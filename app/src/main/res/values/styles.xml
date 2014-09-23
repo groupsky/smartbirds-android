@@ -5,4 +5,59 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="FieldLabel">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <style name="FieldInput">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="FieldInput.Spinner" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:spinnerMode">dialog</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="FieldInput.Text" parent="FieldInput">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+
+    </style>
+
+    <style name="FieldInput.Number" parent="FieldInput.Text">
+    </style>
+
+    <style name="FieldInput.Memo" parent="FieldInput.Text">
+        <item name="android:singleLine">false</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:gravity">top|left</item>
+
+    </style>
+
+    <style name="FieldInput.SemiSpinner" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="FieldInput.Date" parent="FieldInput.SemiSpinner">
+    </style>
+
+    <style name="FieldInput.Time" parent="FieldInput.SemiSpinner">
+    </style>
+
+    <style name="FieldInput.MultipleChoice" parent="FieldInput.SemiSpinner">
+    </style>
+
+
 </resources>

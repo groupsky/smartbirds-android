@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="form_main_source">
+        <item>Единични наблюдения</item>
+        <item>Средно зимно преброяване</item>
+        <item>МОВП</item>
+        <item>Миграция</item>
+        <item>Мониторинг влажни зони</item>
+    </string-array>
+
+    <string-array name="form_main_rain">
+        <item>Не вали</item>
+        <item>Ръми</item>
+        <item>Преваляване</item>
+    </string-array>
+
+    <string-array name="form_main_wind_direction">
+        <item>E</item>
+        <item>ENE</item>
+        <item>ESE</item>
+        <item>N</item>
+        <item>NE</item>
+        <item>NNE</item>
+        <item>NNW</item>
+        <item>NW</item>
+        <item>S</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>SSW</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>WSW</item>
+    </string-array>
+
+    <string-array name="form_main_wind_force">
+        <item>0 - Безветрие</item>
+        <item>1 - Слаб вятър</item>
+        <item>2 - Лек бриз</item>
+        <item>3 - Слаб вятър</item>
+        <item>4 - Умерен вятър</item>
+        <item>5 - Умерен вятър</item>
+        <item>6 - Силен вятър</item>
+        <item>7 - Доста силен вятър</item>
+        <item>8 - Много силен вятър</item>
+        <item>9 - Щорм</item>
+        <item>10 - Силен Щорм</item>
+        <item>11 - Жесток щорм</item>
+        <item>12 - Ураган</item>
+    </string-array>
+
+    <string-array name="form_main_cloud_level">
+        <item>0-33%</item>
+        <item>33-66%</item>
+        <item>66-100%</item>
+    </string-array>
+    
+    <string-array name="form_main_threats">
+        <item>Култивация</item>
+        <item>Използване на пестициди</item>
+        <item>Наторяване</item>
+        <item>Напояване</item>
+        <item>Паша</item>
+        <item>Изоставяне на пасторални системи</item>
+        <item>Реорганизация на селскостопански земи</item>
+        <item>Отстраняване на плетове и храсти</item>
+        <item>Животновъдство</item>
+        <item>Хранене на добитък</item>
+        <item>Модифициране на култивационните практики</item>
+        <item>Селскостопански и горскостопански дейности, които не са посочени по-горе</item>
+        <item>Залесяване</item>
+        <item>Горскостопански сечи</item>
+        <item>Експлоатация без повторно засаждане</item>
+        <item>Косене / сечи</item>
+        <item>Отстраняване на подраст</item>
+        <item>Отстраняване на мъртви и загиващи дървета</item>
+        <item>Общо управление на горите</item>
+        <item>Изкуствено залесяване</item>
+        <item>Повторно засаждане</item>
+        <item>Изгаряне</item>
+        <item>Отглеждане на рибни и черупчести аквакултури</item>
+        <item>Професионален риболов</item>
+        <item>Риболов на определени места</item>
+        <item>Тралене</item>
+        <item>Риболов с плаващи мрежи</item>
+        <item>Събиране на примамки</item>
+        <item>Лов</item>
+        <item>Вземане от гнездото (соколи)</item>
+        <item>Други въздействия, свързани с отдиха и туризма, които не са посочени по-горе</item>
+        <item>Сметища, възстановяване на земи и пресушаване</item>
+        <item>Запълване на канавки, отводнителни канали, езера, вирове, блата или изкопи</item>
+        <item>Пресушаване</item>
+        <item>Управление на водната или крайбрежна растителност за целите на дренажа</item>
+        <item>Отстраняване на седименти (тиня...)</item>
+        <item>Канализация</item>
+        <item>Управление на водните нива</item>
+        <item>Диги, насипи, изкуствени плажове, общо</item>
+        <item>Управление на водните нива</item>
+        <item>Добив на пясък и чакъл</item>
+        <item>Кариери</item>
+        <item>Отнемане на материали от плажната ивица</item>
+        <item>Добив на торф</item>
+        <item>Ръчно събиране на торф</item>
+        <item>Механично събиране на торф</item>
+        <item>Проучване и добив на петрол или газ</item>
+        <item>Мини</item>
+        <item>Открити мини</item>
+        <item>Солници</item>
+        <item>Дейности, свързани с минното дело и добива на материали, които не са посочени по-горе</item>
+        <item>Замърсяване на водите</item>
+        <item>Замърсяване на въздуха</item>
+        <item>Замърсяване на почвите</item>
+        <item>Урбанизирани райони, обитавани от човека области</item>
+        <item>Текуща урбанизация</item>
+        <item>Преустановена урбанизация</item>
+        <item>Разпръснати селища</item>
+    </string-array>
+</resources>

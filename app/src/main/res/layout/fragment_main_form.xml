@@ -1,0 +1,127 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.bspb.smartbirds.pro.MainFormFragment">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:showDividers="beginning"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <Spinner
+                    style="@style/FieldInput.Spinner"
+                    android:entries="@array/form_main_source" />
+
+                <TextView
+                    style="@style/FieldLabel"
+                    android:text="Начало:" />
+
+                <TextView
+                    style="@style/FieldInput.Date"
+                    android:hint="Начална дата"
+                    android:text="22.09.2014" />
+
+                <TextView
+                    style="@style/FieldInput.Time"
+                    android:hint="час"
+                    android:text="15:30" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <AutoCompleteTextView
+                    style="@style/FieldInput.Text"
+                    android:hint="Място" />
+
+                <TextView
+                    style="@style/FieldLabel"
+                    android:text="Край:" />
+
+                <EditText
+                    style="@style/FieldInput.Date"
+                    android:hint="Крайна дата"
+                    android:text="22.09.2014" />
+
+                <EditText
+                    style="@style/FieldInput.Time"
+                    android:hint="час"
+                    android:text="18:30" />
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <MultiAutoCompleteTextView
+                    style="@style/FieldInput.Text"
+                    android:hint="Наблюдатели" />
+
+            </TableRow>
+
+            <View android:layout_height="24dp" />
+
+            <TableRow>
+
+                <Spinner
+                    style="@style/FieldInput.Spinner"
+                    android:entries="@array/form_main_rain"
+                    android:text="Дъжд" />
+
+                <EditText
+                    style="@style/FieldInput.Number"
+                    android:hint="Темп °C" />
+
+                <Spinner
+                    style="@style/FieldInput.Spinner"
+                    android:entries="@array/form_main_wind_force"
+                    android:text="Сила_на_вятъра" />
+
+                <Spinner
+                    style="@style/FieldInput.Spinner"
+                    android:entries="@array/form_main_wind_direction"
+                    android:text="Посока_на_вятъра" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    style="@style/FieldInput.Text"
+                    android:hint="Вид облаци" />
+
+                <Spinner
+                    style="@style/FieldInput.Spinner"
+                    android:entries="@array/form_main_cloud_level"
+                    android:text="Облачност %" />
+
+                <EditText
+                    style="@style/FieldInput.Text"
+                    android:hint="МТО други" />
+
+                <EditText
+                    style="@style/FieldInput.Number"
+                    android:hint="Видимост км" />
+
+            </TableRow>
+
+            <View android:layout_height="16dp" />
+
+            <EditText
+                style="@style/FieldInput.MultipleChoice"
+                android:entries="@array/form_main_threats"
+                android:hint="Заплахи" />
+
+            <View android:layout_height="16dp" />
+
+            <EditText
+                style="@style/FieldInput.Memo"
+                android:layout_height="wrap_content"
+                android:hint="Бележки" />
+        </TableLayout>
+</ScrollView>
