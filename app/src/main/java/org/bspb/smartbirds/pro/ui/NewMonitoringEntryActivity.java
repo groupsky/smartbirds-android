@@ -6,51 +6,33 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
 import org.bspb.smartbirds.pro.R;
 
-@EActivity
+@EActivity(R.layout.activity_form)
 public class NewMonitoringEntryActivity extends Activity implements NewBirdsEntryFormFragment.Listener {
 
     public static final String EXTRA_LAT = "lat";
     public static final String EXTRA_LON = "lon";
-    private double lat;
-    private double lon;
+
+    @Extra(EXTRA_LAT)
+    double lat;
+    @Extra(EXTRA_LON)
+    double lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            onRestoreInstanceState(intent.getExtras());
-        }
-
-        if (savedInstanceState == null) {
+        if (getFragmentManager().findFragmentById(R.id.container) == null)
             getFragmentManager().beginTransaction()
                     .add(R.id.container, NewBirdsEntryFormFragment.newInstance(lat, lon))
                     .commit();
-        } else {
-            onRestoreInstanceState(savedInstanceState);
-        }
 
         setResult(RESULT_CANCELED);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putDouble(EXTRA_LAT, lat);
-        outState.putDouble(EXTRA_LON, lon);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        lat = savedInstanceState.getDouble(EXTRA_LAT, lat);
-        lon = savedInstanceState.getDouble(EXTRA_LON, lon);
     }
 
     @Override
@@ -59,9 +41,4 @@ public class NewMonitoringEntryActivity extends Activity implements NewBirdsEntr
         finish();
     }
 
-    public static Intent newIntent(Context context, double latitude, double longitude) {
-        return new Intent(context, NewMonitoringEntryActivity.class)
-                .putExtra(EXTRA_LAT, latitude)
-                .putExtra(EXTRA_LON, longitude);
-    }
 }

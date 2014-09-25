@@ -7,24 +7,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OnActivityResult;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 
-@EActivity
+@EActivity(R.layout.activity_monitoring)
+@OptionsMenu(R.menu.monitoring)
 public class MonitoringActivity extends FragmentActivity {
 
     private static final int REQUEST_NEW_ENTRY = 1001;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monitoring);
+    @AfterViews
+    void tryToSetUpMap() {
         setUpMapIfNeeded();
     }
 
@@ -70,37 +74,24 @@ public class MonitoringActivity extends FragmentActivity {
      */
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.monitoring, menu);
-        return true;
+    @OptionsItem(R.id.action_new_entry)
+    void onNewEntry() {
+        Location loc = mMap.getMyLocation();
+        NewMonitoringEntryActivity_.intent(this).lat(loc.getLatitude()).lon(loc.getLongitude()).startForResult(REQUEST_NEW_ENTRY);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_new_entry:
-                Location loc = mMap.getMyLocation();
-                startActivityForResult(NewMonitoringEntryActivity.newIntent(this, loc.getLatitude(), loc.getLongitude()), REQUEST_NEW_ENTRY);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_NEW_ENTRY:
-                switch (resultCode) {
-                    case RESULT_OK:
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0))).title("Отчитане"));
-                        break;
-                }
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
+    @OnActivityResult(REQUEST_NEW_ENTRY)
+    void onNewEntry(int resultCode, Intent data) {
+        if (resultCode != RESULT_OK)
+            return;
+        mMap.addMarker(new MarkerOptions().position(new LatLng(data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0))).title("Отчитане"));
     }
 }

@@ -18,6 +18,7 @@ import de.greenrobot.event.EventBus;
 @EApplication
 public class SmartBirdsApplication extends Application {
 
+    public static final String TAG = "SBP";
     @Bean
     EEventBus bus;
 

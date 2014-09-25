@@ -21,9 +21,11 @@ import org.bspb.smartbirds.pro.ui.StartMonitoringActivity_;
 @EFragment(R.layout.fragment_main)
 public class MainFragment extends Fragment {
 
+    @Bean EEventBus bus;
+
     @Click(R.id.btn_start)
     void startBtnClicked() {
-        StartMonitoringActivity_.intent(this).start();
+        bus.postSticky(new StartMonitoringEvent());
     }
 
 }

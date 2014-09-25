@@ -20,6 +20,7 @@ import org.androidannotations.annotations.RootContext;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
+import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.ui.MonitoringActivity;
 import org.bspb.smartbirds.pro.ui.MonitoringActivity_;
@@ -40,23 +41,7 @@ public class MonitoringCommonFormFragment extends Fragment {
 
     @OptionsItem(R.id.action_submit)
     void onSubmit() {
-        MonitoringActivity_.intent(this).start();
-        getActivity().finish();
+        bus.post(new SetMonitoringCommonData());
     }
-
-//    @AfterInject
-//    void registerBus() {
-//        bus.register(this);
-//    }
-//
-//    public void onEvent(MonitoringStartedEvent event) {
-//        bus.removeStickyEvent(StartMonitoringEvent.class);
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        bus.unregister(this);
-//    }
 
 }

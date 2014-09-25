@@ -21,6 +21,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
+import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.ui.StartMonitoringActivity;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
@@ -30,6 +31,8 @@ import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 @OptionsMenu(R.menu.main)
 public class MainActivity extends Activity {
 
+    @Bean EEventBus bus;
+
     @AfterViews
     void createFragment() {
         if (getFragmentManager().findFragmentById(R.id.container) == null)
@@ -38,9 +41,24 @@ public class MainActivity extends Activity {
                     .commit();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bus.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        bus.unregister(this);
+        super.onStop();
+    }
+
     @OptionsItem
     void actionSettings() {
     }
 
 
+    public void onEvent(StartMonitoringEvent event) {
+        StartMonitoringActivity_.intent(this).start();
+    }
 }
