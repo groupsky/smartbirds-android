@@ -1,0 +1,94 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.bspb.smartbirds.pro.ui.fragment.FormMainFragment">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="beginning"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
+
+        <TableRow>
+
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:layout_span="3"
+                android:entries="@array/form_birds_name" />
+
+            <CheckBox android:text="Поверително" />
+
+        </TableRow>
+
+        <TableRow>
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:entries="@array/form_birds_count_units"
+                android:hint="Единица на броя" />
+
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:entries="@array/form_birds_count_type"
+                android:hint="Тип на броя" />
+        </TableRow>
+
+        <TableRow>
+
+            <EditText
+                style="@style/FieldInput.Number"
+                android:hint="Брой" />
+
+            <EditText
+                style="@style/FieldInput.Number"
+                android:hint="Мин." />
+
+            <EditText
+                style="@style/FieldInput.Number"
+                android:hint="Макс." />
+
+        </TableRow>
+
+        <TableRow>
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:entries="@array/form_birds_sex"
+                android:hint="Пол" />
+
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:entries="@array/form_birds_age"
+                android:hint="Възраст" />
+
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:entries="@array/form_birds_marking"
+                android:hint="Маркировка" />
+
+
+        </TableRow>
+
+        <TableRow>
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:layout_span="2"
+                android:entries="@array/form_birds_status"
+                android:hint="Статус на вида" />
+
+            <EditText
+                style="@style/FieldInput.MultipleChoice"
+                android:layout_span="2"
+                android:entries="@array/form_birds_behaviour"
+                android:hint="Поведение" />
+        </TableRow>
+
+        <TableRow>
+            <Spinner
+                style="@style/FieldInput.Spinner"
+                android:layout_span="2"
+                android:entries="@array/form_birds_death"
+                android:hint="Мъртъв индивид (причини)" />
+        </TableRow>
+    </TableLayout>
+</ScrollView>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.bspb.smartbirds.pro.ui.MonitoringActivity">
+    <item
+        android:id="@+id/action_monitor"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="Monitor"
+        app:showAsAction="always"/>
+</menu>

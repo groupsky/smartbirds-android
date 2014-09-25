@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import org.bspb.smartbirds.pro.ui.StartMonitoringActivity;
+import org.bspb.smartbirds.pro.ui.fragment.MainFragment;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MainFragment.Listener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new MainFormFragment())
+                    .add(R.id.container, new MainFragment())
                     .commit();
         }
     }
@@ -46,19 +49,8 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+    @Override
+    public void onStartBtn() {
+        startActivity(new Intent(this, StartMonitoringActivity.class));
     }
 }
