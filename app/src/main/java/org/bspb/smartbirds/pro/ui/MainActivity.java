@@ -1,4 +1,4 @@
-package org.bspb.smartbirds.pro;
+package org.bspb.smartbirds.pro.ui;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.StartMonitoringActivity;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment;
 

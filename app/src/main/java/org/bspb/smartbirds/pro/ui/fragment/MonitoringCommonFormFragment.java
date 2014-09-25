@@ -1,4 +1,4 @@
-package org.bspb.smartbirds.pro;
+package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,33 +10,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.bspb.smartbirds.pro.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link org.bspb.smartbirds.pro.FormBirdsFragment.Listener} interface
+ * {@link MonitoringCommonFormFragment.Listener} interface
  * to handle interaction events.
- * Use the {@link FormBirdsFragment#newInstance} factory method to
+ * Use the {@link MonitoringCommonFormFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
-public class FormBirdsFragment extends Fragment {
-
-    private Listener mListener;
+public class MonitoringCommonFormFragment extends Fragment {
+    private Listener listener;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment FormBirdsFragment.
+     * @return A new instance of fragment FormMainFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static FormBirdsFragment newInstance() {
-        FormBirdsFragment fragment = new FormBirdsFragment();
+    public static MonitoringCommonFormFragment newInstance() {
+        @SuppressWarnings("deprecation") MonitoringCommonFormFragment fragment = new MonitoringCommonFormFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
-    public FormBirdsFragment() {
+
+    /**
+     * @deprecated Use newInstance instead
+     */
+    @Deprecated
+    public MonitoringCommonFormFragment() {
         // Required empty public constructor
     }
 
@@ -50,20 +55,20 @@ public class FormBirdsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_form_birds, container, false);
+        return inflater.inflate(R.layout.fragment_monitoring_form_common, container, false);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.start_monitoring, menu);
+        inflater.inflate(R.menu.monitoring_common_form, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_submit:
-                mListener.onSubmitMonitoringForm();
+                listener.onSubmitMonitoringCommonForm();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -73,7 +78,7 @@ public class FormBirdsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (Listener) activity;
+            listener = (Listener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement Listener");
@@ -83,7 +88,7 @@ public class FormBirdsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 
     /**
@@ -91,13 +96,13 @@ public class FormBirdsFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface Listener {
-        public void onSubmitMonitoringForm();
+        public void onSubmitMonitoringCommonForm();
     }
 
 }

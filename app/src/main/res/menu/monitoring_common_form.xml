@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_new_entry"
+        android:id="@+id/action_submit"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="Ново отчитане"
+        android:title="Начало"
         app:showAsAction="always" />
 
 </menu>

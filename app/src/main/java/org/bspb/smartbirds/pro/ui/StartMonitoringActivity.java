@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.bspb.smartbirds.pro.FormBirdsFragment;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.ui.fragment.FormMainFragment;
+import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment;
 
-public class StartMonitoringActivity extends Activity implements FormMainFragment.Listener {
+public class StartMonitoringActivity extends Activity implements MonitoringCommonFormFragment.Listener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +15,14 @@ public class StartMonitoringActivity extends Activity implements FormMainFragmen
         setContentView(R.layout.activity_start_monitoring);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, FormMainFragment.newInstance())
+                    .add(R.id.container, MonitoringCommonFormFragment.newInstance())
                     .commit();
         }
     }
 
 
     @Override
-    public void onSubmitMainForm() {
+    public void onSubmitMonitoringCommonForm() {
 
         startActivity(new Intent(this, MonitoringActivity.class));
         finish();

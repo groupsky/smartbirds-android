@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.bspb.smartbirds.pro.ui.fragment.FormMainFragment">
+    tools:context="org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment">
 
     <TableLayout
         android:layout_width="match_parent"
