@@ -4,11 +4,12 @@
 
     <application
         android:allowBackup="true"
+        android:name=".SmartBirdsApplication_"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.MainActivity_"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,19 +18,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.StartMonitoringActivity"
+            android:name=".ui.StartMonitoringActivity_"
             android:label="@string/title_activity_start_monitoring"
-            android:parentActivityName=".ui.MainActivity" >
+            android:parentActivityName=".ui.MainActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.MainActivity" />
+                android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
         </activity>
         <activity
-            android:name=".ui.MonitoringActivity"
-            android:label="@string/title_activity_monitoring" >
+            android:name=".ui.MonitoringActivity_"
+            android:label="@string/title_activity_monitoring"
+            android:parentActivityName=".ui.MainActivity_">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.MainActivity" />
+                android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
         </activity>
 
         <meta-data
@@ -40,13 +42,19 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.NewMonitoringEntryActivity"
+            android:name=".ui.NewMonitoringEntryActivity_"
             android:label="@string/title_activity_form"
-            android:parentActivityName=".ui.MonitoringActivity" >
+            android:parentActivityName=".ui.MonitoringActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity" />
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
         </activity>
+
+        <service
+            android:name=".service.DataService_"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

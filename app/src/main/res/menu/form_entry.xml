@@ -8,7 +8,6 @@
         android:id="@+id/action_submit"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="Запис"
-        app:showAsAction="always" />
+        android:title="Запис"/>
 
 </menu>

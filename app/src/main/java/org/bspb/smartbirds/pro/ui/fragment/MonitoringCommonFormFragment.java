@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,40 +11,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.RootContext;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
+import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.ui.MonitoringActivity;
+import org.bspb.smartbirds.pro.ui.MonitoringActivity_;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MonitoringCommonFormFragment.Listener} interface
- * to handle interaction events.
- * Use the {@link MonitoringCommonFormFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+@EFragment(R.layout.fragment_monitoring_form_common)
+@OptionsMenu(R.menu.monitoring_common_form)
 public class MonitoringCommonFormFragment extends Fragment {
-    private Listener listener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment FormMainFragment.
-     */
-    public static MonitoringCommonFormFragment newInstance() {
-        @SuppressWarnings("deprecation") MonitoringCommonFormFragment fragment = new MonitoringCommonFormFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    /**
-     * @deprecated Use newInstance instead
-     */
-    @Deprecated
-    public MonitoringCommonFormFragment() {
-        // Required empty public constructor
-    }
+    @Bean
+    EEventBus bus;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,58 +38,25 @@ public class MonitoringCommonFormFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_monitoring_form_common, container, false);
+    @OptionsItem(R.id.action_submit)
+    void onSubmit() {
+        MonitoringActivity_.intent(this).start();
+        getActivity().finish();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.monitoring_common_form, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_submit:
-                listener.onSubmitMonitoringCommonForm();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            listener = (Listener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement Listener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface Listener {
-        public void onSubmitMonitoringCommonForm();
-    }
+//    @AfterInject
+//    void registerBus() {
+//        bus.register(this);
+//    }
+//
+//    public void onEvent(MonitoringStartedEvent event) {
+//        bus.removeStickyEvent(StartMonitoringEvent.class);
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        bus.unregister(this);
+//    }
 
 }

@@ -8,7 +8,6 @@
         android:id="@+id/action_new_entry"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="Ново отчитане"
-        app:showAsAction="always" />
+        android:title="Ново отчитане"/>
 
 </menu>

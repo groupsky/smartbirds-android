@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 
+import org.androidannotations.annotations.EActivity;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
 import org.bspb.smartbirds.pro.R;
 
+@EActivity
 public class NewMonitoringEntryActivity extends Activity implements NewBirdsEntryFormFragment.Listener {
 
     public static final String EXTRA_LAT = "lat";

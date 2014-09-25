@@ -12,46 +12,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.ui.StartMonitoringActivity;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment;
+import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
-public class MainActivity extends Activity implements MainFragment.Listener {
+@EActivity(R.layout.activity_main)
+@OptionsMenu(R.menu.main)
+public class MainActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
+    @AfterViews
+    void createFragment() {
+        if (getFragmentManager().findFragmentById(R.id.container) == null)
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new MainFragment())
+                    .add(R.id.container, MainFragment_.builder().build())
                     .commit();
-        }
+    }
+
+    @OptionsItem
+    void actionSettings() {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onStartBtn() {
-        startActivity(new Intent(this, StartMonitoringActivity.class));
-    }
 }

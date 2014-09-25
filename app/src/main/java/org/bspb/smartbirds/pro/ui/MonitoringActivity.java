@@ -12,8 +12,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.androidannotations.annotations.EActivity;
 import org.bspb.smartbirds.pro.R;
 
+@EActivity
 public class MonitoringActivity extends FragmentActivity {
 
     private static final int REQUEST_NEW_ENTRY = 1001;
