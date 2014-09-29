@@ -4,10 +4,14 @@
     android:layout_height="match_parent"
     tools:context="org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:showDividers="beginning"
             android:shrinkColumns="*"
             android:stretchColumns="*">
 
@@ -56,15 +60,21 @@
 
             </TableRow>
 
-            <TableRow>
+        </TableLayout>
 
-                <MultiAutoCompleteTextView
-                    style="@style/FieldInput.Text"
-                    android:hint="Наблюдатели" />
+        <MultiAutoCompleteTextView
+            style="@style/FieldInput.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Наблюдатели" />
 
-            </TableRow>
+        <View style="@style/FieldSeparator" />
 
-            <View android:layout_height="24dp" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:collapseColumns="*"
+            android:stretchColumns="*">
 
             <TableRow>
 
@@ -109,19 +119,23 @@
                     android:hint="Видимост км" />
 
             </TableRow>
-
-            <View android:layout_height="16dp" />
-
-            <EditText
-                style="@style/FieldInput.MultipleChoice"
-                android:entries="@array/form_main_threats"
-                android:hint="Заплахи" />
-
-            <View android:layout_height="16dp" />
-
-            <EditText
-                style="@style/FieldInput.Memo"
-                android:layout_height="wrap_content"
-                android:hint="Бележки" />
         </TableLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <EditText
+            style="@style/FieldInput.MultipleChoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/form_main_threats"
+            android:hint="Заплахи" />
+
+        <View style="@style/FieldSeparator" />
+
+        <EditText
+            style="@style/FieldInput.Memo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Бележки" />
+    </LinearLayout>
 </ScrollView>

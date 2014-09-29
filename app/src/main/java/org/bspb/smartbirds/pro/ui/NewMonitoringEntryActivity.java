@@ -7,13 +7,18 @@ import android.location.Location;
 import android.os.Bundle;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.EntrySubmitted;
+import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment_;
 
 @EActivity(R.layout.activity_form)
-public class NewMonitoringEntryActivity extends Activity implements NewBirdsEntryFormFragment.Listener {
+public class NewMonitoringEntryActivity extends Activity {
 
     public static final String EXTRA_LAT = "lat";
     public static final String EXTRA_LON = "lon";
@@ -23,20 +28,36 @@ public class NewMonitoringEntryActivity extends Activity implements NewBirdsEntr
     @Extra(EXTRA_LON)
     double lon;
 
+    @Bean
+    EEventBus eventBus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getFragmentManager().findFragmentById(R.id.container) == null)
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, NewBirdsEntryFormFragment.newInstance(lat, lon))
-                    .commit();
-
         setResult(RESULT_CANCELED);
     }
 
+    @AfterViews
+    void createFragment() {
+        if (getFragmentManager().findFragmentById(R.id.container) == null)
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, NewBirdsEntryFormFragment_.builder().build())
+                    .commit();
+    }
+
     @Override
-    public void onSubmitMonitoringForm() {
+    protected void onStart() {
+        super.onStart();
+        eventBus.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        eventBus.unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(EntrySubmitted event) {
         setResult(RESULT_OK, new Intent().putExtra(EXTRA_LAT, lat).putExtra(EXTRA_LON, lon));
         finish();
     }

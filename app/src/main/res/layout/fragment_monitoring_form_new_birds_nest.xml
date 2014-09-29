@@ -1,105 +1,101 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment">
+    android:layout_height="wrap_content"
+    android:showDividers="beginning"
+    android:shrinkColumns="*"
+    android:stretchColumns="*"
+    tools:context="org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:showDividers="beginning"
-        android:shrinkColumns="*"
-        android:stretchColumns="*">
+    <TableRow>
 
-        <TableRow>
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_nest_substrate"
+            android:hint="Субстрат" />
 
-            <Spinner
-                style="@style/FieldInput.Spinner"
-                android:entries="@array/form_birds_nest_substrate"
-                android:hint="Субстрат" />
+        <EditText
+            style="@style/FieldInput.Text"
+            android:entries="@array/form_birds_nest_location"
+            android:hint="Дърво" />
 
-            <EditText
-                style="@style/FieldInput.Text"
-                android:entries="@array/form_birds_nest_location"
-                android:hint="Дърво" />
+        <EditText
+            style="@style/FieldInput.Number"
+            android:hint="Височина на дървото" />
 
-            <EditText
-                style="@style/FieldInput.Number"
-                android:hint="Височина на дървото" />
+    </TableRow>
 
-        </TableRow>
+    <TableRow>
 
-        <TableRow>
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_nest_location"
+            android:hint="Местоположение_на_дървото" />
 
-            <Spinner
-                style="@style/FieldInput.Spinner"
-                android:entries="@array/form_birds_nest_location"
-                android:hint="Местоположение_на_дървото" />
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_nest_height"
+            android:hint="Височина_на_гнездото" />
 
-            <Spinner
-                style="@style/FieldInput.Spinner"
-                android:entries="@array/form_birds_nest_height"
-                android:hint="Височина_на_гнездото" />
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_nest_position"
+            android:hint="Местоположение_на_гнездото" />
+    </TableRow>
 
-            <Spinner
-                style="@style/FieldInput.Spinner"
-                android:entries="@array/form_birds_nest_position"
-                android:hint="Местоположение_на_гнездото" />
-        </TableRow>
+    <TableRow>
 
-        <TableRow>
+        <CheckBox android:text="Мътене" />
 
-            <CheckBox android:text="Мътене" />
+        <EditText
+            style="@style/FieldInput.Number"
+            android:hint="Брой яйца" />
 
-            <EditText
-                style="@style/FieldInput.Number"
-                android:hint="Брой яйца" />
+        <EditText
+            style="@style/FieldInput.Number"
+            android:hint="Брой пухови малки" />
 
-            <EditText
-                style="@style/FieldInput.Number"
-                android:hint="Брой пухови малки" />
+    </TableRow>
 
-        </TableRow>
+    <TableRow>
 
-        <TableRow>
+        <EditText
+            style="@style/FieldInput.Number"
+            android:hint="Брой оперени малки в гнездото" />
 
-            <EditText
-                style="@style/FieldInput.Number"
-                android:hint="Брой оперени малки в гнездото" />
+        <EditText
+            style="@style/FieldInput.Number"
+            android:hint="Брой излетели малки" />
 
-            <EditText
-                style="@style/FieldInput.Number"
-                android:hint="Брой излетели малки" />
+        <CheckBox android:text="Охрана на гнездото" />
+    </TableRow>
 
-            <CheckBox android:text="Охрана на гнездото" />
-        </TableRow>
+    <TableRow android:gravity="bottom">
 
-        <TableRow android:gravity="bottom">
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_age_individual"
+            android:hint="Възраст на женската" />
 
-            <Spinner
-                style="@style/FieldInput.Spinner"
-                android:entries="@array/form_birds_age_individual"
-                android:hint="Възраст на женската" />
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_age_individual"
+            android:hint="Възраст на мъжката" />
 
-            <Spinner
-                style="@style/FieldInput.Spinner"
-                android:entries="@array/form_birds_age_individual"
-                android:hint="Възраст на мъжката" />
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_nest_success"
+            android:hint="Гнездови успех" />
 
-            <Spinner
-                style="@style/FieldInput.Spinner"
-                android:entries="@array/form_birds_nest_success"
-                android:hint="Гнездови успех" />
+    </TableRow>
 
-        </TableRow>
+    <TableRow>
 
-        <TableRow>
-            <EditText
-                android:layout_span="3"
-                style="@style/FieldInput.Memo"
-                android:hint="Земеползване в радиус от 300м"
-                android:lines="1" />
+        <EditText
+            style="@style/FieldInput.Memo"
+            android:layout_span="3"
+            android:hint="Земеползване в радиус от 300м"
+            android:lines="1" />
 
-        </TableRow>
-    </TableLayout>
-</ScrollView>
+    </TableRow>
+</TableLayout>
