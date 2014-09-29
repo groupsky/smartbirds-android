@@ -18,6 +18,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
 
 @EActivity(R.layout.activity_monitoring)
@@ -26,6 +27,10 @@ public class MonitoringActivity extends FragmentActivity {
 
     private static final int REQUEST_NEW_ENTRY = 1001;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+
+    @OptionsMenuItem(R.id.action_new_entry)
+    MenuItem menuNewEntry;
+
 
     @AfterViews
     void tryToSetUpMap() {
@@ -78,14 +83,20 @@ public class MonitoringActivity extends FragmentActivity {
             @Override
             public void onMyLocationChange(Location location) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+                menuNewEntry.setEnabled(true);
             }
         });
     }
 
     @OptionsItem(R.id.action_new_entry)
     void onNewEntry() {
+        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(this);
+
         Location loc = mMap.getMyLocation();
-        NewMonitoringEntryActivity_.intent(this).lat(loc.getLatitude()).lon(loc.getLongitude()).startForResult(REQUEST_NEW_ENTRY);
+        if (loc != null) {
+            ib.lat(loc.getLatitude()).lon(loc.getLongitude());
+        }
+        ib.startForResult(REQUEST_NEW_ENTRY);
     }
 
     @OnActivityResult(REQUEST_NEW_ENTRY)
