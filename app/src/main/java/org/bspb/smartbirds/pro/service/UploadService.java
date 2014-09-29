@@ -60,7 +60,8 @@ public class UploadService extends IntentService {
                 doUpload(ftpClient, new File(file, subfile), monitoringName+'/');
             }
 
-            eventBus.post(new UploadCompleted(monitoringPath));
+            file.renameTo(new File(monitoringPath.replace("-up", "")));
+            eventBus.post(new UploadCompleted(monitoringPath.replace("-up", "")));
         } catch (IOException e) {
             Log.e(TAG, String.format("error while uploading: %s", e.getMessage()), e);
         }
