@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.bspb.smartbirds.pro" >
+    package="org.bspb.smartbirds.pro">
 
     <application
-        android:allowBackup="true"
         android:name=".SmartBirdsApplication_"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ui.MainActivity_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +21,8 @@
         <activity
             android:name=".ui.StartMonitoringActivity_"
             android:label="@string/title_activity_start_monitoring"
-            android:parentActivityName=".ui.MainActivity_" >
+            android:parentActivityName=".ui.MainActivity_"
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
@@ -28,7 +30,8 @@
         <activity
             android:name=".ui.MonitoringActivity_"
             android:label="@string/title_activity_monitoring"
-            android:parentActivityName=".ui.MainActivity_">
+            android:parentActivityName=".ui.MainActivity_"
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
@@ -44,7 +47,8 @@
         <activity
             android:name=".ui.NewMonitoringEntryActivity_"
             android:label="@string/title_activity_form"
-            android:parentActivityName=".ui.MonitoringActivity_" >
+            android:parentActivityName=".ui.MonitoringActivity_"
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
@@ -53,8 +57,7 @@
         <service
             android:name=".service.DataService_"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
