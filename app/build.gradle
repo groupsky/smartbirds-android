@@ -54,4 +54,6 @@ dependencies {
     //noinspection GradleDynamicVersion
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile 'com.googlecode.jcsv:jcsv:1.4.0'
+    compile 'commons-net:commons-net:3.3'
+
 }

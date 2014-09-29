@@ -5,6 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/action_finish"
+        android:orderInCategory="50"
+        android:showAsAction="always"
+        android:title="Завършване"
+        />
+    <item
         android:id="@+id/action_new_entry"
         android:orderInCategory="100"
         android:showAsAction="always"

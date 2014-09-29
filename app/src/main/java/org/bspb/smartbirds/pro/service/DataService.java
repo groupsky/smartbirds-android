@@ -17,6 +17,7 @@ import org.androidannotations.annotations.EService;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
@@ -136,6 +137,13 @@ public class DataService extends Service {
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void onEvent(FinishMonitoringEvent event) {
+        File newDir = new File(monitoringDir.getAbsolutePath().replace("-wip", "-up"));
+        monitoringDir.renameTo(newDir);
+        monitoringDir = newDir;
+        UploadService_.intent(this).upload(monitoringDir.getAbsolutePath()).start();
     }
 
 }

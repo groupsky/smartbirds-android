@@ -14,12 +14,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu(R.menu.monitoring)
@@ -30,6 +33,8 @@ public class MonitoringActivity extends FragmentActivity {
 
     @OptionsMenuItem(R.id.action_new_entry)
     MenuItem menuNewEntry;
+    @Bean
+    EEventBus eventBus;
 
 
     @AfterViews
@@ -104,5 +109,11 @@ public class MonitoringActivity extends FragmentActivity {
         if (resultCode != RESULT_OK)
             return;
         mMap.addMarker(new MarkerOptions().position(new LatLng(data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0))).title("Отчитане"));
+    }
+
+    @OptionsItem(R.id.action_finish)
+    void onFinish() {
+        eventBus.post(new FinishMonitoringEvent());
+        finish();
     }
 }

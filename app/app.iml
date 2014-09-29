@@ -86,6 +86,7 @@
     <orderEntry type="library" exported="" name="crashlytics-1.1.13" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-5.0.89" level="project" />
+    <orderEntry type="library" exported="" name="commons-net-3.3" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-api-3.0.1" level="project" />
   </component>
 </module>
