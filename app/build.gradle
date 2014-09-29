@@ -51,5 +51,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services:5.0.89'
     compile 'de.greenrobot:eventbus:2.2.1'
+    //noinspection GradleDynamicVersion
     compile 'com.crashlytics.android:crashlytics:1.+'
+    compile 'com.googlecode.jcsv:jcsv:1.4.0'
 }

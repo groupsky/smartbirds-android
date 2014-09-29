@@ -19,7 +19,9 @@
 
                 <Spinner
                     style="@style/FieldInput.Spinner"
-                    android:entries="@array/form_main_source" />
+                    android:entries="@array/form_main_source"
+                    android:hint="Източник"
+                    android:tag="main/source" />
 
                 <TextView
                     style="@style/FieldLabel"
@@ -28,11 +30,13 @@
                 <TextView
                     style="@style/FieldInput.Date"
                     android:hint="Начална дата"
+                    android:tag="main/start_date"
                     android:text="22.09.2014" />
 
                 <TextView
                     style="@style/FieldInput.Time"
                     android:hint="час"
+                    android:tag="main/start_time"
                     android:text="15:30" />
 
             </TableRow>
@@ -41,7 +45,8 @@
 
                 <AutoCompleteTextView
                     style="@style/FieldInput.Text"
-                    android:hint="Място" />
+                    android:hint="Място"
+                    android:tag="main/location" />
 
                 <TextView
                     style="@style/FieldLabel"
@@ -50,11 +55,13 @@
                 <EditText
                     style="@style/FieldInput.Date"
                     android:hint="Крайна дата"
+                    android:tag="main/end_date"
                     android:text="22.09.2014" />
 
                 <EditText
                     style="@style/FieldInput.Time"
                     android:hint="час"
+                    android:tag="main/end_time"
                     android:text="18:30" />
 
 
@@ -66,7 +73,8 @@
             style="@style/FieldInput.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Наблюдатели" />
+            android:hint="Наблюдатели"
+            android:tag="main/observers" />
 
         <View style="@style/FieldSeparator" />
 
@@ -81,20 +89,24 @@
                 <Spinner
                     style="@style/FieldInput.Spinner"
                     android:entries="@array/form_main_rain"
+                    android:tag="main/rain"
                     android:text="Дъжд" />
 
                 <EditText
                     style="@style/FieldInput.Number"
-                    android:hint="Темп °C" />
+                    android:hint="Темп °C"
+                    android:tag="main/temp" />
 
                 <Spinner
                     style="@style/FieldInput.Spinner"
                     android:entries="@array/form_main_wind_force"
+                    android:tag="main/wind_force"
                     android:text="Сила_на_вятъра" />
 
                 <Spinner
                     style="@style/FieldInput.Spinner"
                     android:entries="@array/form_main_wind_direction"
+                    android:tag="main/wind_direction"
                     android:text="Посока_на_вятъра" />
 
             </TableRow>
@@ -103,20 +115,24 @@
 
                 <EditText
                     style="@style/FieldInput.Text"
-                    android:hint="Вид облаци" />
+                    android:hint="Вид облаци"
+                    android:tag="main/clouds_type" />
 
                 <Spinner
                     style="@style/FieldInput.Spinner"
                     android:entries="@array/form_main_cloud_level"
+                    android:tag="main/clouds_level"
                     android:text="Облачност %" />
 
                 <EditText
                     style="@style/FieldInput.Text"
-                    android:hint="МТО други" />
+                    android:hint="МТО други"
+                    android:tag="main/meteo_other" />
 
                 <EditText
                     style="@style/FieldInput.Number"
-                    android:hint="Видимост км" />
+                    android:hint="Видимост км"
+                    android:tag="main/visibility" />
 
             </TableRow>
         </TableLayout>
@@ -128,7 +144,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/form_main_threats"
-            android:hint="Заплахи" />
+            android:hint="Заплахи"
+            android:tag="main/threats" />
 
         <View style="@style/FieldSeparator" />
 
@@ -136,6 +153,7 @@
             style="@style/FieldInput.Memo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Бележки" />
+            android:hint="Бележки"
+            android:tag="main/notes" />
     </LinearLayout>
 </ScrollView>

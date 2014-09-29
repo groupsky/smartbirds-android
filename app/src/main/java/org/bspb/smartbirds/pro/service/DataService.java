@@ -2,9 +2,14 @@ package org.bspb.smartbirds.pro.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.googlecode.jcsv.writer.CSVWriter;
+import com.googlecode.jcsv.writer.internal.CSVWriterBuilder;
+import com.googlecode.jcsv.writer.internal.DefaultCSVEntryConverter;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -12,19 +17,39 @@ import org.androidannotations.annotations.EService;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.ui.StartMonitoringActivity;
 
-import de.greenrobot.event.ThreadMode;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.UUID;
 
 @EService
 public class DataService extends Service {
 
-    private static final String TAG = SmartBirdsApplication.TAG+".DataService";
+    private static final String TAG = SmartBirdsApplication.TAG + ".DataService";
+    private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
+
+    static {
+        DATE_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
+
     @Bean
     EEventBus bus;
+
+    HashMap<String, String> commonData;
+    String monitoringName;
+    File monitoringDir;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -55,16 +80,62 @@ public class DataService extends Service {
     public void onEvent(StartMonitoringEvent event) {
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
-        bus.postSticky(new MonitoringStartedEvent());
+        commonData = new HashMap<String, String>();
+        monitoringName = String.format("%s-%s", DATE_FORMATTER.format(new Date()), getRandomNode());
+        if ((monitoringDir = createMonitoringDir()) != null) {
+            bus.postSticky(new MonitoringStartedEvent());
+        } else {
+            Toast.makeText(this, "Cannot create directory for data! Check that you have enough storage available", Toast.LENGTH_SHORT).show();
+            bus.post(new MonitoringFailedEvent());
+        }
+    }
+
+    private File createMonitoringDir() {
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), monitoringName+"-wip");
+        if (!file.mkdirs()) {
+            Log.w(TAG, String.format("Cannot create %s", file));
+            file = new File(getFilesDir(), monitoringName+"-wip");
+            if (!file.mkdirs()) {
+                Log.e(TAG, String.format("Cannot create %s", file));
+                return null;
+            }
+        } else {
+            Log.d(TAG, String.format("Created directory %s", file));
+        }
+        return file;
+    }
+
+    private String getRandomNode() {
+        String uuid = UUID.randomUUID().toString();
+        return uuid.substring(uuid.length() - 12);
     }
 
     public void onEvent(CancelMonitoringEvent event) {
         Log.d(TAG, "onCancelMonitoringEvent...");
         Toast.makeText(this, "Cancel monitoring", Toast.LENGTH_SHORT).show();
+        commonData = null;
     }
 
     public void onEvent(SetMonitoringCommonData event) {
         Log.d(TAG, "onSetMonitoringCommonData");
+        commonData.clear();
+        commonData.putAll(event.getData());
+
+        File file = new File(monitoringDir, "common.csv");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).entryConverter(new DefaultCSVEntryConverter()).build();
+
+            csvWriter.write(commonData.keySet().toArray(new String[]{}));
+            csvWriter.write(commonData.values().toArray(new String[]{}));
+
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

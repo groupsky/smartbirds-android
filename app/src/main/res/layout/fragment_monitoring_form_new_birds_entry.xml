@@ -12,9 +12,13 @@
         <Spinner
             style="@style/FieldInput.Spinner"
             android:layout_span="3"
+            android:tag="entry/bird_type"
+            android:hint="Вид научно име"
             android:entries="@array/form_birds_name" />
 
-        <CheckBox android:text="Поверително" />
+        <CheckBox android:text="Поверително"
+            android:tag="entry/private"
+            />
 
     </TableRow>
 
@@ -23,11 +27,13 @@
         <Spinner
             style="@style/FieldInput.Spinner"
             android:entries="@array/form_birds_count_units"
+            android:tag="entry/count_unit"
             android:hint="Единица на броя" />
 
         <Spinner
             style="@style/FieldInput.Spinner"
             android:entries="@array/form_birds_count_type"
+            android:tag="entry/count_type"
             android:hint="Тип на броя" />
     </TableRow>
 
@@ -35,14 +41,17 @@
 
         <EditText
             style="@style/FieldInput.Number"
+            android:tag="entry/count"
             android:hint="Брой" />
 
         <EditText
             style="@style/FieldInput.Number"
+            android:tag="entry/count_min"
             android:hint="Мин." />
 
         <EditText
             style="@style/FieldInput.Number"
+            android:tag="entry/count_max"
             android:hint="Макс." />
 
     </TableRow>
