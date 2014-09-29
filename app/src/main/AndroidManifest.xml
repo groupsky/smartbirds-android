@@ -58,6 +58,7 @@
             android:name=".service.DataService_"
             android:enabled="true"
             android:exported="false"></service>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="77d73d871322caaa0ef4f96a467325bcc3b2dfb5"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -2,6 +2,8 @@ package org.bspb.smartbirds.pro;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EApplication;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
@@ -25,6 +27,8 @@ public class SmartBirdsApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Crashlytics.start(this);
 
         bus.register(this);
     }
