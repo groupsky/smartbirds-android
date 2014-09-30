@@ -3,9 +3,11 @@ package org.bspb.smartbirds.pro.ui.utils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 
@@ -67,6 +69,14 @@ public class FormUtils {
             if (view instanceof EditText) {
                 EditText editText = (EditText) view;
                 return editText.getText().toString();
+            }
+            if (view instanceof CheckBox) {
+                CheckBox checkBox = (CheckBox) view;
+                return checkBox.isChecked()?"1":"0";
+            }
+            if (view instanceof TextView) {
+                TextView textView = (TextView) view;
+                return textView.getText().toString();
             }
             Log.w(TAG, "unsupported view "+view.getClass());
             return "";
