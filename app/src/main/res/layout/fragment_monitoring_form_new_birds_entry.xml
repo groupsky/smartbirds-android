@@ -12,12 +12,12 @@
         <Spinner
             style="@style/FieldInput.Spinner"
             android:layout_span="3"
-            android:tag="entry/bird_type"
+            android:tag="Вид_научно_име"
             android:hint="Вид научно име"
             android:entries="@array/form_birds_name" />
 
         <CheckBox android:text="Поверително"
-            android:tag="entry/private"
+            android:tag="Поверително"
             />
 
     </TableRow>
@@ -27,31 +27,38 @@
         <Spinner
             style="@style/FieldInput.Spinner"
             android:entries="@array/form_birds_count_units"
-            android:tag="entry/count_unit"
+            android:tag="Единица_на_броя"
             android:hint="Единица на броя" />
 
         <Spinner
             style="@style/FieldInput.Spinner"
             android:entries="@array/form_birds_count_type"
-            android:tag="entry/count_type"
+            android:tag="Тип_на_броя"
             android:hint="Тип на броя" />
+
+        <Spinner
+            style="@style/FieldInput.Spinner"
+            android:entries="@array/form_birds_nesting"
+            android:tag="Тип_Гнездене"
+            android:hint="Тип гнездене"
+            />
     </TableRow>
 
     <TableRow>
 
         <EditText
             style="@style/FieldInput.Number"
-            android:tag="entry/count"
+            android:tag="Брой"
             android:hint="Брой" />
 
         <EditText
             style="@style/FieldInput.Number"
-            android:tag="entry/count_min"
+            android:tag="Мин."
             android:hint="Мин." />
 
         <EditText
             style="@style/FieldInput.Number"
-            android:tag="entry/count_max"
+            android:tag="Макс."
             android:hint="Макс." />
 
     </TableRow>
@@ -61,16 +68,19 @@
         <Spinner
             style="@style/FieldInput.Spinner"
             android:entries="@array/form_birds_sex"
+            android:tag="Пол"
             android:hint="Пол" />
 
         <Spinner
             style="@style/FieldInput.Spinner"
             android:entries="@array/form_birds_age"
+            android:tag="Възраст"
             android:hint="Възраст" />
 
         <Spinner
             style="@style/FieldInput.Spinner"
             android:entries="@array/form_birds_marking"
+            android:tag="Маркировка"
             android:hint="Маркировка" />
 
 
@@ -82,12 +92,14 @@
             style="@style/FieldInput.Spinner"
             android:layout_span="2"
             android:entries="@array/form_birds_status"
+            android:tag="Статус_на_вида"
             android:hint="Статус на вида" />
 
         <EditText
             style="@style/FieldInput.MultipleChoice"
             android:layout_span="2"
             android:entries="@array/form_birds_behaviour"
+            android:tag="Поведение"
             android:hint="Поведение" />
     </TableRow>
 
@@ -97,6 +109,7 @@
             style="@style/FieldInput.Spinner"
             android:layout_span="2"
             android:entries="@array/form_birds_death"
+            android:tag="Мъртъв_индивид_причини"
             android:hint="Мъртъв индивид (причини)" />
     </TableRow>
 </TableLayout>
