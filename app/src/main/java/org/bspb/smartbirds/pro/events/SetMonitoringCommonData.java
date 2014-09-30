@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Created by groupsky on 14-9-25.
  */
 public class SetMonitoringCommonData {
-    HashMap<String, String> data;
+    public HashMap<String, String> data;
 
     public SetMonitoringCommonData(HashMap<String, String> data) {
         this.data = data;

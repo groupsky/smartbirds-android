@@ -17,6 +17,7 @@ import org.androidannotations.annotations.EService;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
@@ -48,7 +49,6 @@ public class DataService extends Service {
     @Bean
     EEventBus bus;
 
-    HashMap<String, String> commonData;
     String monitoringName;
     File monitoringDir;
 
@@ -81,7 +81,6 @@ public class DataService extends Service {
     public void onEvent(StartMonitoringEvent event) {
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
-        commonData = new HashMap<String, String>();
         monitoringName = String.format("%s-%s", DATE_FORMATTER.format(new Date()), getRandomNode());
         if ((monitoringDir = createMonitoringDir()) != null) {
             bus.postSticky(new MonitoringStartedEvent());
@@ -92,10 +91,10 @@ public class DataService extends Service {
     }
 
     private File createMonitoringDir() {
-        File file = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), monitoringName+"-wip");
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), monitoringName + "-wip");
         if (!file.mkdirs()) {
             Log.w(TAG, String.format("Cannot create %s", file));
-            file = new File(getFilesDir(), monitoringName+"-wip");
+            file = new File(getFilesDir(), monitoringName + "-wip");
             if (!file.mkdirs()) {
                 Log.e(TAG, String.format("Cannot create %s", file));
                 return null;
@@ -114,13 +113,10 @@ public class DataService extends Service {
     public void onEvent(CancelMonitoringEvent event) {
         Log.d(TAG, "onCancelMonitoringEvent...");
         Toast.makeText(this, "Cancel monitoring", Toast.LENGTH_SHORT).show();
-        commonData = null;
     }
 
     public void onEvent(SetMonitoringCommonData event) {
         Log.d(TAG, "onSetMonitoringCommonData");
-        commonData.clear();
-        commonData.putAll(event.getData());
 
         File file = new File(monitoringDir, "common.csv");
         FileOutputStream fos = null;
@@ -129,8 +125,8 @@ public class DataService extends Service {
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).entryConverter(new DefaultCSVEntryConverter()).build();
 
-            csvWriter.write(commonData.keySet().toArray(new String[]{}));
-            csvWriter.write(commonData.values().toArray(new String[]{}));
+            csvWriter.write(event.data.keySet().toArray(new String[]{}));
+            csvWriter.write(event.data.values().toArray(new String[]{}));
 
             csvWriter.flush();
             csvWriter.close();
@@ -146,4 +142,26 @@ public class DataService extends Service {
         UploadService_.intent(this).upload(monitoringDir.getAbsolutePath()).start();
     }
 
+    public void onEvent(EntrySubmitted event) {
+        Log.d(TAG, "onEntrySubmitted");
+
+        File file = new File(monitoringDir, "entries.csv");
+        boolean exists = file.exists();
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file, true);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).entryConverter(new DefaultCSVEntryConverter()).build();
+
+            if (!exists)
+                csvWriter.write(event.data.keySet().toArray(new String[]{}));
+            csvWriter.write(event.data.values().toArray(new String[]{}));
+
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

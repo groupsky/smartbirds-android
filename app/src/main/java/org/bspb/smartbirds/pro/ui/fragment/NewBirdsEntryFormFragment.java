@@ -19,6 +19,10 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
+import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
+import org.bspb.smartbirds.pro.ui.utils.FormUtils;
+
+import java.util.HashMap;
 
 
 @EFragment(R.layout.fragment_monitoring_form_birds)
@@ -44,7 +48,8 @@ public class NewBirdsEntryFormFragment extends Fragment {
 
     @OptionsItem(R.id.action_submit)
     void onSubmitClicked(MenuItem item) {
-        eventBus.post(new EntrySubmitted());
+        HashMap<String, String> data = FormUtils.traverseForm(getView()).serialize();
+        eventBus.post(new EntrySubmitted(data));
     }
 
 }
