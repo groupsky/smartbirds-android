@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <include layout="@layout/fragment_monitoring_form_new_birds_entry" />
@@ -15,6 +15,15 @@
         <View style="@style/FieldSeparator" />
 
         <include layout="@layout/fragment_monitoring_form_new_birds_nest" />
+
+        <View style="@style/FieldSeparator" />
+
+        <EditText
+            style="@style/FieldInput.Memo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Бележки"
+            android:tag="Бележки_вид" />
 
     </LinearLayout>
 </ScrollView>
