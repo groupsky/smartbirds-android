@@ -91,7 +91,7 @@ public class DataService extends Service {
     }
 
     private File createMonitoringDir() {
-        File file = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), monitoringName + "-wip");
+        File file = new File(getExternalFilesDir(null), monitoringName + "-wip");
         if (!file.mkdirs()) {
             Log.w(TAG, String.format("Cannot create %s", file));
             file = new File(getFilesDir(), monitoringName + "-wip");
