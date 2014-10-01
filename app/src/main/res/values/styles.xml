@@ -33,15 +33,16 @@
 
     <style name="FieldInput.Text" parent="FieldInput">
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
-
+        <item name="android:inputType">text</item>
     </style>
 
     <style name="FieldInput.Number" parent="FieldInput.Text">
+        <item name="android:inputType">number</item>
     </style>
 
     <style name="FieldInput.Memo" parent="FieldInput.Text">
         <item name="android:singleLine">false</item>
-        <item name="android:inputType">textMultiLine</item>
+        <item name="android:inputType">textMultiLine|textLongMessage</item>
         <item name="android:scrollbars">none</item>
         <item name="android:gravity">top|left</item>
 

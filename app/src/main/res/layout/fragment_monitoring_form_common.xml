@@ -46,6 +46,7 @@
                 <AutoCompleteTextView
                     style="@style/FieldInput.Text"
                     android:hint="Място"
+                    android:inputType="text|textCapWords|textPostalAddress"
                     android:tag="Място" />
 
                 <TextView
@@ -70,9 +71,11 @@
         </TableLayout>
 
         <MultiAutoCompleteTextView
+            android:id="@+id/observers"
             style="@style/FieldInput.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text|textCapWords|textPersonName"
             android:hint="Наблюдатели"
             android:tag="Наблюдатели" />
 
