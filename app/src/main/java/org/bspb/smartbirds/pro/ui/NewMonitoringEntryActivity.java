@@ -41,7 +41,7 @@ public class NewMonitoringEntryActivity extends Activity {
     void createFragment() {
         if (getFragmentManager().findFragmentById(R.id.container) == null)
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, NewBirdsEntryFormFragment_.builder().build())
+                    .add(R.id.container, NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).build())
                     .commit();
     }
 

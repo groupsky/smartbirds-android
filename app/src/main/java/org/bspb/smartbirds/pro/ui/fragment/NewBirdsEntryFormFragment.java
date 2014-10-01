@@ -34,7 +34,7 @@ public class NewBirdsEntryFormFragment extends Fragment {
 
     @FragmentArg(ARG_LAT)
     double lat;
-    @FragmentArg(ARG_LAT)
+    @FragmentArg(ARG_LON)
     double lon;
 
     @Bean
@@ -49,6 +49,8 @@ public class NewBirdsEntryFormFragment extends Fragment {
     @OptionsItem(R.id.action_submit)
     void onSubmitClicked(MenuItem item) {
         HashMap<String, String> data = FormUtils.traverseForm(getView()).serialize();
+        data.put("latitude", Double.toString(lat));
+        data.put("longitude", Double.toString(lon));
         eventBus.post(new EntrySubmitted(data));
     }
 
