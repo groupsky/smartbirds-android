@@ -51,6 +51,7 @@ public class DataService extends Service {
 
     String monitoringName;
     File monitoringDir;
+    HashMap<String, String> commonData;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -117,22 +118,7 @@ public class DataService extends Service {
 
     public void onEvent(SetMonitoringCommonData event) {
         Log.d(TAG, "onSetMonitoringCommonData");
-
-        File file = new File(monitoringDir, "common.csv");
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-            OutputStreamWriter osw = new OutputStreamWriter(fos);
-            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).entryConverter(new DefaultCSVEntryConverter()).build();
-
-            csvWriter.write(event.data.keySet().toArray(new String[]{}));
-            csvWriter.write(event.data.values().toArray(new String[]{}));
-
-            csvWriter.flush();
-            csvWriter.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
+        commonData = event.data;
     }
 
     public void onEvent(FinishMonitoringEvent event) {
@@ -145,6 +131,10 @@ public class DataService extends Service {
     public void onEvent(EntrySubmitted event) {
         Log.d(TAG, "onEntrySubmitted");
 
+        HashMap<String, String> data = new HashMap<String, String>();
+        data.putAll(commonData);
+        data.putAll(event.data);
+
         File file = new File(monitoringDir, "entries.csv");
         boolean exists = file.exists();
         FileOutputStream fos = null;
@@ -154,8 +144,8 @@ public class DataService extends Service {
             CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).entryConverter(new DefaultCSVEntryConverter()).build();
 
             if (!exists)
-                csvWriter.write(event.data.keySet().toArray(new String[]{}));
-            csvWriter.write(event.data.values().toArray(new String[]{}));
+                csvWriter.write(data.keySet().toArray(new String[]{}));
+            csvWriter.write(data.values().toArray(new String[]{}));
 
             csvWriter.flush();
             csvWriter.close();
