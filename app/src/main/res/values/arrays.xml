@@ -118,634 +118,634 @@
     </string-array>
 
     <string-array name="form_birds_name">
-        <item>Larus cachinnans|Каспийска чайка</item>
-        <item>Alectoris sp.|Неопределен кеклик</item>
-        <item>Accipiter brevipes|Късопръст ястреб</item>
-        <item>Accipiter gentilis|Голям ястреб</item>
-        <item>Accipiter nisus|Малък ястреб</item>
-        <item>Acrocephalus agricola|Индийско шаварче</item>
-        <item>Acrocephalus arundinaceus|Тръстиково шаварче</item>
-        <item>Acrocephalus dumetorum|Градинско шаварче </item>
-        <item>Acrocephalus melanopogon|Мустакато шаварче</item>
-        <item>Acrocephalus paludicola|Водно шаварче</item>
-        <item>Acrocephalus palustris|Мочурно шаварче</item>
-        <item>Acrocephalus schoenobaenus|Крайбрежно шаварче</item>
-        <item>Acrocephalus scirpaceus|Блатно шаварче</item>
-        <item>Actitis hypoleucos|Късокрил кюкавец</item>
-        <item>Actitis macularia|Петнист кюкавец</item>
-        <item>Aegithalos caudatus|Дългоопашат синигер</item>
-        <item>Aegolius funereus|Пернатонога кукумявка</item>
-        <item>Aegypius monachus|Черен лешояд</item>
-        <item>Aix galericulata|Мандаринка</item>
-        <item>Aix sponsa|Каролинка</item>
-        <item>Alauda arvensis|Полска чучулига</item>
-        <item>Alca torda|Дебелоклюна гагарка</item>
-        <item>Alcedo atthis|Земеродно рибарче</item>
-        <item>Alectoris barbara|Берберски кеклик</item>
-        <item>Alectoris chukar|Тракийски кеклик</item>
-        <item>Alectoris graeca|Планински кеклик</item>
-        <item>Alectoris rufa|Червен кеклик</item>
-        <item>Alle alle|Малка гагарка</item>
-        <item>Alopochen aegyptiacus|Египетска гъска</item>
-        <item>Amandava amandava|</item>
-        <item>Ammomanes deserti|Пустинна чучулига</item>
-        <item>Ammoperdix griseogularis|Персийска пустинна яребица</item>
-        <item>Anas acuta|Шилоопшата патица</item>
-        <item>Anas carolinensis|Каролинско зимно бърне</item>
-        <item>Anas clypeata|Клопач</item>
-        <item>Anas crecca|Зимно бърне</item>
-        <item>Anas discors|Синьокрило бърне</item>
-        <item>Anas falcata|Сърпокрила патица</item>
-        <item>Anas penelope|Фиш</item>
-        <item>Anas platyrhynchos|Зеленоглава патица</item>
-        <item>Anas querquedula|Лятно бърне</item>
-        <item>Anas strepera|Сива патица</item>
-        <item>Anser albifrons|Голяма белочела гъска</item>
-        <item>Anser anser|Сива гъска</item>
-        <item>Anser brachyrhynchus|Късоклюна гъска</item>
-        <item>Anser caerulescens|Снежна гъска</item>
-        <item>Anser erythropus|Малка белочела гъска</item>
-        <item>Anser fabalis|Посевна гъска</item>
-        <item>Anser serrirostis|Тундрова посевна гъска</item>
-        <item>Anser spp.|Неопределени гъски</item>
-        <item>Anthropoides virgo|Момин жерав</item>
-        <item>Anthus berthelotii|Канарска бъбрица</item>
-        <item>Anthus campestris|Полска бъбрица</item>
-        <item>Anthus cervinus|Червеногуша бъбрица</item>
-        <item>Anthus gustavi|Сибирска бъбрица</item>
-        <item>Anthus hodgsoni|Зелена бъбрица</item>
-        <item>Anthus novaeseelandiae|Дългоопашата бъбрица</item>
-        <item>Anthus petrosus|Скална бъбрица</item>
-        <item>Anthus pratensis|Ливадна бъбрица</item>
-        <item>Anthus richardi|Степна бъбрица</item>
-        <item>Anthus spinoletta|Водна бъбрица</item>
-        <item>Anthus trivialis|Горска бъбрица</item>
-        <item>Apus affinis|Малък бързолет</item>
-        <item>Apus apus|Черен бързолет</item>
-        <item>Apus caffer|Белокръст бързолет</item>
-        <item>Apus melba|Алпийски бързолет</item>
-        <item>Apus pallidus|Блед бързолет</item>
-        <item>Apus unicolor|Едноцветен бързолет</item>
-        <item>Aquila adalberti|Испански орел</item>
-        <item>Aquila chrysaetos|Скален орел</item>
-        <item>Aquila clanga|Голям креслив орел</item>
-        <item>Aquila heliaca|Царски орел</item>
-        <item>Aquila nipalensis|Степен орел</item>
-        <item>Aquila pomarina|Малък креслив орел</item>
-        <item>Aquila rapax|Африкански степен орел</item>
-        <item>Ardea cinerea|Сива чапла</item>
-        <item>Ardea purpurea|Ръждива чапла</item>
-        <item>Ardeola ralloides|Гривеста чапла</item>
-        <item>Arenaria interpres|Камъкообръщач</item>
-        <item>Asio flammeus|Блатна сова</item>
-        <item>Asio otus|Горска ушата сова</item>
-        <item>Athene noctua|Домашна кукумявка</item>
-        <item>Aythya collaris|Пръстенчатоклюна потапница</item>
-        <item>Aythya ferina|Кафявоглава потапница</item>
-        <item>Aythya fuligula|Качулата потапница</item>
-        <item>Aythya marila|Планинска потапница</item>
-        <item>Aythya nyroca|Белоока потапница</item>
-        <item>Bombycilla garrulus|Копринарка</item>
-        <item>Bonasa bonasia|Лещарка</item>
-        <item>Botaurus lentiginosus|</item>
-        <item>Botaurus stellaris|Голям воден бик</item>
-        <item>Branta bernicla|Черна гъска</item>
-        <item>Branta canadensis|Канадска гъска</item>
-        <item>Branta leucopsis|Белобуза гъска</item>
-        <item>Branta ruficollis|Червеногуша гъска</item>
-        <item>Bubo bubo|Бухал</item>
-        <item>Bubulcus ibis|Биволска чапла</item>
-        <item>Bucanetes githagineus|</item>
-        <item>Bucanetes mongolicus|</item>
-        <item>Bucephala clangula|Звънарка</item>
-        <item>Bucephala islandica|</item>
-        <item>Bulweria bulwerii|</item>
-        <item>Burhinus oedicnemus|Турилик</item>
-        <item>Buteo buteo|Обикновен мишелов</item>
-        <item>Buteo lagopus|Северен мишелов</item>
-        <item>Buteo rufinus|Белоопашат мишелов</item>
-        <item>Butorides virescens|</item>
-        <item>Calandrella brachydactyla|Късопръста чучулига</item>
-        <item>Calandrella rufescens|Сива чучулига</item>
-        <item>Calcarius lapponicus|Лапландска овесарка</item>
-        <item>Calidris alba|Трипръст брегобегач</item>
-        <item>Calidris alpina|Тъмногръд брегобегач</item>
-        <item>Calidris canutus|Голям брегобегач</item>
-        <item>Calidris ferruginea|Кривоклюн брегобегач</item>
-        <item>Calidris fuscicollis|Белокръст брегобегач</item>
-        <item>Calidris maritima|Морски брегобегач</item>
-        <item>Calidris mauri|Западен брегобегач</item>
-        <item>Calidris melanotos |Цветногръд брегобегач</item>
-        <item>Calidris minuta|Малък брегобегач</item>
-        <item>Calidris pusilla|Ципестопръст брегобегач</item>
-        <item>Calidris temminckii|Сив брегобегач</item>
-        <item>Calonectris diomedea|Жълтоклюн буревестник </item>
-        <item>Caprimulgus europaeus|Козодой</item>
-        <item>Caprimulgus ruficollis|</item>
-        <item>Carduelis cannabina|Обикновено конопарче</item>
-        <item>Carduelis carduelis|Щиглец</item>
-        <item>Carduelis chloris|Зеленика</item>
-        <item>Carduelis flammea|Брезова скатия</item>
-        <item>Carduelis flavirostris|Жълтоклюно конопарче</item>
-        <item>Carduelis hornemanni|Полярна скатия</item>
-        <item>Carduelis spinus|Елшова скатия</item>
-        <item>Carpodacus erythrinus|Червена чинка</item>
-        <item>Carpodacus rubicilla|</item>
-        <item>Carpospiza brachydactyla|</item>
-        <item>Cepphus grylle|Обикновен чистик</item>
-        <item>Cercotrichas galactotes|Трънковче</item>
-        <item>Certhia brachydactyla|Градинска дърволазка</item>
-        <item>Certhia familiaris|Горска дърволазка</item>
-        <item>Ceryle rudis|</item>
-        <item>Cettia cetti|Свилено шаварче</item>
-        <item>Charadrius alexandrinus|Морски дъждосвирец</item>
-        <item>Charadrius asiaticus|Каспийски дъждосвирец</item>
-        <item>Charadrius dubius|Речен дъждосвирец</item>
-        <item>Charadrius hiaticula|Пясъчен дъждосвирец</item>
-        <item>Charadrius leschenaultii|Дебелоклюн дъждосвирец</item>
-        <item>Charadrius morinellus|Планински дъждосвирец</item>
-        <item>Chersophilus duponti|Кривоклюна чучулига</item>
-        <item>Chettusia gregaria|Степна калугерица</item>
-        <item>Chettusia leucura|Белоопашата калугерица</item>
-        <item>Chlamydotis undulata|</item>
-        <item>Chlidonias hybridus|Белобуза рибарка</item>
-        <item>Chlidonias leucopterus|Белокрила рибарка</item>
-        <item>Chlidonias niger|Черна рибарка</item>
-        <item>Chrysolophus pictus|</item>
-        <item>Ciconia ciconia|Бял щъркел</item>
-        <item>Ciconia nigra|Черен щъркел</item>
-        <item>Cinclus cinclus|Воден кос</item>
-        <item>Circaetus gallicus|Орел змияр</item>
-        <item>Circus aeruginosus|Тръстиков блатар</item>
-        <item>Circus cyaneus|Полски блатар</item>
-        <item>Circus macrourus|Степен блатар</item>
-        <item>Circus pygargus|Ливаден блатар</item>
-        <item>Cisticola juncidis|Пъстроопашато шаварче</item>
-        <item>Clamator glandarius|Качулата кукувица</item>
-        <item>Clangula hyemalis|Ледена потапница</item>
-        <item>Coccothraustes coccothraustes|Черешарка</item>
-        <item>Coccyzus americanus|</item>
-        <item>Columba bollii|</item>
-        <item>Columba junoniae|</item>
-        <item>Columba livia|Полудив гълъб</item>
-        <item>Columba oenas|Гълъб хралупар</item>
-        <item>Columba palumbus|Гривяк</item>
-        <item>Columba trocaz|</item>
-        <item>Coracias garrulus|Синявица</item>
-        <item>Corvus corax|Гарван гробар</item>
-        <item>Corvus corone|Сива врана</item>
-        <item>Corvus frugilegus|Посевна врана</item>
-        <item>Corvus monedula|Чавка</item>
-        <item>Coturnix coturnix|Пъдпъдък</item>
-        <item>Crex crex|Ливаден дърдавец</item>
-        <item>Cuculus canorus|Обикновена кукувица</item>
-        <item>Cuculus saturatus|</item>
-        <item>Cursorius cursor|</item>
-        <item>Cyanopica cyana|</item>
-        <item>Cygnus bewickii|Тундров лебед</item>
-        <item>Cygnus cygnus|Поен лебед</item>
-        <item>Cygnus olor|Ням лебед</item>
-        <item>Delichon urbica|Градска лястовица</item>
-        <item>Dendrocopos leucotos|Белогърб кълвач</item>
-        <item>Dendrocopos major|Голям пъстър кълвач</item>
-        <item>Dendrocopos medius|Среден пъстър кълвач</item>
-        <item>Dendrocopos minor|Малък пъстър кълвач</item>
-        <item>Dendrocopos syriacus|Сирийски пъстър кълвач</item>
-        <item>Dryocopus martius|Черен кълвач</item>
-        <item>Egretta alba|Голяма бяла чапла</item>
-        <item>Egretta garzetta|Малка бяла чапла</item>
-        <item>Egretta gularis|Рифова чапла</item>
-        <item>Elanus caeruleus|Пепелява каничка</item>
-        <item>Emberiza aureola|</item>
-        <item>Emberiza bruniceps|</item>
-        <item>Emberiza buchanani|</item>
-        <item>Emberiza caesia|Пепелява овесарка</item>
-        <item>Emberiza cia|Сивоглава овесарка</item>
-        <item>Emberiza cineracea|</item>
-        <item>Emberiza cirlus|Зеленогуша овесарка</item>
-        <item>Emberiza citrinella|Жълта овесарка</item>
-        <item>Emberiza hortulana|Градинска овесарка</item>
-        <item>Emberiza leucocephalos|Пепелява овесарка</item>
-        <item>Emberiza melanocephala|Черноглава овесарка</item>
-        <item>Emberiza pusilla|Малка овесарка</item>
-        <item>Emberiza rustica|Белогуша овесарка</item>
-        <item>Emberiza schoeniclus|Тръстикова овесарка</item>
-        <item>Eremophila alpestris|Ушата чучулига</item>
-        <item>Erithacus rubecula|Червеногръдка</item>
-        <item>Estrilda astrild|</item>
-        <item>Falco biarmicus|Далматински сокол</item>
-        <item>Falco cherrug|Ловен сокол</item>
-        <item>Falco columbarius|Малък сокол</item>
-        <item>Falco eleonorae|Средиземноморски сокол</item>
-        <item>Falco naumanni|Белошипа ветрушка</item>
-        <item>Falco pelegrinoides|Ръждивоглав сокол</item>
-        <item>Falco peregrinus|Сокол скитник</item>
-        <item>Falco rusticolus|Северен сокол</item>
-        <item>Falco subbuteo|Орко</item>
-        <item>Falco tinnunculus|Черношипа ветрушка</item>
-        <item>Falco vespertinus|Вечерна ветрушка</item>
-        <item>Ficedula albicollis|Беловрата мухоловка</item>
-        <item>Ficedula hypoleuca|Жалобна мухоловка</item>
-        <item>Ficedula parva|Червеногуша мухоловка</item>
-        <item>Ficedula semitorquata|Полубеловрата мухоловка</item>
-        <item>Francolinus francolinus|</item>
-        <item>Fratercula arctica|Тъпоклюна кайра</item>
-        <item>Fringilla coelebs|Обикновена чинка</item>
-        <item>Fringilla montifringilla|Планинска чинка</item>
-        <item>Fringilla teydea|</item>
-        <item>Fulica atra|Лиска</item>
-        <item>Fulica cristata|</item>
-        <item>Fulmarus glacialis|Фулмар</item>
-        <item>Galerida cristata|Качулата чучулига</item>
-        <item>Galerida malabarica|</item>
-        <item>Galerida theklae|Текла</item>
-        <item>Gallinago gallinago|Средна бекасина</item>
-        <item>Gallinago media|Голяма бекасина</item>
-        <item>Gallinago stenura|</item>
-        <item>Gallinula chloropus|Зеленоножка</item>
-        <item>Garrulus glandarius|Сойка</item>
-        <item>Gavia adamsii|Жълтоклюн гмуркач</item>
-        <item>Gavia arctica|Черногуш гмуркач</item>
-        <item>Gavia immer|Черноклюн гмуркач</item>
-        <item>Gavia stellata|Червеногуш гмуркач</item>
-        <item>Gelochelidon nilotica|Дебелоклюна рибарка</item>
-        <item>Geronticus eremita|Плешив ибис</item>
-        <item>Glareola nordmanni|Чернокрил огърличник</item>
-        <item>Glareola pratincola|Кафявокрил огърличник</item>
-        <item>Glaucidium passerinum|Врабчова кукумявка</item>
-        <item>Grus grus|Сив жерав</item>
-        <item>Gypaetus barbatus|Брадат лешояд</item>
-        <item>Gyps fulvus|Белоглав лешояд</item>
-        <item>Haematopus moquini|</item>
-        <item>Haematopus ostralegus|Стридояд</item>
-        <item>Halcyon smyrnensis|Белогърдо земеродно рибарче</item>
-        <item>Haliaeetus albicilla|Морски орел</item>
-        <item>Hieraaetus fasciatus|Ястребов орел</item>
-        <item>Hieraaetus pennatus|Малък орел</item>
-        <item>Himantopus himantopus|Кокилобегач</item>
-        <item>Iduna caligata|Малък присмехулник</item>
-        <item>Hippolais icterina|Градински присмехулник</item>
-        <item>Hippolais languida|Пустинен присмехулник</item>
-        <item>Hippolais olivetorum|Голям маслинов присмехулник</item>
-        <item>Hippolais pallida|Малък маслинов присмехулник</item>
-        <item>Hippolais polyglotta|Бъбрив присмехулник</item>
-        <item>Hirundo daurica|Червенокръста лястовица</item>
-        <item>Hirundo rustica|Селска лястовица</item>
-        <item>Histrionicus histrionicus|</item>
-        <item>Hoplopterus indicus|</item>
-        <item>Hoplopterus spinosus|Шипокрила калугерица</item>
-        <item>Hydrobates pelagicus|Европейска вълнолюбка</item>
-        <item>Irania gutturalis|</item>
-        <item>Ixobrychus minutus|Малък воден бик</item>
-        <item>Jynx torquilla|Въртошийка</item>
-        <item>Ketupa zeylonensis|</item>
-        <item>Lagopus lagopus|</item>
-        <item>Lagopus mutus|</item>
-        <item>Lanius collurio|Червеногърба сврачка</item>
-        <item>Lanius excubitor|Сива сврачка</item>
-        <item>Lanius minor|Черночела сврачка</item>
-        <item>Lanius nubicus|Белочела сврачка</item>
-        <item>Lanius senator|Червеноглава сврачка</item>
-        <item>Larus argentatus|Сребриста чайка</item>
-        <item>Larus armenicus|Арменска чайка</item>
-        <item>Larus audouinii|Средиземноморската чайка</item>
-        <item>Larus michahellis|Жълтокрака чайка</item>
-        <item>Larus canus|Чайка буревестница</item>
-        <item>Larus delawarensis|Пръстенчатоклюна чайка</item>
-        <item>Larus fuscus|Малката черногърба чайка</item>
-        <item>Larus genei|Дългоклюна чайка</item>
-        <item>Larus glaucoides|Малка белокрила чайка</item>
-        <item>Larus hyperboreus|Голяма белокрила чайка</item>
-        <item>Larus ichthyaetus|Голяма черноглава чайка</item>
-        <item>Larus marinus|Голяма черногърба чайка</item>
-        <item>Larus melanocephalus|Малката черноглава чайка</item>
-        <item>Larus minutus|Малка чайка</item>
-        <item>Larus relictus|Реликтна чайка</item>
-        <item>Larus ridibundus|Речна чайка</item>
-        <item>Larus sabini|Вилоопашата чайка </item>
-        <item>Limicola falcinellus|Блатобегач</item>
-        <item>Limnodromus scolopaceus|Берингов вретенач</item>
-        <item>Limosa lapponica|Пъстроопашат крайбрежен бекас</item>
-        <item>Limosa limosa|Черноопашат крайбрежен бекас</item>
-        <item>Locustella fluviatilis|Речен цвъркач</item>
-        <item>Locustella lanceolata|</item>
-        <item>Locustella luscinioides|Тръстиков цвъркач</item>
-        <item>Locustella naevia|Полски цвъркач</item>
-        <item>Loxia curvirostra|Обикновена кръсточовка</item>
-        <item>Loxia leucoptera|Белокрила кръсточовка</item>
-        <item>Loxia pytyopsittacus|Дебелоклюна кръсточовка</item>
-        <item>Loxia scotica|</item>
-        <item>Lullula arborea|Горска чучулига</item>
-        <item>Luscinia calliope|</item>
-        <item>Luscinia luscinia|Северен славей</item>
-        <item>Luscinia megarhynchos|Южен славей</item>
-        <item>Luscinia svecica|Синьогушка</item>
-        <item>Lymnocryptes minimus|Малка бикасина</item>
-        <item>Marmaronetta angustirostris|Мраморна патица</item>
-        <item>Melanitta fusca|Кадифена потапница</item>
-        <item>Melanitta nigra|Траурна потапница</item>
-        <item>Melanocorypha bimaculata|</item>
-        <item>Melanocorypha calandra|Дебелоклюна чучулига</item>
-        <item>Melanocorypha leucoptera|Белокрила чучулига</item>
-        <item>Melanocorypha yeltoniensis|Черна чучулига</item>
-        <item>Meleagris gallopavo|</item>
-        <item>Mergus albellus|Малък нирец</item>
-        <item>Mergus cucullatus|</item>
-        <item>Mergus merganser|Голям нирец</item>
-        <item>Mergus serrator|Среден нирец</item>
-        <item>Merops apiaster|Обикновен пчелояд</item>
-        <item>Merops superciliosus|Зелен пчелояд</item>
-        <item>Miliaria calandra|Сива овесарка</item>
-        <item>Milvus migrans|Черна каня</item>
-        <item>Milvus milvus|Червена каня</item>
-        <item>Monticola saxatilis|Пъстър скален дрозд</item>
-        <item>Monticola solitarius|Син скален дрозд</item>
-        <item>Montifringilla nivalis|Снежно врабче</item>
-        <item>Morus bassanus|Бял рибояд</item>
-        <item>Motacilla alba|Бяла стърчиопашка</item>
-        <item>Motacilla cinerea|Планинска стърчиопашка</item>
-        <item>Motacilla citreola|Жълтоглава стърчиопашка</item>
-        <item>Motacilla finere|</item>
-        <item>Motacilla flava|Жълта стърчиопашка</item>
-        <item>Muscicapa daurrica|</item>
-        <item>Muscicapa striata|Сива мухоловка</item>
-        <item>Myiopsitta monachus|</item>
-        <item>Neophron percnopterus|Египетски лешояд</item>
-        <item>Netta rufina|Червеноклюна потапница</item>
-        <item>Nucifraga caryocatactes|Сокерица</item>
-        <item>Numenius arquata|Голям свирец</item>
-        <item>Numenius phaeopus|Малък свирец</item>
-        <item>Numenius tenuirostris|Тънкоклюн свирец</item>
-        <item>Nyctea scandiaca|</item>
-        <item>Nycticorax nycticorax|Нощна чапла</item>
-        <item>Oceanodroma castro|</item>
-        <item>Oceanodroma leucorhoa|</item>
-        <item>Oenanthe cypriaca|</item>
-        <item>Oenanthe deserti|</item>
-        <item>Oenanthe finschii|</item>
-        <item>Oenanthe hispanica|Испанско каменарче</item>
-        <item>Oenanthe isabellina|Ориенталско каменарче</item>
-        <item>Oenanthe leucopyga|</item>
-        <item>Oenanthe leucura|</item>
-        <item>Oenanthe oenanthe|Сиво каменарче</item>
-        <item>Oenanthe pleschanka|Черногърбо каменарче</item>
-        <item>Oenanthe xanthoprymna|</item>
-        <item>Oriolus oriolus|Авлига</item>
-        <item>Otis tarda|Голяма дропла</item>
-        <item>Otus brucei|</item>
-        <item>Otus scops|Чухал</item>
-        <item>Oxyura jamaicensis|</item>
-        <item>Oxyura leucocephala|Тръноопашата потапница</item>
-        <item>Pagophila eburnea|</item>
-        <item>Pandion haliaetus|Орел рибар</item>
-        <item>Panurus biarmicus|Мустакато тръстикарче</item>
-        <item>Parus ater|Черен синигер</item>
-        <item>Parus caeruleus|Син синигер</item>
-        <item>Parus cinctus|</item>
-        <item>Parus cristatus|Качулат синигер</item>
-        <item>Parus cyanus|</item>
-        <item>Parus lugubris|Жалобен синигер</item>
-        <item>Parus major|Голям синигер</item>
-        <item>Parus montanus|Матовоглав синигер</item>
-        <item>Parus palustris|Лъскавоглав синигер</item>
-        <item>Passer domesticus|Домашно врабче</item>
-        <item>Passer hispaniolensis|Испанско врабче</item>
-        <item>Passer moabiticus|</item>
-        <item>Passer montanus|Полско врабче</item>
-        <item>Pelagodroma marina|</item>
-        <item>Pelecanus crispus|Къдроглав пеликан</item>
-        <item>Pelecanus onocrotalus|Розов пеликан</item>
-        <item>Perdix hodgsoniae|</item>
-        <item>Perdix perdix|Яребица</item>
-        <item>Perisoreus infaustus|</item>
-        <item>Pernis apivorus|Осояд</item>
-        <item>Petronia petronia|Скално врабче</item>
-        <item>Petronia xanthocollis|</item>
-        <item>Phalacrocorax aristotelis|Качулат корморан</item>
-        <item>Phalacrocorax carbo|Голям корморан</item>
-        <item>Phalacrocorax pygmaeus|Малък корморан</item>
-        <item>Phalaropus fulicarius|Плоскоклюн листоног</item>
-        <item>Phalaropus lobatus|Тънкоклюн листоног</item>
-        <item>Phalaropus tricolor|</item>
-        <item>Phasianus colchicus|Фазан</item>
-        <item>Philomachus pugnax|Бойник</item>
-        <item>Phoenicopterus ruber|Розово фламинго</item>
-        <item>Phoenicurus erythrogaster|</item>
-        <item>Phoenicurus ochruros|Домашна червеноопашка</item>
-        <item>Phoenicurus phoenicurus|Градинска червеноопашка</item>
-        <item>Phoenicurus torquata|</item>
-        <item>Phylloscopus orientalis|Източен планински певец</item>
-        <item>Phylloscopus borealis|Северен певец</item>
-        <item>Phylloscopus collybita|Елов певец</item>
-        <item>Phylloscopus inornatus|Жълтовежд певец</item>
-        <item>Phylloscopus lorenzii|</item>
-        <item>Phylloscopus neglectus|</item>
-        <item>Phylloscopus nitidus|</item>
-        <item>Phylloscopus proregulus|Кралчев певец</item>
-        <item>Phylloscopus sibilatrix|Буков певец</item>
-        <item>Phylloscopus sindianus|</item>
-        <item>Phylloscopus spp.|Неопределени певци</item>
-        <item>Phylloscopus trochiloides|Зеленикав певец</item>
-        <item>Phylloscopus trochilus|Брезов певец</item>
-        <item>Pica pica|Сврака</item>
-        <item>Picoides tridactylus|Трипръст кълвач</item>
-        <item>Picus canus|Сив кълвач</item>
-        <item>Picus viridis|Зелен кълвач</item>
-        <item>Pinicola enucleator|</item>
-        <item>Platalea leucorodia|Бяла лопатарка</item>
-        <item>Plectrophenax nivalis|Сежна овесарка</item>
-        <item>Plegadis falcinellus|Блестящ ибис</item>
-        <item>Pluvialis apricaria|Златиста булка</item>
-        <item>Pluvialis squatarola|Сребриста булка</item>
-        <item>Podiceps auritus|Ушат гмурец</item>
-        <item>Podiceps cristatus|Голям гмурец</item>
-        <item>Podiceps grisegena|Червеноврат гмурец</item>
-        <item>Podiceps nigricollis|Черноврат гмурец</item>
-        <item>Polysticta stelleri|</item>
-        <item>Porphyrio porphyrio|</item>
-        <item>Porzana parva|Средна пъструшка</item>
-        <item>Porzana porzana|Голяма пъструшка</item>
-        <item>Porzana pusilla|Малка пъструшка</item>
-        <item>Porzana spp.|Неопределена пъструшка</item>
-        <item>Prinia gracilis|</item>
-        <item>Prunella atrogularis|</item>
-        <item>Prunella collaris|Пъстрогуша завирушка</item>
-        <item>Prunella modularis|Сивогуша завирушка</item>
-        <item>Prunella montanella|</item>
-        <item>Prunella ocularis|</item>
-        <item>Pterocles alchata|</item>
-        <item>Pterocles orientalis|</item>
-        <item>Pterodroma feae|</item>
-        <item>Pterodroma madeira|</item>
-        <item>Pterodroma mollis|</item>
-        <item>Ptyonoprogne rupestris|Скална лястовица</item>
-        <item>Puffinus assimilis|</item>
-        <item>Puffinus gravis|</item>
-        <item>Puffinus griseus|</item>
-        <item>Puffinus mauretanicus|</item>
-        <item>Puffinus puffinus|Обикновен буревестник</item>
-        <item>Puffinus yelkouan|Средиземноморски буревестник</item>
-        <item>Pycnonotus barbatus|</item>
-        <item>Pycnonotus xanthopygos|</item>
-        <item>Pyrrhocorax graculus|Жълтоклюна гарга</item>
-        <item>Pyrrhocorax pyrrhocorax|Червеноклюна гарга</item>
-        <item>Pyrrhula murina|</item>
-        <item>Pyrrhula pyrrhula|Червенушка</item>
-        <item>Rallus aquaticus|Воден дърдавец</item>
-        <item>Recurvirostra avosetta|Саблеклюн</item>
-        <item>Regulus ignicapillus|Червеноглаво кралче</item>
-        <item>Regulus regulus|Жълтоглаво кралче</item>
-        <item>Regulus teneriffae|</item>
-        <item>Remiz pendulinus|Торбогнезден синигер</item>
-        <item>Rhodopechys sanguinea|</item>
-        <item>Rhodospiza obsoleta|</item>
-        <item>Rhodostethia rosea|</item>
-        <item>Riparia riparia|Брегова лястовица</item>
-        <item>Rissa tridactyla|Трипръста чайка</item>
-        <item>Saxicola dacotiae|</item>
-        <item>Saxicola maurus|Сибирско ливадарче</item>
-        <item>Saxicola rubetra|Ръждивогушо ливадарче</item>
-        <item>Saxicola torquata|Черногушо ливадарче</item>
-        <item>Scolopax rusticola|Горски бекас</item>
-        <item>Serinus canaria|</item>
-        <item>Serinus citrinella|</item>
-        <item>Serinus pusillus|</item>
-        <item>Serinus serinus|Диво канарче</item>
-        <item>Sitta europaea|Горска зидарка</item>
-        <item>Sitta krueperi|</item>
-        <item>Sitta neumayer|Скална зидарка</item>
-        <item>Sitta tephronota|</item>
-        <item>Sitta whiteheadi|</item>
-        <item>Somateria mollissima|Обикновена гага</item>
-        <item>Somateria spectabilis|</item>
-        <item>Stercorarius longicaudus|Дългоопашат морелетник</item>
-        <item>Stercorarius parasiticus|Остроопашат морелетник</item>
-        <item>Stercorarius pomarinus|Тъпоопашат морелетник</item>
-        <item>Stercorarius skua|Голям морелетник</item>
-        <item>Sterna albifrons|Белочела рибарка</item>
-        <item>Sterna bengalensis|</item>
-        <item>Sterna caspia|Каспийска рибарка</item>
-        <item>Sterna dougallii|</item>
-        <item>Sterna fuscata|</item>
-        <item>Sterna hirundo|Речна рибарка</item>
-        <item>Sterna paradisaea|</item>
-        <item>Sterna sandvicensis|Гривеста рибарка</item>
-        <item>Streptopelia decaocto|Гугутка</item>
-        <item>Streptopelia orientalis|</item>
-        <item>Streptopelia roseogrisea|</item>
-        <item>Streptopelia senegalensis|</item>
-        <item>Streptopelia turtur|Гургулица</item>
-        <item>Strix aluco|Горска улулица</item>
-        <item>Strix nebulosa|</item>
-        <item>Strix uralensis|Уралска улулица</item>
-        <item>Sturnus roseus|Розов скорец</item>
-        <item>Sturnus unicolor|</item>
-        <item>Sturnus vulgaris|Обикновен скорец</item>
-        <item>Surnia ulula|</item>
-        <item>Sylvia atricapilla|Голямо черноглаво коприварче</item>
-        <item>Sylvia borin|Градинско коприварче</item>
-        <item>Sylvia cantillans|Червеногушо коприварче</item>
-        <item>Sylvia communis|Голямо белогушо коприварче</item>
-        <item>Sylvia conspicillata|</item>
-        <item>Sylvia curruca|Малко белогушо коприварче</item>
-        <item>Sylvia hortensis|Орфеево коприварче</item>
-        <item>Sylvia melanocephala|Черноглаво коприварче</item>
-        <item>Sylvia melanothorax|</item>
-        <item>Sylvia mystacea|</item>
-        <item>Sylvia nana|Азиатско пустинно коприварче</item>
-        <item>Sylvia nisoria|Ястребогушо коприварче</item>
-        <item>Sylvia rueppelli|Черногушо коприварче</item>
-        <item>Sylvia sarda|</item>
-        <item>Sylvia undata|</item>
-        <item>Syrmaticus reevesii|Царски фазан</item>
-        <item>Syrrhaptes paradoxus|</item>
-        <item>Tachybaptus ruficollis|Малък гмурец</item>
-        <item>Tadorna ferruginea|Червен ангъч</item>
-        <item>Tadorna tadorna|Бял ангъч</item>
-        <item>Tarsiger cyanurus|Синьоопашка</item>
-        <item>Tetrao mlokosiewiczi|</item>
-        <item>Tetrao tetrix|Тетрев</item>
-        <item>Tetrao urogallus|Глухар</item>
-        <item>Tetraogallus caspius|</item>
-        <item>Tetraogallus caucasicus|</item>
-        <item>Tetrax tetrax|Стрепет</item>
-        <item>Tichodroma muraria|Скалолазка</item>
-        <item>Tringa erythropus|Голям червенокрак водобегач</item>
-        <item>Tringa flavipes|</item>
-        <item>Tringa glareola|Малък горски водобегач</item>
-        <item>Tringa nebularia|Голям зеленокрак водобегач</item>
-        <item>Tringa ochropus|Голям горски водобегач</item>
-        <item>Tringa stagnatilis|Малък зеленоног водобегач</item>
-        <item>Tringa totanus|Малък червенокрак водобегач</item>
-        <item>Troglodytes troglodytes|Орехче</item>
-        <item>Tryngites subruficollis|Ръждивогръд брегобегач</item>
-        <item>Turdus iliacus|Беловежд дрозд</item>
-        <item>Turdus merula|Кос</item>
-        <item>Turdus philomelos|Поен дрозд</item>
-        <item>Turdus pilaris|Хвойнов дрозд</item>
-        <item>Turdus ruficollis|</item>
-        <item>Turdus torquatus|Белогуш дрозд</item>
-        <item>Turdus viscivorus|Имелов дрозд</item>
-        <item>Turnix sylvatica|</item>
-        <item>Tyto alba|Забулена сова</item>
-        <item>Upupa epops|Папуняк</item>
-        <item>Uria aalge|Тънкоклюна кайра</item>
-        <item>Uria lomvia|</item>
-        <item>Vanellus vanellus|Обикновена калугерица</item>
-        <item>Xenus cinereus|Пепеляв брегобегач</item>
-        <item>Zoothera dauma|</item>
-        <item>Zoothera sibirica|</item>
-        <item>Anatinae|Патицоподобни</item>
-        <item>Aythya sp.|Неопределена потапница</item>
-        <item>Calidris sp.|Неопределен брегобегач</item>
-        <item>Charadrii sp.|Неопределен дъждосвирец</item>
-        <item>Cygnus sp.|Неопределен лебед</item>
-        <item>Galinago sp.|</item>
-        <item>Gallinago sp.|Неопределена бекасина</item>
-        <item>L.mich./cach.|Жълтокрака/Каспийска чайка</item>
-        <item>Larus sp.|Неопределена чайка</item>
-        <item>Mergus sp.|Неопределен нирец</item>
-        <item>Phalacrocorax sp.|Неопределен корморан</item>
-        <item>Podiceps sp.|Неопределен гмурец</item>
-        <item>Tringa sp.|Неопределен водобегач</item>
-        <item>Anser sp.|Неопределена гъска</item>
-        <item>Acrocephalus sp.|Неопределено шаварче</item>
-        <item>Anas sp.|Неопределена патица</item>
-        <item>Circus sp.|Неопределен блатар</item>
-        <item>Falco sp.|Неопределен сокол</item>
-        <item>Gavia sp.|Неопределен гмуркач</item>
-        <item>Sterna sp.|Неопределена рибарка</item>
-        <item>Anthus sp.|Неопределена бъбрица</item>
-        <item>Motacilla sp.|Неопределена стърчиопашка</item>
-        <item>Pelecanus sp.|Неопределен пеликан</item>
-        <item>Phylloscopus sp.|Неопределен певец</item>
-        <item>Dendrocopos sp.|Неопределен кълвач</item>
-        <item>Turdus sp.|Неопределен дрозд</item>
-        <item>Accipiter sp.|Неопределен ястреб</item>
-        <item>Apus sp.|Неопределен бързолет</item>
-        <item>Aquila sp.|Неопределен орел</item>
-        <item>Buteo sp.| Неопределен мишелов</item>
-        <item>Ciconia sp.|Неопределен щъркел</item>
-        <item>Corvus sp.|Неопределен гарван</item>
-        <item>Falconidae sp.|</item>
-        <item>Milvus sp.|Неопределена каня</item>
-        <item>Anas spp.|Неопределени патици</item>
-        <item>Columba spp.|Неопределен гълъб</item>
-        <item>Cygnus spp.|</item>
-        <item>Dendrocopos spp.|</item>
-        <item>Emberiza spp.|Неопределена овесарка</item>
-        <item>Motacilla spp.|</item>
-        <item>Numenius spp.|Неопределен свирец</item>
-        <item>Pelecanus spp.|</item>
-        <item>Sterna spp.|</item>
-        <item>Tringa spp.|</item>
-        <item>Accipitriformes/Falconiformes|Неопределена граблива птица (НГП)</item>
-        <item>Anseriformes/Podicipediformes etc.|Неопределена водолюбива птица (НВП)</item>
-        <item>Charadriiformes|Неопределен дъждосвирец (НД)</item>
-        <item>Columbiformes|Неопределен гълъб (НГБ)</item>
-        <item>Passeriformes|Неопределена пойна птица (НПП)</item>
-        <item>Ciconiiformes|Неопределена щъркелоподобна птица (НЩП)</item>
-        <item>Pelecaniformes|Неопределени пеликани и корморани (НПК)</item>
+        <item>Larus cachinnans | Каспийска чайка</item>
+        <item>Alectoris sp. | Неопределен кеклик</item>
+        <item>Accipiter brevipes | Късопръст ястреб</item>
+        <item>Accipiter gentilis | Голям ястреб</item>
+        <item>Accipiter nisus | Малък ястреб</item>
+        <item>Acrocephalus agricola | Индийско шаварче</item>
+        <item>Acrocephalus arundinaceus | Тръстиково шаварче</item>
+        <item>Acrocephalus dumetorum | Градинско шаварче </item>
+        <item>Acrocephalus melanopogon | Мустакато шаварче</item>
+        <item>Acrocephalus paludicola | Водно шаварче</item>
+        <item>Acrocephalus palustris | Мочурно шаварче</item>
+        <item>Acrocephalus schoenobaenus | Крайбрежно шаварче</item>
+        <item>Acrocephalus scirpaceus | Блатно шаварче</item>
+        <item>Actitis hypoleucos | Късокрил кюкавец</item>
+        <item>Actitis macularia | Петнист кюкавец</item>
+        <item>Aegithalos caudatus | Дългоопашат синигер</item>
+        <item>Aegolius funereus | Пернатонога кукумявка</item>
+        <item>Aegypius monachus | Черен лешояд</item>
+        <item>Aix galericulata | Мандаринка</item>
+        <item>Aix sponsa | Каролинка</item>
+        <item>Alauda arvensis | Полска чучулига</item>
+        <item>Alca torda | Дебелоклюна гагарка</item>
+        <item>Alcedo atthis | Земеродно рибарче</item>
+        <item>Alectoris barbara | Берберски кеклик</item>
+        <item>Alectoris chukar | Тракийски кеклик</item>
+        <item>Alectoris graeca | Планински кеклик</item>
+        <item>Alectoris rufa | Червен кеклик</item>
+        <item>Alle alle | Малка гагарка</item>
+        <item>Alopochen aegyptiacus | Египетска гъска</item>
+        <item>Amandava amandava | </item>
+        <item>Ammomanes deserti | Пустинна чучулига</item>
+        <item>Ammoperdix griseogularis | Персийска пустинна яребица</item>
+        <item>Anas acuta | Шилоопшата патица</item>
+        <item>Anas carolinensis | Каролинско зимно бърне</item>
+        <item>Anas clypeata | Клопач</item>
+        <item>Anas crecca | Зимно бърне</item>
+        <item>Anas discors | Синьокрило бърне</item>
+        <item>Anas falcata | Сърпокрила патица</item>
+        <item>Anas penelope | Фиш</item>
+        <item>Anas platyrhynchos | Зеленоглава патица</item>
+        <item>Anas querquedula | Лятно бърне</item>
+        <item>Anas strepera | Сива патица</item>
+        <item>Anser albifrons | Голяма белочела гъска</item>
+        <item>Anser anser | Сива гъска</item>
+        <item>Anser brachyrhynchus | Късоклюна гъска</item>
+        <item>Anser caerulescens | Снежна гъска</item>
+        <item>Anser erythropus | Малка белочела гъска</item>
+        <item>Anser fabalis | Посевна гъска</item>
+        <item>Anser serrirostis | Тундрова посевна гъска</item>
+        <item>Anser spp. | Неопределени гъски</item>
+        <item>Anthropoides virgo | Момин жерав</item>
+        <item>Anthus berthelotii | Канарска бъбрица</item>
+        <item>Anthus campestris | Полска бъбрица</item>
+        <item>Anthus cervinus | Червеногуша бъбрица</item>
+        <item>Anthus gustavi | Сибирска бъбрица</item>
+        <item>Anthus hodgsoni | Зелена бъбрица</item>
+        <item>Anthus novaeseelandiae | Дългоопашата бъбрица</item>
+        <item>Anthus petrosus | Скална бъбрица</item>
+        <item>Anthus pratensis | Ливадна бъбрица</item>
+        <item>Anthus richardi | Степна бъбрица</item>
+        <item>Anthus spinoletta | Водна бъбрица</item>
+        <item>Anthus trivialis | Горска бъбрица</item>
+        <item>Apus affinis | Малък бързолет</item>
+        <item>Apus apus | Черен бързолет</item>
+        <item>Apus caffer | Белокръст бързолет</item>
+        <item>Apus melba | Алпийски бързолет</item>
+        <item>Apus pallidus | Блед бързолет</item>
+        <item>Apus unicolor | Едноцветен бързолет</item>
+        <item>Aquila adalberti | Испански орел</item>
+        <item>Aquila chrysaetos | Скален орел</item>
+        <item>Aquila clanga | Голям креслив орел</item>
+        <item>Aquila heliaca | Царски орел</item>
+        <item>Aquila nipalensis | Степен орел</item>
+        <item>Aquila pomarina | Малък креслив орел</item>
+        <item>Aquila rapax | Африкански степен орел</item>
+        <item>Ardea cinerea | Сива чапла</item>
+        <item>Ardea purpurea | Ръждива чапла</item>
+        <item>Ardeola ralloides | Гривеста чапла</item>
+        <item>Arenaria interpres | Камъкообръщач</item>
+        <item>Asio flammeus | Блатна сова</item>
+        <item>Asio otus | Горска ушата сова</item>
+        <item>Athene noctua | Домашна кукумявка</item>
+        <item>Aythya collaris | Пръстенчатоклюна потапница</item>
+        <item>Aythya ferina | Кафявоглава потапница</item>
+        <item>Aythya fuligula | Качулата потапница</item>
+        <item>Aythya marila | Планинска потапница</item>
+        <item>Aythya nyroca | Белоока потапница</item>
+        <item>Bombycilla garrulus | Копринарка</item>
+        <item>Bonasa bonasia | Лещарка</item>
+        <item>Botaurus lentiginosus | </item>
+        <item>Botaurus stellaris | Голям воден бик</item>
+        <item>Branta bernicla | Черна гъска</item>
+        <item>Branta canadensis | Канадска гъска</item>
+        <item>Branta leucopsis | Белобуза гъска</item>
+        <item>Branta ruficollis | Червеногуша гъска</item>
+        <item>Bubo bubo | Бухал</item>
+        <item>Bubulcus ibis | Биволска чапла</item>
+        <item>Bucanetes githagineus | </item>
+        <item>Bucanetes mongolicus | </item>
+        <item>Bucephala clangula | Звънарка</item>
+        <item>Bucephala islandica | </item>
+        <item>Bulweria bulwerii | </item>
+        <item>Burhinus oedicnemus | Турилик</item>
+        <item>Buteo buteo | Обикновен мишелов</item>
+        <item>Buteo lagopus | Северен мишелов</item>
+        <item>Buteo rufinus | Белоопашат мишелов</item>
+        <item>Butorides virescens | </item>
+        <item>Calandrella brachydactyla | Късопръста чучулига</item>
+        <item>Calandrella rufescens | Сива чучулига</item>
+        <item>Calcarius lapponicus | Лапландска овесарка</item>
+        <item>Calidris alba | Трипръст брегобегач</item>
+        <item>Calidris alpina | Тъмногръд брегобегач</item>
+        <item>Calidris canutus | Голям брегобегач</item>
+        <item>Calidris ferruginea | Кривоклюн брегобегач</item>
+        <item>Calidris fuscicollis | Белокръст брегобегач</item>
+        <item>Calidris maritima | Морски брегобегач</item>
+        <item>Calidris mauri | Западен брегобегач</item>
+        <item>Calidris melanotos  | Цветногръд брегобегач</item>
+        <item>Calidris minuta | Малък брегобегач</item>
+        <item>Calidris pusilla | Ципестопръст брегобегач</item>
+        <item>Calidris temminckii | Сив брегобегач</item>
+        <item>Calonectris diomedea | Жълтоклюн буревестник </item>
+        <item>Caprimulgus europaeus | Козодой</item>
+        <item>Caprimulgus ruficollis | </item>
+        <item>Carduelis cannabina | Обикновено конопарче</item>
+        <item>Carduelis carduelis | Щиглец</item>
+        <item>Carduelis chloris | Зеленика</item>
+        <item>Carduelis flammea | Брезова скатия</item>
+        <item>Carduelis flavirostris | Жълтоклюно конопарче</item>
+        <item>Carduelis hornemanni | Полярна скатия</item>
+        <item>Carduelis spinus | Елшова скатия</item>
+        <item>Carpodacus erythrinus | Червена чинка</item>
+        <item>Carpodacus rubicilla | </item>
+        <item>Carpospiza brachydactyla | </item>
+        <item>Cepphus grylle | Обикновен чистик</item>
+        <item>Cercotrichas galactotes | Трънковче</item>
+        <item>Certhia brachydactyla | Градинска дърволазка</item>
+        <item>Certhia familiaris | Горска дърволазка</item>
+        <item>Ceryle rudis | </item>
+        <item>Cettia cetti | Свилено шаварче</item>
+        <item>Charadrius alexandrinus | Морски дъждосвирец</item>
+        <item>Charadrius asiaticus | Каспийски дъждосвирец</item>
+        <item>Charadrius dubius | Речен дъждосвирец</item>
+        <item>Charadrius hiaticula | Пясъчен дъждосвирец</item>
+        <item>Charadrius leschenaultii | Дебелоклюн дъждосвирец</item>
+        <item>Charadrius morinellus | Планински дъждосвирец</item>
+        <item>Chersophilus duponti | Кривоклюна чучулига</item>
+        <item>Chettusia gregaria | Степна калугерица</item>
+        <item>Chettusia leucura | Белоопашата калугерица</item>
+        <item>Chlamydotis undulata | </item>
+        <item>Chlidonias hybridus | Белобуза рибарка</item>
+        <item>Chlidonias leucopterus | Белокрила рибарка</item>
+        <item>Chlidonias niger | Черна рибарка</item>
+        <item>Chrysolophus pictus | </item>
+        <item>Ciconia ciconia | Бял щъркел</item>
+        <item>Ciconia nigra | Черен щъркел</item>
+        <item>Cinclus cinclus | Воден кос</item>
+        <item>Circaetus gallicus | Орел змияр</item>
+        <item>Circus aeruginosus | Тръстиков блатар</item>
+        <item>Circus cyaneus | Полски блатар</item>
+        <item>Circus macrourus | Степен блатар</item>
+        <item>Circus pygargus | Ливаден блатар</item>
+        <item>Cisticola juncidis | Пъстроопашато шаварче</item>
+        <item>Clamator glandarius | Качулата кукувица</item>
+        <item>Clangula hyemalis | Ледена потапница</item>
+        <item>Coccothraustes coccothraustes | Черешарка</item>
+        <item>Coccyzus americanus | </item>
+        <item>Columba bollii | </item>
+        <item>Columba junoniae | </item>
+        <item>Columba livia | Полудив гълъб</item>
+        <item>Columba oenas | Гълъб хралупар</item>
+        <item>Columba palumbus | Гривяк</item>
+        <item>Columba trocaz | </item>
+        <item>Coracias garrulus | Синявица</item>
+        <item>Corvus corax | Гарван гробар</item>
+        <item>Corvus corone | Сива врана</item>
+        <item>Corvus frugilegus | Посевна врана</item>
+        <item>Corvus monedula | Чавка</item>
+        <item>Coturnix coturnix | Пъдпъдък</item>
+        <item>Crex crex | Ливаден дърдавец</item>
+        <item>Cuculus canorus | Обикновена кукувица</item>
+        <item>Cuculus saturatus | </item>
+        <item>Cursorius cursor | </item>
+        <item>Cyanopica cyana | </item>
+        <item>Cygnus bewickii | Тундров лебед</item>
+        <item>Cygnus cygnus | Поен лебед</item>
+        <item>Cygnus olor | Ням лебед</item>
+        <item>Delichon urbica | Градска лястовица</item>
+        <item>Dendrocopos leucotos | Белогърб кълвач</item>
+        <item>Dendrocopos major | Голям пъстър кълвач</item>
+        <item>Dendrocopos medius | Среден пъстър кълвач</item>
+        <item>Dendrocopos minor | Малък пъстър кълвач</item>
+        <item>Dendrocopos syriacus | Сирийски пъстър кълвач</item>
+        <item>Dryocopus martius | Черен кълвач</item>
+        <item>Egretta alba | Голяма бяла чапла</item>
+        <item>Egretta garzetta | Малка бяла чапла</item>
+        <item>Egretta gularis | Рифова чапла</item>
+        <item>Elanus caeruleus | Пепелява каничка</item>
+        <item>Emberiza aureola | </item>
+        <item>Emberiza bruniceps | </item>
+        <item>Emberiza buchanani | </item>
+        <item>Emberiza caesia | Пепелява овесарка</item>
+        <item>Emberiza cia | Сивоглава овесарка</item>
+        <item>Emberiza cineracea | </item>
+        <item>Emberiza cirlus | Зеленогуша овесарка</item>
+        <item>Emberiza citrinella | Жълта овесарка</item>
+        <item>Emberiza hortulana | Градинска овесарка</item>
+        <item>Emberiza leucocephalos | Пепелява овесарка</item>
+        <item>Emberiza melanocephala | Черноглава овесарка</item>
+        <item>Emberiza pusilla | Малка овесарка</item>
+        <item>Emberiza rustica | Белогуша овесарка</item>
+        <item>Emberiza schoeniclus | Тръстикова овесарка</item>
+        <item>Eremophila alpestris | Ушата чучулига</item>
+        <item>Erithacus rubecula | Червеногръдка</item>
+        <item>Estrilda astrild | </item>
+        <item>Falco biarmicus | Далматински сокол</item>
+        <item>Falco cherrug | Ловен сокол</item>
+        <item>Falco columbarius | Малък сокол</item>
+        <item>Falco eleonorae | Средиземноморски сокол</item>
+        <item>Falco naumanni | Белошипа ветрушка</item>
+        <item>Falco pelegrinoides | Ръждивоглав сокол</item>
+        <item>Falco peregrinus | Сокол скитник</item>
+        <item>Falco rusticolus | Северен сокол</item>
+        <item>Falco subbuteo | Орко</item>
+        <item>Falco tinnunculus | Черношипа ветрушка</item>
+        <item>Falco vespertinus | Вечерна ветрушка</item>
+        <item>Ficedula albicollis | Беловрата мухоловка</item>
+        <item>Ficedula hypoleuca | Жалобна мухоловка</item>
+        <item>Ficedula parva | Червеногуша мухоловка</item>
+        <item>Ficedula semitorquata | Полубеловрата мухоловка</item>
+        <item>Francolinus francolinus | </item>
+        <item>Fratercula arctica | Тъпоклюна кайра</item>
+        <item>Fringilla coelebs | Обикновена чинка</item>
+        <item>Fringilla montifringilla | Планинска чинка</item>
+        <item>Fringilla teydea | </item>
+        <item>Fulica atra | Лиска</item>
+        <item>Fulica cristata | </item>
+        <item>Fulmarus glacialis | Фулмар</item>
+        <item>Galerida cristata | Качулата чучулига</item>
+        <item>Galerida malabarica | </item>
+        <item>Galerida theklae | Текла</item>
+        <item>Gallinago gallinago | Средна бекасина</item>
+        <item>Gallinago media | Голяма бекасина</item>
+        <item>Gallinago stenura | </item>
+        <item>Gallinula chloropus | Зеленоножка</item>
+        <item>Garrulus glandarius | Сойка</item>
+        <item>Gavia adamsii | Жълтоклюн гмуркач</item>
+        <item>Gavia arctica | Черногуш гмуркач</item>
+        <item>Gavia immer | Черноклюн гмуркач</item>
+        <item>Gavia stellata | Червеногуш гмуркач</item>
+        <item>Gelochelidon nilotica | Дебелоклюна рибарка</item>
+        <item>Geronticus eremita | Плешив ибис</item>
+        <item>Glareola nordmanni | Чернокрил огърличник</item>
+        <item>Glareola pratincola | Кафявокрил огърличник</item>
+        <item>Glaucidium passerinum | Врабчова кукумявка</item>
+        <item>Grus grus | Сив жерав</item>
+        <item>Gypaetus barbatus | Брадат лешояд</item>
+        <item>Gyps fulvus | Белоглав лешояд</item>
+        <item>Haematopus moquini | </item>
+        <item>Haematopus ostralegus | Стридояд</item>
+        <item>Halcyon smyrnensis | Белогърдо земеродно рибарче</item>
+        <item>Haliaeetus albicilla | Морски орел</item>
+        <item>Hieraaetus fasciatus | Ястребов орел</item>
+        <item>Hieraaetus pennatus | Малък орел</item>
+        <item>Himantopus himantopus | Кокилобегач</item>
+        <item>Iduna caligata | Малък присмехулник</item>
+        <item>Hippolais icterina | Градински присмехулник</item>
+        <item>Hippolais languida | Пустинен присмехулник</item>
+        <item>Hippolais olivetorum | Голям маслинов присмехулник</item>
+        <item>Hippolais pallida | Малък маслинов присмехулник</item>
+        <item>Hippolais polyglotta | Бъбрив присмехулник</item>
+        <item>Hirundo daurica | Червенокръста лястовица</item>
+        <item>Hirundo rustica | Селска лястовица</item>
+        <item>Histrionicus histrionicus | </item>
+        <item>Hoplopterus indicus | </item>
+        <item>Hoplopterus spinosus | Шипокрила калугерица</item>
+        <item>Hydrobates pelagicus | Европейска вълнолюбка</item>
+        <item>Irania gutturalis | </item>
+        <item>Ixobrychus minutus | Малък воден бик</item>
+        <item>Jynx torquilla | Въртошийка</item>
+        <item>Ketupa zeylonensis | </item>
+        <item>Lagopus lagopus | </item>
+        <item>Lagopus mutus | </item>
+        <item>Lanius collurio | Червеногърба сврачка</item>
+        <item>Lanius excubitor | Сива сврачка</item>
+        <item>Lanius minor | Черночела сврачка</item>
+        <item>Lanius nubicus | Белочела сврачка</item>
+        <item>Lanius senator | Червеноглава сврачка</item>
+        <item>Larus argentatus | Сребриста чайка</item>
+        <item>Larus armenicus | Арменска чайка</item>
+        <item>Larus audouinii | Средиземноморската чайка</item>
+        <item>Larus michahellis | Жълтокрака чайка</item>
+        <item>Larus canus | Чайка буревестница</item>
+        <item>Larus delawarensis | Пръстенчатоклюна чайка</item>
+        <item>Larus fuscus | Малката черногърба чайка</item>
+        <item>Larus genei | Дългоклюна чайка</item>
+        <item>Larus glaucoides | Малка белокрила чайка</item>
+        <item>Larus hyperboreus | Голяма белокрила чайка</item>
+        <item>Larus ichthyaetus | Голяма черноглава чайка</item>
+        <item>Larus marinus | Голяма черногърба чайка</item>
+        <item>Larus melanocephalus | Малката черноглава чайка</item>
+        <item>Larus minutus | Малка чайка</item>
+        <item>Larus relictus | Реликтна чайка</item>
+        <item>Larus ridibundus | Речна чайка</item>
+        <item>Larus sabini | Вилоопашата чайка </item>
+        <item>Limicola falcinellus | Блатобегач</item>
+        <item>Limnodromus scolopaceus | Берингов вретенач</item>
+        <item>Limosa lapponica | Пъстроопашат крайбрежен бекас</item>
+        <item>Limosa limosa | Черноопашат крайбрежен бекас</item>
+        <item>Locustella fluviatilis | Речен цвъркач</item>
+        <item>Locustella lanceolata | </item>
+        <item>Locustella luscinioides | Тръстиков цвъркач</item>
+        <item>Locustella naevia | Полски цвъркач</item>
+        <item>Loxia curvirostra | Обикновена кръсточовка</item>
+        <item>Loxia leucoptera | Белокрила кръсточовка</item>
+        <item>Loxia pytyopsittacus | Дебелоклюна кръсточовка</item>
+        <item>Loxia scotica | </item>
+        <item>Lullula arborea | Горска чучулига</item>
+        <item>Luscinia calliope | </item>
+        <item>Luscinia luscinia | Северен славей</item>
+        <item>Luscinia megarhynchos | Южен славей</item>
+        <item>Luscinia svecica | Синьогушка</item>
+        <item>Lymnocryptes minimus | Малка бикасина</item>
+        <item>Marmaronetta angustirostris | Мраморна патица</item>
+        <item>Melanitta fusca | Кадифена потапница</item>
+        <item>Melanitta nigra | Траурна потапница</item>
+        <item>Melanocorypha bimaculata | </item>
+        <item>Melanocorypha calandra | Дебелоклюна чучулига</item>
+        <item>Melanocorypha leucoptera | Белокрила чучулига</item>
+        <item>Melanocorypha yeltoniensis | Черна чучулига</item>
+        <item>Meleagris gallopavo | </item>
+        <item>Mergus albellus | Малък нирец</item>
+        <item>Mergus cucullatus | </item>
+        <item>Mergus merganser | Голям нирец</item>
+        <item>Mergus serrator | Среден нирец</item>
+        <item>Merops apiaster | Обикновен пчелояд</item>
+        <item>Merops superciliosus | Зелен пчелояд</item>
+        <item>Miliaria calandra | Сива овесарка</item>
+        <item>Milvus migrans | Черна каня</item>
+        <item>Milvus milvus | Червена каня</item>
+        <item>Monticola saxatilis | Пъстър скален дрозд</item>
+        <item>Monticola solitarius | Син скален дрозд</item>
+        <item>Montifringilla nivalis | Снежно врабче</item>
+        <item>Morus bassanus | Бял рибояд</item>
+        <item>Motacilla alba | Бяла стърчиопашка</item>
+        <item>Motacilla cinerea | Планинска стърчиопашка</item>
+        <item>Motacilla citreola | Жълтоглава стърчиопашка</item>
+        <item>Motacilla finere | </item>
+        <item>Motacilla flava | Жълта стърчиопашка</item>
+        <item>Muscicapa daurrica | </item>
+        <item>Muscicapa striata | Сива мухоловка</item>
+        <item>Myiopsitta monachus | </item>
+        <item>Neophron percnopterus | Египетски лешояд</item>
+        <item>Netta rufina | Червеноклюна потапница</item>
+        <item>Nucifraga caryocatactes | Сокерица</item>
+        <item>Numenius arquata | Голям свирец</item>
+        <item>Numenius phaeopus | Малък свирец</item>
+        <item>Numenius tenuirostris | Тънкоклюн свирец</item>
+        <item>Nyctea scandiaca | </item>
+        <item>Nycticorax nycticorax | Нощна чапла</item>
+        <item>Oceanodroma castro | </item>
+        <item>Oceanodroma leucorhoa | </item>
+        <item>Oenanthe cypriaca | </item>
+        <item>Oenanthe deserti | </item>
+        <item>Oenanthe finschii | </item>
+        <item>Oenanthe hispanica | Испанско каменарче</item>
+        <item>Oenanthe isabellina | Ориенталско каменарче</item>
+        <item>Oenanthe leucopyga | </item>
+        <item>Oenanthe leucura | </item>
+        <item>Oenanthe oenanthe | Сиво каменарче</item>
+        <item>Oenanthe pleschanka | Черногърбо каменарче</item>
+        <item>Oenanthe xanthoprymna | </item>
+        <item>Oriolus oriolus | Авлига</item>
+        <item>Otis tarda | Голяма дропла</item>
+        <item>Otus brucei | </item>
+        <item>Otus scops | Чухал</item>
+        <item>Oxyura jamaicensis | </item>
+        <item>Oxyura leucocephala | Тръноопашата потапница</item>
+        <item>Pagophila eburnea | </item>
+        <item>Pandion haliaetus | Орел рибар</item>
+        <item>Panurus biarmicus | Мустакато тръстикарче</item>
+        <item>Parus ater | Черен синигер</item>
+        <item>Parus caeruleus | Син синигер</item>
+        <item>Parus cinctus | </item>
+        <item>Parus cristatus | Качулат синигер</item>
+        <item>Parus cyanus | </item>
+        <item>Parus lugubris | Жалобен синигер</item>
+        <item>Parus major | Голям синигер</item>
+        <item>Parus montanus | Матовоглав синигер</item>
+        <item>Parus palustris | Лъскавоглав синигер</item>
+        <item>Passer domesticus | Домашно врабче</item>
+        <item>Passer hispaniolensis | Испанско врабче</item>
+        <item>Passer moabiticus | </item>
+        <item>Passer montanus | Полско врабче</item>
+        <item>Pelagodroma marina | </item>
+        <item>Pelecanus crispus | Къдроглав пеликан</item>
+        <item>Pelecanus onocrotalus | Розов пеликан</item>
+        <item>Perdix hodgsoniae | </item>
+        <item>Perdix perdix | Яребица</item>
+        <item>Perisoreus infaustus | </item>
+        <item>Pernis apivorus | Осояд</item>
+        <item>Petronia petronia | Скално врабче</item>
+        <item>Petronia xanthocollis | </item>
+        <item>Phalacrocorax aristotelis | Качулат корморан</item>
+        <item>Phalacrocorax carbo | Голям корморан</item>
+        <item>Phalacrocorax pygmaeus | Малък корморан</item>
+        <item>Phalaropus fulicarius | Плоскоклюн листоног</item>
+        <item>Phalaropus lobatus | Тънкоклюн листоног</item>
+        <item>Phalaropus tricolor | </item>
+        <item>Phasianus colchicus | Фазан</item>
+        <item>Philomachus pugnax | Бойник</item>
+        <item>Phoenicopterus ruber | Розово фламинго</item>
+        <item>Phoenicurus erythrogaster | </item>
+        <item>Phoenicurus ochruros | Домашна червеноопашка</item>
+        <item>Phoenicurus phoenicurus | Градинска червеноопашка</item>
+        <item>Phoenicurus torquata | </item>
+        <item>Phylloscopus orientalis | Източен планински певец</item>
+        <item>Phylloscopus borealis | Северен певец</item>
+        <item>Phylloscopus collybita | Елов певец</item>
+        <item>Phylloscopus inornatus | Жълтовежд певец</item>
+        <item>Phylloscopus lorenzii | </item>
+        <item>Phylloscopus neglectus | </item>
+        <item>Phylloscopus nitidus | </item>
+        <item>Phylloscopus proregulus | Кралчев певец</item>
+        <item>Phylloscopus sibilatrix | Буков певец</item>
+        <item>Phylloscopus sindianus | </item>
+        <item>Phylloscopus spp. | Неопределени певци</item>
+        <item>Phylloscopus trochiloides | Зеленикав певец</item>
+        <item>Phylloscopus trochilus | Брезов певец</item>
+        <item>Pica pica | Сврака</item>
+        <item>Picoides tridactylus | Трипръст кълвач</item>
+        <item>Picus canus | Сив кълвач</item>
+        <item>Picus viridis | Зелен кълвач</item>
+        <item>Pinicola enucleator | </item>
+        <item>Platalea leucorodia | Бяла лопатарка</item>
+        <item>Plectrophenax nivalis | Сежна овесарка</item>
+        <item>Plegadis falcinellus | Блестящ ибис</item>
+        <item>Pluvialis apricaria | Златиста булка</item>
+        <item>Pluvialis squatarola | Сребриста булка</item>
+        <item>Podiceps auritus | Ушат гмурец</item>
+        <item>Podiceps cristatus | Голям гмурец</item>
+        <item>Podiceps grisegena | Червеноврат гмурец</item>
+        <item>Podiceps nigricollis | Черноврат гмурец</item>
+        <item>Polysticta stelleri | </item>
+        <item>Porphyrio porphyrio | </item>
+        <item>Porzana parva | Средна пъструшка</item>
+        <item>Porzana porzana | Голяма пъструшка</item>
+        <item>Porzana pusilla | Малка пъструшка</item>
+        <item>Porzana spp. | Неопределена пъструшка</item>
+        <item>Prinia gracilis | </item>
+        <item>Prunella atrogularis | </item>
+        <item>Prunella collaris | Пъстрогуша завирушка</item>
+        <item>Prunella modularis | Сивогуша завирушка</item>
+        <item>Prunella montanella | </item>
+        <item>Prunella ocularis | </item>
+        <item>Pterocles alchata | </item>
+        <item>Pterocles orientalis | </item>
+        <item>Pterodroma feae | </item>
+        <item>Pterodroma madeira | </item>
+        <item>Pterodroma mollis | </item>
+        <item>Ptyonoprogne rupestris | Скална лястовица</item>
+        <item>Puffinus assimilis | </item>
+        <item>Puffinus gravis | </item>
+        <item>Puffinus griseus | </item>
+        <item>Puffinus mauretanicus | </item>
+        <item>Puffinus puffinus | Обикновен буревестник</item>
+        <item>Puffinus yelkouan | Средиземноморски буревестник</item>
+        <item>Pycnonotus barbatus | </item>
+        <item>Pycnonotus xanthopygos | </item>
+        <item>Pyrrhocorax graculus | Жълтоклюна гарга</item>
+        <item>Pyrrhocorax pyrrhocorax | Червеноклюна гарга</item>
+        <item>Pyrrhula murina | </item>
+        <item>Pyrrhula pyrrhula | Червенушка</item>
+        <item>Rallus aquaticus | Воден дърдавец</item>
+        <item>Recurvirostra avosetta | Саблеклюн</item>
+        <item>Regulus ignicapillus | Червеноглаво кралче</item>
+        <item>Regulus regulus | Жълтоглаво кралче</item>
+        <item>Regulus teneriffae | </item>
+        <item>Remiz pendulinus | Торбогнезден синигер</item>
+        <item>Rhodopechys sanguinea | </item>
+        <item>Rhodospiza obsoleta | </item>
+        <item>Rhodostethia rosea | </item>
+        <item>Riparia riparia | Брегова лястовица</item>
+        <item>Rissa tridactyla | Трипръста чайка</item>
+        <item>Saxicola dacotiae | </item>
+        <item>Saxicola maurus | Сибирско ливадарче</item>
+        <item>Saxicola rubetra | Ръждивогушо ливадарче</item>
+        <item>Saxicola torquata | Черногушо ливадарче</item>
+        <item>Scolopax rusticola | Горски бекас</item>
+        <item>Serinus canaria | </item>
+        <item>Serinus citrinella | </item>
+        <item>Serinus pusillus | </item>
+        <item>Serinus serinus | Диво канарче</item>
+        <item>Sitta europaea | Горска зидарка</item>
+        <item>Sitta krueperi | </item>
+        <item>Sitta neumayer | Скална зидарка</item>
+        <item>Sitta tephronota | </item>
+        <item>Sitta whiteheadi | </item>
+        <item>Somateria mollissima | Обикновена гага</item>
+        <item>Somateria spectabilis | </item>
+        <item>Stercorarius longicaudus | Дългоопашат морелетник</item>
+        <item>Stercorarius parasiticus | Остроопашат морелетник</item>
+        <item>Stercorarius pomarinus | Тъпоопашат морелетник</item>
+        <item>Stercorarius skua | Голям морелетник</item>
+        <item>Sterna albifrons | Белочела рибарка</item>
+        <item>Sterna bengalensis | </item>
+        <item>Sterna caspia | Каспийска рибарка</item>
+        <item>Sterna dougallii | </item>
+        <item>Sterna fuscata | </item>
+        <item>Sterna hirundo | Речна рибарка</item>
+        <item>Sterna paradisaea | </item>
+        <item>Sterna sandvicensis | Гривеста рибарка</item>
+        <item>Streptopelia decaocto | Гугутка</item>
+        <item>Streptopelia orientalis | </item>
+        <item>Streptopelia roseogrisea | </item>
+        <item>Streptopelia senegalensis | </item>
+        <item>Streptopelia turtur | Гургулица</item>
+        <item>Strix aluco | Горска улулица</item>
+        <item>Strix nebulosa | </item>
+        <item>Strix uralensis | Уралска улулица</item>
+        <item>Sturnus roseus | Розов скорец</item>
+        <item>Sturnus unicolor | </item>
+        <item>Sturnus vulgaris | Обикновен скорец</item>
+        <item>Surnia ulula | </item>
+        <item>Sylvia atricapilla | Голямо черноглаво коприварче</item>
+        <item>Sylvia borin | Градинско коприварче</item>
+        <item>Sylvia cantillans | Червеногушо коприварче</item>
+        <item>Sylvia communis | Голямо белогушо коприварче</item>
+        <item>Sylvia conspicillata | </item>
+        <item>Sylvia curruca | Малко белогушо коприварче</item>
+        <item>Sylvia hortensis | Орфеево коприварче</item>
+        <item>Sylvia melanocephala | Черноглаво коприварче</item>
+        <item>Sylvia melanothorax | </item>
+        <item>Sylvia mystacea | </item>
+        <item>Sylvia nana | Азиатско пустинно коприварче</item>
+        <item>Sylvia nisoria | Ястребогушо коприварче</item>
+        <item>Sylvia rueppelli | Черногушо коприварче</item>
+        <item>Sylvia sarda | </item>
+        <item>Sylvia undata | </item>
+        <item>Syrmaticus reevesii | Царски фазан</item>
+        <item>Syrrhaptes paradoxus | </item>
+        <item>Tachybaptus ruficollis | Малък гмурец</item>
+        <item>Tadorna ferruginea | Червен ангъч</item>
+        <item>Tadorna tadorna | Бял ангъч</item>
+        <item>Tarsiger cyanurus | Синьоопашка</item>
+        <item>Tetrao mlokosiewiczi | </item>
+        <item>Tetrao tetrix | Тетрев</item>
+        <item>Tetrao urogallus | Глухар</item>
+        <item>Tetraogallus caspius | </item>
+        <item>Tetraogallus caucasicus | </item>
+        <item>Tetrax tetrax | Стрепет</item>
+        <item>Tichodroma muraria | Скалолазка</item>
+        <item>Tringa erythropus | Голям червенокрак водобегач</item>
+        <item>Tringa flavipes | </item>
+        <item>Tringa glareola | Малък горски водобегач</item>
+        <item>Tringa nebularia | Голям зеленокрак водобегач</item>
+        <item>Tringa ochropus | Голям горски водобегач</item>
+        <item>Tringa stagnatilis | Малък зеленоног водобегач</item>
+        <item>Tringa totanus | Малък червенокрак водобегач</item>
+        <item>Troglodytes troglodytes | Орехче</item>
+        <item>Tryngites subruficollis | Ръждивогръд брегобегач</item>
+        <item>Turdus iliacus | Беловежд дрозд</item>
+        <item>Turdus merula | Кос</item>
+        <item>Turdus philomelos | Поен дрозд</item>
+        <item>Turdus pilaris | Хвойнов дрозд</item>
+        <item>Turdus ruficollis | </item>
+        <item>Turdus torquatus | Белогуш дрозд</item>
+        <item>Turdus viscivorus | Имелов дрозд</item>
+        <item>Turnix sylvatica | </item>
+        <item>Tyto alba | Забулена сова</item>
+        <item>Upupa epops | Папуняк</item>
+        <item>Uria aalge | Тънкоклюна кайра</item>
+        <item>Uria lomvia | </item>
+        <item>Vanellus vanellus | Обикновена калугерица</item>
+        <item>Xenus cinereus | Пепеляв брегобегач</item>
+        <item>Zoothera dauma | </item>
+        <item>Zoothera sibirica | </item>
+        <item>Anatinae | Патицоподобни</item>
+        <item>Aythya sp. | Неопределена потапница</item>
+        <item>Calidris sp. | Неопределен брегобегач</item>
+        <item>Charadrii sp. | Неопределен дъждосвирец</item>
+        <item>Cygnus sp. | Неопределен лебед</item>
+        <item>Galinago sp. | </item>
+        <item>Gallinago sp. | Неопределена бекасина</item>
+        <item>L.mich./cach. | Жълтокрака/Каспийска чайка</item>
+        <item>Larus sp. | Неопределена чайка</item>
+        <item>Mergus sp. | Неопределен нирец</item>
+        <item>Phalacrocorax sp. | Неопределен корморан</item>
+        <item>Podiceps sp. | Неопределен гмурец</item>
+        <item>Tringa sp. | Неопределен водобегач</item>
+        <item>Anser sp. | Неопределена гъска</item>
+        <item>Acrocephalus sp. | Неопределено шаварче</item>
+        <item>Anas sp. | Неопределена патица</item>
+        <item>Circus sp. | Неопределен блатар</item>
+        <item>Falco sp. | Неопределен сокол</item>
+        <item>Gavia sp. | Неопределен гмуркач</item>
+        <item>Sterna sp. | Неопределена рибарка</item>
+        <item>Anthus sp. | Неопределена бъбрица</item>
+        <item>Motacilla sp. | Неопределена стърчиопашка</item>
+        <item>Pelecanus sp. | Неопределен пеликан</item>
+        <item>Phylloscopus sp. | Неопределен певец</item>
+        <item>Dendrocopos sp. | Неопределен кълвач</item>
+        <item>Turdus sp. | Неопределен дрозд</item>
+        <item>Accipiter sp. | Неопределен ястреб</item>
+        <item>Apus sp. | Неопределен бързолет</item>
+        <item>Aquila sp. | Неопределен орел</item>
+        <item>Buteo sp. |  Неопределен мишелов</item>
+        <item>Ciconia sp. | Неопределен щъркел</item>
+        <item>Corvus sp. | Неопределен гарван</item>
+        <item>Falconidae sp. | </item>
+        <item>Milvus sp. | Неопределена каня</item>
+        <item>Anas spp. | Неопределени патици</item>
+        <item>Columba spp. | Неопределен гълъб</item>
+        <item>Cygnus spp. | </item>
+        <item>Dendrocopos spp. | </item>
+        <item>Emberiza spp. | Неопределена овесарка</item>
+        <item>Motacilla spp. | </item>
+        <item>Numenius spp. | Неопределен свирец</item>
+        <item>Pelecanus spp. | </item>
+        <item>Sterna spp. | </item>
+        <item>Tringa spp. | </item>
+        <item>Accipitriformes/Falconiformes | Неопределена граблива птица (НГП)</item>
+        <item>Anseriformes/Podicipediformes etc. | Неопределена водолюбива птица (НВП)</item>
+        <item>Charadriiformes | Неопределен дъждосвирец (НД)</item>
+        <item>Columbiformes | Неопределен гълъб (НГБ)</item>
+        <item>Passeriformes | Неопределена пойна птица (НПП)</item>
+        <item>Ciconiiformes | Неопределена щъркелоподобна птица (НЩП)</item>
+        <item>Pelecaniformes | Неопределени пеликани и корморани (НПК)</item>
     </string-array>
 
     <string-array name="form_birds_count_units">

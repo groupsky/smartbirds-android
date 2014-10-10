@@ -18,6 +18,7 @@
     </style>
 
     <style name="FieldInput">
+        <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingBottom">5dp</item>
@@ -49,6 +50,7 @@
     </style>
 
     <style name="FieldInput.SemiSpinner" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingBottom">5dp</item>
@@ -65,5 +67,7 @@
     <style name="FieldInput.MultipleChoice" parent="FieldInput.SemiSpinner">
     </style>
 
+    <style name="FieldInput.SingleChoice" parent="FieldInput.SemiSpinner">
+    </style>
 
 </resources>

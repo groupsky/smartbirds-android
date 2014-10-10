@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,6 +12,8 @@ import android.app.Fragment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -22,8 +25,10 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
+import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.StringArrayRes;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -52,6 +57,11 @@ public class NewBirdsEntryFormFragment extends Fragment {
 //    MenuItem menuTakePicture;
     @ViewById(R.id.picture)
     ImageView picture;
+    @ViewById(R.id.field_name)
+    AutoCompleteTextView fieldName;
+    @StringArrayRes(R.array.form_birds_name)
+    String[] names;
+
 
     @Bean
     EEventBus eventBus;
@@ -65,10 +75,13 @@ public class NewBirdsEntryFormFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-//    @AfterViews
-//    void updateMenuTakePicture() {
+    @AfterViews
+    void updateMenuTakePicture() {
 //        menuTakePicture.setEnabled(INTENT_TAKE_PICTURE.resolveActivity(getActivity().getPackageManager()) != null);
-//    }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, names);
+        fieldName.setAdapter(adapter);
+    }
 
 
     @Override
