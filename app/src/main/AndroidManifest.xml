@@ -65,6 +65,12 @@
 
         <service
             android:name=".service.UploadService_"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+        <service
+            android:name=".service.TrackingService_"
+            android:enabled="true"
             android:exported="false" >
         </service>
     </application>

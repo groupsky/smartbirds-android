@@ -2,11 +2,13 @@ package org.bspb.smartbirds.pro.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.googlecode.jcsv.writer.CSVWriter;
 import com.googlecode.jcsv.writer.internal.CSVWriterBuilder;
 import com.googlecode.jcsv.writer.internal.DefaultCSVEntryConverter;
@@ -24,9 +26,11 @@ import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,14 +45,17 @@ public class DataService extends Service {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".DataService";
     private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
+    private static final DateFormat GPX_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
 
     static {
         DATE_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
+        GPX_DATE_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     @Bean
     EEventBus bus;
 
+    boolean monitoring = false;
     String monitoringName;
     File monitoringDir;
     HashMap<String, String> commonData;
@@ -83,7 +90,9 @@ public class DataService extends Service {
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
         monitoringName = String.format("%s-%s", DATE_FORMATTER.format(new Date()), getRandomNode());
-        if ((monitoringDir = createMonitoringDir()) != null) {
+        if ((monitoringDir = createMonitoringDir()) != null && initGpxFile()) {
+            TrackingService_.intent(this).start();
+            monitoring = true;
             bus.postSticky(new MonitoringStartedEvent());
         } else {
             Toast.makeText(this, "Cannot create directory for data! Check that you have enough storage available", Toast.LENGTH_SHORT).show();
@@ -106,6 +115,32 @@ public class DataService extends Service {
         return file;
     }
 
+    private boolean initGpxFile() {
+        File file = new File(monitoringDir, "track.gpx");
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file, false)));
+            try {
+                osw.write(
+                        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                                "<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"\n" +
+                                "     version=\"1.1\"\n" +
+                                "     creator=\"SmartBirds Pro\"\n" +
+                                "     xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
+                                "     xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">\n" +
+                                "  <metadata>\n" +
+                                "    <time>" + GPX_DATE_FORMATTER.format(new Date()) + "</time>\n" +
+                                "  </metadata>\n" +
+                                "  <trk>\n");
+            } finally {
+                osw.close();
+            }
+        } catch (IOException e) {
+            Crashlytics.logException(e);
+            return false;
+        }
+        return true;
+    }
+
     private String getRandomNode() {
         String uuid = UUID.randomUUID().toString();
         return uuid.substring(uuid.length() - 12);
@@ -113,6 +148,8 @@ public class DataService extends Service {
 
     public void onEvent(CancelMonitoringEvent event) {
         Log.d(TAG, "onCancelMonitoringEvent...");
+        TrackingService_.intent(this).stop();
+        monitoring = false;
         Toast.makeText(this, "Cancel monitoring", Toast.LENGTH_SHORT).show();
     }
 
@@ -122,6 +159,9 @@ public class DataService extends Service {
     }
 
     public void onEvent(FinishMonitoringEvent event) {
+        monitoring = false;
+        TrackingService_.intent(this).stop();
+        closeGpxFile();
         File newDir = new File(monitoringDir.getAbsolutePath().replace("-wip", "-up"));
         monitoringDir.renameTo(newDir);
         monitoringDir = newDir;
@@ -150,8 +190,50 @@ public class DataService extends Service {
             csvWriter.flush();
             csvWriter.close();
         } catch (java.io.IOException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
 
+    }
+
+    public void onEvent(Location location) {
+        Log.d(TAG, "onLocation");
+
+        if (monitoring && location != null) {
+            File file = new File(monitoringDir, "track.gpx");
+            try {
+                OutputStreamWriter osw = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file, true)));
+                try {
+                    osw.write(
+                            "    <trkseg>\n" +
+                                    "      <trkpt lat=\""+location.getLatitude()+"\" lon=\""+location.getLongitude()+"\">\n" +
+                                    (location.hasAltitude()?"        <ele>"+location.getAltitude()+"</ele>\n":"") +
+                                    "        <time>"+GPX_DATE_FORMATTER.format(new Date(location.getTime()))+"</time>\n" +
+                                    "      </trkpt>\n" +
+                                    "    </trkseg>\n");
+                } finally {
+                    osw.close();
+                }
+            } catch (IOException e) {
+                Crashlytics.logException(e);
+            }
+        }
+    }
+
+    private void closeGpxFile() {
+        if (monitoring) {
+            File file = new File(monitoringDir, "track.gpx");
+            try {
+                OutputStreamWriter osw = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file, true)));
+                try {
+                    osw.write(
+                            "  </trk>\n" +
+                                    "</gpx>\n");
+                } finally {
+                    osw.close();
+                }
+            } catch (IOException e) {
+                Crashlytics.logException(e);
+            }
+        }
     }
 }
