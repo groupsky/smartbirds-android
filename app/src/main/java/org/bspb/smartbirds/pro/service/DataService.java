@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.service;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
@@ -18,9 +19,11 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
+import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
+import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
@@ -59,6 +62,7 @@ public class DataService extends Service {
     String monitoringName;
     File monitoringDir;
     HashMap<String, String> commonData;
+    int pictureCounter;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -92,6 +96,7 @@ public class DataService extends Service {
         monitoringName = String.format("%s-%s", DATE_FORMATTER.format(new Date()), getRandomNode());
         if ((monitoringDir = createMonitoringDir()) != null && initGpxFile()) {
             TrackingService_.intent(this).start();
+            pictureCounter = 0;
             monitoring = true;
             bus.postSticky(new MonitoringStartedEvent());
         } else {
@@ -230,6 +235,24 @@ public class DataService extends Service {
                                     "</gpx>\n");
                 } finally {
                     osw.close();
+                }
+            } catch (IOException e) {
+                Crashlytics.logException(e);
+            }
+        }
+    }
+
+    public void onEvent(CreateImageFile event) {
+        // Create an image file name
+        while (true) {
+            String index = Integer.toString(pictureCounter++);
+            while (index.length() < 4) index = '0' + index;
+            String imageFileName = "Pic" + index + ".jpg";
+            File image = new File(monitoringDir, imageFileName);
+            try {
+                if (image.createNewFile()) {
+                    bus.post(new ImageFileCreated(imageFileName, Uri.fromFile(image), image.getAbsolutePath()));
+                    break;
                 }
             } catch (IOException e) {
                 Crashlytics.logException(e);

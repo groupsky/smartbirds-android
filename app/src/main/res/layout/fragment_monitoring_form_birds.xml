@@ -25,5 +25,13 @@
             android:hint="Бележки"
             android:tag="Бележки_вид" />
 
+        <View style="@style/FieldSeparator" />
+
+        <ImageView
+            android:id="@+id/picture"
+            android:scaleType="centerInside"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </ScrollView>
