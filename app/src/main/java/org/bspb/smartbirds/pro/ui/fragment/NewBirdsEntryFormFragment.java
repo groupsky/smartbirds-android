@@ -53,12 +53,8 @@ public class NewBirdsEntryFormFragment extends Fragment {
     double lat;
     @FragmentArg(ARG_LON)
     double lon;
-//    @OptionsMenuItem(R.id.take_picture)
-//    MenuItem menuTakePicture;
     @ViewById(R.id.picture)
     ImageView picture;
-    @ViewById(R.id.field_name)
-    AutoCompleteTextView fieldName;
     @StringArrayRes(R.array.form_birds_name)
     String[] names;
 
@@ -74,15 +70,6 @@ public class NewBirdsEntryFormFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    @AfterViews
-    void updateMenuTakePicture() {
-//        menuTakePicture.setEnabled(INTENT_TAKE_PICTURE.resolveActivity(getActivity().getPackageManager()) != null);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, names);
-        fieldName.setAdapter(adapter);
-    }
-
 
     @Override
     public void onStart() {

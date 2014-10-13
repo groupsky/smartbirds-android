@@ -17,8 +17,8 @@
 
             <TableRow>
 
-                <Spinner
-                    style="@style/FieldInput.Spinner"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_source"
                     android:hint="Източник"
                     android:tag="Източник" />
@@ -27,17 +27,15 @@
                     style="@style/FieldLabel"
                     android:text="Начало:" />
 
-                <TextView
+                <EditText
                     style="@style/FieldInput.Date"
-                    android:hint="Начална дата"
-                    android:tag="Начална_Дата"
-                    android:text="22.09.2014" />
+                    android:hint="дата"
+                    android:tag="Начална_Дата" />
 
-                <TextView
+                <EditText
                     style="@style/FieldInput.Time"
                     android:hint="час"
-                    android:tag="Час_начало"
-                    android:text="15:30" />
+                    android:tag="Час_начало" />
 
             </TableRow>
 
@@ -55,15 +53,13 @@
 
                 <EditText
                     style="@style/FieldInput.Date"
-                    android:hint="Крайна дата"
-                    android:tag="Крайна_Дата"
-                    android:text="22.09.2014" />
+                    android:hint="дата"
+                    android:tag="Крайна_Дата" />
 
                 <EditText
                     style="@style/FieldInput.Time"
                     android:hint="час"
-                    android:tag="Час_край"
-                    android:text="18:30" />
+                    android:tag="Час_край" />
 
 
             </TableRow>
@@ -89,28 +85,28 @@
 
             <TableRow>
 
-                <Spinner
-                    style="@style/FieldInput.Spinner"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_rain"
                     android:tag="Дъжд"
-                    android:text="Дъжд" />
+                    android:hint="Дъжд" />
 
                 <EditText
                     style="@style/FieldInput.Number"
                     android:hint="Темп °C"
                     android:tag="Температура_C" />
 
-                <Spinner
-                    style="@style/FieldInput.Spinner"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_wind_force"
                     android:tag="Сила_на_вятъра"
-                    android:text="Сила_на_вятъра" />
+                    android:hint="Сила на вятъра" />
 
-                <Spinner
-                    style="@style/FieldInput.Spinner"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_wind_direction"
                     android:tag="Посока_на_вятъра"
-                    android:text="Посока_на_вятъра" />
+                    android:hint="Посока на вятъра" />
 
             </TableRow>
 
@@ -121,11 +117,11 @@
                     android:hint="Вид облаци"
                     android:tag="Вид_облаци" />
 
-                <Spinner
-                    style="@style/FieldInput.Spinner"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_cloud_level"
                     android:tag="Облачност_%"
-                    android:text="Облачност %" />
+                    android:hint="Облачност %" />
 
                 <EditText
                     style="@style/FieldInput.Text"
@@ -142,7 +138,7 @@
 
         <View style="@style/FieldSeparator" />
 
-        <EditText
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
             style="@style/FieldInput.MultipleChoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

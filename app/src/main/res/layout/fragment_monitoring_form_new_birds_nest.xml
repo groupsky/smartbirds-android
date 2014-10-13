@@ -9,14 +9,14 @@
 
     <TableRow>
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_substrate"
             android:tag="Субстрат"
             android:hint="Субстрат" />
 
-        <EditText
-            style="@style/FieldInput.Text"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_location"
             android:tag="Дърво"
             android:hint="Дърво" />
@@ -30,20 +30,20 @@
 
     <TableRow>
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_location"
             android:tag="Местоположение_на_дървото"
             android:hint="Местоположение_на_дървото" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_height"
             android:tag="Височина_на_гнездото"
             android:hint="Височина_на_гнездото" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_position"
             android:tag="Местоположение_на_гнездото"
             android:hint="Местоположение_на_гнездото" />
@@ -83,20 +83,20 @@
 
     <TableRow android:gravity="bottom">
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_age_individual"
             android:tag="Възраст_на_женската"
             android:hint="Възраст на женската" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_age_individual"
             android:tag="Възраст_на_мъжката"
             android:hint="Възраст на мъжката" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_success"
             android:tag="Гнездови_успех"
             android:hint="Гнездови успех" />

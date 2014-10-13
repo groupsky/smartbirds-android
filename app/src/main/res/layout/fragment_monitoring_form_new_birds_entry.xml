@@ -1,6 +1,5 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:showDividers="beginning"
@@ -10,108 +9,107 @@
 
     <TableRow>
 
-        <AutoCompleteTextView
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
             android:id="@+id/field_name"
-            style="@style/FieldInput.Text"
+            style="@style/FieldInput.SingleChoice"
             android:layout_span="3"
-            android:tag="Вид_научно_име"
+            android:entries="@array/form_birds_name"
             android:hint="Вид научно име"
-            android:entries="@array/form_birds_name" />
+            android:tag="Вид_научно_име" />
 
-        <CheckBox android:text="Поверително"
+        <CheckBox
             android:tag="Поверително"
-            />
+            android:text="Поверително" />
 
     </TableRow>
 
     <TableRow>
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_count_units"
-            android:tag="Единица_на_броя"
-            android:hint="Единица на броя" />
+            android:hint="Единица на броя"
+            android:tag="Единица_на_броя" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_count_type"
-            android:tag="Тип_на_броя"
-            android:hint="Тип на броя" />
+            android:hint="Тип на броя"
+            android:tag="Тип_на_броя" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nesting"
-            android:tag="Тип_Гнездене"
             android:hint="Тип гнездене"
-            />
+            android:tag="Тип_Гнездене" />
     </TableRow>
 
     <TableRow>
 
         <EditText
             style="@style/FieldInput.Number"
-            android:tag="Брой"
-            android:hint="Брой" />
+            android:hint="Брой"
+            android:tag="Брой" />
 
         <EditText
             style="@style/FieldInput.Number"
-            android:tag="Мин."
-            android:hint="Мин." />
+            android:hint="Мин."
+            android:tag="Мин." />
 
         <EditText
             style="@style/FieldInput.Number"
-            android:tag="Макс."
-            android:hint="Макс." />
+            android:hint="Макс."
+            android:tag="Макс." />
 
     </TableRow>
 
     <TableRow>
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_sex"
-            android:tag="Пол"
-            android:hint="Пол" />
+            android:hint="Пол"
+            android:tag="Пол" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_age"
-            android:tag="Възраст"
-            android:hint="Възраст" />
+            android:hint="Възраст"
+            android:tag="Възраст" />
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_marking"
-            android:tag="Маркировка"
-            android:hint="Маркировка" />
+            android:hint="Маркировка"
+            android:tag="Маркировка" />
 
 
     </TableRow>
 
     <TableRow>
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:layout_span="2"
             android:entries="@array/form_birds_status"
-            android:tag="Статус_на_вида"
-            android:hint="Статус на вида" />
+            android:hint="Статус на вида"
+            android:tag="Статус_на_вида" />
 
-        <EditText
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
             style="@style/FieldInput.MultipleChoice"
             android:layout_span="2"
             android:entries="@array/form_birds_behaviour"
-            android:tag="Поведение"
-            android:hint="Поведение" />
+            android:hint="Поведение"
+            android:tag="Поведение" />
     </TableRow>
 
     <TableRow>
 
-        <Spinner
-            style="@style/FieldInput.Spinner"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+            style="@style/FieldInput.SingleChoice"
             android:layout_span="2"
             android:entries="@array/form_birds_death"
-            android:tag="Мъртъв_индивид_причини"
-            android:hint="Мъртъв индивид (причини)" />
+            android:hint="Мъртъв индивид (причини)"
+            android:tag="Мъртъв_индивид_причини" />
     </TableRow>
 </TableLayout>
