@@ -89,8 +89,7 @@ public class NewBirdsEntryFormFragment extends Fragment {
         HashMap<String, String> data = FormUtils.traverseForm(getView()).serialize();
         data.put("Lat", Double.toString(lat));
         data.put("Long", Double.toString(lon));
-        if (imageFileName != null)
-            data.put("Picture", imageFileName);
+        data.put("Picture", imageFileName != null ? imageFileName : "");
         eventBus.post(new EntrySubmitted(data));
     }
 
@@ -115,8 +114,8 @@ public class NewBirdsEntryFormFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             // Get the dimensions of the View
             DisplayMetrics displayMetrics = picture.getResources().getDisplayMetrics();
-            int targetW = (int)Math.round(320.0/ displayMetrics.density);
-            int targetH = (int)Math.round(320.0/ displayMetrics.density);
+            int targetW = (int) Math.round(320.0 / displayMetrics.density);
+            int targetH = (int) Math.round(320.0 / displayMetrics.density);
 
             // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -126,7 +125,7 @@ public class NewBirdsEntryFormFragment extends Fragment {
             int photoH = bmOptions.outHeight;
 
             // Determine how much to scale down the image
-            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
             // Decode the image file into a Bitmap sized to fill the View
             bmOptions.inJustDecodeBounds = false;
