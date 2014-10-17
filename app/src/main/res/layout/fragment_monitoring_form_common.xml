@@ -18,7 +18,6 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_source"
                     android:hint="Източник"
                     android:tag="Източник" />
@@ -27,13 +26,11 @@
                     style="@style/FieldLabel"
                     android:text="Начало:" />
 
-                <EditText
-                    style="@style/FieldInput.Date"
+                <org.bspb.smartbirds.pro.ui.views.DateFormInput
                     android:hint="дата"
                     android:tag="Начална_Дата" />
 
-                <EditText
-                    style="@style/FieldInput.Time"
+                <org.bspb.smartbirds.pro.ui.views.TimeFormInput
                     android:hint="час"
                     android:tag="Час_начало" />
 
@@ -41,8 +38,7 @@
 
             <TableRow>
 
-                <AutoCompleteTextView
-                    style="@style/FieldInput.Text"
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
                     android:hint="Място"
                     android:inputType="text|textCapWords|textPostalAddress"
                     android:tag="Място" />
@@ -51,13 +47,11 @@
                     style="@style/FieldLabel"
                     android:text="Край:" />
 
-                <EditText
-                    style="@style/FieldInput.Date"
+                <org.bspb.smartbirds.pro.ui.views.DateFormInput
                     android:hint="дата"
                     android:tag="Крайна_Дата" />
 
-                <EditText
-                    style="@style/FieldInput.Time"
+                <org.bspb.smartbirds.pro.ui.views.TimeFormInput
                     android:hint="час"
                     android:tag="Час_край" />
 
@@ -66,9 +60,8 @@
 
         </TableLayout>
 
-        <MultiAutoCompleteTextView
+        <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
             android:id="@+id/observers"
-            style="@style/FieldInput.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text|textCapWords|textPersonName"
@@ -86,24 +79,20 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_rain"
                     android:tag="Дъжд"
                     android:hint="Дъжд" />
 
-                <EditText
-                    style="@style/FieldInput.Number"
+                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
                     android:hint="Темп °C"
                     android:tag="Температура_C" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_wind_force"
                     android:tag="Сила_на_вятъра"
                     android:hint="Сила на вятъра" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_wind_direction"
                     android:tag="Посока_на_вятъра"
                     android:hint="Посока на вятъра" />
@@ -112,24 +101,20 @@
 
             <TableRow>
 
-                <EditText
-                    style="@style/FieldInput.Text"
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
                     android:hint="Вид облаци"
                     android:tag="Вид_облаци" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    style="@style/FieldInput.SingleChoice"
                     android:entries="@array/form_main_cloud_level"
                     android:tag="Облачност_%"
                     android:hint="Облачност %" />
 
-                <EditText
-                    style="@style/FieldInput.Text"
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
                     android:hint="МТО други"
                     android:tag="МТО_други" />
 
-                <EditText
-                    style="@style/FieldInput.Number"
+                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
                     android:hint="Видимост км"
                     android:tag="Видимост_км" />
 
@@ -139,7 +124,6 @@
         <View style="@style/FieldSeparator" />
 
         <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
-            style="@style/FieldInput.MultipleChoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/form_main_threats"
@@ -148,8 +132,7 @@
 
         <View style="@style/FieldSeparator" />
 
-        <EditText
-            style="@style/FieldInput.Memo"
+        <org.bspb.smartbirds.pro.ui.views.MemoFormInput
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Бележки"

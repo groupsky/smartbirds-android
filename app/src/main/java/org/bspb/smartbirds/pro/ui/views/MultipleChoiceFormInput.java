@@ -39,7 +39,7 @@ public class MultipleChoiceFormInput extends TextView {
     }
 
     public MultipleChoiceFormInput(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.spinnerStyle);
+        this(context, attrs, R.attr.multipleChoiceFormInputStyle);
     }
 
     public MultipleChoiceFormInput(Context context, AttributeSet attrs, int defStyle) {
@@ -117,7 +117,6 @@ public class MultipleChoiceFormInput extends TextView {
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            Log.d(TAG, String.format("onClick: %d", which));
             switch (which) {
                 case AlertDialog.BUTTON_NEGATIVE:
                     break;

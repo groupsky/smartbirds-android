@@ -1,10 +1,14 @@
 package org.bspb.smartbirds.pro.ui.views;
 
+import static android.app.Dialog.BUTTON_NEGATIVE;
+import static android.app.Dialog.BUTTON_POSITIVE;
+import static android.app.Dialog.BUTTON_NEUTRAL;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.widget.AdapterView.INVALID_POSITION;
 import static android.view.ViewGroup.LayoutParams.*;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -45,7 +49,7 @@ public class SingleChoiceFormInput extends TextView {
     }
 
     public SingleChoiceFormInput(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.spinnerStyle);
+        this(context, attrs, R.attr.singleChoiceFormInputStyle);
     }
 
     public SingleChoiceFormInput(Context context, AttributeSet attrs, int defStyle) {
@@ -110,6 +114,7 @@ public class SingleChoiceFormInput extends TextView {
     private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {
 
         private AlertDialog mPopup;
+        private int mLastSelected = INVALID_POSITION;
 
         public void show() {
             EditText view = new EditText(getContext());
@@ -125,6 +130,9 @@ public class SingleChoiceFormInput extends TextView {
                     .setCancelable(true)
                     .setView(view)
                     .setOnCancelListener(this)
+                    .setPositiveButton(android.R.string.ok, this)
+                    .setNegativeButton(android.R.string.cancel, this)
+                    .setNeutralButton("Clear", this)
                     .create();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -134,13 +142,37 @@ public class SingleChoiceFormInput extends TextView {
             }
 
             mPopup.show();
+
+            mPopup.getButton(BUTTON_POSITIVE).setEnabled(mSelectedPosition != INVALID_POSITION);
         }
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            setSelection(which);
-            mPopup.dismiss();
-            ((Filterable) mAdapter).getFilter().filter(null, this);
+            switch (which) {
+                case BUTTON_NEGATIVE:
+                    mPopup.dismiss();
+                    ((Filterable) mAdapter).getFilter().filter(null, this);
+                    break;
+                case BUTTON_POSITIVE:
+                    if (mLastSelected == INVALID_POSITION) return;
+                    setSelection(mLastSelected);
+                    mPopup.dismiss();
+                    ((Filterable) mAdapter).getFilter().filter(null, this);
+                    break;
+                case BUTTON_NEUTRAL:
+                    setSelection(INVALID_POSITION);
+                    mPopup.dismiss();
+                    ((Filterable) mAdapter).getFilter().filter(null, this);
+                    break;
+                default:
+                    if (mLastSelected == which) {
+                        onClick(dialog, BUTTON_POSITIVE);
+                    } else {
+                        mPopup.getButton(BUTTON_POSITIVE).setEnabled(true);
+                        mLastSelected = which;
+                    }
+                    break;
+            }
         }
 
         @Override

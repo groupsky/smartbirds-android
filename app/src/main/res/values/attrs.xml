@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Stylable attributes for Theme -->
+    <declare-styleable name="Theme">
+        <attr name="singleChoiceFormInputStyle" format="reference" />
+        <attr name="multipleChoiceFormInputStyle" format="reference" />
+        <attr name="dateFormInputStyle" format="reference" />
+        <attr name="timeFormInputStyle" format="reference" />
+        <attr name="textFormInputStyle" format="reference" />
+        <attr name="numberFormInputStyle" format="reference" />
+        <attr name="multipleTextFormInputStyle" format="reference" />
+        <attr name="memoFormInputStyle" format="reference" />
+        <attr name="switchFormInputStyle" format="reference" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for SingleChoiceFormInput -->
     <declare-styleable name="SingleChoiceFormInput">
         <attr name="android:entries" />
     </declare-styleable>
+
+    <!-- Stylable attributes for MultipleChoiceFormInput -->
     <declare-styleable name="MultipleChoiceFormInput">
         <attr name="android:entries" />
     </declare-styleable>

@@ -2,7 +2,15 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="singleChoiceFormInputStyle">@style/FieldInput.SingleChoice</item>
+        <item name="multipleChoiceFormInputStyle">@style/FieldInput.MultipleChoice</item>
+        <item name="dateFormInputStyle">@style/FieldInput.Date</item>
+        <item name="timeFormInputStyle">@style/FieldInput.Time</item>
+        <item name="textFormInputStyle">@style/FieldInput.Text</item>
+        <item name="numberFormInputStyle">@style/FieldInput.Number</item>
+        <item name="multipleTextFormInputStyle">@style/FieldInput.MultipleText</item>
+        <item name="memoFormInputStyle">@style/FieldInput.Memo</item>
+        <item name="switchFormInputStyle">@style/FieldInput.Switch</item>
     </style>
 
     <style name="FieldSeparator">
@@ -17,27 +25,16 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <style name="FieldInput">
+    <style name="FieldInput.Text" parent="android:Widget.Holo.Light.EditText">
         <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingBottom">5dp</item>
-        <item name="android:focusable">true</item>
-        <item name="android:focusableInTouchMode">true</item>
-    </style>
-
-    <style name="FieldInput.Spinner" parent="android:Widget.Holo.Light.Spinner">
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingRight">15dp</item>
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:spinnerMode">dialog</item>
-        <item name="android:textAppearance">?android:textAppearanceMedium</item>
-    </style>
-
-    <style name="FieldInput.Text" parent="FieldInput">
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:inputType">text</item>
     </style>
+
+    <style name="FieldInput.MultipleText" parent="FieldInput.Text"></style>
 
     <style name="FieldInput.Number" parent="FieldInput.Text">
         <item name="android:inputType">number</item>
@@ -51,26 +48,21 @@
     </style>
 
     <style name="FieldInput.SemiSpinner" parent="android:Widget.Holo.Light.Spinner">
-        <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:clickable">true</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
-        <item name="android:focusable">true</item>
-        <item name="android:focusableInTouchMode">true</item>
     </style>
 
-    <style name="FieldInput.Date" parent="FieldInput.SemiSpinner">
-    </style>
+    <style name="FieldInput.Date" parent="FieldInput.SemiSpinner"></style>
 
-    <style name="FieldInput.Time" parent="FieldInput.SemiSpinner">
-    </style>
+    <style name="FieldInput.Time" parent="FieldInput.SemiSpinner"></style>
 
-    <style name="FieldInput.MultipleChoice" parent="FieldInput.SemiSpinner">
-    </style>
+    <style name="FieldInput.MultipleChoice" parent="FieldInput.SemiSpinner"></style>
 
-    <style name="FieldInput.SingleChoice" parent="FieldInput.SemiSpinner">
-    </style>
+    <style name="FieldInput.SingleChoice" parent="FieldInput.SemiSpinner"></style>
+
+    <style name="FieldInput.Switch" parent="android:Widget.Holo.Light.CompoundButton.CheckBox"></style>
 
 </resources>

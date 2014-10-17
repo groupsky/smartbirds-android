@@ -10,107 +10,96 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_substrate"
-            android:tag="Субстрат"
-            android:hint="Субстрат" />
+            android:hint="Субстрат"
+            android:tag="Субстрат" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_location"
-            android:tag="Дърво"
-            android:hint="Дърво" />
+            android:hint="Дърво"
+            android:tag="Дърво" />
 
-        <EditText
-            style="@style/FieldInput.Number"
-            android:tag="Височина_на_дървото"
-            android:hint="Височина на дървото" />
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+            android:hint="Височина на дървото"
+            android:tag="Височина_на_дървото" />
 
     </TableRow>
 
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_location"
-            android:tag="Местоположение_на_дървото"
-            android:hint="Местоположение_на_дървото" />
+            android:hint="Местоположение на дървото"
+            android:tag="Местоположение_на_дървото" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_height"
-            android:tag="Височина_на_гнездото"
-            android:hint="Височина_на_гнездото" />
+            android:hint="Височина на гнездото"
+            android:tag="Височина_на_гнездото" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_position"
-            android:tag="Местоположение_на_гнездото"
-            android:hint="Местоположение_на_гнездото" />
+            android:hint="Местоположение на гнездото"
+            android:tag="Местоположение_на_гнездото" />
     </TableRow>
 
     <TableRow>
 
-        <CheckBox android:text="Мътене"
-            android:tag="Мътене"/>
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:tag="Мътене"
+            android:text="Мътене" />
 
-        <EditText
-            style="@style/FieldInput.Number"
-            android:tag="Брой_яйца"
-            android:hint="Брой яйца" />
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+            android:hint="Брой яйца"
+            android:tag="Брой_яйца" />
 
-        <EditText
-            style="@style/FieldInput.Number"
-            android:tag="Брой_пухови_малки"
-            android:hint="Брой пухови малки" />
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+            android:hint="Брой пухови малки"
+            android:tag="Брой_пухови_малки" />
 
     </TableRow>
 
     <TableRow>
 
-        <EditText
-            style="@style/FieldInput.Number"
-            android:tag="Брой_оперени_малки_в_гнездото"
-            android:hint="Брой оперени малки в гнездото" />
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+            android:hint="Брой оперени малки в гнездото"
+            android:tag="Брой_оперени_малки_в_гнездото" />
 
-        <EditText
-            style="@style/FieldInput.Number"
-            android:tag="Брой_излетели_малки"
-            android:hint="Брой излетели малки" />
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+            android:hint="Брой излетели малки"
+            android:tag="Брой_излетели_малки" />
 
-        <CheckBox android:text="Охрана на гнездото" android:tag="Охрана_на_гнездото" />
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:tag="Охрана_на_гнездото"
+            android:text="Охрана на гнездото" />
     </TableRow>
 
     <TableRow android:gravity="bottom">
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_age_individual"
-            android:tag="Възраст_на_женската"
-            android:hint="Възраст на женската" />
+            android:hint="Възраст на женската"
+            android:tag="Възраст_на_женската" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_age_individual"
-            android:tag="Възраст_на_мъжката"
-            android:hint="Възраст на мъжката" />
+            android:hint="Възраст на мъжката"
+            android:tag="Възраст_на_мъжката" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nest_success"
-            android:tag="Гнездови_успех"
-            android:hint="Гнездови успех" />
+            android:hint="Гнездови успех"
+            android:tag="Гнездови_успех" />
 
     </TableRow>
 
     <TableRow>
 
-        <EditText
-            style="@style/FieldInput.Memo"
+        <org.bspb.smartbirds.pro.ui.views.MemoFormInput
             android:layout_span="3"
-            android:tag="Земеползване_в_радиус_от_300м"
             android:hint="Земеползване в радиус от 300м"
-            android:lines="1" />
+            android:lines="1"
+            android:tag="Земеползване_в_радиус_от_300м" />
 
     </TableRow>
 </TableLayout>

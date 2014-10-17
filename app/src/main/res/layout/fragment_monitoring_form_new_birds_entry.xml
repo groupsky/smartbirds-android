@@ -11,13 +11,12 @@
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
             android:id="@+id/field_name"
-            style="@style/FieldInput.SingleChoice"
             android:layout_span="3"
             android:entries="@array/form_birds_name"
             android:hint="Вид научно име"
             android:tag="Вид_научно_име" />
 
-        <CheckBox
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
             android:tag="Поверително"
             android:text="Поверително" />
 
@@ -26,19 +25,16 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_count_units"
             android:hint="Единица на броя"
             android:tag="Единица_на_броя" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_count_type"
             android:hint="Тип на броя"
             android:tag="Тип_на_броя" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_nesting"
             android:hint="Тип гнездене"
             android:tag="Тип_Гнездене" />
@@ -46,18 +42,15 @@
 
     <TableRow>
 
-        <EditText
-            style="@style/FieldInput.Number"
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
             android:hint="Брой"
             android:tag="Брой" />
 
-        <EditText
-            style="@style/FieldInput.Number"
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
             android:hint="Мин."
             android:tag="Мин." />
 
-        <EditText
-            style="@style/FieldInput.Number"
+        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
             android:hint="Макс."
             android:tag="Макс." />
 
@@ -66,19 +59,16 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_sex"
             android:hint="Пол"
             android:tag="Пол" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_age"
             android:hint="Възраст"
             android:tag="Възраст" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:entries="@array/form_birds_marking"
             android:hint="Маркировка"
             android:tag="Маркировка" />
@@ -89,14 +79,12 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:layout_span="2"
             android:entries="@array/form_birds_status"
             android:hint="Статус на вида"
             android:tag="Статус_на_вида" />
 
         <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
-            style="@style/FieldInput.MultipleChoice"
             android:layout_span="2"
             android:entries="@array/form_birds_behaviour"
             android:hint="Поведение"
@@ -106,7 +94,6 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            style="@style/FieldInput.SingleChoice"
             android:layout_span="2"
             android:entries="@array/form_birds_death"
             android:hint="Мъртъв индивид (причини)"
