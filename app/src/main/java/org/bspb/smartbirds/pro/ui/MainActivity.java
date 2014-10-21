@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.view.Window;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -22,6 +23,8 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.events.StartingUpload;
+import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.ui.StartMonitoringActivity;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
@@ -32,6 +35,12 @@ import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 public class MainActivity extends Activity {
 
     @Bean EEventBus bus;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+    }
 
     @AfterViews
     void createFragment() {
@@ -60,5 +69,13 @@ public class MainActivity extends Activity {
 
     public void onEvent(StartMonitoringEvent event) {
         StartMonitoringActivity_.intent(this).start();
+    }
+
+    public void onEvent(StartingUpload event) {
+        setProgressBarIndeterminateVisibility(true);
+    }
+
+    public void onEvent(UploadCompleted event) {
+        setProgressBarIndeterminateVisibility(false);
     }
 }

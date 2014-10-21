@@ -327,4 +327,5 @@ public class DataService extends Service {
     public void onEvent(GetMonitoringCommonData event) {
         bus.post(new MonitoringCommonData(commonData));
     }
+
 }

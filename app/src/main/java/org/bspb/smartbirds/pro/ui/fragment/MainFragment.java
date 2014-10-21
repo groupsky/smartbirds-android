@@ -16,16 +16,47 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.events.StartingUpload;
+import org.bspb.smartbirds.pro.events.UploadCompleted;
+import org.bspb.smartbirds.pro.service.UploadService_;
 import org.bspb.smartbirds.pro.ui.StartMonitoringActivity_;
 
 @EFragment(R.layout.fragment_main)
 public class MainFragment extends Fragment {
 
-    @Bean EEventBus bus;
+    @Bean
+    EEventBus bus;
+
+    @ViewById(R.id.progress)
+    View progress;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        bus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        bus.unregister(this);
+        super.onStop();
+    }
 
     @Click(R.id.btn_start)
     void startBtnClicked() {
         bus.postSticky(new StartMonitoringEvent());
     }
 
+    @Click(R.id.btn_upload)
+    void uploadBtnClicked() {
+        UploadService_.intent(this).uploadAll().start();
+    }
+
+    public void onEvent(StartingUpload event) {
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    public void onEvent(UploadCompleted event) {
+        progress.setVisibility(View.GONE);
+    }
 }

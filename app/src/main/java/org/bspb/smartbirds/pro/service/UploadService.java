@@ -13,6 +13,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 
 import java.io.File;
@@ -36,8 +37,21 @@ public class UploadService extends IntentService {
 
     }
 
+    @ServiceAction
+    void uploadAll() {
+        Log.d(TAG, "uploading all finished monitorings");
+        File baseDir = getExternalFilesDir(null);
+        for (String monitoring: baseDir.list()) {
+            if (!monitoring.endsWith("-up")) continue;
+            File monitoringDir = new File(baseDir, monitoring);
+            if (!monitoringDir.isDirectory()) continue;
+            upload(monitoringDir.getAbsolutePath());
+        }
+    }
+
     @ServiceAction()
     void upload(String monitoringPath) {
+        eventBus.post(new StartingUpload(monitoringPath));
         Log.d(TAG, String.format("uploading %s", monitoringPath));
         File file = new File(monitoringPath);
         String monitoringName = file.getName().replace("-up", "");

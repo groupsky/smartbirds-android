@@ -79,6 +79,8 @@ public class FormUtils {
         }
 
         public void setValue(String value) {
+            if (value == null)
+                return;
             if (view instanceof EditText) {
                 EditText editText = (EditText) view;
                 editText.setText(value);
@@ -115,6 +117,7 @@ public class FormUtils {
         }
 
         public void deserialize(HashMap<String, String> values) {
+            if (values == null) return;
             for (String key: fields.keySet()) {
                 if (!values.containsKey(key)) continue;
                 FormField field = fields.get(key);
