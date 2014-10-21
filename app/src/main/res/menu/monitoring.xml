@@ -16,5 +16,10 @@
         android:showAsAction="always"
         android:enabled="false"
         android:title="Ново отчитане"/>
+    <item
+        android:id="@+id/action_common_form"
+        android:orderInCategory="75"
+        android:showAsAction="always"
+        android:title="Общи" />
 
 </menu>

@@ -56,6 +56,17 @@
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
         </activity>
 
+        <activity
+            android:name=".ui.EditCommonFormActivity_"
+            android:label="@string/title_activity_edit"
+            android:parentActivityName=".ui.MonitoringActivity_"
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
+        </activity>
+
         <service
             android:name=".service.DataService_"
             android:enabled="true"

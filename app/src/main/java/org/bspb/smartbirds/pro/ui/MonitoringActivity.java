@@ -104,6 +104,11 @@ public class MonitoringActivity extends FragmentActivity {
         ib.startForResult(REQUEST_NEW_ENTRY);
     }
 
+    @OptionsItem(R.id.action_common_form)
+    void onCommonForm() {
+        EditCommonFormActivity_.intent(this).start();
+    }
+
     @OnActivityResult(REQUEST_NEW_ENTRY)
     void onNewEntry(int resultCode, Intent data) {
         if (resultCode != RESULT_OK)

@@ -8,5 +8,6 @@
     <string name="title_activity_start_monitoring">Start Monitoring</string>
     <string name="title_activity_monitoring">Monitoring</string>
     <string name="title_activity_form">FormActivity</string>
+    <string name="title_activity_edit">Edit common form</string>
 
 </resources>

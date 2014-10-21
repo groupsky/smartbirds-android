@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.googlecode.jcsv.CSVStrategy;
 import com.googlecode.jcsv.writer.CSVWriter;
 import com.googlecode.jcsv.writer.internal.CSVWriterBuilder;
 import com.googlecode.jcsv.writer.internal.DefaultCSVEntryConverter;
@@ -23,18 +24,31 @@ import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
+import org.bspb.smartbirds.pro.events.GetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
+import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -167,18 +181,68 @@ public class DataService extends Service {
         monitoring = false;
         TrackingService_.intent(this).stop();
         closeGpxFile();
+
+        combineCommonWithEntires();
+
         File newDir = new File(monitoringDir.getAbsolutePath().replace("-wip", "-up"));
         monitoringDir.renameTo(newDir);
         monitoringDir = newDir;
         UploadService_.intent(this).upload(monitoringDir.getAbsolutePath()).start();
     }
 
+    private void combineCommonWithEntires() {
+        try {
+
+            String[] commonLines = convertToCsvLines(commonData);
+
+            File entriesFile = new File(monitoringDir, "entries.csv");
+            BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
+            File tempFile = new File(monitoringDir, "combined_entries.csv");
+            BufferedWriter outWriter = new BufferedWriter(new FileWriter(tempFile));
+            try {
+                boolean firstLine = true;
+                String entry;
+                while ((entry = entriesReader.readLine()) != null) {
+                    if (firstLine) {
+                        outWriter.write(commonLines[0]);
+                        firstLine = false;
+                    } else {
+                        outWriter.write(commonLines[1]);
+                    }
+                    outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
+                    outWriter.write(entry);
+                    outWriter.newLine();
+                }
+            } finally {
+                outWriter.close();
+                entriesReader.close();
+            }
+
+            entriesFile.delete();
+            tempFile.renameTo(entriesFile);
+        } catch (Throwable t) {
+            Crashlytics.logException(t);
+        }
+    }
+
+    private String[] convertToCsvLines(HashMap<String, String> data) throws IOException {
+        StringWriter memory = new StringWriter();
+        try {
+            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(memory).strategy(CSVStrategy.DEFAULT).entryConverter(new DefaultCSVEntryConverter()).build();
+            csvWriter.write(commonData.keySet().toArray(new String[]{}));
+            csvWriter.write(commonData.values().toArray(new String[]{}));
+            memory.flush();
+        } finally {
+            memory.close();
+        }
+        String commonData = memory.getBuffer().toString();
+        return commonData.split(System.getProperty("line.separator"));
+    }
+
     public void onEvent(EntrySubmitted event) {
         Log.d(TAG, "onEntrySubmitted");
 
-        HashMap<String, String> data = new HashMap<String, String>();
-        data.putAll(commonData);
-        data.putAll(event.data);
+        HashMap<String, String> data = event.data;
 
         File file = new File(monitoringDir, "entries.csv");
         boolean exists = file.exists();
@@ -186,7 +250,7 @@ public class DataService extends Service {
         try {
             fos = new FileOutputStream(file, true);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
-            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).entryConverter(new DefaultCSVEntryConverter()).build();
+            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).strategy(CSVStrategy.DEFAULT).entryConverter(new DefaultCSVEntryConverter()).build();
 
             if (!exists)
                 csvWriter.write(data.keySet().toArray(new String[]{}));
@@ -258,5 +322,9 @@ public class DataService extends Service {
                 Crashlytics.logException(e);
             }
         }
+    }
+
+    public void onEvent(GetMonitoringCommonData event) {
+        bus.post(new MonitoringCommonData(commonData));
     }
 }

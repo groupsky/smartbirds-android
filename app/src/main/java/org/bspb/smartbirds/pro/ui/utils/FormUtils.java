@@ -62,10 +62,6 @@ public class FormUtils {
         }
 
         public String getValue() {
-            if (view instanceof Spinner) {
-                Spinner spinner = (Spinner) view;
-                return spinner.getSelectedItem().toString();
-            }
             if (view instanceof EditText) {
                 EditText editText = (EditText) view;
                 return editText.getText().toString();
@@ -80,6 +76,21 @@ public class FormUtils {
             }
             Log.w(TAG, "unsupported view "+view.getClass());
             return "";
+        }
+
+        public void setValue(String value) {
+            if (view instanceof EditText) {
+                EditText editText = (EditText) view;
+                editText.setText(value);
+            }
+            if (view instanceof CheckBox) {
+                CheckBox checkBox = (CheckBox) view;
+                checkBox.setChecked("1".equals(value));
+            }
+            if (view instanceof TextView) {
+                TextView textView = (TextView) view;
+                textView.setText(value);
+            }
         }
     }
 
@@ -101,6 +112,14 @@ public class FormUtils {
                 values.put(key, value);
             }
             return values;
+        }
+
+        public void deserialize(HashMap<String, String> values) {
+            for (String key: fields.keySet()) {
+                if (!values.containsKey(key)) continue;
+                FormField field = fields.get(key);
+                field.setValue(values.get(key));
+            }
         }
     }
 
