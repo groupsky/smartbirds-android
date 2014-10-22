@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterInject;
@@ -32,12 +33,15 @@ public class TrackingService extends Service implements LocationListener {
     Location lastLocation;
     @SystemService
     LocationManager locationManager;
+    @SystemService
+    PowerManager powerManager;
 
     private final IBinder binder = new Binder() {
         public TrackingService getService() {
             return TrackingService.this;
         }
     };
+    private PowerManager.WakeLock wakeLock;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -74,6 +78,10 @@ public class TrackingService extends Service implements LocationListener {
     private void startTracking() {
         Log.v(TAG, "Requesting location updates");
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
+        wakeLock.acquire();
+
         tracking = true;
     }
 
@@ -81,6 +89,7 @@ public class TrackingService extends Service implements LocationListener {
         Log.v(TAG, "Stopping location updates");
         locationManager.removeUpdates(this);
         tracking = false;
+        wakeLock.release();
     }
 
     @Override
