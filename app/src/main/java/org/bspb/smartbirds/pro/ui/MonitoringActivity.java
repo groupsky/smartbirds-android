@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -14,10 +15,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
@@ -26,6 +30,10 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu(R.menu.monitoring)
@@ -38,6 +46,9 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuNewEntry;
     @Bean
     EEventBus eventBus;
+    Polyline path;
+    @InstanceState
+    ArrayList<LatLng> points = new ArrayList<LatLng>();
 
 
     @AfterViews
@@ -87,11 +98,21 @@ public class MonitoringActivity extends FragmentActivity {
      */
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
+        path = mMap.addPolyline(new PolylineOptions()
+                        .addAll(points)
+                        .width(5)
+                        .color(Color.BLUE)
+                        .geodesic(true)
+        );
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
                 menuNewEntry.setEnabled(true);
+
+                points.add(new LatLng(location.getLatitude(), location.getLongitude()));
+                path.setPoints(points);
+
             }
         });
     }
@@ -157,4 +178,5 @@ public class MonitoringActivity extends FragmentActivity {
     void doCancel() {
         eventBus.post(new CancelMonitoringEvent());
     }
+
 }
