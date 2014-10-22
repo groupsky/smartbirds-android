@@ -11,6 +11,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsItem;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
@@ -58,16 +59,12 @@ public class NewMonitoringEntryActivity extends Activity {
         super.onStop();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            setResult(RESULT_CANCELED);
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    @OptionsItem(android.R.id.home)
+    void cancel() {
+        setResult(RESULT_CANCELED);
+        finish();
     }
-
+    
     public void onEvent(EntrySubmitted event) {
         setResult(RESULT_OK, new Intent().putExtra(EXTRA_LAT, lat).putExtra(EXTRA_LON, lon));
         finish();

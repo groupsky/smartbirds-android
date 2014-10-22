@@ -26,7 +26,7 @@ import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
 @OptionsMenu(R.menu.monitoring_edit_common_form)
 public class EditCommonFormActivity extends Activity {
 
-    private static final String TAG = SmartBirdsApplication.TAG+".StartMonitoring";
+    private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
     MonitoringCommonFormFragment formFragment;
 
     @AfterViews
@@ -41,8 +41,14 @@ public class EditCommonFormActivity extends Activity {
     }
 
     @OptionsItem(R.id.action_submit)
-    public void save() {
+    void save() {
         formFragment.save();
+        finish();
+    }
+
+    @OptionsItem(android.R.id.home)
+    void cancel() {
+        setResult(RESULT_CANCELED);
         finish();
     }
 

@@ -28,10 +28,11 @@ import java.util.HashMap;
 
 @EActivity(R.layout.activity_start_monitoring)
 @OptionsMenu(R.menu.monitoring_common_form)
-public class StartMonitoringActivity extends Activity  {
+public class StartMonitoringActivity extends Activity {
 
-    private static final String TAG = SmartBirdsApplication.TAG+".StartMonitoring";
-    @Bean EEventBus bus;
+    private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
+    @Bean
+    EEventBus bus;
     MonitoringCommonFormFragment formFragment;
 
     @AfterViews
@@ -71,19 +72,14 @@ public class StartMonitoringActivity extends Activity  {
         cancelMonitoring();
     }
 
-    private void cancelMonitoring() {
+    @OptionsItem(android.R.id.home)
+    void cancelMonitoring() {
         Log.d(TAG, "cancelMonitoring");
         bus.removeStickyEvent(StartMonitoringEvent.class);
         bus.removeStickyEvent(MonitoringStartedEvent.class);
         bus.post(new CancelMonitoringEvent());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            cancelMonitoring();
-        }
-        return super.onOptionsItemSelected(item);
+        if (!isFinishing())
+            finish();
     }
 
     @OptionsItem(R.id.action_submit)

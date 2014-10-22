@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
@@ -21,6 +23,7 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 
@@ -120,5 +123,38 @@ public class MonitoringActivity extends FragmentActivity {
     void onFinish() {
         eventBus.post(new FinishMonitoringEvent());
         finish();
+    }
+
+    @OptionsItem(android.R.id.home)
+    void onUp() {
+        confirmCancel();
+    }
+
+    @Override
+    public void onBackPressed() {
+        confirmCancel();
+    }
+
+    private void confirmCancel() {
+        //Ask the user if they want to quit
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.cancel_monitoring)
+                .setMessage(R.string.really_cancel_monitoring)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        doCancel();
+                        finish();
+                    }
+
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+    }
+
+    void doCancel() {
+        eventBus.post(new CancelMonitoringEvent());
     }
 }
