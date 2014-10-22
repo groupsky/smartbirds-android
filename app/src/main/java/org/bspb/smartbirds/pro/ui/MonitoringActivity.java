@@ -7,17 +7,19 @@ import android.graphics.Color;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.SphericalUtil;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -32,8 +34,6 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu(R.menu.monitoring)
@@ -49,6 +49,18 @@ public class MonitoringActivity extends FragmentActivity {
     Polyline path;
     @InstanceState
     ArrayList<LatLng> points = new ArrayList<LatLng>();
+    @InstanceState
+    double zoomFactor = 500;
+    @InstanceState
+    LatLng lastPosition;
+    @OptionsMenuItem(R.id.action_zoom_1km)
+    MenuItem menuZoom1km;
+    @OptionsMenuItem(R.id.action_zoom_500m)
+    MenuItem menuZoom500m;
+    @OptionsMenuItem(R.id.action_zoom_250m)
+    MenuItem menuZoom250m;
+    @OptionsMenuItem(R.id.action_zoom_100m)
+    MenuItem menuZoom100m;
 
 
     @AfterViews
@@ -97,7 +109,13 @@ public class MonitoringActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
+        mMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.setMyLocationEnabled(true);
+//        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         path = mMap.addPolyline(new PolylineOptions()
                         .addAll(points)
                         .width(5)
@@ -107,7 +125,8 @@ public class MonitoringActivity extends FragmentActivity {
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
+                lastPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                updateCamera();
                 menuNewEntry.setEnabled(true);
 
                 points.add(new LatLng(location.getLatitude(), location.getLongitude()));
@@ -115,6 +134,13 @@ public class MonitoringActivity extends FragmentActivity {
 
             }
         });
+    }
+
+    private void updateCamera() {
+        if (lastPosition == null) return;
+        LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
+        LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
     }
 
     @OptionsItem(R.id.action_new_entry)
@@ -179,4 +205,31 @@ public class MonitoringActivity extends FragmentActivity {
         eventBus.post(new CancelMonitoringEvent());
     }
 
+    @OptionsItem(R.id.action_zoom_1km)
+    void setZoom1km() {
+        zoomFactor = 1000;
+        menuZoom1km.setChecked(true);
+        updateCamera();
+    }
+
+    @OptionsItem(R.id.action_zoom_500m)
+    void setZoom500m() {
+        zoomFactor = 500;
+        menuZoom500m.setChecked(true);
+        updateCamera();
+    }
+
+    @OptionsItem(R.id.action_zoom_250m)
+    void setZoom250m() {
+        zoomFactor = 250;
+        menuZoom250m.setChecked(true);
+        updateCamera();
+    }
+
+    @OptionsItem(R.id.action_zoom_100m)
+    void setZoom100m() {
+        zoomFactor = 100;
+        menuZoom100m.setChecked(true);
+        updateCamera();
+    }
 }
