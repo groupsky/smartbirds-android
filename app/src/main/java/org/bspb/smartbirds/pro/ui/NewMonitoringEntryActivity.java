@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -55,6 +56,16 @@ public class NewMonitoringEntryActivity extends Activity {
     protected void onStop() {
         eventBus.unregister(this);
         super.onStop();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            setResult(RESULT_CANCELED);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onEvent(EntrySubmitted event) {
