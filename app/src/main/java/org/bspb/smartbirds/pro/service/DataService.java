@@ -44,8 +44,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -189,7 +187,6 @@ public class DataService extends Service {
         monitoring = false;
 
         monitoringDir = newDir;
-        UploadService_.intent(this).upload(monitoringDir.getAbsolutePath()).start();
     }
 
     private void combineCommonWithEntires() {
