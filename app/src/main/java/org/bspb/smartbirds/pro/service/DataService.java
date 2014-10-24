@@ -192,10 +192,12 @@ public class DataService extends Service {
 
     private void combineCommonWithEntires() {
         try {
+            File entriesFile = new File(monitoringDir, "entries.csv");
+            if (!entriesFile.exists())
+                return;
 
             String[] commonLines = convertToCsvLines(commonData);
 
-            File entriesFile = new File(monitoringDir, "entries.csv");
             BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
             File tempFile = new File(monitoringDir, "combined_entries.csv");
             BufferedWriter outWriter = new BufferedWriter(new FileWriter(tempFile));
@@ -292,7 +294,7 @@ public class DataService extends Service {
         if (monitoring) {
             File file = new File(monitoringDir, "track.gpx");
             try {
-                OutputStreamWriter osw = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file, true)));
+                Writer osw = new BufferedWriter(new FileWriter(file, true));
                 try {
                     osw.write(
                             "  </trk>\n" +
