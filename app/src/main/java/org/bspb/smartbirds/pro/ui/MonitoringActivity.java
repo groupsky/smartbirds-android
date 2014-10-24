@@ -174,7 +174,9 @@ public class MonitoringActivity extends FragmentActivity {
     void onNewEntry(int resultCode, Intent data) {
         if (resultCode != RESULT_OK)
             return;
-        mMap.addMarker(new MarkerOptions().position(new LatLng(data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0))).title("Отчитане"));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0)))
+                .title(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, "Отчитане")));
     }
 
     @OptionsItem(R.id.action_finish)

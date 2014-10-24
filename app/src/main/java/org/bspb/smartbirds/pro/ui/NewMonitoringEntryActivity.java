@@ -28,6 +28,7 @@ public class NewMonitoringEntryActivity extends Activity {
 
     public static final String EXTRA_LAT = "lat";
     public static final String EXTRA_LON = "lon";
+    public static final String EXTRA_NAME = "name";
 
     @Extra(EXTRA_LAT)
     double lat;
@@ -64,7 +65,11 @@ public class NewMonitoringEntryActivity extends Activity {
     }
 
     public void onEvent(EntrySubmitted event) {
-        setResult(RESULT_OK, new Intent().putExtra(EXTRA_LAT, lat).putExtra(EXTRA_LON, lon));
+        Intent intent = new Intent().putExtra(EXTRA_LAT, lat).putExtra(EXTRA_LON, lon);
+        if (event.data.containsKey("Вид_научно_име")) {
+            intent.putExtra(EXTRA_NAME, event.data.get("Вид_научно_име"));
+        }
+        setResult(RESULT_OK, intent);
         finish();
     }
 
