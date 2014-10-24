@@ -178,7 +178,6 @@ public class DataService extends Service {
     }
 
     public void onEvent(FinishMonitoringEvent event) {
-        monitoring = false;
         TrackingService_.intent(this).stop();
         closeGpxFile();
 
@@ -186,6 +185,9 @@ public class DataService extends Service {
 
         File newDir = new File(monitoringDir.getAbsolutePath().replace("-wip", "-up"));
         monitoringDir.renameTo(newDir);
+
+        monitoring = false;
+
         monitoringDir = newDir;
         UploadService_.intent(this).upload(monitoringDir.getAbsolutePath()).start();
     }
@@ -272,7 +274,7 @@ public class DataService extends Service {
         if (monitoring && location != null) {
             File file = new File(monitoringDir, "track.gpx");
             try {
-                OutputStreamWriter osw = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file, true)));
+                Writer osw = new BufferedWriter(new FileWriter(file, true));
                 try {
                     osw.write(
                             "    <trkseg>\n" +
