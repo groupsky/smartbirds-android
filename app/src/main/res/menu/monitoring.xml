@@ -6,41 +6,78 @@
 
     <item
         android:id="@+id/action_finish"
+        android:menuCategory="container"
         android:orderInCategory="50"
         android:showAsAction="always"
         android:title="Завършване" />
     <item
         android:id="@+id/action_new_entry"
+        android:menuCategory="container"
         android:enabled="false"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="Ново отчитане" />
     <item
         android:id="@+id/action_common_form"
+        android:menuCategory="container"
         android:orderInCategory="75"
         android:showAsAction="always"
         android:title="Общи" />
 
-    <group android:checkableBehavior="single" >
-        <item
-            android:id="@+id/action_zoom_free"
-            android:title="Free" />
+    <item
+        android:id="@+id/menu_zoom"
+        android:menuCategory="alternative"
+        android:showAsAction="ifRoom"
+        android:title="500m">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/action_zoom_free"
+                    android:title="Free" />
 
-        <item
-            android:id="@+id/action_zoom_1km"
-            android:title="1km" />
+                <item
+                    android:id="@+id/action_zoom_1km"
+                    android:title="1km" />
 
-        <item
-            android:id="@+id/action_zoom_500m"
-            android:checked="true"
-            android:title="500m" />
+                <item
+                    android:id="@+id/action_zoom_500m"
+                    android:checked="true"
+                    android:title="500m" />
 
-        <item
-            android:id="@+id/action_zoom_250m"
-            android:title="250m" />
+                <item
+                    android:id="@+id/action_zoom_250m"
+                    android:title="250m" />
 
-        <item
-            android:id="@+id/action_zoom_100m"
-            android:title="100m" />
-    </group>
+                <item
+                    android:id="@+id/action_zoom_100m"
+                    android:title="100m" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_map"
+        android:menuCategory="alternative"
+        android:showAsAction="ifRoom|withText"
+        android:title="Нормална">
+        <menu>
+
+            <group
+                android:checkableBehavior="single"
+                android:menuCategory="alternative">
+                <item
+                    android:id="@+id/action_map_google_normal"
+                    android:checked="true"
+                    android:title="Нормална" />
+
+                <item
+                    android:id="@+id/action_map_google_satellite"
+                    android:title="Сателитна" />
+
+                <item
+                    android:id="@+id/action_map_google_hybrid"
+                    android:title="Хибридна" />
+            </group>
+        </menu>
+    </item>
 </menu>

@@ -53,16 +53,10 @@ public class MonitoringActivity extends FragmentActivity {
     double zoomFactor = 500;
     @InstanceState
     LatLng lastPosition;
-    @OptionsMenuItem(R.id.action_zoom_1km)
-    MenuItem menuZoom1km;
-    @OptionsMenuItem(R.id.action_zoom_500m)
-    MenuItem menuZoom500m;
-    @OptionsMenuItem(R.id.action_zoom_250m)
-    MenuItem menuZoom250m;
-    @OptionsMenuItem(R.id.action_zoom_100m)
-    MenuItem menuZoom100m;
-    @OptionsMenuItem(R.id.action_zoom_free)
-    MenuItem menuZoomFree;
+    @OptionsMenuItem(R.id.menu_map)
+    MenuItem menuMap;
+    @OptionsMenuItem(R.id.menu_zoom)
+    MenuItem menuZoom;
 
 
     @AfterViews
@@ -114,7 +108,9 @@ public class MonitoringActivity extends FragmentActivity {
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.setMyLocationEnabled(true);
-//        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        mMap.setBuildingsEnabled(false);
+        mMap.setIndoorEnabled(false);
+        mMap.setTrafficEnabled(false);
         path = mMap.addPolyline(new PolylineOptions()
                         .addAll(points)
                         .width(5)
@@ -219,37 +215,63 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     @OptionsItem(R.id.action_zoom_1km)
-    void setZoom1km() {
+    void setZoom1km(MenuItem sender) {
         zoomFactor = 1000;
-        menuZoom1km.setChecked(true);
+        sender.setChecked(true);
+        menuZoom.setTitle(sender.getTitle());
         updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_500m)
-    void setZoom500m() {
+    void setZoom500m(MenuItem sender) {
         zoomFactor = 500;
-        menuZoom500m.setChecked(true);
+        sender.setChecked(true);
+        menuZoom.setTitle(sender.getTitle());
         updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_250m)
-    void setZoom250m() {
+    void setZoom250m(MenuItem sender) {
         zoomFactor = 250;
-        menuZoom250m.setChecked(true);
+        sender.setChecked(true);
+        menuZoom.setTitle(sender.getTitle());
         updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_100m)
-    void setZoom100m() {
+    void setZoom100m(MenuItem sender) {
         zoomFactor = 100;
-        menuZoom100m.setChecked(true);
+        sender.setChecked(true);
+        menuZoom.setTitle(sender.getTitle());
         updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_free)
-    void setZoomFree() {
+    void setZoomFree(MenuItem sender) {
         zoomFactor = -1;
-        menuZoomFree.setChecked(true);
+        sender.setChecked(true);
+        menuZoom.setTitle(sender.getTitle());
         updateCamera();
+    }
+
+    @OptionsItem(R.id.action_map_google_normal)
+    void setGoogleMapsNormal(MenuItem sender) {
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        sender.setChecked(true);
+        menuMap.setTitle(sender.getTitle());
+    }
+
+    @OptionsItem(R.id.action_map_google_satellite)
+    void setGoogleMapsSatellite(MenuItem sender) {
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        sender.setChecked(true);
+        menuMap.setTitle(sender.getTitle());
+    }
+
+    @OptionsItem(R.id.action_map_google_hybrid)
+    void setGoogleMapsHybrid(MenuItem sender) {
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        sender.setChecked(true);
+        menuMap.setTitle(sender.getTitle());
     }
 }
