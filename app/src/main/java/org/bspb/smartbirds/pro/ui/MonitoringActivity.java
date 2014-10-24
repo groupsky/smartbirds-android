@@ -61,6 +61,8 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuZoom250m;
     @OptionsMenuItem(R.id.action_zoom_100m)
     MenuItem menuZoom100m;
+    @OptionsMenuItem(R.id.action_zoom_free)
+    MenuItem menuZoomFree;
 
 
     @AfterViews
@@ -109,11 +111,8 @@ public class MonitoringActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.setMyLocationEnabled(true);
 //        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         path = mMap.addPolyline(new PolylineOptions()
@@ -134,13 +133,25 @@ public class MonitoringActivity extends FragmentActivity {
 
             }
         });
+        updateCamera();
     }
 
     private void updateCamera() {
-        if (lastPosition == null) return;
-        LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
-        LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
+        if (zoomFactor > 0) {
+            mMap.getUiSettings().setAllGesturesEnabled(false);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+
+            if (lastPosition == null) return;
+
+            LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
+            LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
+        } else {
+            mMap.getUiSettings().setAllGesturesEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+        }
     }
 
     @OptionsItem(R.id.action_new_entry)
@@ -230,6 +241,13 @@ public class MonitoringActivity extends FragmentActivity {
     void setZoom100m() {
         zoomFactor = 100;
         menuZoom100m.setChecked(true);
+        updateCamera();
+    }
+
+    @OptionsItem(R.id.action_zoom_free)
+    void setZoomFree() {
+        zoomFactor = -1;
+        menuZoomFree.setChecked(true);
         updateCamera();
     }
 }

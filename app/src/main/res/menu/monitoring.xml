@@ -23,6 +23,10 @@
 
     <group android:checkableBehavior="single" >
         <item
+            android:id="@+id/action_zoom_free"
+            android:title="Free" />
+
+        <item
             android:id="@+id/action_zoom_1km"
             android:title="1km" />
 
