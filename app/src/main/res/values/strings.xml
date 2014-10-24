@@ -12,5 +12,7 @@
     <string name="cancel_monitoring">Отмяна на мониторинг</string>
     <string name="really_cancel_monitoring">Наистина ли желаете да отмените мониторинга?</string>
     <string name="clear">Clear</string>
+    <string name="cancel_entry">Отмяна на отчитане</string>
+    <string name="really_cancel_entry">Наистина ли желаете да отмените въвеждането?</string>
 
 </resources>

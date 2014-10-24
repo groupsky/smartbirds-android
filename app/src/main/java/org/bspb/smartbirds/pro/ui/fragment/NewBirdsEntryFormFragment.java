@@ -40,7 +40,6 @@ import java.util.HashMap;
 
 
 @EFragment(R.layout.fragment_monitoring_form_birds)
-@OptionsMenu(R.menu.form_entry)
 public class NewBirdsEntryFormFragment extends Fragment {
 
     private static final String ARG_LAT = "lat";
@@ -64,12 +63,6 @@ public class NewBirdsEntryFormFragment extends Fragment {
     private String imageFileName = null;
     private String imagePath;
     private Uri imageUri;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
 
     @Override
     public void onStart() {
