@@ -4,6 +4,8 @@ import static android.app.Dialog.BUTTON_NEGATIVE;
 import static android.app.Dialog.BUTTON_POSITIVE;
 import static android.app.Dialog.BUTTON_NEUTRAL;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_NONE;
+import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
 import static android.widget.AdapterView.INVALID_POSITION;
 import static android.view.ViewGroup.LayoutParams.*;
 
@@ -19,6 +21,8 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ArrayAdapter;
@@ -26,6 +30,7 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -117,26 +122,34 @@ public class SingleChoiceFormInput extends TextView {
         private int mLastSelected = INVALID_POSITION;
 
         public void show() {
-            EditText view = new EditText(getContext());
-            view.setImeOptions(view.getImeOptions() | IME_FLAG_NO_EXTRACT_UI);
-            view.setHint(android.R.string.search_go);
-            view.addTextChangedListener(this);
+            boolean needFilter = mAdapter.getCount() > 0;
+
+            EditText view = null;
+            if (needFilter) {
+                view = new EditText(getContext());
+                view.setImeOptions(IME_ACTION_NONE | IME_FLAG_NO_EXTRACT_UI);
+                view.setInputType(TYPE_TEXT_VARIATION_FILTER);
+                view.setHint(android.R.string.search_go);
+                view.setHint(getHint());
+                view.addTextChangedListener(this);
+            }
 
             ((Filterable) mAdapter).getFilter().filter(null);
 
-            mPopup = new AlertDialog.Builder(getContext())
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                     .setTitle(getHint())
                     .setSingleChoiceItems(mAdapter, mSelectedPosition, this)
                     .setCancelable(true)
-                    .setView(view)
                     .setOnCancelListener(this)
-                    .setPositiveButton(android.R.string.ok, this)
                     .setNegativeButton(android.R.string.cancel, this)
-                    .setNeutralButton("Clear", this)
-                    .create();
+                    .setNeutralButton(R.string.clear, this);
+            if (needFilter) {
+                builder.setCustomTitle(view);
+            }
+            mPopup = builder.create();
 
+            final ListView listView = mPopup.getListView();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                final ListView listView = mPopup.getListView();
                 listView.setTextDirection(getTextDirection());
                 listView.setTextAlignment(getTextAlignment());
             }
@@ -144,6 +157,10 @@ public class SingleChoiceFormInput extends TextView {
             mPopup.show();
 
             mPopup.getButton(BUTTON_POSITIVE).setEnabled(mSelectedPosition != INVALID_POSITION);
+            if (needFilter) {
+                mPopup.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                view.requestFocus();
+            }
         }
 
         @Override
@@ -165,12 +182,8 @@ public class SingleChoiceFormInput extends TextView {
                     ((Filterable) mAdapter).getFilter().filter(null, this);
                     break;
                 default:
-                    if (mLastSelected == which) {
-                        onClick(dialog, BUTTON_POSITIVE);
-                    } else {
-                        mPopup.getButton(BUTTON_POSITIVE).setEnabled(true);
-                        mLastSelected = which;
-                    }
+                    mLastSelected = which;
+                    onClick(dialog, BUTTON_POSITIVE);
                     break;
             }
         }

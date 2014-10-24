@@ -11,5 +11,6 @@
     <string name="title_activity_edit">Edit common form</string>
     <string name="cancel_monitoring">Отмяна на мониторинг</string>
     <string name="really_cancel_monitoring">Наистина ли желаете да отмените мониторинга?</string>
+    <string name="clear">Clear</string>
 
 </resources>
