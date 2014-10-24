@@ -65,6 +65,12 @@ public class NewBirdsEntryFormFragment extends Fragment {
     private Uri imageUri;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         eventBus.register(this);
