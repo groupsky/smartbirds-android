@@ -3,6 +3,8 @@ package org.bspb.smartbirds.pro.ui.views;
 import static android.app.Dialog.BUTTON_NEGATIVE;
 import static android.app.Dialog.BUTTON_POSITIVE;
 import static android.app.Dialog.BUTTON_NEUTRAL;
+import static android.text.InputType.TYPE_MASK_VARIATION;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_NONE;
 import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
@@ -122,15 +124,15 @@ public class SingleChoiceFormInput extends TextView {
         private int mLastSelected = INVALID_POSITION;
 
         public void show() {
-            boolean needFilter = mAdapter.getCount() > 0;
+            boolean needFilter = mAdapter.getCount() > 20;
 
             EditText view = null;
             if (needFilter) {
                 view = new EditText(getContext());
-                view.setImeOptions(IME_ACTION_NONE | IME_FLAG_NO_EXTRACT_UI);
+                view.setImeOptions(view.getImeOptions() | IME_FLAG_NO_EXTRACT_UI | IME_ACTION_DONE);
                 view.setInputType(TYPE_TEXT_VARIATION_FILTER);
-                view.setHint(android.R.string.search_go);
                 view.setHint(getHint());
+                view.setSingleLine();
                 view.addTextChangedListener(this);
             }
 
