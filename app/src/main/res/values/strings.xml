@@ -14,5 +14,6 @@
     <string name="clear">Clear</string>
     <string name="cancel_entry">Отмяна на отчитане</string>
     <string name="really_cancel_entry">Наистина ли желаете да отмените въвеждането?</string>
+    <string name="map_normal">Нормална</string>
 
 </resources>

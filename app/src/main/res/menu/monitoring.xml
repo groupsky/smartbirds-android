@@ -59,7 +59,7 @@
         android:id="@+id/menu_map"
         android:menuCategory="alternative"
         android:showAsAction="ifRoom|withText"
-        android:title="Нормална">
+        android:title="@string/map_normal">
         <menu>
 
             <group
@@ -68,7 +68,7 @@
                 <item
                     android:id="@+id/action_map_google_normal"
                     android:checked="true"
-                    android:title="Нормална" />
+                    android:title="@string/map_normal" />
 
                 <item
                     android:id="@+id/action_map_google_satellite"
@@ -77,6 +77,27 @@
                 <item
                     android:id="@+id/action_map_google_hybrid"
                     android:title="Хибридна" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_map_provider"
+        android:menuCategory="alternative"
+        android:showAsAction="ifRoom|withText"
+        android:title="Map provider">
+        <menu>
+
+            <group
+                android:checkableBehavior="none"
+                android:menuCategory="alternative">
+                <item
+                    android:id="@+id/action_map_google"
+                    android:title="Google" />
+
+                <item
+                    android:id="@+id/action_map_osm"
+                    android:title="OSM" />
+
             </group>
         </menu>
     </item>

@@ -58,4 +58,6 @@ dependencies {
     compile 'com.googlecode.jcsv:jcsv:1.4.0'
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.maps.android:android-maps-utils:0.3.2'
+    compile 'org.osmdroid:osmdroid-android:4.2'
+
 }

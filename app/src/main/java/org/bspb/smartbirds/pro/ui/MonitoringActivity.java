@@ -3,21 +3,11 @@ package org.bspb.smartbirds.pro.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.android.SphericalUtil;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -32,21 +22,39 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
+import org.bspb.smartbirds.pro.events.LocationChangedEvent;
+import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
+import org.bspb.smartbirds.pro.ui.map.MapMarker;
+import org.bspb.smartbirds.pro.ui.map.MapProvider;
+import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
 
 import java.util.ArrayList;
 
+/**
+ * Created by dani on 14-11-4.
+ */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu(R.menu.monitoring)
 public class MonitoringActivity extends FragmentActivity {
 
     private static final int REQUEST_NEW_ENTRY = 1001;
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+
+    @InstanceState
+    MapProvider.ProviderType mapType = MapProvider.ProviderType.GOOGLE;
+
+    @Bean(GoogleMapProvider.class)
+    MapProvider googleMap;
+    @Bean(OsmMapProvider.class)
+    MapProvider osmMap;
+    @InstanceState
+    ArrayList<MapMarker> markers = new ArrayList<MapMarker>();
+
+    MapProvider currentMap;
 
     @OptionsMenuItem(R.id.action_new_entry)
     MenuItem menuNewEntry;
     @Bean
     EEventBus eventBus;
-    Polyline path;
     @InstanceState
     ArrayList<LatLng> points = new ArrayList<LatLng>();
     @InstanceState
@@ -55,106 +63,89 @@ public class MonitoringActivity extends FragmentActivity {
     LatLng lastPosition;
     @OptionsMenuItem(R.id.menu_map)
     MenuItem menuMap;
+    @OptionsMenuItem(R.id.action_map_google_normal)
+    MenuItem menuMapNormal;
     @OptionsMenuItem(R.id.menu_zoom)
     MenuItem menuZoom;
 
+    @AfterInject
+    public void initProviders() {
+        googleMap.setFragmentManager(getSupportFragmentManager());
+        osmMap.setFragmentManager(getSupportFragmentManager());
+    }
 
     @AfterViews
     void tryToSetUpMap() {
-        setUpMapIfNeeded();
+        showCurrentMap();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setUpMapIfNeeded();
+        currentMap.setUpMapIfNeeded();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        eventBus.register(this);
+        eventBus.register(osmMap);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        eventBus.unregister(this);
+        eventBus.unregister(osmMap);
+    }
+
+    private void showCurrentMap() {
+        switch (mapType) {
+            case GOOGLE:
+                currentMap = googleMap;
+                if (menuMap != null) {
+                    menuMap.setEnabled(true);
+                }
+                break;
+            case OSM:
+                currentMap = osmMap;
+                if (menuMap != null) {
+                    menuMap.setEnabled(false);
+                    menuMap.setTitle(R.string.map_normal);
+                    menuMapNormal.setChecked(true);
+                }
+                break;
+            default:
+                currentMap = googleMap;
+                if (menuMap != null) {
+                    menuMap.setEnabled(true);
+                }
+                break;
         }
+        currentMap.setPosition(lastPosition);
+        currentMap.setZoomFactor(zoomFactor);
+        currentMap.setMarkers(markers);
+        currentMap.setPath(points);
+        currentMap.showMap();
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
-    private void setUpMap() {
-        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
-        mMap.getUiSettings().setCompassEnabled(true);
-        mMap.setMyLocationEnabled(true);
-        mMap.setBuildingsEnabled(false);
-        mMap.setIndoorEnabled(false);
-        mMap.setTrafficEnabled(false);
-        path = mMap.addPolyline(new PolylineOptions()
-                        .addAll(points)
-                        .width(5)
-                        .color(Color.BLUE)
-                        .geodesic(true)
-        );
-        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
-                lastPosition = new LatLng(location.getLatitude(), location.getLongitude());
-                updateCamera();
-                menuNewEntry.setEnabled(true);
-
-                points.add(new LatLng(location.getLatitude(), location.getLongitude()));
-                path.setPoints(points);
-
-            }
-        });
-        updateCamera();
+    @OptionsItem(R.id.action_map_google)
+    void onGoogleMapProvider() {
+        mapType = MapProvider.ProviderType.GOOGLE;
+        showCurrentMap();
     }
 
-    private void updateCamera() {
-        if (zoomFactor > 0) {
-            mMap.getUiSettings().setAllGesturesEnabled(false);
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-            mMap.getUiSettings().setZoomControlsEnabled(false);
-
-            if (lastPosition == null) return;
-
-            LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
-            LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
-        } else {
-            mMap.getUiSettings().setAllGesturesEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            mMap.getUiSettings().setZoomControlsEnabled(true);
-        }
+    @OptionsItem(R.id.action_map_osm)
+    void onOSMMapProvider() {
+        mapType = MapProvider.ProviderType.OSM;
+        showCurrentMap();
     }
 
     @OptionsItem(R.id.action_new_entry)
     void onNewEntry() {
         NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(this);
 
-        Location loc = mMap.getMyLocation();
+        Location loc = currentMap.getMyLocation();
         if (loc != null) {
             ib.lat(loc.getLatitude()).lon(loc.getLongitude());
         }
@@ -170,9 +161,9 @@ public class MonitoringActivity extends FragmentActivity {
     void onNewEntry(int resultCode, Intent data) {
         if (resultCode != RESULT_OK)
             return;
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0)))
-                .title(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, "Отчитане")));
+        MapMarker marker = new MapMarker(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, "Отчитане"), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0));
+        markers.add(marker);
+        currentMap.addMarker(marker);
     }
 
     @OptionsItem(R.id.action_finish)
@@ -217,61 +208,77 @@ public class MonitoringActivity extends FragmentActivity {
     @OptionsItem(R.id.action_zoom_1km)
     void setZoom1km(MenuItem sender) {
         zoomFactor = 1000;
+        currentMap.setZoomFactor(zoomFactor);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        updateCamera();
+        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_500m)
     void setZoom500m(MenuItem sender) {
         zoomFactor = 500;
+        currentMap.setZoomFactor(zoomFactor);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        updateCamera();
+        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_250m)
     void setZoom250m(MenuItem sender) {
         zoomFactor = 250;
+        currentMap.setZoomFactor(zoomFactor);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        updateCamera();
+        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_100m)
     void setZoom100m(MenuItem sender) {
         zoomFactor = 100;
+        currentMap.setZoomFactor(zoomFactor);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        updateCamera();
+        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_free)
     void setZoomFree(MenuItem sender) {
         zoomFactor = -1;
+        currentMap.setZoomFactor(zoomFactor);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        updateCamera();
+        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_map_google_normal)
     void setGoogleMapsNormal(MenuItem sender) {
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        currentMap.setMapType(MapProvider.MapType.NORMAL);
         sender.setChecked(true);
         menuMap.setTitle(sender.getTitle());
     }
 
     @OptionsItem(R.id.action_map_google_satellite)
     void setGoogleMapsSatellite(MenuItem sender) {
-        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        currentMap.setMapType(MapProvider.MapType.SATELLITE);
         sender.setChecked(true);
         menuMap.setTitle(sender.getTitle());
     }
 
     @OptionsItem(R.id.action_map_google_hybrid)
     void setGoogleMapsHybrid(MenuItem sender) {
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        currentMap.setMapType(MapProvider.MapType.HYBRID);
         sender.setChecked(true);
         menuMap.setTitle(sender.getTitle());
+    }
+
+    public void onEvent(LocationChangedEvent event) {
+        Location location = event.location;
+        lastPosition = new LatLng(location.getLatitude(), location.getLongitude());
+        currentMap.setPosition(lastPosition);
+        currentMap.updateCamera();
+        menuNewEntry.setEnabled(true);
+
+        points.add(new LatLng(location.getLatitude(), location.getLongitude()));
+        currentMap.updatePath(points);
     }
 }
