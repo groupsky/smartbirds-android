@@ -40,7 +40,7 @@ public class MonitoringActivity extends FragmentActivity {
     private static final int REQUEST_NEW_ENTRY = 1001;
 
     @InstanceState
-    MapProvider.ProviderType mapType = MapProvider.ProviderType.GOOGLE;
+    MapProvider.ProviderType mapType = MapProvider.ProviderType.OSM;
 
     @Bean(GoogleMapProvider.class)
     MapProvider googleMap;
@@ -276,7 +276,9 @@ public class MonitoringActivity extends FragmentActivity {
         lastPosition = new LatLng(location.getLatitude(), location.getLongitude());
         currentMap.setPosition(lastPosition);
         currentMap.updateCamera();
-        menuNewEntry.setEnabled(true);
+        if(menuNewEntry != null) {
+            menuNewEntry.setEnabled(true);
+        }
 
         points.add(new LatLng(location.getLatitude(), location.getLongitude()));
         currentMap.updatePath(points);
