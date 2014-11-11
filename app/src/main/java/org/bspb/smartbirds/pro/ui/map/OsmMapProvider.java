@@ -18,6 +18,8 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
+import org.osmdroid.bonuspack.kml.KmlDocument;
+import org.osmdroid.bonuspack.overlays.FolderOverlay;
 import org.osmdroid.bonuspack.overlays.InfoWindow;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
@@ -35,6 +37,7 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,8 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     boolean locked = true;
     private MyLocationNewOverlay locationOverlay;
 
+    private boolean positioned = false;
+
     @Override
     public void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -79,6 +84,8 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private void setUpMap() {
         mMap.setMultiTouchControls(true);
         mMap.setTileSource(TileSourceFactory.MAPQUESTOSM);
+        mMap.setBuiltInZoomControls(true);
+        mMap.getController().setZoom(16);
 
         locationOverlay = new MyLocationNewOverlay(fragment.getActivity(), mMap) {
             @Override
@@ -124,6 +131,16 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         MapEventsOverlay eventsOverlay = new MapEventsOverlay(mMap.getContext(), this);
 
+        if (markers != null && !markers.isEmpty()) {
+            for (MapMarker mapMarker : markers) {
+                addMarker(mapMarker);
+            }
+        }
+
+        KmlDocument kml = new KmlDocument();
+        kml.parseKMLFile(new File(AREA_FILE_PATH));
+        FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
+
         mMap.getOverlayManager().clear();
         mMap.getOverlayManager().add(compassOverlay);
         mMap.getOverlayManager().add(pathOverlay);
@@ -131,19 +148,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         mMap.getOverlayManager().add(scaleBarOverlay);
         mMap.getOverlayManager().add(markersOverlay);
         mMap.getOverlayManager().add(eventsOverlay);
-
-
         mMap.getOverlayManager().add(new TouchEventsOverlay(mMap.getContext()));
+        mMap.getOverlayManager().add(kmlOverlay);
 
-        mMap.setBuiltInZoomControls(true);
 
-        mMap.getController().setZoom(16);
-
-        if (markers != null && !markers.isEmpty()) {
-            for (MapMarker mapMarker : markers) {
-                addMarker(mapMarker);
-            }
-        }
         updateCamera();
     }
 
@@ -159,6 +167,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void showMap() {
+        positioned = false;
         if (fragment == null) {
             fragment = new OsmMapFragment_();
         }
@@ -196,11 +205,16 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
                 }
             });
             mMap.invalidate();
+            positioned = false;
         } else {
             mMap.setMultiTouchControls(true);
             mMap.setBuiltInZoomControls(true);
             locationOverlay.disableFollowLocation();
             locked = false;
+            if (!positioned && lastPosition != null) {
+                mMap.getController().animateTo(new GeoPoint(lastPosition.latitude, lastPosition.longitude));
+                positioned = true;
+            }
         }
 
     }

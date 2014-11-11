@@ -13,6 +13,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.SphericalUtil;
@@ -22,7 +23,13 @@ import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
+import org.osmdroid.bonuspack.kml.KmlDocument;
+import org.osmdroid.bonuspack.kml.KmlFeature;
+import org.osmdroid.bonuspack.kml.KmlPlacemark;
+import org.osmdroid.bonuspack.kml.Style;
+import org.osmdroid.util.GeoPoint;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +109,7 @@ public class GoogleMapProvider implements MapProvider {
             }
         }
 
+        drawArea();
         updateCamera();
     }
 
@@ -222,5 +230,34 @@ public class GoogleMapProvider implements MapProvider {
     public void updatePath(ArrayList<LatLng> points) {
         this.points = points;
         path.setPoints(points);
+    }
+
+    private void drawArea() {
+        KmlDocument kml = new KmlDocument();
+        kml.parseKMLFile(new File(AREA_FILE_PATH));
+        System.out.println(AREA_FILE_PATH);
+        if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
+            KmlFeature item = kml.mKmlRoot.mItems.get(0);
+            if (item instanceof KmlPlacemark) {
+                KmlPlacemark placemark = (KmlPlacemark) item;
+                Style style = kml.getStyle(placemark.mStyle);
+
+                ArrayList<GeoPoint> geopoints = placemark.mGeometry.mCoordinates;
+                ArrayList<LatLng> points = new ArrayList<LatLng>();
+                for (GeoPoint point : geopoints) {
+                    points.add(new LatLng(point.getLatitude(), point.getLongitude()));
+                }
+                PolygonOptions polygonOptions = new PolygonOptions();
+                polygonOptions.addAll(points);
+
+                if (style != null) {
+                    polygonOptions.strokeColor(style.mLineStyle.mColor);
+                    polygonOptions.strokeWidth(style.mLineStyle.mWidth);
+                    polygonOptions.fillColor(style.mPolyStyle.mColor);
+                }
+
+                mMap.addPolygon(polygonOptions);
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@ public class MonitoringActivity extends FragmentActivity {
     private static final int REQUEST_NEW_ENTRY = 1001;
 
     @InstanceState
-    MapProvider.ProviderType mapType = MapProvider.ProviderType.OSM;
+    MapProvider.ProviderType mapType = MapProvider.ProviderType.GOOGLE;
 
     @Bean(GoogleMapProvider.class)
     MapProvider googleMap;
