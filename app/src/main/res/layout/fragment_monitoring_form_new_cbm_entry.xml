@@ -20,9 +20,9 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_cbm_name"
-                    android:entries="@array/form_cbm_name"
-                    android:hint="Вид"
-                    android:tag="Вид" />
+                    android:entries="@array/form_birds_name"
+                    android:hint="Вид научно име"
+                    android:tag="Вид научно име" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_cbm_distance"
@@ -31,8 +31,8 @@
                     android:tag="Разстояние" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="Брой"
-                    android:tag="Брой" />
+                    android:hint="Брой индивиди"
+                    android:tag="Брой индивиди" />
 
             </TableRow>
 
