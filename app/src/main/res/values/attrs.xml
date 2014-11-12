@@ -7,7 +7,8 @@
         <attr name="dateFormInputStyle" format="reference" />
         <attr name="timeFormInputStyle" format="reference" />
         <attr name="textFormInputStyle" format="reference" />
-        <attr name="numberFormInputStyle" format="reference" />
+        <attr name="floatNumberFormInputStyle" format="reference" />
+        <attr name="decimalNumberFormInputStyle" format="reference" />
         <attr name="multipleTextFormInputStyle" format="reference" />
         <attr name="memoFormInputStyle" format="reference" />
         <attr name="switchFormInputStyle" format="reference" />

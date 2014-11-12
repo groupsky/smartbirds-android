@@ -19,7 +19,7 @@
             android:hint="Дърво"
             android:tag="Дърво" />
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Височина на дървото"
             android:tag="Височина_на_дървото" />
 
@@ -49,11 +49,11 @@
             android:tag="Мътене"
             android:text="Мътене" />
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Брой яйца"
             android:tag="Брой_яйца" />
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Брой пухови малки"
             android:tag="Брой_пухови_малки" />
 
@@ -61,11 +61,11 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Брой оперени малки в гнездото"
             android:tag="Брой_оперени_малки_в_гнездото" />
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Брой излетели малки"
             android:tag="Брой_излетели_малки" />
 

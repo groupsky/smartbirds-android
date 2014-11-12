@@ -83,7 +83,7 @@
                     android:tag="Дъжд"
                     android:hint="Дъжд" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="Темп °C"
                     android:tag="Температура_C" />
 
@@ -114,7 +114,7 @@
                     android:hint="МТО други"
                     android:tag="МТО_други" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="Видимост км"
                     android:tag="Видимост_км" />
 

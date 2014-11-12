@@ -42,15 +42,15 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Брой"
             android:tag="Брой" />
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Мин."
             android:tag="Мин." />
 
-        <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Макс."
             android:tag="Макс." />
 

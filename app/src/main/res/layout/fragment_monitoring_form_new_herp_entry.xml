@@ -46,7 +46,7 @@
                     android:hint="Заплахи констатации"
                     android:tag="Заплахи констатации" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="Брой"
                     android:tag="Брой" />
 
@@ -62,18 +62,18 @@
                     android:hint="Разстояние от оста"
                     android:tag="Разстояние от оста" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="Маса (g)"
                     android:tag="Маса (g)" />
             </TableRow>
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="SCL/L (mm)"
                     android:tag="SCL/L (mm)" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="MPL/Lcd/C (mm)"
                     android:tag="MPL/Lcd/C (mm)" />
 
@@ -81,11 +81,11 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="MCW/A (mm)"
                     android:tag="MCW/A (mm)" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="H /Lcap/Pl (mm)"
                     android:tag="H /Lcap/Pl (mm)" />
             </TableRow>
@@ -107,15 +107,15 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="Sq_ventr"
                     android:tag="Sq_ventr" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="Sq_caud"
                     android:tag="Sq_caud" />
 
-                <org.bspb.smartbirds.pro.ui.views.NumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="Sq_dors"
                     android:tag="Sq_dors" />
             </TableRow>

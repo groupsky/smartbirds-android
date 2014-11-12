@@ -7,7 +7,8 @@
         <item name="dateFormInputStyle">@style/FieldInput.Date</item>
         <item name="timeFormInputStyle">@style/FieldInput.Time</item>
         <item name="textFormInputStyle">@style/FieldInput.Text</item>
-        <item name="numberFormInputStyle">@style/FieldInput.Number</item>
+        <item name="floatNumberFormInputStyle">@style/FieldInput.FloatNumber</item>
+        <item name="decimalNumberFormInputStyle">@style/FieldInput.DecimalNumber</item>
         <item name="multipleTextFormInputStyle">@style/FieldInput.MultipleText</item>
         <item name="memoFormInputStyle">@style/FieldInput.Memo</item>
         <item name="switchFormInputStyle">@style/FieldInput.Switch</item>
@@ -36,8 +37,12 @@
 
     <style name="FieldInput.MultipleText" parent="FieldInput.Text"></style>
 
-    <style name="FieldInput.Number" parent="FieldInput.Text">
-        <item name="android:inputType">number</item>
+    <style name="FieldInput.FloatNumber" parent="FieldInput.Text">
+        <item name="android:inputType">numberDecimal|numberSigned</item>
+    </style>
+
+    <style name="FieldInput.DecimalNumber" parent="FieldInput.Text">
+        <item name="android:inputType">number|numberSigned</item>
     </style>
 
     <style name="FieldInput.Memo" parent="FieldInput.Text">
