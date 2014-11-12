@@ -18,6 +18,7 @@ import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment_;
+import org.bspb.smartbirds.pro.ui.fragment.NewCbmEntryFormFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.NewHerpEntryFormFragment_;
 
 @EActivity(R.layout.activity_form)
@@ -54,6 +55,9 @@ public class NewMonitoringEntryActivity extends Activity {
                 break;
             case HERP:
                 fragment = NewHerpEntryFormFragment_.builder().build();
+                break;
+            case CBM:
+                fragment = NewCbmEntryFormFragment_.builder().build();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported entry type");

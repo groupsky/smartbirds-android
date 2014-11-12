@@ -138,6 +138,8 @@ public class SingleChoiceFormInput extends TextView {
 
             ((Filterable) mAdapter).getFilter().filter(null);
 
+            setSelection(mAdapter.getPosition(getText()));
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                     .setTitle(getHint())
                     .setSingleChoiceItems(mAdapter, mSelectedPosition, this)
