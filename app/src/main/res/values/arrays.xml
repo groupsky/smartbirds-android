@@ -1246,4 +1246,72 @@
         <item>H.9 - Острови, островчета, надводни скали и камъни</item>
         <item>D.6 - Пустеещи земи</item>
     </string-array>
+
+    <string-array name="form_ciconia_substratum">
+        <item>Стълб</item>
+        <item>Дърво</item>
+        <item>Покрив</item>
+        <item>Комин</item>
+    </string-array>
+
+    <string-array name="form_ciconia_column">
+        <item>с жици</item>
+        <item>без жици</item>
+    </string-array>
+
+    <string-array name="form_ciconia_column_type">
+        <item>бетонен</item>
+        <item>железен</item>
+        <item>дървен</item>
+    </string-array>
+
+    <string-array name="form_ciconia_tree">
+        <item>акация(салкъм)</item>
+        <item>бряст</item>
+        <item>бор</item>
+        <item>върба</item>
+        <item>дъб</item>
+        <item>липа</item>
+        <item>топола</item>
+        <item>чинар</item>
+        <item>черница</item>
+        <item>сухо</item>
+        <item>друго</item>
+        <item>… (свободен текст)</item>
+    </string-array>
+
+    <string-array name="form_ciconia_building">
+        <item>покрив на църква</item>
+        <item>покрив на фурна</item>
+        <item>покрив на училище</item>
+        <item>покрив на читалище</item>
+        <item>покрив на кметство</item>
+        <item>покрив на частна къща</item>
+        <item>покрив на трафопост</item>
+        <item>покрив на фабрика</item>
+        <item>покрив на баня</item>
+        <item>покрив на друга</item>
+        <item>комин на църква</item>
+        <item>комин на фурна</item>
+        <item>комин на училище</item>
+        <item>комин на читалище</item>
+        <item>комин на кметство</item>
+        <item>комин на частна къща</item>
+        <item>комин на трафопост</item>
+        <item>комин на фабрика</item>
+        <item>комин на баня</item>
+        <item>комин на друга</item>
+    </string-array>
+    
+    <string-array name="form_ciconia_not_occupied">
+        <item>тази година не са идвали въобще</item>
+        <item>появили са се, но после изчезнали</item>
+    </string-array>
+
+    <string-array name="form_ciconia_new_birds">
+        <item>ДВЕ птици</item>
+        <item>EДНА птица</item>
+    </string-array>
+
+
 </resources>

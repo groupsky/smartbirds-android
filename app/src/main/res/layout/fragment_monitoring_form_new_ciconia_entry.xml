@@ -1,0 +1,178 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_substratum"
+                    android:hint="Основен тип на субстрата"
+                    android:tag="Основен тип на субстрата" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_column"
+                    android:hint="Стълб"
+                    android:tag="Стълб" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:tag="Гнездото е на изкуствена платформа"
+                    android:hint="Гнездото е на изкуствена платформа" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_column_type"
+                    android:hint="Вид стълб"
+                    android:tag="Вид стълб" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_tree"
+                    android:hint="Дърво"
+                    android:tag="Дърво" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_building"
+                    android:hint="Сграда"
+                    android:tag="Сграда" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:hint="Гнездото е на изкуствена поставка направена от човек"
+                    android:tag="Гнездото е на изкуствена поставка направена от човек" />
+
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                    android:hint="Гнездото е на друг вид субстрат"
+                    android:tag="Гнездото е на друг вид субстрат" />
+            </TableRow>
+
+            <TableRow>
+
+                <View style="@style/FieldSeparator" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_not_occupied"
+                    android:hint="Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели"
+                    android:tag="Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_new_birds"
+                    android:hint="Тази година в гнездото са се появили една/две птици"
+                    android:tag="Тази година в гнездото са се появили една/две птици" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.DateFormInput
+                    android:hint="Приблизителна дата на появяване на щъркелите"
+                    android:tag="Приблизителна дата на появяване на щъркелите" />
+
+                <org.bspb.smartbirds.pro.ui.views.DateFormInput
+                    android:hint="Приблизителна дата на изчезване на щъркелите"
+                    android:tag="Приблизителна дата на изчезване на щъркелите" />
+            </TableRow>
+
+            <TableRow>
+
+                <View style="@style/FieldSeparator" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+                    android:entries="@array/form_ciconia_new_birds"
+                    android:hint="Тази година в гнездото са се появили"
+                    android:tag="Тази година в гнездото са се появили" />
+            </TableRow>
+
+            <TableRow>
+
+                <View style="@style/FieldSeparator" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:hint="Брой малки в гнездото"
+                    android:tag="Брой малки в гнездото" />
+            </TableRow>
+
+            <TableRow>
+
+                <View style="@style/FieldSeparator" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:hint="Гнездото НЕ се обитава от ПОВЕЧЕ от една година"
+                    android:tag="Гнездото НЕ се обитава от ПОВЕЧЕ от една година" />
+            </TableRow>
+
+            <TableRow>
+
+                <View style="@style/FieldSeparator" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:hint="Данни за загинали малки от ел.ток"
+                    android:tag="Данни за загинали малки от ел.ток" />
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:hint="Данни за загинали малки изхвърлени от родителите"
+                    android:tag="Данни за загинали малки изхвърлени от родителите" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:hint="загинали по други причини"
+                    android:tag="загинали по други причини" />
+
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                    android:hint="Причина"
+                    android:tag="Причина" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
+                    android:hint="Бележки"
+                    android:tag="Бележки" />
+            </TableRow>
+        </TableLayout>
+
+        <View style="@style/FieldSeparator" />
+z
+        <ImageView
+            android:id="@+id/picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
+</ScrollView>

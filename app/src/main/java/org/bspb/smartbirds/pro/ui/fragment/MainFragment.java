@@ -51,6 +51,11 @@ public class MainFragment extends Fragment {
         bus.postSticky(new StartMonitoringEvent(EntryType.CBM));
     }
 
+    @Click(R.id.btn_start_ciconia)
+    void startCiconiaClicked() {
+        bus.postSticky(new StartMonitoringEvent(EntryType.CICONIA));
+    }
+
     @Click(R.id.btn_upload)
     void uploadBtnClicked() {
         UploadService_.intent(this).uploadAll().start();
