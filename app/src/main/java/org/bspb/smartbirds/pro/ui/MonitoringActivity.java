@@ -13,12 +13,14 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 public class MonitoringActivity extends FragmentActivity {
 
     private static final int REQUEST_NEW_ENTRY = 1001;
+
+    public static final String EXTRA_TYPE = "entryType";
 
     @InstanceState
     MapProvider.ProviderType mapType = MapProvider.ProviderType.GOOGLE;
@@ -67,6 +71,8 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuMapNormal;
     @OptionsMenuItem(R.id.menu_zoom)
     MenuItem menuZoom;
+    @Extra(EXTRA_TYPE)
+    EntryType entryType;
 
     @AfterInject
     public void initProviders() {
@@ -144,6 +150,7 @@ public class MonitoringActivity extends FragmentActivity {
     @OptionsItem(R.id.action_new_entry)
     void onNewEntry() {
         NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(this);
+        ib.entryType(entryType);
 
         Location loc = currentMap.getMyLocation();
         if (loc != null) {
@@ -276,7 +283,7 @@ public class MonitoringActivity extends FragmentActivity {
         lastPosition = new LatLng(location.getLatitude(), location.getLongitude());
         currentMap.setPosition(lastPosition);
         currentMap.updateCamera();
-        if(menuNewEntry != null) {
+        if (menuNewEntry != null) {
             menuNewEntry.setEnabled(true);
         }
 

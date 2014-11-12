@@ -13,6 +13,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
@@ -42,9 +43,14 @@ public class MainFragment extends Fragment {
         super.onStop();
     }
 
-    @Click(R.id.btn_start)
-    void startBtnClicked() {
-        bus.postSticky(new StartMonitoringEvent());
+    @Click(R.id.btn_start_birds)
+    void startBirdsBtnClicked() {
+        bus.postSticky(new StartMonitoringEvent(EntryType.BIRDS));
+    }
+
+    @Click(R.id.btn_start_herp)
+    void startHerpBtnClicked() {
+        bus.postSticky(new StartMonitoringEvent(EntryType.HERP));
     }
 
     @Click(R.id.btn_upload)

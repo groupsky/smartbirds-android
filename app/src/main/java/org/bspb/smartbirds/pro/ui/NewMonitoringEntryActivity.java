@@ -2,12 +2,10 @@ package org.bspb.smartbirds.pro.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -15,12 +13,12 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
+import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
-import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
-import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
-import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment_;
+import org.bspb.smartbirds.pro.ui.fragment.NewHerpEntryFormFragment_;
 
 @EActivity(R.layout.activity_form)
 @OptionsMenu(R.menu.form_entry)
@@ -29,11 +27,14 @@ public class NewMonitoringEntryActivity extends Activity {
     public static final String EXTRA_LAT = "lat";
     public static final String EXTRA_LON = "lon";
     public static final String EXTRA_NAME = "name";
+    public static final String EXTRA_TYPE = "entryType";
 
     @Extra(EXTRA_LAT)
     double lat;
     @Extra(EXTRA_LON)
     double lon;
+    @Extra(EXTRA_TYPE)
+    EntryType entryType;
 
     @Bean
     EEventBus eventBus;
@@ -46,9 +47,20 @@ public class NewMonitoringEntryActivity extends Activity {
 
     @AfterViews
     void createFragment() {
+        Fragment fragment = null;
+        switch (entryType) {
+            case BIRDS:
+                fragment = NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).build();
+                break;
+            case HERP:
+                fragment = NewHerpEntryFormFragment_.builder().build();
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported entry type");
+        }
         if (getFragmentManager().findFragmentById(R.id.container) == null)
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).build())
+                    .add(R.id.container, fragment)
                     .commit();
     }
 

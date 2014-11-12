@@ -10,11 +10,13 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.Trace;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
@@ -31,9 +33,15 @@ import java.util.HashMap;
 public class StartMonitoringActivity extends Activity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
+
+    public static final String EXTRA_TYPE = "entryType";
+
     @Bean
     EEventBus bus;
     MonitoringCommonFormFragment formFragment;
+
+    @Extra(EXTRA_TYPE)
+    EntryType entryType;
 
     @AfterViews
     void createFragment() {
@@ -85,7 +93,7 @@ public class StartMonitoringActivity extends Activity {
     @OptionsItem(R.id.action_submit)
     public void save() {
         formFragment.save();
-        MonitoringActivity_.intent(this).start();
+        MonitoringActivity_.intent(this).entryType(entryType).start();
         finish();
     }
 }

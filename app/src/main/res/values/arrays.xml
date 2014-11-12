@@ -919,4 +919,263 @@
         <item>Неуспешно гнездо (Неизвестни причини)</item>
     </string-array>
 
+    <string-array name="form_herp_name">
+        <item>Вид | Бтлгарско име</item>
+        <item>Ablepharus kitaibelii | Късокрак гущер</item>
+        <item>Anguis colchica | Източен слепок</item>
+        <item>Anguis fragilis | Слепок</item>
+        <item>Bombina bombina | Червенокоремна бумка</item>
+        <item>Bombina variegata | Жълтокоремна бумка</item>
+        <item>Bufo bufo | Кафява крастава жаба</item>
+        <item>Caretta caretta | Карета</item>
+        <item>Chelonia mydas | Зелена морска костенурка</item>
+        <item>Coronella austriaca | Медянка</item>
+        <item>Darevskia praticola | Горски гущер</item>
+        <item>Dolichophis caspius | Голям стрелец</item>
+        <item>Elaphe quatuorlineata | Ивичест смок (кощерица)</item>
+        <item>Elaphe sauromates | Пъстър смок</item>
+        <item>Emys orbicularis | Обикновена блатна костенурка</item>
+        <item>Epidalea viridis | Зелена крастава жаба</item>
+        <item>Eryx jaculus | Пясъчна (турска) боа</item>
+        <item>Eurotestudo hermanni | Шипоопашата костенурка</item>
+        <item>Hyla arborea | Жаба дървесница</item>
+        <item>Ichthyosaura alpestris | Алпийски тритон</item>
+        <item>Lacerta agilis | Ливаден гущер</item>
+        <item>Lacerta agilis bosnica | Ливаден гущер</item>
+        <item>Lacerta agilis chersonensis | Ливаден гущер</item>
+        <item>Lacerta trilineata | Ивичест гущер</item>
+        <item>Lacerta viridis | Зелен гущер</item>
+        <item>Lissotriton graecus | Влакноопашато тритонче</item>
+        <item>Lissotriton vulgaris | Обикновен тритон</item>
+        <item>Malpolon insignitus | Вдлъбнаточел смок</item>
+        <item>Mauremys rivulata | Каспийска блатна костенурка</item>
+        <item>Mediodactylus kotschyi | Балкански гекон</item>
+        <item>Natrix natrix | Обикновена водна змия</item>
+        <item>Natrix natrix natrix | Обикновена водна змия</item>
+        <item>Natrix natrix persa | Обикновена (ивичеста) водна змия</item>
+        <item>Natrix tessellata | Сива водна змия</item>
+        <item>Ophisops elegans | Змиеок гущер</item>
+        <item>Pelobates fuscus | Обикновена чесновница</item>
+        <item>Pelobates syriacus | Сирийска (балканска) чесновница</item>
+        <item>Pelophylax kl. esculentus | Зелена водна жаба</item>
+        <item>Pelophylax ridibundus | Голяма водна жаба</item>
+        <item>Platyceps collaris | Черноврата стрелушка</item>
+        <item>Platyceps najadum | Тънък стрелец (стрелушка)</item>
+        <item>Podarcis erhardii | Македонски гущер</item>
+        <item>Podarcis muralis | Стенен гущер</item>
+        <item>Podarcis tauricus | Кримски гущер</item>
+        <item>Pseudopus apodus | Жълтокоремник (змиегущер)</item>
+        <item>Rana dalmatina | Горска жаба</item>
+        <item>Rana graeca | Гръцка жаба</item>
+        <item>Rana temporaria | Планинска жаба</item>
+        <item>Salamandra salamandra | Дъждовник</item>
+        <item>Telescopus fallax | Котешка змия</item>
+        <item>Testudo graeca | Шипобедрена костенурка</item>
+        <item>Triturus cristatus | Северен гребенест тритон</item>
+        <item>Triturus dobrogicus | Дунавски гребенест тритон</item>
+        <item>Triturus ivanbureschi | Южен гребенест тритон</item>
+        <item>Triturus macedonicus | Македонски гребенест тритон</item>
+        <item>Vipera ammodytes | Пепелянка</item>
+        <item>Vipera ammodytes ammodytes | Червеноопашата пепелянка</item>
+        <item>Vipera ammodytes montandoni | Зеленоопашата пепелянка</item>
+        <item>Vipera aspis | Аспида (каменарка)</item>
+        <item>Vipera berus | Усойница</item>
+        <item>Vipera ursinii | Остромуцунеста усойница</item>
+        <item>Zamenis longissimus | Смок мишкар</item>
+        <item>Zamenis situla | Леопардов смок</item>
+        <item>Zootoca vivipara | Живороден гущер</item>
+        <item>Erinaceus roumanicus | Белогръд таралеж</item>
+        <item>Talpa europea | Къртица</item>
+        <item>Talpa levantis | Черноморска къртица</item>
+        <item>Sorex araneus | Обикновена кафявозъбка</item>
+        <item>Sorex minutus | Малка кафявозъбка</item>
+        <item>Neomys anomalus | Малка водна земеровка</item>
+        <item>Neomys fodiens  | Голяма водна земеровка</item>
+        <item>Crocidura leucodon | Голяма (белокоремна) белозъбка</item>
+        <item>Crocidura suaveolens | Малка белозъбка</item>
+        <item>Suncus etruscus | Етруска земеровка</item>
+        <item>Lepus europeus | Див заек</item>
+        <item>Oryctolagus cuniculus | Заек подземник</item>
+        <item>Sciurus vulgaris | Катерица</item>
+        <item>Spermophilus citellus | Лалугер</item>
+        <item>Dryomys nitedula | Горски сънливец</item>
+        <item>Glis glis | Обикновен (голям) сънливец</item>
+        <item>Muscardinus avellanarius | Лешников сънливец</item>
+        <item>Myomimus roachi | Мишевиден сънливец</item>
+        <item>Micromys minutus | Оризищна мишка</item>
+        <item>Sylvaemus epimelas | Скална мишка</item>
+        <item>Sylvaemus flavicollis | Жълтогърла горска мишка</item>
+        <item>Sylvaemus sylvaticus | Обикновена горска мишка</item>
+        <item>Sylvaemus uralensis | Малка горска мишка</item>
+        <item>Apodemus agrarius | Полска мишка</item>
+        <item>Rattus rattus | Черен плъх</item>
+        <item>Rattus norvegicus | Сив плъх</item>
+        <item>Mus musculus musculus | Домашна мишка</item>
+        <item>Mus musculus domesticus | Домашна мишка</item>
+        <item>Mus spicilegus | Степна домашна мишка</item>
+        <item>Mus macedonicus | Източносредиземноморска домашна мишка</item>
+        <item>Cricetus cricetus | Голям хомяк</item>
+        <item>Mesocricetus newtoni | Добръджански хомяк</item>
+        <item>Cricetulus migratоrius | Сиво хомяче</item>
+        <item>Ondatra zibethicus | Ондатра</item>
+        <item>Clethrionomys glareolus | Ръждива горска полевка </item>
+        <item>Arvicola terrestris | Водна полевка (плъх)</item>
+        <item>Microtus arvalis | Обикновена полевка</item>
+        <item>Microtus levis | Източноевропейска полевка</item>
+        <item>Microtus hartingi | Полевка на Хартинг</item>
+        <item>Microtus subterraneus | Подземна полевка</item>
+        <item>Chinomys nivalis | Снежна полевка</item>
+        <item>Sicista subtilis | Скачаща степна мишка</item>
+        <item>Spalax leucodon | Сляпо куче</item>
+        <item>Myocastor coypus | Нутрия</item>
+        <item>Canis lupus | Вълк</item>
+        <item>Canis aureus | Чакал</item>
+        <item>Vulpes vulpes | Лисица</item>
+        <item>Nyctereutes procenoides | Енотовидно куче</item>
+        <item>Ursus arctos | Кафява мечка</item>
+        <item>Martes martes | Златка</item>
+        <item>Martes foina | Бялка</item>
+        <item>Mustela nivalis | Невестулка</item>
+        <item>Mustela putorius | Черен пор</item>
+        <item>Mustela eversmani | Степен пор</item>
+        <item>Vormela peregusna | Пъстър пор</item>
+        <item>Meles meles | Язовец</item>
+        <item>Lutra lutra | Видра</item>
+        <item>Felis silvestris | Дива котка</item>
+        <item>Lynx lynx | Рис</item>
+        <item>Delphinus delphis | Обикновен делфин</item>
+        <item>Tursiops truncatus | Афала</item>
+        <item>Phocoena phocoena | Морска свиня (Муткур)</item>
+        <item>Sus scrofa | Дива свиня</item>
+        <item>Cervus elaphus | Благороден елен</item>
+        <item>Dama dama | Елен лопатар</item>
+        <item>Capreolus capreolus | Сърна</item>
+        <item>Rupicapra rupicapra | Дива коза</item>
+        <item>Ovis gmelinii | Муфлон</item>
+        <item>Rhinolophus ferrumequinum | Голям подковонос</item>
+        <item>Rhinolophus hipposideros | Малък подковонос</item>
+        <item>Rhinolophus blasii | Подковонос на Блази</item>
+        <item>Rhinolophus euryale | Южен подковонос</item>
+        <item>Rhinolophus mehelyi | Подковонос на Мехели</item>
+        <item>Myotis myotis | Голям нощник</item>
+        <item>Myotis blythii | Остроух нощник</item>
+        <item>Myotis bechsteinii | Нощник на Бехщайн</item>
+        <item>Myotis natteri | Нощник на Натерер</item>
+        <item>Myotis emarginatus | Трицветен нощник</item>
+        <item>Myotis mystacinus | Мустакат нощник</item>
+        <item>Myotis aurascens | Южен мустакат нощник</item>
+        <item>Myotis brandtii | Нощник на Брандт</item>
+        <item>Myotis daubentonii | Воден нощник</item>
+        <item>Myotis capaccinii | Дългопръст нощник</item>
+        <item>Myotis dasycneme | Езерен нощник</item>
+        <item>Myotis alcathoe | Алкатоев нощник</item>
+        <item>Plecotus austriacus | Сив дългоух прилеп</item>
+        <item>Plecotus auritus | Кафяв дългоух прилеп</item>
+        <item>Barabastella barabastellus | Широкоух прилеп</item>
+        <item>Nyctalus noctula | Ръждив вечерник</item>
+        <item>Nyctalus lasiopterus | Голям вечерник</item>
+        <item>Nyctalus leisleri | Малък вечерник</item>
+        <item>Pipistrellus pipistrellus  | Кафяво прилепче</item>
+        <item>Pipistrellus pygmaeus | </item>
+        <item>Pipistrellus nathusii | Прилепче на Натузий</item>
+        <item>Pipistrellus kuhlii | Средиземноморско прилепче</item>
+        <item>Hypsugo savii | Прилепче на Сави</item>
+        <item>Eptisicus serotinus | Полунощен прилеп</item>
+        <item>Eptisicus nilssonii | Северен прилеп</item>
+        <item>Vesperilio murinus | Двуцветен прилеп</item>
+        <item>Miniopterus schrebersii | Пещерен дългокрил</item>
+        <item>Tadarida teniotis | Булдогов прилеп</item>
+    </string-array>
+
+    <string-array name="form_herp_gender">
+        <item>M (мъжки)</item>
+        <item>F (женски)</item>
+    </string-array>
+
+    <string-array name="form_herp_age">
+        <item>Ad (Възрастен)</item>
+        <item>Sub (млад, неоловозрял)</item>
+        <item>Juv (ювенилен, новоизлюпен)</item>
+        <item>Larve (Ларва)</item>
+        <item>Eggs (яйца)</item>
+    </string-array>
+
+    <string-array name="form_herp_habitat">
+        <item>Местообитание</item>
+        <item>1. Светли иглолистни гори с храсталаци</item>
+        <item>1.1. гъсти иглолистни гори - култури и други</item>
+        <item>2. смесени гори</item>
+        <item>3. силно разредени иглолистни гори с храсталаци</item>
+        <item>3.1. поляни, пасища, ливади с разпръснати храсти</item>
+        <item>4. светли широколистни гори с храсталаци</item>
+        <item>4.1. гъсти широколистни гори</item>
+        <item>5. силно разредени широколистни гори с храсталаци</item>
+        <item>6. екотон дървесно-храстова, тревна растителност</item>
+        <item>7. пасища и ливади без да има наблизо гори или храсти или само с единични такива</item>
+        <item>8. смесица от градини, лозя, пасища, ливади, синури, горички или храсти</item>
+        <item>9. интензивни овощни градини и лозя - лишени от тревно покритие</item>
+        <item>10. скални местообитания</item>
+        <item>11. дюни обрасли с хр-астова растителност</item>
+        <item>11.1. лонгозни гори</item>
+        <item>12. галерийните гори край реките</item>
+        <item>12.1. дерета</item>
+        <item>13. влажни зони - крайбрежия обрасли с тръстика</item>
+        <item>14. Водни местообитания:</item>
+        <item>14.1 рекa</item>
+        <item>14.2 езера</item>
+        <item>14.3 язовир</item>
+        <item>14.4 микроязовир</item>
+        <item>14.5 канал</item>
+        <item>14.6 други</item>
+        <item>14.7 корито на чешма</item>
+        <item>14.8. коловоз</item>
+        <item>14.9. канавки</item>
+        <item>14.10 локва на пътя</item>
+        <item>15. покритие на брегова растителност</item>
+        <item>15.1 от 0 до 33 %</item>
+        <item>15.2 от 34 до 66 %</item>
+        <item>15.3 от 67 до 99 %</item>
+        <item>16. обработваеми земи</item>
+        <item>16.1. угар</item>
+        <item>16.2. зеленчукови градини</item>
+        <item>16.3. зърнени култури</item>
+        <item>16.4. люцерни</item>
+        <item>16.5. други</item>
+        <item>17. черен път</item>
+        <item>18. Асфалтов път</item>
+        <item>19. Постройки (извън населени места)</item>
+        <item>20. Селищни територии</item>
+        <item>21. Градски територии</item>
+        <item>14.11. Мочур</item>
+        <item>14.12. Малко езеро (до 30 кв. м)</item>
+        <item>14.13. Шахта</item>
+        <item>14.14. Калище</item>
+        <item>10.1.Шкарп</item>
+        <item>22. Сечище</item>
+    </string-array>
+
+    <string-array name="form_herp_danger_observation">
+        <item>Пожари</item>
+        <item>Сечи</item>
+        <item>Строежи</item>
+        <item>Кариери</item>
+        <item>Замърсяване</item>
+        <item>Бракониери</item>
+        <item>Ветропарк</item>
+        <item>Соларен парк</item>
+        <item>Мини ВЕЦ</item>
+        <item>Разораване на пасища и мери</item>
+        <item>Залесяване с нетипични видове</item>
+        <item>Прекомерно обрастване на пасища</item>
+        <item>Пресъхващи водни тела</item>
+        <item>Пътища</item>
+        <item>Инвазивни видове</item>
+        <item>Други</item>
+        <item>Зарибяване</item>
+        <item>Убит на пътя</item>
+        <item>Мъртъв екземпляр</item>
+        <item>Премахване на храсти</item>
+        <item>Съблекло</item>
+        <item>Изпражнения</item>
+    </string-array>
 </resources>
