@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,10 +18,10 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_main_source"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:hint="Източник"
-                    android:tag="Източник" />
+                    android:tag="Източник"
+                    app:entries="form_main_source" />
 
                 <TextView
                     style="@style/FieldLabel"
@@ -64,8 +65,8 @@
             android:id="@+id/observers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text|textCapWords|textPersonName"
             android:hint="Наблюдатели"
+            android:inputType="text|textCapWords|textPersonName"
             android:tag="Наблюдатели" />
 
         <View style="@style/FieldSeparator" />
@@ -78,24 +79,24 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_main_rain"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:hint="Дъжд"
                     android:tag="Дъжд"
-                    android:hint="Дъжд" />
+                    app:entries="form_main_rain" />
 
                 <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:hint="Темп °C"
                     android:tag="Температура_C" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_main_wind_force"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:hint="Сила на вятъра"
                     android:tag="Сила_на_вятъра"
-                    android:hint="Сила на вятъра" />
+                    app:entries="form_main_wind_force" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_main_wind_direction"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:hint="Посока на вятъра"
                     android:tag="Посока_на_вятъра"
-                    android:hint="Посока на вятъра" />
+                    app:entries="form_main_wind_direction" />
 
             </TableRow>
 
@@ -105,10 +106,10 @@
                     android:hint="Вид облаци"
                     android:tag="Вид_облаци" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_main_cloud_level"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:hint="Облачност %"
                     android:tag="Облачност_%"
-                    android:hint="Облачност %" />
+                    app:entries="form_main_cloud_level" />
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
                     android:hint="МТО други"
@@ -123,12 +124,12 @@
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/form_main_threats"
             android:hint="Заплахи"
-            android:tag="Заплахи" />
+            android:tag="Заплахи"
+            app:entries="form_main_threats" />
 
         <View style="@style/FieldSeparator" />
 

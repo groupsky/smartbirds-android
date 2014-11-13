@@ -1,18 +1,6 @@
 package org.bspb.smartbirds.pro.ui.views;
 
-import static android.app.Dialog.BUTTON_NEGATIVE;
-import static android.app.Dialog.BUTTON_POSITIVE;
-import static android.app.Dialog.BUTTON_NEUTRAL;
-import static android.text.InputType.TYPE_MASK_VARIATION;
-import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
-import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-import static android.view.inputmethod.EditorInfo.IME_ACTION_NONE;
-import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
-import static android.widget.AdapterView.INVALID_POSITION;
-import static android.view.ViewGroup.LayoutParams.*;
-
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -21,9 +9,6 @@ import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -31,20 +16,36 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.app.Dialog.BUTTON_NEGATIVE;
+import static android.app.Dialog.BUTTON_NEUTRAL;
+import static android.app.Dialog.BUTTON_POSITIVE;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
+import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
+import static android.widget.AdapterView.INVALID_POSITION;
 
 /**
  * Created by groupsky on 14-10-10.
  */
+@EView
 public class SingleChoiceFormInput extends TextView {
 
-    private ArrayAdapter<CharSequence> mAdapter;
+    private final CharSequence key;
+    @Bean
+    NomenclaturesBean nomenclatures;
+
+    private ArrayAdapter<String> mAdapter;
     private DataSetObserver mDataSetObserver;
     /**
      * The position within the adapter's data set of the currently selected item.
@@ -64,13 +65,11 @@ public class SingleChoiceFormInput extends TextView {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceFormInput, defStyle, 0);
         try {
-            CharSequence[] entries = a.getTextArray(R.styleable.SingleChoiceFormInput_android_entries);
-            if (entries != null) {
-                ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(context,
-                        android.R.layout.select_dialog_singlechoice, entries);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                setAdapter(adapter);
-            }
+            key = a.getText(R.styleable.SingleChoiceFormInput_entries);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+                    android.R.layout.select_dialog_singlechoice, new ArrayList<String>());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            setAdapter(adapter);
         } finally {
             a.recycle();
         }
@@ -95,7 +94,7 @@ public class SingleChoiceFormInput extends TextView {
      *
      * @param adapter The SpinnerAdapter to use for this Spinner
      */
-    public void setAdapter(ArrayAdapter<CharSequence> adapter) {
+    public void setAdapter(ArrayAdapter<String> adapter) {
         mAdapter = adapter;
         setSelection(INVALID_POSITION);
     }
@@ -124,6 +123,12 @@ public class SingleChoiceFormInput extends TextView {
         private int mLastSelected = INVALID_POSITION;
 
         public void show() {
+            if (key != null) {
+                List<String> values = nomenclatures.getNomenclature(key.toString());
+                mAdapter.addAll(values);
+                mAdapter.notifyDataSetChanged();
+            }
+
             boolean needFilter = mAdapter.getCount() > 20;
 
             EditText view = null;
@@ -138,7 +143,7 @@ public class SingleChoiceFormInput extends TextView {
 
             ((Filterable) mAdapter).getFilter().filter(null);
 
-            setSelection(mAdapter.getPosition(getText()));
+            setSelection(mAdapter.getPosition(getText().toString()));
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                     .setTitle(getHint())
@@ -212,7 +217,7 @@ public class SingleChoiceFormInput extends TextView {
 
         @Override
         public void onFilterComplete(int count) {
-            setSelection(mAdapter.getPosition(getText()));
+            setSelection(mAdapter.getPosition(getText().toString()));
         }
     }
 }

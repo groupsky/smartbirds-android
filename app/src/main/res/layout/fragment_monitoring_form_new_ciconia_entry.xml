@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -18,13 +19,13 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_substratum"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_substratum"
                     android:hint="Основен тип на субстрата"
                     android:tag="Основен тип на субстрата" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_column"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_column"
                     android:hint="Стълб"
                     android:tag="Стълб" />
             </TableRow>
@@ -35,21 +36,21 @@
                     android:tag="Гнездото е на изкуствена платформа"
                     android:hint="Гнездото е на изкуствена платформа" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_column_type"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_column_type"
                     android:hint="Вид стълб"
                     android:tag="Вид стълб" />
             </TableRow>
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_tree"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_tree"
                     android:hint="Дърво"
                     android:tag="Дърво" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_building"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_building"
                     android:hint="Сграда"
                     android:tag="Сграда" />
             </TableRow>
@@ -72,13 +73,13 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_not_occupied"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_not_occupied"
                     android:hint="Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели"
                     android:tag="Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_new_birds"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_new_birds"
                     android:hint="Тази година в гнездото са се появили една/две птици"
                     android:tag="Тази година в гнездото са се появили една/две птици" />
             </TableRow>
@@ -101,8 +102,8 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-                    android:entries="@array/form_ciconia_new_birds"
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    app:entries="form_ciconia_new_birds"
                     android:hint="Тази година в гнездото са се появили"
                     android:tag="Тази година в гнездото са се появили" />
             </TableRow>

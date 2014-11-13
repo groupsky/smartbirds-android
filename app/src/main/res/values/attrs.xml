@@ -16,11 +16,11 @@
 
     <!-- Stylable attributes for SingleChoiceFormInput -->
     <declare-styleable name="SingleChoiceFormInput">
-        <attr name="android:entries" />
+        <attr name="entries" format="string" />
     </declare-styleable>
 
     <!-- Stylable attributes for MultipleChoiceFormInput -->
     <declare-styleable name="MultipleChoiceFormInput">
-        <attr name="android:entries" />
+        <attr name="entries" />
     </declare-styleable>
 </resources>

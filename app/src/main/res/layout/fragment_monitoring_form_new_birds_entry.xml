@@ -1,4 +1,5 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,12 +10,12 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:id="@+id/field_name"
             android:layout_span="3"
-            android:entries="@array/form_birds_name"
             android:hint="Вид научно име"
-            android:tag="Вид_научно_име" />
+            android:tag="Вид_научно_име"
+            app:entries="form_birds_name" />
 
         <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
             android:tag="Поверително"
@@ -24,20 +25,20 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_count_units"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Единица на броя"
-            android:tag="Единица_на_броя" />
+            android:tag="Единица_на_броя"
+            app:entries="form_birds_count_units" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_count_type"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Тип на броя"
-            android:tag="Тип_на_броя" />
+            android:tag="Тип_на_броя"
+            app:entries="form_birds_count_type" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_nesting"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Тип гнездене"
-            android:tag="Тип_Гнездене" />
+            android:tag="Тип_Гнездене"
+            app:entries="form_birds_nesting" />
     </TableRow>
 
     <TableRow>
@@ -58,45 +59,45 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_sex"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Пол"
-            android:tag="Пол" />
+            android:tag="Пол"
+            app:entries="form_birds_sex" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_age"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Възраст"
-            android:tag="Възраст" />
+            android:tag="Възраст"
+            app:entries="form_birds_age" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_marking"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Маркировка"
-            android:tag="Маркировка" />
+            android:tag="Маркировка"
+            app:entries="form_birds_marking" />
 
 
     </TableRow>
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:layout_span="2"
-            android:entries="@array/form_birds_status"
             android:hint="Статус на вида"
-            android:tag="Статус_на_вида" />
+            android:tag="Статус_на_вида"
+            app:entries="form_birds_status" />
 
-        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
             android:layout_span="2"
-            android:entries="@array/form_birds_behaviour"
             android:hint="Поведение"
-            android:tag="Поведение" />
+            android:tag="Поведение"
+            app:entries="form_birds_behaviour" />
     </TableRow>
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:layout_span="2"
-            android:entries="@array/form_birds_death"
             android:hint="Мъртъв индивид (причини)"
-            android:tag="Мъртъв_индивид_причини" />
+            android:tag="Мъртъв_индивид_причини"
+            app:entries="form_birds_death" />
     </TableRow>
 </TableLayout>

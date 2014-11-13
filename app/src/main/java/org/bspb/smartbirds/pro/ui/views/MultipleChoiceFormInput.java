@@ -4,31 +4,33 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.database.DataSetObserver;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
-import java.util.Arrays;
-
-import static android.widget.AdapterView.INVALID_POSITION;
+import java.util.List;
 
 /**
  * Created by groupsky on 14-10-13.
  */
+@EView
 public class MultipleChoiceFormInput extends TextView {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MultipleChoiceFormInput";
     CharSequence[] entries;
+
+    private final CharSequence key;
+    @Bean
+    NomenclaturesBean nomenclatures;
     /**
      * The position within the adapter's data set of the currently selected item.
      */
@@ -47,10 +49,8 @@ public class MultipleChoiceFormInput extends TextView {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MultipleChoiceFormInput, defStyle, 0);
         try {
-            entries = a.getTextArray(R.styleable.MultipleChoiceFormInput_android_entries);
-            if (entries != null) {
-                mSelected = new boolean[entries.length];
-            }
+
+            key = a.getText(R.styleable.MultipleChoiceFormInput_entries);
         } finally {
             a.recycle();
 
@@ -94,6 +94,27 @@ public class MultipleChoiceFormInput extends TextView {
         boolean[] selected;
 
         public void show() {
+            if (entries == null && key != null) {
+                List<String> values = nomenclatures.getNomenclature(key.toString());
+                if (values != null) {
+                    entries = new CharSequence[values.size()];
+                    mSelected = new boolean[values.size()];
+                    for (int i = 0; i < values.size(); i++) {
+                        entries[i] = values.get(i);
+                    }
+
+                    String[] items = getText().toString().split(", ");
+                    if (items != null) {
+                        for (String item : items) {
+                            if (values.contains(item)) {
+                                mSelected[values.indexOf(item)] = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+
             this.selected = mSelected.clone();
             mPopup = new AlertDialog.Builder(getContext())
                     .setTitle(getHint())

@@ -6,6 +6,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
+import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_;
 
 /**
  * Created by dani on 14-11-11.

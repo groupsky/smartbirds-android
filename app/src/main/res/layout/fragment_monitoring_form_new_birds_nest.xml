@@ -1,4 +1,5 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,15 +10,15 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_nest_substrate"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Субстрат"
-            android:tag="Субстрат" />
+            android:tag="Субстрат"
+            app:entries="form_birds_nest_substrate" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_nest_location"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Дърво"
-            android:tag="Дърво" />
+            android:tag="Дърво"
+            app:entries="form_birds_nest_location" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="Височина на дървото"
@@ -27,20 +28,20 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_nest_location"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Местоположение на дървото"
-            android:tag="Местоположение_на_дървото" />
+            android:tag="Местоположение_на_дървото"
+            app:entries="form_birds_nest_location" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_nest_height"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Височина на гнездото"
-            android:tag="Височина_на_гнездото" />
+            android:tag="Височина_на_гнездото"
+            app:entries="form_birds_nest_height" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_nest_position"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Местоположение на гнездото"
-            android:tag="Местоположение_на_гнездото" />
+            android:tag="Местоположение_на_гнездото"
+            app:entries="form_birds_nest_position" />
     </TableRow>
 
     <TableRow>
@@ -76,20 +77,20 @@
 
     <TableRow android:gravity="bottom">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_age_individual"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Възраст на женската"
-            android:tag="Възраст_на_женската" />
+            android:tag="Възраст_на_женската"
+            app:entries="form_birds_age_individual" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_age_individual"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Възраст на мъжката"
-            android:tag="Възраст_на_мъжката" />
+            android:tag="Възраст_на_мъжката"
+            app:entries="form_birds_age_individual" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-            android:entries="@array/form_birds_nest_success"
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Гнездови успех"
-            android:tag="Гнездови_успех" />
+            android:tag="Гнездови_успех"
+            app:entries="form_birds_nest_success" />
 
     </TableRow>
 
