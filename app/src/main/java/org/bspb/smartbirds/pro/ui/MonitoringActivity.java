@@ -25,6 +25,7 @@ import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
+import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -149,14 +150,10 @@ public class MonitoringActivity extends FragmentActivity {
 
     @OptionsItem(R.id.action_new_entry)
     void onNewEntry() {
-        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(this);
-        ib.entryType(entryType);
-
-        Location loc = currentMap.getMyLocation();
-        if (loc != null) {
-            ib.lat(loc.getLatitude()).lon(loc.getLongitude());
+        LatLng position = null;
+        if (currentMap.getMyLocation() != null) {
+            startNewEntry(new LatLng(currentMap.getMyLocation().getLatitude(), currentMap.getMyLocation().getLongitude()));
         }
-        ib.startForResult(REQUEST_NEW_ENTRY);
     }
 
     @OptionsItem(R.id.action_common_form)
@@ -289,5 +286,18 @@ public class MonitoringActivity extends FragmentActivity {
 
         points.add(new LatLng(location.getLatitude(), location.getLongitude()));
         currentMap.updatePath(points);
+    }
+
+    public void onEvent(MapClickedEvent event) {
+        startNewEntry(event.position);
+    }
+
+    protected void startNewEntry(LatLng position) {
+        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(this);
+        ib.entryType(entryType);
+        if (position != null) {
+            ib.lat(position.latitude).lon(position.longitude);
+        }
+        ib.startForResult(REQUEST_NEW_ENTRY);
     }
 }

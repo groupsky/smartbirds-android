@@ -23,6 +23,7 @@ import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
+import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlPlacemark;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by dani on 14-11-6.
  */
 @EBean
-public class GoogleMapProvider implements MapProvider {
+public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -82,6 +83,7 @@ public class GoogleMapProvider implements MapProvider {
     }
 
     private void setUpMap() {
+        mMap.setOnMapClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.setMyLocationEnabled(true);
@@ -258,6 +260,13 @@ public class GoogleMapProvider implements MapProvider {
 
                 mMap.addPolygon(polygonOptions);
             }
+        }
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        if (positioned) {
+            eventBus.post(new MapClickedEvent(latLng));
         }
     }
 }

@@ -17,6 +17,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
+import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.overlays.FolderOverlay;
@@ -33,15 +34,12 @@ import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.PathOverlay;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
-import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener;
 
 /**
  * Created by dani on 14-11-6.
@@ -104,22 +102,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         scaleBarOverlay.setUnitsOfMeasure(ScaleBarOverlay.UnitsOfMeasure.metric);
         scaleBarOverlay.setEnableAdjustLength(true);
 
-        final CompassOverlay compassOverlay = new CompassOverlay(fragment.getActivity(), mMap);
-        compassOverlay.enableCompass();
-        compassOverlay.setCompassCenter(scaleBarOverlay.screenWidth - 230, 30);
-
-        markersOverlay = new ItemizedIconOverlay<OverlayItem>(mMap.getContext(), new ArrayList<OverlayItem>(), new OnItemGestureListener<OverlayItem>() {
-            @Override
-            public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return false;
-            }
-
-            @Override
-            public boolean onItemLongPress(int index, OverlayItem item) {
-                return false;
-            }
-        });
-
         pathOverlay = new PathOverlay(Color.BLUE, mMap.getContext());
         pathOverlay.getPaint().setStrokeWidth(5);
         if (points != null && !points.isEmpty()) {
@@ -131,25 +113,23 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         MapEventsOverlay eventsOverlay = new MapEventsOverlay(mMap.getContext(), this);
 
-        if (markers != null && !markers.isEmpty()) {
-            for (MapMarker mapMarker : markers) {
-                addMarker(mapMarker);
-            }
-        }
-
         KmlDocument kml = new KmlDocument();
         kml.parseKMLFile(new File(AREA_FILE_PATH));
         FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
 
         mMap.getOverlayManager().clear();
-        mMap.getOverlayManager().add(compassOverlay);
         mMap.getOverlayManager().add(pathOverlay);
         mMap.getOverlayManager().add(locationOverlay);
         mMap.getOverlayManager().add(scaleBarOverlay);
-        mMap.getOverlayManager().add(markersOverlay);
         mMap.getOverlayManager().add(eventsOverlay);
         mMap.getOverlayManager().add(new TouchEventsOverlay(mMap.getContext()));
         mMap.getOverlayManager().add(kmlOverlay);
+
+        if (markers != null && !markers.isEmpty()) {
+            for (MapMarker mapMarker : markers) {
+                addMarker(mapMarker);
+            }
+        }
 
 
         updateCamera();
@@ -295,6 +275,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public boolean singleTapConfirmedHelper(GeoPoint geoPoint) {
         InfoWindow.closeAllInfoWindowsOn(mMap);
+        eventBus.post(new MapClickedEvent(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())));
         return true;
     }
 
