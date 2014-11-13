@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.googlecode.jcsv.reader.CSVReader;
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
@@ -9,7 +10,12 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.apache.commons.net.ftp.FTPClient;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,7 +30,10 @@ import java.util.Map;
 @EBean(scope = EBean.Scope.Singleton)
 public class NomenclaturesBean {
 
-    private static final String FILE_NAME = "nomenclatures.csv";
+    private static final String TAG = SmartBirdsApplication.TAG + ".NomenclaturesBean";
+
+    private static final String NOMENCLATURES_FILE_NAME = "nomenclatures.csv";
+    private static final String FTP_PATH = "nomenclatures/nomenclatures.csv";
 
     private Map<String, List<String>> data;
 
@@ -39,7 +48,14 @@ public class NomenclaturesBean {
     @Background
     public void loadData() {
         try {
-            InputStream inputStream = context.getAssets().open(FILE_NAME);
+            File nomenclatures = new File(context.getExternalFilesDir(null), NOMENCLATURES_FILE_NAME);
+            InputStream inputStream;
+            if (nomenclatures.exists() && nomenclatures.length() > 0) {
+                inputStream = new FileInputStream(nomenclatures);
+            } else {
+                inputStream = context.getAssets().open(NOMENCLATURES_FILE_NAME);
+            }
+
             CSVReader<String[]> csv = CSVReaderBuilder.newDefaultReader(new InputStreamReader(inputStream));
             List<String> keys = csv.readHeader();
 
@@ -61,6 +77,21 @@ public class NomenclaturesBean {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Background
+    public void loadDataFromServer() {
+        FTPClient ftpClient = FTPClientUtils.connect();
+        try {
+            File file = new File(context.getExternalFilesDir(null), NOMENCLATURES_FILE_NAME);
+            FileOutputStream out = new FileOutputStream(file);
+
+            ftpClient.retrieveFile(FTP_PATH, out);
+            loadData();
+        } catch (IOException e) {
+            Log.e(TAG, String.format("error while downloading nomenclatures: %s", e.getMessage()), e);
+        }
+
     }
 
     public List<String> getNomenclature(String key) {
