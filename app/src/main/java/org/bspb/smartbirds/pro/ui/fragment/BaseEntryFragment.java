@@ -75,12 +75,15 @@ public abstract class BaseEntryFragment extends Fragment {
 
     @OptionsItem(R.id.action_submit)
     void onSubmitClicked(MenuItem item) {
-        item.setEnabled(false);
-        HashMap<String, String> data = FormUtils.traverseForm(getView()).serialize();
-        data.put("Lat", Double.toString(lat));
-        data.put("Long", Double.toString(lon));
-        data.put("Picture", imageFileName != null ? imageFileName : "");
-        eventBus.post(new EntrySubmitted(data));
+        FormUtils.FormModel form = FormUtils.traverseForm(getView());
+        if (form.validateFields()) {
+            item.setEnabled(false);
+            HashMap<String, String> data = form.serialize();
+            data.put("Lat", Double.toString(lat));
+            data.put("Long", Double.toString(lon));
+            data.put("Picture", imageFileName != null ? imageFileName : "");
+            eventBus.post(new EntrySubmitted(data));
+        }
     }
 
     @OptionsItem(R.id.take_picture)

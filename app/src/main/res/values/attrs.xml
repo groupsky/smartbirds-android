@@ -17,10 +17,43 @@
     <!-- Stylable attributes for SingleChoiceFormInput -->
     <declare-styleable name="SingleChoiceFormInput">
         <attr name="entries" format="string" />
+        <attr name="required" format="boolean" />
     </declare-styleable>
 
     <!-- Stylable attributes for MultipleChoiceFormInput -->
     <declare-styleable name="MultipleChoiceFormInput">
         <attr name="entries" />
+        <attr name="required" />
     </declare-styleable>
+
+    <!-- Stylable attributes for TextFormInput -->
+    <declare-styleable name="TextFormInput">
+        <attr name="required" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for MultipleTextFormInput -->
+    <declare-styleable name="MultipleTextFormInput">
+        <attr name="required" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for DateFormInput-->
+    <declare-styleable name="DateFormInput">
+        <attr name="required" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for TimeFormInput-->
+    <declare-styleable name="TimeFormInput">
+        <attr name="required" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for DecimalNumberFormInput-->
+    <declare-styleable name="DecimalNumberFormInput">
+        <attr name="required" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for FloatNumberFormInput-->
+    <declare-styleable name="FloatNumberFormInput">
+        <attr name="required" />
+    </declare-styleable>
+
 </resources>

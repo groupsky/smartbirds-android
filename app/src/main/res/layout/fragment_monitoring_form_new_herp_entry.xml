@@ -22,7 +22,8 @@
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:hint="Вид"
                     android:tag="Вид"
-                    app:entries="form_herp_name" />
+                    app:entries="form_herp_name"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:hint="Пол"
@@ -49,7 +50,8 @@
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="Брой"
-                    android:tag="Брой" />
+                    android:tag="Брой"
+                    app:required="true" />
 
             </TableRow>
 

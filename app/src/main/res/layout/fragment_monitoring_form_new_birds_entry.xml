@@ -15,7 +15,8 @@
             android:layout_span="3"
             android:hint="Вид научно име"
             android:tag="Вид_научно_име"
-            app:entries="form_birds_name" />
+            app:entries="form_birds_name"
+            app:required="true" />
 
         <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
             android:tag="Поверително"
@@ -28,12 +29,14 @@
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Единица на броя"
             android:tag="Единица_на_броя"
-            app:entries="form_birds_count_units" />
+            app:entries="form_birds_count_units"
+            app:required="true" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Тип на броя"
             android:tag="Тип_на_броя"
-            app:entries="form_birds_count_type" />
+            app:entries="form_birds_count_type"
+            app:required="true" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="Тип гнездене"

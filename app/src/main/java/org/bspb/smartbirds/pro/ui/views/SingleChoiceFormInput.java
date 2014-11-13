@@ -22,6 +22,7 @@ import android.widget.TextView;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 import java.util.ArrayList;
@@ -39,9 +40,10 @@ import static android.widget.AdapterView.INVALID_POSITION;
  * Created by groupsky on 14-10-10.
  */
 @EView
-public class SingleChoiceFormInput extends TextView {
+public class SingleChoiceFormInput extends TextView implements SupportRequiredView {
 
     private final CharSequence key;
+    private final boolean required;
     @Bean
     NomenclaturesBean nomenclatures;
 
@@ -66,6 +68,7 @@ public class SingleChoiceFormInput extends TextView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceFormInput, defStyle, 0);
         try {
             key = a.getText(R.styleable.SingleChoiceFormInput_entries);
+            required = a.getBoolean(R.styleable.SingleChoiceFormInput_required, false);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                     android.R.layout.select_dialog_singlechoice, new ArrayList<String>());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,6 +107,7 @@ public class SingleChoiceFormInput extends TextView {
             mSelectedPosition = position;
             if (position != INVALID_POSITION) {
                 setText(String.valueOf(mAdapter.getItem(position)));
+                setError(null);
             } else {
                 setText("");
             }
@@ -115,6 +119,17 @@ public class SingleChoiceFormInput extends TextView {
         super.performClick();
         new PopupDialog().show();
         return true;
+    }
+
+    @Override
+    public void checkRequired() throws ViewValidationException {
+        if (required) {
+            String value = getText().toString();
+            if (value == null || value.equals("")) {
+                setError("This field is required");
+                throw new ViewValidationException();
+            }
+        }
     }
 
     private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {

@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -21,19 +21,21 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_name"
-                    app:entries="form_birds_name"
                     android:hint="Вид научно име"
-                    android:tag="Вид научно име" />
+                    android:tag="Вид научно име"
+                    app:entries="form_birds_name"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_distance"
-                    app:entries="form_cbm_distance"
                     android:hint="Разстояние"
-                    android:tag="Разстояние" />
+                    android:tag="Разстояние"
+                    app:entries="form_cbm_distance" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="Брой индивиди"
-                    android:tag="Брой индивиди" />
+                    android:tag="Брой индивиди"
+                    app:required="true" />
 
             </TableRow>
 
@@ -41,15 +43,17 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_primary_habitat"
-                    app:entries="form_cbm_habitat"
                     android:hint="Първостепенно местообитание"
-                    android:tag="Първостепенно местообитание" />
+                    android:tag="Първостепенно местообитание"
+                    app:entries="form_cbm_habitat"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_secondary_habitat"
-                    app:entries="form_cbm_habitat"
                     android:hint="Второстепенно местообитание"
-                    android:tag="Второстепенно местообитание" />
+                    android:tag="Второстепенно местообитание"
+                    app:entries="form_cbm_habitat"
+                    app:required="true" />
 
             </TableRow>
 
@@ -57,15 +61,17 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_visit_number"
-                    app:entries="form_cbm_visit_number"
                     android:hint="Посещение номер"
-                    android:tag="Посещение номер" />
+                    android:tag="Посещение номер"
+                    app:entries="form_cbm_visit_number"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_sector"
-                    app:entries="form_cbm_sector"
                     android:hint="Номер на участък"
-                    android:tag="Номер на участък" />
+                    android:tag="Номер на участък"
+                    app:entries="form_cbm_sector"
+                    app:required="true" />
 
             </TableRow>
 

@@ -79,6 +79,9 @@ public class MultipleChoiceFormInput extends TextView {
             }
         }
         setText(sb.toString());
+        if (sb.length() > 0) {
+            setError(null);
+        }
     }
 
     @Override

@@ -21,7 +21,8 @@
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:hint="Източник"
                     android:tag="Източник"
-                    app:entries="form_main_source" />
+                    app:entries="form_main_source"
+                    app:required="true" />
 
                 <TextView
                     style="@style/FieldLabel"
@@ -29,11 +30,13 @@
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
                     android:hint="дата"
-                    android:tag="Начална_Дата" />
+                    android:tag="Начална_Дата"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.TimeFormInput
                     android:hint="час"
-                    android:tag="Час_начало" />
+                    android:tag="Час_начало"
+                    app:required="true" />
 
             </TableRow>
 
@@ -42,7 +45,8 @@
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
                     android:hint="Място"
                     android:inputType="text|textCapWords|textPostalAddress"
-                    android:tag="Място" />
+                    android:tag="Място"
+                    app:required="true" />
 
                 <TextView
                     style="@style/FieldLabel"
@@ -50,11 +54,13 @@
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
                     android:hint="дата"
-                    android:tag="Крайна_Дата" />
+                    android:tag="Крайна_Дата"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.TimeFormInput
                     android:hint="час"
-                    android:tag="Час_край" />
+                    android:tag="Час_край"
+                    app:required="true" />
 
 
             </TableRow>
@@ -67,7 +73,8 @@
             android:layout_height="wrap_content"
             android:hint="Наблюдатели"
             android:inputType="text|textCapWords|textPersonName"
-            android:tag="Наблюдатели" />
+            android:tag="Наблюдатели"
+            app:required="true" />
 
         <View style="@style/FieldSeparator" />
 

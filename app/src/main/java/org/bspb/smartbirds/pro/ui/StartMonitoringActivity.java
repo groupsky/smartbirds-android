@@ -83,8 +83,10 @@ public class StartMonitoringActivity extends Activity {
 
     @OptionsItem(R.id.action_submit)
     public void save() {
-        formFragment.save();
-        MonitoringActivity_.intent(this).entryType(entryType).start();
-        finish();
+        if (formFragment.validate()) {
+            formFragment.save();
+            MonitoringActivity_.intent(this).entryType(entryType).start();
+            finish();
+        }
     }
 }

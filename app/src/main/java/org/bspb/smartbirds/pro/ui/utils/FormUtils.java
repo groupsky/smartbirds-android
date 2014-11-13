@@ -5,11 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
+import org.bspb.smartbirds.pro.ui.views.SupportRequiredView;
 
 import java.util.HashMap;
 
@@ -68,13 +68,13 @@ public class FormUtils {
             }
             if (view instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) view;
-                return checkBox.isChecked()?"1":"0";
+                return checkBox.isChecked() ? "1" : "0";
             }
             if (view instanceof TextView) {
                 TextView textView = (TextView) view;
                 return textView.getText().toString();
             }
-            Log.w(TAG, "unsupported view "+view.getClass());
+            Log.w(TAG, "unsupported view " + view.getClass());
             return "";
         }
 
@@ -106,9 +106,9 @@ public class FormUtils {
                     '}';
         }
 
-        public HashMap<String, String>  serialize() {
+        public HashMap<String, String> serialize() {
             HashMap<String, String> values = new HashMap<String, String>();
-            for (String key: fields.keySet()) {
+            for (String key : fields.keySet()) {
                 FormField field = fields.get(key);
                 String value = field.getValue();
                 values.put(key, value);
@@ -118,11 +118,28 @@ public class FormUtils {
 
         public void deserialize(HashMap<String, String> values) {
             if (values == null) return;
-            for (String key: fields.keySet()) {
+            for (String key : fields.keySet()) {
                 if (!values.containsKey(key)) continue;
                 FormField field = fields.get(key);
                 field.setValue(values.get(key));
             }
+        }
+
+        public boolean validateFields() {
+            boolean res = true;
+            for (FormField field : fields.values()) {
+                if (field.view instanceof SupportRequiredView) {
+                    try {
+                        ((SupportRequiredView) field.view).checkRequired();
+                    } catch (ViewValidationException e) {
+                        res = false;
+                    }
+                }
+            }
+
+
+            return res;
+
         }
     }
 

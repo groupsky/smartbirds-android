@@ -2,27 +2,29 @@ package org.bspb.smartbirds.pro.ui.views;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by groupsky on 14-10-17.
  */
-public class DateFormInput extends TextView {
+public class DateFormInput extends TextView implements SupportRequiredView {
 
     protected Calendar mValue;
     protected DateFormat mDateFormat;
+
+    private boolean required;
 
     public DateFormInput(Context context) {
         this(context, null);
@@ -38,6 +40,13 @@ public class DateFormInput extends TextView {
         mDateFormat = SimpleDateFormat.getDateInstance();
 
         setValue(Calendar.getInstance());
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DateFormInput, defStyle, 0);
+        try {
+            required = a.getBoolean(R.styleable.DateFormInput_required, false);
+        } finally {
+            a.recycle();
+        }
     }
 
     @Override
@@ -90,4 +99,16 @@ public class DateFormInput extends TextView {
             setValue(value);
         }
     }
+
+    @Override
+    public void checkRequired() throws ViewValidationException {
+        if (required) {
+            String value = getText().toString();
+            if (value == null || value.equals("")) {
+                setError("This field is required");
+                throw new ViewValidationException();
+            }
+        }
+    }
+
 }

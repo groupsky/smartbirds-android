@@ -1,29 +1,32 @@
 package org.bspb.smartbirds.pro.ui.views;
 
-import static android.text.format.DateFormat.is24HourFormat;
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static android.text.format.DateFormat.is24HourFormat;
+
 /**
  * Created by groupsky on 14-10-17.
  */
-public class TimeFormInput extends TextView {
+public class TimeFormInput extends TextView implements SupportRequiredView {
 
     protected Calendar mValue;
     protected DateFormat mDateFormat;
+
+    private boolean required;
 
     public TimeFormInput(Context context) {
         this(context, null);
@@ -39,6 +42,13 @@ public class TimeFormInput extends TextView {
         mDateFormat = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);
 
         setValue(Calendar.getInstance());
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TimeFormInput, defStyle, 0);
+        try {
+            required = a.getBoolean(R.styleable.TimeFormInput_required, false);
+        } finally {
+            a.recycle();
+        }
     }
 
     @Override
@@ -87,6 +97,17 @@ public class TimeFormInput extends TextView {
             value.set(Calendar.HOUR, hourOfDay);
             value.set(Calendar.MINUTE, minute);
             setValue(value);
+        }
+    }
+
+    @Override
+    public void checkRequired() throws ViewValidationException {
+        if (required) {
+            String value = getText().toString();
+            if (value == null || value.equals("")) {
+                setError("This field is required");
+                throw new ViewValidationException();
+            }
         }
     }
 }
