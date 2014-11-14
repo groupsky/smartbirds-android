@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -31,15 +30,12 @@ import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -103,6 +99,7 @@ public class DataService extends Service {
     }
 
     public void onEvent(StartMonitoringEvent event) {
+
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
         monitoringName = String.format("%s-%s", DATE_FORMATTER.format(new Date()), getRandomNode());
@@ -111,6 +108,7 @@ public class DataService extends Service {
             pictureCounter = 0;
             monitoring = true;
             bus.postSticky(new MonitoringStartedEvent());
+            NotificationUtils.showMonitoringNotification(getApplicationContext());
         } else {
             Toast.makeText(this, "Cannot create directory for data! Check that you have enough storage available", Toast.LENGTH_SHORT).show();
             bus.post(new MonitoringFailedEvent());
@@ -165,6 +163,8 @@ public class DataService extends Service {
 
     public void onEvent(CancelMonitoringEvent event) {
         Log.d(TAG, "onCancelMonitoringEvent...");
+        NotificationUtils.hideMonitoringNotification(getApplicationContext());
+
         TrackingService_.intent(this).stop();
         monitoring = false;
         Toast.makeText(this, "Cancel monitoring", Toast.LENGTH_SHORT).show();
@@ -176,6 +176,7 @@ public class DataService extends Service {
     }
 
     public void onEvent(FinishMonitoringEvent event) {
+        NotificationUtils.hideMonitoringNotification(getApplicationContext());
         TrackingService_.intent(this).stop();
         closeGpxFile();
 
@@ -275,9 +276,9 @@ public class DataService extends Service {
                 try {
                     osw.write(
                             "    <trkseg>\n" +
-                                    "      <trkpt lat=\""+location.getLatitude()+"\" lon=\""+location.getLongitude()+"\">\n" +
-                                    (location.hasAltitude()?"        <ele>"+location.getAltitude()+"</ele>\n":"") +
-                                    "        <time>"+GPX_DATE_FORMATTER.format(new Date(location.getTime()))+"</time>\n" +
+                                    "      <trkpt lat=\"" + location.getLatitude() + "\" lon=\"" + location.getLongitude() + "\">\n" +
+                                    (location.hasAltitude() ? "        <ele>" + location.getAltitude() + "</ele>\n" : "") +
+                                    "        <time>" + GPX_DATE_FORMATTER.format(new Date(location.getTime())) + "</time>\n" +
                                     "      </trkpt>\n" +
                                     "    </trkseg>\n");
                 } finally {

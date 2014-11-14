@@ -113,9 +113,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         MapEventsOverlay eventsOverlay = new MapEventsOverlay(mMap.getContext(), this);
 
-        KmlDocument kml = new KmlDocument();
-        kml.parseKMLFile(new File(AREA_FILE_PATH));
-        FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
 
         mMap.getOverlayManager().clear();
         mMap.getOverlayManager().add(pathOverlay);
@@ -123,7 +120,14 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         mMap.getOverlayManager().add(scaleBarOverlay);
         mMap.getOverlayManager().add(eventsOverlay);
         mMap.getOverlayManager().add(new TouchEventsOverlay(mMap.getContext()));
-        mMap.getOverlayManager().add(kmlOverlay);
+
+        KmlDocument kml = new KmlDocument();
+        File file = new File(AREA_FILE_PATH);
+        if (file.exists()) {
+            kml.parseKMLFile(file);
+            FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
+            mMap.getOverlayManager().add(kmlOverlay);
+        }
 
         if (markers != null && !markers.isEmpty()) {
             for (MapMarker mapMarker : markers) {

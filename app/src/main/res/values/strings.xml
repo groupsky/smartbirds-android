@@ -20,5 +20,7 @@
     <string name="entry_type_ciconia">Бял щъркел</string>
     <string name="entry_type_herp">Земноводни и влечуги и бозайници</string>
     <string name="required_field">This field is required</string>
+    <string name="monitoring_notification_title">Мониторинг</string>
+    <string name="monitoring_notification_content">Стартиран мониторинг</string>
 
 </resources>

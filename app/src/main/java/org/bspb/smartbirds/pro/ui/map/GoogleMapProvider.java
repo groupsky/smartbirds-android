@@ -152,7 +152,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         FragmentTransaction fragTransaction = fragmentManager.beginTransaction();
         fragTransaction.replace(R.id.map_container, fragment, "google");
         fragTransaction.commit();
-
     }
 
     @Override
@@ -236,7 +235,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     private void drawArea() {
         KmlDocument kml = new KmlDocument();
-        kml.parseKMLFile(new File(AREA_FILE_PATH));
+        File file = new File(AREA_FILE_PATH);
+        if (!file.exists()) {
+            return;
+        }
+        kml.parseKMLFile(file);
         System.out.println(AREA_FILE_PATH);
         if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
             KmlFeature item = kml.mKmlRoot.mItems.get(0);
