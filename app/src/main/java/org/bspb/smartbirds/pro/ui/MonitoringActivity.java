@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -273,6 +274,16 @@ public class MonitoringActivity extends FragmentActivity {
         currentMap.setMapType(MapProvider.MapType.HYBRID);
         sender.setChecked(true);
         menuMap.setTitle(sender.getTitle());
+    }
+
+    @OptionsItem(R.id.action_stay_awake)
+    void setStayAwake(MenuItem sender) {
+        if (sender.isChecked()) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+        sender.setChecked(!sender.isChecked());
     }
 
     public void onEvent(LocationChangedEvent event) {

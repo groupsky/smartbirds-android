@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_finish"
@@ -12,8 +10,8 @@
         android:title="Завършване" />
     <item
         android:id="@+id/action_new_entry"
-        android:menuCategory="container"
         android:enabled="false"
+        android:menuCategory="container"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="Ново отчитане" />
@@ -101,4 +99,11 @@
             </group>
         </menu>
     </item>
+    <item
+        android:id="@+id/action_stay_awake"
+        android:checkable="true"
+        android:checked="false"
+        android:enabled="true"
+        android:menuCategory="system"
+        android:title="Постоянно включен" />
 </menu>
