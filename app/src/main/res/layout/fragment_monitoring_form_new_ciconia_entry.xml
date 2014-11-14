@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -20,49 +20,49 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_substratum"
-                    android:hint="Основен тип на субстрата"
-                    android:tag="Основен тип на субстрата" />
+                    android:hint="@string/monitoring_ciconia_substratum"
+                    android:tag="Основен тип на субстрата"
+                    app:entries="form_ciconia_substratum" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_column"
-                    android:hint="Стълб"
-                    android:tag="Стълб" />
+                    android:hint="@string/monitoring_ciconia_column"
+                    android:tag="Стълб"
+                    app:entries="form_ciconia_column" />
             </TableRow>
 
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:tag="Гнездото е на изкуствена платформа"
-                    android:hint="Гнездото е на изкуствена платформа" />
+                    android:hint="@string/monitoring_ciconia_nest_artificial"
+                    android:tag="Гнездото е на изкуствена платформа" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_column_type"
-                    android:hint="Вид стълб"
-                    android:tag="Вид стълб" />
+                    android:hint="@string/monitoring_ciconia_column_type"
+                    android:tag="Вид стълб"
+                    app:entries="form_ciconia_column_type" />
             </TableRow>
 
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_tree"
-                    android:hint="Дърво"
-                    android:tag="Дърво" />
+                    android:hint="@string/monitoring_ciconia_tree"
+                    android:tag="Дърво"
+                    app:entries="form_ciconia_tree" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_building"
-                    android:hint="Сграда"
-                    android:tag="Сграда" />
+                    android:hint="@string/monitoring_ciconia_building"
+                    android:tag="Сграда"
+                    app:entries="form_ciconia_building" />
             </TableRow>
 
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:hint="Гнездото е на изкуствена поставка направена от човек"
+                    android:hint="@string/monitoring_ciconia_nest_artificial_human"
                     android:tag="Гнездото е на изкуствена поставка направена от човек" />
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="Гнездото е на друг вид субстрат"
+                    android:hint="@string/monitoring_ciconia_nest_other"
                     android:tag="Гнездото е на друг вид субстрат" />
             </TableRow>
 
@@ -74,24 +74,24 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_not_occupied"
-                    android:hint="Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели"
-                    android:tag="Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели" />
+                    android:hint="@string/monitoring_ciconia_not_occupied"
+                    android:tag="Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели"
+                    app:entries="form_ciconia_not_occupied" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_new_birds"
-                    android:hint="Тази година в гнездото са се появили една/две птици"
-                    android:tag="Тази година в гнездото са се появили една/две птици" />
+                    android:hint="@string/monitoring_ciconia_new_birds"
+                    android:tag="Тази година в гнездото са се появили една/две птици"
+                    app:entries="form_ciconia_new_birds" />
             </TableRow>
 
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:hint="Приблизителна дата на появяване на щъркелите"
+                    android:hint="@string/monitoring_ciconia_date_appear"
                     android:tag="Приблизителна дата на появяване на щъркелите" />
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:hint="Приблизителна дата на изчезване на щъркелите"
+                    android:hint="@string/monitoring_ciconia_disappear"
                     android:tag="Приблизителна дата на изчезване на щъркелите" />
             </TableRow>
 
@@ -103,9 +103,9 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    app:entries="form_ciconia_new_birds"
-                    android:hint="Тази година в гнездото са се появили"
-                    android:tag="Тази година в гнездото са се появили" />
+                    android:hint="@string/monitoring_ciconia_this_year"
+                    android:tag="Тази година в гнездото са се появили"
+                    app:entries="form_ciconia_new_birds" />
             </TableRow>
 
             <TableRow>
@@ -116,7 +116,7 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="Брой малки в гнездото"
+                    android:hint="@string/monitoring_ciconia_small_count"
                     android:tag="Брой малки в гнездото" />
             </TableRow>
 
@@ -128,7 +128,7 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="Гнездото НЕ се обитава от ПОВЕЧЕ от една година"
+                    android:hint="@string/monitoring_ciconia_not_occupied_more_than_year"
                     android:tag="Гнездото НЕ се обитава от ПОВЕЧЕ от една година" />
             </TableRow>
 
@@ -140,35 +140,36 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="Данни за загинали малки от ел.ток"
+                    android:hint="@string/monitoring_ciconia_small_death_electricity"
                     android:tag="Данни за загинали малки от ел.ток" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="Данни за загинали малки изхвърлени от родителите"
+                    android:hint="@string/monitoring_ciconia_small_death_from_parent"
                     android:tag="Данни за загинали малки изхвърлени от родителите" />
             </TableRow>
 
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="загинали по други причини"
+                    android:hint="@string/monitoring_ciconia_small_death_other"
                     android:tag="загинали по други причини" />
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="Причина"
+                    android:hint="@string/monitoring_ciconia_cause"
                     android:tag="Причина" />
             </TableRow>
 
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
-                    android:hint="Бележки"
+                    android:hint="@string/monitoring_ciconia_notes"
                     android:tag="Бележки" />
             </TableRow>
         </TableLayout>
 
         <View style="@style/FieldSeparator" />
-z
+        z
+
         <ImageView
             android:id="@+id/picture"
             android:layout_width="wrap_content"

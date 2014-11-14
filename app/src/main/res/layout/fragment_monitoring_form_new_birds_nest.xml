@@ -11,17 +11,17 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Субстрат"
+            android:hint="@string/monitoring_birds_substrate"
             android:tag="Субстрат"
             app:entries="form_birds_nest_substrate" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Дърво"
+            android:hint="@string/monitoring_birds_tree"
             android:tag="Дърво"
             app:entries="form_birds_nest_location" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-            android:hint="Височина на дървото"
+            android:hint="@string/monitoring_birds_tree_height"
             android:tag="Височина_на_дървото" />
 
     </TableRow>
@@ -29,17 +29,17 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Местоположение на дървото"
+            android:hint="@string/monitoring_birds_tree_location"
             android:tag="Местоположение_на_дървото"
             app:entries="form_birds_nest_location" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Височина на гнездото"
+            android:hint="@string/monitoring_birds_nest_height"
             android:tag="Височина_на_гнездото"
             app:entries="form_birds_nest_height" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Местоположение на гнездото"
+            android:hint="@string/monitoring_birds_nest_location"
             android:tag="Местоположение_на_гнездото"
             app:entries="form_birds_nest_position" />
     </TableRow>
@@ -48,14 +48,14 @@
 
         <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
             android:tag="Мътене"
-            android:text="Мътене" />
+            android:text="@string/monitoring_birds_incubation" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-            android:hint="Брой яйца"
+            android:hint="@string/monitoring_birds_eggs_count"
             android:tag="Брой_яйца" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-            android:hint="Брой пухови малки"
+            android:hint="@string/monitoring_birds_small_downy_count"
             android:tag="Брой_пухови_малки" />
 
     </TableRow>
@@ -63,32 +63,32 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-            android:hint="Брой оперени малки в гнездото"
+            android:hint="@string/monitoring_birds_small_feathered_count"
             android:tag="Брой_оперени_малки_в_гнездото" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-            android:hint="Брой излетели малки"
+            android:hint="@string/monitoring_birds_takeoff_count"
             android:tag="Брой_излетели_малки" />
 
         <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-            android:tag="Охрана_на_гнездото"
-            android:text="Охрана на гнездото" />
+            android:tag="Охрана на гнездото"
+            android:text="@string/monitoring_birds_nest_guard" />
     </TableRow>
 
     <TableRow android:gravity="bottom">
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Възраст на женската"
+            android:hint="@string/monitoring_birds_female_age"
             android:tag="Възраст_на_женската"
             app:entries="form_birds_age_individual" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Възраст на мъжката"
+            android:hint="@string/monitoring_birds_male_age"
             android:tag="Възраст_на_мъжката"
             app:entries="form_birds_age_individual" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="Гнездови успех"
+            android:hint="@string/monitoring_birds_nest_success"
             android:tag="Гнездови_успех"
             app:entries="form_birds_nest_success" />
 
@@ -98,7 +98,7 @@
 
         <org.bspb.smartbirds.pro.ui.views.MemoFormInput
             android:layout_span="3"
-            android:hint="Земеползване в радиус от 300м"
+            android:hint="@string/monitoring_birds_land_use"
             android:lines="1"
             android:tag="Земеползване_в_радиус_от_300м" />
 

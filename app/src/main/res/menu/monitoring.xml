@@ -7,48 +7,48 @@
         android:menuCategory="container"
         android:orderInCategory="50"
         android:showAsAction="always"
-        android:title="Завършване" />
+        android:title="@string/menu_monitoring_finish" />
     <item
         android:id="@+id/action_new_entry"
         android:enabled="false"
         android:menuCategory="container"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="Ново отчитане" />
+        android:title="@string/menu_monitoring_new_entry" />
     <item
         android:id="@+id/action_common_form"
         android:menuCategory="container"
         android:orderInCategory="75"
         android:showAsAction="always"
-        android:title="Общи" />
+        android:title="@string/menu_monitoring_common" />
 
     <item
         android:id="@+id/menu_zoom"
         android:menuCategory="alternative"
         android:showAsAction="ifRoom"
-        android:title="500m">
+        android:title="@string/menu_monitoring_zoom_500">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/action_zoom_free"
-                    android:title="Free" />
+                    android:title="@string/menu_monitoring_zoom_free" />
 
                 <item
                     android:id="@+id/action_zoom_1km"
-                    android:title="1km" />
+                    android:title="@string/menu_monitoring_zoom_1000" />
 
                 <item
                     android:id="@+id/action_zoom_500m"
                     android:checked="true"
-                    android:title="500m" />
+                    android:title="@string/menu_monitoring_zoom_500" />
 
                 <item
                     android:id="@+id/action_zoom_250m"
-                    android:title="250m" />
+                    android:title="@string/menu_monitoring_zoom_250" />
 
                 <item
                     android:id="@+id/action_zoom_100m"
-                    android:title="100m" />
+                    android:title="@string/menu_monitoring_zoom_100" />
             </group>
         </menu>
     </item>
@@ -57,7 +57,7 @@
         android:id="@+id/menu_map"
         android:menuCategory="alternative"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/map_normal">
+        android:title="@string/menu_monitoring_map_normal">
         <menu>
 
             <group
@@ -66,15 +66,15 @@
                 <item
                     android:id="@+id/action_map_google_normal"
                     android:checked="true"
-                    android:title="@string/map_normal" />
+                    android:title="@string/menu_monitoring_map_normal" />
 
                 <item
                     android:id="@+id/action_map_google_satellite"
-                    android:title="Сателитна" />
+                    android:title="@string/menu_monitoring_map_satellite" />
 
                 <item
                     android:id="@+id/action_map_google_hybrid"
-                    android:title="Хибридна" />
+                    android:title="@string/menu_monitoring_map_hybrid" />
             </group>
         </menu>
     </item>
@@ -82,7 +82,7 @@
         android:id="@+id/menu_map_provider"
         android:menuCategory="alternative"
         android:showAsAction="ifRoom|withText"
-        android:title="Map provider">
+        android:title="@string/menu_monitoring_map_provider">
         <menu>
 
             <group
@@ -90,11 +90,11 @@
                 android:menuCategory="alternative">
                 <item
                     android:id="@+id/action_map_google"
-                    android:title="Google" />
+                    android:title="@string/menu_monitoring_map_provider_google" />
 
                 <item
                     android:id="@+id/action_map_osm"
-                    android:title="OSM" />
+                    android:title="@string/menu_monitoring_map_provider_osm" />
 
             </group>
         </menu>
@@ -105,5 +105,5 @@
         android:checked="false"
         android:enabled="true"
         android:menuCategory="system"
-        android:title="Постоянно включен" />
+        android:title="@string/menu_monitoring_stay_awake" />
 </menu>

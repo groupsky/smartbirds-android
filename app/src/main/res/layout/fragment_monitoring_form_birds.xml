@@ -22,16 +22,16 @@
             style="@style/FieldInput.Memo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Бележки"
+            android:hint="@string/monitoring_birds_notes"
             android:tag="Бележки_вид" />
 
         <View style="@style/FieldSeparator" />
 
         <ImageView
             android:id="@+id/picture"
-            android:scaleType="centerInside"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside" />
 
     </LinearLayout>
 </ScrollView>

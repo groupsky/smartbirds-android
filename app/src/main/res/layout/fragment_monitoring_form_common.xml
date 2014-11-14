@@ -19,22 +19,22 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="Източник"
+                    android:hint="@string/monitoring_common_source"
                     android:tag="Източник"
                     app:entries="form_main_source"
                     app:required="true" />
 
                 <TextView
                     style="@style/FieldLabel"
-                    android:text="Начало:" />
+                    android:text="@string/monitoring_common_start_date" />
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:hint="дата"
+                    android:hint="@string/monitoring_common_date"
                     android:tag="Начална_Дата"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.TimeFormInput
-                    android:hint="час"
+                    android:hint="@string/monitoring_common_time"
                     android:tag="Час_начало"
                     app:required="true" />
 
@@ -43,22 +43,22 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="Място"
+                    android:hint="@string/monitoring_common_place"
                     android:inputType="text|textCapWords|textPostalAddress"
                     android:tag="Място"
                     app:required="true" />
 
                 <TextView
                     style="@style/FieldLabel"
-                    android:text="Край:" />
+                    android:text="@string/monitoring_common_end_date" />
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:hint="дата"
+                    android:hint="@string/monitoring_common_date"
                     android:tag="Крайна_Дата"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.TimeFormInput
-                    android:hint="час"
+                    android:hint="@string/monitoring_common_time"
                     android:tag="Час_край"
                     app:required="true" />
 
@@ -71,7 +71,7 @@
             android:id="@+id/observers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Наблюдатели"
+            android:hint="@string/monitoring_common_observers"
             android:inputType="text|textCapWords|textPersonName"
             android:tag="Наблюдатели"
             app:required="true" />
@@ -87,21 +87,21 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="Дъжд"
+                    android:hint="@string/monitoring_common_rain"
                     android:tag="Дъжд"
                     app:entries="form_main_rain" />
 
                 <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                    android:hint="Темп °C"
+                    android:hint="@string/monitoring_common_temperature"
                     android:tag="Температура_C" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="Сила на вятъра"
+                    android:hint="@string/monitoring_common_wind_strength"
                     android:tag="Сила_на_вятъра"
                     app:entries="form_main_wind_force" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="Посока на вятъра"
+                    android:hint="@string/monitoring_common_wind_direction"
                     android:tag="Посока_на_вятъра"
                     app:entries="form_main_wind_direction" />
 
@@ -110,20 +110,20 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="Вид облаци"
+                    android:hint="@string/monitoring_common_clouds"
                     android:tag="Вид_облаци" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="Облачност %"
+                    android:hint="@string/monitoring_common_cloudiness"
                     android:tag="Облачност_%"
                     app:entries="form_main_cloud_level" />
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="МТО други"
+                    android:hint="@string/monitoring_common_mto"
                     android:tag="МТО_други" />
 
                 <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                    android:hint="Видимост км"
+                    android:hint="@string/monitoring_common_visibility"
                     android:tag="Видимост_км" />
 
             </TableRow>
@@ -134,7 +134,7 @@
         <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Заплахи"
+            android:hint="@string/monitoring_common_threats"
             android:tag="Заплахи"
             app:entries="form_main_threats" />
 
@@ -143,7 +143,7 @@
         <org.bspb.smartbirds.pro.ui.views.MemoFormInput
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Бележки"
+            android:hint="@string/monitoring_common_notes"
             android:tag="Бележки" />
     </LinearLayout>
 </ScrollView>

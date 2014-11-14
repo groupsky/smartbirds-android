@@ -17,6 +17,7 @@ import com.googlecode.jcsv.writer.internal.DefaultCSVEntryConverter;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
+import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
@@ -110,7 +111,7 @@ public class DataService extends Service {
             bus.postSticky(new MonitoringStartedEvent());
             NotificationUtils.showMonitoringNotification(getApplicationContext());
         } else {
-            Toast.makeText(this, "Cannot create directory for data! Check that you have enough storage available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_message_create_monitoring_dir), Toast.LENGTH_SHORT).show();
             bus.post(new MonitoringFailedEvent());
         }
     }
@@ -167,7 +168,7 @@ public class DataService extends Service {
 
         TrackingService_.intent(this).stop();
         monitoring = false;
-        Toast.makeText(this, "Cancel monitoring", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
     }
 
     public void onEvent(SetMonitoringCommonData event) {

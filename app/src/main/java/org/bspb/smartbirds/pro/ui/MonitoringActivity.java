@@ -119,7 +119,7 @@ public class MonitoringActivity extends FragmentActivity {
                 currentMap = osmMap;
                 if (menuMap != null) {
                     menuMap.setEnabled(false);
-                    menuMap.setTitle(R.string.map_normal);
+                    menuMap.setTitle(R.string.menu_monitoring_map_normal);
                     menuMapNormal.setChecked(true);
                 }
                 break;
@@ -166,7 +166,7 @@ public class MonitoringActivity extends FragmentActivity {
     void onNewEntry(int resultCode, Intent data) {
         if (resultCode != RESULT_OK)
             return;
-        MapMarker marker = new MapMarker(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, "Отчитане"), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0));
+        MapMarker marker = new MapMarker(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, getString(R.string.marker_default_title)), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0));
         markers.add(marker);
         currentMap.addMarker(marker);
     }

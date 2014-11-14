@@ -18,7 +18,7 @@
             android:id="@+id/btn_start_birds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Начало Птици" />
+            android:text="@string/main_screen_btn_start" />
 
         <Button
             android:id="@+id/btn_start_cbm"
@@ -43,7 +43,7 @@
             android:id="@+id/btn_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Качване" />
+            android:text="@string/main_screen_btn_upload" />
     </GridLayout>
 
     <ProgressBar
