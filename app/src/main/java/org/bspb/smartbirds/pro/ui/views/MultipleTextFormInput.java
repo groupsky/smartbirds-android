@@ -53,7 +53,7 @@ public class MultipleTextFormInput extends MultiAutoCompleteTextView implements 
         if (required) {
             String value = getText().toString();
             if (value == null || value.equals("")) {
-                setError("This field is required");
+                setError(getContext().getString(R.string.required_field));
                 throw new ViewValidationException();
             }
         }

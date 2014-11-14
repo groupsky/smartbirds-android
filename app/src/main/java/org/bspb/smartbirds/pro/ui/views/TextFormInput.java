@@ -52,7 +52,7 @@ public class TextFormInput extends AutoCompleteTextView implements SupportRequir
         if (required) {
             String value = getText().toString();
             if (value == null || value.equals("")) {
-                setError("This field is required");
+                setError(getContext().getString(R.string.required_field));
                 throw new ViewValidationException();
             }
         }
