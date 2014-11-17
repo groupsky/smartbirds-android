@@ -138,4 +138,6 @@
     <string name="toast_cancel_monitoring">Отмяна на мониторинг</string>
     <string name="marker_default_title">Отчитане</string>
     <string name="undo_last_entry">Отмяна последно отчитане</string>
+    <string name="not_synced_count">За качване: <b>%d</b></string>
+    <string name="main_footer_text">Приложението е създадено с подкрепата на Мтел</string>
 </resources>

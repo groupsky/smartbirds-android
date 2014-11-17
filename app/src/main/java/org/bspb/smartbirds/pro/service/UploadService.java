@@ -42,6 +42,7 @@ public class UploadService extends IntentService {
     @ServiceAction
     void uploadAll() {
         Log.d(TAG, "uploading all finished monitorings");
+        eventBus.post(new StartingUpload());
         File baseDir = getExternalFilesDir(null);
         for (String monitoring : baseDir.list()) {
             if (!monitoring.endsWith("-up")) continue;
@@ -50,11 +51,11 @@ public class UploadService extends IntentService {
             upload(monitoringDir.getAbsolutePath());
         }
         nomenclaturesBean.loadDataFromServer();
+        eventBus.post(new UploadCompleted());
     }
 
     @ServiceAction()
     void upload(String monitoringPath) {
-        eventBus.post(new StartingUpload(monitoringPath));
         Log.d(TAG, String.format("uploading %s", monitoringPath));
         File file = new File(monitoringPath);
         String monitoringName = file.getName().replace("-up", "");
@@ -69,7 +70,6 @@ public class UploadService extends IntentService {
             }
 
             file.renameTo(new File(monitoringPath.replace("-up", "")));
-            eventBus.post(new UploadCompleted(monitoringPath.replace("-up", "")));
         } catch (IOException e) {
             Log.e(TAG, String.format("error while uploading: %s", e.getMessage()), e);
         }

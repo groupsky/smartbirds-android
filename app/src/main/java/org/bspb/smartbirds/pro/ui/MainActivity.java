@@ -10,8 +10,6 @@ import org.androidannotations.annotations.EActivity;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.events.StartingUpload;
-import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
@@ -51,11 +49,4 @@ public class MainActivity extends Activity {
         StartMonitoringActivity_.intent(this).start();
     }
 
-    public void onEvent(StartingUpload event) {
-        setProgressBarIndeterminateVisibility(true);
-    }
-
-    public void onEvent(UploadCompleted event) {
-        setProgressBarIndeterminateVisibility(false);
-    }
 }
