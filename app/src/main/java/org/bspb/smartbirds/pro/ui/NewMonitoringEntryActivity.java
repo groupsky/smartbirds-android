@@ -86,8 +86,13 @@ public class NewMonitoringEntryActivity extends Activity {
 
     public void onEvent(EntrySubmitted event) {
         Intent intent = new Intent().putExtra(EXTRA_LAT, lat).putExtra(EXTRA_LON, lon);
-        if (event.data.containsKey("Вид_научно_име")) {
-            intent.putExtra(EXTRA_NAME, event.data.get("Вид_научно_име"));
+
+        if (EntryType.CICONIA.equals(event.entryType)) {
+            intent.putExtra(EXTRA_NAME, getString(R.string.entry_type_ciconia));
+        } else {
+            if (event.data.containsKey("Вид_научно_име")) {
+                intent.putExtra(EXTRA_NAME, event.data.get("Вид_научно_име"));
+            }
         }
         setResult(RESULT_OK, intent);
         finish();

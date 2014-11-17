@@ -15,12 +15,6 @@ import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_;
 @EFragment(R.layout.fragment_monitoring_form_new_cbm_entry)
 public class NewCbmEntryFormFragment extends BaseEntryFragment {
 
-    @ViewById(R.id.form_cbm_name)
-    SingleChoiceFormInput nameInput;
-
-    @ViewById(R.id.form_cbm_distance)
-    SingleChoiceFormInput distanceInput;
-
     @ViewById(R.id.form_cbm_primary_habitat)
     SingleChoiceFormInput primaryHabitatInput;
 
@@ -44,8 +38,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Override
     public void onResume() {
         super.onResume();
-        nameInput.setText(prefs.cbmName().get());
-        distanceInput.setText(prefs.cbmDistance().get());
         primaryHabitatInput.setText(prefs.cbmPrimaryHabitat().get());
         secondaryHabitatInput.setText(prefs.cbmSecondaryHabitat().get());
         visitInput.setText(prefs.cbmVisit().get());
@@ -55,8 +47,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Override
     public void onPause() {
         super.onPause();
-        prefs.cbmName().put(nameInput.getText().toString());
-        prefs.cbmDistance().put(distanceInput.getText().toString());
         prefs.cbmPrimaryHabitat().put(primaryHabitatInput.getText().toString());
         prefs.cbmSecondaryHabitat().put(secondaryHabitatInput.getText().toString());
         prefs.cbmVisit().put(visitInput.getText().toString());

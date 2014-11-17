@@ -21,7 +21,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:hint="@string/monitoring_herp_name"
-                    android:tag="Вид"
+                    android:tag="Вид_научно_име"
                     app:entries="form_herp_name"
                     app:required="true" />
 
@@ -39,6 +39,7 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_herp_habitat"
                     android:hint="@string/monitoring_herp_habitat"
                     android:tag="Местообитание"
                     app:entries="form_herp_habitat" />
@@ -49,8 +50,10 @@
                     app:entries="form_herp_danger_observation" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:id="@+id/form_herp_count"
                     android:hint="@string/monitoring_herp_count"
                     android:tag="Брой"
+                    android:text="1"
                     app:required="true" />
 
             </TableRow>

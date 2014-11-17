@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro;
 
+import org.androidannotations.annotations.sharedpreferences.DefaultString;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;
 
 /**
@@ -8,10 +9,6 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 @SharedPref
 public interface SmartBirdsPrefs {
 
-    String cbmName();
-
-    String cbmDistance();
-
     String cbmPrimaryHabitat();
 
     String cbmSecondaryHabitat();
@@ -19,4 +16,13 @@ public interface SmartBirdsPrefs {
     String cbmVisit();
 
     String cbmSector();
+
+    String birdCountUnits();
+
+    String birdCountType();
+
+    String herpHabitat();
+
+    @DefaultString("1")
+    String herpCount();
 }

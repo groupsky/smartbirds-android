@@ -22,7 +22,7 @@
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_name"
                     android:hint="@string/monitoring_cbm_name"
-                    android:tag="Вид научно име"
+                    android:tag="Вид_научно_име"
                     app:entries="form_birds_name"
                     app:required="true" />
 
@@ -52,8 +52,7 @@
                     android:id="@+id/form_cbm_secondary_habitat"
                     android:hint="@string/monitoring_cbm_secondary_habitat"
                     android:tag="Второстепенно местообитание"
-                    app:entries="form_cbm_habitat"
-                    app:required="true" />
+                    app:entries="form_cbm_habitat" />
 
             </TableRow>
 
