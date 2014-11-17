@@ -14,7 +14,6 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
@@ -42,8 +41,6 @@ import java.util.ArrayList;
 public class MonitoringActivity extends FragmentActivity {
 
     private static final int REQUEST_NEW_ENTRY = 1001;
-
-    public static final String EXTRA_TYPE = "entryType";
 
     @InstanceState
     MapProvider.ProviderType mapType = MapProvider.ProviderType.GOOGLE;
@@ -73,8 +70,9 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuMapNormal;
     @OptionsMenuItem(R.id.menu_zoom)
     MenuItem menuZoom;
-    @Extra(EXTRA_TYPE)
-    EntryType entryType;
+    @InstanceState
+    int lastEntryTypePosition = -1;
+
 
     @AfterInject
     public void initProviders() {
@@ -305,12 +303,43 @@ public class MonitoringActivity extends FragmentActivity {
         startNewEntry(event.position);
     }
 
-    protected void startNewEntry(LatLng position) {
-        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(this);
-        ib.entryType(entryType);
-        if (position != null) {
-            ib.lat(position.latitude).lon(position.longitude);
-        }
-        ib.startForResult(REQUEST_NEW_ENTRY);
+    protected void startNewEntry(final LatLng position) {
+        final String[] types = getResources().getStringArray(R.array.enty_types);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(R.string.menu_monitoring_new_entry)
+                .setSingleChoiceItems(types, lastEntryTypePosition, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EntryType type = null;
+                        lastEntryTypePosition = i;
+                        switch (i) {
+                            case 0:
+                                type = EntryType.BIRDS;
+                                break;
+                            case 1:
+                                type = EntryType.CBM;
+                                break;
+                            case 2:
+                                type = EntryType.CICONIA;
+                                break;
+                            case 3:
+                                type = EntryType.HERP;
+                                break;
+                            default:
+                                return;
+                        }
+                        dialogInterface.cancel();
+                        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
+                        ib.entryType(type);
+                        if (position != null) {
+                            ib.lat(position.latitude).lon(position.longitude);
+                        }
+                        ib.startForResult(REQUEST_NEW_ENTRY);
+                    }
+                })
+                .setCancelable(true);
+
+        builder.create().show();
+
     }
 }

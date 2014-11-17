@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
     }
 
     public void onEvent(StartMonitoringEvent event) {
-        StartMonitoringActivity_.intent(this).entryType(event.entryType).start();
+        StartMonitoringActivity_.intent(this).start();
     }
 
     public void onEvent(StartingUpload event) {

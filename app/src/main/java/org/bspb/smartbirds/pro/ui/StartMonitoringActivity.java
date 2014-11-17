@@ -25,14 +25,9 @@ public class StartMonitoringActivity extends Activity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
 
-    public static final String EXTRA_TYPE = "entryType";
-
     @Bean
     EEventBus bus;
     MonitoringCommonFormFragment formFragment;
-
-    @Extra(EXTRA_TYPE)
-    EntryType entryType;
 
     @AfterViews
     void createFragment() {
@@ -85,7 +80,7 @@ public class StartMonitoringActivity extends Activity {
     public void save() {
         if (formFragment.validate()) {
             formFragment.save();
-            MonitoringActivity_.intent(this).entryType(entryType).start();
+            MonitoringActivity_.intent(this).start();
             finish();
         }
     }

@@ -19,6 +19,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -193,36 +194,39 @@ public class DataService extends Service {
 
     private void combineCommonWithEntires() {
         try {
-            File entriesFile = new File(monitoringDir, "entries.csv");
-            if (!entriesFile.exists())
-                return;
+            EntryType[] types = EntryType.values();
+            for (EntryType entryType : types) {
+                File entriesFile = getEntriesFile(entryType);
+                if (!entriesFile.exists())
+                    return;
 
-            String[] commonLines = convertToCsvLines(commonData);
+                String[] commonLines = convertToCsvLines(commonData);
 
-            BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
-            File tempFile = new File(monitoringDir, "combined_entries.csv");
-            BufferedWriter outWriter = new BufferedWriter(new FileWriter(tempFile));
-            try {
-                boolean firstLine = true;
-                String entry;
-                while ((entry = entriesReader.readLine()) != null) {
-                    if (firstLine) {
-                        outWriter.write(commonLines[0]);
-                        firstLine = false;
-                    } else {
-                        outWriter.write(commonLines[1]);
+                BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
+                File tempFile = new File(monitoringDir, "combined_entries.csv");
+                BufferedWriter outWriter = new BufferedWriter(new FileWriter(tempFile));
+                try {
+                    boolean firstLine = true;
+                    String entry;
+                    while ((entry = entriesReader.readLine()) != null) {
+                        if (firstLine) {
+                            outWriter.write(commonLines[0]);
+                            firstLine = false;
+                        } else {
+                            outWriter.write(commonLines[1]);
+                        }
+                        outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
+                        outWriter.write(entry);
+                        outWriter.newLine();
                     }
-                    outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
-                    outWriter.write(entry);
-                    outWriter.newLine();
+                } finally {
+                    outWriter.close();
+                    entriesReader.close();
                 }
-            } finally {
-                outWriter.close();
-                entriesReader.close();
-            }
 
-            entriesFile.delete();
-            tempFile.renameTo(entriesFile);
+                entriesFile.delete();
+                tempFile.renameTo(entriesFile);
+            }
         } catch (Throwable t) {
             Crashlytics.logException(t);
         }
@@ -247,7 +251,7 @@ public class DataService extends Service {
 
         HashMap<String, String> data = event.data;
 
-        File file = new File(monitoringDir, "entries.csv");
+        File file = getEntriesFile(event.entryType);
         boolean exists = file.exists();
         FileOutputStream fos = null;
         try {
@@ -265,6 +269,27 @@ public class DataService extends Service {
             Crashlytics.logException(e);
         }
 
+    }
+
+    private File getEntriesFile(EntryType entryType) {
+        String filename;
+        switch (entryType) {
+            case BIRDS:
+                filename = "form_bird.csv";
+                break;
+            case HERP:
+                filename = "form_herp_mam.csv";
+                break;
+            case CBM:
+                filename = "form_cbm.csv";
+                break;
+            case CICONIA:
+                filename = "form_ciconia.csv";
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported entry type");
+        }
+        return new File(monitoringDir, filename);
     }
 
     public void onEvent(Location location) {

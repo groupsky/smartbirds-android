@@ -20,6 +20,7 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
@@ -55,6 +56,8 @@ public abstract class BaseEntryFragment extends Fragment {
     protected String imagePath;
     protected Uri imageUri;
 
+    abstract EntryType getEntryType();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,7 @@ public abstract class BaseEntryFragment extends Fragment {
             data.put("Lat", Double.toString(lat));
             data.put("Long", Double.toString(lon));
             data.put("Picture", imageFileName != null ? imageFileName : "");
-            eventBus.post(new EntrySubmitted(data));
+            eventBus.post(new EntrySubmitted(data, getEntryType()));
         }
     }
 

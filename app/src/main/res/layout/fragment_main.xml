@@ -21,25 +21,6 @@
             android:text="@string/main_screen_btn_start" />
 
         <Button
-            android:id="@+id/btn_start_cbm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Начало МОВП" />
-
-        <Button
-            android:id="@+id/btn_start_ciconia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Начало Бял щъркел" />
-
-        <Button
-            android:id="@+id/btn_start_herp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Начало Herp" />
-
-
-        <Button
             android:id="@+id/btn_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
