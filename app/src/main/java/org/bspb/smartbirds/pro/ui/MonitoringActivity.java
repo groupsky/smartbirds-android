@@ -98,6 +98,7 @@ public class MonitoringActivity extends FragmentActivity {
         super.onStart();
         eventBus.register(this);
         eventBus.register(osmMap);
+        eventBus.register(googleMap);
     }
 
     @Override
@@ -105,6 +106,7 @@ public class MonitoringActivity extends FragmentActivity {
         super.onStop();
         eventBus.unregister(this);
         eventBus.unregister(osmMap);
+        eventBus.unregister(googleMap);
     }
 
     private void showCurrentMap() {

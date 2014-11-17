@@ -2,10 +2,8 @@ package org.bspb.smartbirds.pro.ui.map;
 
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,7 +21,9 @@ import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
+import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
+import org.bspb.smartbirds.pro.events.MapDetachedEvent;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlPlacemark;
@@ -43,7 +43,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     private FragmentManager fragmentManager;
-    private SupportMapFragment fragment;
+    private BspbMapFragment_ fragment;
     private double zoomFactor;
     private LatLng lastPosition;
 
@@ -129,24 +129,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     public void showMap() {
         positioned = false;
         if (fragment == null) {
-            fragment = new SupportMapFragment() {
-                @Override
-                public void onViewCreated(View view, Bundle savedInstanceState) {
-                    super.onViewCreated(view, savedInstanceState);
-                    getView().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            setUpMapIfNeeded();
-                        }
-                    });
-                }
-
-                @Override
-                public void onDetach() {
-                    super.onDetach();
-                    mMap = null;
-                }
-            };
+            fragment = new BspbMapFragment_();
         }
 
         FragmentTransaction fragTransaction = fragmentManager.beginTransaction();
@@ -240,7 +223,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             return;
         }
         kml.parseKMLFile(file);
-        System.out.println(AREA_FILE_PATH);
         if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
             KmlFeature item = kml.mKmlRoot.mItems.get(0);
             if (item instanceof KmlPlacemark) {
@@ -271,5 +253,13 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         if (positioned) {
             eventBus.post(new MapClickedEvent(latLng));
         }
+    }
+
+    public void onEvent(MapAttachedEvent event) {
+        setUpMapIfNeeded();
+    }
+
+    public void onEvent(MapDetachedEvent event) {
+        mMap = null;
     }
 }
