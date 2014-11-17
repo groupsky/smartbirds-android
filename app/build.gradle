@@ -26,11 +26,11 @@ android {
         applicationId "org.bspb.smartbirds.pro"
         minSdkVersion 14
         targetSdkVersion 20
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 4
+        versionName "1.0.4"
     }
     buildTypes {
-        ext.betaDistributionGroupAliases="BSPB"
+        ext.betaDistributionGroupAliases = "BSPB"
 
         release {
             runProguard true
