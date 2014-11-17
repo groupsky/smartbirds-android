@@ -32,6 +32,7 @@ import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
 import java.io.BufferedOutputStream;
@@ -73,6 +74,8 @@ public class DataService extends Service {
     File monitoringDir;
     HashMap<String, String> commonData;
     int pictureCounter;
+    EntrySubmitted bufferedEntry = null;
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -167,6 +170,7 @@ public class DataService extends Service {
         Log.d(TAG, "onCancelMonitoringEvent...");
         NotificationUtils.hideMonitoringNotification(getApplicationContext());
 
+        bufferedEntry = null;
         TrackingService_.intent(this).stop();
         monitoring = false;
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
@@ -178,6 +182,7 @@ public class DataService extends Service {
     }
 
     public void onEvent(FinishMonitoringEvent event) {
+        flushBuffer();
         NotificationUtils.hideMonitoringNotification(getApplicationContext());
         TrackingService_.intent(this).stop();
         closeGpxFile();
@@ -249,6 +254,13 @@ public class DataService extends Service {
     public void onEvent(EntrySubmitted event) {
         Log.d(TAG, "onEntrySubmitted");
 
+        flushBuffer();
+        bufferedEntry = event;
+    }
+
+    private void flushBuffer() {
+        EntrySubmitted event = bufferedEntry;
+        if (event == null) return;
         HashMap<String, String> data = event.data;
 
         File file = getEntriesFile(event.entryType);
@@ -269,6 +281,7 @@ public class DataService extends Service {
             Crashlytics.logException(e);
         }
 
+        bufferedEntry = null;
     }
 
     private File getEntriesFile(EntryType entryType) {
@@ -354,6 +367,10 @@ public class DataService extends Service {
 
     public void onEvent(GetMonitoringCommonData event) {
         bus.post(new MonitoringCommonData(commonData));
+    }
+
+    public void onEvent(UndoLastEntry event) {
+        bufferedEntry = null;
     }
 
 }

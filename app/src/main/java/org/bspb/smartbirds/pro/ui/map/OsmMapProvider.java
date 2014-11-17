@@ -65,6 +65,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private MyLocationNewOverlay locationOverlay;
 
     private boolean positioned = false;
+    private Marker lastMarker;
 
     @Override
     public void setUpMapIfNeeded() {
@@ -231,13 +232,22 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void addMarker(MapMarker mapMarker) {
-        Marker marker = new Marker(mMap);
+        Marker marker = lastMarker = new Marker(mMap);
         marker.setPosition(new GeoPoint(mapMarker.getLatitude(), mapMarker.getLongitude()));
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         marker.setTitle(mapMarker.getTitle());
         marker.setPanToView(false);
         mMap.getOverlays().add(marker);
         mMap.invalidate();
+    }
+
+    @Override
+    public void removeLastMarker() {
+        if (lastMarker != null) {
+            mMap.getOverlays().remove(lastMarker);
+            lastMarker = null;
+            mMap.invalidate();
+        }
     }
 
     @Override

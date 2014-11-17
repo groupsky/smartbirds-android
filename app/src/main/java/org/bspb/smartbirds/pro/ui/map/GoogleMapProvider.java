@@ -10,6 +10,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -53,6 +54,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private ArrayList<LatLng> points;
     private Polyline path;
     private boolean positioned = false;
+    private Marker lastMarker;
 
     @Override
     /**
@@ -187,7 +189,15 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void addMarker(MapMarker marker) {
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(marker.getLatitude(), marker.getLongitude())).title(marker.getTitle());
-        mMap.addMarker(markerOptions);
+        lastMarker = mMap.addMarker(markerOptions);
+    }
+
+    @Override
+    public void removeLastMarker() {
+        if (lastMarker != null) {
+            lastMarker.remove();
+            lastMarker = null;
+        }
     }
 
     @Override

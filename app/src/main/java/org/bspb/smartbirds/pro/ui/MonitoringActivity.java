@@ -26,6 +26,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
+import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -56,6 +57,8 @@ public class MonitoringActivity extends FragmentActivity {
 
     @OptionsMenuItem(R.id.action_new_entry)
     MenuItem menuNewEntry;
+    @OptionsMenuItem(R.id.action_undo_last_entry)
+    MenuItem menuUndoEntry;
     @Bean
     EEventBus eventBus;
     @InstanceState
@@ -169,6 +172,7 @@ public class MonitoringActivity extends FragmentActivity {
         MapMarker marker = new MapMarker(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, getString(R.string.marker_default_title)), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0));
         markers.add(marker);
         currentMap.addMarker(marker);
+        menuUndoEntry.setEnabled(true);
     }
 
     @OptionsItem(R.id.action_finish)
@@ -342,4 +346,13 @@ public class MonitoringActivity extends FragmentActivity {
         builder.create().show();
 
     }
+
+    @OptionsItem(R.id.action_undo_last_entry)
+    void undoLastEntry() {
+        menuUndoEntry.setEnabled(false);
+        eventBus.post(new UndoLastEntry());
+        markers.remove(markers.size()-1);
+        currentMap.removeLastMarker();
+    }
+
 }

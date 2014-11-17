@@ -16,6 +16,13 @@
         android:showAsAction="always"
         android:title="@string/menu_monitoring_new_entry" />
     <item
+        android:id="@+id/action_undo_last_entry"
+        android:enabled="false"
+        android:menuCategory="container"
+        android:orderInCategory="125"
+        android:showAsAction="ifRoom"
+        android:title="@string/undo_last_entry" />
+    <item
         android:id="@+id/action_common_form"
         android:menuCategory="container"
         android:orderInCategory="75"

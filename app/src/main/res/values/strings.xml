@@ -137,4 +137,5 @@
     <string name="error_message_create_monitoring_dir">Не може да създаде директорията за данните. Проверете имате ли достатъчно място.</string>
     <string name="toast_cancel_monitoring">Отмяна на мониторинг</string>
     <string name="marker_default_title">Отчитане</string>
+    <string name="undo_last_entry">Отмяна последно отчитане</string>
 </resources>

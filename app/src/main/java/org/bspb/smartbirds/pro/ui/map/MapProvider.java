@@ -44,6 +44,8 @@ public interface MapProvider {
 
     void addMarker(MapMarker marker);
 
+    void removeLastMarker();
+
     void setMarkers(ArrayList<MapMarker> markers);
 
     void setPath(ArrayList<LatLng> points);
