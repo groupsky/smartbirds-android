@@ -351,7 +351,7 @@ public class MonitoringActivity extends FragmentActivity {
     void undoLastEntry() {
         menuUndoEntry.setEnabled(false);
         eventBus.post(new UndoLastEntry());
-        markers.remove(markers.size()-1);
+        markers.remove(markers.size() - 1);
         currentMap.removeLastMarker();
     }
 
