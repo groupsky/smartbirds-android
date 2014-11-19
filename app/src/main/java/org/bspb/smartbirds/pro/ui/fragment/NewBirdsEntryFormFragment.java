@@ -4,8 +4,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 
 
@@ -19,7 +19,7 @@ public class NewBirdsEntryFormFragment extends BaseEntryFragment {
     SingleChoiceFormInput countType;
 
     @Pref
-    SmartBirdsPrefs_ prefs;
+    BirdPrefs_ prefs;
 
     @Override
     public void onResume() {

@@ -4,10 +4,9 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.prefs.CbmPrefs_;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_;
 
 /**
  * Created by dani on 14-11-11.
@@ -28,7 +27,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     SingleChoiceFormInput sectorInput;
 
     @Pref
-    SmartBirdsPrefs_ prefs;
+    CbmPrefs_ prefs;
 
     @Override
     EntryType getEntryType() {

@@ -114,7 +114,13 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         }
 
         drawArea();
-        updateCamera();
+        fragment.getView().post(new Runnable() {
+            @Override
+            public void run() {
+                updateCamera();
+            }
+        });
+
     }
 
     @Override

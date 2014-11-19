@@ -1,10 +1,13 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
@@ -19,6 +22,7 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
@@ -27,6 +31,7 @@ import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -42,6 +47,9 @@ import java.util.ArrayList;
 public class MonitoringActivity extends FragmentActivity {
 
     private static final int REQUEST_NEW_ENTRY = 1001;
+
+    private static final String PREFS_MARKERS = "markers";
+    private static final String PREFS_POINTS = "points";
 
     @InstanceState
     MapProvider.ProviderType mapType = MapProvider.ProviderType.GOOGLE;
@@ -64,7 +72,7 @@ public class MonitoringActivity extends FragmentActivity {
     @InstanceState
     ArrayList<LatLng> points = new ArrayList<LatLng>();
     @InstanceState
-    double zoomFactor = 500;
+    int zoomFactor = 500;
     @InstanceState
     LatLng lastPosition;
     @OptionsMenuItem(R.id.menu_map)
@@ -76,6 +84,9 @@ public class MonitoringActivity extends FragmentActivity {
     @InstanceState
     int lastEntryTypePosition = -1;
 
+    @Pref
+    MonitoringPrefs_ monitoringPrefs;
+    private boolean canceled = false;
 
     @AfterInject
     public void initProviders() {
@@ -84,7 +95,8 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     @AfterViews
-    void tryToSetUpMap() {
+    void init() {
+        restoreState();
         showCurrentMap();
     }
 
@@ -108,6 +120,28 @@ public class MonitoringActivity extends FragmentActivity {
         eventBus.unregister(this);
         eventBus.unregister(osmMap);
         eventBus.unregister(googleMap);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        switch (zoomFactor) {
+            case 1000:
+                menuZoom.setTitle(R.string.menu_monitoring_zoom_1000);
+                break;
+            case 500:
+                menuZoom.setTitle(R.string.menu_monitoring_zoom_500);
+                break;
+            case 250:
+                menuZoom.setTitle(R.string.menu_monitoring_zoom_250);
+                break;
+            case 100:
+                menuZoom.setTitle(R.string.menu_monitoring_zoom_100);
+                break;
+            case -1:
+                menuZoom.setTitle(R.string.menu_monitoring_zoom_free);
+                break;
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void showCurrentMap() {
@@ -177,6 +211,7 @@ public class MonitoringActivity extends FragmentActivity {
 
     @OptionsItem(R.id.action_finish)
     void onFinish() {
+        clearPrefs();
         eventBus.post(new FinishMonitoringEvent());
         finish();
     }
@@ -211,6 +246,7 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     void doCancel() {
+        clearPrefs();
         eventBus.post(new CancelMonitoringEvent());
     }
 
@@ -355,4 +391,116 @@ public class MonitoringActivity extends FragmentActivity {
         currentMap.removeLastMarker();
     }
 
+    @Override
+    protected void onDestroy() {
+        persistState();
+        super.onDestroy();
+    }
+
+    private void persistState() {
+        if (!canceled) {
+
+            MonitoringPrefs_.MonitoringPrefsEditor_ editor = monitoringPrefs.edit();
+            editor.mapType().put(mapType.toString());
+            if (markers != null) {
+                editor.markersCount().put(markers.size());
+            }
+            if (points != null) {
+                editor.pointsCount().put(points.size());
+            }
+            if (lastPosition != null) {
+                editor.lastPositionLat().put((float) lastPosition.latitude)
+                        .lastPositionLon().put((float) lastPosition.longitude);
+            }
+            editor.zoomFactor().put(zoomFactor);
+            editor.lastEntryTypePosition().put(lastEntryTypePosition);
+
+            editor.apply();
+
+            persistMarkers();
+            persistPoints();
+        }
+    }
+
+    private void persistMarkers() {
+        if (markers == null) {
+            return;
+        }
+        SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = markersPrefs.edit();
+        editor.clear();
+        for (int i = 0; i < markers.size(); i++) {
+            editor.putString("title_" + i, markers.get(i).getTitle());
+            editor.putFloat("lat_" + i, (float) markers.get(i).getLatitude());
+            editor.putFloat("lon_" + i, (float) markers.get(i).getLongitude());
+        }
+        editor.commit();
+    }
+
+    private void persistPoints() {
+        if (points == null) {
+            return;
+        }
+        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pointsPrefs.edit();
+        editor.clear();
+        for (int i = 0; i < points.size(); i++) {
+            editor.putFloat("lat_" + i, (float) points.get(i).latitude);
+            editor.putFloat("lon_" + i, (float) points.get(i).longitude);
+        }
+        editor.commit();
+    }
+
+    private void restoreState() {
+        if (monitoringPrefs.mapType().get() != null && !monitoringPrefs.mapType().get().equals("")) {
+            mapType = MapProvider.ProviderType.valueOf(monitoringPrefs.mapType().get());
+            lastPosition = new LatLng(monitoringPrefs.lastPositionLat().get(), monitoringPrefs.lastPositionLon().get());
+            zoomFactor = monitoringPrefs.zoomFactor().get();
+            lastEntryTypePosition = monitoringPrefs.lastEntryTypePosition().get();
+            restoreMarkers();
+            restorePoints();
+        }
+    }
+
+    private void restorePoints() {
+        int pointsCount = monitoringPrefs.pointsCount().get();
+        if (pointsCount <= 0) {
+            return;
+        }
+
+        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
+
+        points = new ArrayList<LatLng>();
+        for (int i = 0; i < pointsCount; i++) {
+            final double lat = pointsPrefs.getFloat("lat_" + i, 0);
+            final double lon = pointsPrefs.getFloat("lon_" + i, 0);
+            points.add(new LatLng(lat, lon));
+        }
+    }
+
+    private void restoreMarkers() {
+        int markersCount = monitoringPrefs.markersCount().get();
+        if (markersCount <= 0) {
+            return;
+        }
+
+        SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
+
+        markers = new ArrayList<MapMarker>();
+        for (int i = 0; i < markersCount; i++) {
+            final String title = markersPrefs.getString("title_" + i, "");
+            final double lat = markersPrefs.getFloat("lat_" + i, 0);
+            final double lon = markersPrefs.getFloat("lon_" + i, 0);
+            markers.add(new MapMarker(title, lat, lon));
+        }
+    }
+
+    private void clearPrefs() {
+        canceled = true;
+        monitoringPrefs.edit().clear().apply();
+        SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
+        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
+        markersPrefs.edit().clear().commit();
+        pointsPrefs.edit().clear().commit();
+    }
 }

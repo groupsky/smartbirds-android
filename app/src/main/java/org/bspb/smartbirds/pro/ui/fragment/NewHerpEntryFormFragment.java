@@ -4,8 +4,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.prefs.HerpPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 
@@ -22,7 +22,7 @@ public class NewHerpEntryFormFragment extends BaseEntryFragment {
     DecimalNumberFormInput count;
 
     @Pref
-    SmartBirdsPrefs_ prefs;
+    HerpPrefs_ prefs;
 
     @Override
     public void onResume() {

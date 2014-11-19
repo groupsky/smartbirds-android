@@ -1,7 +1,9 @@
 package org.bspb.smartbirds.pro.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
 import android.os.IBinder;
@@ -17,6 +19,7 @@ import com.googlecode.jcsv.writer.internal.DefaultCSVEntryConverter;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.enums.EntryType;
@@ -33,6 +36,8 @@ import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
+import org.bspb.smartbirds.pro.prefs.DataServicePrefs_;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
 import java.io.BufferedOutputStream;
@@ -51,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -60,6 +66,8 @@ public class DataService extends Service {
     private static final String TAG = SmartBirdsApplication.TAG + ".DataService";
     private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
     private static final DateFormat GPX_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+    private static final String PREFS_ENTRY = "entry";
+    private static final String PREFS_COMMON_DATA = "commonData";
 
     static {
         DATE_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -68,6 +76,12 @@ public class DataService extends Service {
 
     @Bean
     EEventBus bus;
+
+    @Pref
+    SmartBirdsPrefs_ globalPrefs;
+
+    @Pref
+    DataServicePrefs_ dataServicePrefs;
 
     boolean monitoring = false;
     String monitoringName;
@@ -84,6 +98,8 @@ public class DataService extends Service {
 
     @AfterInject
     void initBus() {
+        restoreState();
+
         Log.d(TAG, "bus registing...");
         bus.registerSticky(this);
         Log.d(TAG, "bus registered");
@@ -104,13 +120,16 @@ public class DataService extends Service {
     }
 
     public void onEvent(StartMonitoringEvent event) {
-
+        globalPrefs.runningMonitoring().put(true);
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
         monitoringName = String.format("%s-%s", DATE_FORMATTER.format(new Date()), getRandomNode());
+        dataServicePrefs.monitoringName().put(monitoringName);
         if ((monitoringDir = createMonitoringDir()) != null && initGpxFile()) {
+            dataServicePrefs.monitoringDir().put(monitoringDir.getAbsolutePath());
             TrackingService_.intent(this).start();
             pictureCounter = 0;
+            dataServicePrefs.pictureCounter().put(0);
             monitoring = true;
             bus.postSticky(new MonitoringStartedEvent());
             NotificationUtils.showMonitoringNotification(getApplicationContext());
@@ -170,15 +189,17 @@ public class DataService extends Service {
         Log.d(TAG, "onCancelMonitoringEvent...");
         NotificationUtils.hideMonitoringNotification(getApplicationContext());
 
-        bufferedEntry = null;
+        resetBufferedEntity();
         TrackingService_.intent(this).stop();
         monitoring = false;
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
+        clearPrefs();
     }
 
     public void onEvent(SetMonitoringCommonData event) {
         Log.d(TAG, "onSetMonitoringCommonData");
         commonData = event.data;
+        persistCommonData();
     }
 
     public void onEvent(FinishMonitoringEvent event) {
@@ -195,6 +216,7 @@ public class DataService extends Service {
         monitoring = false;
 
         monitoringDir = newDir;
+        clearPrefs();
     }
 
     private void combineCommonWithEntires() {
@@ -203,8 +225,8 @@ public class DataService extends Service {
             for (EntryType entryType : types) {
                 File entriesFile = getEntriesFile(entryType);
                 if (!entriesFile.exists())
-                    return;
-
+                    continue;
+                System.out.println("Combining dattaaaaa for: " + entriesFile.getAbsolutePath());
                 String[] commonLines = convertToCsvLines(commonData);
 
                 BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
@@ -256,6 +278,7 @@ public class DataService extends Service {
 
         flushBuffer();
         bufferedEntry = event;
+        persistBufferedEntry();
     }
 
     private void flushBuffer() {
@@ -279,9 +302,10 @@ public class DataService extends Service {
             csvWriter.close();
         } catch (java.io.IOException e) {
             Crashlytics.logException(e);
+            e.printStackTrace();
         }
 
-        bufferedEntry = null;
+        resetBufferedEntity();
     }
 
     private File getEntriesFile(EntryType entryType) {
@@ -302,7 +326,9 @@ public class DataService extends Service {
             default:
                 throw new IllegalArgumentException("Unsupported entry type");
         }
-        return new File(monitoringDir, filename);
+        File file = new File(monitoringDir, filename);
+        file.setReadable(true);
+        return file;
     }
 
     public void onEvent(Location location) {
@@ -351,6 +377,7 @@ public class DataService extends Service {
         // Create an image file name
         while (true) {
             String index = Integer.toString(pictureCounter++);
+            dataServicePrefs.pictureCounter().put(pictureCounter);
             while (index.length() < 4) index = '0' + index;
             String imageFileName = "Pic" + index + ".jpg";
             File image = new File(monitoringDir, imageFileName);
@@ -370,7 +397,73 @@ public class DataService extends Service {
     }
 
     public void onEvent(UndoLastEntry event) {
-        bufferedEntry = null;
+        resetBufferedEntity();
     }
 
+    private void restoreState() {
+        if (globalPrefs.runningMonitoring().get()) {
+            monitoring = true;
+            monitoringName = dataServicePrefs.monitoringName().get();
+            monitoringDir = new File(dataServicePrefs.monitoringDir().get());
+            pictureCounter = dataServicePrefs.pictureCounter().get();
+            TrackingService_.intent(this).start();
+            restoreBufferedEntity();
+            restoreCommonData();
+        }
+    }
+
+    private void restoreBufferedEntity() {
+        SharedPreferences entryPrefs = getSharedPreferences(PREFS_ENTRY, Context.MODE_PRIVATE);
+        if (entryPrefs.contains("entryType")) {
+            EntryType entryType = EntryType.valueOf(entryPrefs.getString("entryType", ""));
+
+            HashMap<String, String> prefsValues = (HashMap<String, String>) entryPrefs.getAll();
+            prefsValues.remove("entryType");
+
+            bufferedEntry = new EntrySubmitted(prefsValues, entryType);
+        }
+    }
+
+    private void restoreCommonData() {
+        SharedPreferences commonDataPrefs = getSharedPreferences(PREFS_COMMON_DATA, Context.MODE_PRIVATE);
+
+        Map<String, String> prefsValues = (Map<String, String>) commonDataPrefs.getAll();
+        if (prefsValues != null && !prefsValues.isEmpty()) {
+            commonData = (HashMap<String, String>) prefsValues;
+        }
+    }
+
+    private void persistBufferedEntry() {
+        SharedPreferences entryPrefs = getSharedPreferences(PREFS_ENTRY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = entryPrefs.edit();
+        editor.clear();
+        editor.putString("entryType", bufferedEntry.entryType.toString());
+        for (Map.Entry<String, String> entry : bufferedEntry.data.entrySet()) {
+            editor.putString(entry.getKey(), entry.getValue());
+        }
+        editor.commit();
+    }
+
+    private void persistCommonData() {
+        SharedPreferences commonDataPrefs = getSharedPreferences(PREFS_COMMON_DATA, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = commonDataPrefs.edit();
+        editor.clear();
+        for (Map.Entry<String, String> entry : commonData.entrySet()) {
+            editor.putString(entry.getKey(), entry.getValue());
+        }
+        editor.commit();
+    }
+
+    private void resetBufferedEntity() {
+        bufferedEntry = null;
+        SharedPreferences entryPrefs = getSharedPreferences(PREFS_ENTRY, Context.MODE_PRIVATE);
+        entryPrefs.edit().clear().commit();
+    }
+
+    private void clearPrefs() {
+        globalPrefs.runningMonitoring().put(false);
+        dataServicePrefs.clear();
+        SharedPreferences commonDataPrefs = getSharedPreferences(PREFS_COMMON_DATA, Context.MODE_PRIVATE);
+        commonDataPrefs.edit().clear().commit();
+    }
 }

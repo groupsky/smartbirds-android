@@ -1,32 +1,32 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.content.Intent;
 import android.view.View;
 import android.view.Window;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
-import org.androidannotations.annotations.NoTitle;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.WindowFeature;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-@WindowFeature({ Window.FEATURE_NO_TITLE})
+@WindowFeature({Window.FEATURE_NO_TITLE})
 @Fullscreen
 @EActivity(R.layout.activity_splash_screen)
 public class SplashScreenActivity extends Activity implements Runnable {
 
     @ViewById(android.R.id.content)
     View content;
+
+    @Pref
+    SmartBirdsPrefs_ prefs;
 
     // Duration in milliseconds
     private static final int SPLASH_DURATION = 3000;
@@ -49,7 +49,14 @@ public class SplashScreenActivity extends Activity implements Runnable {
 
     @Override
     public void run() {
-        MainActivity_.intent(SplashScreenActivity.this).start();
+        if (prefs.runningMonitoring().get()) {
+            NotificationUtils.showMonitoringNotification(this);
+            DataService_.intent(this).start();
+            startActivities(new Intent[]{MainActivity_.intent(SplashScreenActivity.this).get(), MonitoringActivity_.intent(SplashScreenActivity.this).get()});
+        } else {
+            MainActivity_.intent(SplashScreenActivity.this).start();
+        }
+
         finish();
     }
 }
