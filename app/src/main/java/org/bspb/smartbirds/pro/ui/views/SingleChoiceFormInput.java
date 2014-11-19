@@ -140,6 +140,7 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
         public void show() {
             if (key != null) {
                 List<String> values = nomenclatures.getNomenclature(key.toString());
+                mAdapter.clear();
                 mAdapter.addAll(values);
                 mAdapter.notifyDataSetChanged();
             }
