@@ -111,6 +111,7 @@ public class FormUtils {
             for (String key : fields.keySet()) {
                 FormField field = fields.get(key);
                 String value = field.getValue();
+                value = value.replaceAll("\n", " | ");
                 values.put(key, value);
             }
             return values;

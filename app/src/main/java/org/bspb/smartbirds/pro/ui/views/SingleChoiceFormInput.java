@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.os.Build;
+import android.support.v4.text.TextUtilsCompat;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.WindowManager;
@@ -145,7 +147,10 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
             if (key != null) {
                 List<String> values = nomenclatures.getNomenclature(key.toString());
                 mAdapter.clear();
-                mAdapter.addAll(values);
+                for(String value: values) {
+                    mAdapter.add(TextUtils.join("\n", value.split(" *\\| *")));
+                }
+//                mAdapter.addAll(values);
                 mAdapter.notifyDataSetChanged();
             }
 
