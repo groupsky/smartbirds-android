@@ -149,4 +149,45 @@
     <string name="export_subject">SmartBirds Pro export</string>
     <string name="export_text">"Monitoring export from %s"</string>
     <string name="export_app_chooser">"Export monitoring: "</string>
+    <string name="main_screen_btn_info">Информация</string>
+    <string name="main_screen_btn_help">Помощ</string>
+    <string name="info_dialog_title">Информация</string>
+    <string name="help_url">http://bspb.org/bg/SmartBirds_Pro_manual.html</string>
+    <string name="info_text">
+        <![CDATA[
+            <p><b>SmartBirds Pro е мобилно приложение за мониторинг на птици, земноводни, влечуги и бозайници</b></p>
+            <p>Този продукт е създаден от Българско дружество за защита на птиците / BirdLife България,</p>
+            <img src="logo_bspb" width="120" height="120"/>
+            <br />
+            <br />
+            <a href="http://www.bspb.org">www.bspb.org</a>
+            <p>по проект „Модерната природозащита: съвременни комуникации в подкрепа на науката на гражданите“, финансиран по  програма „Мтел еко грант”</p>
+            <img src="logo_mtel" width="120" height="120"/>
+            <br />
+            <br />
+            <a href="http://www.mtel.bg/priroda">www.mtel.bg/priroda</a>
+
+            <p>
+                <b>Идеен проект:</b>
+                <br />
+                Георги Попгеоргиев
+                <br />
+                Светослав Спасов
+                <br />
+                Юрий Корнилев
+            </p>
+
+            <p>Изказваме сърдечни благодарности на Боряна Михова, Димитър Плачийски, Йорданка Горанова - Луканова, Йордан Христов, Стойчо Стойчев, Теодора Петрова и на всички колеги от БДЗП, които допринесоха за реализирането на проекта.</p>
+
+            <p>
+                <b>Дизайн и програмиране</b>
+                <br />
+                Масконсулт ООД
+                <br />
+                <a href="http://www.masconsult.eu/">www.masconsult.eu</a>\
+            </p>
+
+            <p>От <a href="http://www.smartbirds.org">www.smartbirds.org</a> също можете да изтеглите и любителското приложение SmartBirds, съдържащо електронен бележник и определител на гнездящите птици в България.</p>
+        ]]>
+    </string>
 </resources>

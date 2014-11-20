@@ -7,10 +7,10 @@
     tools:context="org.bspb.smartbirds.pro.ui.SplashScreenActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:scaleType="centerInside"
-        android:src="@drawable/logo_with_text" />
+        android:src="@drawable/logo_bspb" />
 
 
     <Button
@@ -67,13 +67,24 @@
         android:scaleType="centerInside"
         android:src="@drawable/logo_mtel" />
 
-    <TextView
+    <Button
+        android:id="@+id/btn_info"
+        style="@style/Buttonbspb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="@string/main_footer_text"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:text="@string/main_screen_btn_info"
+        android:textColor="@android:color/white" />
 
+    <Button
+        android:id="@+id/btn_help"
+        style="@style/Buttonbspb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_info"
+        android:text="@string/main_screen_btn_help"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

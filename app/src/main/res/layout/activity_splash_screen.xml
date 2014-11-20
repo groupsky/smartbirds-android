@@ -7,10 +7,10 @@
     tools:context="org.bspb.smartbirds.pro.ui.SplashScreenActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:scaleType="centerInside"
-        android:src="@drawable/logo_with_text" />
+        android:src="@drawable/logo_bspb" />
 
     <TextView
         android:layout_width="wrap_content"

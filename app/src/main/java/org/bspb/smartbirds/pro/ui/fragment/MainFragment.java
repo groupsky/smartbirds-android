@@ -4,6 +4,11 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +74,41 @@ public class MainFragment extends Fragment {
     void exportBtnClicked() {
         exportDialog = ProgressDialog.show(getActivity(), getString(R.string.export_dialog_title), getString(R.string.export_dialog_text), true);
         ExportService_.intent(this).prepareForExport().start();
+    }
+
+    @Click(R.id.btn_info)
+    void infoBtnClicked() {
+        final float density = getResources().getDisplayMetrics().density;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(getString(R.string.info_dialog_title));
+        TextView view = new TextView(getActivity());
+        view.setPadding((int)(10 * density), (int)(10 * density), (int)(10 * density), (int)(10 * density));
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        view.setText(Html.fromHtml(getString(R.string.info_text), new Html.ImageGetter() {
+            @Override
+            public Drawable getDrawable(String s) {
+                Drawable drawable = null;
+                if ("logo_bspb".equals(s)) {
+                    drawable = getResources().getDrawable(R.drawable.logo_bspb);
+                } else if ("logo_mtel".equals(s)) {
+                    drawable = getResources().getDrawable(R.drawable.logo_mtel);
+                }
+                drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * density),
+                        (int) (drawable.getIntrinsicHeight() * density));
+                return drawable;
+
+            }
+        }, null));
+        builder.setView(view);
+        builder.create().show();
+    }
+
+    @Click(R.id.btn_help)
+    void helpBtnClicked() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(getString(R.string.help_url)));
+        startActivity(intent);
     }
 
     @UiThread
