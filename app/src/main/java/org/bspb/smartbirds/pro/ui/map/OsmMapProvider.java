@@ -18,6 +18,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
+import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.overlays.FolderOverlay;
@@ -295,7 +296,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public boolean longPressHelper(GeoPoint geoPoint) {
-        return false;
+        InfoWindow.closeAllInfoWindowsOn(mMap);
+        eventBus.post(new MapLongClickedEvent(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())));
+        return true;
     }
 
     public class TouchEventsOverlay extends Overlay {

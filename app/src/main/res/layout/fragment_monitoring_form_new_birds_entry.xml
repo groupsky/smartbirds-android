@@ -49,14 +49,17 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_birds_count"
             android:hint="@string/monitoring_birds_count"
             android:tag="Брой" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_birds_count_min"
             android:hint="@string/monitoring_birds_min"
             android:tag="Мин." />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_birds_count_max"
             android:hint="@string/monitoring_birds_max"
             android:tag="Макс." />
 

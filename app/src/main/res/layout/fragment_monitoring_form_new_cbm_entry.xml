@@ -30,7 +30,8 @@
                     android:id="@+id/form_cbm_distance"
                     android:hint="@string/monitoring_cbm_distance"
                     android:tag="Разстояние"
-                    app:entries="form_cbm_distance" />
+                    app:entries="form_cbm_distance"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="@string/monitoring_cbm_count"

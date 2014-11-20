@@ -113,4 +113,33 @@
         android:enabled="true"
         android:menuCategory="system"
         android:title="@string/menu_monitoring_stay_awake" />
+    <item
+        android:id="@+id/menu_form_type"
+        android:menuCategory="alternative"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/monitoring_type">
+        <menu>
+
+            <group
+                android:checkableBehavior="single"
+                android:menuCategory="alternative">
+                <item
+                    android:id="@+id/action_form_type_birds"
+                    android:title="@string/entry_type_birds" />
+
+                <item
+                    android:id="@+id/action_form_type_cbm"
+                    android:title="@string/entry_type_cbm" />
+
+                <item
+                    android:id="@+id/action_form_type_ciconia"
+                    android:title="@string/entry_type_ciconia" />
+
+                <item
+                    android:id="@+id/action_form_type_herp"
+                    android:title="@string/entry_type_herp" />
+
+            </group>
+        </menu>
+    </item>
 </menu>

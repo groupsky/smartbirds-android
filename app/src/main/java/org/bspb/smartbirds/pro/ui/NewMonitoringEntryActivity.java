@@ -53,15 +53,19 @@ public class NewMonitoringEntryActivity extends Activity {
         switch (entryType) {
             case BIRDS:
                 fragment = NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).build();
+                setTitle(R.string.entry_type_birds);
                 break;
             case HERP:
                 fragment = NewHerpEntryFormFragment_.builder().lat(lat).lon(lon).build();
+                setTitle(R.string.entry_type_herp);
                 break;
             case CBM:
                 fragment = NewCbmEntryFormFragment_.builder().lat(lat).lon(lon).build();
+                setTitle(R.string.entry_type_cbm);
                 break;
             case CICONIA:
                 fragment = NewCiconiaEntryFormFragment_.builder().lat(lat).lon(lon).build();
+                setTitle(R.string.entry_type_ciconia);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported entry type");

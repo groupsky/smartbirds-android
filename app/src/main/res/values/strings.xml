@@ -149,6 +149,7 @@
     <string name="export_subject">SmartBirds Pro export</string>
     <string name="export_text">"Monitoring export from %s"</string>
     <string name="export_app_chooser">"Export monitoring: "</string>
+    <string name="monitoring_type">Тип наблюдение</string>
     <string name="main_screen_btn_info">Информация</string>
     <string name="main_screen_btn_help">Помощ</string>
     <string name="info_dialog_title">Информация</string>

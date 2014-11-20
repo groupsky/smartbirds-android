@@ -30,6 +30,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
+import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
@@ -81,6 +82,14 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuMapNormal;
     @OptionsMenuItem(R.id.menu_zoom)
     MenuItem menuZoom;
+    @OptionsMenuItem(R.id.action_form_type_birds)
+    MenuItem menuFormTypeBirds;
+    @OptionsMenuItem(R.id.action_form_type_cbm)
+    MenuItem menuFormTypeCbm;
+    @OptionsMenuItem(R.id.action_form_type_ciconia)
+    MenuItem menuFormTypeCiconia;
+    @OptionsMenuItem(R.id.action_form_type_herp)
+    MenuItem menuFormTypeHerp;
     @InstanceState
     int lastEntryTypePosition = -1;
 
@@ -141,6 +150,12 @@ public class MonitoringActivity extends FragmentActivity {
                 menuZoom.setTitle(R.string.menu_monitoring_zoom_free);
                 break;
         }
+        switch (lastEntryTypePosition) {
+            case 0: menuFormTypeBirds.setChecked(true); break;
+            case 1: menuFormTypeCbm.setChecked(true); break;
+            case 2: menuFormTypeCiconia.setChecked(true); break;
+            case 3: menuFormTypeHerp.setChecked(true); break;
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -190,7 +205,7 @@ public class MonitoringActivity extends FragmentActivity {
     void onNewEntry() {
         LatLng position = null;
         if (currentMap.getMyLocation() != null) {
-            startNewEntry(new LatLng(currentMap.getMyLocation().getLatitude(), currentMap.getMyLocation().getLongitude()));
+            startNewEntryWithoutAsking(new LatLng(currentMap.getMyLocation().getLatitude(), currentMap.getMyLocation().getLongitude()));
         }
     }
 
@@ -326,6 +341,26 @@ public class MonitoringActivity extends FragmentActivity {
         sender.setChecked(!sender.isChecked());
     }
 
+    @OptionsItem(R.id.action_form_type_birds)
+    void setFormTypeBirds(MenuItem sender) {
+        lastEntryTypePosition = EntryType.BIRDS.ordinal();
+    }
+
+    @OptionsItem(R.id.action_form_type_cbm)
+    void setFormTypeCbm(MenuItem sender) {
+        lastEntryTypePosition = EntryType.CBM.ordinal();
+    }
+
+    @OptionsItem(R.id.action_form_type_ciconia)
+    void setFormTypeCiconia(MenuItem sender) {
+        lastEntryTypePosition = EntryType.CICONIA.ordinal();
+    }
+
+    @OptionsItem(R.id.action_form_type_herp)
+    void setFormTypeHerp(MenuItem sender) {
+        lastEntryTypePosition = EntryType.HERP.ordinal();
+    }
+
     public void onEvent(LocationChangedEvent event) {
         Location location = event.location;
         lastPosition = new LatLng(location.getLatitude(), location.getLongitude());
@@ -340,10 +375,44 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     public void onEvent(MapClickedEvent event) {
-        startNewEntry(event.position);
+        startNewEntryWithoutAsking(event.position);
     }
 
-    protected void startNewEntry(final LatLng position) {
+    public void onEvent(MapLongClickedEvent event) {
+        startNewEntryAsking(event.position);
+    }
+
+    void startNewEntryWithoutAsking(final LatLng position) {
+        if (lastEntryTypePosition == -1) {
+            startNewEntryAsking(position);
+            return;
+        }
+        EntryType type;
+        switch (lastEntryTypePosition) {
+            case 0:
+                type = EntryType.BIRDS;
+                break;
+            case 1:
+                type = EntryType.CBM;
+                break;
+            case 2:
+                type = EntryType.CICONIA;
+                break;
+            case 3:
+                type = EntryType.HERP;
+                break;
+            default:
+                return;
+        }
+        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
+        ib.entryType(type);
+        if (position != null) {
+            ib.lat(position.latitude).lon(position.longitude);
+        }
+        ib.startForResult(REQUEST_NEW_ENTRY);
+    }
+
+    protected void startNewEntryAsking(final LatLng position) {
         final String[] types = getResources().getStringArray(R.array.enty_types);
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.menu_monitoring_new_entry)
@@ -352,29 +421,8 @@ public class MonitoringActivity extends FragmentActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         EntryType type = null;
                         lastEntryTypePosition = i;
-                        switch (i) {
-                            case 0:
-                                type = EntryType.BIRDS;
-                                break;
-                            case 1:
-                                type = EntryType.CBM;
-                                break;
-                            case 2:
-                                type = EntryType.CICONIA;
-                                break;
-                            case 3:
-                                type = EntryType.HERP;
-                                break;
-                            default:
-                                return;
-                        }
+                        startNewEntryWithoutAsking(position);
                         dialogInterface.cancel();
-                        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
-                        ib.entryType(type);
-                        if (position != null) {
-                            ib.lat(position.latitude).lon(position.longitude);
-                        }
-                        ib.startForResult(REQUEST_NEW_ENTRY);
                     }
                 })
                 .setCancelable(true);

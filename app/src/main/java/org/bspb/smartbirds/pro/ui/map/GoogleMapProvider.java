@@ -25,6 +25,7 @@ import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapDetachedEvent;
+import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlPlacemark;
@@ -39,7 +40,7 @@ import java.util.List;
  * Created by dani on 14-11-6.
  */
 @EBean
-public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener {
+public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -86,6 +87,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     private void setUpMap() {
         mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.setMyLocationEnabled(true);
@@ -266,9 +268,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void onMapClick(LatLng latLng) {
-        if (positioned) {
-            eventBus.post(new MapClickedEvent(latLng));
-        }
+        eventBus.post(new MapClickedEvent(latLng));
     }
 
     public void onEvent(MapAttachedEvent event) {
@@ -277,5 +277,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     public void onEvent(MapDetachedEvent event) {
         mMap = null;
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        eventBus.post(new MapLongClickedEvent(latLng));
     }
 }
