@@ -102,6 +102,10 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
         setSelection(INVALID_POSITION);
     }
 
+    public int getSelection() {
+        return mSelectedPosition;
+    }
+
     public void setSelection(int position) {
         if (position != mSelectedPosition) {
             mSelectedPosition = position;
