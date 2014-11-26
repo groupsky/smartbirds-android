@@ -57,7 +57,7 @@ public class TimeFormInput extends TextViewFormInput {
 
         public void show() {
             final Calendar c = mValue!=null?mValue:Calendar.getInstance();
-            final int hour = c.get(Calendar.HOUR);
+            final int hour = c.get(Calendar.HOUR_OF_DAY);
             final int minute = c.get(Calendar.MINUTE);
 
             final TimePickerDialog dialog = new TimePickerDialog(getContext(), this, hour, minute, is24HourFormat(getContext()));
@@ -72,7 +72,7 @@ public class TimeFormInput extends TextViewFormInput {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             Calendar value = Calendar.getInstance();
-            value.set(Calendar.HOUR, hourOfDay);
+            value.set(Calendar.HOUR_OF_DAY, hourOfDay);
             value.set(Calendar.MINUTE, minute);
             setValue(value);
         }
