@@ -56,8 +56,9 @@ public class TimeFormInput extends TextViewFormInput {
     private class PopupDialog implements TimePickerDialog.OnTimeSetListener {
 
         public void show() {
-            final int hour = mValue.get(Calendar.HOUR);
-            final int minute = mValue.get(Calendar.MINUTE);
+            final Calendar c = mValue!=null?mValue:Calendar.getInstance();
+            final int hour = c.get(Calendar.HOUR);
+            final int minute = c.get(Calendar.MINUTE);
 
             final TimePickerDialog dialog = new TimePickerDialog(getContext(), this, hour, minute, is24HourFormat(getContext()));
 

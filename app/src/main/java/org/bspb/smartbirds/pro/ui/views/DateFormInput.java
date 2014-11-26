@@ -54,9 +54,10 @@ public class DateFormInput extends TextViewFormInput {
     private class PopupDialog implements DatePickerDialog.OnDateSetListener {
 
         public void show() {
-            final int year = mValue.get(Calendar.YEAR);
-            final int month = mValue.get(Calendar.MONTH);
-            final int day = mValue.get(Calendar.DAY_OF_MONTH);
+            final Calendar c = mValue!=null?mValue:Calendar.getInstance();
+            final int year = c.get(Calendar.YEAR);
+            final int month = c.get(Calendar.MONTH);
+            final int day = c.get(Calendar.DAY_OF_MONTH);
 
             final DatePickerDialog dialog = new DatePickerDialog(getContext(), this, year, month, day);
 
