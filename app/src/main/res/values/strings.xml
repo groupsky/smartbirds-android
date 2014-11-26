@@ -2,193 +2,193 @@
 <resources>
 
     <string name="app_name">SmartBirds Pro</string>
-    <string name="title_activity_start_monitoring">Начало мониторинг</string>
-    <string name="title_activity_monitoring">Мониторинг</string>
-    <string name="title_activity_form">FormActivity</string>
-    <string name="title_activity_edit">Редакция на обща форма</string>
-    <string name="cancel_monitoring">Отмяна на мониторинг</string>
-    <string name="really_cancel_monitoring">Наистина ли желаете да отмените мониторинга?</string>
-    <string name="clear">Изчистване</string>
-    <string name="cancel_entry">Отмяна на въвеждане</string>
-    <string name="really_cancel_entry">Наистина ли желаете да отмените въвеждането?</string>
-    <string name="entry_type_cbm">Мониторинг на обикновените видове птици (МОВП)</string>
-    <string name="entry_type_birds">Птици</string>
-    <string name="entry_type_ciconia">Бял щъркел</string>
-    <string name="entry_type_herp">Земноводни и влечуги / бозайници</string>
-    <string name="required_field">Задължително поле</string>
-    <string name="monitoring_notification_title">Мониторинг</string>
-    <string name="monitoring_notification_content">Стартиран мониторинг</string>
-    <string name="menu_entry_save">Запис</string>
-    <string name="menu_entry_add_photo">+ Снимка</string>
-    <string name="menu_monitoring_finish">Завършване</string>
-    <string name="menu_monitoring_new_entry">Ново отчитане</string>
-    <string name="menu_monitoring_common">Общи</string>
+    <string name="title_activity_start_monitoring">Begin monitoring</string>
+    <string name="title_activity_monitoring">Monitoring</string>
+    <string name="title_activity_form">Active form</string>
+    <string name="title_activity_edit">Edit common form</string>
+    <string name="cancel_monitoring">Cancel monitoring</string>
+    <string name="really_cancel_monitoring">Do you really want to cancel the monitoring?</string>
+    <string name="clear">Clear</string>
+    <string name="cancel_entry">Cancel entry</string>
+    <string name="really_cancel_entry">Do you really want to cancel the entry?</string>
+    <string name="entry_type_cbm">Common Bird Monitoring(CBM)</string>
+    <string name="entry_type_birds">Birds</string>
+    <string name="entry_type_ciconia">White stork</string>
+    <string name="entry_type_herp">Amphibians and reptiles / mammals</string>
+    <string name="required_field">Required field</string>
+    <string name="monitoring_notification_title">Monitoring</string>
+    <string name="monitoring_notification_content">Monitoring started</string>
+    <string name="menu_entry_save">Save</string>
+    <string name="menu_entry_add_photo">+ Photo</string>
+    <string name="menu_monitoring_finish">Finish</string>
+    <string name="menu_monitoring_new_entry">New entry</string>
+    <string name="menu_monitoring_common">Common</string>
     <string name="menu_monitoring_zoom_500">500 m</string>
-    <string name="menu_monitoring_zoom_free">Свободно</string>
+    <string name="menu_monitoring_zoom_free">Free</string>
     <string name="menu_monitoring_zoom_1000">1 km</string>
     <string name="menu_monitoring_zoom_250">250 m</string>
     <string name="menu_monitoring_zoom_100">100 m</string>
-    <string name="menu_monitoring_map_normal">Нормална</string>
-    <string name="menu_monitoring_map_satellite">Сателитна</string>
-    <string name="menu_monitoring_map_hybrid">Хибридна</string>
-    <string name="menu_monitoring_map_provider">Карта от:</string>
+    <string name="menu_monitoring_map_normal">Normal</string>
+    <string name="menu_monitoring_map_satellite">Satellite</string>
+    <string name="menu_monitoring_map_hybrid">Hybrid</string>
+    <string name="menu_monitoring_map_provider">Map from:</string>
     <string name="menu_monitoring_map_provider_google">Google</string>
     <string name="menu_monitoring_map_provider_osm">OSM</string>
-    <string name="menu_monitoring_stay_awake">Постоянно включен</string>
-    <string name="menu_monitoring_start">Начало</string>
-    <string name="menu_monitoring_save">Запис</string>
-    <string name="main_screen_btn_start">Начало</string>
-    <string name="main_screen_btn_upload">Качване</string>
-    <string name="monitoring_birds_notes">Бележки</string>
-    <string name="monitoring_common_source">Източник</string>
-    <string name="monitoring_common_start_date">Начало:</string>
-    <string name="monitoring_common_date">Дата</string>
-    <string name="monitoring_common_time">Час</string>
-    <string name="monitoring_common_place">Място</string>
-    <string name="monitoring_common_end_date">Край:</string>
-    <string name="monitoring_common_observers">Наблюдатели</string>
-    <string name="monitoring_common_rain">Дъжд</string>
-    <string name="monitoring_common_temperature">Темп °C</string>
-    <string name="monitoring_common_wind_strength">Сила на вятъра</string>
-    <string name="monitoring_common_wind_direction">Посока на вятъра</string>
-    <string name="monitoring_common_clouds">Вид облаци</string>
-    <string name="monitoring_common_cloudiness">Облачност %</string>
-    <string name="monitoring_common_mto">МТО други</string>
-    <string name="monitoring_common_visibility">Видимост km</string>
-    <string name="monitoring_common_threats">Заплахи</string>
-    <string name="monitoring_common_notes">Бележки</string>
-    <string name="monitoring_birds_name">Вид научно име</string>
-    <string name="monitoring_birds_private">Поверително</string>
-    <string name="monitoring_birds_count_unit">Единица на броя</string>
-    <string name="monitoring_birds_count_type">Тип на броя</string>
-    <string name="monitoring_birds_nesting">Тип гнездене</string>
-    <string name="monitoring_birds_count">Брой</string>
-    <string name="monitoring_birds_min">Мин.</string>
-    <string name="monitoring_birds_max">Макс.</string>
-    <string name="monitoring_birds_gender">Пол</string>
-    <string name="monitoring_birds_age">Възраст</string>
-    <string name="monitoring_birds_marking">Маркировка</string>
-    <string name="monitoring_birds_status">Статус на вида</string>
-    <string name="monitoring_birds_behaviour">Поведение</string>
-    <string name="monitoring_birds_death">Мъртъв индивид (причини)</string>
-    <string name="monitoring_birds_substrate">Субстрат</string>
-    <string name="monitoring_birds_tree">Дърво</string>
-    <string name="monitoring_birds_tree_height">Височина на дървото</string>
-    <string name="monitoring_birds_tree_location">Местоположение на дървото</string>
-    <string name="monitoring_birds_nest_height">Височина на гнездото</string>
-    <string name="monitoring_birds_nest_location">Местоположение на гнездото</string>
-    <string name="monitoring_birds_incubation">Мътене</string>
-    <string name="monitoring_birds_eggs_count">Брой яйца</string>
-    <string name="monitoring_birds_small_downy_count">Брой пухови малки</string>
-    <string name="monitoring_birds_small_feathered_count">Брой оперени малки в гнездото</string>
-    <string name="monitoring_birds_takeoff_count">Брой излетели малки</string>
-    <string name="monitoring_birds_nest_guard">Охрана на гнездото</string>
-    <string name="monitoring_birds_female_age">Възраст, женска</string>
-    <string name="monitoring_birds_male_age">Възраст, мъжка</string>
-    <string name="monitoring_birds_nest_success">Гнездови успех</string>
-    <string name="monitoring_birds_land_use">Земеползване, радиус от 300 m</string>
-    <string name="monitoring_cbm_name">Вид научно име</string>
-    <string name="monitoring_cbm_distance">Разстояние</string>
-    <string name="monitoring_cbm_count">Брой индивиди</string>
-    <string name="monitoring_cbm_primary_habitat">Първостепенно местообитание</string>
-    <string name="monitoring_cbm_secondary_habitat">Второстепенно местообитание</string>
-    <string name="monitoring_cbm_visit_number">Посещение номер</string>
-    <string name="monitoring_cbm_sector">Номер на участък</string>
-    <string name="monitoring_ciconia_substratum">Основен тип на субстрата</string>
-    <string name="monitoring_ciconia_column">Стълб</string>
-    <string name="monitoring_ciconia_nest_artificial">Гнездо на изкуствена платформа</string>
-    <string name="monitoring_ciconia_column_type">Вид стълб</string>
-    <string name="monitoring_ciconia_tree">Дърво</string>
-    <string name="monitoring_ciconia_building">Сграда</string>
-    <string name="monitoring_ciconia_nest_artificial_human">Гнездо на изкуствена поставка направена от човек</string>
-    <string name="monitoring_ciconia_nest_other">Гнездо на друг вид субстрат</string>
-    <string name="monitoring_ciconia_not_occupied">Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели</string>
-    <string name="monitoring_ciconia_new_birds">Тази година в гнездото са се появили една/две птици</string>
-    <string name="monitoring_ciconia_date_appear">Приблизителна дата на появяване на щъркелите</string>
-    <string name="monitoring_ciconia_disappear">Приблизителна дата на изчезване на щъркелите</string>
-    <string name="monitoring_ciconia_this_year">Тази година в гнездото са се появили</string>
-    <string name="monitoring_ciconia_small_count">Брой малки в гнездото</string>
-    <string name="monitoring_ciconia_not_occupied_more_than_year">Гнездото НЕ се обитава от ПОВЕЧЕ от една година</string>
-    <string name="monitoring_ciconia_small_death_electricity">Данни за загинали малки от ел. ток</string>
-    <string name="monitoring_ciconia_small_death_from_parent">Данни за загинали малки изхвърлени от родителите</string>
-    <string name="monitoring_ciconia_small_death_other">Загинали по други причини</string>
-    <string name="monitoring_ciconia_cause">Причина</string>
-    <string name="monitoring_ciconia_notes">Бележки</string>
-    <string name="monitoring_herp_name">Вид</string>
-    <string name="monitoring_herp_gender">Пол</string>
-    <string name="monitoring_herp_age">Възраст</string>
-    <string name="monitoring_herp_habitat">Местообитание</string>
-    <string name="monitoring_herp_danger_observation">Заплахи, констатации</string>
-    <string name="monitoring_herp_count">Брой</string>
-    <string name="monitoring_herp_marking">Маркировка</string>
-    <string name="monitoring_herp_axis_distance">Разстояние от оста</string>
-    <string name="monitoring_herp_weight">Маса (g)</string>
+    <string name="menu_monitoring_stay_awake">Always on</string>
+    <string name="menu_monitoring_start">Start</string>
+    <string name="menu_monitoring_save">Save</string>
+    <string name="main_screen_btn_start">Start</string>
+    <string name="main_screen_btn_upload">Upload</string>
+    <string name="monitoring_birds_notes">Remarks</string>
+    <string name="monitoring_common_source">Source</string>
+    <string name="monitoring_common_start_date">Beginning:</string>
+    <string name="monitoring_common_date">Date</string>
+    <string name="monitoring_common_time">Time</string>
+    <string name="monitoring_common_place">Place</string>
+    <string name="monitoring_common_end_date">End:</string>
+    <string name="monitoring_common_observers">Observers</string>
+    <string name="monitoring_common_rain">Rain</string>
+    <string name="monitoring_common_temperature">Temp °C</string>
+    <string name="monitoring_common_wind_strength">Wind strength</string>
+    <string name="monitoring_common_wind_direction">Wind direction</string>
+    <string name="monitoring_common_clouds">Clouds type</string>
+    <string name="monitoring_common_cloudiness">Cloudiness %</string>
+    <string name="monitoring_common_mto">Weather (Other)</string>
+    <string name="monitoring_common_visibility">Visibility km</string>
+    <string name="monitoring_common_threats">Threats</string>
+    <string name="monitoring_common_notes">Remarks</string>
+    <string name="monitoring_birds_name">Observed bird</string>
+    <string name="monitoring_birds_private">Confidential</string>
+    <string name="monitoring_birds_count_unit">Count unit</string>
+    <string name="monitoring_birds_count_type">Count type</string>
+    <string name="monitoring_birds_nesting">Nest type</string>
+    <string name="monitoring_birds_count">Count</string>
+    <string name="monitoring_birds_min">Min.</string>
+    <string name="monitoring_birds_max">Max.</string>
+    <string name="monitoring_birds_gender">Sex</string>
+    <string name="monitoring_birds_age">Age</string>
+    <string name="monitoring_birds_marking">Mark presence</string>
+    <string name="monitoring_birds_status">Bird status</string>
+    <string name="monitoring_birds_behaviour">Behavior</string>
+    <string name="monitoring_birds_death">Dead specimen (reasons)</string>
+    <string name="monitoring_birds_substrate">Substrate</string>
+    <string name="monitoring_birds_tree">Tree</string>
+    <string name="monitoring_birds_tree_height">Tree height</string>
+    <string name="monitoring_birds_tree_location">Tree location</string>
+    <string name="monitoring_birds_nest_height">Nest height</string>
+    <string name="monitoring_birds_nest_location">Nest location</string>
+    <string name="monitoring_birds_incubation">Incubation</string>
+    <string name="monitoring_birds_eggs_count">Number of eggs</string>
+    <string name="monitoring_birds_small_downy_count">Number of pull.</string>
+    <string name="monitoring_birds_small_feathered_count">Number of fledglings</string>
+    <string name="monitoring_birds_takeoff_count">Number of successfully fledged juveniles</string>
+    <string name="monitoring_birds_nest_guard">Nest guarding</string>
+    <string name="monitoring_birds_female_age">Age of the female</string>
+    <string name="monitoring_birds_male_age">Age of the male</string>
+    <string name="monitoring_birds_nest_success">Breeding success</string>
+    <string name="monitoring_birds_land_use">Land uses, radius 300 m</string>
+    <string name="monitoring_cbm_name">Observed bird</string>
+    <string name="monitoring_cbm_distance">Distance</string>
+    <string name="monitoring_cbm_count">Count</string>
+    <string name="monitoring_cbm_primary_habitat">Primary habitat</string>
+    <string name="monitoring_cbm_secondary_habitat">Secondary habitat</string>
+    <string name="monitoring_cbm_visit_number">Visit number</string>
+    <string name="monitoring_cbm_sector">Transect number</string>
+    <string name="monitoring_ciconia_substratum">Substrate</string>
+    <string name="monitoring_ciconia_column">Pylon</string>
+    <string name="monitoring_ciconia_nest_artificial">Nest on artificial platform</string>
+    <string name="monitoring_ciconia_column_type">Pylon type</string>
+    <string name="monitoring_ciconia_tree">Tree</string>
+    <string name="monitoring_ciconia_building">Building</string>
+    <string name="monitoring_ciconia_nest_artificial_human">Nest on humanmade artificial platform</string>
+    <string name="monitoring_ciconia_nest_other">Nest on another substrate</string>
+    <string name="monitoring_ciconia_not_occupied">This year the nest is NOT occupied by White storks</string>
+    <string name="monitoring_ciconia_new_birds">This year one/two birds came to the nest</string>
+    <string name="monitoring_ciconia_date_appear">Approximate date of stork arrival</string>
+    <string name="monitoring_ciconia_disappear">Approximate date of stork disappearance</string>
+    <string name="monitoring_ciconia_this_year">This year in the nest appeared</string>
+    <string name="monitoring_ciconia_small_count">Number of juveniles in nest</string>
+    <string name="monitoring_ciconia_not_occupied_more_than_year">The nest in NOT inhabited in MORE THAN one year</string>
+    <string name="monitoring_ciconia_small_death_electricity">Information for electrocuted juveniles</string>
+    <string name="monitoring_ciconia_small_death_from_parent">Information for juveniles rejected by the parents</string>
+    <string name="monitoring_ciconia_small_death_other">Juveniles died from other causes</string>
+    <string name="monitoring_ciconia_cause">Cause</string>
+    <string name="monitoring_ciconia_notes">Remarks</string>
+    <string name="monitoring_herp_name">Species</string>
+    <string name="monitoring_herp_gender">Sex</string>
+    <string name="monitoring_herp_age">Age</string>
+    <string name="monitoring_herp_habitat">Habitat</string>
+    <string name="monitoring_herp_danger_observation">Threats, other </string>
+    <string name="monitoring_herp_count">Coutn</string>
+    <string name="monitoring_herp_marking">Marking</string>
+    <string name="monitoring_herp_axis_distance">Distance from axis</string>
+    <string name="monitoring_herp_weight">Weight (g)</string>
     <string name="monitoring_herp_scl">SCL/L (mm)</string>
     <string name="monitoring_herp_mpl">MPL/Lcd/C (mm)</string>
     <string name="monitoring_herp_mcw">MCW/A (mm)</string>
     <string name="monitoring_herp_h">H /Lcap/Pl (mm)</string>
-    <string name="monitoring_herp_t_substrate">Т на субстрата</string>
-    <string name="monitoring_herp_t_vha">Т на в-ха</string>
-    <string name="monitoring_herp_t_kloaka">Т на клоака</string>
+    <string name="monitoring_herp_t_substrate">Т, substrate</string>
+    <string name="monitoring_herp_t_vha">Т, air</string>
+    <string name="monitoring_herp_t_kloaka">Т, cloaca</string>
     <string name="monitoring_herp_sq_ventr">Sq ventr</string>
     <string name="monitoring_herp_sq_caud">Sq caud</string>
     <string name="monitoring_herp_sq_dors">Sq dors</string>
-    <string name="monitoring_herp_notes">Бележки</string>
-    <string name="error_message_create_monitoring_dir">Не може да създаде директорията за данните. Проверете имате ли достатъчно място.</string>
-    <string name="toast_cancel_monitoring">Отмяна на мониторинг</string>
-    <string name="marker_default_title">Отчитане</string>
-    <string name="undo_last_entry">Отмяна последно отчитане</string>
-    <string name="not_synced_count">За качване: <b>%d</b></string>
-    <string name="main_footer_text">Приложението е създадено с подкрепата на Мтел</string>
-    <string name="main_screen_btn_export">Експорт</string>
-    <string name="export_failed_error">Can not prepare zip for export</string>
+    <string name="monitoring_herp_notes">Notes</string>
+    <string name="error_message_create_monitoring_dir">Cannot create data folder. Please, check available space.</string>
+    <string name="toast_cancel_monitoring">Cancel monitoring</string>
+    <string name="marker_default_title">Entry</string>
+    <string name="undo_last_entry">Cancel last entry</string>
+    <string name="not_synced_count">For upload: <b>%d</b></string>
+    <string name="main_footer_text">The application was created with the support of Mtel.</string>
+    <string name="main_screen_btn_export">Export</string>
+    <string name="export_failed_error">Cannot create archive for export</string>
     <string name="export_dialog_title">Export</string>
-    <string name="export_dialog_text">Prepare for export...</string>
+    <string name="export_dialog_text">Preparing for export…</string>
     <string name="upload_dialog_title">Upload</string>
-    <string name="upload_dialog_text">Uploading items...</string>
+    <string name="upload_dialog_text">Uploading data…</string>
     <string name="export_subject">SmartBirds Pro export</string>
-    <string name="export_text">"Monitoring export from %s"</string>
+    <string name="export_text">"Export monitoring %s"</string>
     <string name="export_app_chooser">"Export monitoring: "</string>
-    <string name="monitoring_type">Тип наблюдение</string>
-    <string name="main_screen_btn_info">Информация</string>
-    <string name="main_screen_btn_help">Помощ</string>
-    <string name="info_dialog_title">Информация</string>
+    <string name="monitoring_type">Type of observation</string>
+    <string name="main_screen_btn_info">Information</string>
+    <string name="main_screen_btn_help">Help</string>
+    <string name="info_dialog_title">Information</string>
     <string name="help_url">http://bspb.org/bg/SmartBirds_Pro_manual.html</string>
     <string name="info_text">
         <![CDATA[
-            <p><b>SmartBirds Pro е мобилно приложение за мониторинг на птици, земноводни, влечуги и бозайници</b></p>
-            <p>Този продукт е създаден от Българско дружество за защита на птиците / BirdLife България,</p>
+            <p><b>SmartBirds Pro is a mobile application for monitoring of birds, amphibians, reptiles, and mammals</b></p>
+            <p>This product was developed by the Bulgarian Society for the Protection of Birds / BirdLife Bulgaria,</p>
             <img src="logo_bspb" width="120" height="120"/>
             <br />
             <br />
             <a href="http://www.bspb.org">www.bspb.org</a>
-            <p>по проект „Модерната природозащита: съвременни комуникации в подкрепа на науката на гражданите“, финансиран по  програма „Мтел еко грант”</p>
+            <p>through the project „Modern nature conservation: contemporary communications in support of citizen science“, financed through the programme „Mtel eco grant”</p>
             <img src="logo_mtel" width="120" height="120"/>
             <br />
             <br />
             <a href="http://www.mtel.bg/priroda">www.mtel.bg/priroda</a>
 
             <p>
-                <b>Идеен проект:</b>
+                <b>Concept:</b>
                 <br />
-                Георги Попгеоргиев
+                Georgi Popgeorgiev
                 <br />
-                Светослав Спасов
+                Svetoslav Spasov
                 <br />
-                Юрий Корнилев
+                Yurii Kornilev
             </p>
 
-            <p>Изказваме сърдечни благодарности на Боряна Михова, Димитър Плачийски, Йорданка Горанова - Луканова, Йордан Христов, Стойчо Стойчев, Теодора Петрова и на всички колеги от БДЗП, които допринесоха за реализирането на проекта.</p>
+            <p>We are indebted to Boryana Mihova, Dimitar Plachiyski, Yordanka Goranova-Lukanova, Yordan Hristov, Stoycho Stoychev, Teodora Petrova and all colleagues from the BSPB, who helped in the realization of the project</p>
 
             <p>
-                <b>Дизайн и програмиране</b>
+                <b>Design and programming</b>
                 <br />
-                Масконсулт ООД
+				MASConsult LTD
                 <br />
                 <a href="http://www.masconsult.eu/">www.masconsult.eu</a>\
             </p>
 
-            <p>От <a href="http://www.smartbirds.org">www.smartbirds.org</a> също можете да изтеглите и любителското приложение SmartBirds, съдържащо електронен бележник и определител на гнездящите птици в България.</p>
+            <p>From <a href="http://www.smartbirds.org">www.smartbirds.org</a> you can also downloand the enthusiast\'s application SmartBirds, containing an electronic notepad and a guide to the nesting birds in Bulgaria.</p>
         ]]>
     </string>
 </resources>
