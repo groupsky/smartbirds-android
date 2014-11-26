@@ -21,12 +21,10 @@ import static android.text.format.DateFormat.is24HourFormat;
 /**
  * Created by groupsky on 14-10-17.
  */
-public class TimeFormInput extends TextView implements SupportRequiredView {
+public class TimeFormInput extends TextViewFormInput {
 
     protected Calendar mValue;
     protected DateFormat mDateFormat;
-
-    private boolean required;
 
     public TimeFormInput(Context context) {
         this(context, null);
@@ -40,27 +38,6 @@ public class TimeFormInput extends TextView implements SupportRequiredView {
         super(context, attrs, defStyle);
 
         mDateFormat = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);
-
-        setValue(Calendar.getInstance());
-
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TimeFormInput, defStyle, 0);
-        try {
-            required = a.getBoolean(R.styleable.TimeFormInput_required, false);
-        } finally {
-            a.recycle();
-        }
-    }
-
-    @Override
-    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        super.onInitializeAccessibilityEvent(event);
-        event.setClassName(getClass().getName());
-    }
-
-    @Override
-    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-        super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(getClass().getName());
     }
 
     public void setValue(Calendar calendar) {
@@ -100,14 +77,4 @@ public class TimeFormInput extends TextView implements SupportRequiredView {
         }
     }
 
-    @Override
-    public void checkRequired() throws ViewValidationException {
-        if (required) {
-            String value = getText().toString();
-            if (value == null || value.equals("")) {
-                setError(getContext().getString(R.string.required_field));
-                throw new ViewValidationException();
-            }
-        }
-    }
 }

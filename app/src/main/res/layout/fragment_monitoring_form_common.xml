@@ -29,11 +29,13 @@
                     android:text="@string/monitoring_common_start_date" />
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
+                    android:id="@+id/form_common_start_date"
                     android:hint="@string/monitoring_common_date"
                     android:tag="Начална_Дата"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.TimeFormInput
+                    android:id="@+id/form_common_start_time"
                     android:hint="@string/monitoring_common_time"
                     android:tag="Час_начало"
                     app:required="true" />
@@ -53,6 +55,7 @@
                     android:text="@string/monitoring_common_end_date" />
 
                 <org.bspb.smartbirds.pro.ui.views.DateFormInput
+                    android:id="@+id/form_common_end_date"
                     android:hint="@string/monitoring_common_date"
                     android:tag="Крайна_Дата"
                     app:required="true" />

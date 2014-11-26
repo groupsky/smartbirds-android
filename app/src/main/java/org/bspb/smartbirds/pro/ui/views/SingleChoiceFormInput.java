@@ -20,6 +20,7 @@ import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
@@ -42,10 +43,10 @@ import static android.widget.AdapterView.INVALID_POSITION;
  * Created by groupsky on 14-10-10.
  */
 @EView
-public class SingleChoiceFormInput extends TextView implements SupportRequiredView {
+public class SingleChoiceFormInput extends TextViewFormInput {
 
     private final CharSequence key;
-    private final boolean required;
+
     @Bean
     NomenclaturesBean nomenclatures;
 
@@ -70,7 +71,6 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceFormInput, defStyle, 0);
         try {
             key = a.getText(R.styleable.SingleChoiceFormInput_entries);
-            required = a.getBoolean(R.styleable.SingleChoiceFormInput_required, false);
             SmartArrayAdapter<String> adapter = new SmartArrayAdapter<String>(context,
                     android.R.layout.select_dialog_singlechoice, new ArrayList<String>());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -80,16 +80,16 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
         }
     }
 
-    @Override
-    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        super.onInitializeAccessibilityEvent(event);
-        event.setClassName(getClass().getName());
-    }
-
-    @Override
-    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-        super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(getClass().getName());
+    @AfterInject
+    void loadData() {
+        if (key != null) {
+            List<String> values = nomenclatures.getNomenclature(key.toString());
+            mAdapter.clear();
+            for(String value: values) {
+                mAdapter.add(TextUtils.join("\n", value.trim().split(" *\\| *")));
+            }
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     /**
@@ -110,6 +110,9 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
 
     public void setSelection(int position) {
         if (position != mSelectedPosition) {
+            if (position < 0 || position >= mAdapter.getCount()) {
+                position = INVALID_POSITION;
+            }
             mSelectedPosition = position;
             if (position != INVALID_POSITION) {
                 setText(String.valueOf(mAdapter.getItem(position)));
@@ -127,32 +130,13 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
         return true;
     }
 
-    @Override
-    public void checkRequired() throws ViewValidationException {
-        if (required) {
-            String value = getText().toString();
-            if (value == null || value.equals("")) {
-                setError(getContext().getString(R.string.required_field));
-                throw new ViewValidationException();
-            }
-        }
-    }
-
     private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {
 
         private AlertDialog mPopup;
         private int mLastSelected = INVALID_POSITION;
 
         public void show() {
-            if (key != null) {
-                List<String> values = nomenclatures.getNomenclature(key.toString());
-                mAdapter.clear();
-                for(String value: values) {
-                    mAdapter.add(TextUtils.join("\n", value.trim().split(" *\\| *")));
-                }
-//                mAdapter.addAll(values);
-                mAdapter.notifyDataSetChanged();
-            }
+            loadData();
 
             boolean needFilter = mAdapter.getCount() > 20;
 

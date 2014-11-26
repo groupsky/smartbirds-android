@@ -4,34 +4,34 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 
 /**
- * Created by groupsky on 14-10-17.
+ * Created by groupsky on 26.11.14.
  */
-public class TextFormInput extends AutoCompleteTextView implements SupportRequiredView {
+public class TextViewFormInput extends TextView implements SupportRequiredView {
 
     protected final String TAG = SmartBirdsApplication.TAG + '.' + getClass().getSimpleName();
 
-    boolean mRequired;
+    private boolean mRequired;
 
-    public TextFormInput(Context context) {
+    public TextViewFormInput(Context context) {
         this(context, null);
     }
 
-    public TextFormInput(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.textFormInputStyle);
+    public TextViewFormInput(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public TextFormInput(Context context, AttributeSet attrs, int defStyle) {
+    public TextViewFormInput(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SupportRequiredView, defStyle, 0);
         try {
             mRequired = a.getBoolean(R.styleable.SupportRequiredView_required, false);

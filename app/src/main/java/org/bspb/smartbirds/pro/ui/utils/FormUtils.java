@@ -62,6 +62,8 @@ public class FormUtils {
         }
 
         public String getValue() {
+            if (!view.isEnabled())
+                return "";
             if (view instanceof EditText) {
                 EditText editText = (EditText) view;
                 return editText.getText().toString();

@@ -19,12 +19,10 @@ import java.util.Calendar;
 /**
  * Created by groupsky on 14-10-17.
  */
-public class DateFormInput extends TextView implements SupportRequiredView {
+public class DateFormInput extends TextViewFormInput {
 
     protected Calendar mValue;
     protected DateFormat mDateFormat;
-
-    private boolean required;
 
     public DateFormInput(Context context) {
         this(context, null);
@@ -38,27 +36,6 @@ public class DateFormInput extends TextView implements SupportRequiredView {
         super(context, attrs, defStyle);
 
         mDateFormat = SimpleDateFormat.getDateInstance();
-
-        setValue(Calendar.getInstance());
-
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DateFormInput, defStyle, 0);
-        try {
-            required = a.getBoolean(R.styleable.DateFormInput_required, false);
-        } finally {
-            a.recycle();
-        }
-    }
-
-    @Override
-    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        super.onInitializeAccessibilityEvent(event);
-        event.setClassName(getClass().getName());
-    }
-
-    @Override
-    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-        super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(getClass().getName());
     }
 
     public void setValue(Calendar calendar) {
@@ -97,17 +74,6 @@ public class DateFormInput extends TextView implements SupportRequiredView {
             value.set(Calendar.MONTH, monthOfYear);
             value.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             setValue(value);
-        }
-    }
-
-    @Override
-    public void checkRequired() throws ViewValidationException {
-        if (required) {
-            String value = getText().toString();
-            if (value == null || value.equals("")) {
-                setError(getContext().getString(R.string.required_field));
-                throw new ViewValidationException();
-            }
         }
     }
 

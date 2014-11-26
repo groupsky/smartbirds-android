@@ -23,9 +23,8 @@ import java.util.List;
  * Created by groupsky on 14-10-13.
  */
 @EView
-public class MultipleChoiceFormInput extends TextView {
+public class MultipleChoiceFormInput extends TextViewFormInput {
 
-    private static final String TAG = SmartBirdsApplication.TAG + ".MultipleChoiceFormInput";
     CharSequence[] entries;
 
     private final CharSequence key;
@@ -55,18 +54,6 @@ public class MultipleChoiceFormInput extends TextView {
             a.recycle();
 
         }
-    }
-
-    @Override
-    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        super.onInitializeAccessibilityEvent(event);
-        event.setClassName(getClass().getName());
-    }
-
-    @Override
-    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-        super.onInitializeAccessibilityNodeInfo(info);
-        info.setClassName(getClass().getName());
     }
 
     public void setSelectedItems(boolean[] selected) {

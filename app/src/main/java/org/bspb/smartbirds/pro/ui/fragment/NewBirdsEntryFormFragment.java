@@ -35,15 +35,16 @@ public class NewBirdsEntryFormFragment extends BaseEntryFragment {
     @Override
     public void onResume() {
         super.onResume();
-        countUnits.setText(prefs.birdCountUnits().get());
-        countType.setText(prefs.birdCountType().get());
+        countUnits.setSelection(prefs.birdCountUnitsPosition().get());
+        countType.setSelection(prefs.birdCountTypePosition().get());
+        handleCountsLogic();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        prefs.birdCountUnits().put(countUnits.getText().toString());
-        prefs.birdCountType().put(countType.getText().toString());
+        prefs.birdCountUnitsPosition().put(countUnits.getSelection());
+        prefs.birdCountTypePosition().put(countType.getSelection());
     }
 
     @Override

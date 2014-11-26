@@ -2,12 +2,14 @@ package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.MultiAutoCompleteTextView;
 
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 
 /**
@@ -15,7 +17,9 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
  */
 public class MultipleTextFormInput extends MultiAutoCompleteTextView implements SupportRequiredView {
 
-    private boolean required;
+    protected final String TAG = SmartBirdsApplication.TAG + '.' + getClass().getSimpleName();
+
+    private boolean mRequired;
 
     public MultipleTextFormInput(Context context) {
         this(context, null);
@@ -28,9 +32,9 @@ public class MultipleTextFormInput extends MultiAutoCompleteTextView implements 
     public MultipleTextFormInput(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MultipleTextFormInput, defStyle, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SupportRequiredView, defStyle, 0);
         try {
-            required = a.getBoolean(R.styleable.MultipleTextFormInput_required, false);
+            mRequired = a.getBoolean(R.styleable.SupportRequiredView_required, false);
         } finally {
             a.recycle();
         }
@@ -50,12 +54,21 @@ public class MultipleTextFormInput extends MultiAutoCompleteTextView implements 
 
     @Override
     public void checkRequired() throws ViewValidationException {
-        if (required) {
-            String value = getText().toString();
-            if (value == null || value.equals("")) {
+        if (mRequired && isEnabled()) {
+            if (TextUtils.isEmpty(getText())) {
                 setError(getContext().getString(R.string.required_field));
                 throw new ViewValidationException();
             }
+        } else {
+            setError(null);
         }
+    }
+
+    public boolean isRequired() {
+        return mRequired;
+    }
+
+    public void setRequired(boolean required) {
+        this.mRequired = required;
     }
 }
