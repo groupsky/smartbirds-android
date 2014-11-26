@@ -82,7 +82,7 @@ public class SingleChoiceFormInput extends TextViewFormInput {
 
     @AfterInject
     void loadData() {
-        if (key != null) {
+        if (key != null && !isInEditMode()) {
             List<String> values = nomenclatures.getNomenclature(key.toString());
             mAdapter.clear();
             for(String value: values) {

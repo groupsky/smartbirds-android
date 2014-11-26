@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TableLayout
@@ -16,6 +16,11 @@
             android:layout_height="match_parent"
             android:shrinkColumns="*"
             android:stretchColumns="*">
+
+            <TextView
+                style="@style/FieldSeparator.Ciconia"
+                android:text="@string/monitoring_ciconia_sep_1"
+                />
 
             <TableRow>
 
@@ -66,10 +71,10 @@
                     android:tag="Гнездото е на друг вид субстрат" />
             </TableRow>
 
-            <TableRow>
-
-                <View style="@style/FieldSeparator" />
-            </TableRow>
+            <TextView
+                style="@style/FieldSeparator.Ciconia"
+                android:text="@string/monitoring_ciconia_sep_2"
+                />
 
             <TableRow>
 
@@ -95,10 +100,10 @@
                     android:tag="Приблизителна дата на изчезване на щъркелите" />
             </TableRow>
 
-            <TableRow>
-
-                <View style="@style/FieldSeparator" />
-            </TableRow>
+            <TextView
+                style="@style/FieldSeparator.Ciconia"
+                android:text="@string/monitoring_ciconia_sep_3"
+                />
 
             <TableRow>
 
@@ -108,10 +113,10 @@
                     app:entries="form_ciconia_new_birds" />
             </TableRow>
 
-            <TableRow>
-
-                <View style="@style/FieldSeparator" />
-            </TableRow>
+            <TextView
+                style="@style/FieldSeparator.Ciconia"
+                android:text="@string/monitoring_ciconia_sep_4"
+                />
 
             <TableRow>
 
@@ -120,10 +125,10 @@
                     android:tag="Брой малки в гнездото" />
             </TableRow>
 
-            <TableRow>
-
-                <View style="@style/FieldSeparator" />
-            </TableRow>
+            <TextView
+                style="@style/FieldSeparator.Ciconia"
+                android:text="@string/monitoring_ciconia_sep_5"
+                />
 
             <TableRow>
 
@@ -132,10 +137,10 @@
                     android:tag="Гнездото НЕ се обитава от ПОВЕЧЕ от една година" />
             </TableRow>
 
-            <TableRow>
-
-                <View style="@style/FieldSeparator" />
-            </TableRow>
+            <TextView
+                style="@style/FieldSeparator.Ciconia"
+                android:text="@string/monitoring_ciconia_sep_6"
+                />
 
             <TableRow>
 
@@ -168,7 +173,6 @@
         </TableLayout>
 
         <View style="@style/FieldSeparator" />
-        z
 
         <ImageView
             android:id="@+id/picture"

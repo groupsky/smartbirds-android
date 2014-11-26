@@ -191,4 +191,10 @@
             <p>От <a href="http://www.smartbirds.org">www.smartbirds.org</a> също можете да изтеглите и любителското приложение SmartBirds, съдържащо електронен бележник и определител на гнездящите птици в България.</p>
         ]]>
     </string>
+    <string name="monitoring_ciconia_sep_1">1. Гнездото на БЕЛИТЕ щъркели е върху:</string>
+    <string name="monitoring_ciconia_sep_2">2.</string>
+    <string name="monitoring_ciconia_sep_3">3. В гнездото не се виждат малки</string>
+    <string name="monitoring_ciconia_sep_4">4. В гнездото има:</string>
+    <string name="monitoring_ciconia_sep_5">5.</string>
+    <string name="monitoring_ciconia_sep_6">6. Данни за загинали малки</string>
 </resources>
