@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -26,6 +25,7 @@ import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
+import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
     @Bean
     NomenclaturesBean nomenclatures;
 
-    private ArrayAdapter<String> mAdapter;
+    private SmartArrayAdapter<String> mAdapter;
     private DataSetObserver mDataSetObserver;
     /**
      * The position within the adapter's data set of the currently selected item.
@@ -71,7 +71,7 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
         try {
             key = a.getText(R.styleable.SingleChoiceFormInput_entries);
             required = a.getBoolean(R.styleable.SingleChoiceFormInput_required, false);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+            SmartArrayAdapter<String> adapter = new SmartArrayAdapter<String>(context,
                     android.R.layout.select_dialog_singlechoice, new ArrayList<String>());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             setAdapter(adapter);
@@ -99,7 +99,7 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
      *
      * @param adapter The SpinnerAdapter to use for this Spinner
      */
-    public void setAdapter(ArrayAdapter<String> adapter) {
+    public void setAdapter(SmartArrayAdapter<String> adapter) {
         mAdapter = adapter;
         setSelection(INVALID_POSITION);
     }
@@ -148,7 +148,7 @@ public class SingleChoiceFormInput extends TextView implements SupportRequiredVi
                 List<String> values = nomenclatures.getNomenclature(key.toString());
                 mAdapter.clear();
                 for(String value: values) {
-                    mAdapter.add(TextUtils.join("\n", value.split(" *\\| *")));
+                    mAdapter.add(TextUtils.join("\n", value.trim().split(" *\\| *")));
                 }
 //                mAdapter.addAll(values);
                 mAdapter.notifyDataSetChanged();
