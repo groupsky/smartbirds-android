@@ -15,10 +15,9 @@
             android:tag="Субстрат"
             app:entries="form_birds_nest_substrate" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+        <org.bspb.smartbirds.pro.ui.views.TextFormInput
             android:hint="@string/monitoring_birds_tree"
-            android:tag="Дърво"
-            app:entries="form_birds_nest_location" />
+            android:tag="Дърво" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="@string/monitoring_birds_tree_height"
