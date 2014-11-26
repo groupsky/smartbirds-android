@@ -36,7 +36,7 @@ public class MonitoringCommonFormFragment extends Fragment {
     @ViewById(R.id.form_common_end_date)
     DateFormInput endDateView;
     @FragmentArg("new_monitoring")
-    boolean newMonitoring = false;
+    boolean newMonitoring;
 
     @Override
     public void onStart() {
@@ -55,9 +55,11 @@ public class MonitoringCommonFormFragment extends Fragment {
     @AfterViews
     void loadSavedData() {
         form = FormUtils.traverseForm(getView());
-        startDateView.setValue(Calendar.getInstance());
-        startTimeView.setValue(Calendar.getInstance());
-        endDateView.setValue(Calendar.getInstance());
+        if (newMonitoring) {
+            startDateView.setValue(Calendar.getInstance());
+            startTimeView.setValue(Calendar.getInstance());
+            endDateView.setValue(Calendar.getInstance());
+        }
     }
 
     @OptionsItem(R.id.action_submit)
