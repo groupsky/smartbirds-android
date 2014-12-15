@@ -29,12 +29,21 @@ android {
         versionCode 7
         versionName "1.0.7"
     }
+    signingConfigs {
+        release {
+            storeFile file("../release.jks")
+            storePassword "***REMOVED***"
+            keyAlias "smartbirds-pro"
+            keyPassword "***REMOVED***"
+        }
+    }
     buildTypes {
         ext.betaDistributionGroupAliases = "BSPB"
 
         release {
-            runProguard true
+            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
