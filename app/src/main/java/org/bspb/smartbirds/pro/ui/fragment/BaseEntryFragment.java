@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -18,6 +19,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
@@ -25,6 +28,7 @@ import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
+import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
@@ -53,6 +57,9 @@ public abstract class BaseEntryFragment extends Fragment {
 
     @Bean
     protected EEventBus eventBus;
+
+    @OptionsMenuItem(R.id.take_picture)
+    MenuItem takePicture;
 
     protected String imageFileName = null;
     protected String imagePath;
@@ -95,10 +102,15 @@ public abstract class BaseEntryFragment extends Fragment {
 
     @OptionsItem(R.id.take_picture)
     void onTakePicture(MenuItem item) {
-        item.setEnabled(false);
         if (INTENT_TAKE_PICTURE.resolveActivity(getActivity().getPackageManager()) != null) {
+            item.setEnabled(false);
             eventBus.post(new CreateImageFile());
         }
+    }
+
+    public void onEvent(ImageFileCreatedFailed event) {
+        Toast.makeText(getActivity(), R.string.image_file_create_error, Toast.LENGTH_SHORT).show();
+        takePicture.setEnabled(true);
     }
 
     public void onEvent(ImageFileCreated event) {
@@ -136,6 +148,7 @@ public abstract class BaseEntryFragment extends Fragment {
             picture.setImageBitmap(bitmap);
         } else {
             imageFileName = null;
+            takePicture.setEnabled(true);
         }
     }
 
