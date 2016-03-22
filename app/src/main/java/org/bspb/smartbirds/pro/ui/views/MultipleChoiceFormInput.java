@@ -94,11 +94,9 @@ public class MultipleChoiceFormInput extends TextViewFormInput {
                     }
 
                     String[] items = getText().toString().split(", ");
-                    if (items != null) {
-                        for (String item : items) {
-                            if (values.contains(item)) {
-                                mSelected[values.indexOf(item)] = true;
-                            }
+                    for (String item : items) {
+                        if (values.contains(item)) {
+                            mSelected[values.indexOf(item)] = true;
                         }
                     }
                 }

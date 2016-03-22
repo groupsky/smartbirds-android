@@ -119,7 +119,7 @@
     <string name="monitoring_herp_age">Age</string>
     <string name="monitoring_herp_habitat">Habitat</string>
     <string name="monitoring_herp_danger_observation">Threats, other </string>
-    <string name="monitoring_herp_count">Coutn</string>
+    <string name="monitoring_herp_count">Count</string>
     <string name="monitoring_herp_marking">Marking</string>
     <string name="monitoring_herp_axis_distance">Distance from axis</string>
     <string name="monitoring_herp_weight">Weight (g)</string>

@@ -44,7 +44,7 @@
                     android:tag="Местообитание"
                     app:entries="form_herp_habitat" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
                     android:hint="@string/monitoring_herp_danger_observation"
                     android:tag="Заплахи констатации"
                     app:entries="form_herp_danger_observation" />
@@ -54,7 +54,8 @@
                     android:hint="@string/monitoring_herp_count"
                     android:tag="Брой"
                     android:text="1"
-                    app:required="true" />
+                    app:required="true"
+                    tools:ignore="HardcodedText" />
 
             </TableRow>
 
