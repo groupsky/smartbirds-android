@@ -201,6 +201,7 @@ public class DataService extends Service {
     public void onEvent(SetMonitoringCommonData event) {
         Log.d(TAG, "onSetMonitoringCommonData");
         commonData = event.data;
+        commonData.put(Configuration.MONITORING_ID, monitoringName);
         persistCommonData();
     }
 

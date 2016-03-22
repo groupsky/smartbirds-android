@@ -17,6 +17,7 @@ public class Configuration {
     public static final String END_TIME_KEY = "Час_край";
     public static final String ENTRY_TIME = "Час_наблюдение";
     public static final String ENTRY_DATE = "Наблюдение_дата";
+    public static final String MONITORING_ID = "Мониторинг_код";
 
     public static void init(Context context) {
         STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.M.yyyy", Locale.ENGLISH);
