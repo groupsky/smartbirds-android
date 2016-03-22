@@ -63,45 +63,11 @@ public class FormUtils {
         }
 
         public String getValue() {
-            if (!view.isEnabled())
-                return "";
-            if (view instanceof SupportStorage) {
-                SupportStorage storageView = (SupportStorage) view;
-                return storageView.valueForStorage();
-            }
-            if (view instanceof EditText) {
-                EditText editText = (EditText) view;
-                return editText.getText().toString();
-            }
-            if (view instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) view;
-                return checkBox.isChecked() ? "1" : "0";
-            }
-            if (view instanceof TextView) {
-                TextView textView = (TextView) view;
-                return textView.getText().toString();
-            }
-            Log.w(TAG, "unsupported view " + view.getClass());
-            return "";
+            return FormUtils.getViewValue(view);
         }
 
         public void setValue(String value) {
-            if (value == null)
-                return;
-            if (view instanceof SupportStorage) {
-                SupportStorage storageView = (SupportStorage) view;
-                storageView.restoreFromStorage(value);
-            } else if (view instanceof EditText) {
-                EditText editText = (EditText) view;
-                editText.setText(value);
-            } else if (view instanceof CheckBox) {
-                CheckBox checkBox = (CheckBox) view;
-                checkBox.setChecked("1".equals(value));
-            } else if (view instanceof TextView) {
-                TextView textView = (TextView) view;
-                textView.setText(value);
-            } else
-                Log.w(TAG, "unsupported view " + view.getClass());
+            FormUtils.setViewValue(view, value);
         }
     }
 
@@ -151,6 +117,48 @@ public class FormUtils {
             return res;
 
         }
+    }
+
+    public static String getViewValue(View view) {
+        if (!view.isEnabled())
+            return "";
+        if (view instanceof SupportStorage) {
+            SupportStorage storageView = (SupportStorage) view;
+            return storageView.valueForStorage();
+        }
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            return editText.getText().toString();
+        }
+        if (view instanceof CheckBox) {
+            CheckBox checkBox = (CheckBox) view;
+            return checkBox.isChecked() ? "1" : "0";
+        }
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            return textView.getText().toString();
+        }
+        Log.w(TAG, "unsupported view " + view.getClass());
+        return "";
+    }
+
+    public static void setViewValue(View view, String value) {
+        if (value == null)
+            return;
+        if (view instanceof SupportStorage) {
+            SupportStorage storageView = (SupportStorage) view;
+            storageView.restoreFromStorage(value);
+        } else if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setText(value);
+        } else if (view instanceof CheckBox) {
+            CheckBox checkBox = (CheckBox) view;
+            checkBox.setChecked("1".equals(value));
+        } else if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            textView.setText(value);
+        } else
+            Log.w(TAG, "unsupported view " + view.getClass());
     }
 
 }
