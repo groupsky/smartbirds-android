@@ -198,4 +198,5 @@
     <string name="monitoring_ciconia_sep_5">5.</string>
     <string name="monitoring_ciconia_sep_6">6. Data for dead juveniles</string>
     <string name="export_description">Export all data not yet uploaded to the server (all data is still kept on the device)</string>
+    <string name="image_file_create_error">Can\'t create photo</string>
 </resources>

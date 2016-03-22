@@ -31,6 +31,7 @@ import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.GetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
+import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
@@ -397,6 +398,7 @@ public class DataService extends Service {
                     break;
                 }
             } catch (IOException e) {
+                bus.post(new ImageFileCreatedFailed());
                 Crashlytics.logException(e);
             }
         }
