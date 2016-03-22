@@ -63,7 +63,7 @@
                 <org.bspb.smartbirds.pro.ui.views.TimeFormInput
                     android:hint="@string/monitoring_common_time"
                     android:tag="Час_край"
-                    app:required="true" />
+                    app:required="false" />
 
 
             </TableRow>

@@ -10,6 +10,7 @@ import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 /**
@@ -31,6 +32,8 @@ public class SmartBirdsApplication extends Application {
         Crashlytics.start(this);
 
         bus.register(this);
+
+        Configuration.init(this);
     }
 
     public void onEvent(StartMonitoringEvent event) {

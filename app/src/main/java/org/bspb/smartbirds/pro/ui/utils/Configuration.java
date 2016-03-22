@@ -1,0 +1,23 @@
+package org.bspb.smartbirds.pro.ui.utils;
+
+import android.content.Context;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+/**
+ * Created by groupsky on 22.03.16.
+ */
+public class Configuration {
+
+    public static DateFormat STORAGE_TIME_FORMAT;
+    public static DateFormat STORAGE_DATE_FORMAT;
+
+    public static final String END_TIME_KEY = "Час_край";
+
+    public static void init(Context context) {
+        STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.M.yyyy", Locale.ENGLISH);
+        STORAGE_TIME_FORMAT = new SimpleDateFormat("kk:mm:ss", Locale.ENGLISH);
+    }
+}
