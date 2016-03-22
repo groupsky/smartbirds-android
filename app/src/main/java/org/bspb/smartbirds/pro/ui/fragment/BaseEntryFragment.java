@@ -25,8 +25,10 @@ import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -85,6 +87,8 @@ public abstract class BaseEntryFragment extends Fragment {
             data.put("Lat", Double.toString(lat));
             data.put("Long", Double.toString(lon));
             data.put("Picture", imageFileName != null ? imageFileName : "");
+            data.put(Configuration.ENTRY_DATE, Configuration.STORAGE_DATE_FORMAT.format(new Date()));
+            data.put(Configuration.ENTRY_TIME, Configuration.STORAGE_TIME_FORMAT.format(new Date()));
             eventBus.post(new EntrySubmitted(data, getEntryType()));
         }
     }
