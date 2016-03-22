@@ -7,7 +7,7 @@
     <string name="title_activity_form">Активна форма</string>
     <string name="title_activity_edit">Редакция на обща форма</string>
     <string name="cancel_monitoring">Отмяна на мониторинг</string>
-    <string name="really_cancel_monitoring">Наистина ли желаете да отмените мониторинга?</string>
+    <string name="really_cancel_monitoring">Това ще изтрие всички събрани данни от този мониторинг!\nНаистина ли желаете да отмените мониторинга?</string>
     <string name="clear">Изчистване</string>
     <string name="cancel_entry">Отмяна на въвеждане</string>
     <string name="really_cancel_entry">Наистина ли желаете да отмените въвеждането?</string>
@@ -197,4 +197,5 @@
     <string name="monitoring_ciconia_sep_4">4. В гнездото има:</string>
     <string name="monitoring_ciconia_sep_5">5.</string>
     <string name="monitoring_ciconia_sep_6">6. Данни за загинали малки</string>
+    <string name="export_description">Експорт на всички данни, които не са качвани на сървъра (данните ще останат на устройството)</string>
 </resources>
