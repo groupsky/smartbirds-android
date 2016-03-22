@@ -15,6 +15,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < mSelected.length; i++) {
             if (mSelected[i]) {
-                if (sb.length() > 0) sb.append(", ");
+                if (sb.length() > 0) sb.append(Configuration.MULTIPLE_CHOICE_DELIMITER);
                 sb.append(entries[i]);
             }
         }
@@ -93,7 +94,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput {
                         entries[i] = values.get(i);
                     }
 
-                    String[] items = getText().toString().split(", ");
+                    String[] items = getText().toString().split(Configuration.MULTIPLE_CHOICE_DELIMITER);
                     for (String item : items) {
                         if (values.contains(item)) {
                             mSelected[values.indexOf(item)] = true;
