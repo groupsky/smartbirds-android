@@ -91,8 +91,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="crashlytics-1.1.13" level="project" />
     <orderEntry type="library" exported="" name="jcsv-1.4.0" level="project" />
+    <orderEntry type="library" exported="" name="crashlytics-1.1.13" level="project" />
+    <orderEntry type="library" exported="" name="androidannotations-api-3.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="eventbus-2.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
@@ -101,7 +102,6 @@
     <orderEntry type="library" exported="" name="osmbonuspack_v4.9" level="project" />
     <orderEntry type="library" exported="" name="android-maps-utils-0.3.2" level="project" />
     <orderEntry type="library" exported="" name="commons-net-3.3" level="project" />
-    <orderEntry type="library" exported="" name="androidannotations-api-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-5.0.89" level="project" />
   </component>
 </module>
