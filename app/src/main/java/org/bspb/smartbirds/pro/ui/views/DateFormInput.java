@@ -4,25 +4,34 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by groupsky on 14-10-17.
  */
-public class DateFormInput extends TextViewFormInput {
+public class DateFormInput extends TextViewFormInput implements SupportStorage {
+
+    private static final String TAG = SmartBirdsApplication.TAG + ".DateFormInput";
 
     protected Calendar mValue;
     protected DateFormat mDateFormat;
+    protected DateFormat mStorageFormat;
 
     public DateFormInput(Context context) {
         this(context, null);
@@ -36,6 +45,11 @@ public class DateFormInput extends TextViewFormInput {
         super(context, attrs, defStyle);
 
         mDateFormat = SimpleDateFormat.getDateInstance();
+        mStorageFormat = new SimpleDateFormat("dd.M.yyyy", Locale.ENGLISH);
+    }
+
+    public Calendar getValue() {
+        return mValue;
     }
 
     public void setValue(Calendar calendar) {
@@ -49,6 +63,23 @@ public class DateFormInput extends TextViewFormInput {
         super.performClick();
         new PopupDialog().show();
         return true;
+    }
+
+    @Override
+    public String valueForStorage() {
+        return mStorageFormat.format(mValue.getTime());
+    }
+
+    @Override
+    public void restoreFromStorage(String value) {
+        try {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(mStorageFormat.parse(value));
+            setValue(calendar);
+        } catch (ParseException e) {
+            Crashlytics.logException(e);
+            Log.e(TAG, "Invalid storage format", e);
+        }
     }
 
     private class PopupDialog implements DatePickerDialog.OnDateSetListener {

@@ -4,27 +4,36 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import static android.text.format.DateFormat.is24HourFormat;
 
 /**
  * Created by groupsky on 14-10-17.
  */
-public class TimeFormInput extends TextViewFormInput {
+public class TimeFormInput extends TextViewFormInput implements SupportStorage {
+
+    private static final String TAG = SmartBirdsApplication.TAG + ".DateFormInput";
 
     protected Calendar mValue;
     protected DateFormat mDateFormat;
+    protected DateFormat mStorageFormat;
 
     public TimeFormInput(Context context) {
         this(context, null);
@@ -38,6 +47,7 @@ public class TimeFormInput extends TextViewFormInput {
         super(context, attrs, defStyle);
 
         mDateFormat = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);
+        mStorageFormat = new SimpleDateFormat("kk:mm:ss", Locale.ENGLISH);
     }
 
     public void setValue(Calendar calendar) {
@@ -51,6 +61,23 @@ public class TimeFormInput extends TextViewFormInput {
         super.performClick();
         new PopupDialog().show();
         return true;
+    }
+
+    @Override
+    public String valueForStorage() {
+        return mStorageFormat.format(mValue.getTime());
+    }
+
+    @Override
+    public void restoreFromStorage(String value) {
+        try {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(mStorageFormat.parse(value));
+            setValue(calendar);
+        } catch (ParseException e) {
+            Crashlytics.logException(e);
+            Log.e(TAG, "Invalid storage format", e);
+        }
     }
 
     private class PopupDialog implements TimePickerDialog.OnTimeSetListener {

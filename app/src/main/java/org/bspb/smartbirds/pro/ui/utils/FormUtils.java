@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 import org.bspb.smartbirds.pro.ui.views.SupportRequiredView;
+import org.bspb.smartbirds.pro.ui.views.SupportStorage;
 
 import java.util.HashMap;
 
@@ -64,6 +65,10 @@ public class FormUtils {
         public String getValue() {
             if (!view.isEnabled())
                 return "";
+            if (view instanceof SupportStorage) {
+                SupportStorage storageView = (SupportStorage) view;
+                return storageView.valueForStorage();
+            }
             if (view instanceof EditText) {
                 EditText editText = (EditText) view;
                 return editText.getText().toString();
@@ -83,18 +88,20 @@ public class FormUtils {
         public void setValue(String value) {
             if (value == null)
                 return;
-            if (view instanceof EditText) {
+            if (view instanceof SupportStorage) {
+                SupportStorage storageView = (SupportStorage) view;
+                storageView.restoreFromStorage(value);
+            } else if (view instanceof EditText) {
                 EditText editText = (EditText) view;
                 editText.setText(value);
-            }
-            if (view instanceof CheckBox) {
+            } else if (view instanceof CheckBox) {
                 CheckBox checkBox = (CheckBox) view;
                 checkBox.setChecked("1".equals(value));
-            }
-            if (view instanceof TextView) {
+            } else if (view instanceof TextView) {
                 TextView textView = (TextView) view;
                 textView.setText(value);
-            }
+            } else
+                Log.w(TAG, "unsupported view " + view.getClass());
         }
     }
 
