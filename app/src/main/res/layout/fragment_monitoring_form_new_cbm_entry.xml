@@ -80,11 +80,8 @@
 
         <View style="@style/FieldSeparator" />
 
-        <ImageView
-            android:id="@+id/picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside" />
+
+        <include layout="@layout/partial_pictures" />
 
     </LinearLayout>
 </ScrollView>

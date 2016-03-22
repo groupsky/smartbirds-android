@@ -386,7 +386,8 @@ public class DataService extends Service {
 
     public void onEvent(CreateImageFile event) {
         // Create an image file name
-        while (true) {
+        int cnt = 100;
+        while (cnt-->0) {
             String index = Integer.toString(pictureCounter++);
             dataServicePrefs.pictureCounter().put(pictureCounter);
             while (index.length() < 4) index = '0' + index;
@@ -395,13 +396,14 @@ public class DataService extends Service {
             try {
                 if (image.createNewFile()) {
                     bus.post(new ImageFileCreated(imageFileName, Uri.fromFile(image), image.getAbsolutePath()));
-                    break;
+                    return;
                 }
             } catch (IOException e) {
-                bus.post(new ImageFileCreatedFailed());
+                Log.d(TAG, "Image file create error", e);
                 Crashlytics.logException(e);
             }
         }
+        bus.post(new ImageFileCreatedFailed());
     }
 
     public void onEvent(GetMonitoringCommonData event) {

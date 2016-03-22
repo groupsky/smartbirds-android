@@ -75,13 +75,13 @@ public class MainFragment extends Fragment {
 
     @Click(R.id.btn_upload)
     void uploadBtnClicked() {
-        UploadService_.intent(this).uploadAll().start();
+        UploadService_.intent(getActivity()).uploadAll().start();
     }
 
     @Click(R.id.btn_export)
     void exportBtnClicked() {
         exportDialog = ProgressDialog.show(getActivity(), getString(R.string.export_dialog_title), getString(R.string.export_dialog_text), true);
-        ExportService_.intent(this).prepareForExport().start();
+        ExportService_.intent(getActivity()).prepareForExport().start();
     }
 
     @Click(R.id.btn_info)

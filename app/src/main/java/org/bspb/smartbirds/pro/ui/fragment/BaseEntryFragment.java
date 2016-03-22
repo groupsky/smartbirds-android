@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.ViewsById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
@@ -34,6 +36,7 @@ import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by dani on 14-11-12.
@@ -52,8 +55,8 @@ public abstract class BaseEntryFragment extends Fragment {
     @FragmentArg(ARG_LON)
     protected double lon;
 
-    @ViewById(R.id.picture)
-    protected ImageView picture;
+    @ViewsById({R.id.picture1, R.id.picture2, R.id.picture3})
+    protected List<ImageView> pictures;
 
     @Bean
     protected EEventBus eventBus;
@@ -61,9 +64,9 @@ public abstract class BaseEntryFragment extends Fragment {
     @OptionsMenuItem(R.id.take_picture)
     MenuItem takePicture;
 
-    protected String imageFileName = null;
-    protected String imagePath;
-    protected Uri imageUri;
+    protected ImageStruct[] images = new ImageStruct[3];
+    protected ImageStruct currentImage;
+    private int picturesCount = 0;
 
     abstract EntryType getEntryType();
 
@@ -93,7 +96,9 @@ public abstract class BaseEntryFragment extends Fragment {
             HashMap<String, String> data = form.serialize();
             data.put("Lat", Double.toString(lat));
             data.put("Long", Double.toString(lon));
-            data.put("Picture", imageFileName != null ? imageFileName : "");
+            for (int i=0; i<images.length; i++) {
+                data.put("Picture"+i, images[i] != null ? images[i].fileName : "");
+            }
             data.put(Configuration.ENTRY_DATE, Configuration.STORAGE_DATE_FORMAT.format(new Date()));
             data.put(Configuration.ENTRY_TIME, Configuration.STORAGE_TIME_FORMAT.format(new Date()));
             eventBus.post(new EntrySubmitted(data, getEntryType()));
@@ -114,9 +119,7 @@ public abstract class BaseEntryFragment extends Fragment {
     }
 
     public void onEvent(ImageFileCreated event) {
-        imageFileName = event.imageFileName;
-        imagePath = event.imagePath;
-        imageUri = event.uri;
+        currentImage = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
         Intent intent = new Intent(INTENT_TAKE_PICTURE).putExtra(MediaStore.EXTRA_OUTPUT, event.uri);
         startActivityForResult(intent, REQUEST_TAKE_PICTURE);
     }
@@ -125,14 +128,14 @@ public abstract class BaseEntryFragment extends Fragment {
     void onTakePictureResult(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
             // Get the dimensions of the View
-            DisplayMetrics displayMetrics = picture.getResources().getDisplayMetrics();
+            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
             int targetW = (int) Math.round(320.0 / displayMetrics.density);
             int targetH = (int) Math.round(320.0 / displayMetrics.density);
 
             // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(imagePath, bmOptions);
+            BitmapFactory.decodeFile(currentImage.path, bmOptions);
             int photoW = bmOptions.outWidth;
             int photoH = bmOptions.outHeight;
 
@@ -144,21 +147,41 @@ public abstract class BaseEntryFragment extends Fragment {
             bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
 
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
+            Bitmap bitmap = BitmapFactory.decodeFile(currentImage.path, bmOptions);
+            images[picturesCount] = currentImage;
+            currentImage = null;
+            ImageView picture = pictures.get(picturesCount);
+            picturesCount++;
             picture.setImageBitmap(bitmap);
+            picture.setVisibility(View.VISIBLE);
+
+            takePicture.setEnabled(picturesCount < images.length);
         } else {
-            imageFileName = null;
+            currentImage = null;
             takePicture.setEnabled(true);
         }
     }
 
-    @Click(R.id.picture)
-    void onPictureClick() {
-        Intent intent = new Intent(INTENT_VIEW_PICTURE).setDataAndType(imageUri, "image/jpg");
+    @Click({R.id.picture1, R.id.picture2, R.id.picture3})
+    void Click(View v) {
+        int idx = pictures.indexOf(v);
+        if (idx < 0 || idx >= images.length) return;
+        Intent intent = new Intent(INTENT_VIEW_PICTURE).setDataAndType(images[idx].uri, "image/jpg");
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
     }
 
 
+    private static class ImageStruct {
+        public String fileName = null;
+        public String path;
+        public Uri uri;
+
+        public ImageStruct(String fileName, String path, Uri uri) {
+            this.fileName = fileName;
+            this.path = path;
+            this.uri = uri;
+        }
+    }
 }
