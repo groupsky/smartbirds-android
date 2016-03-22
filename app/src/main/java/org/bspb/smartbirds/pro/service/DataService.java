@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.DataServicePrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
 import java.io.BufferedOutputStream;
@@ -203,6 +205,13 @@ public class DataService extends Service {
     }
 
     public void onEvent(FinishMonitoringEvent event) {
+        if (commonData.containsKey(Configuration.END_TIME_KEY)) {
+            if (TextUtils.isEmpty(commonData.get(Configuration.END_TIME_KEY))) {
+                commonData.put(Configuration.END_TIME_KEY, Configuration.STORAGE_TIME_FORMAT.format(new Date()));
+                persistCommonData();
+            }
+        }
+
         flushBuffer();
         NotificationUtils.hideMonitoringNotification(getApplicationContext());
         TrackingService_.intent(this).stop();

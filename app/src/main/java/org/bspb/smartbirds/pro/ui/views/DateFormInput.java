@@ -15,6 +15,7 @@ import com.crashlytics.android.Crashlytics;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,7 +46,7 @@ public class DateFormInput extends TextViewFormInput implements SupportStorage {
         super(context, attrs, defStyle);
 
         mDateFormat = SimpleDateFormat.getDateInstance();
-        mStorageFormat = new SimpleDateFormat("dd.M.yyyy", Locale.ENGLISH);
+        mStorageFormat = Configuration.STORAGE_DATE_FORMAT;
     }
 
     public Calendar getValue() {
@@ -67,7 +68,7 @@ public class DateFormInput extends TextViewFormInput implements SupportStorage {
 
     @Override
     public String valueForStorage() {
-        return mStorageFormat.format(mValue.getTime());
+        return mValue != null ? mStorageFormat.format(mValue.getTime()) : "";
     }
 
     @Override
