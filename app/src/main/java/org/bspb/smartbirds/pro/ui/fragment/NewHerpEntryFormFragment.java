@@ -28,14 +28,12 @@ public class NewHerpEntryFormFragment extends BaseEntryFragment {
     public void onResume() {
         super.onResume();
         habitat.setText(prefs.herpHabitat().get());
-        count.setText(prefs.herpCount().get());
     }
 
     @Override
     public void onPause() {
         super.onPause();
         prefs.herpHabitat().put(habitat.getText().toString());
-        prefs.herpCount().put(count.getText().toString());
     }
 
     @Override
