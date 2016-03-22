@@ -7,7 +7,7 @@
     <string name="title_activity_form">Active form</string>
     <string name="title_activity_edit">Edit common form</string>
     <string name="cancel_monitoring">Cancel monitoring</string>
-    <string name="really_cancel_monitoring">Do you really want to cancel the monitoring?</string>
+    <string name="really_cancel_monitoring">This will delete all data from this monitoring!\nDo you really want to cancel the monitoring?</string>
     <string name="clear">Clear</string>
     <string name="cancel_entry">Cancel entry</string>
     <string name="really_cancel_entry">Do you really want to cancel the entry?</string>
@@ -197,4 +197,5 @@
     <string name="monitoring_ciconia_sep_4">4. Inside the nest there are:</string>
     <string name="monitoring_ciconia_sep_5">5.</string>
     <string name="monitoring_ciconia_sep_6">6. Data for dead juveniles</string>
+    <string name="export_description">Export all data not yet uploaded to the server (all data is still kept on the device)</string>
 </resources>

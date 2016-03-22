@@ -3,18 +3,26 @@ package org.bspb.smartbirds.pro.ui.fragment;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
@@ -82,7 +90,7 @@ public class MainFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.info_dialog_title));
         TextView view = new TextView(getActivity());
-        view.setPadding((int)(10 * density), (int)(10 * density), (int)(10 * density), (int)(10 * density));
+        view.setPadding((int) (10 * density), (int) (10 * density), (int) (10 * density), (int) (10 * density));
         view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         view.setMovementMethod(LinkMovementMethod.getInstance());
         view.setText(Html.fromHtml(getString(R.string.info_text), new Html.ImageGetter() {
@@ -144,6 +152,35 @@ public class MainFragment extends Fragment {
         }
         Toast.makeText(getActivity(), getString(R.string.export_failed_error), Toast.LENGTH_LONG).
                 show();
+    }
+
+    @LongClick(R.id.btn_export)
+    public boolean displayDescription(View v) {
+        if (TextUtils.isEmpty(v.getContentDescription())) return false;
+        final int[] screenPos = new int[2];
+        final Rect displayFrame = new Rect();
+        v.getLocationOnScreen(screenPos);
+        v.getWindowVisibleDisplayFrame(displayFrame);
+
+        final Context context = v.getContext();
+        final int width = v.getWidth();
+        final int height = v.getHeight();
+        final int midy = screenPos[1] + height / 2;
+        int referenceX = screenPos[0] + width / 2;
+        if (ViewCompat.getLayoutDirection(v) == ViewCompat.LAYOUT_DIRECTION_LTR) {
+            final int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+            referenceX = screenWidth - referenceX; // mirror
+        }
+        Toast cheatSheet = Toast.makeText(context, v.getContentDescription(), Toast.LENGTH_SHORT);
+        if (midy < displayFrame.height()) {
+            // Show along the top; follow action buttons
+            cheatSheet.setGravity(Gravity.TOP | GravityCompat.END, referenceX, height);
+        } else {
+            // Show along the bottom center
+            cheatSheet.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, height);
+        }
+        cheatSheet.show();
+        return true;
     }
 
     protected void showNotSyncedCount() {
