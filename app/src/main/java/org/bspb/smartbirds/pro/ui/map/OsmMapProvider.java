@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
@@ -126,9 +127,13 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         KmlDocument kml = new KmlDocument();
         File file = new File(AREA_FILE_PATH);
         if (file.exists()) {
-            kml.parseKMLFile(file);
-            FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
-            mMap.getOverlayManager().add(kmlOverlay);
+            try {
+                kml.parseKMLFile(file);
+                FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
+                mMap.getOverlayManager().add(kmlOverlay);
+            } catch (Throwable t) {
+                Crashlytics.logException(t);
+            }
         }
 
         if (markers != null && !markers.isEmpty()) {

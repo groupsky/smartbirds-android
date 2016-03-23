@@ -1,10 +1,13 @@
 package org.bspb.smartbirds.pro.ui.map;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Location;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -28,7 +31,12 @@ import org.bspb.smartbirds.pro.events.MapDetachedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
+import org.osmdroid.bonuspack.kml.KmlFolder;
+import org.osmdroid.bonuspack.kml.KmlGeometry;
+import org.osmdroid.bonuspack.kml.KmlLineString;
+import org.osmdroid.bonuspack.kml.KmlMultiGeometry;
 import org.osmdroid.bonuspack.kml.KmlPlacemark;
+import org.osmdroid.bonuspack.kml.KmlPolygon;
 import org.osmdroid.bonuspack.kml.Style;
 import org.osmdroid.util.GeoPoint;
 
@@ -196,6 +204,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void addMarker(MapMarker marker) {
+        if (mMap == null) return;
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(marker.getLatitude(), marker.getLongitude())).title(marker.getTitle());
         lastMarker = mMap.addMarker(markerOptions);
     }
@@ -240,28 +249,55 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         if (!file.exists()) {
             return;
         }
-        kml.parseKMLFile(file);
-        if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
-            KmlFeature item = kml.mKmlRoot.mItems.get(0);
-            if (item instanceof KmlPlacemark) {
-                KmlPlacemark placemark = (KmlPlacemark) item;
-                Style style = kml.getStyle(placemark.mStyle);
+        try {
+            kml.parseKMLFile(file);
+            if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
+                displayItem(kml, kml.mKmlRoot);
+            }
+        } catch (Throwable t) {
+            Crashlytics.logException(t);
+        }
+    }
 
-                ArrayList<GeoPoint> geopoints = placemark.mGeometry.mCoordinates;
-                ArrayList<LatLng> points = new ArrayList<LatLng>();
-                for (GeoPoint point : geopoints) {
-                    points.add(new LatLng(point.getLatitude(), point.getLongitude()));
+    private void displayItem(KmlDocument kml, KmlFeature item) {
+        if (item instanceof KmlFolder) {
+            KmlFolder folder = (KmlFolder)item;
+            for (KmlFeature subitem: folder.mItems) {
+                displayItem(kml, subitem);
+            }
+        } else if (item instanceof KmlPlacemark) {
+            KmlPlacemark placemark = (KmlPlacemark) item;
+            Style style = kml.getStyle(placemark.mStyle);
+
+            displayGeometry(placemark.mGeometry, style);
+        }
+    }
+
+    private void displayGeometry(KmlGeometry geometry, Style style) {
+        if (geometry instanceof KmlPolygon || geometry instanceof KmlLineString) {
+            ArrayList<GeoPoint> geopoints = geometry.mCoordinates;
+            ArrayList<LatLng> points = new ArrayList<LatLng>();
+            for (GeoPoint point : geopoints) {
+                points.add(new LatLng(point.getLatitude(), point.getLongitude()));
+            }
+            PolygonOptions polygonOptions = new PolygonOptions();
+            polygonOptions.addAll(points);
+
+            if (style != null) {
+                Paint paint = style.getOutlinePaint();
+                polygonOptions.strokeColor(paint.getColor());
+                polygonOptions.strokeWidth(Math.max(1f, paint.getStrokeWidth()));
+                if (style.mPolyStyle != null) {
+                    polygonOptions.fillColor(style.mPolyStyle.getFinalColor());
                 }
-                PolygonOptions polygonOptions = new PolygonOptions();
-                polygonOptions.addAll(points);
+            }
 
-                if (style != null) {
-                    polygonOptions.strokeColor(style.mLineStyle.mColor);
-                    polygonOptions.strokeWidth(style.mLineStyle.mWidth);
-                    polygonOptions.fillColor(style.mPolyStyle.mColor);
-                }
+            mMap.addPolygon(polygonOptions);
 
-                mMap.addPolygon(polygonOptions);
+        } else if (geometry instanceof KmlMultiGeometry) {
+            KmlMultiGeometry multiGeometry = (KmlMultiGeometry)geometry;
+            for (KmlGeometry subGeometry: multiGeometry.mItems) {
+                displayGeometry(subGeometry, style);
             }
         }
     }
