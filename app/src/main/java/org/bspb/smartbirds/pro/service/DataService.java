@@ -203,6 +203,7 @@ public class DataService extends Service {
         Log.d(TAG, "onSetMonitoringCommonData");
         commonData = event.data;
         commonData.put(Configuration.MONITORING_ID, monitoringName);
+        commonData.put(Configuration.VERSION, Configuration.STORAGE_VERSION_CODE);
         persistCommonData();
     }
 

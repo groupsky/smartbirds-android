@@ -11,6 +11,8 @@ import java.util.Locale;
  */
 public class Configuration {
 
+    public static final String STORAGE_VERSION_CODE = "2";
+
     public static final String MULTIPLE_CHOICE_DELIMITER = " | ";
     public static DateFormat STORAGE_TIME_FORMAT;
     public static DateFormat STORAGE_DATE_FORMAT;
@@ -19,6 +21,7 @@ public class Configuration {
     public static final String ENTRY_TIME = "Час_наблюдение";
     public static final String ENTRY_DATE = "Наблюдение_дата";
     public static final String MONITORING_ID = "Мониторинг_код";
+    public static final String VERSION = "version";
 
     public static void init(Context context) {
         STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.M.yyyy", Locale.ENGLISH);
