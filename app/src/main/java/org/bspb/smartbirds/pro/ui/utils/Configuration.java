@@ -24,7 +24,7 @@ public class Configuration {
     public static final String VERSION = "version";
 
     public static void init(Context context) {
-        STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.M.yyyy", Locale.ENGLISH);
+        STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         STORAGE_TIME_FORMAT = new SimpleDateFormat("kk:mm:ss", Locale.ENGLISH);
     }
 }
