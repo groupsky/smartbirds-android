@@ -1,9 +1,10 @@
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/.idea
 .DS_Store
 /build
+*.iml
+/captures
 
 # crashlytics config
 com_crashlytics_export_strings.xml
