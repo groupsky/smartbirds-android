@@ -168,7 +168,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
                     android:hint="@string/monitoring_ciconia_notes"
-                    android:tag="Бележки" />
+                    android:tag="Бележки_вид" />
             </TableRow>
         </TableLayout>
 
