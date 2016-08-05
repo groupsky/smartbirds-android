@@ -6,6 +6,11 @@ import android.location.Location;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -94,6 +99,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     }
 
     private void setUpMap() {
+        addScaleBar();
+
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
@@ -318,5 +325,27 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void onMapLongClick(LatLng latLng) {
         eventBus.post(new MapLongClickedEvent(latLng));
+    }
+
+    private void addScaleBar() {
+        View mapContainer = fragment.getView();
+
+        FrameLayout scaleBarContainer = new FrameLayout(fragment.getContext());
+        ScaleBar scaleBar = new ScaleBar(fragment.getActivity(), mMap);
+
+        FrameLayout.LayoutParams scaleBarContainerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) scaleBar.getViewHeight());
+        scaleBarContainerParams.gravity = Gravity.BOTTOM;
+
+        scaleBarContainer.setLayoutParams(scaleBarContainerParams);
+
+        FrameLayout.LayoutParams scaleBarParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        scaleBarParams.gravity = Gravity.CENTER;
+
+        scaleBar.setLayoutParams(scaleBarParams);
+        scaleBarContainer.addView(scaleBar);
+
+        if(mapContainer instanceof FrameLayout) {
+            ((FrameLayout) mapContainer).addView(scaleBarContainer);
+        }
     }
 }
