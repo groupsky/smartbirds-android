@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="tag_source" translatable="false">Source</string>
+    <string name="tag_begin_date" translatable="false">Date_Begin</string>
+    <string name="tag_begin_time" translatable="false">Hour_Beginning</string>
+    <string name="tag_location" translatable="false">Location</string>
+    <string name="tag_end_date" translatable="false">Date_End</string>
+    <string name="tag_end_time" translatable="false">Hour_End</string>
+    <string name="tag_observers" translatable="false">Observers</string>
+    <string name="tag_rain" translatable="false">Rain</string>
+    <string name="tag_temperature" translatable="false">Temperature_C</string>
+    <string name="tag_wind_strength" translatable="false">Wind_Strength</string>
+    <string name="tag_wind_direction" translatable="false">Wind_Direction</string>
+    <string name="tag_clouds_type" translatable="false">Clouds_Type</string>
+    <string name="tag_cloudiness" translatable="false">Clouds_%</string>
+    <string name="tag_weather_other" translatable="false">Meteo_Other</string>
+    <string name="tag_visibility_km" translatable="false">Visibility_km</string>
+    <string name="tag_threats" translatable="false">Threats</string>
+    <string name="tag_remarks" translatable="false">Notes</string>
+    <string name="tag_remarks_type" translatable="false">Note_Species</string>
+    <string name="tag_species_scientific_name" translatable="false">Species_Scientific_Name</string>
+    <string name="tag_confidential" translatable="false">Confidential</string>
+    <string name="tag_count_unit" translatable="false">Count_Unit</string>
+    <string name="tag_count_type" translatable="false">Type_Unit</string>
+    <string name="tag_nest_type" translatable="false">Type_Nesting</string>
+    <string name="tag_count" translatable="false">Count</string>
+    <string name="tag_min" translatable="false">Min.</string>
+    <string name="tag_max" translatable="false">Max.</string>
+    <string name="tag_sex" translatable="false">Sex</string>
+    <string name="tag_age" translatable="false">Age</string>
+    <string name="tag_mark_presence" translatable="false">Marking</string>
+    <string name="tag_bird_status" translatable="false">Species_Type</string>
+    <string name="tag_behavior" translatable="false">Behavios</string>
+    <string name="tag_dead_specimen_reason" translatable="false">Dead_Individual_Causes</string>
+    <string name="tag_substrate" translatable="false">Substrate</string>
+    <string name="tag_tree" translatable="false">Tree</string>
+    <string name="tag_tree_height" translatable="false">Tree_Height</string>
+    <string name="tag_tree_location" translatable="false">Location_Tree</string>
+    <string name="tag_nest_height" translatable="false">Nest_Height</string>
+    <string name="tag_nest_location" translatable="false">Nest_Location</string>
+    <string name="tag_incubation" translatable="false">Brooding</string>
+    <string name="tag_number_of_eggs" translatable="false">Count_Eggs</string>
+    <string name="tag_number_of_pull" translatable="false">Count_Nestling</string>
+    <string name="tag_number_of_fledglings" translatable="false">Count_Fledgling</string>
+    <string name="tag_number_fledged_juveniles" translatable="false">Count_Successfully_Left_Nest</string>
+    <string name="tag_nest_guarding" translatable="false">Nest_Protected</string>
+    <string name="tag_age_female" translatable="false">Age_Female</string>
+    <string name="tag_age_male" translatable="false">Age_Male</string>
+    <string name="tag_breeding_success" translatable="false">Nesting_Success</string>
+    <string name="tag_land_uses_300m" translatable="false">Landuse_300m_Radius</string>
+    <string name="tag_observed_bird" translatable="false">Вид_научно_име</string>
+    <string name="tag_distance" translatable="false">Разстояние</string>
+    <string name="tag_count_subject" translatable="false">Брой индивиди</string>
+    <string name="tag_primary_habitat" translatable="false">Първостепенно местообитание</string>
+    <string name="tag_secondary_habitat" translatable="false">Второстепенно местообитание</string>
+    <string name="tag_visit_number" translatable="false">Посещение номер</string>
+    <string name="tag_transect_number" translatable="false">Номер на участък</string>
+    <string name="tag_substrate_type" translatable="false">Основен тип на субстрата</string>
+    <string name="tag_pylon" translatable="false">Стълб</string>
+    <string name="tag_nest_artificial_platform" translatable="false">Гнездото е на изкуствена платформа</string>
+    <string name="tag_pylon_type" translatable="false">Вид стълб</string>
+    <string name="tag_ciconia_tree" translatable="false">Дърво</string>
+    <string name="tag_building" translatable="false">Сграда</string>
+    <string name="tag_nest_artificial_platform_human" translatable="false">Гнездото е на изкуствена поставка направена от човек</string>
+    <string name="tag_nest_another_substrate" translatable="false">Гнездото е на друг вид субстрат</string>
+    <string name="tag_nest_not_occupied_this_year" translatable="false">Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели</string>
+    <string name="tag_birds_come_to_nest_this_year" translatable="false">Тази година в гнездото са се появили една/две птици</string>
+    <string name="tag_approximate_date_stork_arrival" translatable="false">Приблизителна дата на появяване на щъркелите</string>
+    <string name="tag_approximate_date_stork_disappear" translatable="false">Приблизителна дата на изчезване на щъркелите</string>
+    <string name="tag_this_year_in_the_nest_appeared" translatable="false">Тази година в гнездото са се появили</string>
+    <string name="tag_number_juveniles_in_nest" translatable="false">Брой малки в гнездото</string>
+    <string name="tag_nest_not_inhabited_more_than_year" translatable="false">Гнездото НЕ се обитава от ПОВЕЧЕ от една година</string>
+    <string name="tag_info_for_juveniles_electrocuted" translatable="false">Данни за загинали малки от ел.ток</string>
+    <string name="tag_info_for_juveniles_rejected_by_parents" translatable="false">Данни за загинали малки изхвърлени от родителите</string>
+    <string name="tag_died_from_other_causes" translatable="false">загинали по други причини</string>
+    <string name="tag_cause" translatable="false">Причина</string>
+    <string name="tag_ciconia_remarks_type" translatable="false">Note_Species</string>
+    <string name="tag_habitat" translatable="false">Местообитание</string>
+    <string name="tag_threats_other" translatable="false">Заплахи констатации</string>
+    <string name="tag_marking" translatable="false">Marking</string>
+    <string name="tag_distance_from_axis" translatable="false">Разстояние от оста</string>
+    <string name="tag_weight_g" translatable="false">Маса (g)</string>
+    <string name="tag_scl" translatable="false">SCL/L (mm)</string>
+    <string name="tag_mpl" translatable="false">MPL/Lcd/C (mm)</string>
+    <string name="tag_mcw" translatable="false">MCW/A (mm)</string>
+    <string name="tag_lcap" translatable="false">H /Lcap/Pl (mm)</string>
+    <string name="tag_t_substrate" translatable="false">Т на субстрата</string>
+    <string name="tag_t_air" translatable="false">Т на в-ха</string>
+    <string name="tag_t_cloaca" translatable="false">Т на клоака</string>
+    <string name="tag_sq_ventr" translatable="false">Sq_ventr</string>
+    <string name="tag_sq_caud" translatable="false">Sq_caud</string>
+    <string name="tag_sq_dors" translatable="false">Sq_dors</string>
+    <string name="tag_notes" translatable="false">Бележки</string>
+
+    <string name="end_time_key" translatable="false">Hour_End</string>
+    <string name="entry_time" translatable="false">Hour_Observation</string>
+    <string name="entry_date" translatable="false">Observation_Date</string>
+    <string name="monitoring_id" translatable="false">Monitoring_Code</string>
+    <string name="version" translatable="false">version</string>
+
+</resources>

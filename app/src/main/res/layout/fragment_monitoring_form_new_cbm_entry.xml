@@ -22,20 +22,20 @@
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_name"
                     android:hint="@string/monitoring_cbm_name"
-                    android:tag="Вид_научно_име"
+                    android:tag="@string/tag_observed_bird"
                     app:entries="form_birds_name"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_distance"
                     android:hint="@string/monitoring_cbm_distance"
-                    android:tag="Разстояние"
+                    android:tag="@string/tag_distance"
                     app:entries="form_cbm_distance"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="@string/monitoring_cbm_count"
-                    android:tag="Брой индивиди"
+                    android:tag="@string/tag_count_subject"
                     app:required="true" />
 
             </TableRow>
@@ -45,14 +45,14 @@
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_primary_habitat"
                     android:hint="@string/monitoring_cbm_primary_habitat"
-                    android:tag="Първостепенно местообитание"
+                    android:tag="@string/tag_primary_habitat"
                     app:entries="form_cbm_habitat"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_secondary_habitat"
                     android:hint="@string/monitoring_cbm_secondary_habitat"
-                    android:tag="Второстепенно местообитание"
+                    android:tag="@string/tag_secondary_habitat"
                     app:entries="form_cbm_habitat" />
 
             </TableRow>
@@ -62,14 +62,14 @@
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_visit_number"
                     android:hint="@string/monitoring_cbm_visit_number"
-                    android:tag="Посещение номер"
+                    android:tag="@string/tag_visit_number"
                     app:entries="form_cbm_visit_number"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_sector"
                     android:hint="@string/monitoring_cbm_sector"
-                    android:tag="Номер на участък"
+                    android:tag="@string/tag_transect_number"
                     app:entries="form_cbm_sector"
                     app:required="true" />
 

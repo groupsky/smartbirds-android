@@ -99,8 +99,8 @@ public abstract class BaseEntryFragment extends Fragment {
             for (int i=0; i<images.length; i++) {
                 data.put("Picture"+i, images[i] != null ? images[i].fileName : "");
             }
-            data.put(Configuration.ENTRY_DATE, Configuration.STORAGE_DATE_FORMAT.format(new Date()));
-            data.put(Configuration.ENTRY_TIME, Configuration.STORAGE_TIME_FORMAT.format(new Date()));
+            data.put(getResources().getString(R.string.entry_date), Configuration.STORAGE_DATE_FORMAT.format(new Date()));
+            data.put(getResources().getString(R.string.entry_time), Configuration.STORAGE_TIME_FORMAT.format(new Date()));
             eventBus.post(new EntrySubmitted(data, getEntryType()));
         }
     }
