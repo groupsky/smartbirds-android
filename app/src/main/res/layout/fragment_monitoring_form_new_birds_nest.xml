@@ -12,16 +12,16 @@
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_substrate"
-            android:tag="Субстрат"
+            android:tag="@string/tag_substrate"
             app:entries="form_birds_nest_substrate" />
 
         <org.bspb.smartbirds.pro.ui.views.TextFormInput
             android:hint="@string/monitoring_birds_tree"
-            android:tag="Дърво" />
+            android:tag="@string/tag_tree" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="@string/monitoring_birds_tree_height"
-            android:tag="Височина_на_дървото" />
+            android:tag="@string/tag_tree_height" />
 
     </TableRow>
 
@@ -29,33 +29,33 @@
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_tree_location"
-            android:tag="Местоположение_на_дървото"
+            android:tag="@string/tag_tree_location"
             app:entries="form_birds_nest_location" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_nest_height"
-            android:tag="Височина_на_гнездото"
+            android:tag="@string/tag_nest_height"
             app:entries="form_birds_nest_height" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_nest_location"
-            android:tag="Местоположение_на_гнездото"
+            android:tag="@string/tag_nest_location"
             app:entries="form_birds_nest_position" />
     </TableRow>
 
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-            android:tag="Мътене"
+            android:tag="@string/tag_incubation"
             android:text="@string/monitoring_birds_incubation" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="@string/monitoring_birds_eggs_count"
-            android:tag="Брой_яйца" />
+            android:tag="@string/tag_number_of_eggs" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="@string/monitoring_birds_small_downy_count"
-            android:tag="Брой_пухови_малки" />
+            android:tag="@string/tag_number_of_pull" />
 
     </TableRow>
 
@@ -63,14 +63,14 @@
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="@string/monitoring_birds_small_feathered_count"
-            android:tag="Брой_оперени_малки_в_гнездото" />
+            android:tag="@string/tag_number_of_fledglings" />
 
         <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
             android:hint="@string/monitoring_birds_takeoff_count"
-            android:tag="Брой_излетели_малки" />
+            android:tag="@string/tag_number_fledged_juveniles" />
 
         <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-            android:tag="Охрана на гнездото"
+            android:tag="@string/tag_nest_guarding"
             android:text="@string/monitoring_birds_nest_guard" />
     </TableRow>
 
@@ -78,17 +78,17 @@
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_female_age"
-            android:tag="Възраст_на_женската"
+            android:tag="@string/tag_age_female"
             app:entries="form_birds_age_individual" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_male_age"
-            android:tag="Възраст_на_мъжката"
+            android:tag="@string/tag_age_male"
             app:entries="form_birds_age_individual" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_nest_success"
-            android:tag="Гнездови_успех"
+            android:tag="@string/tag_breeding_success"
             app:entries="form_birds_nest_success" />
 
     </TableRow>
@@ -99,7 +99,7 @@
             android:layout_span="3"
             android:hint="@string/monitoring_birds_land_use"
             android:lines="1"
-            android:tag="Земеползване_в_радиус_от_300м" />
+            android:tag="@string/tag_land_uses_300m" />
 
     </TableRow>
 </TableLayout>

@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/monitoring_birds_notes"
-            android:tag="Бележки_вид" />
+            android:tag="@string/tag_remarks_type" />
 
         <View style="@style/FieldSeparator" />
 

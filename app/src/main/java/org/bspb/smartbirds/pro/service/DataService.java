@@ -202,15 +202,15 @@ public class DataService extends Service {
     public void onEvent(SetMonitoringCommonData event) {
         Log.d(TAG, "onSetMonitoringCommonData");
         commonData = event.data;
-        commonData.put(Configuration.MONITORING_ID, monitoringName);
-        commonData.put(Configuration.VERSION, Configuration.STORAGE_VERSION_CODE);
+        commonData.put(getResources().getString(R.string.monitoring_id), monitoringName);
+        commonData.put(getResources().getString(R.string.version), Configuration.STORAGE_VERSION_CODE);
         persistCommonData();
     }
 
     public void onEvent(FinishMonitoringEvent event) {
-        if (commonData.containsKey(Configuration.END_TIME_KEY)) {
-            if (TextUtils.isEmpty(commonData.get(Configuration.END_TIME_KEY))) {
-                commonData.put(Configuration.END_TIME_KEY, Configuration.STORAGE_TIME_FORMAT.format(new Date()));
+        if (commonData.containsKey(getResources().getString(R.string.end_time_key))) {
+            if (TextUtils.isEmpty(commonData.get(getResources().getString(R.string.end_time_key)))) {
+                commonData.put(getResources().getString(R.string.end_time_key), Configuration.STORAGE_TIME_FORMAT.format(new Date()));
                 persistCommonData();
             }
         }
