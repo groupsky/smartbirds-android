@@ -11,4 +11,9 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean runningMonitoring();
+
+    @DefaultBoolean(false)
+    boolean isAuthenticated();
+
+    String authToken();
 }
