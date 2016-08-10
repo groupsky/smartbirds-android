@@ -13,8 +13,6 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.osmdroid.views.MapView;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Created by dani on 14-11-4.
  */

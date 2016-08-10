@@ -1,15 +1,19 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
@@ -18,6 +22,9 @@ public class MainActivity extends Activity {
 
     @Bean
     EEventBus bus;
+
+    @Pref
+    SmartBirdsPrefs_ prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        requireAuthentication();
         bus.register(this);
     }
 
@@ -45,8 +53,22 @@ public class MainActivity extends Activity {
         super.onStop();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requireAuthentication();
+    }
+
     public void onEvent(StartMonitoringEvent event) {
         StartMonitoringActivity_.intent(this).start();
+    }
+
+    @AfterInject
+    protected void requireAuthentication() {
+        if(!prefs.isAuthenticated().get() && !isFinishing()) {
+            startActivity(new Intent(this, LoginActivity_.class));
+            finish();
+        }
     }
 
 }
