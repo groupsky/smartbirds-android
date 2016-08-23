@@ -49,11 +49,11 @@
             android:tag="@string/tag_incubation"
             android:text="@string/monitoring_birds_incubation" />
 
-        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
             android:hint="@string/monitoring_birds_eggs_count"
             android:tag="@string/tag_number_of_eggs" />
 
-        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
             android:hint="@string/monitoring_birds_small_downy_count"
             android:tag="@string/tag_number_of_pull" />
 
@@ -61,11 +61,11 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
             android:hint="@string/monitoring_birds_small_feathered_count"
             android:tag="@string/tag_number_of_fledglings" />
 
-        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
             android:hint="@string/monitoring_birds_takeoff_count"
             android:tag="@string/tag_number_fledged_juveniles" />
 
