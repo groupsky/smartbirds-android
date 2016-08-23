@@ -65,7 +65,7 @@
                     android:hint="@string/monitoring_herp_marking"
                     android:tag="@string/tag_marking" />
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="@string/monitoring_herp_axis_distance"
                     android:tag="@string/tag_distance_from_axis" />
 
@@ -99,15 +99,15 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="@string/monitoring_herp_t_substrate"
                     android:tag="@string/tag_t_substrate" />
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="@string/monitoring_herp_t_vha"
                     android:tag="@string/tag_t_air" />
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:hint="@string/monitoring_herp_t_kloaka"
                     android:tag="@string/tag_t_cloaca" />
             </TableRow>
