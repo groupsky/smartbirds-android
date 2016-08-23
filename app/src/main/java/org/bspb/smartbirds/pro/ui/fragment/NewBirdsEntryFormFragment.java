@@ -9,6 +9,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
+import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 
@@ -23,11 +24,11 @@ public class NewBirdsEntryFormFragment extends BaseEntryFragment {
     SingleChoiceFormInput countType;
 
     @ViewById(R.id.form_birds_count)
-    FloatNumberFormInput count;
+    DecimalNumberFormInput count;
     @ViewById(R.id.form_birds_count_min)
-    FloatNumberFormInput countMin;
+    DecimalNumberFormInput countMin;
     @ViewById(R.id.form_birds_count_max)
-    FloatNumberFormInput countMax;
+    DecimalNumberFormInput countMax;
 
     @Pref
     BirdPrefs_ prefs;
