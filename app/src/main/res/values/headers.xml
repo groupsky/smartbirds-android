@@ -49,49 +49,49 @@
     <string name="tag_age_male" translatable="false">Age_Male</string>
     <string name="tag_breeding_success" translatable="false">Nesting_Success</string>
     <string name="tag_land_uses_300m" translatable="false">Landuse_300m_Radius</string>
-    <string name="tag_observed_bird" translatable="false">Вид_научно_име</string>
-    <string name="tag_distance" translatable="false">Разстояние</string>
-    <string name="tag_count_subject" translatable="false">Брой индивиди</string>
-    <string name="tag_primary_habitat" translatable="false">Първостепенно местообитание</string>
-    <string name="tag_secondary_habitat" translatable="false">Второстепенно местообитание</string>
-    <string name="tag_visit_number" translatable="false">Посещение номер</string>
-    <string name="tag_transect_number" translatable="false">Номер на участък</string>
-    <string name="tag_substrate_type" translatable="false">Основен тип на субстрата</string>
-    <string name="tag_pylon" translatable="false">Стълб</string>
-    <string name="tag_nest_artificial_platform" translatable="false">Гнездото е на изкуствена платформа</string>
-    <string name="tag_pylon_type" translatable="false">Вид стълб</string>
-    <string name="tag_ciconia_tree" translatable="false">Дърво</string>
-    <string name="tag_building" translatable="false">Сграда</string>
-    <string name="tag_nest_artificial_platform_human" translatable="false">Гнездото е на изкуствена поставка направена от човек</string>
-    <string name="tag_nest_another_substrate" translatable="false">Гнездото е на друг вид субстрат</string>
-    <string name="tag_nest_not_occupied_this_year" translatable="false">Гнездото тази година НЕ се обитава от БЕЛИТЕ щъркели</string>
-    <string name="tag_birds_come_to_nest_this_year" translatable="false">Тази година в гнездото са се появили една/две птици</string>
-    <string name="tag_approximate_date_stork_arrival" translatable="false">Приблизителна дата на появяване на щъркелите</string>
-    <string name="tag_approximate_date_stork_disappear" translatable="false">Приблизителна дата на изчезване на щъркелите</string>
-    <string name="tag_this_year_in_the_nest_appeared" translatable="false">Тази година в гнездото са се появили</string>
-    <string name="tag_number_juveniles_in_nest" translatable="false">Брой малки в гнездото</string>
-    <string name="tag_nest_not_inhabited_more_than_year" translatable="false">Гнездото НЕ се обитава от ПОВЕЧЕ от една година</string>
-    <string name="tag_info_for_juveniles_electrocuted" translatable="false">Данни за загинали малки от ел.ток</string>
-    <string name="tag_info_for_juveniles_rejected_by_parents" translatable="false">Данни за загинали малки изхвърлени от родителите</string>
-    <string name="tag_died_from_other_causes" translatable="false">загинали по други причини</string>
-    <string name="tag_cause" translatable="false">Причина</string>
     <string name="tag_ciconia_remarks_type" translatable="false">Note_Species</string>
-    <string name="tag_habitat" translatable="false">Местообитание</string>
-    <string name="tag_threats_other" translatable="false">Заплахи констатации</string>
     <string name="tag_marking" translatable="false">Marking</string>
-    <string name="tag_distance_from_axis" translatable="false">Разстояние от оста</string>
-    <string name="tag_weight_g" translatable="false">Маса (g)</string>
     <string name="tag_scl" translatable="false">SCL/L (mm)</string>
     <string name="tag_mpl" translatable="false">MPL/Lcd/C (mm)</string>
     <string name="tag_mcw" translatable="false">MCW/A (mm)</string>
     <string name="tag_lcap" translatable="false">H /Lcap/Pl (mm)</string>
-    <string name="tag_t_substrate" translatable="false">Т на субстрата</string>
-    <string name="tag_t_air" translatable="false">Т на в-ха</string>
-    <string name="tag_t_cloaca" translatable="false">Т на клоака</string>
     <string name="tag_sq_ventr" translatable="false">Sq_ventr</string>
     <string name="tag_sq_caud" translatable="false">Sq_caud</string>
     <string name="tag_sq_dors" translatable="false">Sq_dors</string>
-    <string name="tag_notes" translatable="false">Бележки</string>
+    <string name="tag_observed_bird">Species scientific name</string>
+    <string name="tag_distance">Distance</string>
+    <string name="tag_count_subject">Count individuals</string>
+    <string name="tag_primary_habitat">Primary habitat</string>
+    <string name="tag_secondary_habitat">Secondary habitat</string>
+    <string name="tag_visit_number">Visit number</string>
+    <string name="tag_transect_number">Number plot</string>
+    <string name="tag_substrate_type">Primary substrate type</string>
+    <string name="tag_pylon">Electricity pole</string>
+    <string name="tag_nest_artificial_platform">Nest is on artificial platform</string>
+    <string name="tag_pylon_type">Type electricity pole</string>
+    <string name="tag_ciconia_tree">Tree</string>
+    <string name="tag_building">Building</string>
+    <string name="tag_nest_artificial_platform_human">Nest on artificial human-made platform</string>
+    <string name="tag_nest_another_substrate">Nest is on another type of substrate</string>
+    <string name="tag_nest_not_occupied_this_year">Nest this year NOT Utilized by White Storks</string>
+    <string name="tag_birds_come_to_nest_this_year">This year One/Two birds appeared in nest</string>
+    <string name="tag_approximate_date_stork_arrival">Approximate date Storks appeared</string>
+    <string name="tag_approximate_date_stork_disappear">Approximate date disappearance White Storks</string>
+    <string name="tag_this_year_in_the_nest_appeared">This year in the nest appeared</string>
+    <string name="tag_number_juveniles_in_nest">Count juveniles in nest</string>
+    <string name="tag_nest_not_inhabited_more_than_year">Nest NOT used for OVER one year</string>
+    <string name="tag_info_for_juveniles_electrocuted">Data on juvenile mortality from electrocutions</string>
+    <string name="tag_info_for_juveniles_rejected_by_parents">Data on juveniles expelled from parents</string>
+    <string name="tag_died_from_other_causes">Died other reasons</string>
+    <string name="tag_cause">Reason</string>
+    <string name="tag_habitat">Habitat</string>
+    <string name="tag_threats_other">Threats observations</string>
+    <string name="tag_distance_from_axis">Distance from axis</string>
+    <string name="tag_weight_g">Mass (g)</string>
+    <string name="tag_t_substrate">Temp substrate</string>
+    <string name="tag_t_air">Temp air</string>
+    <string name="tag_t_cloaca">T cloaca</string>
+    <string name="tag_notes">Notes</string>
 
     <string name="end_time_key" translatable="false">Hour_End</string>
     <string name="entry_time" translatable="false">Hour_Observation</string>
