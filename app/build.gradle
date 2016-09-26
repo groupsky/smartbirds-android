@@ -12,7 +12,8 @@ android {
         targetSdkVersion 24
         versionCode 9
         versionName "1.0.9"
-        buildConfigField "String", "BACKEND_BASE_URL", "\"http:sb.87.252.173.51.xip.io:8082/api/\""
+//        buildConfigField "String", "BACKEND_BASE_URL", "\"http:sb.87.252.173.51.xip.io:8082/api/\""
+        buildConfigField "String", "BACKEND_BASE_URL", "\"http:192.168.0.106:5000/api/\""
     }
     signingConfigs {
         release {

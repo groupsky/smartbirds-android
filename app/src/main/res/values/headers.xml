@@ -99,4 +99,7 @@
     <string name="monitoring_id" translatable="false">Monitoring_Code</string>
     <string name="version" translatable="false">version</string>
 
+    <string name="tag_lat" translatable="false">Lat</string>
+    <string name="tag_lon" translatable="false">Long</string>
+
 </resources>

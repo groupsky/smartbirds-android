@@ -94,8 +94,8 @@ public abstract class BaseEntryFragment extends Fragment {
         if (form.validateFields()) {
             item.setEnabled(false);
             HashMap<String, String> data = form.serialize();
-            data.put("Lat", Double.toString(lat));
-            data.put("Long", Double.toString(lon));
+            data.put(getString(R.string.tag_lat), Double.toString(lat));
+            data.put(getString(R.string.tag_lon), Double.toString(lon));
             for (int i=0; i<images.length; i++) {
                 data.put("Picture"+i, images[i] != null ? images[i].fileName : "");
             }
