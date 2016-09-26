@@ -12,7 +12,7 @@ android {
         targetSdkVersion 24
         versionCode 9
         versionName "1.0.9"
-        buildConfigField "String", "BACKEND_BASE_URL", "\"http:192.168.4.103:5000/api/\""
+        buildConfigField "String", "BACKEND_BASE_URL", "\"http:sb.87.252.173.51.xip.io:8082/api/\""
     }
     signingConfigs {
         release {
@@ -32,7 +32,7 @@ android {
         }
     }
     lintOptions {
-	abortOnError false
+        abortOnError false
     }
 }
 
@@ -48,7 +48,7 @@ dependencies {
     compile "org.androidannotations:androidannotations-api:4.0.0"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.gms:play-services:8.+'
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'de.greenrobot:eventbus:2.2.1'
     //noinspection GradleDynamicVersion
     compile 'com.crashlytics.android:crashlytics:1.+'
@@ -56,11 +56,10 @@ dependencies {
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.maps.android:android-maps-utils:0.3.2'
     compile 'org.osmdroid:osmdroid-android:4.2'
-    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:design:24.2.1'
 
     // http://square.github.io/retrofit/
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-
 }
