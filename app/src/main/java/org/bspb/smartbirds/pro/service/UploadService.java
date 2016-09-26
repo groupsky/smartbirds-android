@@ -4,20 +4,42 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.JsonObject;
+import com.googlecode.jcsv.CSVStrategy;
+import com.googlecode.jcsv.reader.CSVReader;
+import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
+import com.googlecode.jcsv.reader.internal.DefaultCSVEntryParser;
+
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
 import org.androidannotations.annotations.ServiceAction;
 import org.apache.commons.net.ftp.FTPClient;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.Backend;
+import org.bspb.smartbirds.pro.backend.Converter;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.ui.utils.FTPClientUtils;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
+import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okio.BufferedSink;
+import retrofit2.Response;
+
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EIntentService
 public class UploadService extends IntentService {
@@ -26,6 +48,8 @@ public class UploadService extends IntentService {
 
     @Bean
     EEventBus eventBus;
+    @Bean
+    Backend backend;
 
     @Bean
     NomenclaturesBean nomenclaturesBean;
@@ -61,17 +85,66 @@ public class UploadService extends IntentService {
         String monitoringName = file.getName().replace("-up", "");
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
-        FTPClient ftpClient = FTPClientUtils.connect();
         try {
-            Log.d(TAG, String.format("mkdir %s", monitoringName));
-            ftpClient.makeDirectory(monitoringName);
-            for (String subfile : file.list()) {
-                doUpload(ftpClient, new File(file, subfile), monitoringName + '/');
-            }
-
+            uploadOnServer(monitoringPath, monitoringName);
+            uploadOnFtp(monitoringPath, monitoringName);
             file.renameTo(new File(monitoringPath.replace("-up", "")));
         } catch (IOException e) {
             Log.e(TAG, String.format("error while uploading: %s", e.getMessage()), e);
+        }
+    }
+
+    private void uploadOnServer(String monitoringPath, String monitoringName) throws IOException {
+        File file = new File(monitoringPath);
+        for (String subfile : file.list()) {
+            switch (subfile) {
+                case "form_bird.csv":
+                    uploadBirds(new File(file, subfile));
+                    break;
+            }
+        }
+    }
+
+    private void uploadBirds(File file) throws IOException {
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            logException(e);
+            throw new IOException(e.getMessage(), e);
+        }
+        try {
+            CSVReader<String[]> csvReader = new CSVReaderBuilder<String[]>(new InputStreamReader(new BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(new DefaultCSVEntryParser()).build();
+            try {
+                List<String> header = csvReader.readHeader();
+                for (String[] row: csvReader) {
+                    JsonObject obj = null;
+                    try {
+                        obj = Converter.convertBirds(header, row);
+                    } catch (Exception e) {
+                        logException(e);
+                        throw new IOException(e.getMessage(), e);
+                    }
+                    Log.d(TAG, "creating "+obj);
+                    Response<ResponseBody> res = backend.api().createBirds(obj).execute();
+                    Log.d(TAG, "response "+res);
+                    if (!res.isSuccessful()) throw new IOException("Something bad happened: "+res.code()+" - "+res.message());
+                }
+            } finally {
+                csvReader.close();
+            }
+        } finally {
+            fis.close();
+        }
+    }
+
+    private void uploadOnFtp(String monitoringPath, String monitoringName) throws IOException {
+        FTPClient ftpClient = FTPClientUtils.connect();
+        Log.d(TAG, String.format("mkdir %s", monitoringName));
+        ftpClient.makeDirectory(monitoringName);
+        File file = new File(monitoringPath);
+        for (String subfile : file.list()) {
+            doUpload(ftpClient, new File(file, subfile), monitoringName + '/');
         }
     }
 
