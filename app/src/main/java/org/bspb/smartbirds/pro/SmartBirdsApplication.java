@@ -7,7 +7,6 @@ import com.crashlytics.android.Crashlytics;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EApplication;
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor;
-import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor_;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
