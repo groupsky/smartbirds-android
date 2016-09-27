@@ -95,7 +95,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput {
                     entries = new CharSequence[values.size()];
                     mSelected = new boolean[values.size()];
                     for (int i = 0; i < values.size(); i++) {
-                        entries[i] = values.get(i).label.bg;
+                        entries[i] = values.get(i).localeLabel;
                     }
 
                     String[] items = getText().toString().split(MULTIPLE_CHOICE_SPLITTER);

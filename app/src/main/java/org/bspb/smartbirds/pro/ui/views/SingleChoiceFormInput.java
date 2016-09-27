@@ -87,8 +87,8 @@ public class SingleChoiceFormInput extends TextViewFormInput {
         if (key != null && !isInEditMode()) {
             List<Nomenclature> values = nomenclatures.getNomenclature(key.toString());
             mAdapter.clear();
-            for (Nomenclature value : values) {
-                mAdapter.add(TextUtils.join("\n", value.label.bg.trim().split(MULTIPLE_CHOICE_SPLITTER)));
+            for(Nomenclature value: values) {
+                mAdapter.add(TextUtils.join("\n", value.localeLabel.trim().split(MULTIPLE_CHOICE_SPLITTER)));
             }
             mAdapter.notifyDataSetChanged();
         }

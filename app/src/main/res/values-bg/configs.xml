@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nomenclatures_local_filename">nomenclatures_bg.csv</string>
+    <string name="nomenclature_locale_column">label_bg</string>
 </resources>
