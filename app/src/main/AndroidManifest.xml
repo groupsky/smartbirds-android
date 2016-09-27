@@ -129,6 +129,15 @@
             android:name=".service.AuthenticationService_"
             android:exported="false" />
 
+        <provider
+            android:name="org.bspb.smartbirds.pro.db.generated.SmartBirdsProvider"
+            android:authorities="org.bspb.smartbirds.pro.SmartBirdsProvider"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".service.NomenclatureService_"
+            android:exported="false" />
     </application>
 
 </manifest>
