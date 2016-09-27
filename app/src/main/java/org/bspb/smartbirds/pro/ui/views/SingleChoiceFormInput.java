@@ -24,6 +24,7 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
@@ -84,10 +85,10 @@ public class SingleChoiceFormInput extends TextViewFormInput {
     @AfterInject
     void loadData() {
         if (key != null && !isInEditMode()) {
-            List<String> values = nomenclatures.getNomenclature(key.toString());
+            List<Nomenclature> values = nomenclatures.getNomenclature(key.toString());
             mAdapter.clear();
-            for(String value: values) {
-                mAdapter.add(TextUtils.join("\n", value.trim().split(MULTIPLE_CHOICE_SPLITTER)));
+            for (Nomenclature value : values) {
+                mAdapter.add(TextUtils.join("\n", value.label.bg.trim().split(MULTIPLE_CHOICE_SPLITTER)));
             }
             mAdapter.notifyDataSetChanged();
         }
