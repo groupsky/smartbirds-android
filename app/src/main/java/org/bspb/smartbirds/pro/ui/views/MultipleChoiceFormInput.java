@@ -15,6 +15,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
@@ -89,12 +90,12 @@ public class MultipleChoiceFormInput extends TextViewFormInput {
 
         public void show() {
             if (entries == null && key != null) {
-                List<String> values = nomenclatures.getNomenclature(key.toString());
+                List<Nomenclature> values = nomenclatures.getNomenclature(key.toString());
                 if (values != null) {
                     entries = new CharSequence[values.size()];
                     mSelected = new boolean[values.size()];
                     for (int i = 0; i < values.size(); i++) {
-                        entries[i] = values.get(i);
+                        entries[i] = values.get(i).label.bg;
                     }
 
                     String[] items = getText().toString().split(MULTIPLE_CHOICE_SPLITTER);

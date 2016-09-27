@@ -50,7 +50,6 @@ public class UploadService extends IntentService {
             if (!monitoringDir.isDirectory()) continue;
             upload(monitoringDir.getAbsolutePath());
         }
-        nomenclaturesBean.loadDataFromServer();
         eventBus.post(new UploadCompleted());
     }
 
