@@ -33,7 +33,6 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.service.ExportService_;
-import org.bspb.smartbirds.pro.service.NomenclatureService_;
 import org.bspb.smartbirds.pro.service.UploadService_;
 
 import java.io.File;
