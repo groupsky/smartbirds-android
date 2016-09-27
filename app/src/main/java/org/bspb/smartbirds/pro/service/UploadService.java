@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.google.gson.JsonObject;
 import com.googlecode.jcsv.CSVStrategy;
 import com.googlecode.jcsv.reader.CSVReader;
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
@@ -16,23 +15,22 @@ import org.androidannotations.annotations.ServiceAction;
 import org.apache.commons.net.ftp.FTPClient;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.Backend;
-import org.bspb.smartbirds.pro.backend.Converter;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
+import org.bspb.smartbirds.pro.forms.BirdsUploader;
+import org.bspb.smartbirds.pro.forms.CiconiaUploader;
+import org.bspb.smartbirds.pro.forms.HerpUploader;
+import org.bspb.smartbirds.pro.forms.Uploader;
 import org.bspb.smartbirds.pro.ui.utils.FTPClientUtils;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
@@ -84,46 +82,37 @@ public class UploadService extends IntentService {
             uploadOnServer(monitoringPath, monitoringName);
             uploadOnFtp(monitoringPath, monitoringName);
             file.renameTo(new File(monitoringPath.replace("-up", "")));
-        } catch (IOException e) {
-            Log.e(TAG, String.format("error while uploading: %s", e.getMessage()), e);
+        } catch (Throwable e) {
+            logException(e);
         }
     }
 
-    private void uploadOnServer(String monitoringPath, String monitoringName) throws IOException {
+    private void uploadOnServer(String monitoringPath, String monitoringName) throws Exception {
         File file = new File(monitoringPath);
         for (String subfile : file.list()) {
             switch (subfile) {
                 case "form_bird.csv":
-                    uploadBirds(new File(file, subfile));
+                    uploadForm(new File(file, subfile), new BirdsUploader());
+                    break;
+                case "form_herp_mam.csv":
+                    uploadForm(new File(file, subfile), new HerpUploader());
+                    break;
+                case "form_ciconia.csv":
+                    uploadForm(new File(file, subfile), new CiconiaUploader());
                     break;
             }
         }
     }
 
-    private void uploadBirds(File file) throws IOException {
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            logException(e);
-            throw new IOException(e.getMessage(), e);
-        }
+    private void uploadForm(File file, Uploader uploader) throws Exception {
+        FileInputStream fis = new FileInputStream(file);
         try {
             CSVReader<String[]> csvReader = new CSVReaderBuilder<String[]>(new InputStreamReader(new BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(new DefaultCSVEntryParser()).build();
             try {
                 List<String> header = csvReader.readHeader();
-                for (String[] row: csvReader) {
-                    JsonObject obj = null;
-                    try {
-                        obj = Converter.convertBirds(header, row);
-                    } catch (Exception e) {
-                        logException(e);
-                        throw new IOException(e.getMessage(), e);
-                    }
-                    Log.d(TAG, "creating "+obj);
-                    Response<ResponseBody> res = backend.api().createBirds(obj).execute();
-                    Log.d(TAG, "response "+res);
-                    if (!res.isSuccessful()) throw new IOException("Something bad happened: "+res.code()+" - "+res.message());
+                for (String[] row : csvReader) {
+                    if (!uploader.upload(backend.api(), header, row))
+                        throw new IOException("Couldn't upload form");
                 }
             } finally {
                 csvReader.close();
