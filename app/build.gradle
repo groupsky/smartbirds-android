@@ -8,11 +8,11 @@ android {
 
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 24
         versionCode 9
         versionName "1.0.9"
-        buildConfigField "String", "BACKEND_BASE_URL", "\"http:sb.87.252.173.51.xip.io:8082/api/\""
+        buildConfigField "String", "BACKEND_BASE_URL", "\"http:192.168.0.106:5000/api/\""
     }
     signingConfigs {
         release {
@@ -63,4 +63,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+
+    // https://github.com/SimonVT/schematic
+    apt 'net.simonvt.schematic:schematic-compiler:0.6.3'
+    compile 'net.simonvt.schematic:schematic:0.6.7'
 }

@@ -33,6 +33,7 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.service.ExportService_;
+import org.bspb.smartbirds.pro.service.NomenclatureService_;
 import org.bspb.smartbirds.pro.service.UploadService_;
 
 import java.io.File;
@@ -82,6 +83,12 @@ public class MainFragment extends Fragment {
     void exportBtnClicked() {
         exportDialog = ProgressDialog.show(getActivity(), getString(R.string.export_dialog_title), getString(R.string.export_dialog_text), true);
         ExportService_.intent(getActivity()).prepareForExport().start();
+    }
+
+    @Click(R.id.btn_sync)
+    void syncBtnClicked() {
+        NomenclatureService_.intent(getActivity()).updateNomenclatures().start();
+        UploadService_.intent(getActivity()).uploadAll().start();
     }
 
     @Click(R.id.btn_info)
