@@ -2,26 +2,22 @@ package org.bspb.smartbirds.pro.ui.views;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.crashlytics.android.Crashlytics;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
+import java.util.Map;
 
 import static android.text.format.DateFormat.is24HourFormat;
 
@@ -65,13 +61,15 @@ public class TimeFormInput extends TextViewFormInput implements SupportStorage {
     }
 
     @Override
-    public String valueForStorage() {
-        return mValue != null ? mStorageFormat.format(mValue.getTime()) : "";
+    public void serializeToStorage(Map<String, String> storage, String fieldName) {
+        storage.put(fieldName, mValue != null ? mStorageFormat.format(mValue.getTime()) : "");
     }
 
     @Override
-    public void restoreFromStorage(String value) {
+    public void restoreFromStorage(Map<String, String> storage, String fieldName) {
         try {
+            final String value = storage.get(fieldName);
+            if (TextUtils.isEmpty(value)) return;
             final Calendar calendar = Calendar.getInstance();
             calendar.setTime(mStorageFormat.parse(value));
             setValue(calendar);
@@ -84,7 +82,7 @@ public class TimeFormInput extends TextViewFormInput implements SupportStorage {
     private class PopupDialog implements TimePickerDialog.OnTimeSetListener {
 
         public void show() {
-            final Calendar c = mValue!=null?mValue:Calendar.getInstance();
+            final Calendar c = mValue != null ? mValue : Calendar.getInstance();
             final int hour = c.get(Calendar.HOUR_OF_DAY);
             final int minute = c.get(Calendar.MINUTE);
 

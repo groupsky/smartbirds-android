@@ -13,6 +13,7 @@ import org.bspb.smartbirds.pro.ui.views.SupportRequiredView;
 import org.bspb.smartbirds.pro.ui.views.SupportStorage;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by groupsky on 14-9-29.
@@ -62,12 +63,12 @@ public class FormUtils {
             this.field = field;
         }
 
-        public String getValue() {
-            return FormUtils.getViewValue(view);
+        public void serialize(Map<String, String> storage) {
+            FormUtils.serialize(storage, field, view);
         }
 
-        public void setValue(String value) {
-            FormUtils.setViewValue(view, value);
+        public void deserialize(Map<String, String> storage) {
+            FormUtils.deserialize(storage, field, view);
         }
     }
 
@@ -85,9 +86,7 @@ public class FormUtils {
             HashMap<String, String> values = new HashMap<String, String>();
             for (String key : fields.keySet()) {
                 FormField field = fields.get(key);
-                String value = field.getValue();
-                value = value.replaceAll("\n", " | ");
-                values.put(key, value);
+                field.serialize(values);
             }
             return values;
         }
@@ -97,7 +96,7 @@ public class FormUtils {
             for (String key : fields.keySet()) {
                 if (!values.containsKey(key)) continue;
                 FormField field = fields.get(key);
-                field.setValue(values.get(key));
+                field.deserialize(values);
             }
         }
 
@@ -119,36 +118,42 @@ public class FormUtils {
         }
     }
 
-    public static String getViewValue(View view) {
-        if (!view.isEnabled())
-            return "";
+    public static void serialize(Map<String, String> storage, String field, View view) {
+        if (!view.isEnabled()) {
+            storage.put(field, "");
+            return;
+        }
         if (view instanceof SupportStorage) {
             SupportStorage storageView = (SupportStorage) view;
-            return storageView.valueForStorage();
+            storageView.serializeToStorage(storage, field);
+            return;
         }
+        String value;
         if (view instanceof EditText) {
             EditText editText = (EditText) view;
-            return editText.getText().toString();
-        }
-        if (view instanceof CheckBox) {
+            value = editText.getText().toString();
+        } else if (view instanceof CheckBox) {
             CheckBox checkBox = (CheckBox) view;
-            return checkBox.isChecked() ? "1" : "0";
-        }
-        if (view instanceof TextView) {
+            value = checkBox.isChecked() ? "1" : "0";
+        } else if (view instanceof TextView) {
             TextView textView = (TextView) view;
-            return textView.getText().toString();
+            value = textView.getText().toString();
+        } else {
+            Log.w(TAG, "unsupported view " + view.getClass());
+            value = "";
         }
-        Log.w(TAG, "unsupported view " + view.getClass());
-        return "";
+        storage.put(field, value);
     }
 
-    public static void setViewValue(View view, String value) {
-        if (value == null)
-            return;
+    public static void deserialize(Map<String, String> storage, String field, View view) {
         if (view instanceof SupportStorage) {
             SupportStorage storageView = (SupportStorage) view;
-            storageView.restoreFromStorage(value);
-        } else if (view instanceof EditText) {
+            storageView.restoreFromStorage(storage, field);
+            return;
+        }
+
+        String value = storage.get(field);
+        if (view instanceof EditText) {
             EditText editText = (EditText) view;
             editText.setText(value);
         } else if (view instanceof CheckBox) {

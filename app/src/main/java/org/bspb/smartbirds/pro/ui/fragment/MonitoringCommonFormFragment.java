@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
-import android.view.View;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -16,7 +15,6 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.GetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 import org.bspb.smartbirds.pro.ui.views.DateFormInput;
@@ -45,7 +43,7 @@ public class MonitoringCommonFormFragment extends Fragment {
     @Pref
     CommonPrefs_ prefs;
     @ViewById(R.id.observers)
-    View observers;
+    MultipleTextFormInput observers;
 
     @Override
     public void onStart() {
@@ -58,13 +56,13 @@ public class MonitoringCommonFormFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        FormUtils.setViewValue(observers, prefs.commonObservers().get());
+        observers.setText(prefs.commonObservers().get());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        prefs.commonObservers().put(FormUtils.getViewValue(observers));
+        prefs.commonObservers().put(observers.getText().toString());
     }
 
     @Override

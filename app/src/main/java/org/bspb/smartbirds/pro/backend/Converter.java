@@ -4,13 +4,12 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
-import com.google.gson.JsonArray;
+import com.google.gson.Gson;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_;
-import org.json.JSONArray;
+import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,9 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.regex.Pattern;
 
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.STORAGE_DATE_FORMAT;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.STORAGE_TIME_FORMAT;
 
@@ -256,6 +253,16 @@ public class Converter {
             } else {
                 JsonObject label = new JsonObject();
                 label.addProperty(locale, value);
+                {
+                    String bg = csv.get(csvField + ".bg");
+                    if (!TextUtils.isEmpty(bg))
+                        label.addProperty("bg", bg);
+                }
+                {
+                    String en = csv.get(csvField + ".en");
+                    if (!TextUtils.isEmpty(en))
+                        label.addProperty("en", en);
+                }
                 JsonObject field = new JsonObject();
                 field.add("label", label);
                 json.add(jsonField, field);
@@ -303,19 +310,10 @@ public class Converter {
 
         @Override
         public void convert(Map<String, String> csv, JsonObject json, Set<String> usedCsvFields) throws Exception {
-            String value = csv.get(csvField);
+            String value = csv.get(csvField + ".json");
             if (!TextUtils.isEmpty(value)) {
-                String[] values = value.split(MULTIPLE_CHOICE_SPLITTER);
-
-                JsonArray jsValues = new JsonArray();
-                for (String val : values) {
-                    JsonObject label = new JsonObject();
-                    label.addProperty(locale, val);
-                    JsonObject jsVal = new JsonObject();
-                    jsVal.add("label", label);
-                    jsValues.add(jsVal);
-                }
-                json.add(jsonField, jsValues);
+                Nomenclature[] values = new Gson().fromJson(value, Nomenclature[].class);
+                json.add(jsonField, new Gson().toJsonTree(values));
             } else {
                 json.add(jsonField, JsonNull.INSTANCE);
             }
