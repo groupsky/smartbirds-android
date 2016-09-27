@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +35,8 @@ public class Converter {
 
     private static List<Convert> commonMapping = new ArrayList<>();
     private static List<Convert> birdsMapping = new ArrayList<>();
+    private static List<Convert> herpMapping = new ArrayList<>();
+    private static List<Convert> ciconiaMapping = new ArrayList<>();
 
     private static void add(Context context, List<Convert> list, @StringRes int csvFieldName, String jsonFieldName) {
         add(context, list, csvFieldName, jsonFieldName, null);
@@ -61,6 +64,10 @@ public class Converter {
 
     private static void addDateTime(Context context, List<Convert> list, @StringRes int csvDateFieldName, @StringRes int csvTimeFieldName, String jsonFieldName) {
         list.add(new DateTimeConverter(context.getString(csvDateFieldName), context.getString(csvTimeFieldName), jsonFieldName));
+    }
+
+    private static void addDate(Context context, List<Convert> list, @StringRes int csvDateFieldName, String jsonFieldName) {
+        list.add(new DateConverter(context.getString(csvDateFieldName), jsonFieldName));
     }
 
     public static void init(Context context) {
@@ -119,9 +126,55 @@ public class Converter {
         addSingle(context, birdsMapping, R.string.tag_breeding_success, "nestingSuccess");
         add(context, birdsMapping, R.string.tag_land_uses_300m, "landuse300mRadius");
         add(context, birdsMapping, R.string.tag_remarks_type, "speciesNotes");
+
+        // herps
+        herpMapping.addAll(commonMapping);
+        addSpecies(context, herpMapping, R.string.tag_species_scientific_name, "species");
+        addSingle(context, herpMapping, R.string.tag_sex, "sex");
+        addSingle(context, herpMapping, R.string.tag_age, "age");
+        addSingle(context, herpMapping, R.string.tag_habitat, "habitat");
+        addMulti(context, herpMapping, R.string.tag_threats_other, "threatsHerps");
+        add(context, herpMapping, R.string.tag_count, "count");
+        add(context, herpMapping, R.string.tag_marking, "marking");
+        add(context, herpMapping, R.string.tag_distance_from_axis, "axisDistance");
+        add(context, herpMapping, R.string.tag_weight_g, "weight");
+        add(context, herpMapping, R.string.tag_scl, "sCLL");
+        add(context, herpMapping, R.string.tag_mpl, "mPLLcdC");
+        add(context, herpMapping, R.string.tag_mcw, "mCWA");
+        add(context, herpMapping, R.string.tag_lcap, "hLcapPl");
+        add(context, herpMapping, R.string.tag_t_substrate, "tempSubstrat");
+        add(context, herpMapping, R.string.tag_t_air, "tempAir");
+        add(context, herpMapping, R.string.tag_t_cloaca, "tempCloaca");
+        add(context, herpMapping, R.string.tag_sq_ventr, "sqVentr");
+        add(context, herpMapping, R.string.tag_sq_caud, "sqCaud");
+        add(context, herpMapping, R.string.tag_sq_dors, "sqDors");
+        add(context, herpMapping, R.string.tag_remarks_type, "speciesNotes");
+
+        // ciconia
+        ciconiaMapping.addAll(commonMapping);
+        addSingle(context, ciconiaMapping, R.string.tag_substrate_type, "primarySubstrateType");
+        addSingle(context, ciconiaMapping, R.string.tag_pylon, "electricityPole");
+        addBool(context, ciconiaMapping, R.string.tag_nest_artificial_platform, "nestIsOnArtificialPlatform");
+        addSingle(context, ciconiaMapping, R.string.tag_pylon_type, "typeElectricityPole");
+        addSingle(context, ciconiaMapping, R.string.tag_ciconia_tree, "tree");
+        addSingle(context, ciconiaMapping, R.string.tag_building, "building");
+        addBool(context, ciconiaMapping, R.string.tag_nest_artificial_platform_human, "nestOnArtificialHumanMadePlatform");
+        add(context, ciconiaMapping, R.string.tag_nest_another_substrate, "nestIsOnAnotherTypeOfSubstrate");
+        addSingle(context, ciconiaMapping, R.string.tag_nest_not_occupied_this_year, "nestThisYearNotUtilizedByWhiteStorks");
+        addSingle(context, ciconiaMapping, R.string.tag_birds_come_to_nest_this_year, "thisYearOneTwoBirdsAppearedInNest");
+        addDate(context, ciconiaMapping, R.string.tag_approximate_date_stork_arrival, "approximateDateStorksAppeared");
+        addDate(context, ciconiaMapping, R.string.tag_approximate_date_stork_disappear, "approximateDateDisappearanceWhiteStorks");
+        addSingle(context, ciconiaMapping, R.string.tag_this_year_in_the_nest_appeared, "thisYearInTheNestAppeared");
+        add(context, ciconiaMapping, R.string.tag_number_juveniles_in_nest, "countJuvenilesInNest");
+        add(context, ciconiaMapping, R.string.tag_nest_not_inhabited_more_than_year, "nestNotUsedForOverOneYear");
+        add(context, ciconiaMapping, R.string.tag_info_for_juveniles_electrocuted, "dataOnJuvenileMortalityFromElectrocutions");
+        add(context, ciconiaMapping, R.string.tag_info_for_juveniles_rejected_by_parents, "dataOnJuvenilesExpelledFromParents");
+        add(context, ciconiaMapping, R.string.tag_died_from_other_causes, "diedOtherReasons");
+        add(context, ciconiaMapping, R.string.tag_cause, "reason");
+        add(context, ciconiaMapping, R.string.tag_ciconia_remarks_type, "speciesNotes");
     }
 
-    public static JsonObject convertBirds(List<String> header, String[] row) throws Exception {
+    private static JsonObject convert(List<String> header, String[] row, List<Convert> converters) throws Exception {
         HashMap<String, String> csv = new HashMap<>();
         Iterator<String> it = header.iterator();
         String columnName;
@@ -132,11 +185,23 @@ public class Converter {
 
         JsonObject result = new JsonObject();
         HashSet<String> usedCsvColumns = new HashSet<>();
-        for (Convert converter : birdsMapping) {
+        for (Convert converter : converters) {
             converter.convert(csv, result, usedCsvColumns);
         }
 
         return result;
+    }
+
+    public static JsonObject convertBirds(List<String> header, String[] row) throws Exception {
+        return convert(header, row, birdsMapping);
+    }
+
+    public static JsonObject convertHerp(List<String> header, String[] row) throws Exception {
+        return convert(header, row, herpMapping);
+    }
+
+    public static JsonObject convertCiconia(List<String> header, String[] row) throws Exception {
+        return convert(header, row, ciconiaMapping);
     }
 
     interface Convert {
@@ -203,17 +268,29 @@ public class Converter {
             this.jsonField = jsonField;
         }
 
-        @Override
-        public void convert(Map<String, String> csv, JsonObject json, Set<String> usedCsvFields) throws Exception {
+        protected Date parse(Map<String, String> csv, Set<String> usedCsvFields) throws ParseException {
             String dateValue = csv.get(csvDateField);
             String timeValue = csv.get(csvTimeField);
+            usedCsvFields.add(csvDateField);
+            usedCsvFields.add(csvTimeField);
+
             if (TextUtils.isEmpty(dateValue) && TextUtils.isEmpty(timeValue)) {
-                json.add(jsonField, JsonNull.INSTANCE);
+                return null;
             } else {
                 Date date = STORAGE_DATE_FORMAT.parse(dateValue);
                 Date time = STORAGE_TIME_FORMAT.parse(timeValue);
 
-                String output = df.format(new Date(date.getTime() + time.getTime()));
+                return new Date(date.getTime() + time.getTime());
+            }
+        }
+
+        @Override
+        public void convert(Map<String, String> csv, JsonObject json, Set<String> usedCsvFields) throws Exception {
+            Date value = parse(csv, usedCsvFields);
+            if (value == null) {
+                json.add(jsonField, JsonNull.INSTANCE);
+            } else {
+                String output = df.format(value);
 
                 int inset0 = 9;
                 int inset1 = 6;
@@ -227,9 +304,24 @@ public class Converter {
 
                 json.addProperty(jsonField, result);
             }
+        }
+    }
 
+    private static class DateConverter extends DateTimeConverter {
+        DateConverter(String csvDateField, String jsonField) {
+            super(csvDateField, null, jsonField);
+        }
+
+        @Override
+        protected Date parse(Map<String, String> csv, Set<String> usedCsvFields) throws ParseException {
+            String dateValue = csv.get(csvDateField);
             usedCsvFields.add(csvDateField);
-            usedCsvFields.add(csvTimeField);
+
+            if (TextUtils.isEmpty(dateValue)) {
+                return null;
+            } else {
+                return STORAGE_DATE_FORMAT.parse(dateValue);
+            }
         }
     }
 
