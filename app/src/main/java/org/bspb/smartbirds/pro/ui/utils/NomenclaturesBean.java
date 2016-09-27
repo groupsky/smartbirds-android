@@ -1,6 +1,12 @@
 package org.bspb.smartbirds.pro.ui.utils;
 
 import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.ContentObserver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -14,6 +20,8 @@ import org.androidannotations.annotations.RootContext;
 import org.apache.commons.net.ftp.FTPClient;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,9 +31,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
+import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
+import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
 
 /**
  * Created by dani on 14-11-12.
@@ -34,71 +47,56 @@ import java.util.Map;
 public class NomenclaturesBean {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".NomenclaturesBean";
+    private static final String[] PROJECTION = {
+            TYPE, LABEL_BG, LABEL_EN,
+    };
 
-    private static final String FTP_PATH = "nomenclatures/";
-
-    private Map<String, List<String>> data;
+    private final Map<String, List<Nomenclature>> data = new HashMap<>();
 
     @RootContext
     Context context;
 
-    public NomenclaturesBean() {
-        data = new HashMap<String, List<String>>();
-    }
+    Cursor cursor;
+
+    final Loader.OnLoadCompleteListener<Cursor> listener = new Loader.OnLoadCompleteListener<Cursor>() {
+        @Override
+        public void onLoadComplete(Loader<Cursor> loader, Cursor data) {
+            cursor = data;
+            if (cursor != null)
+                loadData();
+        }
+    };
 
     @AfterInject
+    void init() {
+        CursorLoader loader = new CursorLoader(context, SmartBirdsProvider.Nomenclatures.CONTENT_URI, PROJECTION, null, null, null);
+        loader.registerListener(0, listener);
+        loader.startLoading();
+    }
+
     @Background
     public void loadData() {
         try {
-            final String localFilename = context.getString(R.string.nomenclatures_local_filename);
-            File nomenclatures = new File(context.getExternalFilesDir(null), localFilename);
-            InputStream inputStream;
-            if (nomenclatures.exists() && nomenclatures.length() > 0) {
-                inputStream = new FileInputStream(nomenclatures);
-            } else {
-                inputStream = context.getAssets().open(localFilename);
-            }
-
-            CSVReader<String[]> csv = CSVReaderBuilder.newDefaultReader(new InputStreamReader(inputStream));
-            List<String> keys = csv.readHeader();
-
-            for (String key : keys) {
-                data.put(key, new ArrayList<String>());
-            }
-
-            List<String[]> rows = csv.readAll();
-            if (rows != null && !rows.isEmpty()) {
-                for (String[] row : rows) {
-                    for (int i = 0; i < row.length; i++) {
-                        if (row[i] != null && !row[i].equals("")) {
-                            data.get(keys.get(i)).add(row[i]);
-                        }
-                    }
+            data.clear();
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                final Nomenclature nomenclature = new Nomenclature(cursor);
+                List<Nomenclature> list;
+                if (!data.containsKey(nomenclature.type)) {
+                    list = new LinkedList<>();
+                    data.put(nomenclature.type, list);
+                } else {
+                    list = data.get(nomenclature.type);
                 }
+                list.add(nomenclature);
             }
-
-        } catch (IOException e) {
-            Crashlytics.logException(e);
+        } catch (Throwable t) {
+            Crashlytics.logException(t);
         }
     }
 
-    @Background
-    public void loadDataFromServer() {
-        final String localFilename = context.getString(R.string.nomenclatures_local_filename);
-        FTPClient ftpClient = FTPClientUtils.connect();
-        try {
-            File file = new File(context.getExternalFilesDir(null), localFilename);
-            FileOutputStream out = new FileOutputStream(file);
 
-            ftpClient.retrieveFile(FTP_PATH+localFilename, out);
-            loadData();
-        } catch (IOException e) {
-            Crashlytics.logException(e);
-            Log.e(TAG, String.format("error while downloading nomenclatures: %s", e.getMessage()), e);
-        }
-    }
-
-    public List<String> getNomenclature(String key) {
+    public List<Nomenclature> getNomenclature(String key) {
+        key = key.replaceFirst("^form_", "");
         return data.get(key);
     }
 
