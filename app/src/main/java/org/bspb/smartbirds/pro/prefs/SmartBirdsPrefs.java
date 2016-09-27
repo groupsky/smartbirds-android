@@ -16,4 +16,9 @@ public interface SmartBirdsPrefs {
     boolean isAuthenticated();
 
     String authToken();
+
+    String username();
+
+    // TODO: use more secure store like credential store or the like
+    String password();
 }

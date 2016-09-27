@@ -35,12 +35,14 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.LoginResultEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LoginStateEvent;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.service.AuthenticationService_;
 
 import de.greenrobot.event.ThreadMode;
@@ -74,6 +76,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     Backend backend;
     @Bean
     EEventBus bus;
+    @Pref
+    SmartBirdsPrefs_ prefs;
 
     private boolean isLoginRunning;
 
@@ -93,6 +97,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     void initLoginForm() {
         // Set up the login form.
         populateAutoComplete();
+
+        if (prefs.username().exists()) {
+            mEmailView.setText(prefs.username().get());
+        }
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
