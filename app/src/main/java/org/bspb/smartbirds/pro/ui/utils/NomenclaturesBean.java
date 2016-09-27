@@ -3,37 +3,22 @@ package org.bspb.smartbirds.pro.ui.utils;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
-import android.database.ContentObserver;
 import android.database.Cursor;
-import android.net.Uri;
-import android.os.Handler;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.googlecode.jcsv.reader.CSVReader;
-import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import org.apache.commons.net.ftp.FTPClient;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
@@ -78,8 +63,9 @@ public class NomenclaturesBean {
     public void loadData() {
         try {
             data.clear();
+            String localeColumn = context.getString(R.string.nomenclature_locale_column);
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                final Nomenclature nomenclature = new Nomenclature(cursor);
+                final Nomenclature nomenclature = new Nomenclature(cursor, localeColumn);
                 List<Nomenclature> list;
                 if (!data.containsKey(nomenclature.type)) {
                     list = new LinkedList<>();
