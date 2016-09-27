@@ -5,8 +5,6 @@ import android.database.Cursor;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.bspb.smartbirds.pro.db.NomenclatureColumns;
-
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
@@ -23,8 +21,7 @@ public class Nomenclature {
     @SerializedName("label")
     public Label label;
 
-    @Expose(serialize = false, deserialize = false)
-    public String localeLabel;
+    transient public String localeLabel;
 
     public Nomenclature() {
     }
@@ -33,6 +30,25 @@ public class Nomenclature {
         type = cursor.getString(cursor.getColumnIndexOrThrow(TYPE));
         label = new Label(cursor);
         localeLabel = cursor.getString(cursor.getColumnIndexOrThrow(localeColumn));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Nomenclature that = (Nomenclature) o;
+
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        return label != null ? label.equals(that.label) : that.label == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type != null ? type.hashCode() : 0;
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -59,6 +75,25 @@ public class Nomenclature {
         public Label(Cursor cursor) {
             bg = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_BG));
             en = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Label label = (Label) o;
+
+            if (bg != null ? !bg.equals(label.bg) : label.bg != null) return false;
+            return en != null ? en.equals(label.en) : label.en == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = bg != null ? bg.hashCode() : 0;
+            result = 31 * result + (en != null ? en.hashCode() : 0);
+            return result;
         }
 
         @Override

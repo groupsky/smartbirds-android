@@ -1,10 +1,12 @@
 package org.bspb.smartbirds.pro.ui.views;
 
+import java.util.Map;
+
 /**
  * Created by groupsky on 22.03.16.
  */
 public interface SupportStorage {
-    String valueForStorage();
+    void serializeToStorage(Map<String, String> storage, String fieldName);
 
-    void restoreFromStorage(String value);
+    void restoreFromStorage(Map<String, String> storage, String fieldName);
 }

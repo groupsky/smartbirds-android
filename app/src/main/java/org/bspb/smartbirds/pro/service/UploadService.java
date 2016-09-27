@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.JsonObject;
 import com.googlecode.jcsv.CSVStrategy;
 import com.googlecode.jcsv.reader.CSVReader;
@@ -23,7 +22,6 @@ import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.ui.utils.FTPClientUtils;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -33,10 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import okio.BufferedSink;
 import retrofit2.Response;
 
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
