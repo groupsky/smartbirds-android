@@ -9,11 +9,14 @@ import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -60,6 +63,7 @@ public class Backend {
             builder.interceptors().addAll(interceptors);
             builder.networkInterceptors().addAll(networkInterceptors);
             builder.readTimeout(5, TimeUnit.MINUTES);
+            builder.cookieJar(new JavaNetCookieJar(CookieHandler.getDefault() != null ? CookieHandler.getDefault() : new CookieManager()));
             client = builder.build();
             // replace with okhttp instances to throw unmodifiable exception
             interceptors = client.interceptors();

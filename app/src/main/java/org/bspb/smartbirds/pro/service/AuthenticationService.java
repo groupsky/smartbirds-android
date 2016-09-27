@@ -90,7 +90,7 @@ public class AuthenticationService  extends AbstractIntentService {
             }
         }
 
-        authenticationInterceptor.setAuthorization(response.body().token);
+        authenticationInterceptor.setAuthorization(response.body().token, email, password);
 
         return LoginResultEvent.Status.SUCCESS;
     }
