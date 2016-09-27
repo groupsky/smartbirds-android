@@ -19,6 +19,9 @@ import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 import java.util.List;
+import java.util.regex.Pattern;
+
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
 
 /**
  * Created by groupsky on 14-10-13.
@@ -94,7 +97,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput {
                         entries[i] = values.get(i);
                     }
 
-                    String[] items = getText().toString().split(Configuration.MULTIPLE_CHOICE_DELIMITER);
+                    String[] items = getText().toString().split(MULTIPLE_CHOICE_SPLITTER);
                     for (String item : items) {
                         if (values.contains(item)) {
                             mSelected[values.indexOf(item)] = true;
