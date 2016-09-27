@@ -137,7 +137,7 @@
                 <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
                     android:layout_span="3"
                     android:hint="@string/monitoring_herp_notes"
-                    android:tag="@string/tag_notes" />
+                    android:tag="@string/tag_remarks_type" />
             </TableRow>
 
         </TableLayout>
