@@ -85,12 +85,6 @@ public class MainFragment extends Fragment {
         ExportService_.intent(getActivity()).prepareForExport().start();
     }
 
-    @Click(R.id.btn_sync)
-    void syncBtnClicked() {
-        NomenclatureService_.intent(getActivity()).updateNomenclatures().start();
-        UploadService_.intent(getActivity()).uploadAll().start();
-    }
-
     @Click(R.id.btn_info)
     void infoBtnClicked() {
         final float density = getResources().getDisplayMetrics().density;
