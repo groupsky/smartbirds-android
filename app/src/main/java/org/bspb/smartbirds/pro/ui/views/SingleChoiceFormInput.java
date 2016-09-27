@@ -38,6 +38,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
 import static android.widget.AdapterView.INVALID_POSITION;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
 
 /**
  * Created by groupsky on 14-10-10.
@@ -86,7 +87,7 @@ public class SingleChoiceFormInput extends TextViewFormInput {
             List<String> values = nomenclatures.getNomenclature(key.toString());
             mAdapter.clear();
             for(String value: values) {
-                mAdapter.add(TextUtils.join("\n", value.trim().split(" *\\| *")));
+                mAdapter.add(TextUtils.join("\n", value.trim().split(MULTIPLE_CHOICE_SPLITTER)));
             }
             mAdapter.notifyDataSetChanged();
         }
