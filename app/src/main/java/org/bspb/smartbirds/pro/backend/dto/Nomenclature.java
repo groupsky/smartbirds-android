@@ -23,12 +23,16 @@ public class Nomenclature {
     @SerializedName("label")
     public Label label;
 
+    @Expose(serialize = false, deserialize = false)
+    public String localeLabel;
+
     public Nomenclature() {
     }
 
-    public Nomenclature(Cursor cursor) {
+    public Nomenclature(Cursor cursor, String localeColumn) {
         type = cursor.getString(cursor.getColumnIndexOrThrow(TYPE));
         label = new Label(cursor);
+        localeLabel = cursor.getString(cursor.getColumnIndexOrThrow(localeColumn));
     }
 
     @Override
