@@ -2,16 +2,21 @@ package org.bspb.smartbirds.pro.backend;
 
 import com.google.gson.JsonObject;
 
+import org.bspb.smartbirds.pro.backend.dto.FileId;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
 
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -36,4 +41,8 @@ public interface SmartBirdsApi {
 
     @POST("cbm")
     Call<ResponseBody> createCbm(@Body JsonObject request);
+
+    @Multipart
+    @POST("storage")
+    Call<ResponseEnvelope<FileId>> upload(@Part MultipartBody.Part file);
 }
