@@ -8,7 +8,6 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EApplication;
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor;
 import org.bspb.smartbirds.pro.backend.Backend;
-import org.bspb.smartbirds.pro.backend.Converter;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
@@ -43,8 +42,6 @@ public class SmartBirdsApplication extends Application {
         bus.register(this);
 
         Configuration.init(this);
-
-        Converter.init(this);
     }
 
     public void onEvent(StartMonitoringEvent event) {
