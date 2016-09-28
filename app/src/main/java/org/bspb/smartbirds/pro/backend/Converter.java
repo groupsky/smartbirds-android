@@ -33,10 +33,11 @@ import static org.bspb.smartbirds.pro.ui.utils.Configuration.STORAGE_TIME_FORMAT
 
 public class Converter {
 
-    private static List<Convert> commonMapping = new ArrayList<>();
-    private static List<Convert> birdsMapping = new ArrayList<>();
-    private static List<Convert> herpMapping = new ArrayList<>();
-    private static List<Convert> ciconiaMapping = new ArrayList<>();
+    private static final List<Convert> commonMapping = new ArrayList<>();
+    private static final List<Convert> birdsMapping = new ArrayList<>();
+    private static final List<Convert> herpMapping = new ArrayList<>();
+    private static final List<Convert> ciconiaMapping = new ArrayList<>();
+    private static final List<Convert> cbmMapping = new ArrayList<>();
 
     private static void add(Context context, List<Convert> list, @StringRes int csvFieldName, String jsonFieldName) {
         add(context, list, csvFieldName, jsonFieldName, null);
@@ -172,6 +173,18 @@ public class Converter {
         add(context, ciconiaMapping, R.string.tag_died_from_other_causes, "diedOtherReasons");
         add(context, ciconiaMapping, R.string.tag_cause, "reason");
         add(context, ciconiaMapping, R.string.tag_ciconia_remarks_type, "speciesNotes");
+
+        // cbm
+        cbmMapping.addAll(commonMapping);
+        addSingle(context, cbmMapping, R.string.tag_transect_number, "plot");
+        addSingle(context, cbmMapping, R.string.tag_visit_number, "visit");
+        addSingle(context, cbmMapping, R.string.tag_secondary_habitat, "secondaryHabitat");
+        addSingle(context, cbmMapping, R.string.tag_primary_habitat, "primaryHabitat");
+        addSingle(context, cbmMapping, R.string.tag_distance, "distance");
+        addSpecies(context, cbmMapping, R.string.tag_observed_bird, "species");
+        add(context, cbmMapping, R.string.tag_count_subject, "count");
+        // TODO: zone
+        add(context, cbmMapping, R.string.tag_location, "zone");
     }
 
     private static JsonObject convert(List<String> header, String[] row, List<Convert> converters) throws Exception {
@@ -202,6 +215,10 @@ public class Converter {
 
     public static JsonObject convertCiconia(List<String> header, String[] row) throws Exception {
         return convert(header, row, ciconiaMapping);
+    }
+
+    public static JsonObject convertCbm(List<String> header, String[] row) throws Exception {
+        return convert(header, row, cbmMapping);
     }
 
     interface Convert {

@@ -33,4 +33,7 @@ public interface SmartBirdsApi {
 
     @POST("ciconia")
     Call<ResponseBody> createCiconia(@Body JsonObject request);
+
+    @POST("cbm")
+    Call<ResponseBody> createCbm(@Body JsonObject request);
 }
