@@ -3,12 +3,14 @@ package org.bspb.smartbirds.pro.backend;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 
 import java.text.ParseException;
@@ -38,6 +40,7 @@ public class Converter {
     private static final List<Convert> herpMapping = new ArrayList<>();
     private static final List<Convert> ciconiaMapping = new ArrayList<>();
     private static final List<Convert> cbmMapping = new ArrayList<>();
+    private static final String TAG = SmartBirdsApplication.TAG + ".Converter";
 
     private static void add(Context context, List<Convert> list, @StringRes int csvFieldName, String jsonFieldName) {
         add(context, list, csvFieldName, jsonFieldName, null);
@@ -200,6 +203,12 @@ public class Converter {
         HashSet<String> usedCsvColumns = new HashSet<>();
         for (Convert converter : converters) {
             converter.convert(csv, result, usedCsvColumns);
+        }
+
+        Set<String> unusedColumns = new HashSet<>(csv.keySet());
+        unusedColumns.removeAll(usedCsvColumns);
+        if (!unusedColumns.isEmpty()) {
+            Log.w(TAG, "Unused csv columns: " + TextUtils.join(", ", unusedColumns));
         }
 
         return result;
@@ -377,6 +386,8 @@ public class Converter {
                 json.add(jsonField, field);
             }
             usedCsvFields.add(csvField);
+            usedCsvFields.add(csvField+".bg");
+            usedCsvFields.add(csvField+".en");
         }
     }
 
@@ -396,13 +407,15 @@ public class Converter {
         public void convert(Map<String, String> csv, JsonObject json, Set<String> usedCsvFields) throws Exception {
             String value = csv.get(csvField);
             if (!TextUtils.isEmpty(value)) {
-                String[] values = value.split(" *\\| *");
+                String[] values = value.split(" *\n *");
                 json.addProperty(jsonField, values[0]);
             } else {
                 json.add(jsonField, JsonNull.INSTANCE);
             }
 
             usedCsvFields.add(csvField);
+            usedCsvFields.add(csvField+".bg");
+            usedCsvFields.add(csvField+".en");
         }
     }
 
@@ -428,6 +441,7 @@ public class Converter {
             }
 
             usedCsvFields.add(csvField);
+            usedCsvFields.add(csvField+".json");
         }
     }
 }

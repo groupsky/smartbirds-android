@@ -7,7 +7,6 @@ import android.util.Log;
 import com.googlecode.jcsv.CSVStrategy;
 import com.googlecode.jcsv.reader.CSVReader;
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
-import com.googlecode.jcsv.reader.internal.DefaultCSVEntryParser;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
@@ -23,6 +22,7 @@ import org.bspb.smartbirds.pro.forms.CbmUploader;
 import org.bspb.smartbirds.pro.forms.CiconiaUploader;
 import org.bspb.smartbirds.pro.forms.HerpUploader;
 import org.bspb.smartbirds.pro.forms.Uploader;
+import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser;
 import org.bspb.smartbirds.pro.ui.utils.FTPClientUtils;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
@@ -112,7 +112,7 @@ public class UploadService extends IntentService {
     private void uploadForm(File file, Uploader uploader) throws Exception {
         FileInputStream fis = new FileInputStream(file);
         try {
-            CSVReader<String[]> csvReader = new CSVReaderBuilder<String[]>(new InputStreamReader(new BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(new DefaultCSVEntryParser()).build();
+            CSVReader<String[]> csvReader = new CSVReaderBuilder<String[]>(new InputStreamReader(new BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(new SmartBirdsCSVEntryParser()).build();
             try {
                 List<String> header = csvReader.readHeader();
                 for (String[] row : csvReader) {
