@@ -19,6 +19,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.forms.BirdsUploader;
+import org.bspb.smartbirds.pro.forms.CbmUploader;
 import org.bspb.smartbirds.pro.forms.CiconiaUploader;
 import org.bspb.smartbirds.pro.forms.HerpUploader;
 import org.bspb.smartbirds.pro.forms.Uploader;
@@ -67,7 +68,8 @@ public class UploadService extends IntentService {
             if (!monitoringDir.isDirectory()) continue;
             upload(monitoringDir.getAbsolutePath());
         }
-        NomenclatureService_.intent(this).updateNomenclatures().start();
+        // TODO: commented out just for debug
+//        NomenclatureService_.intent(this).updateNomenclatures().start();
         eventBus.post(new UploadCompleted());
     }
 
@@ -99,6 +101,9 @@ public class UploadService extends IntentService {
                     break;
                 case "form_ciconia.csv":
                     uploadForm(new File(file, subfile), new CiconiaUploader());
+                    break;
+                case "form_cbm.csv":
+                    uploadForm(new File(file, subfile), new CbmUploader());
                     break;
             }
         }
