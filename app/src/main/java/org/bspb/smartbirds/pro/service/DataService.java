@@ -15,7 +15,6 @@ import com.crashlytics.android.Crashlytics;
 import com.googlecode.jcsv.CSVStrategy;
 import com.googlecode.jcsv.writer.CSVWriter;
 import com.googlecode.jcsv.writer.internal.CSVWriterBuilder;
-import com.googlecode.jcsv.writer.internal.DefaultCSVEntryConverter;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -40,6 +39,7 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.DataServicePrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryConverter;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
@@ -238,7 +238,6 @@ public class DataService extends Service {
                 File entriesFile = getEntriesFile(entryType);
                 if (!entriesFile.exists())
                     continue;
-                System.out.println("Combining dattaaaaa for: " + entriesFile.getAbsolutePath());
                 String[] commonLines = convertToCsvLines(commonData);
 
                 BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
@@ -274,7 +273,7 @@ public class DataService extends Service {
     private String[] convertToCsvLines(HashMap<String, String> data) throws IOException {
         StringWriter memory = new StringWriter();
         try {
-            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(memory).strategy(CSVStrategy.DEFAULT).entryConverter(new DefaultCSVEntryConverter()).build();
+            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(memory).strategy(CSVStrategy.DEFAULT).entryConverter(new SmartBirdsCSVEntryConverter()).build();
             csvWriter.write(commonData.keySet().toArray(new String[]{}));
             csvWriter.write(commonData.values().toArray(new String[]{}));
             memory.flush();
@@ -304,7 +303,7 @@ public class DataService extends Service {
         try {
             fos = new FileOutputStream(file, true);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
-            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).strategy(CSVStrategy.DEFAULT).entryConverter(new DefaultCSVEntryConverter()).build();
+            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).strategy(CSVStrategy.DEFAULT).entryConverter(new SmartBirdsCSVEntryConverter()).build();
 
             if (!exists)
                 csvWriter.write(data.keySet().toArray(new String[]{}));
