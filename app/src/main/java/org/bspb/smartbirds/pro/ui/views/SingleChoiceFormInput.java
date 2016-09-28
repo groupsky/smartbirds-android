@@ -100,7 +100,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
      */
     public void setAdapter(SmartArrayAdapter<NomenclatureItem> adapter) {
         mAdapter = adapter;
-        setSelection(INVALID_POSITION);
+        setText(getText());
     }
 
     public int getSelection() {
@@ -145,8 +145,15 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     @Override
     public void restoreFromStorage(Map<String, String> storage, String fieldName) {
         String value = storage.get(fieldName);
-        setSelection(mAdapter.getPosition(new NomenclatureItem(value)));
         setText(value);
+    }
+
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        if (mAdapter != null) {
+            setSelection(mAdapter.getPosition(new NomenclatureItem(text.toString())));
+        }
+        super.setText(text, type);
     }
 
     private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {
