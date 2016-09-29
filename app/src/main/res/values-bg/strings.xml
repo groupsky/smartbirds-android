@@ -38,7 +38,7 @@
     <string name="menu_monitoring_start">Начало</string>
     <string name="menu_monitoring_save">Запис</string>
     <string name="main_screen_btn_start">Начало</string>
-    <string name="main_screen_btn_upload">Качване</string>
+    <string name="main_screen_btn_upload">Качване тест</string>
     <string name="monitoring_birds_notes">Бележки</string>
     <string name="monitoring_common_source">Източник</string>
     <string name="monitoring_common_start_date">Начало:</string>
