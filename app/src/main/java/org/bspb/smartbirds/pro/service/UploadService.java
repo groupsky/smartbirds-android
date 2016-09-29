@@ -120,7 +120,7 @@ public class UploadService extends IntentService {
         for (String subfile : file.list(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.matches("Pic\\d+\\.jpg");
+                return name.matches("Pic\\d+\\.jpg") || "track.gpx".equals(name);
             }
         })) {
             fileObjs.put(subfile, uploadFile(new File(file, subfile)));
@@ -206,6 +206,9 @@ public class UploadService extends IntentService {
                         pictures.add(fileObj);
                     }
                     data.add("pictures", pictures);
+
+                    // convert gpx
+                    data.add("track", fileObjs.get("track.gpx").get("url"));
 
                     Call<ResponseBody> call = uploader.upload(backend.api(), data);
                     Response<ResponseBody> response = call.execute();
