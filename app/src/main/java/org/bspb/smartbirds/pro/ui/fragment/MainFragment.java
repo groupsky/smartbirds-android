@@ -31,13 +31,16 @@ import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.events.DownloadCompleted;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ExportFailedEvent;
 import org.bspb.smartbirds.pro.events.ExportPreparedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.events.StartingDownload;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.service.ExportService_;
+import org.bspb.smartbirds.pro.service.NomenclatureService;
 import org.bspb.smartbirds.pro.service.UploadService_;
 
 import java.io.File;
@@ -54,7 +57,10 @@ public class MainFragment extends Fragment {
     @Bean
     EEventBus bus;
 
-    private AlertDialog uploadingDialog;
+    boolean isUploading = false;
+    boolean isDownloading = false;
+
+    private AlertDialog progressDialog;
     private AlertDialog exportDialog;
 
     @ViewById(R.id.not_synced_count)
@@ -64,6 +70,9 @@ public class MainFragment extends Fragment {
     public void onStart() {
         super.onStart();
         bus.register(this);
+        if (NomenclatureService.isDownloading) {
+            onEvent(new StartingDownload());
+        }
     }
 
     @Override
@@ -164,13 +173,35 @@ public class MainFragment extends Fragment {
 
     @UiThread
     public void onEvent(StartingUpload event) {
-        uploadingDialog = ProgressDialog.show(getActivity(), getString(R.string.upload_dialog_title), getString(R.string.upload_dialog_text), true);
+        isUploading = true;
+        if (progressDialog == null || !progressDialog.isShowing()) {
+            progressDialog = ProgressDialog.show(getActivity(), getString(R.string.upload_dialog_title), getString(R.string.upload_dialog_text), true);
+        }
+    }
+
+    @UiThread
+    public void onEvent(DownloadCompleted event) {
+        isDownloading = false;
+        if (!isUploading && progressDialog != null) {
+            progressDialog.cancel();
+            progressDialog = null;
+        }
+        showNotSyncedCount();
+    }
+
+    @UiThread
+    public void onEvent(StartingDownload event) {
+        isDownloading = true;
+        if (progressDialog == null || !progressDialog.isShowing()) {
+            progressDialog = ProgressDialog.show(getActivity(), getString(R.string.download_dialog_title), getString(R.string.download_dialog_text), true);
+        }
     }
 
     @UiThread
     public void onEvent(UploadCompleted event) {
-        if (uploadingDialog != null) {
-            uploadingDialog.cancel();
+        isUploading = false;
+        if (!isDownloading && progressDialog != null) {
+            progressDialog.cancel();
         }
         showNotSyncedCount();
     }
