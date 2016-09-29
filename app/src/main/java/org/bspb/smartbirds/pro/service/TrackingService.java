@@ -1,7 +1,9 @@
 package org.bspb.smartbirds.pro.service;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -9,12 +11,11 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
-import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.SystemService;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -71,13 +72,21 @@ public class TrackingService extends Service implements LocationListener {
         if (isTracking()) {
             stopTracking();
         }
-        locationManager.removeUpdates(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.removeUpdates(this);
+        } else {
+            throw new IllegalStateException("No permission to retrieve location!");
+        }
         super.onDestroy();
     }
 
     private void startTracking() {
         Log.v(TAG, "Requesting location updates");
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        } else {
+            throw new IllegalStateException("No permission to retrieve location!");
+        }
 
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
         wakeLock.acquire();
@@ -87,7 +96,11 @@ public class TrackingService extends Service implements LocationListener {
 
     private void stopTracking() {
         Log.v(TAG, "Stopping location updates");
-        locationManager.removeUpdates(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.removeUpdates(this);
+        } else {
+            throw new IllegalStateException("No permission to retrieve location!");
+        }
         tracking = false;
         wakeLock.release();
     }
