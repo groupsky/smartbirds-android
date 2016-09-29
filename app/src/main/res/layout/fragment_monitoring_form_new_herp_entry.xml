@@ -22,7 +22,7 @@
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:hint="@string/monitoring_herp_name"
                     android:tag="@string/tag_species_scientific_name"
-                    app:entries="form_herp_name"
+                    app:entries="species_herp"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_

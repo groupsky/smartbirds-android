@@ -9,6 +9,7 @@ import org.androidannotations.api.support.app.AbstractIntentService;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
+import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.AUTHORITY;
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures.CONTENT_URI;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 
 /**
  * Created by groupsky on 27.09.16.
@@ -63,7 +65,33 @@ public class NomenclatureService extends AbstractIntentService {
                 buffer.add(0, ContentProviderOperation.newDelete(CONTENT_URI).build());
                 getContentResolver().applyBatch(AUTHORITY, buffer);
                 buffer.clear();
+
+                limit = 500;
+                offset = 0;
+                while (true) {
+                    Response<ResponseListEnvelope<SpeciesNomenclature>> response = backend.api().species(limit, offset).execute();
+                    if (!response.isSuccessful()) break;
+                    if (response.body().data.isEmpty()) break;
+                    for (SpeciesNomenclature species : response.body().data) {
+                        // increase the offset
+                        offset++;
+
+                        // insert the nomenclature value
+                        buffer.add(ContentProviderOperation.newInsert(CONTENT_URI)
+                                .withValue(TYPE, "species_" + species.type)
+                                .withValue(LABEL_BG, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.bg)
+                                .withValue(LABEL_EN, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.en)
+                                .build());
+                    }
+                }
+
+                // if we received nomenclatures
+                if (!buffer.isEmpty()) {
+                    getContentResolver().applyBatch(AUTHORITY, buffer);
+                    buffer.clear();
+                }
             }
+
         } catch (Throwable t) {
             logException(t);
         }

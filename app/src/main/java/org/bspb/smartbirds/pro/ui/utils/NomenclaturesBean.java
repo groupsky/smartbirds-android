@@ -97,6 +97,7 @@ public class NomenclaturesBean {
 
     public List<Nomenclature> getNomenclature(String key) {
         key = key.replaceFirst("^form_", "");
+        if (!data.containsKey(key)) throw new IllegalArgumentException("Unknown nomenclature "+key);
         return data.get(key);
     }
 
