@@ -146,6 +146,8 @@
     <string name="export_dialog_text">Preparing for export…</string>
     <string name="upload_dialog_title">Upload</string>
     <string name="upload_dialog_text">Uploading data…</string>
+    <string name="download_dialog_title">Download</string>
+    <string name="download_dialog_text">Downloading data…</string>
     <string name="export_subject">SmartBirds Pro export</string>
     <string name="export_text">"Export monitoring %s"</string>
     <string name="export_app_chooser">"Export monitoring: "</string>

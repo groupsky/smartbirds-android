@@ -107,6 +107,12 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         return mSelectedPosition;
     }
 
+    public Nomenclature getSelectedItem() {
+        return mAdapter != null && mSelectedPosition != INVALID_POSITION
+                ? mAdapter.getItem(mSelectedPosition).nomenclature
+                : null;
+    }
+
     public void setSelection(int position) {
         if (position != mSelectedPosition) {
             if (position < 0 || position >= mAdapter.getCount()) {
