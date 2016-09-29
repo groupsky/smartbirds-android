@@ -23,7 +23,7 @@
                     android:id="@+id/form_cbm_name"
                     android:hint="@string/monitoring_cbm_name"
                     android:tag="@string/tag_observed_bird"
-                    app:entries="form_birds_name"
+                    app:entries="species_birds"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
