@@ -15,9 +15,12 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
+import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +54,12 @@ public class NomenclaturesBean {
                 loadData();
         }
     };
+    private final Comparator<? super Nomenclature> comparator = new Comparator<Nomenclature>() {
+        @Override
+        public int compare(Nomenclature o1, Nomenclature o2) {
+            return AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel);
+        }
+    };
 
     @AfterInject
     void init() {
@@ -68,12 +77,17 @@ public class NomenclaturesBean {
                 final Nomenclature nomenclature = new Nomenclature(cursor, localeColumn);
                 List<Nomenclature> list;
                 if (!data.containsKey(nomenclature.type)) {
-                    list = new LinkedList<>();
+                    list = new ArrayList<>();
                     data.put(nomenclature.type, list);
                 } else {
                     list = data.get(nomenclature.type);
                 }
                 list.add(nomenclature);
+            }
+
+            // sort nomenclatures
+            for (List<Nomenclature> nomenclatures: data.values()) {
+                Collections.sort(nomenclatures, comparator);
             }
         } catch (Throwable t) {
             Crashlytics.logException(t);
