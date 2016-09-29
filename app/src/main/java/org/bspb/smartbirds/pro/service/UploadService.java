@@ -102,8 +102,8 @@ public class UploadService extends IntentService {
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
         try {
-            uploadOnServer(monitoringPath, monitoringName);
             uploadOnFtp(monitoringPath, monitoringName);
+            uploadOnServer(monitoringPath, monitoringName);
             file.renameTo(new File(monitoringPath.replace("-up", "")));
         } catch (Throwable e) {
             logException(e);
