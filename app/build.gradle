@@ -10,8 +10,8 @@ android {
         applicationId "org.bspb.smartbirds.pro"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 12
-        versionName "1.1.2"
+        versionCode 13
+        versionName "1.1.3"
         buildConfigField "String", "BACKEND_BASE_URL", "\"http://sb.87.252.173.51.xip.io:8082/api/\""
     }
     signingConfigs {
