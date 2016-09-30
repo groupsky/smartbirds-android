@@ -1,8 +1,5 @@
 package org.bspb.smartbirds.pro.prefs;
 
-import android.widget.AdapterView;
-
-import org.androidannotations.annotations.sharedpreferences.DefaultInt;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;
 
 /**
@@ -11,10 +8,8 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 @SharedPref
 public interface BirdPrefs {
 
-    @DefaultInt(AdapterView.INVALID_POSITION)
-    int birdCountUnitsPosition();
+    String birdCountUnits();
 
-    @DefaultInt(AdapterView.INVALID_POSITION)
-    int birdCountTypePosition();
+    String birdCountType();
 
 }
