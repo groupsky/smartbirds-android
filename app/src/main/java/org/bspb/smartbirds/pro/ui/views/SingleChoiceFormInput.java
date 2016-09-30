@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.database.DataSetObserver;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -50,11 +49,10 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     NomenclaturesBean nomenclatures;
 
     private SmartArrayAdapter<NomenclatureItem> mAdapter;
-    private DataSetObserver mDataSetObserver;
     /**
-     * The position within the adapter's data set of the currently selected item.
+     * The currently selected item.
      */
-    int mSelectedPosition = INVALID_POSITION;
+    NomenclatureItem mSelectedItem = null;
 
     public SingleChoiceFormInput(Context context) {
         this(context, null);
@@ -103,28 +101,41 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         setText(getText());
     }
 
-    public int getSelection() {
-        return mSelectedPosition;
+    public String getSelection() {
+        return mSelectedItem != null ? mSelectedItem.label : null;
     }
 
     public Nomenclature getSelectedItem() {
-        return mAdapter != null && mSelectedPosition != INVALID_POSITION
-                ? mAdapter.getItem(mSelectedPosition).nomenclature
+        return mSelectedItem != null
+                ? mSelectedItem.nomenclature
                 : null;
     }
 
-    public void setSelection(int position) {
-        if (position != mSelectedPosition) {
-            if (position < 0 || position >= mAdapter.getCount()) {
-                position = INVALID_POSITION;
-            }
-            mSelectedPosition = position;
-            if (position != INVALID_POSITION) {
-                setText(String.valueOf(mAdapter.getItem(position)));
-                setError(null);
+    public void setSelection(String label) {
+        setSelection(new NomenclatureItem(label));
+    }
+
+    protected void setSelection(NomenclatureItem item) {
+        // find our item that has nomenclature inside
+        if (item != null) {
+            int idx = mAdapter.getPosition(item);
+            if (idx != INVALID_POSITION) {
+                item = mAdapter.getItem(idx);
             } else {
-                setText("");
+                item = null;
             }
+        }
+
+        if (item != null) {
+            if (item.equals(mSelectedItem)) return;
+        } else if (mSelectedItem == null) return;
+
+        mSelectedItem = item;
+        if (item != null) {
+            setText(item.label);
+            setError(null);
+        } else {
+            setText("");
         }
     }
 
@@ -138,10 +149,9 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     @Override
     public void serializeToStorage(Map<String, String> storage, String fieldName) {
         storage.put(fieldName, getText().toString().replace("\n", MULTIPLE_CHOICE_DELIMITER));
-        if (mSelectedPosition != INVALID_POSITION) {
-            NomenclatureItem item = mAdapter.getItem(mSelectedPosition);
-            storage.put(fieldName + ".bg", item.nomenclature.label.bg);
-            storage.put(fieldName + ".en", item.nomenclature.label.en);
+        if (mSelectedItem != null) {
+            storage.put(fieldName + ".bg", mSelectedItem.nomenclature.label.bg);
+            storage.put(fieldName + ".en", mSelectedItem.nomenclature.label.en);
         } else {
             storage.put(fieldName + ".bg", "");
             storage.put(fieldName + ".en", "");
@@ -157,7 +167,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     @Override
     public void setText(CharSequence text, BufferType type) {
         if (mAdapter != null) {
-            setSelection(mAdapter.getPosition(new NomenclatureItem(text.toString())));
+            setSelection(new NomenclatureItem(text.toString()));
         }
         super.setText(text, type);
     }
@@ -165,7 +175,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {
 
         private AlertDialog mPopup;
-        private int mLastSelected = INVALID_POSITION;
+        private NomenclatureItem mLastSelected = null;
 
         public void show() {
             loadData();
@@ -184,11 +194,11 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
             mAdapter.getFilter().filter(null);
 
-            setSelection(mAdapter.getPosition(new NomenclatureItem(getText().toString())));
+            setSelection(new NomenclatureItem(getText().toString()));
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                     .setTitle(getHint())
-                    .setSingleChoiceItems(mAdapter, mSelectedPosition, this)
+                    .setSingleChoiceItems(mAdapter, mSelectedItem != null ? mAdapter.getPosition(mSelectedItem) : INVALID_POSITION, this)
                     .setCancelable(true)
                     .setOnCancelListener(this)
                     .setNegativeButton(android.R.string.cancel, this)
@@ -206,7 +216,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
             mPopup.show();
 
-            mPopup.getButton(BUTTON_POSITIVE).setEnabled(mSelectedPosition != INVALID_POSITION);
+            mPopup.getButton(BUTTON_POSITIVE).setEnabled(mSelectedItem != null);
             if (needFilter) {
                 mPopup.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
                 view.requestFocus();
@@ -221,18 +231,18 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                     ((Filterable) mAdapter).getFilter().filter(null, this);
                     break;
                 case BUTTON_POSITIVE:
-                    if (mLastSelected == INVALID_POSITION) return;
+                    if (mLastSelected == null) return;
                     setSelection(mLastSelected);
                     mPopup.dismiss();
                     ((Filterable) mAdapter).getFilter().filter(null, this);
                     break;
                 case BUTTON_NEUTRAL:
-                    setSelection(INVALID_POSITION);
+                    setSelection((NomenclatureItem)null);
                     mPopup.dismiss();
                     ((Filterable) mAdapter).getFilter().filter(null, this);
                     break;
                 default:
-                    mLastSelected = which;
+                    mLastSelected = mAdapter.getItem(which);
                     onClick(dialog, BUTTON_POSITIVE);
                     break;
             }
@@ -258,7 +268,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
         @Override
         public void onFilterComplete(int count) {
-            setSelection(mAdapter.getPosition(new NomenclatureItem(getText().toString())));
+            setSelection(new NomenclatureItem(getText().toString()));
         }
     }
 
