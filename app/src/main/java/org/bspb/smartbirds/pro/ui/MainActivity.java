@@ -12,6 +12,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.LogoutEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requireAuthentication();
     }
 
     @AfterViews
@@ -61,6 +63,10 @@ public class MainActivity extends Activity {
 
     public void onEvent(StartMonitoringEvent event) {
         StartMonitoringActivity_.intent(this).start();
+    }
+
+    public void onEvent(LogoutEvent event) {
+        requireAuthentication();
     }
 
     @AfterInject
