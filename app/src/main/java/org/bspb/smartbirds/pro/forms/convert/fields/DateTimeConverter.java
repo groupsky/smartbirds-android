@@ -13,12 +13,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.STORAGE_DATE_FORMAT;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.STORAGE_TIME_FORMAT;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.STORAGE_DATE_TIME_FORMAT;
 
 public class DateTimeConverter implements FieldConverter {
 
-    static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.ENGLISH);
+    static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz", Locale.ENGLISH);
     static final TimeZone tz = TimeZone.getTimeZone("UTC");
 
     static {
@@ -44,10 +43,7 @@ public class DateTimeConverter implements FieldConverter {
         if (TextUtils.isEmpty(dateValue) && TextUtils.isEmpty(timeValue)) {
             return null;
         } else {
-            Date date = STORAGE_DATE_FORMAT.parse(dateValue);
-            Date time = STORAGE_TIME_FORMAT.parse(timeValue);
-
-            return new Date(date.getTime() + time.getTime());
+            return STORAGE_DATE_TIME_FORMAT.parse(dateValue+" "+timeValue);
         }
     }
 
@@ -59,15 +55,7 @@ public class DateTimeConverter implements FieldConverter {
         } else {
             String output = df.format(value);
 
-            int inset0 = 9;
-            int inset1 = 6;
-
-            String s0 = output.substring(0, output.length() - inset0);
-            String s1 = output.substring(output.length() - inset1, output.length());
-
-            String result = s0 + s1;
-
-            result = result.replaceAll("UTC", "+00:00");
+            String result = output.replaceAll("UTC", "Z").replaceAll("\\+00:00", "Z");
 
             json.addProperty(jsonField, result);
         }
