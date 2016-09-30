@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
@@ -18,11 +20,10 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
-import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.ViewsById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
@@ -64,9 +65,12 @@ public abstract class BaseEntryFragment extends Fragment {
     @OptionsMenuItem(R.id.take_picture)
     MenuItem takePicture;
 
+    @InstanceState
     protected ImageStruct[] images = new ImageStruct[3];
+    @InstanceState
     protected ImageStruct currentImage;
-    private int picturesCount = 0;
+    @InstanceState
+    protected int picturesCount = 0;
 
     abstract EntryType getEntryType();
 
@@ -173,7 +177,7 @@ public abstract class BaseEntryFragment extends Fragment {
     }
 
 
-    private static class ImageStruct {
+    static class ImageStruct implements Parcelable {
         public String fileName = null;
         public String path;
         public Uri uri;
@@ -183,5 +187,35 @@ public abstract class BaseEntryFragment extends Fragment {
             this.path = path;
             this.uri = uri;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.fileName);
+            dest.writeString(this.path);
+            dest.writeParcelable(this.uri, flags);
+        }
+
+        protected ImageStruct(Parcel in) {
+            this.fileName = in.readString();
+            this.path = in.readString();
+            this.uri = in.readParcelable(Uri.class.getClassLoader());
+        }
+
+        public static final Parcelable.Creator<ImageStruct> CREATOR = new Parcelable.Creator<ImageStruct>() {
+            @Override
+            public ImageStruct createFromParcel(Parcel source) {
+                return new ImageStruct(source);
+            }
+
+            @Override
+            public ImageStruct[] newArray(int size) {
+                return new ImageStruct[size];
+            }
+        };
     }
 }
