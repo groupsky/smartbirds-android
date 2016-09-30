@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.service;
 
 import android.content.ContentProviderOperation;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
@@ -14,6 +15,7 @@ import org.bspb.smartbirds.pro.events.DownloadCompleted;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingDownload;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Response;
@@ -54,7 +56,8 @@ public class NomenclatureService extends AbstractIntentService {
                 ArrayList<ContentProviderOperation> buffer = new ArrayList<>();
                 while (true) {
                     Response<ResponseListEnvelope<Nomenclature>> response = backend.api().nomenclatures(limit, offset).execute();
-                    if (!response.isSuccessful()) break;
+                    if (!response.isSuccessful())
+                        throw new IOException("Server error: " + response.code() + " - " + response.message());
                     if (response.body().data.isEmpty()) break;
                     for (Nomenclature nomenclature : response.body().data) {
                         // increase the offset
@@ -79,7 +82,8 @@ public class NomenclatureService extends AbstractIntentService {
                     offset = 0;
                     while (true) {
                         Response<ResponseListEnvelope<SpeciesNomenclature>> response = backend.api().species(limit, offset).execute();
-                        if (!response.isSuccessful()) break;
+                        if (!response.isSuccessful())
+                            throw new IOException("Server error: " + response.code() + " - " + response.message());
                         if (response.body().data.isEmpty()) break;
                         for (SpeciesNomenclature species : response.body().data) {
                             // increase the offset
@@ -103,6 +107,7 @@ public class NomenclatureService extends AbstractIntentService {
 
             } catch (Throwable t) {
                 logException(t);
+                Toast.makeText(this, "Could not download nomenclatures. Try again.", Toast.LENGTH_SHORT).show();
             }
             bus.post(new DownloadCompleted());
         } finally {
