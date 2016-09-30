@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -61,6 +62,7 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 public class UploadService extends IntentService {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".UploadService";
+    public static boolean isUploading;
 
     @Bean
     EEventBus eventBus;
@@ -82,16 +84,21 @@ public class UploadService extends IntentService {
     @ServiceAction
     void uploadAll() {
         Log.d(TAG, "uploading all finished monitorings");
+        isUploading = true;
         eventBus.post(new StartingUpload());
-        File baseDir = getExternalFilesDir(null);
-        for (String monitoring : baseDir.list()) {
-            if (!monitoring.endsWith("-up")) continue;
-            File monitoringDir = new File(baseDir, monitoring);
-            if (!monitoringDir.isDirectory()) continue;
-            upload(monitoringDir.getAbsolutePath());
+        try {
+            File baseDir = getExternalFilesDir(null);
+            for (String monitoring : baseDir.list()) {
+                if (!monitoring.endsWith("-up")) continue;
+                File monitoringDir = new File(baseDir, monitoring);
+                if (!monitoringDir.isDirectory()) continue;
+                upload(monitoringDir.getAbsolutePath());
+            }
+            NomenclatureService_.intent(this).updateNomenclatures().start();
+        } finally {
+            isUploading = false;
+            eventBus.post(new UploadCompleted());
         }
-        NomenclatureService_.intent(this).updateNomenclatures().start();
-        eventBus.post(new UploadCompleted());
     }
 
     @ServiceAction()
@@ -103,10 +110,24 @@ public class UploadService extends IntentService {
 
         try {
             uploadOnFtp(monitoringPath, monitoringName);
-            uploadOnServer(monitoringPath, monitoringName);
+            try {
+                uploadOnServer(monitoringPath, monitoringName);
+            } catch (Throwable t) {
+                logException(t);
+                Toast.makeText(
+                        this,
+                        String.format("Could not upload %s to server!\n" +
+                                "It is still uploaded on ftp.", monitoringName),
+                        Toast.LENGTH_SHORT).show();
+            }
             file.renameTo(new File(monitoringPath.replace("-up", "")));
         } catch (Throwable e) {
             logException(e);
+            Toast.makeText(
+                    this,
+                    String.format("Could not upload %s to ftp!\n" +
+                            "You will need to manually export.", monitoringName),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -123,7 +144,15 @@ public class UploadService extends IntentService {
                 return name.matches("Pic\\d+\\.jpg") || "track.gpx".equals(name);
             }
         })) {
-            fileObjs.put(subfile, uploadFile(new File(file, subfile)));
+            try {
+                fileObjs.put(subfile, uploadFile(new File(file, subfile)));
+            } catch (Throwable t) {
+                logException(t);
+                Toast.makeText(this,
+                        String.format("Could not upload %s of %s to server!\n" +
+                                "It is still uploaded on ftp.", subfile, monitoringName),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
         // then upload forms
@@ -156,7 +185,7 @@ public class UploadService extends IntentService {
                     Log.w(TAG, "Unhandled form file: " + subfile);
                     continue;
             }
-            uploadForm(new File(file, subfile), converter, uploader, fileObjs);
+            uploadForm(monitoringName, new File(file, subfile), converter, uploader, fileObjs);
         }
     }
 
@@ -174,46 +203,57 @@ public class UploadService extends IntentService {
         return fileObj;
     }
 
-    private void uploadForm(File file, Converter converter, Uploader uploader, Map<String, JsonObject> fileObjs) throws Exception {
+    private void uploadForm(String monitoringName, File file, Converter converter, Uploader uploader, Map<String, JsonObject> fileObjs) throws Exception {
         FileInputStream fis = new FileInputStream(file);
         try {
             CSVReader<String[]> csvReader = new CSVReaderBuilder<String[]>(new InputStreamReader(new BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(new SmartBirdsCSVEntryParser()).build();
             try {
                 List<String> header = csvReader.readHeader();
                 for (String[] row : csvReader) {
-                    HashMap<String, String> csv = new HashMap<>();
-                    Iterator<String> it = header.iterator();
-                    String columnName;
-                    for (int idx = 0; it.hasNext() && idx < row.length; idx++) {
-                        columnName = it.next();
-                        csv.put(columnName, row[idx]);
+                    try {
+                        HashMap<String, String> csv = new HashMap<>();
+                        Iterator<String> it = header.iterator();
+                        String columnName;
+                        for (int idx = 0; it.hasNext() && idx < row.length; idx++) {
+                            columnName = it.next();
+                            csv.put(columnName, row[idx]);
+                        }
+
+                        JsonObject data = converter.convert(csv);
+
+                        // convert pictures
+                        JsonArray pictures = new JsonArray();
+                        int idx = 0;
+                        while (true) {
+                            String fieldName = "Picture" + idx;
+                            idx++;
+                            if (!csv.containsKey(fieldName)) break;
+                            String filename = csv.get(fieldName);
+                            if (TextUtils.isEmpty(filename)) continue;
+                            JsonObject fileObj = fileObjs.get(filename);
+                            if (fileObj == null) {
+                                final String error = String.format("Missing image %s for %s", filename, monitoringName);
+                                logException(new IllegalStateException(error));
+                                Toast.makeText(this,
+                                        error,
+                                        Toast.LENGTH_SHORT).show();
+                                continue;
+                            }
+                            pictures.add(fileObj);
+                        }
+                        data.add("pictures", pictures);
+
+                        // convert gpx
+                        data.add("track", fileObjs.get("track.gpx").get("url"));
+
+                        Call<ResponseBody> call = uploader.upload(backend.api(), data);
+                        Response<ResponseBody> response = call.execute();
+                        if (!response.isSuccessful())
+                            throw new IOException("Couldn't upload form");
+                    } catch (Throwable t) {
+                        logException(t);
+                        Toast.makeText(this, String.format("Coult not upload all records of %s", monitoringName), Toast.LENGTH_SHORT).show();
                     }
-
-                    JsonObject data = converter.convert(csv);
-
-                    // convert pictures
-                    JsonArray pictures = new JsonArray();
-                    int idx = 0;
-                    while (true) {
-                        String fieldName = "Picture" + idx;
-                        idx++;
-                        if (!csv.containsKey(fieldName)) break;
-                        String filename = csv.get(fieldName);
-                        if (TextUtils.isEmpty(filename)) continue;
-                        JsonObject fileObj = fileObjs.get(filename);
-                        if (fileObj == null)
-                            throw new IllegalStateException("Missing file: " + filename);
-                        pictures.add(fileObj);
-                    }
-                    data.add("pictures", pictures);
-
-                    // convert gpx
-                    data.add("track", fileObjs.get("track.gpx").get("url"));
-
-                    Call<ResponseBody> call = uploader.upload(backend.api(), data);
-                    Response<ResponseBody> response = call.execute();
-                    if (!response.isSuccessful())
-                        throw new IOException("Couldn't upload form");
                 }
             } finally {
                 csvReader.close();
