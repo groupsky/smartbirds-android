@@ -1,11 +1,15 @@
 package org.bspb.smartbirds.pro.ui.utils;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
@@ -14,19 +18,28 @@ import org.androidannotations.annotations.RootContext;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
+import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures.CONTENT_URI;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 
 /**
  * Created by dani on 14-11-12.
@@ -86,7 +99,7 @@ public class NomenclaturesBean {
             }
 
             // sort nomenclatures
-            for (List<Nomenclature> nomenclatures: data.values()) {
+            for (List<Nomenclature> nomenclatures : data.values()) {
                 Collections.sort(nomenclatures, comparator);
             }
         } catch (Throwable t) {
@@ -94,10 +107,79 @@ public class NomenclaturesBean {
         }
     }
 
+    public Iterable<ContentValues> prepareNomenclatureCV(Iterable<Nomenclature> nomenclatures) {
+        LinkedList<ContentValues> cvs = new LinkedList<>();
+        for (Nomenclature nomenclature : nomenclatures) {
+            ContentValues cv = new ContentValues();
+            cv.put(TYPE, nomenclature.type);
+            cv.put(LABEL_BG, nomenclature.label.bg);
+            cv.put(LABEL_EN, nomenclature.label.en);
+            cvs.add(cv);
+        }
+        return cvs;
+    }
+
+    public Iterable<ContentValues> prepareSpeciesCV(Iterable<SpeciesNomenclature> speciesCollection) {
+        LinkedList<ContentValues> cvs = new LinkedList<>();
+        for (SpeciesNomenclature species : speciesCollection) {
+            ContentValues cv = new ContentValues();
+            cv.put(TYPE, "species_" + species.type);
+            cv.put(LABEL_BG, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.bg);
+            cv.put(LABEL_EN, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.en);
+            cvs.add(cv);
+        }
+        return cvs;
+    }
+
+    private int prepareCPO(Iterable<ContentValues> cvs, Collection<ContentProviderOperation> buffer) {
+        int count = 0;
+        for (ContentValues cv : cvs) {
+            // insert the nomenclature value
+            buffer.add(ContentProviderOperation.newInsert(CONTENT_URI)
+                    .withValues(cv)
+                    .build());
+            // increase the count
+            count++;
+        }
+        return count;
+    }
+
+    public int prepareNomenclatureCPO(Iterable<Nomenclature> nomenclatureItems, Collection<ContentProviderOperation> buffer) {
+        return prepareCPO(prepareNomenclatureCV(nomenclatureItems), buffer);
+    }
+
+    public int prepareSpeciesCPO(Iterable<SpeciesNomenclature> speciesItems, Collection<ContentProviderOperation> buffer) {
+        return prepareCPO(prepareSpeciesCV(speciesItems), buffer);
+    }
+
+    public Iterable<Nomenclature> loadBundledNomenclatures() {
+        return loadBundledFile("nomenclatures.json");
+    }
+
+    public Iterable<SpeciesNomenclature> loadBundledSpecies() {
+        return loadBundledFile("species.json");
+    }
+
+    private <T> Iterable<T> loadBundledFile(String filename) {
+        try {
+            InputStream is = new BufferedInputStream(context.getAssets().open(filename));
+            try {
+                return new Gson().fromJson(new InputStreamReader(is), new TypeToken<List<T>>() {
+                }.getType());
+            } finally {
+                is.close();
+            }
+        } catch (IOException e) {
+            Crashlytics.logException(e);
+            throw new IllegalStateException("Missing bundled file " + filename, e);
+        }
+    }
+
 
     public List<Nomenclature> getNomenclature(String key) {
         key = key.replaceFirst("^form_", "");
-        if (!data.containsKey(key)) throw new IllegalArgumentException("Unknown nomenclature "+key);
+        if (!data.containsKey(key))
+            throw new IllegalArgumentException("Unknown nomenclature " + key);
         return data.get(key);
     }
 
