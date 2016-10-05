@@ -49,6 +49,7 @@ import java.util.Date;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EFragment(R.layout.fragment_main)
 public class MainFragment extends Fragment {
@@ -158,8 +159,12 @@ public class MainFragment extends Fragment {
                     drawable = getResources().getDrawable(R.drawable.logo_bspb);
                     drawable = getResources().getDrawable(R.drawable.logo_mtel);
                 }
-                drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * density),
-                        (int) (drawable.getIntrinsicHeight() * density));
+                if (drawable == null) {
+                    logException(new IllegalArgumentException("Unknown image: "+s));
+                } else {
+                    drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * density),
+                            (int) (drawable.getIntrinsicHeight() * density));
+                }
                 return drawable;
 
             }
