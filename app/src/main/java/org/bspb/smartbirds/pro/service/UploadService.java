@@ -244,7 +244,11 @@ public class UploadService extends IntentService {
                         data.add("pictures", pictures);
 
                         // convert gpx
-                        data.add("track", fileObjs.get("track.gpx").get("url"));
+                        if (!fileObjs.containsKey("track.gpx")) {
+                            logException(new IllegalStateException("Missing track.gpx file"));
+                        } else {
+                            data.add("track", fileObjs.get("track.gpx").get("url"));
+                        }
 
                         Call<ResponseBody> call = uploader.upload(backend.api(), data);
                         Response<ResponseBody> response = call.execute();
