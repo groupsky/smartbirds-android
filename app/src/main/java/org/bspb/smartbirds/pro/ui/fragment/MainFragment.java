@@ -155,12 +155,16 @@ public class MainFragment extends Fragment {
             @Override
             public Drawable getDrawable(String s) {
                 Drawable drawable = null;
-                if ("logo_bspb".equals(s)) {
-                    drawable = getResources().getDrawable(R.drawable.logo_bspb);
-                    drawable = getResources().getDrawable(R.drawable.logo_mtel);
+                switch (s) {
+                    case "logo_bspb":
+                        drawable = getResources().getDrawable(R.drawable.logo_bspb);
+                        break;
+                    case "logo_mtel":
+                        drawable = getResources().getDrawable(R.drawable.logo_mtel);
+                        break;
                 }
                 if (drawable == null) {
-                    logException(new IllegalArgumentException("Unknown image: "+s));
+                    logException(new IllegalArgumentException("Unknown image: " + s));
                 } else {
                     drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * density),
                             (int) (drawable.getIntrinsicHeight() * density));
