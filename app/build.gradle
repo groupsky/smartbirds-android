@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
@@ -24,6 +24,11 @@ android {
     }
     buildTypes {
         ext.betaDistributionGroupAliases = "BSPB"
+
+        debug {
+            // Disable fabric build ID generation for debug builds
+            ext.enableCrashlytics = false
+        }
 
         release {
             minifyEnabled false
@@ -50,8 +55,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'de.greenrobot:eventbus:2.2.1'
-    //noinspection GradleDynamicVersion
-    compile 'com.crashlytics.android:crashlytics:1.+'
+    // Crashlytics Kit
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true
+    }
     compile 'com.googlecode.jcsv:jcsv:1.4.0'
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.maps.android:android-maps-utils:0.3.2'
