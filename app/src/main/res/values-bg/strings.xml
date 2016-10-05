@@ -46,7 +46,7 @@
     <string name="monitoring_common_time">Час</string>
     <string name="monitoring_common_place">Място</string>
     <string name="monitoring_common_end_date">Край:</string>
-    <string name="monitoring_common_observers">Наблюдатели</string>
+    <string name="monitoring_common_observers">Други наблюдатели</string>
     <string name="monitoring_common_rain">Дъжд</string>
     <string name="monitoring_common_temperature">Темп °C</string>
     <string name="monitoring_common_wind_strength">Сила на вятъра</string>

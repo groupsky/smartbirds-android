@@ -76,8 +76,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/monitoring_common_observers"
             android:inputType="text|textCapWords|textPersonName"
-            android:tag="@string/tag_observers"
-            app:required="true" />
+            android:tag="@string/tag_other_observers" />
 
         <View style="@style/FieldSeparator" />
 

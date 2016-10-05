@@ -8,5 +8,5 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 @SharedPref
 public interface CommonPrefs {
 
-    String commonObservers();
+    String commonOtherObservers();
 }
