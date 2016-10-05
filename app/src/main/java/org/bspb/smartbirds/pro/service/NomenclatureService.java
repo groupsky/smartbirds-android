@@ -14,19 +14,16 @@ import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
 import org.bspb.smartbirds.pro.events.DownloadCompleted;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingDownload;
+import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Response;
 
-import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
-import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
-import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.AUTHORITY;
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures.CONTENT_URI;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 
 /**
  * Created by groupsky on 27.09.16.
@@ -40,6 +37,8 @@ public class NomenclatureService extends AbstractIntentService {
     Backend backend;
     @Bean
     EEventBus bus;
+    @Bean
+    NomenclaturesBean nomenclaturesBean;
 
     public NomenclatureService() {
         super("NomenclatureService");
@@ -59,17 +58,7 @@ public class NomenclatureService extends AbstractIntentService {
                     if (!response.isSuccessful())
                         throw new IOException("Server error: " + response.code() + " - " + response.message());
                     if (response.body().data.isEmpty()) break;
-                    for (Nomenclature nomenclature : response.body().data) {
-                        // increase the offset
-                        offset++;
-
-                        // insert the nomenclature value
-                        buffer.add(ContentProviderOperation.newInsert(CONTENT_URI)
-                                .withValue(TYPE, nomenclature.type)
-                                .withValue(LABEL_BG, nomenclature.label.bg)
-                                .withValue(LABEL_EN, nomenclature.label.en)
-                                .build());
-                    }
+                    offset += nomenclaturesBean.prepareNomenclatureCPO(response.body().data, buffer);
                 }
 
                 // if we received nomenclatures
@@ -85,17 +74,7 @@ public class NomenclatureService extends AbstractIntentService {
                         if (!response.isSuccessful())
                             throw new IOException("Server error: " + response.code() + " - " + response.message());
                         if (response.body().data.isEmpty()) break;
-                        for (SpeciesNomenclature species : response.body().data) {
-                            // increase the offset
-                            offset++;
-
-                            // insert the nomenclature value
-                            buffer.add(ContentProviderOperation.newInsert(CONTENT_URI)
-                                    .withValue(TYPE, "species_" + species.type)
-                                    .withValue(LABEL_BG, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.bg)
-                                    .withValue(LABEL_EN, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.en)
-                                    .build());
-                        }
+                        offset += nomenclaturesBean.prepareSpeciesCPO(response.body().data, buffer);
                     }
 
                     // if we received nomenclatures
