@@ -94,8 +94,10 @@ public class NewMonitoringEntryActivity extends Activity {
         if (EntryType.CICONIA.equals(event.entryType)) {
             intent.putExtra(EXTRA_NAME, getString(R.string.entry_type_ciconia));
         } else {
-            if (event.data.containsKey("Вид_научно_име")) {
-                intent.putExtra(EXTRA_NAME, event.data.get("Вид_научно_име"));
+            if (event.data.containsKey(getString(R.string.tag_species_scientific_name))) {
+                intent.putExtra(EXTRA_NAME, event.data.get(getString(R.string.tag_species_scientific_name)));
+            } else if (event.data.containsKey(getString(R.string.tag_observed_bird))) {
+                intent.putExtra(EXTRA_NAME, event.data.get(getString(R.string.tag_observed_bird)));
             }
         }
         setResult(RESULT_OK, intent);
