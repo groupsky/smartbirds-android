@@ -24,12 +24,18 @@ public class LoginResponse {
     @Nullable
     public String error;
 
+    @SerializedName("user")
+    @Expose
+    public User user;
+
     @Override
     public String toString() {
         return "LoginResponse{" +
                 "token='" + token + '\'' +
                 ", success=" + success +
                 ", error='" + error + '\'' +
+                ", user=" + user +
                 '}';
     }
+
 }

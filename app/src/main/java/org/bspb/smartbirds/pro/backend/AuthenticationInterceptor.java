@@ -13,7 +13,7 @@ import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.AuthenticationService_;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class AuthenticationInterceptor implements Interceptor {
     Context context;
 
     @Pref
-    SmartBirdsPrefs_ prefs;
+    UserPrefs_ prefs;
 
     @Bean
     Backend backend;
@@ -53,8 +53,7 @@ public class AuthenticationInterceptor implements Interceptor {
 
     public void clearAuthorization() {
         this.authorization = null;
-        prefs.authToken().remove();
-        prefs.password().remove();
+        prefs.clear();
         prefs.isAuthenticated().put(false);
     }
 

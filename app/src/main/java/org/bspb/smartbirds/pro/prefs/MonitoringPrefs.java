@@ -5,7 +5,7 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 /**
  * Created by dani on 14-11-19.
  */
-@SharedPref
+@SharedPref(SharedPref.Scope.UNIQUE)
 public interface MonitoringPrefs {
 
     String mapType();

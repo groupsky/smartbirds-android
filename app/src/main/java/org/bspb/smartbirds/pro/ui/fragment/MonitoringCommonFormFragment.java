@@ -5,7 +5,6 @@ import android.app.Fragment;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
@@ -16,6 +15,7 @@ import org.bspb.smartbirds.pro.events.GetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 import org.bspb.smartbirds.pro.ui.views.DateFormInput;
 import org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput;
@@ -38,10 +38,10 @@ public class MonitoringCommonFormFragment extends Fragment {
     TimeFormInput startTimeView;
     @ViewById(R.id.form_common_end_date)
     DateFormInput endDateView;
-    @FragmentArg("new_monitoring")
-    boolean newMonitoring;
     @Pref
     CommonPrefs_ prefs;
+    @Pref
+    UserPrefs_ userPrefs;
     @ViewById(R.id.observers)
     MultipleTextFormInput observers;
 
@@ -49,20 +49,19 @@ public class MonitoringCommonFormFragment extends Fragment {
     public void onStart() {
         super.onStart();
         bus.register(this);
-        if (!newMonitoring)
-            bus.post(new GetMonitoringCommonData());
+        bus.post(new GetMonitoringCommonData());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        observers.setText(prefs.commonObservers().get());
+        observers.setText(prefs.commonOtherObservers().get());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        prefs.commonObservers().put(observers.getText().toString());
+        prefs.commonOtherObservers().put(observers.getText().toString());
     }
 
     @Override
@@ -74,21 +73,25 @@ public class MonitoringCommonFormFragment extends Fragment {
     @AfterViews
     void loadSavedData() {
         form = FormUtils.traverseForm(getView());
-        if (newMonitoring) {
-            startDateView.setValue(Calendar.getInstance());
-            startTimeView.setValue(Calendar.getInstance());
-            endDateView.setValue(Calendar.getInstance());
-        }
+        startDateView.setValue(Calendar.getInstance());
+        startTimeView.setValue(Calendar.getInstance());
+        endDateView.setValue(Calendar.getInstance());
     }
 
     @OptionsItem(R.id.action_submit)
     public void save() {
         HashMap<String, String> data = form.serialize();
+        data.put(getString(R.string.tag_user_id), userPrefs.userId().get());
+        data.put(getString(R.string.tag_user_first_name), userPrefs.firstName().get());
+        data.put(getString(R.string.tag_user_last_name), userPrefs.lastName().get());
+        data.put(getString(R.string.tag_user_email), userPrefs.email().get());
         bus.post(new SetMonitoringCommonData(data));
     }
 
     public void onEventMainThread(MonitoringCommonData event) {
-        form.deserialize(event.data);
+        if (event.data != null && !event.data.isEmpty()) {
+            form.deserialize(event.data);
+        }
     }
 
     public boolean validate() {

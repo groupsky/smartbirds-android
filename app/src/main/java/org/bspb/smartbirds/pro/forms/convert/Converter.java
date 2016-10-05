@@ -46,7 +46,7 @@ public abstract class Converter {
         add(R.string.monitoring_id, "monitoringCode");
         addDateTime(R.string.tag_begin_date, R.string.tag_begin_time, "startDateTime");
         addDateTime(R.string.tag_end_date, R.string.tag_end_time, "endDateTime");
-        add(R.string.tag_observers, "observers");
+        add(R.string.tag_other_observers, "observers");
         addSingle(R.string.tag_rain, "rain");
         add(R.string.tag_temperature, "temperature");
         addSingle(R.string.tag_wind_direction, "windDirection");

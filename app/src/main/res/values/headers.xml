@@ -7,7 +7,7 @@
     <string name="tag_location" translatable="false">Location</string>
     <string name="tag_end_date" translatable="false">Date_End</string>
     <string name="tag_end_time" translatable="false">Hour_End</string>
-    <string name="tag_observers" translatable="false">Observers</string>
+    <string name="tag_other_observers" translatable="false">otherObservers</string>
     <string name="tag_rain" translatable="false">Rain</string>
     <string name="tag_temperature" translatable="false">Temperature_C</string>
     <string name="tag_wind_strength" translatable="false">Wind_Strength</string>
@@ -101,5 +101,10 @@
 
     <string name="tag_lat" translatable="false">Lat</string>
     <string name="tag_lon" translatable="false">Long</string>
+
+    <string name="tag_user_id" translatable="false">userId</string>
+    <string name="tag_user_first_name" translatable="false">firstName</string>
+    <string name="tag_user_last_name">lastName</string>
+    <string name="tag_user_email">email</string>
 
 </resources>

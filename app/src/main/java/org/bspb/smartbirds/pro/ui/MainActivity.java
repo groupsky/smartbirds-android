@@ -14,7 +14,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LogoutEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     EEventBus bus;
 
     @Pref
-    SmartBirdsPrefs_ prefs;
+    UserPrefs_ prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

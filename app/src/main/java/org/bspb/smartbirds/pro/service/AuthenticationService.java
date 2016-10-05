@@ -28,7 +28,7 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
  * Created by dani on 08.08.16.
  */
 @EIntentService
-public class AuthenticationService  extends AbstractIntentService {
+public class AuthenticationService extends AbstractIntentService {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".AuthenticationSvc";
     @Pref
@@ -56,22 +56,22 @@ public class AuthenticationService  extends AbstractIntentService {
         Log.d(TAG, String.format("login: %s %s", email, password));
         bus.postSticky(new LoginStateEvent(true));
         try {
-            LoginResultEvent.Status status = doLogin(email, password);
-            Log.d(TAG, String.format("login: %s %s => %s", email, password, status));
-            bus.postSticky(new LoginResultEvent(status));
+            LoginResultEvent result = doLogin(email, password);
+            Log.d(TAG, String.format("login: %s %s => %s", email, password, result));
+            bus.postSticky(result);
         } finally {
             bus.postSticky(new LoginStateEvent(false));
         }
     }
 
-    private LoginResultEvent.Status doLogin(String email, String password)  {
+    private LoginResultEvent doLogin(String email, String password) {
 
         Response<LoginResponse> response = null;
         try {
             response = backend.api().login(new LoginRequest(email, password)).execute();
         } catch (IOException e) {
             logException(e);
-            return LoginResultEvent.Status.CONNECTIVITY;
+            return new LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY);
         }
 
         if (!response.isSuccessful()) {
@@ -82,11 +82,11 @@ public class AuthenticationService  extends AbstractIntentService {
             }
             switch (response.code()) {
                 case Backend.HTTP_STATUS_BAD_REQUEST:
-                    return LoginResultEvent.Status.BAD_PASSWORD;
+                    return new LoginResultEvent(LoginResultEvent.Status.BAD_PASSWORD);
                 case Backend.HTTP_STATUS_UNAUTHORIZED:
-                    return LoginResultEvent.Status.BAD_PASSWORD;
+                    return new LoginResultEvent(LoginResultEvent.Status.BAD_PASSWORD);
                 default:
-                    return LoginResultEvent.Status.CONNECTIVITY;
+                    return new LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY);
             }
         }
 
@@ -94,6 +94,6 @@ public class AuthenticationService  extends AbstractIntentService {
 
         NomenclatureService_.intent(this).updateNomenclatures().start();
 
-        return LoginResultEvent.Status.SUCCESS;
+        return new LoginResultEvent(response.body().user);
     }
 }
