@@ -22,20 +22,20 @@ import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.osmdroid.bonuspack.kml.KmlDocument;
-import org.osmdroid.bonuspack.overlays.FolderOverlay;
-import org.osmdroid.bonuspack.overlays.InfoWindow;
-import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
-import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
-import org.osmdroid.bonuspack.overlays.Marker;
+import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.FolderOverlay;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.MapEventsOverlay;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.PathOverlay;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
+import org.osmdroid.views.overlay.infowindow.InfoWindow;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
@@ -84,11 +84,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     private void setUpMap() {
         mMap.setMultiTouchControls(true);
-        mMap.setTileSource(TileSourceFactory.MAPQUESTOSM);
+        mMap.setTileSource(TileSourceFactory.MAPNIK);
         mMap.setBuiltInZoomControls(true);
         mMap.getController().setZoom(16);
 
-        locationOverlay = new MyLocationNewOverlay(fragment.getActivity(), mMap) {
+        locationOverlay = new MyLocationNewOverlay(mMap) {
             @Override
             public void onLocationChanged(Location location, IMyLocationProvider source) {
                 super.onLocationChanged(location, source);
@@ -101,7 +101,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         locationOverlay.setDrawAccuracyEnabled(true);
 
-        ScaleBarOverlay scaleBarOverlay = new ScaleBarOverlay(fragment.getActivity());
+        ScaleBarOverlay scaleBarOverlay = new ScaleBarOverlay(mMap);
         scaleBarOverlay.setUnitsOfMeasure(ScaleBarOverlay.UnitsOfMeasure.metric);
         scaleBarOverlay.setEnableAdjustLength(true);
 
