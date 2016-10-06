@@ -9,6 +9,7 @@ import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
 import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
+import org.bspb.smartbirds.pro.backend.dto.Zone;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -49,4 +50,7 @@ public interface SmartBirdsApi {
     @Multipart
     @POST("storage")
     Call<ResponseEnvelope<FileId>> upload(@Part MultipartBody.Part file);
+
+    @GET("zone?limit=-1&nomenclature=false&status=owned")
+    Call<ResponseListEnvelope<Zone>> listZones();
 }

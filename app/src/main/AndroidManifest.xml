@@ -138,6 +138,14 @@
         <service
             android:name=".service.NomenclatureService_"
             android:exported="false" />
+
+        <service
+            android:name=".service.ZoneService_"
+            android:exported="false" />
+
+        <service
+            android:name=".service.SyncService_"
+            android:exported="false" />
     </application>
 
 </manifest>

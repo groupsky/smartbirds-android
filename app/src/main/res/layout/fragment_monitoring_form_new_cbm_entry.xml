@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TableLayout
@@ -58,6 +58,12 @@
             </TableRow>
 
             <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
+                    android:id="@+id/form_cbm_zone"
+                    android:hint="@string/monitoring_cbm_zone"
+                    android:tag="@string/tag_zone"
+                    app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_visit_number"

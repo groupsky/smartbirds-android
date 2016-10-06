@@ -7,6 +7,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.prefs.CbmPrefs_;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
+import org.bspb.smartbirds.pro.ui.views.ZoneFormInput;
 
 /**
  * Created by dani on 14-11-11.
@@ -26,6 +27,9 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @ViewById(R.id.form_cbm_sector)
     SingleChoiceFormInput sectorInput;
 
+    @ViewById(R.id.form_cbm_zone)
+    ZoneFormInput zoneInput;
+
     @Pref
     CbmPrefs_ prefs;
 
@@ -41,6 +45,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         secondaryHabitatInput.setText(prefs.cbmSecondaryHabitat().get());
         visitInput.setText(prefs.cbmVisit().get());
         sectorInput.setText(prefs.cbmSector().get());
+        zoneInput.setText(prefs.cbmZone().get());
     }
 
     @Override
@@ -50,5 +55,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         prefs.cbmSecondaryHabitat().put(secondaryHabitatInput.getText().toString());
         prefs.cbmVisit().put(visitInput.getText().toString());
         prefs.cbmSector().put(sectorInput.getText().toString());
+        prefs.cbmZone().put(zoneInput.getText().toString());
     }
 }

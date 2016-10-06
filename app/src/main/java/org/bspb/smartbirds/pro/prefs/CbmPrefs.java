@@ -16,4 +16,6 @@ public interface CbmPrefs {
 
     String cbmSector();
 
+    String cbmZone();
+
 }
