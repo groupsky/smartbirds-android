@@ -17,6 +17,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
+import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.NewCbmEntryFormFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.NewCiconiaEntryFormFragment_;
@@ -45,6 +46,7 @@ public class NewMonitoringEntryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
+        DataService_.intent(this).start();
     }
 
     @AfterViews

@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,10 +12,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -23,8 +27,10 @@ import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewsById;
+import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
@@ -32,6 +38,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
+import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
@@ -43,6 +50,7 @@ import java.util.List;
  * Created by dani on 14-11-12.
  */
 @EFragment
+@OptionsMenu(R.menu.debug_menu)
 public abstract class BaseEntryFragment extends Fragment {
 
     protected static final String ARG_LAT = "lat";
@@ -64,6 +72,8 @@ public abstract class BaseEntryFragment extends Fragment {
 
     @OptionsMenuItem(R.id.take_picture)
     MenuItem takePicture;
+    @OptionsMenuItem(R.id.action_crash)
+    MenuItem menuCrash;
 
     @InstanceState
     protected ImageStruct[] images = new ImageStruct[3];
@@ -78,6 +88,12 @@ public abstract class BaseEntryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        DataService_.intent(context).start();
     }
 
     @Override
@@ -126,6 +142,17 @@ public abstract class BaseEntryFragment extends Fragment {
         currentImage = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
         Intent intent = new Intent(INTENT_TAKE_PICTURE).putExtra(MediaStore.EXTRA_OUTPUT, event.uri);
         startActivityForResult(intent, REQUEST_TAKE_PICTURE);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menuCrash.setVisible(BuildConfig.DEBUG);
+    }
+
+    @OptionsItem(R.id.action_crash)
+    void crash() {
+        Crashlytics.getInstance().crash();
     }
 
     @OnActivityResult(REQUEST_TAKE_PICTURE)

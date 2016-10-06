@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterViews;
@@ -14,6 +15,7 @@ import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
 
@@ -26,6 +28,12 @@ public class StartMonitoringActivity extends Activity {
     @Bean
     EEventBus bus;
     MonitoringCommonFormFragment formFragment;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DataService_.intent(this).start();
+    }
 
     @AfterViews
     void createFragment() {

@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -16,6 +17,7 @@ import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 import org.bspb.smartbirds.pro.ui.views.DateFormInput;
 import org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput;
@@ -46,10 +48,16 @@ public class MonitoringCommonFormFragment extends Fragment {
     MultipleTextFormInput observers;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        DataService_.intent(context).start();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         bus.register(this);
-        bus.post(new GetMonitoringCommonData());
+        bus.postSticky(new GetMonitoringCommonData());
     }
 
     @Override
