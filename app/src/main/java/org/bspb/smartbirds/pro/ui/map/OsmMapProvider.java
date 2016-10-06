@@ -251,13 +251,15 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void addMarker(MapMarker mapMarker) {
-        Marker marker = lastMarker = new Marker(mMap);
-        marker.setPosition(new GeoPoint(mapMarker.getLatitude(), mapMarker.getLongitude()));
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        marker.setTitle(mapMarker.getTitle());
-        marker.setPanToView(false);
-        mMap.getOverlays().add(marker);
-        mMap.invalidate();
+        if (mMap != null) {
+            Marker marker = lastMarker = new Marker(mMap);
+            marker.setPosition(new GeoPoint(mapMarker.getLatitude(), mapMarker.getLongitude()));
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            marker.setTitle(mapMarker.getTitle());
+            marker.setPanToView(false);
+            mMap.getOverlays().add(marker);
+            mMap.invalidate();
+        }
     }
 
     @Override

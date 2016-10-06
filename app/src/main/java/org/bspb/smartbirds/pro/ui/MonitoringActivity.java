@@ -6,12 +6,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.androidannotations.annotations.AfterInject;
@@ -24,6 +27,7 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.sharedpreferences.Pref;
+import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.enums.EntryType;
@@ -36,6 +40,7 @@ import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -47,7 +52,7 @@ import java.util.ArrayList;
  * Created by dani on 14-11-4.
  */
 @EActivity(R.layout.activity_monitoring)
-@OptionsMenu(R.menu.monitoring)
+@OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
 public class MonitoringActivity extends FragmentActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
@@ -96,6 +101,8 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuFormTypeCiconia;
     @OptionsMenuItem(R.id.action_form_type_herp)
     MenuItem menuFormTypeHerp;
+    @OptionsMenuItem(R.id.action_crash)
+    MenuItem menuCrash;
     @InstanceState
     int lastEntryTypePosition = -1;
 
@@ -115,6 +122,12 @@ public class MonitoringActivity extends FragmentActivity {
     void init() {
         restoreState();
         showCurrentMap();
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DataService_.intent(this).start();
     }
 
     @Override
@@ -141,6 +154,7 @@ public class MonitoringActivity extends FragmentActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        menuCrash.setVisible(BuildConfig.DEBUG);
         switch (zoomFactor) {
             case 1000:
                 menuZoom.setTitle(R.string.menu_monitoring_zoom_1000);
@@ -230,6 +244,7 @@ public class MonitoringActivity extends FragmentActivity {
         markers.add(marker);
         currentMap.addMarker(marker);
         menuUndoEntry.setEnabled(true);
+        persistState();
     }
 
     @OptionsItem(R.id.action_finish)
@@ -380,6 +395,7 @@ public class MonitoringActivity extends FragmentActivity {
 
         points.add(new LatLng(location.getLatitude(), location.getLongitude()));
         currentMap.updatePath(points);
+        persistState();
     }
 
     public void onEvent(MapClickedEvent event) {
@@ -445,6 +461,12 @@ public class MonitoringActivity extends FragmentActivity {
         eventBus.post(new UndoLastEntry());
         markers.remove(markers.size() - 1);
         currentMap.removeLastMarker();
+        persistState();
+    }
+
+    @OptionsItem(R.id.action_crash)
+    void crash() {
+        Crashlytics.getInstance().crash();
     }
 
     @Override

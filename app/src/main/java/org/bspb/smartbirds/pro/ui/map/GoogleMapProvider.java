@@ -130,8 +130,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         if (markers != null && !markers.isEmpty()) {
             for (MapMarker marker : markers) {
-                MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(marker.getLatitude(), marker.getLongitude())).title(marker.getTitle());
-                mMap.addMarker(markerOptions);
+                addMarker(marker);
             }
         }
 

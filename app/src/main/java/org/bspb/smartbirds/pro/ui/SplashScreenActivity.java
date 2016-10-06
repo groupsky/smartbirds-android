@@ -50,7 +50,6 @@ public class SplashScreenActivity extends Activity implements Runnable {
     @Override
     public void run() {
         if (prefs.runningMonitoring().get()) {
-            NotificationUtils.showMonitoringNotification(this);
             DataService_.intent(this).start();
             startActivities(new Intent[]{MainActivity_.intent(SplashScreenActivity.this).get(), MonitoringActivity_.intent(SplashScreenActivity.this).get()});
         } else {

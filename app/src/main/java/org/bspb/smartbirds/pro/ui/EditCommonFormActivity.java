@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -8,6 +9,7 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
 
@@ -20,6 +22,12 @@ public class EditCommonFormActivity extends Activity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
     MonitoringCommonFormFragment formFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DataService_.intent(this).start();
+    }
 
     @AfterViews
     void createFragment() {

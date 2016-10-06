@@ -112,6 +112,7 @@ public class DataService extends Service {
     public void onDestroy() {
         Log.d(TAG, "destroying...");
         bus.unregister(this);
+        if (monitoring) DataService_.intent(this).start();
 
         super.onDestroy();
     }
@@ -119,10 +120,14 @@ public class DataService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand...");
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
-    public void onEvent(StartMonitoringEvent event) {
+    public void onEvent(@SuppressWarnings("UnusedParameters") StartMonitoringEvent event) {
+        if (monitoring) {
+            bus.postSticky(new MonitoringStartedEvent());
+            return;
+        }
         globalPrefs.runningMonitoring().put(true);
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
@@ -161,6 +166,7 @@ public class DataService extends Service {
         File file = new File(monitoringDir, "track.gpx");
         try {
             OutputStreamWriter osw = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file, false)));
+            //noinspection TryFinallyCanBeTryWithResources
             try {
                 osw.write(
                         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -174,6 +180,7 @@ public class DataService extends Service {
                                 "  </metadata>\n" +
                                 "  <trk>\n");
             } finally {
+                //noinspection ThrowFromFinallyBlock
                 osw.close();
             }
         } catch (IOException e) {
@@ -188,12 +195,17 @@ public class DataService extends Service {
         return uuid.substring(uuid.length() - 12);
     }
 
-    public void onEvent(CancelMonitoringEvent event) {
+    public void onEvent(@SuppressWarnings("UnusedParameters") CancelMonitoringEvent event) {
         Log.d(TAG, "onCancelMonitoringEvent...");
         NotificationUtils.hideMonitoringNotification(getApplicationContext());
 
         resetBufferedEntity();
         TrackingService_.intent(this).stop();
+
+        File newDir = new File(monitoringDir.getAbsolutePath().replace("-wip", "-cancel"));
+        //noinspection ResultOfMethodCallIgnored
+        monitoringDir.renameTo(newDir);
+
         monitoring = false;
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
         clearPrefs();
@@ -207,7 +219,7 @@ public class DataService extends Service {
         persistCommonData();
     }
 
-    public void onEvent(FinishMonitoringEvent event) {
+    public void onEvent(@SuppressWarnings("UnusedParameters") FinishMonitoringEvent event) {
         if (commonData.containsKey(getResources().getString(R.string.end_time_key))) {
             if (TextUtils.isEmpty(commonData.get(getResources().getString(R.string.end_time_key)))) {
                 commonData.put(getResources().getString(R.string.end_time_key), Configuration.STORAGE_TIME_FORMAT.format(new Date()));
@@ -223,6 +235,7 @@ public class DataService extends Service {
         combineCommonWithEntires();
 
         File newDir = new File(monitoringDir.getAbsolutePath().replace("-wip", "-up"));
+        //noinspection ResultOfMethodCallIgnored
         monitoringDir.renameTo(newDir);
 
         monitoring = false;
@@ -240,29 +253,39 @@ public class DataService extends Service {
                     continue;
                 String[] commonLines = convertToCsvLines(commonData);
 
-                BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
                 File tempFile = new File(monitoringDir, "combined_entries.csv");
-                BufferedWriter outWriter = new BufferedWriter(new FileWriter(tempFile));
+
+                BufferedReader entriesReader = new BufferedReader(new FileReader(entriesFile));
+                //noinspection TryFinallyCanBeTryWithResources
                 try {
-                    boolean firstLine = true;
-                    String entry;
-                    while ((entry = entriesReader.readLine()) != null) {
-                        if (firstLine) {
-                            outWriter.write(commonLines[0]);
-                            firstLine = false;
-                        } else {
-                            outWriter.write(commonLines[1]);
+                    BufferedWriter outWriter = new BufferedWriter(new FileWriter(tempFile));
+                    //noinspection TryFinallyCanBeTryWithResources
+                    try {
+                        boolean firstLine = true;
+                        String entry;
+                        while ((entry = entriesReader.readLine()) != null) {
+                            if (firstLine) {
+                                outWriter.write(commonLines[0]);
+                                firstLine = false;
+                            } else {
+                                outWriter.write(commonLines[1]);
+                            }
+                            outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
+                            outWriter.write(entry);
+                            outWriter.newLine();
                         }
-                        outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
-                        outWriter.write(entry);
-                        outWriter.newLine();
+                    } finally {
+                        //noinspection ThrowFromFinallyBlock
+                        outWriter.close();
                     }
                 } finally {
-                    outWriter.close();
+                    //noinspection ThrowFromFinallyBlock
                     entriesReader.close();
                 }
 
+                //noinspection ResultOfMethodCallIgnored
                 entriesFile.delete();
+                //noinspection ResultOfMethodCallIgnored
                 tempFile.renameTo(entriesFile);
             }
         } catch (Throwable t) {
@@ -274,10 +297,11 @@ public class DataService extends Service {
         StringWriter memory = new StringWriter();
         try {
             CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(memory).strategy(CSVStrategy.DEFAULT).entryConverter(new SmartBirdsCSVEntryConverter()).build();
-            csvWriter.write(commonData.keySet().toArray(new String[]{}));
-            csvWriter.write(commonData.values().toArray(new String[]{}));
+            csvWriter.write(data.keySet().toArray(new String[]{}));
+            csvWriter.write(data.values().toArray(new String[]{}));
             memory.flush();
         } finally {
+            //noinspection ThrowFromFinallyBlock
             memory.close();
         }
         String commonData = memory.getBuffer().toString();
@@ -299,18 +323,21 @@ public class DataService extends Service {
 
         File file = getEntriesFile(event.entryType);
         boolean exists = file.exists();
-        FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(file, true);
-            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file, true));
             CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(osw).strategy(CSVStrategy.DEFAULT).entryConverter(new SmartBirdsCSVEntryConverter()).build();
+            try {
 
-            if (!exists)
-                csvWriter.write(data.keySet().toArray(new String[]{}));
-            csvWriter.write(data.values().toArray(new String[]{}));
+                if (!exists)
+                    csvWriter.write(data.keySet().toArray(new String[]{}));
+                csvWriter.write(data.values().toArray(new String[]{}));
 
-            csvWriter.flush();
-            csvWriter.close();
+            } finally {
+                //noinspection ThrowFromFinallyBlock
+                csvWriter.flush();
+                //noinspection ThrowFromFinallyBlock
+                csvWriter.close();
+            }
         } catch (java.io.IOException e) {
             Crashlytics.logException(e);
             e.printStackTrace();
@@ -338,6 +365,7 @@ public class DataService extends Service {
                 throw new IllegalArgumentException("Unsupported entry type");
         }
         File file = new File(monitoringDir, filename);
+        //noinspection ResultOfMethodCallIgnored
         file.setReadable(true);
         return file;
     }
@@ -349,6 +377,7 @@ public class DataService extends Service {
             File file = new File(monitoringDir, "track.gpx");
             try {
                 Writer osw = new BufferedWriter(new FileWriter(file, true));
+                //noinspection TryFinallyCanBeTryWithResources
                 try {
                     osw.write(
                             "    <trkseg>\n" +
@@ -358,6 +387,7 @@ public class DataService extends Service {
                                     "      </trkpt>\n" +
                                     "    </trkseg>\n");
                 } finally {
+                    //noinspection ThrowFromFinallyBlock
                     osw.close();
                 }
             } catch (IOException e) {
@@ -371,11 +401,13 @@ public class DataService extends Service {
             File file = new File(monitoringDir, "track.gpx");
             try {
                 Writer osw = new BufferedWriter(new FileWriter(file, true));
+                //noinspection TryFinallyCanBeTryWithResources
                 try {
                     osw.write(
                             "  </trk>\n" +
                                     "</gpx>\n");
                 } finally {
+                    //noinspection ThrowFromFinallyBlock
                     osw.close();
                 }
             } catch (IOException e) {
@@ -384,10 +416,10 @@ public class DataService extends Service {
         }
     }
 
-    public void onEvent(CreateImageFile event) {
+    public void onEvent(@SuppressWarnings("UnusedParameters") CreateImageFile event) {
         // Create an image file name
         int cnt = 100;
-        while (cnt-->0) {
+        while (cnt-- > 0) {
             String index = Integer.toString(pictureCounter++);
             dataServicePrefs.pictureCounter().put(pictureCounter);
             while (index.length() < 4) index = '0' + index;
@@ -406,11 +438,11 @@ public class DataService extends Service {
         bus.post(new ImageFileCreatedFailed());
     }
 
-    public void onEvent(GetMonitoringCommonData event) {
+    public void onEvent(@SuppressWarnings("UnusedParameters") GetMonitoringCommonData event) {
         bus.post(new MonitoringCommonData(commonData));
     }
 
-    public void onEvent(UndoLastEntry event) {
+    public void onEvent(@SuppressWarnings("UnusedParameters") UndoLastEntry event) {
         resetBufferedEntity();
     }
 
@@ -423,6 +455,7 @@ public class DataService extends Service {
             TrackingService_.intent(this).start();
             restoreBufferedEntity();
             restoreCommonData();
+            NotificationUtils.showMonitoringNotification(getApplicationContext());
         }
     }
 
@@ -431,6 +464,7 @@ public class DataService extends Service {
         if (entryPrefs.contains("entryType")) {
             EntryType entryType = EntryType.valueOf(entryPrefs.getString("entryType", ""));
 
+            //noinspection unchecked
             HashMap<String, String> prefsValues = (HashMap<String, String>) entryPrefs.getAll();
             prefsValues.remove("entryType");
 
@@ -441,9 +475,10 @@ public class DataService extends Service {
     private void restoreCommonData() {
         SharedPreferences commonDataPrefs = getSharedPreferences(PREFS_COMMON_DATA, Context.MODE_PRIVATE);
 
-        Map<String, String> prefsValues = (Map<String, String>) commonDataPrefs.getAll();
+        //noinspection unchecked
+        HashMap<String, String> prefsValues = (HashMap<String, String>) commonDataPrefs.getAll();
         if (prefsValues != null && !prefsValues.isEmpty()) {
-            commonData = (HashMap<String, String>) prefsValues;
+            commonData = prefsValues;
         }
     }
 
@@ -455,7 +490,7 @@ public class DataService extends Service {
         for (Map.Entry<String, String> entry : bufferedEntry.data.entrySet()) {
             editor.putString(entry.getKey(), entry.getValue());
         }
-        editor.commit();
+        editor.apply();
     }
 
     private void persistCommonData() {
@@ -465,19 +500,19 @@ public class DataService extends Service {
         for (Map.Entry<String, String> entry : commonData.entrySet()) {
             editor.putString(entry.getKey(), entry.getValue());
         }
-        editor.commit();
+        editor.apply();
     }
 
     private void resetBufferedEntity() {
         bufferedEntry = null;
         SharedPreferences entryPrefs = getSharedPreferences(PREFS_ENTRY, Context.MODE_PRIVATE);
-        entryPrefs.edit().clear().commit();
+        entryPrefs.edit().clear().apply();
     }
 
     private void clearPrefs() {
         globalPrefs.runningMonitoring().put(false);
         dataServicePrefs.clear();
         SharedPreferences commonDataPrefs = getSharedPreferences(PREFS_COMMON_DATA, Context.MODE_PRIVATE);
-        commonDataPrefs.edit().clear().commit();
+        commonDataPrefs.edit().clear().apply();
     }
 }
