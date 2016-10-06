@@ -9,7 +9,6 @@ import android.database.Cursor;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
@@ -27,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -160,12 +160,14 @@ public class NomenclaturesBean {
         return loadBundledFile("species.json");
     }
 
-    private <T> Iterable<T> loadBundledFile(String filename) {
+    @SafeVarargs
+    private final <T> Iterable<T> loadBundledFile(final String filename,
+                                                  // this is a hack to get a concrete array class on the T and bypass the type erasue
+                                                  final T... arrayType) {
         try {
             InputStream is = new BufferedInputStream(context.getAssets().open(filename));
             try {
-                return new Gson().fromJson(new InputStreamReader(is), new TypeToken<List<T>>() {
-                }.getType());
+                return Arrays.asList((T[]) new Gson().fromJson(new InputStreamReader(is), arrayType.getClass()));
             } finally {
                 is.close();
             }
