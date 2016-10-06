@@ -1,16 +1,17 @@
 package org.bspb.smartbirds.pro.ui.map;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,8 +26,10 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.SphericalUtil;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
@@ -105,15 +108,17 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         mMap.setOnMapLongClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
-        mMap.setMyLocationEnabled(true);
+        if (ActivityCompat.checkSelfPermission(fragment.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        }
         mMap.setBuildingsEnabled(false);
         mMap.setIndoorEnabled(false);
         mMap.setTrafficEnabled(false);
         path = mMap.addPolyline(new PolylineOptions()
-                        .addAll(points)
-                        .width(5)
-                        .color(Color.BLUE)
-                        .geodesic(true)
+                .addAll(points)
+                .width(5)
+                .color(Color.BLUE)
+                .geodesic(true)
         );
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -250,7 +255,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         path.setPoints(points);
     }
 
-    private void drawArea() {
+    @Background
+    void drawArea() {
         KmlDocument kml = new KmlDocument();
         File file = new File(AREA_FILE_PATH);
         if (!file.exists()) {
@@ -259,17 +265,22 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         try {
             kml.parseKMLFile(file);
             if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
-                displayItem(kml, kml.mKmlRoot);
+                displayArea(kml);
             }
         } catch (Throwable t) {
             Crashlytics.logException(t);
         }
     }
 
-    private void displayItem(KmlDocument kml, KmlFeature item) {
+    @UiThread
+    void displayArea(KmlDocument kml) {
+        displayItem(kml, kml.mKmlRoot);
+    }
+
+    void displayItem(KmlDocument kml, KmlFeature item) {
         if (item instanceof KmlFolder) {
-            KmlFolder folder = (KmlFolder)item;
-            for (KmlFeature subitem: folder.mItems) {
+            KmlFolder folder = (KmlFolder) item;
+            for (KmlFeature subitem : folder.mItems) {
                 displayItem(kml, subitem);
             }
         } else if (item instanceof KmlPlacemark) {
@@ -302,8 +313,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             mMap.addPolygon(polygonOptions);
 
         } else if (geometry instanceof KmlMultiGeometry) {
-            KmlMultiGeometry multiGeometry = (KmlMultiGeometry)geometry;
-            for (KmlGeometry subGeometry: multiGeometry.mItems) {
+            KmlMultiGeometry multiGeometry = (KmlMultiGeometry) geometry;
+            for (KmlGeometry subGeometry : multiGeometry.mItems) {
                 displayGeometry(subGeometry, style);
             }
         }
@@ -344,7 +355,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         scaleBar.setLayoutParams(scaleBarParams);
         scaleBarContainer.addView(scaleBar);
 
-        if(mapContainer instanceof FrameLayout) {
+        if (mapContainer instanceof FrameLayout) {
             ((FrameLayout) mapContainer).addView(scaleBarContainer);
         }
     }
