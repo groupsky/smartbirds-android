@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -25,7 +24,6 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -35,7 +33,6 @@ import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -49,8 +46,6 @@ import java.util.ArrayList;
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu(R.menu.monitoring)
 public class MonitoringActivity extends FragmentActivity {
-
-    private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
     private static final int REQUEST_NEW_ENTRY = 1001;
 
@@ -75,7 +70,6 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuUndoEntry;
     @Bean
     EEventBus eventBus;
-
     @InstanceState
     ArrayList<LatLng> points = new ArrayList<LatLng>();
     @InstanceState
@@ -101,8 +95,6 @@ public class MonitoringActivity extends FragmentActivity {
 
     @Pref
     MonitoringPrefs_ monitoringPrefs;
-    @Pref
-    SmartBirdsPrefs_ prefs;
     private boolean canceled = false;
 
     @AfterInject
@@ -448,17 +440,16 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         persistState();
-        super.onPause();
+        super.onDestroy();
     }
 
     private void persistState() {
-        Log.d(TAG, "persisting state");
         if (!canceled) {
 
             MonitoringPrefs_.MonitoringPrefsEditor_ editor = monitoringPrefs.edit();
-            prefs.mapType().put(mapType.toString());
+            editor.mapType().put(mapType.toString());
             if (markers != null) {
                 editor.markersCount().put(markers.size());
             }
@@ -491,7 +482,7 @@ public class MonitoringActivity extends FragmentActivity {
             editor.putFloat("lat_" + i, (float) markers.get(i).getLatitude());
             editor.putFloat("lon_" + i, (float) markers.get(i).getLongitude());
         }
-        editor.apply();
+        editor.commit();
     }
 
     private void persistPoints() {
@@ -505,13 +496,12 @@ public class MonitoringActivity extends FragmentActivity {
             editor.putFloat("lat_" + i, (float) points.get(i).latitude);
             editor.putFloat("lon_" + i, (float) points.get(i).longitude);
         }
-        editor.apply();
+        editor.commit();
     }
 
     private void restoreState() {
-        Log.d(TAG, "restoring state");
-        if (prefs.mapType().get() != null && !prefs.mapType().get().equals("")) {
-            mapType = MapProvider.ProviderType.valueOf(prefs.mapType().get());
+        if (monitoringPrefs.mapType().get() != null && !monitoringPrefs.mapType().get().equals("")) {
+            mapType = MapProvider.ProviderType.valueOf(monitoringPrefs.mapType().get());
             lastPosition = new LatLng(monitoringPrefs.lastPositionLat().get(), monitoringPrefs.lastPositionLon().get());
             zoomFactor = monitoringPrefs.zoomFactor().get();
             lastEntryTypePosition = monitoringPrefs.lastEntryTypePosition().get();
@@ -554,12 +544,11 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     private void clearPrefs() {
-        Log.d(TAG, "clearing monitoring prefs");
         canceled = true;
         monitoringPrefs.edit().clear().apply();
         SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
         SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
-        markersPrefs.edit().clear().apply();
-        pointsPrefs.edit().clear().apply();
+        markersPrefs.edit().clear().commit();
+        pointsPrefs.edit().clear().commit();
     }
 }

@@ -11,7 +11,4 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean runningMonitoring();
-
-    String mapType();
-
 }
