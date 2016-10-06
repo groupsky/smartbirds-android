@@ -8,6 +8,8 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 @SharedPref(SharedPref.Scope.UNIQUE)
 public interface MonitoringPrefs {
 
+    String mapType();
+
     int markersCount();
 
     int pointsCount();
