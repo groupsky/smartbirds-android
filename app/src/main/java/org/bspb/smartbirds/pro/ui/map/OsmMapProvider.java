@@ -12,8 +12,10 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
@@ -84,11 +86,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     private void setUpMap() {
         mMap.setMultiTouchControls(true);
-        mMap.setTileSource(TileSourceFactory.MAPQUESTOSM);
+        mMap.setTileSource(TileSourceFactory.MAPNIK);
         mMap.setBuiltInZoomControls(true);
         mMap.getController().setZoom(16);
 
-        locationOverlay = new MyLocationNewOverlay(fragment.getActivity(), mMap) {
+        locationOverlay = new MyLocationNewOverlay(mMap.getContext(), mMap) {
             @Override
             public void onLocationChanged(Location location, IMyLocationProvider source) {
                 super.onLocationChanged(location, source);
@@ -101,7 +103,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         locationOverlay.setDrawAccuracyEnabled(true);
 
-        ScaleBarOverlay scaleBarOverlay = new ScaleBarOverlay(fragment.getActivity());
+        ScaleBarOverlay scaleBarOverlay = new ScaleBarOverlay(mMap.getContext());
         scaleBarOverlay.setUnitsOfMeasure(ScaleBarOverlay.UnitsOfMeasure.metric);
         scaleBarOverlay.setEnableAdjustLength(true);
 
@@ -124,17 +126,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         mMap.getOverlayManager().add(eventsOverlay);
         mMap.getOverlayManager().add(new TouchEventsOverlay(mMap.getContext()));
 
-        KmlDocument kml = new KmlDocument();
-        File file = new File(AREA_FILE_PATH);
-        if (file.exists()) {
-            try {
-                kml.parseKMLFile(file);
-                FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
-                mMap.getOverlayManager().add(kmlOverlay);
-            } catch (Throwable t) {
-                Crashlytics.logException(t);
-            }
-        }
+        loadKmlFile();
 
         if (markers != null && !markers.isEmpty()) {
             for (MapMarker mapMarker : markers) {
@@ -144,6 +136,27 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
 
         updateCamera();
+    }
+
+    @Background
+    void loadKmlFile() {
+        KmlDocument kml = new KmlDocument();
+        File file = new File(AREA_FILE_PATH);
+        if (file.exists()) {
+            try {
+                kml.parseKMLFile(file);
+                FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
+                displayKml(kmlOverlay);
+            } catch (Throwable t) {
+                Crashlytics.logException(t);
+            }
+        }
+
+    }
+
+    @UiThread
+    void displayKml(Overlay kmlOverlay) {
+        mMap.getOverlayManager().add(kmlOverlay);
     }
 
     @Override
