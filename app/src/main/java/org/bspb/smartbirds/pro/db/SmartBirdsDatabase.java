@@ -27,16 +27,11 @@ public class SmartBirdsDatabase {
     @OnCreate
     public static void onCreate(Context context, SQLiteDatabase db) {
         NomenclaturesBean nomenclatureBean = NomenclaturesBean_.getInstance_(context);
-        db.beginTransaction();
-        try {
-            for (ContentValues cv : nomenclatureBean.prepareNomenclatureCV(nomenclatureBean.loadBundledNomenclatures())) {
-                db.insert(NOMENCLATURES, null, cv);
-            }
-            for (ContentValues cv : nomenclatureBean.prepareSpeciesCV(nomenclatureBean.loadBundledSpecies())) {
-                db.insert(NOMENCLATURES, null, cv);
-            }
-        } finally {
-            db.endTransaction();
+        for (ContentValues cv : nomenclatureBean.prepareNomenclatureCV(nomenclatureBean.loadBundledNomenclatures())) {
+            db.insert(NOMENCLATURES, null, cv);
+        }
+        for (ContentValues cv : nomenclatureBean.prepareSpeciesCV(nomenclatureBean.loadBundledSpecies())) {
+            db.insert(NOMENCLATURES, null, cv);
         }
     }
 }
