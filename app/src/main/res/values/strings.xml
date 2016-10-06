@@ -216,4 +216,5 @@
         completions."
     </string>
     <string name="monitoring_permission_rationale">Location permissions are needed for saving entry location</string>
+    <string name="monitoring_cbm_zone">Zone</string>
 </resources>

@@ -94,7 +94,6 @@ public class UploadService extends IntentService {
                 if (!monitoringDir.isDirectory()) continue;
                 upload(monitoringDir.getAbsolutePath());
             }
-            NomenclatureService_.intent(this).updateNomenclatures().start();
         } finally {
             isUploading = false;
             eventBus.post(new UploadCompleted());

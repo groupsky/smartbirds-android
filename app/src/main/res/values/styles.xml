@@ -12,6 +12,7 @@
         <item name="multipleTextFormInputStyle">@style/FieldInput.MultipleText</item>
         <item name="memoFormInputStyle">@style/FieldInput.Memo</item>
         <item name="switchFormInputStyle">@style/FieldInput.Switch</item>
+        <item name="zoneFormInputStyle">@style/FieldInput.SingleChoice</item>
     </style>
 
     <style name="FieldSeparator">

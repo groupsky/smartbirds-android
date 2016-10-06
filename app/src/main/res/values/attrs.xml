@@ -12,6 +12,7 @@
         <attr name="multipleTextFormInputStyle" format="reference" />
         <attr name="memoFormInputStyle" format="reference" />
         <attr name="switchFormInputStyle" format="reference" />
+        <attr name="zoneFormInputStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SupportRequiredView">

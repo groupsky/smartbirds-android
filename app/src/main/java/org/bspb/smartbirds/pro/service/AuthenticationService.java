@@ -92,7 +92,7 @@ public class AuthenticationService extends AbstractIntentService {
 
         authenticationInterceptor.setAuthorization(response.body().token, email, password);
 
-        NomenclatureService_.intent(this).updateNomenclatures().start();
+        SyncService_.intent(this).initialSync().start();
 
         return new LoginResultEvent(response.body().user);
     }

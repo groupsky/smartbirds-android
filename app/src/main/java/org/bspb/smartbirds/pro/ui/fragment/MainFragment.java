@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -41,8 +42,9 @@ import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.service.ExportService_;
 import org.bspb.smartbirds.pro.service.NomenclatureService;
+import org.bspb.smartbirds.pro.service.SyncService_;
 import org.bspb.smartbirds.pro.service.UploadService;
-import org.bspb.smartbirds.pro.service.UploadService_;
+import org.bspb.smartbirds.pro.service.ZoneService;
 
 import java.io.File;
 import java.util.Date;
@@ -74,7 +76,7 @@ public class MainFragment extends Fragment {
         } else {
             onEvent(new UploadCompleted());
         }
-        if (NomenclatureService.isDownloading) {
+        if (NomenclatureService.isDownloading || ZoneService.isDownloading) {
             onEvent(new StartingDownload());
         } else {
             onEvent(new DownloadCompleted());
@@ -123,7 +125,7 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_LOCATION) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startBirdsClicked();
@@ -133,7 +135,7 @@ public class MainFragment extends Fragment {
 
     @Click(R.id.btn_upload)
     void uploadBtnClicked() {
-        UploadService_.intent(getActivity()).uploadAll().start();
+        SyncService_.intent(getActivity()).sync().start();
     }
 
     @Click(R.id.btn_export)
@@ -193,7 +195,7 @@ public class MainFragment extends Fragment {
 
     @UiThread
     public void onEvent(DownloadCompleted event) {
-        if (!UploadService.isUploading && progressDialog != null) {
+        if (!(UploadService.isUploading || ZoneService.isDownloading || NomenclatureService.isDownloading) && progressDialog != null) {
             progressDialog.cancel();
             progressDialog = null;
         }
@@ -209,7 +211,7 @@ public class MainFragment extends Fragment {
 
     @UiThread
     public void onEvent(UploadCompleted event) {
-        if (!NomenclatureService.isDownloading && progressDialog != null) {
+        if (!(NomenclatureService.isDownloading || ZoneService.isDownloading) && progressDialog != null) {
             progressDialog.cancel();
         }
         showNotSyncedCount();

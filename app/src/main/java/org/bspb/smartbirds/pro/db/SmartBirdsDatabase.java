@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import net.simonvt.schematic.annotation.Database;
 import net.simonvt.schematic.annotation.OnCreate;
+import net.simonvt.schematic.annotation.OnUpgrade;
 import net.simonvt.schematic.annotation.Table;
 
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
@@ -19,10 +20,13 @@ import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_;
 public class SmartBirdsDatabase {
 
 
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 
     @Table(NomenclatureColumns.class)
     public static final String NOMENCLATURES = "nomenclatures";
+
+    @Table(ZoneColumns.class)
+    public static final String ZONES = "zones";
 
     @OnCreate
     public static void onCreate(Context context, SQLiteDatabase db) {
@@ -32,6 +36,18 @@ public class SmartBirdsDatabase {
         }
         for (ContentValues cv : nomenclatureBean.prepareSpeciesCV(nomenclatureBean.loadBundledSpecies())) {
             db.insert(NOMENCLATURES, null, cv);
+        }
+    }
+
+    @OnUpgrade
+    public static void upgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        for (; oldVersion < newVersion; oldVersion++) {
+            switch (oldVersion) {
+                case 1:
+                case 2:
+                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.ZONES);
+                    break;
+            }
         }
     }
 }

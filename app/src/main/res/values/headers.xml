@@ -106,5 +106,6 @@
     <string name="tag_user_first_name" translatable="false">firstName</string>
     <string name="tag_user_last_name">lastName</string>
     <string name="tag_user_email">email</string>
+    <string name="tag_zone">zone</string>
 
 </resources>

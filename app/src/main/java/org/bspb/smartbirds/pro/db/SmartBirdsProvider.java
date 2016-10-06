@@ -22,6 +22,7 @@ public class SmartBirdsProvider {
 
     interface Path {
         String NOMENCLATURES = "nomenclatures";
+        String ZONES = "zones";
     }
 
     private static Uri buildUri(String... paths) {
@@ -51,6 +52,14 @@ public class SmartBirdsProvider {
         public static Uri withType(String type) {
             return buildUri(Path.NOMENCLATURES, type);
         }
+    }
 
+    @TableEndpoint(table = SmartBirdsDatabase.ZONES)
+    public static class Zones {
+        @ContentUri(
+                path = Path.ZONES,
+                type = TYPE_LIST + Path.ZONES,
+                defaultSort = ZoneColumns._ID + " ASC")
+        public static final Uri CONTENT_URI = buildUri(Path.ZONES);
     }
 }
