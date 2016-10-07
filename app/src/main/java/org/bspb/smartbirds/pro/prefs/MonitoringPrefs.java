@@ -16,7 +16,5 @@ public interface MonitoringPrefs {
 
     float lastPositionLon();
 
-    int zoomFactor();
-
-    int lastEntryTypePosition();
+    String entryType();
 }

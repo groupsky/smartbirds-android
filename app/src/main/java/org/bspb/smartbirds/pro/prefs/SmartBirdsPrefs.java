@@ -12,6 +12,12 @@ public interface SmartBirdsPrefs {
     @DefaultBoolean(false)
     boolean runningMonitoring();
 
+    String providerType();
+
     String mapType();
 
+    int zoomFactor();
+
+    @DefaultBoolean(false)
+    boolean stayAwake();
 }

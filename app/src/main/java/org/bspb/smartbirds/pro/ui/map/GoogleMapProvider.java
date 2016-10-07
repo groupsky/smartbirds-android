@@ -72,6 +72,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private Polyline path;
     private boolean positioned = false;
     private Marker lastMarker;
+    private MapType mapType;
 
     @Override
     /**
@@ -104,6 +105,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private void setUpMap() {
         addScaleBar();
 
+        setMapType(mapType);
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
@@ -192,19 +194,22 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void setMapType(MapType mapType) {
-        switch (mapType) {
-            case NORMAL:
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                break;
-            case SATELLITE:
-                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                break;
-            case HYBRID:
-                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                break;
-            default:
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                break;
+        this.mapType = mapType;
+        if (mMap != null) {
+            switch (mapType) {
+                case NORMAL:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    break;
+                case SATELLITE:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                    break;
+                case HYBRID:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    break;
+                default:
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    break;
+            }
         }
     }
 

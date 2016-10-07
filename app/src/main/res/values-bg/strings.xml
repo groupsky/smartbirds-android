@@ -22,6 +22,7 @@
     <string name="menu_entry_add_photo">+ Снимка</string>
     <string name="menu_monitoring_finish">Завършване</string>
     <string name="menu_monitoring_new_entry">Ново отчитане</string>
+    <string name="menu_monitoring_new_specific_entry">Ново отичтане %s</string>
     <string name="menu_monitoring_common">Общи</string>
     <string name="menu_monitoring_zoom_500">500 m</string>
     <string name="menu_monitoring_zoom_free">Свободно</string>
