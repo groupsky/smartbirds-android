@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
 
 import org.androidannotations.annotations.Bean;
@@ -45,7 +46,10 @@ public class SmartBirdsApplication extends Application {
                 .build();
 
         // Initialize Fabric with the debug-disabled crashlytics.
-        Fabric.with(this, crashlyticsKit);
+        Fabric.with(this, crashlyticsKit, new Answers());
+
+        Crashlytics.setString("git_sha", BuildConfig.GIT_SHA);
+        Crashlytics.setString("build_time", BuildConfig.BUILD_TIME);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));

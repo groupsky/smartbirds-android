@@ -1,3 +1,7 @@
+def versionNameBase = "1.1.5"
+def versionCodeBase = 15
+
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
@@ -10,9 +14,12 @@ android {
         applicationId "org.bspb.smartbirds.pro"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 15
-        versionName "1.1.5"
+        versionCode versionCodeBase
+        versionName "${versionNameBase}"
         buildConfigField "String", "BACKEND_BASE_URL", "\"http://sb.87.252.173.51.xip.io:8082/api/\""
+
+        def buildTime = new GregorianCalendar().format("MM-dd-yyyy' 'HH:mm:ss Z")
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
     }
     signingConfigs {
         release {
@@ -26,6 +33,8 @@ android {
         ext.betaDistributionGroupAliases = "BSPB"
 
         debug {
+            versionNameSuffix "-DEBUG"
+            buildConfigField "String", "GIT_SHA", "\"DEBUG\""
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
         }
@@ -34,6 +43,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+
+            def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+            buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFile = new File(output.outputFile.parent, "smartbirdspro-${variant.versionName}-${versionCodeBase}.apk")
+                }
+            }
+
         }
     }
     lintOptions {
