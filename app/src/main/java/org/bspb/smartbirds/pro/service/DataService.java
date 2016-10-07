@@ -512,7 +512,8 @@ public class DataService extends Service {
     private void clearPrefs() {
         globalPrefs.runningMonitoring().put(false);
         dataServicePrefs.clear();
-        SharedPreferences commonDataPrefs = getSharedPreferences(PREFS_COMMON_DATA, Context.MODE_PRIVATE);
-        commonDataPrefs.edit().clear().apply();
+        getSharedPreferences(PREFS_COMMON_DATA, Context.MODE_PRIVATE).edit().clear().apply();
+        getSharedPreferences(PREFS_ENTRY, Context.MODE_PRIVATE).edit().clear().apply();
+        commonData.clear();
     }
 }
