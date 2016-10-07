@@ -7,6 +7,7 @@ import android.location.Location;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
@@ -70,6 +71,15 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     private boolean positioned = false;
     private Marker lastMarker;
+    private final View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     public void setUpMapIfNeeded() {
@@ -188,6 +198,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         if (zoomFactor > 0) {
             mMap.setBuiltInZoomControls(false);
             mMap.setMultiTouchControls(false);
+            mMap.setOnTouchListener(touchListener);
             locationOverlay.enableFollowLocation();
             locked = true;
 
@@ -213,6 +224,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         } else {
             mMap.setMultiTouchControls(true);
             mMap.setBuiltInZoomControls(true);
+            mMap.setOnTouchListener(null);
             locationOverlay.disableFollowLocation();
             locked = false;
             if (!positioned && lastPosition != null) {
