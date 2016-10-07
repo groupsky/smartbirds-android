@@ -72,7 +72,7 @@ dependencies {
     compile "org.androidannotations:androidannotations-api:4.0.0"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.google.android.gms:play-services-maps:9.6.1'
     compile 'de.greenrobot:eventbus:2.2.1'
     // Crashlytics Kit
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
