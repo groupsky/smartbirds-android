@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -56,7 +57,7 @@ import java.util.List;
  * Created by dani on 14-11-6.
  */
 @EBean
-public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
+public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -94,11 +95,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = fragment.getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+            fragment.getMapAsync(this);
         }
     }
 
@@ -110,6 +107,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         mMap.setOnMapLongClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
         if (ActivityCompat.checkSelfPermission(fragment.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
@@ -126,7 +124,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             @Override
             public void onMyLocationChange(Location location) {
                 eventBus.post(new LocationChangedEvent(location));
-
             }
         });
 
@@ -179,7 +176,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
             LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
             LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
+            if (positioned) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
+            } else {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
+            }
             positioned = true;
         } else {
             mMap.getUiSettings().setAllGesturesEnabled(true);
@@ -361,6 +362,17 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         if (mapContainer instanceof FrameLayout) {
             ((FrameLayout) mapContainer).addView(scaleBarContainer);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        // Check if we were successful in obtaining the map.
+        if (mMap != null) {
+            setUpMap();
+        } else {
+            fragment.getMapAsync(this);
         }
     }
 }
