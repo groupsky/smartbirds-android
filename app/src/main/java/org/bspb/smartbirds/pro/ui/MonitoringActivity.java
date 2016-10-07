@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -48,6 +49,8 @@ import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
 
 import java.util.ArrayList;
 
+import static android.text.TextUtils.isEmpty;
+
 /**
  * Created by dani on 14-11-4.
  */
@@ -63,13 +66,18 @@ public class MonitoringActivity extends FragmentActivity {
     private static final String PREFS_POINTS = "points";
 
     @InstanceState
-    MapProvider.ProviderType mapType = MapProvider.ProviderType.GOOGLE;
+    @NonNull
+    MapProvider.ProviderType providerType = MapProvider.ProviderType.GOOGLE;
+    @InstanceState
+    @NonNull
+    MapProvider.MapType mapType = MapProvider.MapType.NORMAL;
 
     @Bean(GoogleMapProvider.class)
     MapProvider googleMap;
     @Bean(OsmMapProvider.class)
     MapProvider osmMap;
     @InstanceState
+    @NonNull
     ArrayList<MapMarker> markers = new ArrayList<MapMarker>();
 
     MapProvider currentMap;
@@ -82,6 +90,7 @@ public class MonitoringActivity extends FragmentActivity {
     EEventBus eventBus;
 
     @InstanceState
+    @NonNull
     ArrayList<LatLng> points = new ArrayList<LatLng>();
     @InstanceState
     int zoomFactor = 500;
@@ -91,8 +100,22 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuMap;
     @OptionsMenuItem(R.id.action_map_google_normal)
     MenuItem menuMapNormal;
+    @OptionsMenuItem(R.id.action_map_google_hybrid)
+    MenuItem menuMapHybrid;
+    @OptionsMenuItem(R.id.action_map_google_satellite)
+    MenuItem menuMapSatellite;
     @OptionsMenuItem(R.id.menu_zoom)
     MenuItem menuZoom;
+    @OptionsMenuItem(R.id.action_zoom_free)
+    MenuItem menuZoomFree;
+    @OptionsMenuItem(R.id.action_zoom_1km)
+    MenuItem menuZoom1km;
+    @OptionsMenuItem(R.id.action_zoom_500m)
+    MenuItem menuZoom500m;
+    @OptionsMenuItem(R.id.action_zoom_250m)
+    MenuItem menuZoom250m;
+    @OptionsMenuItem(R.id.action_zoom_100m)
+    MenuItem menuZoom100m;
     @OptionsMenuItem(R.id.action_form_type_birds)
     MenuItem menuFormTypeBirds;
     @OptionsMenuItem(R.id.action_form_type_cbm)
@@ -101,16 +124,27 @@ public class MonitoringActivity extends FragmentActivity {
     MenuItem menuFormTypeCiconia;
     @OptionsMenuItem(R.id.action_form_type_herp)
     MenuItem menuFormTypeHerp;
+    @OptionsMenuItem(R.id.menu_map_provider)
+    MenuItem menuMapProvider;
+    @OptionsMenuItem(R.id.action_map_google)
+    MenuItem menuMapGoogle;
+    @OptionsMenuItem(R.id.action_map_osm)
+    MenuItem menuMapOSM;
     @OptionsMenuItem(R.id.action_crash)
     MenuItem menuCrash;
+    @OptionsMenuItem(R.id.action_stay_awake)
+    MenuItem menuStayAwake;
     @InstanceState
-    int lastEntryTypePosition = -1;
+    @Nullable
+    EntryType entryType = null;
 
     @Pref
     MonitoringPrefs_ monitoringPrefs;
     @Pref
     SmartBirdsPrefs_ prefs;
     private boolean canceled = false;
+    @InstanceState
+    boolean stayAwake;
 
     @AfterInject
     public void initProviders() {
@@ -158,31 +192,83 @@ public class MonitoringActivity extends FragmentActivity {
         switch (zoomFactor) {
             case 1000:
                 menuZoom.setTitle(R.string.menu_monitoring_zoom_1000);
+                menuZoom1km.setChecked(true);
                 break;
             case 500:
                 menuZoom.setTitle(R.string.menu_monitoring_zoom_500);
+                menuZoom500m.setChecked(true);
                 break;
             case 250:
                 menuZoom.setTitle(R.string.menu_monitoring_zoom_250);
+                menuZoom250m.setChecked(true);
                 break;
             case 100:
                 menuZoom.setTitle(R.string.menu_monitoring_zoom_100);
+                menuZoom100m.setChecked(true);
                 break;
             case -1:
                 menuZoom.setTitle(R.string.menu_monitoring_zoom_free);
+                menuZoomFree.setChecked(true);
                 break;
         }
-        switch (lastEntryTypePosition) {
-            case 0: menuFormTypeBirds.setChecked(true); break;
-            case 1: menuFormTypeCbm.setChecked(true); break;
-            case 2: menuFormTypeCiconia.setChecked(true); break;
-            case 3: menuFormTypeHerp.setChecked(true); break;
+        switch (providerType) {
+            case GOOGLE:
+                menuMapGoogle.setChecked(true);
+                menuMapProvider.setTitle(menuMapGoogle.getTitle());
+                menuMap.setEnabled(true);
+                switch (mapType) {
+                    case HYBRID:
+                        menuMapHybrid.setChecked(true);
+                        menuMap.setTitle(menuMapHybrid.getTitle());
+                        break;
+                    case SATELLITE:
+                        menuMapSatellite.setChecked(true);
+                        menuMap.setTitle(menuMapSatellite.getTitle());
+                        break;
+                    case NORMAL:
+                        menuMapNormal.setChecked(true);
+                        menuMap.setTitle(menuMapNormal.getTitle());
+                        break;
+                    default:
+                        throw new IllegalStateException("Unhandled map type: " + mapType);
+                }
+                break;
+            case OSM:
+                menuMapOSM.setChecked(true);
+                menuMapProvider.setTitle(menuMapOSM.getTitle());
+                menuMap.setEnabled(false);
+                menuMap.setTitle(menuMapNormal.getTitle());
+                break;
+            default:
+                throw new IllegalStateException("Unhandled provider type: " + providerType);
         }
+        menuNewEntry.setTitle(R.string.menu_monitoring_new_entry);
+        if (entryType != null) {
+            switch (entryType) {
+                case BIRDS:
+                    menuFormTypeBirds.setChecked(true);
+                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeBirds.getTitle()));
+                    break;
+                case CBM:
+                    menuFormTypeCbm.setChecked(true);
+                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeCbm.getTitle()));
+                    break;
+                case CICONIA:
+                    menuFormTypeCiconia.setChecked(true);
+                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeCiconia.getTitle()));
+                    break;
+                case HERP:
+                    menuFormTypeHerp.setChecked(true);
+                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeHerp.getTitle()));
+                    break;
+            }
+        }
+        menuStayAwake.setChecked(stayAwake);
         return super.onPrepareOptionsMenu(menu);
     }
 
     private void showCurrentMap() {
-        switch (mapType) {
+        switch (providerType) {
             case GOOGLE:
                 currentMap = googleMap;
                 if (menuMap != null) {
@@ -208,19 +294,24 @@ public class MonitoringActivity extends FragmentActivity {
         currentMap.setZoomFactor(zoomFactor);
         currentMap.setMarkers(markers);
         currentMap.setPath(points);
+        currentMap.setMapType(mapType);
         currentMap.showMap();
     }
 
     @OptionsItem(R.id.action_map_google)
     void onGoogleMapProvider() {
-        mapType = MapProvider.ProviderType.GOOGLE;
-        showCurrentMap();
+        setProviderType(MapProvider.ProviderType.GOOGLE);
     }
 
     @OptionsItem(R.id.action_map_osm)
     void onOSMMapProvider() {
-        mapType = MapProvider.ProviderType.OSM;
+        setProviderType(MapProvider.ProviderType.OSM);
+    }
+
+    public void setProviderType(@NonNull MapProvider.ProviderType providerType) {
+        this.providerType = providerType;
         showCurrentMap();
+        prefs.providerType().put(providerType.toString());
     }
 
     @OptionsItem(R.id.action_new_entry)
@@ -241,10 +332,14 @@ public class MonitoringActivity extends FragmentActivity {
         if (resultCode != RESULT_OK)
             return;
         MapMarker marker = new MapMarker(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, getString(R.string.marker_default_title)), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0));
+        addMarker(marker);
+    }
+
+    private void addMarker(MapMarker marker) {
         markers.add(marker);
         currentMap.addMarker(marker);
         menuUndoEntry.setEnabled(true);
-        persistState();
+        persistMarkers();
     }
 
     @OptionsItem(R.id.action_finish)
@@ -290,98 +385,115 @@ public class MonitoringActivity extends FragmentActivity {
 
     @OptionsItem(R.id.action_zoom_1km)
     void setZoom1km(MenuItem sender) {
-        zoomFactor = 1000;
-        currentMap.setZoomFactor(zoomFactor);
+        setZoomFactor(1000);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_500m)
     void setZoom500m(MenuItem sender) {
-        zoomFactor = 500;
-        currentMap.setZoomFactor(zoomFactor);
+        setZoomFactor(500);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_250m)
     void setZoom250m(MenuItem sender) {
-        zoomFactor = 250;
-        currentMap.setZoomFactor(zoomFactor);
+        setZoomFactor(250);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_100m)
     void setZoom100m(MenuItem sender) {
-        zoomFactor = 100;
-        currentMap.setZoomFactor(zoomFactor);
+        setZoomFactor(100);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
-        currentMap.updateCamera();
     }
 
     @OptionsItem(R.id.action_zoom_free)
     void setZoomFree(MenuItem sender) {
-        zoomFactor = -1;
-        currentMap.setZoomFactor(zoomFactor);
+        setZoomFactor(-1);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
+    }
+
+    public void setZoomFactor(int zoomFactor) {
+        this.zoomFactor = zoomFactor;
+        currentMap.setZoomFactor(zoomFactor);
         currentMap.updateCamera();
+        prefs.zoomFactor().put(zoomFactor);
     }
 
     @OptionsItem(R.id.action_map_google_normal)
     void setGoogleMapsNormal(MenuItem sender) {
-        currentMap.setMapType(MapProvider.MapType.NORMAL);
+        setMapType(MapProvider.MapType.NORMAL);
         sender.setChecked(true);
         menuMap.setTitle(sender.getTitle());
     }
 
     @OptionsItem(R.id.action_map_google_satellite)
     void setGoogleMapsSatellite(MenuItem sender) {
-        currentMap.setMapType(MapProvider.MapType.SATELLITE);
+        setMapType(MapProvider.MapType.SATELLITE);
         sender.setChecked(true);
         menuMap.setTitle(sender.getTitle());
     }
 
     @OptionsItem(R.id.action_map_google_hybrid)
     void setGoogleMapsHybrid(MenuItem sender) {
-        currentMap.setMapType(MapProvider.MapType.HYBRID);
+        setMapType(MapProvider.MapType.HYBRID);
         sender.setChecked(true);
         menuMap.setTitle(sender.getTitle());
     }
 
+    public void setMapType(@NonNull MapProvider.MapType mapType) {
+        this.mapType = mapType;
+        currentMap.setMapType(mapType);
+        prefs.mapType().put(mapType.toString());
+    }
+
     @OptionsItem(R.id.action_stay_awake)
     void setStayAwake(MenuItem sender) {
-        if (sender.isChecked()) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        } else {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
         sender.setChecked(!sender.isChecked());
+        setStayAwake(sender.isChecked());
+    }
+
+    private void setStayAwake(boolean stayAwake) {
+        this.stayAwake = stayAwake;
+        if (stayAwake) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+        prefs.stayAwake().put(stayAwake);
     }
 
     @OptionsItem(R.id.action_form_type_birds)
     void setFormTypeBirds(MenuItem sender) {
-        lastEntryTypePosition = EntryType.BIRDS.ordinal();
+        setEntryType(EntryType.BIRDS);
     }
 
     @OptionsItem(R.id.action_form_type_cbm)
     void setFormTypeCbm(MenuItem sender) {
-        lastEntryTypePosition = EntryType.CBM.ordinal();
+        setEntryType(EntryType.CBM);
     }
 
     @OptionsItem(R.id.action_form_type_ciconia)
     void setFormTypeCiconia(MenuItem sender) {
-        lastEntryTypePosition = EntryType.CICONIA.ordinal();
+        setEntryType(EntryType.CICONIA);
     }
 
     @OptionsItem(R.id.action_form_type_herp)
     void setFormTypeHerp(MenuItem sender) {
-        lastEntryTypePosition = EntryType.HERP.ordinal();
+        setEntryType(EntryType.HERP);
+    }
+
+    public void setEntryType(@Nullable EntryType entryType) {
+        this.entryType = entryType;
+        if (entryType != null)
+            monitoringPrefs.entryType().put(entryType.name());
+        else
+            monitoringPrefs.entryType().remove();
     }
 
     public void onEvent(LocationChangedEvent event) {
@@ -392,10 +504,16 @@ public class MonitoringActivity extends FragmentActivity {
         if (menuNewEntry != null) {
             menuNewEntry.setEnabled(true);
         }
+        monitoringPrefs.lastPositionLat().put((float) lastPosition.latitude);
+        monitoringPrefs.lastPositionLon().put((float) lastPosition.longitude);
 
-        points.add(new LatLng(location.getLatitude(), location.getLongitude()));
+        addPoint(new LatLng(location.getLatitude(), location.getLongitude()));
+    }
+
+    private void addPoint(LatLng point) {
+        points.add(point);
         currentMap.updatePath(points);
-        persistState();
+        persistPoints();
     }
 
     public void onEvent(MapClickedEvent event) {
@@ -407,29 +525,12 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     void startNewEntryWithoutAsking(final LatLng position) {
-        if (lastEntryTypePosition == -1) {
+        if (entryType == null) {
             startNewEntryAsking(position);
             return;
         }
-        EntryType type;
-        switch (lastEntryTypePosition) {
-            case 0:
-                type = EntryType.BIRDS;
-                break;
-            case 1:
-                type = EntryType.CBM;
-                break;
-            case 2:
-                type = EntryType.CICONIA;
-                break;
-            case 3:
-                type = EntryType.HERP;
-                break;
-            default:
-                return;
-        }
         NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
-        ib.entryType(type);
+        ib.entryType(entryType);
         if (position != null) {
             ib.lat(position.latitude).lon(position.longitude);
         }
@@ -440,11 +541,10 @@ public class MonitoringActivity extends FragmentActivity {
         final String[] types = getResources().getStringArray(R.array.enty_types);
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.menu_monitoring_new_entry)
-                .setSingleChoiceItems(types, lastEntryTypePosition, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(types, entryType != null ? entryType.ordinal() : -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        EntryType type = null;
-                        lastEntryTypePosition = i;
+                        entryType = EntryType.values()[i];
                         startNewEntryWithoutAsking(position);
                         dialogInterface.cancel();
                     }
@@ -461,7 +561,7 @@ public class MonitoringActivity extends FragmentActivity {
         eventBus.post(new UndoLastEntry());
         markers.remove(markers.size() - 1);
         currentMap.removeLastMarker();
-        persistState();
+        persistMarkers();
     }
 
     @OptionsItem(R.id.action_crash)
@@ -480,19 +580,22 @@ public class MonitoringActivity extends FragmentActivity {
         if (!canceled) {
 
             MonitoringPrefs_.MonitoringPrefsEditor_ editor = monitoringPrefs.edit();
+            prefs.providerType().put(providerType.toString());
             prefs.mapType().put(mapType.toString());
-            if (markers != null) {
-                editor.markersCount().put(markers.size());
-            }
-            if (points != null) {
-                editor.pointsCount().put(points.size());
-            }
+            prefs.stayAwake().put(stayAwake);
             if (lastPosition != null) {
-                editor.lastPositionLat().put((float) lastPosition.latitude)
-                        .lastPositionLon().put((float) lastPosition.longitude);
+                editor.lastPositionLat().put((float) lastPosition.latitude);
+                editor.lastPositionLon().put((float) lastPosition.longitude);
+            } else {
+                editor.lastPositionLat().remove();
+                editor.lastPositionLon().remove();
             }
-            editor.zoomFactor().put(zoomFactor);
-            editor.lastEntryTypePosition().put(lastEntryTypePosition);
+            prefs.zoomFactor().put(zoomFactor);
+            if (entryType != null) {
+                editor.entryType().put(entryType.name());
+            } else {
+                editor.entryType().remove();
+            }
 
             editor.apply();
 
@@ -502,44 +605,80 @@ public class MonitoringActivity extends FragmentActivity {
     }
 
     private void persistMarkers() {
-        if (markers == null) {
-            return;
-        }
         SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = markersPrefs.edit();
         editor.clear();
-        for (int i = 0; i < markers.size(); i++) {
-            editor.putString("title_" + i, markers.get(i).getTitle());
-            editor.putFloat("lat_" + i, (float) markers.get(i).getLatitude());
-            editor.putFloat("lon_" + i, (float) markers.get(i).getLongitude());
+        try {
+            if (markers.isEmpty()) {
+                monitoringPrefs.markersCount().remove();
+                return;
+            }
+            monitoringPrefs.markersCount().put(markers.size());
+            for (int i = 0; i < markers.size(); i++) {
+                editor.putString("title_" + i, markers.get(i).getTitle());
+                editor.putFloat("lat_" + i, (float) markers.get(i).getLatitude());
+                editor.putFloat("lon_" + i, (float) markers.get(i).getLongitude());
+            }
+        } finally {
+            editor.apply();
         }
-        editor.apply();
     }
 
     private void persistPoints() {
-        if (points == null) {
-            return;
-        }
         SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pointsPrefs.edit();
         editor.clear();
-        for (int i = 0; i < points.size(); i++) {
-            editor.putFloat("lat_" + i, (float) points.get(i).latitude);
-            editor.putFloat("lon_" + i, (float) points.get(i).longitude);
+        try {
+            if (points.isEmpty()) {
+                monitoringPrefs.pointsCount().remove();
+                return;
+            }
+            monitoringPrefs.pointsCount().put(points.size());
+            for (int i = 0; i < points.size(); i++) {
+                editor.putFloat("lat_" + i, (float) points.get(i).latitude);
+                editor.putFloat("lon_" + i, (float) points.get(i).longitude);
+            }
+        } finally {
+            editor.apply();
         }
-        editor.apply();
     }
 
     private void restoreState() {
         Log.d(TAG, "restoring state");
-        if (prefs.mapType().get() != null && !prefs.mapType().get().equals("")) {
-            mapType = MapProvider.ProviderType.valueOf(prefs.mapType().get());
-            lastPosition = new LatLng(monitoringPrefs.lastPositionLat().get(), monitoringPrefs.lastPositionLon().get());
-            zoomFactor = monitoringPrefs.zoomFactor().get();
-            lastEntryTypePosition = monitoringPrefs.lastEntryTypePosition().get();
-            restoreMarkers();
-            restorePoints();
+        providerType = MapProvider.ProviderType.GOOGLE;
+        try {
+            final String providerTypeName = prefs.providerType().get();
+            if (!isEmpty(providerTypeName))
+                providerType = MapProvider.ProviderType.valueOf(providerTypeName);
+        } catch (IllegalArgumentException ignored) {
         }
+        mapType = MapProvider.MapType.NORMAL;
+        try {
+            final String mapTypeName = prefs.mapType().get();
+            if (!isEmpty(mapTypeName))
+                mapType = MapProvider.MapType.valueOf(mapTypeName);
+        } catch (IllegalArgumentException ignored) {
+        }
+
+        if (monitoringPrefs.lastPositionLat().exists() && monitoringPrefs.lastPositionLon().exists()) {
+            lastPosition = new LatLng(monitoringPrefs.lastPositionLat().get(), monitoringPrefs.lastPositionLon().get());
+        } else {
+            lastPosition = null;
+        }
+
+        zoomFactor = prefs.zoomFactor().getOr(500);
+        entryType = null;
+        try {
+            final String entryTypeName = monitoringPrefs.entryType().get();
+            if (!isEmpty(entryTypeName))
+                entryType = EntryType.valueOf(entryTypeName);
+        } catch (IllegalArgumentException ignored) {
+        }
+
+        setStayAwake(prefs.stayAwake().get());
+
+        restoreMarkers();
+        restorePoints();
     }
 
     private void restorePoints() {
@@ -550,7 +689,7 @@ public class MonitoringActivity extends FragmentActivity {
 
         SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
 
-        points = new ArrayList<LatLng>();
+        points.clear();
         for (int i = 0; i < pointsCount; i++) {
             final double lat = pointsPrefs.getFloat("lat_" + i, 0);
             final double lon = pointsPrefs.getFloat("lon_" + i, 0);
@@ -566,7 +705,7 @@ public class MonitoringActivity extends FragmentActivity {
 
         SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
 
-        markers = new ArrayList<MapMarker>();
+        markers.clear();
         for (int i = 0; i < markersCount; i++) {
             final String title = markersPrefs.getString("title_" + i, "");
             final double lat = markersPrefs.getFloat("lat_" + i, 0);
@@ -579,9 +718,7 @@ public class MonitoringActivity extends FragmentActivity {
         Log.d(TAG, "clearing monitoring prefs");
         canceled = true;
         monitoringPrefs.edit().clear().apply();
-        SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
-        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
-        markersPrefs.edit().clear().apply();
-        pointsPrefs.edit().clear().apply();
+        getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE).edit().clear().apply();
+        getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
     }
 }

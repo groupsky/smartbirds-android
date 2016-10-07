@@ -22,6 +22,7 @@
     <string name="menu_entry_add_photo">+ Photo</string>
     <string name="menu_monitoring_finish">Finish</string>
     <string name="menu_monitoring_new_entry">New entry</string>
+    <string name="menu_monitoring_new_specific_entry">New %s entry</string>
     <string name="menu_monitoring_common">Common</string>
     <string name="menu_monitoring_zoom_500">500 m</string>
     <string name="menu_monitoring_zoom_free">Free</string>
