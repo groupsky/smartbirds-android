@@ -215,6 +215,7 @@
     <string name="login_permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="monitoring_permission_rationale">Location permissions are needed for saving entry location</string>
+    <string name="monitoring_permission_rationale">Location permissions are required for entry location</string>
     <string name="monitoring_cbm_zone">Zone</string>
+    <string name="storage_permission_rationale">Storage permissions are required for map display</string>
 </resources>

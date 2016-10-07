@@ -6,14 +6,12 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.Html;
@@ -51,12 +49,17 @@ import java.util.Date;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.support.v4.content.ContextCompat.checkSelfPermission;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EFragment(R.layout.fragment_main)
 public class MainFragment extends Fragment {
 
     private static final int REQUEST_LOCATION = 0;
+    private static final int REQUEST_STORAGE = 1;
 
     @Bean
     EEventBus bus;
@@ -102,15 +105,42 @@ public class MainFragment extends Fragment {
     }
 
     private boolean permissionsGranted() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getActivity(), ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        return locationPermissionsGranted() && storagePermissionsGranted();
+    }
+
+    private boolean storagePermissionsGranted() {
+        if (checkSelfPermission(getActivity(), WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED &&
+                checkSelfPermission(getActivity(), READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+            return true;
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return false;
+        }
+        if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
+            Snackbar.make(notSyncedCountView, R.string.storage_permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+                            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+                        }
+                    });
+        } else {
+            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+        }
+        return false;
+    }
+
+    private boolean locationPermissionsGranted() {
+        if (checkSelfPermission(getActivity(), ACCESS_FINE_LOCATION) == PERMISSION_GRANTED &&
+                checkSelfPermission(getActivity(), ACCESS_COARSE_LOCATION) == PERMISSION_GRANTED) {
             return true;
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return false;
         }
         if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
-            Snackbar.make(notSyncedCountView, R.string.login_permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(notSyncedCountView, R.string.monitoring_permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -126,10 +156,14 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_LOCATION) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        switch (requestCode) {
+            case REQUEST_LOCATION:
+            case REQUEST_STORAGE:
+                for (int grantResult: grantResults)
+                    if (grantResult != PERMISSION_GRANTED)
+                        break;
                 startBirdsClicked();
-            }
+                break;
         }
     }
 
