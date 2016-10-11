@@ -345,9 +345,12 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     private void addScaleBar() {
         View mapContainer = fragment.getView();
+        ScaleBar scaleBar = (ScaleBar) mapContainer.findViewById(R.id.scale_bar);
+        if (scaleBar != null) return;
 
         FrameLayout scaleBarContainer = new FrameLayout(fragment.getContext());
-        ScaleBar scaleBar = new ScaleBar(fragment.getActivity(), mMap);
+        scaleBar = new ScaleBar(fragment.getActivity(), mMap);
+        scaleBar.setId(R.id.scale_bar);
 
         FrameLayout.LayoutParams scaleBarContainerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) scaleBar.getViewHeight());
         scaleBarContainerParams.gravity = Gravity.TOP;
