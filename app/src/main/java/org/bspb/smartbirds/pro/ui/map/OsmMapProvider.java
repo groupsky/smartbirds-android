@@ -4,10 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.location.Location;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,6 +21,7 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.EEventBus_;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
@@ -27,13 +30,13 @@ import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.overlays.FolderOverlay;
 import org.osmdroid.bonuspack.overlays.InfoWindow;
-import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
@@ -66,20 +69,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private ArrayList<LatLng> points;
     private PathOverlay pathOverlay;
 
-    boolean locked = true;
     private MyLocationNewOverlay locationOverlay;
 
     private boolean positioned = false;
     private Marker lastMarker;
-    private final View.OnTouchListener touchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                return true;
-            }
-            return false;
-        }
-    };
+    private EventsOverlay eventsOverlay;
 
     @Override
     public void setUpMapIfNeeded() {
@@ -100,16 +94,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         mMap.setBuiltInZoomControls(true);
         mMap.getController().setZoom(16);
 
-        locationOverlay = new MyLocationNewOverlay(mMap.getContext(), mMap) {
-            @Override
-            public void onLocationChanged(Location location, IMyLocationProvider source) {
-                super.onLocationChanged(location, source);
-                eventBus.post(new LocationChangedEvent(location));
-            }
-        };
+        locationOverlay = new LocationRetrievalOverlay(mMap.getContext(), mMap);
         locationOverlay.enableMyLocation();
         locationOverlay.enableFollowLocation();
-
 
         locationOverlay.setDrawAccuracyEnabled(true);
 
@@ -126,7 +113,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         }
 
-        MapEventsOverlay eventsOverlay = new MapEventsOverlay(mMap.getContext(), this);
+        eventsOverlay = new EventsOverlay(mMap.getContext(), this);
 
 
         mMap.getOverlayManager().clear();
@@ -134,7 +121,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         mMap.getOverlayManager().add(locationOverlay);
         mMap.getOverlayManager().add(scaleBarOverlay);
         mMap.getOverlayManager().add(eventsOverlay);
-        mMap.getOverlayManager().add(new TouchEventsOverlay(mMap.getContext()));
 
         loadKmlFile();
 
@@ -198,9 +184,8 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         if (zoomFactor > 0) {
             mMap.setBuiltInZoomControls(false);
             mMap.setMultiTouchControls(false);
-            mMap.setOnTouchListener(touchListener);
             locationOverlay.enableFollowLocation();
-            locked = true;
+            eventsOverlay.setLocked(true);
 
             if (lastPosition == null) return;
 
@@ -224,9 +209,8 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         } else {
             mMap.setMultiTouchControls(true);
             mMap.setBuiltInZoomControls(true);
-            mMap.setOnTouchListener(null);
             locationOverlay.disableFollowLocation();
-            locked = false;
+            eventsOverlay.setLocked(false);
             if (!positioned && lastPosition != null) {
                 mMap.getController().animateTo(new GeoPoint(lastPosition.latitude, lastPosition.longitude));
                 positioned = true;
@@ -237,19 +221,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void setMapType(MapType mapType) {
-//        switch (mapType) {
-//            case NORMAL:
-//                break;
-//            case SATELLITE:
-//                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-//                break;
-//            case HYBRID:
-//                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-//                break;
-//            default:
-//                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//                break;
-//        }
+        // not supported on OSM
     }
 
     @Override
@@ -333,10 +305,23 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         return true;
     }
 
-    public class TouchEventsOverlay extends Overlay {
+    private static class EventsOverlay extends Overlay {
 
-        public TouchEventsOverlay(Context ctx) {
+        @Nullable
+        private MapEventsReceiver receiver;
+        private boolean locked;
+
+        public EventsOverlay(@NonNull Context ctx, @NonNull MapEventsReceiver receiver) {
             super(ctx);
+            this.receiver = receiver;
+        }
+
+        public boolean isLocked() {
+            return locked;
+        }
+
+        public void setLocked(boolean locked) {
+            this.locked = locked;
         }
 
         @Override
@@ -344,14 +329,101 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         }
 
         @Override
-        public boolean onDoubleTap(MotionEvent e, MapView mapView) {
-            return locked;
+        public boolean onFling(MotionEvent pEvent1, MotionEvent pEvent2, float pVelocityX, float pVelocityY, MapView pMapView) {
+            return locked || super.onFling(pEvent1, pEvent2, pVelocityX, pVelocityY, pMapView);
         }
 
         @Override
         public boolean onScroll(MotionEvent pEvent1, MotionEvent pEvent2, float pDistanceX, float pDistanceY, MapView pMapView) {
+            return locked || super.onScroll(pEvent1, pEvent2, pDistanceX, pDistanceY, pMapView);
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e, MapView mapView) {
+            return locked || super.onDoubleTap(e, mapView);
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e, MapView mapView) {
+            return locked || super.onDoubleTapEvent(e, mapView);
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e, MapView mapView) {
+            return locked || super.onDown(e, mapView);
+        }
+
+        @Override
+        public boolean onKeyDown(int keyCode, KeyEvent event, MapView mapView) {
+            return locked || super.onKeyDown(keyCode, event, mapView);
+        }
+
+        @Override
+        public boolean onKeyUp(int keyCode, KeyEvent event, MapView mapView) {
+            return locked || super.onKeyUp(keyCode, event, mapView);
+        }
+
+        @Override
+        public boolean onLongPress(MotionEvent e, MapView mapView) {
+            if (receiver == null) return false;
+            Projection proj = mapView.getProjection();
+            GeoPoint p = (GeoPoint) proj.fromPixels((int) e.getX(), (int) e.getY());
+            return receiver.longPressHelper(p);
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e, MapView mapView) {
+            if (receiver == null) return false;
+            Projection proj = mapView.getProjection();
+            GeoPoint p = (GeoPoint) proj.fromPixels((int) e.getX(), (int) e.getY());
+            return receiver.singleTapConfirmedHelper(p);
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e, MapView mapView) {
             return locked;
         }
 
+        @Override
+        public boolean onTouchEvent(MotionEvent event, MapView mapView) {
+            return super.onTouchEvent(event, mapView);
+        }
+
+        @Override
+        public boolean onTrackballEvent(MotionEvent event, MapView mapView) {
+            return locked || super.onTrackballEvent(event, mapView);
+        }
+
+        @Override
+        public void onDetach(MapView mapView) {
+            super.onDetach(mapView);
+            receiver = null;
+        }
+
+    }
+
+    private static class LocationRetrievalOverlay extends MyLocationNewOverlay {
+
+        @Nullable
+        private EEventBus bus;
+
+        public LocationRetrievalOverlay(@NonNull Context ctx, @NonNull MapView mapView) {
+            super(ctx, mapView);
+            bus = EEventBus_.getInstance_(ctx);
+        }
+
+        @Override
+        public void onLocationChanged(Location location, IMyLocationProvider source) {
+            super.onLocationChanged(location, source);
+            if (bus != null) {
+                bus.post(new LocationChangedEvent(location));
+            }
+        }
+
+        @Override
+        public void onDetach(MapView mapView) {
+            super.onDetach(mapView);
+            bus = null;
+        }
     }
 }
