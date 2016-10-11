@@ -242,25 +242,22 @@ public class MonitoringActivity extends FragmentActivity {
             default:
                 throw new IllegalStateException("Unhandled provider type: " + providerType);
         }
-        menuNewEntry.setTitle(R.string.menu_monitoring_new_entry);
         if (entryType != null) {
             switch (entryType) {
                 case BIRDS:
                     menuFormTypeBirds.setChecked(true);
-                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeBirds.getTitle()));
                     break;
                 case CBM:
                     menuFormTypeCbm.setChecked(true);
-                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeCbm.getTitle()));
                     break;
                 case CICONIA:
                     menuFormTypeCiconia.setChecked(true);
-                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeCiconia.getTitle()));
                     break;
                 case HERP:
                     menuFormTypeHerp.setChecked(true);
-                    menuNewEntry.setTitle(getString(R.string.menu_monitoring_new_specific_entry, menuFormTypeHerp.getTitle()));
                     break;
+                default:
+                    throw new IllegalStateException("Unhandled entry type: "+entryType);
             }
         }
         menuStayAwake.setChecked(stayAwake);
