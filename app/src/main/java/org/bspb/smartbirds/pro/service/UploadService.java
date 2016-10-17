@@ -154,6 +154,12 @@ public class UploadService extends IntentService {
             }
         }
 
+        if (!fileObjs.containsKey("track.gpx") && new File(file, "track.gpx").exists()) {
+            // try again
+            fileObjs.put("track.gpx", uploadFile(new File(file, "track.gpx")));
+        }
+
+
         // then upload forms
         for (String subfile : file.list(new FilenameFilter() {
             @Override
