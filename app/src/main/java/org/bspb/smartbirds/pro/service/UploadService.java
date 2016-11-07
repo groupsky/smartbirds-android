@@ -108,15 +108,15 @@ public class UploadService extends IntentService {
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
         try {
-            uploadOnFtp(monitoringPath, monitoringName);
+            uploadOnServer(monitoringPath, monitoringName);
             try {
-                uploadOnServer(monitoringPath, monitoringName);
+                uploadOnFtp(monitoringPath, monitoringName);
             } catch (Throwable t) {
                 logException(t);
                 Toast.makeText(
                         this,
-                        String.format("Could not upload %s to server!\n" +
-                                "It is still uploaded on ftp.", monitoringName),
+                        String.format("Could not upload %s to ftp!\n" +
+                                "It is still uploaded on smartbirds.org", monitoringName),
                         Toast.LENGTH_SHORT).show();
             }
             file.renameTo(new File(monitoringPath.replace("-up", "")));
