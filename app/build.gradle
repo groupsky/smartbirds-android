@@ -16,7 +16,6 @@ android {
         targetSdkVersion 24
         versionCode versionCodeBase
         versionName "${versionNameBase}"
-        buildConfigField "String", "BACKEND_BASE_URL", "\"http://sb.87.252.173.51.xip.io:8082/api/\""
 
         def buildTime = new GregorianCalendar().format("MM-dd-yyyy' 'HH:mm:ss Z")
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
@@ -35,6 +34,7 @@ android {
         debug {
             versionNameSuffix "-DEBUG"
             buildConfigField "String", "GIT_SHA", "\"DEBUG\""
+            buildConfigField "String", "BACKEND_BASE_URL", "\"http://sb.87.252.173.51.xip.io:8082/api/\""
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
         }
@@ -46,6 +46,7 @@ android {
 
             def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
             buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+            buildConfigField "String", "BACKEND_BASE_URL", "\"https://smartbirds.org/api/\""
 
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
