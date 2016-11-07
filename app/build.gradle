@@ -13,7 +13,9 @@ android {
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
         minSdkVersion 15
-        targetSdkVersion 24
+        // keep 23 until we resolve the FileUriExposedException on api 24+
+        // @see http://stackoverflow.com/questions/32623304/when-take-photo-get-java-lang-throwable-file-uri-exposed-through-clipdata
+        targetSdkVersion 23
         versionCode versionCodeBase
         versionName "${versionNameBase}"
 
