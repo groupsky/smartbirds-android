@@ -148,8 +148,7 @@ public class UploadService extends IntentService {
             } catch (Throwable t) {
                 logException(t);
                 Toast.makeText(this,
-                        String.format("Could not upload %s of %s to server!\n" +
-                                "It is still uploaded on ftp.", subfile, monitoringName),
+                        String.format("Could not upload %s of %s to smartbirds.org!", subfile, monitoringName),
                         Toast.LENGTH_SHORT).show();
             }
         }
