@@ -54,13 +54,13 @@
             android:tag="@string/tag_count"
             app:required="true" />
 
-        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
             android:id="@+id/form_birds_count_min"
             android:hint="@string/monitoring_birds_min"
             android:tag="@string/tag_min"
             app:required="true" />
 
-        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+        <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
             android:id="@+id/form_birds_count_max"
             android:hint="@string/monitoring_birds_max"
             android:tag="@string/tag_max"
