@@ -21,7 +21,17 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
 
     private int sum = 0;
 
+    /**
+     * Tracks key event to make a sum after second time action button next is pressed and
+     * there was no key event before.
+     */
     private boolean keyEventOccurred = false;
+
+    /**
+     * Tracks when our sum button is pressed to clear input field content right before next
+     * key event arrive.
+     */
+    private boolean isSumButtonPressed = false;
 
     public SumDecimalNumberFormInput(Context context) {
         super(context);
@@ -40,7 +50,7 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
 
     private void init() {
         String sign = getResources().getString(R.string.sum_decimal_number_form_input_plus);
-        setImeActionLabel(sign, EditorInfo.IME_ACTION_GO);
+        setImeOptions(EditorInfo.IME_ACTION_NEXT);
         setImeActionLabel(sign, EditorInfo.IME_ACTION_NEXT);
 
         setOnEditorActionListener(new OnEditorActionListener() {
@@ -48,8 +58,7 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
 
-                if (actionId == EditorInfo.IME_ACTION_GO ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
 
                     if (!keyEventOccurred) {
                         setText(String.valueOf(sum));
@@ -60,7 +69,7 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
                         }
 
                         sum += currentValue;
-                        getText().clear();
+                        isSumButtonPressed = true;
                     }
 
                     handled = keyEventOccurred;
@@ -74,7 +83,13 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
         setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (isSumButtonPressed) {
+                    getText().clear();
+                    isSumButtonPressed = false;
+                }
+
                 keyEventOccurred = true;
+
                 return false;
             }
         });
