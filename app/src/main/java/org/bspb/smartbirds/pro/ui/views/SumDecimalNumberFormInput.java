@@ -62,8 +62,8 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
                         if (currentValue.length() != 0) {
                             String[] split = currentValue.split("\\" + SPLIT_CHARACTER);
 
-                            for (int i = 0; i < split.length; i++) {
-                                sum += Integer.valueOf(split[i]);
+                            for (String number : split) {
+                                sum += Integer.valueOf(number);
                             }
                         }
 
