@@ -12,26 +12,21 @@ import org.bspb.smartbirds.pro.R;
 /**
  * Input field for numbers that will be summed together.
  * Ime actions Go / Next are replaced with + sign. When a number is chosen then pressing the
- * + sign (action button) will the number to the sum. When the + sign is clicked twice then the sum
- * is entered in the field and the action Go / Next is executed.
+ * + sign (action button) will append a plus at the end in the edit field. When the + sign is
+ * clicked twice then the sum calculated then entered in the field and
+ * the action Go / Next is executed.
  *
  * Created by Ilian Georgiev.
  */
 public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
 
-    private int sum = 0;
+    private static final String SPLIT_CHARACTER = "+";
 
     /**
      * Tracks key event to make a sum after second time action button next is pressed and
      * there was no key event before.
      */
     private boolean keyEventOccurred = false;
-
-    /**
-     * Tracks when our sum button is pressed to clear input field content right before next
-     * key event arrive.
-     */
-    private boolean isSumButtonPressed = false;
 
     public SumDecimalNumberFormInput(Context context) {
         super(context);
@@ -60,16 +55,30 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
 
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
 
+                    String currentValue = getText().toString();
+
                     if (!keyEventOccurred) {
-                        setText(String.valueOf(sum));
-                    } else {
-                        int currentValue = 0;
-                        if (getText().length() != 0) {
-                            currentValue = Integer.valueOf(getText().toString());
+                        int sum = 0;
+                        if (currentValue.length() != 0) {
+                            String[] split = currentValue.split("\\" + SPLIT_CHARACTER);
+
+                            for (int i = 0; i < split.length; i++) {
+                                sum += Integer.valueOf(split[i]);
+                            }
                         }
 
-                        sum += currentValue;
-                        isSumButtonPressed = true;
+                        String sumStr = String.valueOf(sum);
+                        setText(sumStr);
+                        setSelection(sumStr.length());
+                    } else {
+
+                        if (currentValue.length() != 0) {
+                            currentValue = getText().toString();
+                            currentValue += "+";
+
+                            setText(currentValue);
+                            setSelection(currentValue.length());
+                        }
                     }
 
                     handled = keyEventOccurred;
@@ -83,14 +92,17 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
         setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (isSumButtonPressed) {
-                    getText().clear();
-                    isSumButtonPressed = false;
-                }
-
                 keyEventOccurred = true;
-
                 return false;
+            }
+        });
+
+        setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    keyEventOccurred = true;
+                }
             }
         });
     }
