@@ -51,6 +51,6 @@ public interface SmartBirdsApi {
     @POST("storage")
     Call<ResponseEnvelope<FileId>> upload(@Part MultipartBody.Part file);
 
-    @GET("zone?limit=-1&nomenclature=false&status=owned")
+    @GET("zone?limit=-1&status=owned")
     Call<ResponseListEnvelope<Zone>> listZones();
 }
