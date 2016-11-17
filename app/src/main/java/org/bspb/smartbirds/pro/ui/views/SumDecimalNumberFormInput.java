@@ -58,20 +58,8 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
                     String currentValue = getText().toString();
 
                     if (!keyEventOccurred) {
-                        int sum = 0;
-                        if (currentValue.length() != 0) {
-                            String[] split = currentValue.split("\\" + SPLIT_CHARACTER);
-
-                            for (String number : split) {
-                                sum += Integer.valueOf(number);
-                            }
-                        }
-
-                        String sumStr = String.valueOf(sum);
-                        setText(sumStr);
-                        setSelection(sumStr.length());
+                        calculateSum(currentValue);
                     } else {
-
                         if (currentValue.length() != 0) {
                             currentValue = getText().toString();
                             currentValue += "+";
@@ -102,8 +90,26 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     keyEventOccurred = true;
+                } else {
+                    String currentValue = getText().toString();
+                    calculateSum(currentValue);
                 }
             }
         });
+    }
+
+    private void calculateSum(String currentValue) {
+        int sum = 0;
+        if (currentValue.length() != 0) {
+            String[] split = currentValue.split("\\" + SPLIT_CHARACTER);
+
+            for (String number : split) {
+                sum += Integer.valueOf(number);
+            }
+        }
+
+        String sumStr = String.valueOf(sum);
+        setText(sumStr);
+        setSelection(sumStr.length());
     }
 }
