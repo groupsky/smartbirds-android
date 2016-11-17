@@ -28,6 +28,9 @@ public class SmartBirdsDatabase {
     @Table(ZoneColumns.class)
     public static final String ZONES = "zones";
 
+    @Table(NomenclatureUsesCountColumns.class)
+    public static final String NOMENCLATURE_USES_COUNT = "nomenclature_uses_count";
+
     @OnCreate
     public static void onCreate(Context context, SQLiteDatabase db) {
         NomenclaturesBean nomenclatureBean = NomenclaturesBean_.getInstance_(context);
@@ -46,7 +49,10 @@ public class SmartBirdsDatabase {
                 case 1:
                 case 2:
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.ZONES);
+                    db.execSQL(org.bspb.smartbirds.pro.db.generated
+                            .SmartBirdsDatabase.NOMENCLATURE_USES_COUNT);
                     break;
+
             }
         }
     }
