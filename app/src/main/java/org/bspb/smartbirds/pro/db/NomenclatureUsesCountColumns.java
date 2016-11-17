@@ -23,8 +23,16 @@ public interface NomenclatureUsesCountColumns {
     @AutoIncrement
     String _ID = BaseColumns._ID;
 
+    @DataType(TEXT)
+    String TYPE = "type";
+
+    @DataType(TEXT)
+    String LABEL_BG = "label_bg";
+
+    @DataType(TEXT)
+    String LABEL_EN = "label_en";
+
     @DataType(INTEGER)
-    //@References(table = SmartBirdsDatabase.NOMENCLATURES, column = )
-    String TYPE = "nomenclature_id";
+    String COUNT = "count";
 
 }
