@@ -54,8 +54,6 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
         setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
 
                     String currentValue = getText().toString();
@@ -79,7 +77,7 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
                     }
                 }
 
-                return handled;
+                return false;
             }
         });
 
