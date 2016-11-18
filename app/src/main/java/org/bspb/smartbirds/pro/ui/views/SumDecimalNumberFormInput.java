@@ -91,13 +91,19 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    keyEventOccurred = true;
+                    onFocusReceived();
                 } else {
-                    String currentValue = getText().toString();
-                    calculateSum(currentValue);
+                    if (!keyEventOccurred) {
+                        String currentValue = getText().toString();
+                        calculateSum(currentValue);
+                    }
                 }
             }
         });
+    }
+
+    private void onFocusReceived() {
+        keyEventOccurred = true;
     }
 
     private void calculateSum(String currentValue) {
