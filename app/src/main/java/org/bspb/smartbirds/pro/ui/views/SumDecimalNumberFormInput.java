@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -112,7 +113,9 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
             String[] split = currentValue.split(Pattern.quote(sign));
 
             for (String number : split) {
-                sum += Integer.valueOf(number);
+                if (!TextUtils.isEmpty(number)) {
+                    sum += Integer.valueOf(number);
+                }
             }
         }
 
