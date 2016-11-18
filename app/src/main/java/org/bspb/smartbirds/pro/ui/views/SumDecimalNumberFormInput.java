@@ -60,19 +60,23 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
 
                     String currentValue = getText().toString();
 
-                    if (!keyEventOccurred) {
-                        calculateSum(currentValue);
-                    } else {
+                    if (keyEventOccurred) {
                         if (currentValue.length() != 0) {
                             currentValue = getText().toString();
                             currentValue += sign;
 
                             setSumText(currentValue);
                         }
-                    }
 
-                    handled = keyEventOccurred;
-                    keyEventOccurred = false;
+                        // The key event is handled then set the flag to false in order
+                        // to check it when we want to calculate the sum and leave the field
+                        keyEventOccurred = false;
+
+                        return true;
+                    } else {
+                        calculateSum(currentValue);
+                        return false;
+                    }
                 }
 
                 return handled;
