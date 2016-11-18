@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import org.bspb.smartbirds.pro.R;
 
+import java.util.regex.Pattern;
+
 /**
  * Input field for numbers that will be summed together.
  * Ime actions Go / Next are replaced with + sign. When a number is chosen then pressing the
@@ -20,13 +22,12 @@ import org.bspb.smartbirds.pro.R;
  */
 public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
 
-    private static final String SPLIT_CHARACTER = "+";
-
     /**
      * Tracks key event to make a sum after second time action button next is pressed and
      * there was no key event before.
      */
     private boolean keyEventOccurred = false;
+    private String sign;
 
     public SumDecimalNumberFormInput(Context context) {
         super(context);
@@ -44,7 +45,8 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
     }
 
     private void init() {
-        String sign = getResources().getString(R.string.sum_decimal_number_form_input_plus);
+        sign = getResources().getString(R.string.sum_decimal_number_form_input_plus);
+
         setImeOptions(EditorInfo.IME_ACTION_NEXT);
         setImeActionLabel(sign, EditorInfo.IME_ACTION_NEXT);
 
@@ -62,7 +64,7 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
                     } else {
                         if (currentValue.length() != 0) {
                             currentValue = getText().toString();
-                            currentValue += "+";
+                            currentValue += sign;
 
                             setText(currentValue);
                             setSelection(currentValue.length());
@@ -101,7 +103,7 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
     private void calculateSum(String currentValue) {
         int sum = 0;
         if (currentValue.length() != 0) {
-            String[] split = currentValue.split("\\" + SPLIT_CHARACTER);
+            String[] split = currentValue.split(Pattern.quote(sign));
 
             for (String number : split) {
                 sum += Integer.valueOf(number);
