@@ -67,8 +67,7 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
                             currentValue = getText().toString();
                             currentValue += sign;
 
-                            setText(currentValue);
-                            setSelection(currentValue.length());
+                            setSumText(currentValue);
                         }
                     }
 
@@ -119,7 +118,10 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
             }
         }
 
-        String sumStr = String.valueOf(sum);
+        setSumText(String.valueOf(sum));
+    }
+
+    private void setSumText(String sumStr) {
         setText(sumStr);
         setSelection(sumStr.length());
     }
