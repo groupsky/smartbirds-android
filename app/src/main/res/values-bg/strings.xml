@@ -201,4 +201,5 @@
     <string name="export_description">Експорт на всички данни, които не са качвани на сървъра (данните ще останат на устройството)</string>
     <string name="image_file_create_error">Не може да създаде снимка</string>
     <string name="monitoring_cbm_zone">Площадка</string>
+    <string name="sum_decimal_number_form_input_plus">+</string>
 </resources>

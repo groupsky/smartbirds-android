@@ -58,40 +58,40 @@
     <string name="tag_sq_ventr" translatable="false">Sq_ventr</string>
     <string name="tag_sq_caud" translatable="false">Sq_caud</string>
     <string name="tag_sq_dors" translatable="false">Sq_dors</string>
-    <string name="tag_observed_bird">Species scientific name</string>
-    <string name="tag_distance">Distance</string>
-    <string name="tag_count_subject">Count individuals</string>
-    <string name="tag_primary_habitat">Primary habitat</string>
-    <string name="tag_secondary_habitat">Secondary habitat</string>
-    <string name="tag_visit_number">Visit number</string>
-    <string name="tag_transect_number">Number plot</string>
-    <string name="tag_substrate_type">Primary substrate type</string>
-    <string name="tag_pylon">Electricity pole</string>
-    <string name="tag_nest_artificial_platform">Nest is on artificial platform</string>
-    <string name="tag_pylon_type">Type electricity pole</string>
-    <string name="tag_ciconia_tree">Tree</string>
-    <string name="tag_building">Building</string>
-    <string name="tag_nest_artificial_platform_human">Nest on artificial human-made platform</string>
-    <string name="tag_nest_another_substrate">Nest is on another type of substrate</string>
-    <string name="tag_nest_not_occupied_this_year">Nest this year NOT Utilized by White Storks</string>
-    <string name="tag_birds_come_to_nest_this_year">This year One/Two birds appeared in nest</string>
-    <string name="tag_approximate_date_stork_arrival">Approximate date Storks appeared</string>
-    <string name="tag_approximate_date_stork_disappear">Approximate date disappearance White Storks</string>
-    <string name="tag_this_year_in_the_nest_appeared">This year in the nest appeared</string>
-    <string name="tag_number_juveniles_in_nest">Count juveniles in nest</string>
-    <string name="tag_nest_not_inhabited_more_than_year">Nest NOT used for OVER one year</string>
-    <string name="tag_info_for_juveniles_electrocuted">Data on juvenile mortality from electrocutions</string>
-    <string name="tag_info_for_juveniles_rejected_by_parents">Data on juveniles expelled from parents</string>
-    <string name="tag_died_from_other_causes">Died other reasons</string>
-    <string name="tag_cause">Reason</string>
-    <string name="tag_habitat">Habitat</string>
-    <string name="tag_threats_other">Threats observations</string>
-    <string name="tag_distance_from_axis">Distance from axis</string>
-    <string name="tag_weight_g">Mass (g)</string>
-    <string name="tag_t_substrate">Temp substrate</string>
-    <string name="tag_t_air">Temp air</string>
-    <string name="tag_t_cloaca">T cloaca</string>
-    <string name="tag_notes">Notes</string>
+    <string name="tag_observed_bird" translatable="false">Species scientific name</string>
+    <string name="tag_distance" translatable="false">Distance</string>
+    <string name="tag_count_subject" translatable="false">Count individuals</string>
+    <string name="tag_primary_habitat" translatable="false">Primary habitat</string>
+    <string name="tag_secondary_habitat" translatable="false">Secondary habitat</string>
+    <string name="tag_visit_number" translatable="false">Visit number</string>
+    <string name="tag_transect_number" translatable="false">Number plot</string>
+    <string name="tag_substrate_type" translatable="false">Primary substrate type</string>
+    <string name="tag_pylon" translatable="false">Electricity pole</string>
+    <string name="tag_nest_artificial_platform" translatable="false">Nest is on artificial platform</string>
+    <string name="tag_pylon_type" translatable="false">Type electricity pole</string>
+    <string name="tag_ciconia_tree" translatable="false">Tree</string>
+    <string name="tag_building" translatable="false">Building</string>
+    <string name="tag_nest_artificial_platform_human" translatable="false">Nest on artificial human-made platform</string>
+    <string name="tag_nest_another_substrate" translatable="false">Nest is on another type of substrate</string>
+    <string name="tag_nest_not_occupied_this_year" translatable="false">Nest this year NOT Utilized by White Storks</string>
+    <string name="tag_birds_come_to_nest_this_year" translatable="false">This year One/Two birds appeared in nest</string>
+    <string name="tag_approximate_date_stork_arrival" translatable="false">Approximate date Storks appeared</string>
+    <string name="tag_approximate_date_stork_disappear" translatable="false">Approximate date disappearance White Storks</string>
+    <string name="tag_this_year_in_the_nest_appeared" translatable="false">This year in the nest appeared</string>
+    <string name="tag_number_juveniles_in_nest" translatable="false">Count juveniles in nest</string>
+    <string name="tag_nest_not_inhabited_more_than_year" translatable="false">Nest NOT used for OVER one year</string>
+    <string name="tag_info_for_juveniles_electrocuted" translatable="false">Data on juvenile mortality from electrocutions</string>
+    <string name="tag_info_for_juveniles_rejected_by_parents" translatable="false">Data on juveniles expelled from parents</string>
+    <string name="tag_died_from_other_causes" translatable="false">Died other reasons</string>
+    <string name="tag_cause" translatable="false">Reason</string>
+    <string name="tag_habitat" translatable="false">Habitat</string>
+    <string name="tag_threats_other" translatable="false">Threats observations</string>
+    <string name="tag_distance_from_axis" translatable="false">Distance from axis</string>
+    <string name="tag_weight_g" translatable="false">Mass (g)</string>
+    <string name="tag_t_substrate" translatable="false">Temp substrate</string>
+    <string name="tag_t_air" translatable="false">Temp air</string>
+    <string name="tag_t_cloaca" translatable="false">T cloaca</string>
+    <string name="tag_notes" translatable="false">Notes</string>
 
     <string name="end_time_key" translatable="false">Hour_End</string>
     <string name="entry_time" translatable="false">Hour_Observation</string>
@@ -104,8 +104,8 @@
 
     <string name="tag_user_id" translatable="false">userId</string>
     <string name="tag_user_first_name" translatable="false">firstName</string>
-    <string name="tag_user_last_name">lastName</string>
-    <string name="tag_user_email">email</string>
-    <string name="tag_zone">zone</string>
+    <string name="tag_user_last_name" translatable="false">lastName</string>
+    <string name="tag_user_email" translatable="false">email</string>
+    <string name="tag_zone" translatable="false">zone</string>
 
 </resources>
