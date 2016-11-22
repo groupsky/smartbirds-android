@@ -30,6 +30,8 @@ public class SmartBirdsProvider {
         String NOMENCLATURE_USES_COUNT = "nomenclature_uses_count";
         String NOMENCLATURES = "nomenclatures";
         String ZONES = "zones";
+        String MONITORINGS = "monitorings";
+        String FORMS = "forms";
     }
 
     private static Uri buildUri(String... paths) {
@@ -131,5 +133,56 @@ public class SmartBirdsProvider {
                 type = TYPE_LIST + Path.ZONES,
                 defaultSort = ZoneColumns._ID + " ASC")
         public static final Uri CONTENT_URI = buildUri(Path.ZONES);
+    }
+
+    @TableEndpoint(table = SmartBirdsDatabase.MONITORINGS)
+    public static class Monitorings {
+        @ContentUri(
+                path = Path.MONITORINGS,
+                type = TYPE_LIST + Path.MONITORINGS,
+                defaultSort = MonitoringColumns._ID + " ASC")
+        public static final Uri CONTENT_URI = buildUri(Path.MONITORINGS);
+
+        @InexactContentUri(
+                path = Path.MONITORINGS + "/*",
+                name = Path.MONITORINGS + "_CODE",
+                type = TYPE_ITEM + Path.MONITORINGS,
+                whereColumn = MonitoringColumns.CODE,
+                pathSegment = 1,
+                defaultSort = MonitoringColumns._ID + " ASC")
+        public static Uri withCode(String monitoringCode) {
+            return buildUri(Path.MONITORINGS, monitoringCode);
+        }
+    }
+
+    @TableEndpoint(table = SmartBirdsDatabase.FORMS)
+    public static class Forms {
+        @ContentUri(
+                path = Path.FORMS,
+                type = TYPE_LIST + Path.FORMS,
+                defaultSort = FormColumns._ID + " ASC")
+        public static final Uri CONTENT_URI = buildUri(Path.FORMS);
+
+        @InexactContentUri(
+                path = Path.FORMS + "/#",
+                name = Path.FORMS + "_ID",
+                type = TYPE_ITEM + Path.FORMS,
+                whereColumn = FormColumns._ID,
+                pathSegment = 1,
+                defaultSort = FormColumns._ID + " ASC")
+        public static Uri withId(long id) {
+            return buildUri(Path.FORMS, String.valueOf(id));
+        }
+
+        @InexactContentUri(
+                path = Path.FORMS + "/monitoring/*",
+                name = Path.FORMS + "_MONITORING_CODE",
+                type = TYPE_LIST + Path.FORMS,
+                whereColumn = FormColumns.CODE,
+                pathSegment = 1,
+                defaultSort = FormColumns._ID + " ASC")
+        public static Uri withMonitoringCode(String monitoringCode) {
+            return buildUri(Path.FORMS, "monitoring", monitoringCode);
+        }
     }
 }
