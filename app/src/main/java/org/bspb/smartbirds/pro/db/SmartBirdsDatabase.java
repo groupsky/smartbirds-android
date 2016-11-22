@@ -20,10 +20,16 @@ import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_;
 public class SmartBirdsDatabase {
 
 
-    public static final int VERSION = 4;
+    public static final int VERSION = 5;
+
+    @Table(FormColumns.class)
+    public static final String FORMS = "forms";
 
     @Table(LocationColumns.class)
     public static final String LOCATIONS = "locations";
+
+    @Table(MonitoringColumns.class)
+    public static final String MONITORINGS = "monitorings";
 
     @Table(NomenclatureColumns.class)
     public static final String NOMENCLATURES = "nomenclatures";
@@ -57,6 +63,10 @@ public class SmartBirdsDatabase {
                     break;
                 case 3:
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.LOCATIONS);
+                    break;
+                case 4:
+                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.MONITORINGS);
+                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.FORMS);
                     break;
             }
         }
