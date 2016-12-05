@@ -32,6 +32,7 @@ public class SmartBirdsProvider {
         String ZONES = "zones";
         String MONITORINGS = "monitorings";
         String FORMS = "forms";
+        String TRACKING = "tracking";
     }
 
     private static Uri buildUri(String... paths) {
@@ -183,6 +184,50 @@ public class SmartBirdsProvider {
                 defaultSort = FormColumns._ID + " ASC")
         public static Uri withMonitoringCode(String monitoringCode) {
             return buildUri(Path.FORMS, "monitoring", monitoringCode);
+        }
+
+        @InexactContentUri(
+                path = Path.FORMS + "/last_monitoring/*",
+                name = Path.FORMS + "_LAST_MONITORING_CODE",
+                type = TYPE_ITEM + Path.FORMS,
+                whereColumn = FormColumns.CODE,
+                pathSegment = 1,
+                defaultSort = FormColumns._ID + " DESC",
+                limit = "1"
+            )
+        public static Uri lastWithMonitoringCode(String monitoringCode) {
+            return buildUri(Path.FORMS, "last_monitoring", monitoringCode);
+        }
+    }
+
+    @TableEndpoint(table = SmartBirdsDatabase.TRACKING)
+    public static class Tracking {
+        @ContentUri(
+                path = Path.TRACKING,
+                type = TYPE_LIST + Path.TRACKING,
+                defaultSort = TrackingColumns._ID + " ASC")
+        public static final Uri CONTENT_URI = buildUri(Path.TRACKING);
+
+        @InexactContentUri(
+                path = Path.TRACKING + "/#",
+                name = Path.TRACKING + "_ID",
+                type = TYPE_ITEM + Path.TRACKING,
+                whereColumn = TrackingColumns._ID,
+                pathSegment = 1,
+                defaultSort = TrackingColumns._ID + " ASC")
+        public static Uri withId(long id) {
+            return buildUri(Path.TRACKING, String.valueOf(id));
+        }
+
+        @InexactContentUri(
+                path = Path.TRACKING + "/monitoring/*",
+                name = Path.TRACKING + "_MONITORING_CODE",
+                type = TYPE_LIST + Path.TRACKING,
+                whereColumn = TrackingColumns.CODE,
+                pathSegment = 1,
+                defaultSort = TrackingColumns._ID + " ASC")
+        public static Uri withMonitoringCode(String monitoringCode) {
+            return buildUri(Path.TRACKING, "monitoring", monitoringCode);
         }
     }
 }

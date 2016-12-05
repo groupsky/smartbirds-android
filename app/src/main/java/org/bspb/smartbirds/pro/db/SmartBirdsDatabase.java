@@ -40,6 +40,9 @@ public class SmartBirdsDatabase {
     @Table(NomenclatureUsesCountColumns.class)
     public static final String NOMENCLATURE_USES_COUNT = "nomenclature_uses_count";
 
+    @Table(TrackingColumns.class)
+    public static final String TRACKING = "tracking";
+
     @OnCreate
     public static void onCreate(Context context, SQLiteDatabase db) {
         NomenclaturesBean nomenclatureBean = NomenclaturesBean_.getInstance_(context);
@@ -67,6 +70,7 @@ public class SmartBirdsDatabase {
                 case 4:
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.MONITORINGS);
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.FORMS);
+                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.TRACKING);
                     break;
             }
         }
