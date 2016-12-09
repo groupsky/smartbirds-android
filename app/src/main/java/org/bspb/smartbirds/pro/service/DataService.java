@@ -100,9 +100,11 @@ public class DataService extends Service {
         if (monitoring != null) {
             NotificationUtils.showMonitoringNotification(getApplicationContext());
             TrackingService_.intent(this).start();
+            globalPrefs.runningMonitoring().put(true);
         } else {
             NotificationUtils.hideMonitoringNotification(getApplicationContext());
             TrackingService_.intent(this).stop();
+            globalPrefs.runningMonitoring().put(false);
         }
     }
 
@@ -113,7 +115,8 @@ public class DataService extends Service {
 
     @AfterInject
     void initBus() {
-        restoreState();
+        // restore state
+        setMonitoring(monitoringManager.getActiveMonitoring());
 
         Log.d(TAG, "bus registering...");
         bus.registerSticky(this);
@@ -140,7 +143,6 @@ public class DataService extends Service {
             bus.postSticky(new MonitoringStartedEvent());
             return;
         }
-        globalPrefs.runningMonitoring().put(true);
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
         setMonitoring(monitoringManager.createNew());
@@ -189,11 +191,11 @@ public class DataService extends Service {
     public void onEvent(@SuppressWarnings("UnusedParameters") CancelMonitoringEvent event) {
         Log.d(TAG, "onCancelMonitoringEvent...");
 
-        monitoringManager.updateStatus(monitoring, canceled);
-
+        if (isMonitoring()) {
+            monitoringManager.updateStatus(monitoring, canceled);
+        }
         setMonitoring(null);
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
-        clearPrefs();
     }
 
     public void onEvent(SetMonitoringCommonData event) {
@@ -225,12 +227,11 @@ public class DataService extends Service {
             EntryType[] types = EntryType.values();
             for (EntryType entryType : types) {
                 File entriesFile = getEntriesFile(entryType);
-                if (!entriesFile.exists())
-                    continue;
                 String[] commonLines = convertToCsvLines(monitoring.commonForm);
 
                 Cursor cursor = monitoringManager.getEntries(monitoring, entryType);
                 if (cursor != null) try {
+                    if (cursor.getCount() == 0) continue;
                     BufferedWriter outWriter = new BufferedWriter(new FileWriter(entriesFile));
                     //noinspection TryFinallyCanBeTryWithResources
                     try {
@@ -242,12 +243,12 @@ public class DataService extends Service {
                                 outWriter.write(commonLines[0]);
                                 outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
                                 outWriter.write(lines[0]);
+                                outWriter.newLine();
                                 firstLine = false;
-                            } else {
-                                outWriter.write(commonLines[1]);
-                                outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
-                                outWriter.write(lines[1]);
                             }
+                            outWriter.write(commonLines[1]);
+                            outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
+                            outWriter.write(lines[1]);
                             outWriter.newLine();
                         }
                     } finally {
@@ -361,16 +362,7 @@ public class DataService extends Service {
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") UndoLastEntry event) {
-        monitoringManager.deleteLastEntry(monitoring);
-    }
-
-    private void restoreState() {
-        if (globalPrefs.runningMonitoring().get()) {
-            setMonitoring(monitoringManager.getActiveMonitoring());
-        }
-    }
-
-    private void clearPrefs() {
-        globalPrefs.runningMonitoring().put(false);
+        boolean success = monitoringManager.deleteLastEntry(monitoring);
+        if (!success) Log.e(TAG, "could not delete last monitoring entry");
     }
 }
