@@ -34,14 +34,14 @@ public class SmartBirdsDatabase {
     @Table(NomenclatureColumns.class)
     public static final String NOMENCLATURES = "nomenclatures";
 
+    @Table(TrackingColumns.class)
+    public static final String TRACKING = "tracking";
+
     @Table(ZoneColumns.class)
     public static final String ZONES = "zones";
 
     @Table(NomenclatureUsesCountColumns.class)
     public static final String NOMENCLATURE_USES_COUNT = "nomenclature_uses_count";
-
-    @Table(TrackingColumns.class)
-    public static final String TRACKING = "tracking";
 
     @OnCreate
     public static void onCreate(Context context, SQLiteDatabase db) {
