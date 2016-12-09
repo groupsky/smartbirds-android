@@ -3,7 +3,7 @@ package org.bspb.smartbirds.pro.tools;
 import org.bspb.smartbirds.pro.content.TrackingLocation;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,13 +18,13 @@ public class GpxWriter {
 
     private static final DateFormat GPX_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
 
-    private final OutputStreamWriter output;
+    private final Writer output;
 
     static {
         GPX_DATE_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    public GpxWriter(OutputStreamWriter output) {
+    public GpxWriter(Writer output) {
         this.output = output;
     }
 

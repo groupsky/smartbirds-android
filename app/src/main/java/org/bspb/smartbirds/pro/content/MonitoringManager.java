@@ -20,8 +20,10 @@ import org.bspb.smartbirds.pro.enums.EntryType;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -29,6 +31,7 @@ import java.util.UUID;
 import static android.content.ContentUris.parseId;
 import static java.lang.Double.parseDouble;
 import static org.androidannotations.annotations.EBean.Scope.Singleton;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 
 /**
  * Created by groupsky on 05.12.16.
@@ -39,9 +42,14 @@ public class MonitoringManager {
 
     private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
     private static final Gson SERIALIZER = new Gson();
-    private static final String[] MONITORING_PROJECTION = {
+    public static final String[] MONITORING_PROJECTION = {
             MonitoringColumns._ID,
+            MonitoringColumns.STATUS,
             MonitoringColumns.DATA
+    };
+    private static final String[] ENTRY_PROJECTION = {
+            FormColumns._ID,
+            FormColumns.DATA
     };
 
     static {
@@ -116,16 +124,20 @@ public class MonitoringManager {
         return cv;
     }
 
-    private static Monitoring monitoringFromCursor(@NonNull Cursor cursor) {
+    public static Monitoring monitoringFromCursor(@NonNull Cursor cursor) {
         Monitoring monitoring = SERIALIZER.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(MonitoringColumns.DATA)), Monitoring.class);
-        final int idx = cursor.getColumnIndex(MonitoringColumns._ID);
-        if (idx != -1) {
-            monitoring.id = cursor.getLong(idx);
+        final int idIdx = cursor.getColumnIndex(MonitoringColumns._ID);
+        if (idIdx != -1) {
+            monitoring.id = cursor.getLong(idIdx);
+        }
+        final int statusIdx = cursor.getColumnIndex(MonitoringColumns.STATUS);
+        if (statusIdx != -1) {
+            monitoring.status = Monitoring.Status.valueOf(cursor.getString(statusIdx));
         }
         return monitoring;
     }
 
-    private static MonitoringEntry entryFromCursor(@NonNull Cursor cursor) {
+    public static MonitoringEntry entryFromCursor(@NonNull Cursor cursor) {
         MonitoringEntry entry = SERIALIZER.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(FormColumns.DATA)), MonitoringEntry.class);
         final int idx = cursor.getColumnIndex(FormColumns._ID);
         if (idx != -1) {
@@ -134,7 +146,7 @@ public class MonitoringManager {
         return entry;
     }
 
-    private static TrackingLocation locationFromCursor(@NonNull Cursor cursor) {
+    public static TrackingLocation locationFromCursor(@NonNull Cursor cursor) {
         String monitoringCode = cursor.getString(cursor.getColumnIndexOrThrow(TrackingColumns.CODE));
         long time = cursor.getLong(cursor.getColumnIndexOrThrow(TrackingColumns.TIME));
         double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(TrackingColumns.LATITUDE));
@@ -178,5 +190,50 @@ public class MonitoringManager {
             cursor.close();
         }
         return null;
+    }
+
+    public Cursor getEntries(Monitoring monitoring, EntryType entryType) {
+        return contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), ENTRY_PROJECTION, FormColumns.TYPE+"=?", new String[]{entryType.name()}, FormColumns._ID);
+    }
+
+    public Monitoring getActiveMonitoring() {
+        Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI, MONITORING_PROJECTION, MonitoringColumns.STATUS + "=?", new String[]{wip.name()}, MonitoringColumns._ID + " desc");
+        if (cursor == null) return null;
+        try {
+            if (!cursor.moveToFirst()) return null;
+            return monitoringFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public Iterable<String> monitoringCodesForStatus(Monitoring.Status status) {
+        Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI,
+                new String[] {MonitoringColumns.CODE},
+                MonitoringColumns.STATUS+"=?", new String[]{status.name()},
+                MonitoringColumns._ID);
+        if (cursor == null) return new ArrayList<>(0);
+        try {
+            List<String> monitoringCodes = new ArrayList<>(cursor.getCount());
+            int codeIdx = cursor.getColumnIndexOrThrow(MonitoringColumns.CODE);
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+                monitoringCodes.add(cursor.getString(codeIdx));
+            return monitoringCodes;
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public int countMonitoringsForStatus(Monitoring.Status status) {
+        Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI,
+                new String[] {MonitoringColumns.CODE},
+                MonitoringColumns.STATUS+"=?", new String[]{status.name()},
+                MonitoringColumns._ID);
+        if (cursor == null) return 0;
+        try {
+            return cursor.getCount();
+        } finally {
+            cursor.close();
+        }
     }
 }

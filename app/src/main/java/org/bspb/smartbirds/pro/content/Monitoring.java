@@ -6,7 +6,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 
@@ -30,7 +29,7 @@ public class Monitoring {
     public Status status = wip;
     @Expose
     @SerializedName("commonForm")
-    public final Map<String, String> commonForm = new HashMap<>();
+    public final HashMap<String, String> commonForm = new HashMap<>();
     @Expose
     @SerializedName("pictureCounter")
     public int pictureCounter = 0;

@@ -9,6 +9,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
 import org.androidannotations.annotations.ServiceAction;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ExportFailedEvent;
 import org.bspb.smartbirds.pro.events.ExportPreparedEvent;
@@ -19,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
 
 /**
  * Created by dani on 14-11-18.
@@ -32,6 +35,9 @@ public class ExportService extends IntentService {
 
     @Bean
     EEventBus eventBus;
+
+    @Bean
+    MonitoringManager monitoringManager;
 
     public ExportService() {
         super("Export Service");
@@ -53,10 +59,12 @@ public class ExportService extends IntentService {
 
             byte data[] = new byte[BUFFER];
 
-            for (File monitoring : baseDir.listFiles()) {
-                if (!monitoring.getName().endsWith("-up")) continue;
+            for (String monitoringCode: monitoringManager.monitoringCodesForStatus(finished)) {
+                File monitoring = new File(baseDir, monitoringCode);
+                if (!monitoring.exists()) continue;
+                if (!monitoring.isDirectory()) continue;
                 for (File fileToZip : monitoring.listFiles()) {
-                    ZipEntry entry = new ZipEntry(monitoring.getName().replace("-up", "") + "/" + fileToZip.getName());
+                    ZipEntry entry = new ZipEntry(monitoring.getName() + "/" + fileToZip.getName());
                     zipOut.putNextEntry(entry);
                     FileInputStream inputStream = new FileInputStream(fileToZip);
                     BufferedInputStream in = new BufferedInputStream(inputStream);

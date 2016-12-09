@@ -30,6 +30,7 @@ import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.events.DownloadCompleted;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ExportFailedEvent;
@@ -53,6 +54,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EFragment(R.layout.fragment_main)
@@ -63,6 +65,9 @@ public class MainFragment extends Fragment {
 
     @Bean
     EEventBus bus;
+
+    @Bean
+    MonitoringManager monitoringManager;
 
     private AlertDialog progressDialog;
     private AlertDialog exportDialog;
@@ -304,12 +309,7 @@ public class MainFragment extends Fragment {
 
     protected void showNotSyncedCount() {
         File baseDir = getActivity().getExternalFilesDir(null);
-        int notSyncedCount = 0;
-        for (String monitoring : baseDir.list()) {
-            if (monitoring.endsWith("-up")) {
-                notSyncedCount++;
-            }
-        }
+        int notSyncedCount = monitoringManager.countMonitoringsForStatus(finished);
         notSyncedCountView.setText(getString(R.string.not_synced_count, notSyncedCount));
     }
 }
