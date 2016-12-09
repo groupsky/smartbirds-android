@@ -179,7 +179,17 @@ public class MonitoringManager {
     }
 
     public boolean deleteLastEntry(@NonNull Monitoring monitoring) {
-        return contentResolver.delete(SmartBirdsProvider.Forms.lastWithMonitoringCode(monitoring.code), null, null) == 1;
+        long rowId;
+        Cursor cursor = contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), new String[] {FormColumns._ID}, null, null, FormColumns._ID+" desc");
+        if (cursor == null) return false;
+        try {
+            if (!cursor.moveToFirst()) return false;
+            if (cursor.isAfterLast()) return false;
+            rowId = cursor.getLong(cursor.getColumnIndexOrThrow(FormColumns._ID));
+        } finally {
+            cursor.close();
+        }
+        return contentResolver.delete(SmartBirdsProvider.Forms.withId(rowId), null, null) == 1;
     }
 
     public Monitoring getMonitoring(@NonNull String monitoringCode) {
