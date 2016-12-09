@@ -180,7 +180,7 @@ public class SmartBirdsProvider {
                 name = Path.FORMS + "_MONITORING_CODE",
                 type = TYPE_LIST + Path.FORMS,
                 whereColumn = FormColumns.CODE,
-                pathSegment = 1,
+                pathSegment = 2,
                 defaultSort = FormColumns._ID + " ASC")
         public static Uri withMonitoringCode(String monitoringCode) {
             return buildUri(Path.FORMS, "monitoring", monitoringCode);
@@ -191,7 +191,7 @@ public class SmartBirdsProvider {
                 name = Path.FORMS + "_LAST_MONITORING_CODE",
                 type = TYPE_ITEM + Path.FORMS,
                 whereColumn = FormColumns.CODE,
-                pathSegment = 1,
+                pathSegment = 2,
                 defaultSort = FormColumns._ID + " DESC",
                 limit = "1"
             )
@@ -224,7 +224,7 @@ public class SmartBirdsProvider {
                 name = Path.TRACKING + "_MONITORING_CODE",
                 type = TYPE_LIST + Path.TRACKING,
                 whereColumn = TrackingColumns.CODE,
-                pathSegment = 1,
+                pathSegment = 2,
                 defaultSort = TrackingColumns._ID + " ASC")
         public static Uri withMonitoringCode(String monitoringCode) {
             return buildUri(Path.TRACKING, "monitoring", monitoringCode);
