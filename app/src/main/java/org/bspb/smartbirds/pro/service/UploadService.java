@@ -51,6 +51,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.uploaded;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EIntentService
@@ -117,6 +118,7 @@ public class UploadService extends IntentService {
                         Toast.LENGTH_SHORT).show();
             }
             uploadOnServer(monitoringPath, monitoringName);
+            monitoringManager.updateStatus(monitoringName, uploaded);
         } catch (Throwable e) {
             logException(e);
             Toast.makeText(
