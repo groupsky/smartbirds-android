@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import org.bspb.smartbirds.pro.enums.EntryType;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by groupsky on 05.12.16.
@@ -19,7 +18,7 @@ public class MonitoringEntry {
     @NonNull
     public final EntryType type;
     @NonNull
-    public final Map<String, String> data = new HashMap<>();
+    public final HashMap<String, String> data = new HashMap<>();
 
     public MonitoringEntry(@NonNull String monitoringCode, @NonNull EntryType type) {
         this.monitoringCode = monitoringCode;

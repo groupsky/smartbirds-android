@@ -22,6 +22,7 @@ import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
 import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
@@ -49,6 +50,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EIntentService
@@ -64,6 +66,9 @@ public class UploadService extends IntentService {
 
     @Bean
     NomenclaturesBean nomenclaturesBean;
+
+    @Bean
+    MonitoringManager monitoringManager;
 
     protected UploadService() {
         super("Upload Service");
@@ -81,9 +86,9 @@ public class UploadService extends IntentService {
         eventBus.post(new StartingUpload());
         try {
             File baseDir = getExternalFilesDir(null);
-            for (String monitoring : baseDir.list()) {
-                if (!monitoring.endsWith("-up")) continue;
-                File monitoringDir = new File(baseDir, monitoring);
+            for (String monitoringCode : monitoringManager.monitoringCodesForStatus(finished)) {
+                File monitoringDir = new File(baseDir, monitoringCode);
+                if (!monitoringDir.exists()) continue;
                 if (!monitoringDir.isDirectory()) continue;
                 upload(monitoringDir.getAbsolutePath());
             }
@@ -97,7 +102,7 @@ public class UploadService extends IntentService {
     void upload(String monitoringPath) {
         Log.d(TAG, String.format("uploading %s", monitoringPath));
         File file = new File(monitoringPath);
-        String monitoringName = file.getName().replace("-up", "");
+        String monitoringName = file.getName();
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
         try {
@@ -112,7 +117,6 @@ public class UploadService extends IntentService {
                         Toast.LENGTH_SHORT).show();
             }
             uploadOnServer(monitoringPath, monitoringName);
-            file.renameTo(new File(monitoringPath.replace("-up", "")));
         } catch (Throwable e) {
             logException(e);
             Toast.makeText(
