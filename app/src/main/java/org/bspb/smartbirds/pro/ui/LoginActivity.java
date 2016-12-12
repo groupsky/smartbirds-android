@@ -18,18 +18,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EditorAction;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
@@ -98,17 +96,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         if (prefs.username().exists()) {
             mEmailView.setText(prefs.username().get());
         }
-
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
 
@@ -162,6 +149,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * errors are presented and no actual login attempt is made.
      */
     @Click(R.id.email_sign_in_button)
+    @EditorAction(R.id.password)
     protected void attemptLogin() {
         if (isLoginRunning) {
             return;
@@ -179,7 +167,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        } else if (!isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -209,7 +201,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 
     private boolean isEmailValid(String email) {
-        return !TextUtils.isEmpty(email); // && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isPasswordValid(String password) {
@@ -324,6 +316,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 break;
             case CONNECTIVITY:
                 mEmailView.setError("connectivity error");
+                mEmailView.requestFocus();
                 break;
             case PASSWORD_SHORT:
                 mPasswordView.setError(getString(R.string.error_invalid_password));
