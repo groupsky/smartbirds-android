@@ -25,7 +25,7 @@ import org.bspb.smartbirds.pro.ui.fragment.NewHerpEntryFormFragment_;
 
 @EActivity(R.layout.activity_form)
 @OptionsMenu(R.menu.form_entry)
-public class NewMonitoringEntryActivity extends AppCompatActivity {
+public class NewMonitoringEntryActivity extends BaseActivity {
 
     public static final String EXTRA_LAT = "lat";
     public static final String EXTRA_LON = "lon";

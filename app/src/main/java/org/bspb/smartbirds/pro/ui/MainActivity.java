@@ -20,7 +20,7 @@ import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Bean
     EEventBus bus;

@@ -56,7 +56,7 @@ import static android.text.TextUtils.isEmpty;
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends AppCompatActivity {
+public class MonitoringActivity extends BaseActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 

@@ -48,7 +48,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 @EActivity(R.layout.activity_login)
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends BaseActivity implements LoaderCallbacks<Cursor> {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".LoginActivity";
 
