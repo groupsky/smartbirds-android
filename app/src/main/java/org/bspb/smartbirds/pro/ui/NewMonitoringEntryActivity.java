@@ -1,11 +1,11 @@
 package org.bspb.smartbirds.pro.ui;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -25,7 +25,7 @@ import org.bspb.smartbirds.pro.ui.fragment.NewHerpEntryFormFragment_;
 
 @EActivity(R.layout.activity_form)
 @OptionsMenu(R.menu.form_entry)
-public class NewMonitoringEntryActivity extends Activity {
+public class NewMonitoringEntryActivity extends AppCompatActivity {
 
     public static final String EXTRA_LAT = "lat";
     public static final String EXTRA_LON = "lon";
