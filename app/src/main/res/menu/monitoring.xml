@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_finish"
         android:menuCategory="container"
         android:orderInCategory="50"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/menu_monitoring_finish" />
     <item
         android:id="@+id/action_new_entry"
         android:enabled="false"
         android:menuCategory="container"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/menu_monitoring_new_entry" />
     <item
         android:id="@+id/action_undo_last_entry"
         android:enabled="false"
         android:menuCategory="container"
         android:orderInCategory="125"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/undo_last_entry" />
     <item
         android:id="@+id/action_common_form"
         android:menuCategory="container"
         android:orderInCategory="75"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/menu_monitoring_common" />
 
     <item
         android:id="@+id/menu_zoom"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/menu_monitoring_zoom_500">
         <menu>
             <group android:checkableBehavior="single">
@@ -63,7 +64,7 @@
     <item
         android:id="@+id/menu_map"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom|withText"
         android:title="@string/menu_monitoring_map_normal">
         <menu>
 
@@ -88,7 +89,7 @@
     <item
         android:id="@+id/menu_map_provider"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom|withText"
         android:title="@string/menu_monitoring_map_provider">
         <menu>
 
@@ -116,7 +117,7 @@
     <item
         android:id="@+id/menu_form_type"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom|withText"
         android:title="@string/monitoring_type">
         <menu>
 
