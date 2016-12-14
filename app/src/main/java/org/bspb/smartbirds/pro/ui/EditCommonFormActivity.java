@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -18,7 +18,7 @@ import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
  */
 @EActivity(R.layout.activity_start_monitoring)
 @OptionsMenu(R.menu.monitoring_edit_common_form)
-public class EditCommonFormActivity extends Activity {
+public class EditCommonFormActivity extends AppCompatActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
     MonitoringCommonFormFragment formFragment;
