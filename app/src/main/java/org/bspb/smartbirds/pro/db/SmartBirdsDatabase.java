@@ -47,7 +47,6 @@ public class SmartBirdsDatabase {
         for (; oldVersion < newVersion; oldVersion++) {
             switch (oldVersion) {
                 case 1:
-                case 2:
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.ZONES);
                     db.execSQL(org.bspb.smartbirds.pro.db.generated
                             .SmartBirdsDatabase.NOMENCLATURE_USES_COUNT);

@@ -22,6 +22,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
@@ -66,14 +67,16 @@ public class AuthenticationInterceptor implements Interceptor {
         Log.i(TAG, String.format("Authorization: %s", authorization));
     }
 
-    boolean tryRelogin() {
+    synchronized boolean tryRelogin(String failedAuth) {
         try {
+            if (!TextUtils.equals(this.authorization, failedAuth)) return !isEmpty(authorization);
             retrofit2.Response<LoginResponse> loginResponse = backend.api().login(new LoginRequest(prefs.username().get(), prefs.password().get())).execute();
             if (loginResponse.isSuccessful()) {
                 this.authorization = loginResponse.body().token;
                 prefs.authToken().put(this.authorization);
                 return true;
             } else {
+                this.authorization = null;
                 return false;
             }
         } catch (Throwable t) {
@@ -84,7 +87,7 @@ public class AuthenticationInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        if (!BuildConfig.BACKEND_BASE_URL.contains(chain.request().url().host())) {
+        if (!BuildConfig.BACKEND_BASE_URL.contains(chain.request().url().host()) || chain.request().url().encodedPath().contains("session")) {
             Log.d(TAG, "no auth required");
             return chain.proceed(chain.request());
         }
@@ -100,7 +103,7 @@ public class AuthenticationInterceptor implements Interceptor {
             Response response = chain.proceed(newRequest);
             if (!response.isSuccessful() && response.code() == 401) {
                 Log.w(TAG, "Invalid authorization!");
-                if (retries++ > 3 || !tryRelogin()) {
+                if (retries++ > 3 || !tryRelogin(auth)) {
                     clearAuthorization();
                     AuthenticationService_.intent(context).logout().start();
                     return response;
