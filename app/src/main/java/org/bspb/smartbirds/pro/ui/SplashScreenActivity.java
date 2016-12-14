@@ -20,7 +20,7 @@ import java.util.concurrent.ScheduledExecutorService;
 @WindowFeature({Window.FEATURE_NO_TITLE})
 @Fullscreen
 @EActivity(R.layout.activity_splash_screen)
-public class SplashScreenActivity extends AppCompatActivity implements Runnable {
+public class SplashScreenActivity extends BaseActivity implements Runnable {
 
     @ViewById(android.R.id.content)
     View content;
