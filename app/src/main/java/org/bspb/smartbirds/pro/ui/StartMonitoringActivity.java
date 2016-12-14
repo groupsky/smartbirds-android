@@ -21,7 +21,7 @@ import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
 
 @EActivity(R.layout.activity_start_monitoring)
 @OptionsMenu(R.menu.monitoring_common_form)
-public class StartMonitoringActivity extends AppCompatActivity {
+public class StartMonitoringActivity extends BaseActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
 
