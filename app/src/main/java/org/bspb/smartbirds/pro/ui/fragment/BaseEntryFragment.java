@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;

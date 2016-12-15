@@ -1,11 +1,10 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -72,8 +71,8 @@ public class NewMonitoringEntryActivity extends BaseActivity {
             default:
                 throw new IllegalArgumentException("Unsupported entry type");
         }
-        if (getFragmentManager().findFragmentById(R.id.container) == null)
-            getFragmentManager().beginTransaction()
+        if (getSupportFragmentManager().findFragmentById(R.id.container) == null)
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, fragment)
                     .commit();
     }
