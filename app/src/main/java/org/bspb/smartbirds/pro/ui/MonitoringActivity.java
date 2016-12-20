@@ -9,7 +9,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +30,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.enums.FormType;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
@@ -129,7 +128,7 @@ public class MonitoringActivity extends BaseActivity {
     MenuItem menuStayAwake;
     @InstanceState
     @Nullable
-    FormType formType = null;
+    EntryType entryType = null;
 
     @Pref
     MonitoringPrefs_ monitoringPrefs;
@@ -235,16 +234,16 @@ public class MonitoringActivity extends BaseActivity {
             default:
                 throw new IllegalStateException("Unhandled provider type: " + providerType);
         }
-        updateCheckedFormType(menu);
+        updateCheckedEntryType(menu);
         menuStayAwake.setChecked(stayAwake);
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void updateCheckedFormType(Menu menu) {
-        if (formType == null) return;
-        MenuItem item = menu.findItem(formType.menuActionId);
+    private void updateCheckedEntryType(Menu menu) {
+        if (entryType == null) return;
+        MenuItem item = menu.findItem(entryType.menuActionId);
         if (item == null) {
-            throw new IllegalStateException("Unhandled entry type: " + formType);
+            throw new IllegalStateException("Unhandled entry type: " + entryType);
         }
         item.setChecked(true);
     }
@@ -461,17 +460,17 @@ public class MonitoringActivity extends BaseActivity {
     })
     void setFormType(MenuItem sender) {
         final int senderId = sender.getItemId();
-        for (FormType formType: FormType.values())
-        if (senderId == formType.menuActionId) {
-            setFormType(formType);
+        for (EntryType entryType: EntryType.values())
+        if (senderId == entryType.menuActionId) {
+            setEntryType(entryType);
                     return;
         }
     }
 
-    public void setFormType(@Nullable FormType formType) {
-        this.formType = formType;
-        if (formType != null)
-            monitoringPrefs.entryType().put(formType.name());
+    public void setEntryType(@Nullable EntryType entryType) {
+        this.entryType = entryType;
+        if (entryType != null)
+            monitoringPrefs.entryType().put(entryType.name());
         else
             monitoringPrefs.entryType().remove();
     }
@@ -505,12 +504,12 @@ public class MonitoringActivity extends BaseActivity {
     }
 
     void startNewEntryWithoutAsking(final LatLng position) {
-        if (formType == null) {
+        if (entryType == null) {
             startNewEntryAsking(position);
             return;
         }
         NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
-        ib.formType(formType);
+        ib.entryType(entryType);
         if (position != null) {
             ib.lat(position.latitude).lon(position.longitude);
         }
@@ -518,13 +517,13 @@ public class MonitoringActivity extends BaseActivity {
     }
 
     protected void startNewEntryAsking(final LatLng position) {
-        final String[] types = FormType.getTitles(getResources());
+        final String[] types = EntryType.getTitles(getResources());
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.menu_monitoring_new_entry)
-                .setSingleChoiceItems(types, formType != null ? formType.ordinal() : -1, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(types, entryType != null ? entryType.ordinal() : -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        setFormType(FormType.values()[i]);
+                        setEntryType(EntryType.values()[i]);
                         startNewEntryWithoutAsking(position);
                         dialogInterface.cancel();
                     }
@@ -571,8 +570,8 @@ public class MonitoringActivity extends BaseActivity {
                 editor.lastPositionLon().remove();
             }
             prefs.zoomFactor().put(zoomFactor);
-            if (formType != null) {
-                editor.entryType().put(formType.name());
+            if (entryType != null) {
+                editor.entryType().put(entryType.name());
             } else {
                 editor.entryType().remove();
             }
@@ -647,11 +646,11 @@ public class MonitoringActivity extends BaseActivity {
         }
 
         zoomFactor = prefs.zoomFactor().getOr(500);
-        formType = null;
+        entryType = null;
         try {
             final String entryTypeName = monitoringPrefs.entryType().get();
             if (!isEmpty(entryTypeName))
-                formType = FormType.valueOf(entryTypeName);
+                entryType = EntryType.valueOf(entryTypeName);
         } catch (IllegalArgumentException ignored) {
         }
 
