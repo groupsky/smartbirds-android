@@ -25,7 +25,7 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
 
     @Override
     protected EntryType getEntryType() {
-        return EntryType.BIRDS;
+        return EntryType.HUMID;
     }
 
     @Override

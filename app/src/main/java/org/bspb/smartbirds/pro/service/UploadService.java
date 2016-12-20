@@ -21,18 +21,11 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
 import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
-import org.bspb.smartbirds.pro.forms.convert.BirdsConverter;
-import org.bspb.smartbirds.pro.forms.convert.CbmConverter;
-import org.bspb.smartbirds.pro.forms.convert.CiconiaConverter;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
-import org.bspb.smartbirds.pro.forms.convert.HerpConverter;
-import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
-import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
-import org.bspb.smartbirds.pro.forms.upload.CiconiaUploader;
-import org.bspb.smartbirds.pro.forms.upload.HerpUploader;
 import org.bspb.smartbirds.pro.forms.upload.Uploader;
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser;
 import org.bspb.smartbirds.pro.ui.utils.FTPClientUtils;
@@ -166,31 +159,18 @@ public class UploadService extends IntentService {
                 return name.matches(".*\\.csv");
             }
         })) {
-            Converter converter;
-            Uploader uploader;
-            switch (subfile) {
-                case "form_bird.csv":
-                    converter = new BirdsConverter(this);
-                    uploader = new BirdsUploader();
-                    break;
-                case "form_herp_mam.csv":
-                    converter = new HerpConverter(this);
-                    uploader = new HerpUploader();
-                    break;
-                case "form_ciconia.csv":
-                    converter = new CiconiaConverter(this);
-                    uploader = new CiconiaUploader();
-                    break;
-                case "form_cbm.csv":
-                    converter = new CbmConverter(this);
-                    uploader = new CbmUploader();
-                    break;
-                default:
-                    Log.w(TAG, "Unhandled form file: " + subfile);
-                    continue;
-            }
-            uploadForm(monitoringName, new File(file, subfile), converter, uploader, fileObjs);
+            uploadForm(monitoringName, file, subfile, fileObjs);
         }
+    }
+
+    private void uploadForm(String monitoringName, File base, String filename, Map<String, JsonObject> fileObjs) throws Exception {
+        for (EntryType entryType : EntryType.values()) {
+            if (entryType.filename.equalsIgnoreCase(filename)) {
+                uploadForm(monitoringName, new File(base, filename), entryType.getConverter(this), entryType.getUploader(), fileObjs);
+                return;
+            }
+        }
+        Log.w(TAG, "unhandled form file: " + filename);
     }
 
     private JsonObject uploadFile(File file) throws IOException {

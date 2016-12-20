@@ -1,11 +1,9 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -15,7 +13,6 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.enums.FormType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.service.DataService_;
@@ -34,7 +31,7 @@ public class NewMonitoringEntryActivity extends BaseActivity {
     @Extra(EXTRA_LON)
     double lon;
     @Extra(EXTRA_TYPE)
-    FormType formType;
+    EntryType entryType;
 
     @Bean
     EEventBus eventBus;
@@ -48,10 +45,10 @@ public class NewMonitoringEntryActivity extends BaseActivity {
 
     @AfterViews
     void createFragment() {
-        setTitle(formType.titleId);
+        setTitle(entryType.titleId);
         if (getFragmentManager().findFragmentById(R.id.container) == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, formType.buildFragment(lat, lon))
+                    .add(R.id.container, entryType.buildFragment(lat, lon))
                     .commit();
         }
     }

@@ -347,23 +347,7 @@ public class DataService extends Service {
     }
 
     private File getEntriesFile(EntryType entryType) {
-        String filename;
-        switch (entryType) {
-            case BIRDS:
-                filename = "form_bird.csv";
-                break;
-            case HERP:
-                filename = "form_herp_mam.csv";
-                break;
-            case CBM:
-                filename = "form_cbm.csv";
-                break;
-            case CICONIA:
-                filename = "form_ciconia.csv";
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported entry type");
-        }
+        String filename = entryType.filename;
         File file = new File(monitoringDir, filename);
         //noinspection ResultOfMethodCallIgnored
         file.setReadable(true);
