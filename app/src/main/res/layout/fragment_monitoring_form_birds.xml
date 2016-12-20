@@ -27,7 +27,7 @@
 
         <View style="@style/FieldSeparator" />
 
-        <include layout="@layout/partial_pictures"/>
+        <include layout="@layout/partial_pictures" />
 
     </LinearLayout>
 </ScrollView>

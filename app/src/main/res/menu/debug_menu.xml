@@ -5,7 +5,6 @@
 
     <item
         android:id="@+id/action_crash"
-        android:showAsAction="ifRoom"
         app:showAsAction="ifRoom"
         android:title="Crash"
         tools:ignore="HardcodedText" />

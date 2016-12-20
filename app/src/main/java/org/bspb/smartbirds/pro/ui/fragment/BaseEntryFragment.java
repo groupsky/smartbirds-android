@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,8 +81,9 @@ public abstract class BaseEntryFragment extends Fragment {
     protected ImageStruct currentImage;
     @InstanceState
     protected int picturesCount = 0;
+    protected FormUtils.FormModel form;
 
-    abstract EntryType getEntryType();
+    protected abstract EntryType getEntryType();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,20 +109,41 @@ public abstract class BaseEntryFragment extends Fragment {
         super.onStop();
     }
 
+    protected boolean isValid() {
+        ensureForm();
+        return form.validateFields();
+    }
+
+    protected void ensureForm() {
+        if (form == null)
+            form = FormUtils.traverseForm(getView());
+    }
+
+    protected HashMap<String, String> serialize(Date entryTime) {
+        HashMap<String, String> data = form.serialize();
+        data.put(getString(R.string.tag_lat), Double.toString(lat));
+        data.put(getString(R.string.tag_lon), Double.toString(lon));
+        for (int i = 0; i < images.length; i++) {
+            data.put("Picture" + i, images[i] != null ? images[i].fileName : "");
+        }
+        data.put(getResources().getString(R.string.entry_date), Configuration.STORAGE_DATE_FORMAT.format(entryTime));
+        data.put(getResources().getString(R.string.entry_time), Configuration.STORAGE_TIME_FORMAT.format(entryTime));
+        return data;
+    }
+
+    protected void submitData(HashMap<String, String> data) {
+        eventBus.post(new EntrySubmitted(data, getEntryType()));
+    }
+
+    protected void submitData() {
+        submitData(serialize(new Date()));
+    }
+
     @OptionsItem(R.id.action_submit)
     void onSubmitClicked(MenuItem item) {
-        FormUtils.FormModel form = FormUtils.traverseForm(getView());
-        if (form.validateFields()) {
+        if (isValid()) {
             item.setEnabled(false);
-            HashMap<String, String> data = form.serialize();
-            data.put(getString(R.string.tag_lat), Double.toString(lat));
-            data.put(getString(R.string.tag_lon), Double.toString(lon));
-            for (int i=0; i<images.length; i++) {
-                data.put("Picture"+i, images[i] != null ? images[i].fileName : "");
-            }
-            data.put(getResources().getString(R.string.entry_date), Configuration.STORAGE_DATE_FORMAT.format(new Date()));
-            data.put(getResources().getString(R.string.entry_time), Configuration.STORAGE_TIME_FORMAT.format(new Date()));
-            eventBus.post(new EntrySubmitted(data, getEntryType()));
+            submitData();
         }
     }
 
@@ -244,5 +266,9 @@ public abstract class BaseEntryFragment extends Fragment {
                 return new ImageStruct[size];
             }
         };
+    }
+
+    public interface Builder {
+        Fragment build(double lat, double lon);
     }
 }

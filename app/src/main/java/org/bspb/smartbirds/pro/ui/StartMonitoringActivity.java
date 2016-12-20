@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterViews;
@@ -21,7 +21,7 @@ import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
 
 @EActivity(R.layout.activity_start_monitoring)
 @OptionsMenu(R.menu.monitoring_common_form)
-public class StartMonitoringActivity extends Activity {
+public class StartMonitoringActivity extends BaseActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
 

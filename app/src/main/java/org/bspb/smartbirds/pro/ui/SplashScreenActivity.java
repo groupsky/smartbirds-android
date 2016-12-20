@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.ScheduledExecutorService;
 @WindowFeature({Window.FEATURE_NO_TITLE})
 @Fullscreen
 @EActivity(R.layout.activity_splash_screen)
-public class SplashScreenActivity extends Activity implements Runnable {
+public class SplashScreenActivity extends BaseActivity implements Runnable {
 
     @ViewById(android.R.id.content)
     View content;
