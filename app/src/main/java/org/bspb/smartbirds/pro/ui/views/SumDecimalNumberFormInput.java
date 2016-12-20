@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.text.Editable;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
@@ -95,15 +94,6 @@ public class SumDecimalNumberFormInput extends DecimalNumberFormInput {
         // whenever the text changes reset the state of the action button
         keyEventOccurred = true;
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
-    }
-
-    @Override
-    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
-        super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        if (focused) {
-            // initially reset the state of the action button
-            keyEventOccurred = true;
-        }
     }
 
 }
