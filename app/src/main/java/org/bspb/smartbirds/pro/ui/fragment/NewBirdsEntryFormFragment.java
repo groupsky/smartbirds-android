@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.app.Fragment;
+
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
@@ -49,7 +51,7 @@ public class NewBirdsEntryFormFragment extends BaseEntryFragment {
     }
 
     @Override
-    EntryType getEntryType() {
+    protected EntryType getEntryType() {
         return EntryType.BIRDS;
     }
 
@@ -91,4 +93,11 @@ public class NewBirdsEntryFormFragment extends BaseEntryFragment {
         }
     }
 
+    public static class Builder implements BaseEntryFragment.Builder {
+
+        @Override
+        public Fragment build(double lat, double lon) {
+            return NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).build();
+        }
+    }
 }

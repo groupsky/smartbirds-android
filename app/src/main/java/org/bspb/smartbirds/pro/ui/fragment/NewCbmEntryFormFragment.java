@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.app.Fragment;
+
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
@@ -34,7 +36,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     CbmPrefs_ prefs;
 
     @Override
-    EntryType getEntryType() {
+    protected EntryType getEntryType() {
         return EntryType.CBM;
     }
 
@@ -57,4 +59,13 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         prefs.cbmSector().put(sectorInput.getText().toString());
         prefs.cbmZone().put(zoneInput.getText().toString());
     }
+
+    public static class Builder implements BaseEntryFragment.Builder {
+
+        @Override
+        public Fragment build(double lat, double lon) {
+            return NewCbmEntryFormFragment_.builder().lat(lat).lon(lon).build();
+        }
+    }
+
 }
