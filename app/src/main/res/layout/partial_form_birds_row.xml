@@ -38,7 +38,7 @@
         app:required="true"
         tools:visibility="visible" />
 
-    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+    <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
         android:id="@+id/form_birds_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
