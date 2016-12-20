@@ -9,6 +9,7 @@
         <item name="textFormInputStyle">@style/FieldInput.Text</item>
         <item name="floatNumberFormInputStyle">@style/FieldInput.FloatNumber</item>
         <item name="decimalNumberFormInputStyle">@style/FieldInput.DecimalNumber</item>
+        <item name="sumDecimalNumberFormInputStyle">@style/FieldInput.DecimalNumber.Sum</item>
         <item name="multipleTextFormInputStyle">@style/FieldInput.MultipleText</item>
         <item name="memoFormInputStyle">@style/FieldInput.Memo</item>
         <item name="switchFormInputStyle">@style/FieldInput.Switch</item>
@@ -51,6 +52,13 @@
 
     <style name="FieldInput.DecimalNumber" parent="FieldInput.Text">
         <item name="android:inputType">number|numberSigned</item>
+    </style>
+
+    <style name="FieldInput.DecimalNumber.Sum" parent="FieldInput.Text">
+        <item name="android:imeOptions">actionUnspecified|flagNavigateNext|flagNoFullscreen|flagNoExtractUi</item>
+        <item name="android:imeActionLabel">@string/sum_decimal_number_form_input_plus</item>
+        <item name="android:inputType">number</item>
+        <item name="android:digits">0123456789+</item>
     </style>
 
     <style name="FieldInput.Memo" parent="FieldInput.Text">

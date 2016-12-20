@@ -103,6 +103,7 @@ public class FormUtils {
         public boolean validateFields() {
             boolean res = true;
             for (FormField field : fields.values()) {
+                field.view.clearFocus();
                 if (field.view instanceof SupportRequiredView) {
                     try {
                         ((SupportRequiredView) field.view).checkRequired();
