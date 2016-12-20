@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom"
-    android:orientation="horizontal"
-    tools:showIn="@layout/z_design_fragment_monitoring_form_new_birds_list_row">
+    tools:showIn="@layout/z_design_partial_form_birds_row">
 
     <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
         android:id="@+id/field_name"
@@ -18,26 +14,6 @@
         app:entries="species_birds"
         app:required="true" />
 
-    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-        android:id="@+id/form_birds_count_units"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:hint="@string/monitoring_birds_count_unit"
-        android:tag="@string/tag_count_unit"
-        app:entries="form_birds_count_units"
-        app:required="true" />
-
-    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-        android:id="@+id/form_birds_count_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:hint="@string/monitoring_birds_count_type"
-        android:tag="@string/tag_count_type"
-        app:entries="form_birds_count_type"
-        app:required="true" />
-
     <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
         android:id="@+id/form_birds_count"
         android:layout_width="0dp"
@@ -47,27 +23,26 @@
         android:tag="@string/tag_count"
         app:required="true" />
 
-    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-        android:id="@+id/form_birds_count_min"
+    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+        android:hint="@string/monitoring_birds_gender"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="@string/monitoring_birds_min"
-        android:tag="@string/tag_min"
-        app:required="true" />
+        android:tag="@string/tag_sex"
+        app:entries="form_birds_sex" />
 
-    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-        android:id="@+id/form_birds_count_max"
+    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+        android:hint="@string/monitoring_birds_age"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="@string/monitoring_birds_max"
-        android:tag="@string/tag_max"
-        app:required="true" />
+        android:tag="@string/tag_age"
+        app:entries="form_birds_age" />
 
     <Button
+        android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete" />
+        android:text="X" />
 
-</LinearLayout>
+</merge>

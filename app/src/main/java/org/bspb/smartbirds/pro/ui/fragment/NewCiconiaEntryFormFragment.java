@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.support.v4.app.Fragment;
+
 import org.androidannotations.annotations.EFragment;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
@@ -11,8 +13,16 @@ import org.bspb.smartbirds.pro.enums.EntryType;
 public class NewCiconiaEntryFormFragment extends BaseEntryFragment {
 
     @Override
-    EntryType getEntryType() {
+    protected EntryType getEntryType() {
         return EntryType.CICONIA;
+    }
+
+    public static class Builder implements BaseEntryFragment.Builder {
+
+        @Override
+        public Fragment build(double lat, double lon) {
+            return NewCiconiaEntryFormFragment_.builder().lat(lat).lon(lon).build();
+        }
     }
 
 }

@@ -9,7 +9,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +30,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.enums.FormType;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
@@ -116,14 +115,7 @@ public class MonitoringActivity extends BaseActivity {
     MenuItem menuZoom250m;
     @OptionsMenuItem(R.id.action_zoom_100m)
     MenuItem menuZoom100m;
-    @OptionsMenuItem(R.id.action_form_type_birds)
-    MenuItem menuFormTypeBirds;
-    @OptionsMenuItem(R.id.action_form_type_cbm)
-    MenuItem menuFormTypeCbm;
-    @OptionsMenuItem(R.id.action_form_type_ciconia)
-    MenuItem menuFormTypeCiconia;
-    @OptionsMenuItem(R.id.action_form_type_herp)
-    MenuItem menuFormTypeHerp;
+
     @OptionsMenuItem(R.id.menu_map_provider)
     MenuItem menuMapProvider;
     @OptionsMenuItem(R.id.action_map_google)
@@ -136,7 +128,7 @@ public class MonitoringActivity extends BaseActivity {
     MenuItem menuStayAwake;
     @InstanceState
     @Nullable
-    EntryType entryType = null;
+    FormType formType = null;
 
     @Pref
     MonitoringPrefs_ monitoringPrefs;
@@ -242,26 +234,18 @@ public class MonitoringActivity extends BaseActivity {
             default:
                 throw new IllegalStateException("Unhandled provider type: " + providerType);
         }
-        if (entryType != null) {
-            switch (entryType) {
-                case BIRDS:
-                    menuFormTypeBirds.setChecked(true);
-                    break;
-                case CBM:
-                    menuFormTypeCbm.setChecked(true);
-                    break;
-                case CICONIA:
-                    menuFormTypeCiconia.setChecked(true);
-                    break;
-                case HERP:
-                    menuFormTypeHerp.setChecked(true);
-                    break;
-                default:
-                    throw new IllegalStateException("Unhandled entry type: "+entryType);
-            }
-        }
+        updateCheckedFormType(menu);
         menuStayAwake.setChecked(stayAwake);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void updateCheckedFormType(Menu menu) {
+        if (formType == null) return;
+        MenuItem item = menu.findItem(formType.menuActionId);
+        if (item == null) {
+            throw new IllegalStateException("Unhandled entry type: " + formType);
+        }
+        item.setChecked(true);
     }
 
     private void showCurrentMap() {
@@ -335,7 +319,9 @@ public class MonitoringActivity extends BaseActivity {
     private void addMarker(MapMarker marker) {
         markers.add(marker);
         currentMap.addMarker(marker);
-        menuUndoEntry.setEnabled(true);
+        if (menuUndoEntry != null) {
+            menuUndoEntry.setEnabled(true);
+        }
         persistMarkers();
     }
 
@@ -465,30 +451,26 @@ public class MonitoringActivity extends BaseActivity {
         prefs.stayAwake().put(stayAwake);
     }
 
-    @OptionsItem(R.id.action_form_type_birds)
-    void setFormTypeBirds(MenuItem sender) {
-        setEntryType(EntryType.BIRDS);
+    @OptionsItem({
+            R.id.action_form_type_birds,
+            R.id.action_form_type_cbm,
+            R.id.action_form_type_ciconia,
+            R.id.action_form_type_herp,
+            R.id.action_form_type_humid,
+    })
+    void setFormType(MenuItem sender) {
+        final int senderId = sender.getItemId();
+        for (FormType formType: FormType.values())
+        if (senderId == formType.menuActionId) {
+            setFormType(formType);
+                    return;
+        }
     }
 
-    @OptionsItem(R.id.action_form_type_cbm)
-    void setFormTypeCbm(MenuItem sender) {
-        setEntryType(EntryType.CBM);
-    }
-
-    @OptionsItem(R.id.action_form_type_ciconia)
-    void setFormTypeCiconia(MenuItem sender) {
-        setEntryType(EntryType.CICONIA);
-    }
-
-    @OptionsItem(R.id.action_form_type_herp)
-    void setFormTypeHerp(MenuItem sender) {
-        setEntryType(EntryType.HERP);
-    }
-
-    public void setEntryType(@Nullable EntryType entryType) {
-        this.entryType = entryType;
-        if (entryType != null)
-            monitoringPrefs.entryType().put(entryType.name());
+    public void setFormType(@Nullable FormType formType) {
+        this.formType = formType;
+        if (formType != null)
+            monitoringPrefs.entryType().put(formType.name());
         else
             monitoringPrefs.entryType().remove();
     }
@@ -522,12 +504,12 @@ public class MonitoringActivity extends BaseActivity {
     }
 
     void startNewEntryWithoutAsking(final LatLng position) {
-        if (entryType == null) {
+        if (formType == null) {
             startNewEntryAsking(position);
             return;
         }
         NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
-        ib.entryType(entryType);
+        ib.formType(formType);
         if (position != null) {
             ib.lat(position.latitude).lon(position.longitude);
         }
@@ -535,13 +517,13 @@ public class MonitoringActivity extends BaseActivity {
     }
 
     protected void startNewEntryAsking(final LatLng position) {
-        final String[] types = getResources().getStringArray(R.array.enty_types);
+        final String[] types = FormType.getTitles(getResources());
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.menu_monitoring_new_entry)
-                .setSingleChoiceItems(types, entryType != null ? entryType.ordinal() : -1, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(types, formType != null ? formType.ordinal() : -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        entryType = EntryType.values()[i];
+                        setFormType(FormType.values()[i]);
                         startNewEntryWithoutAsking(position);
                         dialogInterface.cancel();
                     }
@@ -588,8 +570,8 @@ public class MonitoringActivity extends BaseActivity {
                 editor.lastPositionLon().remove();
             }
             prefs.zoomFactor().put(zoomFactor);
-            if (entryType != null) {
-                editor.entryType().put(entryType.name());
+            if (formType != null) {
+                editor.entryType().put(formType.name());
             } else {
                 editor.entryType().remove();
             }
@@ -664,11 +646,11 @@ public class MonitoringActivity extends BaseActivity {
         }
 
         zoomFactor = prefs.zoomFactor().getOr(500);
-        entryType = null;
+        formType = null;
         try {
             final String entryTypeName = monitoringPrefs.entryType().get();
             if (!isEmpty(entryTypeName))
-                entryType = EntryType.valueOf(entryTypeName);
+                formType = FormType.valueOf(entryTypeName);
         } catch (IllegalArgumentException ignored) {
         }
 

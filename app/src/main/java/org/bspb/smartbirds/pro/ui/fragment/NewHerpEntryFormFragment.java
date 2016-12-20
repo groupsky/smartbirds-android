@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.support.v4.app.Fragment;
+
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
@@ -37,8 +39,16 @@ public class NewHerpEntryFormFragment extends BaseEntryFragment {
     }
 
     @Override
-    EntryType getEntryType() {
+    protected EntryType getEntryType() {
         return EntryType.HERP;
+    }
+
+    public static class Builder implements BaseEntryFragment.Builder {
+
+        @Override
+        public Fragment build(double lat, double lon) {
+            return NewHerpEntryFormFragment_.builder().lat(lat).lon(lon).build();
+        }
     }
 
 }

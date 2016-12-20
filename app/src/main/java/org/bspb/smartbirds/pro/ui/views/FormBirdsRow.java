@@ -12,11 +12,8 @@ import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
-
-import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -64,39 +61,12 @@ public class FormBirdsRow extends LinearLayout {
         setGravity(Gravity.BOTTOM);
         setOrientation(HORIZONTAL);
         model = FormUtils.traverseForm(this);
-        countUnits.setSelection(prefs.birdCountUnits().get());
-        countType.setSelection(prefs.birdCountType().get());
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        handleCountsLogic();
     }
 
     @Click(R.id.btn_delete)
     protected void doOnDelete() {
         if (onDeleteListener != null)
             onDeleteListener.onDelete(this);
-    }
-
-    @TextChange(R.id.form_birds_count_units)
-    protected void doOnCountUnitsChange(CharSequence text) {
-        if (!isEmpty(text)) {
-            prefs.birdCountUnits().put(text.toString());
-        } else {
-            prefs.birdCountUnits().remove();
-        }
-    }
-
-    @TextChange(R.id.form_birds_count_type)
-    protected void doOnCountTypeChange(CharSequence text) {
-        if (!isEmpty(text)) {
-            prefs.birdCountType().put(text.toString());
-        } else {
-            prefs.birdCountType().remove();
-        }
-        handleCountsLogic();
     }
 
     @TextChange(R.id.field_name)
@@ -127,43 +97,6 @@ public class FormBirdsRow extends LinearLayout {
 
     public FormUtils.FormModel getModel() {
         return model;
-    }
-
-    void handleCountsLogic() {
-        Nomenclature item = countType.getSelectedItem();
-        String countsType = item != null ? item.label.en : null;
-        switch (countsType != null ? countsType.toLowerCase(Locale.ENGLISH) : "") {
-            case "exact number": // Exact count
-                count.setVisibility(VISIBLE);
-                countMin.setVisibility(INVISIBLE);
-                countMax.setVisibility(INVISIBLE);
-                break;
-            case "min.": // Min count
-                count.setVisibility(INVISIBLE);
-                countMin.setVisibility(VISIBLE);
-                countMax.setVisibility(INVISIBLE);
-                break;
-            case "max.": // Max count
-                count.setVisibility(INVISIBLE);
-                countMin.setVisibility(INVISIBLE);
-                countMax.setVisibility(VISIBLE);
-                break;
-            case "range": // Range count
-                count.setVisibility(INVISIBLE);
-                countMin.setVisibility(VISIBLE);
-                countMax.setVisibility(VISIBLE);
-                break;
-            case "unspecified number": // Unspecified
-                count.setVisibility(INVISIBLE);
-                countMin.setVisibility(INVISIBLE);
-                countMax.setVisibility(INVISIBLE);
-                break;
-            default:
-                count.setVisibility(VISIBLE);
-                countMin.setVisibility(VISIBLE);
-                countMax.setVisibility(VISIBLE);
-                break;
-        }
     }
 
     public interface OnDeleteListener {

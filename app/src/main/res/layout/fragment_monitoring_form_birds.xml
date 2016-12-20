@@ -1,55 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical">-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NewMonitoringEntryActivity">
 
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/pager"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
+        <include layout="@layout/fragment_monitoring_form_new_birds_entry" />
+
+        <View style="@style/FieldSeparator" />
+
+        <include layout="@layout/fragment_monitoring_form_new_birds_nest" />
+
+        <View style="@style/FieldSeparator" />
+
+        <EditText
+            style="@style/FieldInput.Memo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top">
+            android:hint="@string/monitoring_birds_notes"
+            android:tag="@string/tag_remarks_type" />
 
-        </android.support.design.widget.TabLayout>
+        <View style="@style/FieldSeparator" />
 
-    </android.support.v4.view.ViewPager>
+        <include layout="@layout/partial_pictures" />
 
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context=".ui.NewMonitoringEntryActivity">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<include layout="@layout/fragment_monitoring_form_new_birds_entry" />-->
-
-    <!--<View style="@style/FieldSeparator" />-->
-
-    <!--<include layout="@layout/fragment_monitoring_form_new_birds_nest" />-->
-
-    <!--<View style="@style/FieldSeparator" />-->
-
-    <!--<EditText-->
-    <!--style="@style/FieldInput.Memo"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:hint="@string/monitoring_birds_notes"-->
-    <!--android:tag="@string/tag_remarks_type" />-->
-
-    <!--<View style="@style/FieldSeparator" />-->
-
-    <!--<include layout="@layout/partial_pictures"/>-->
-
-    <!--</LinearLayout>-->
-    <!--</ScrollView>-->
-<!--</LinearLayout>-->
+    </LinearLayout>
+</ScrollView>
