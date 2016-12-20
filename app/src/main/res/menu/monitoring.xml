@@ -129,6 +129,10 @@
                     android:title="@string/entry_type_birds" />
 
                 <item
+                    android:id="@+id/action_form_type_humid"
+                    android:title="@string/entry_type_humid" />
+
+                <item
                     android:id="@+id/action_form_type_cbm"
                     android:title="@string/entry_type_cbm" />
 

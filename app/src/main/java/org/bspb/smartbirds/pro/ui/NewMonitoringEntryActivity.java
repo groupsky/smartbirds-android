@@ -15,13 +15,10 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.enums.FormType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.service.DataService_;
-import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment_;
-import org.bspb.smartbirds.pro.ui.fragment.NewCbmEntryFormFragment_;
-import org.bspb.smartbirds.pro.ui.fragment.NewCiconiaEntryFormFragment_;
-import org.bspb.smartbirds.pro.ui.fragment.NewHerpEntryFormFragment_;
 
 @EActivity(R.layout.activity_form)
 @OptionsMenu(R.menu.form_entry)
@@ -37,7 +34,7 @@ public class NewMonitoringEntryActivity extends BaseActivity {
     @Extra(EXTRA_LON)
     double lon;
     @Extra(EXTRA_TYPE)
-    EntryType entryType;
+    FormType formType;
 
     @Bean
     EEventBus eventBus;
@@ -51,31 +48,12 @@ public class NewMonitoringEntryActivity extends BaseActivity {
 
     @AfterViews
     void createFragment() {
-        Fragment fragment = null;
-        switch (entryType) {
-            case BIRDS:
-                fragment = NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).build();
-                setTitle(R.string.entry_type_birds);
-                break;
-            case HERP:
-                fragment = NewHerpEntryFormFragment_.builder().lat(lat).lon(lon).build();
-                setTitle(R.string.entry_type_herp);
-                break;
-            case CBM:
-                fragment = NewCbmEntryFormFragment_.builder().lat(lat).lon(lon).build();
-                setTitle(R.string.entry_type_cbm);
-                break;
-            case CICONIA:
-                fragment = NewCiconiaEntryFormFragment_.builder().lat(lat).lon(lon).build();
-                setTitle(R.string.entry_type_ciconia);
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported entry type");
-        }
-        if (getFragmentManager().findFragmentById(R.id.container) == null)
+        setTitle(formType.titleId);
+        if (getFragmentManager().findFragmentById(R.id.container) == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, fragment)
+                    .add(R.id.container, formType.buildFragment(lat, lon))
                     .commit();
+        }
     }
 
     @Override
