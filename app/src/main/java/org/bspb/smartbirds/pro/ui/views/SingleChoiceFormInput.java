@@ -88,6 +88,9 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                 mAdapter.add(new NomenclatureItem(value));
             }
             mAdapter.notifyDataSetChanged();
+            if (mAdapter.getCount() == 1) {
+                setSelection(mAdapter.getItem(0));
+            }
         }
     }
 

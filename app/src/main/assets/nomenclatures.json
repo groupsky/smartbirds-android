@@ -609,7 +609,21 @@
     }
   },
   {
+    "type": "humid_birds_count_units",
+    "label": {
+      "bg": "Индивиди",
+      "en": "Individuals"
+    }
+  },
+  {
     "type": "birds_count_type",
+    "label": {
+      "bg": "Точен брой",
+      "en": "Exact number"
+    }
+  },
+  {
+    "type": "humid_birds_count_type",
     "label": {
       "bg": "Точен брой",
       "en": "Exact number"
