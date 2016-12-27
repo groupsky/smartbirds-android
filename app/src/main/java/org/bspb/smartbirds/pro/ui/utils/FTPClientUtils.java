@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 
 import java.io.IOException;
@@ -25,6 +26,11 @@ public class FTPClientUtils {
 
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            if (BuildConfig.DEBUG) {
+                ftpClient.changeWorkingDirectory("testov_surver");
+            }
+
         } catch (IOException e) {
             Log.e(TAG, String.format("error while connecting to ftp: %s", e.getMessage()), e);
         }
