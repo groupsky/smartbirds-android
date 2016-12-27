@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -86,6 +88,9 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                 mAdapter.add(new NomenclatureItem(value));
             }
             mAdapter.notifyDataSetChanged();
+            if (mAdapter.getCount() == 1) {
+                setSelection(mAdapter.getItem(0));
+            }
         }
     }
 
@@ -172,6 +177,24 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         super.setText(text, type);
     }
 
+    @Override
+    public Parcelable onSaveInstanceState() {
+        return new InstanceState(super.onSaveInstanceState(), getText());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof InstanceState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        InstanceState ss = (InstanceState) state;
+        super.onRestoreInstanceState(((InstanceState) state).getSuperState());
+
+        setText(ss.text);
+    }
+
     private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {
 
         private AlertDialog mPopup;
@@ -237,7 +260,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                     ((Filterable) mAdapter).getFilter().filter(null, this);
                     break;
                 case BUTTON_NEUTRAL:
-                    setSelection((NomenclatureItem)null);
+                    setSelection((NomenclatureItem) null);
                     mPopup.dismiss();
                     ((Filterable) mAdapter).getFilter().filter(null, this);
                     break;
@@ -307,5 +330,47 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         public String toString() {
             return label;
         }
+    }
+
+    public static class InstanceState extends BaseSavedState {
+        private final String text;
+
+        public InstanceState(Parcelable superState, CharSequence text) {
+            this(superState, text != null ? text.toString() : null);
+        }
+
+        public InstanceState(Parcelable superState, String text) {
+            super(superState);
+            this.text = text;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeString(this.text);
+        }
+
+        protected InstanceState(Parcel source, ClassLoader loader) {
+            super(source);
+            this.text = source.readString();
+        }
+
+        public static final ClassLoaderCreator<InstanceState> CREATOR = new ClassLoaderCreator<InstanceState>() {
+
+            @Override
+            public InstanceState createFromParcel(Parcel source, ClassLoader loader) {
+                return new InstanceState(source, loader);
+            }
+
+            @Override
+            public InstanceState createFromParcel(Parcel source) {
+                return createFromParcel(source, null);
+            }
+
+            @Override
+            public InstanceState[] newArray(int size) {
+                return new InstanceState[size];
+            }
+        };
     }
 }

@@ -50,7 +50,7 @@ import java.util.List;
  * Created by dani on 14-11-12.
  */
 @EFragment
-@OptionsMenu(R.menu.debug_menu)
+@OptionsMenu({R.menu.debug_menu, R.menu.form_entry})
 public abstract class BaseEntryFragment extends Fragment {
 
     protected static final String ARG_LAT = "lat";
@@ -81,8 +81,9 @@ public abstract class BaseEntryFragment extends Fragment {
     protected ImageStruct currentImage;
     @InstanceState
     protected int picturesCount = 0;
+    protected FormUtils.FormModel form;
 
-    abstract EntryType getEntryType();
+    protected abstract EntryType getEntryType();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,25 +109,49 @@ public abstract class BaseEntryFragment extends Fragment {
         super.onStop();
     }
 
+    protected boolean isValid() {
+        ensureForm();
+        return form.validateFields();
+    }
+
+    protected void ensureForm() {
+        if (form == null)
+            form = FormUtils.traverseForm(getView());
+    }
+
+    protected HashMap<String, String> serialize(Date entryTime) {
+        HashMap<String, String> data = form.serialize();
+        data.put(getString(R.string.tag_lat), Double.toString(lat));
+        data.put(getString(R.string.tag_lon), Double.toString(lon));
+        for (int i = 0; i < images.length; i++) {
+            data.put("Picture" + i, images[i] != null ? images[i].fileName : "");
+        }
+        data.put(getResources().getString(R.string.entry_date), Configuration.STORAGE_DATE_FORMAT.format(entryTime));
+        data.put(getResources().getString(R.string.entry_time), Configuration.STORAGE_TIME_FORMAT.format(entryTime));
+        return data;
+    }
+
+    protected void submitData(HashMap<String, String> data) {
+        eventBus.post(new EntrySubmitted(data, getEntryType()));
+    }
+
+    protected void submitData() {
+        submitData(serialize(new Date()));
+    }
+
     @OptionsItem(R.id.action_submit)
     void onSubmitClicked(MenuItem item) {
-        FormUtils.FormModel form = FormUtils.traverseForm(getView());
-        if (form.validateFields()) {
+        if (isValid()) {
             item.setEnabled(false);
-            HashMap<String, String> data = form.serialize();
-            data.put(getString(R.string.tag_lat), Double.toString(lat));
-            data.put(getString(R.string.tag_lon), Double.toString(lon));
-            for (int i=0; i<images.length; i++) {
-                data.put("Picture"+i, images[i] != null ? images[i].fileName : "");
-            }
-            data.put(getResources().getString(R.string.entry_date), Configuration.STORAGE_DATE_FORMAT.format(new Date()));
-            data.put(getResources().getString(R.string.entry_time), Configuration.STORAGE_TIME_FORMAT.format(new Date()));
-            eventBus.post(new EntrySubmitted(data, getEntryType()));
+            submitData();
         }
     }
 
     @OptionsItem(R.id.take_picture)
     void onTakePicture(MenuItem item) {
+        if (picturesCount >= pictures.size()) {
+            return;
+        }
         if (INTENT_TAKE_PICTURE.resolveActivity(getActivity().getPackageManager()) != null) {
             item.setEnabled(false);
             eventBus.post(new CreateImageFile());
@@ -135,7 +160,6 @@ public abstract class BaseEntryFragment extends Fragment {
 
     public void onEvent(ImageFileCreatedFailed event) {
         Toast.makeText(getActivity(), R.string.image_file_create_error, Toast.LENGTH_SHORT).show();
-        takePicture.setEnabled(true);
     }
 
     public void onEvent(ImageFileCreated event) {
@@ -147,7 +171,13 @@ public abstract class BaseEntryFragment extends Fragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menuCrash.setVisible(BuildConfig.DEBUG);
+        if (menuCrash != null) {
+            menuCrash.setVisible(BuildConfig.DEBUG);
+        }
+        if (takePicture != null) {
+            takePicture.setVisible(!pictures.isEmpty());
+            takePicture.setEnabled(picturesCount < pictures.size());
+        }
     }
 
     @OptionsItem(R.id.action_crash)
@@ -185,11 +215,8 @@ public abstract class BaseEntryFragment extends Fragment {
             picturesCount++;
             picture.setImageBitmap(bitmap);
             picture.setVisibility(View.VISIBLE);
-
-            takePicture.setEnabled(picturesCount < images.length);
         } else {
             currentImage = null;
-            takePicture.setEnabled(true);
         }
     }
 
@@ -244,5 +271,9 @@ public abstract class BaseEntryFragment extends Fragment {
                 return new ImageStruct[size];
             }
         };
+    }
+
+    public interface Builder {
+        Fragment build(double lat, double lon);
     }
 }
