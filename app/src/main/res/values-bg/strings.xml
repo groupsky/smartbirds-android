@@ -15,6 +15,7 @@
     <string name="entry_type_birds">Птици</string>
     <string name="entry_type_ciconia">Бял щъркел</string>
     <string name="entry_type_herp">Земноводни и влечуги / бозайници</string>
+    <string name="entry_type_humid">Влажни зони</string>
     <string name="required_field">Задължително поле</string>
     <string name="monitoring_notification_title">Мониторинг</string>
     <string name="monitoring_notification_content">Стартиран мониторинг</string>

@@ -15,6 +15,7 @@
     <string name="entry_type_birds">Birds</string>
     <string name="entry_type_ciconia">White stork</string>
     <string name="entry_type_herp">Amphibians and reptiles / mammals</string>
+    <string name="entry_type_humid">Humid zones</string>
     <string name="required_field">Required field</string>
     <string name="monitoring_notification_title">Monitoring</string>
     <string name="monitoring_notification_content">Monitoring started</string>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="enty_types">
-        <item>@string/entry_type_birds</item>
-        <item>@string/entry_type_cbm</item>
-        <item>@string/entry_type_ciconia</item>
-        <item>@string/entry_type_herp</item>
-    </string-array>
-</resources>
