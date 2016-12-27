@@ -10,7 +10,6 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -18,7 +17,6 @@ import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.service.DataService_;
 
 @EActivity(R.layout.activity_form)
-@OptionsMenu(R.menu.form_entry)
 public class NewMonitoringEntryActivity extends BaseActivity {
 
     public static final String EXTRA_LAT = "lat";
