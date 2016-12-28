@@ -5,11 +5,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.SplashScreenActivity_;
+
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by dani on 14-11-14.
@@ -23,13 +26,23 @@ public class NotificationUtils {
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentTitle(context.getString(R.string.monitoring_notification_title))
                 .setContentText(context.getString(R.string.monitoring_notification_content))
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic_stat_running)
                 .setOngoing(true)
-                .setContentIntent(resultPendingIntent)
-                .build();
+                .setContentIntent(resultPendingIntent);
+
+        try {
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+            if (bitmap != null) {
+                builder.setLargeIcon(bitmap);
+            }
+        } catch (Throwable t) {
+            logException(t);
+        }
+
+        Notification notification = builder.build();
 
 
         NotificationManager notificationManager =
