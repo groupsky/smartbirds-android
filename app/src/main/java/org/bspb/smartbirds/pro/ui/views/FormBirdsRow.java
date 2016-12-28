@@ -22,7 +22,7 @@ import static android.text.TextUtils.isEmpty;
  */
 
 @EViewGroup(R.layout.partial_form_birds_row)
-public class FormBirdsRow extends LinearLayout {
+public class FormBirdsRow extends LinearLayout implements SingleChoiceFormInput.OnSelectionChangeListener {
 
     private OnDeleteListener onDeleteListener;
     private OnPopulatedListener onPopulatedListener;
@@ -61,6 +61,7 @@ public class FormBirdsRow extends LinearLayout {
         setGravity(Gravity.BOTTOM);
         setOrientation(HORIZONTAL);
         model = FormUtils.traverseForm(this);
+        species.setOnSelectionChangeListener(this);
     }
 
     @Click(R.id.btn_delete)
@@ -97,6 +98,11 @@ public class FormBirdsRow extends LinearLayout {
 
     public FormUtils.FormModel getModel() {
         return model;
+    }
+
+    @Override
+    public void onSelectionChange(SingleChoiceFormInput view) {
+        count.requestFocus();
     }
 
     public interface OnDeleteListener {
