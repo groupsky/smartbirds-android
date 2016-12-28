@@ -56,6 +56,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
      */
     NomenclatureItem mSelectedItem = null;
 
+    OnSelectionChangeListener onSelectionChangeListener;
+
     public SingleChoiceFormInput(Context context) {
         this(context, null);
     }
@@ -142,6 +144,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         } else {
             setText("");
         }
+
+        if (onSelectionChangeListener != null) onSelectionChangeListener.onSelectionChange(this);
     }
 
     @Override
@@ -193,6 +197,14 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         super.onRestoreInstanceState(((InstanceState) state).getSuperState());
 
         setText(ss.text);
+    }
+
+    public OnSelectionChangeListener getOnSelectionChangeListener() {
+        return onSelectionChangeListener;
+    }
+
+    public void setOnSelectionChangeListener(OnSelectionChangeListener onSelectionChangeListener) {
+        this.onSelectionChangeListener = onSelectionChangeListener;
     }
 
     private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {
@@ -372,5 +384,9 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                 return new InstanceState[size];
             }
         };
+    }
+
+    public interface OnSelectionChangeListener {
+        void onSelectionChange(SingleChoiceFormInput view);
     }
 }
