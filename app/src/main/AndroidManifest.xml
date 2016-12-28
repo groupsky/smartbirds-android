@@ -101,6 +101,7 @@
 
         <activity
             android:name=".ui.LoginActivity_"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             android:label="@string/title_activity_login"></activity>
 
         <service

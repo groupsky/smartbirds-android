@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="singleChoiceFormInputStyle">@style/FieldInput.SingleChoice</item>
         <item name="multipleChoiceFormInputStyle">@style/FieldInput.MultipleChoice</item>
         <item name="dateFormInputStyle">@style/FieldInput.Date</item>

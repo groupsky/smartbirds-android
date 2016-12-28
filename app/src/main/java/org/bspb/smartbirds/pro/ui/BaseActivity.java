@@ -1,6 +1,6 @@
 package org.bspb.smartbirds.pro.ui;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * This is the parent for all activities.
@@ -8,5 +8,5 @@ import android.support.v7.app.AppCompatActivity;
  *
  * Created by Ilian Georgiev.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends FragmentActivity {
 }
