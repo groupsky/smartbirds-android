@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.backend.dto;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.google.gson.annotations.Expose;
@@ -8,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 
 /**
  * Created by groupsky on 27.09.16.
@@ -31,6 +33,12 @@ public class Nomenclature {
         label = new Label(cursor);
         localeLabel = cursor.getString(cursor.getColumnIndexOrThrow(localeColumn));
     }
+
+    public Nomenclature(SpeciesNomenclature species) {
+        type = "species_"+species.type;
+        label = new Label(species.label);
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -59,6 +67,18 @@ public class Nomenclature {
                 '}';
     }
 
+    public static Nomenclature from(SpeciesNomenclature species) {
+        return new Nomenclature(species);
+    }
+
+    public ContentValues toCV() {
+        ContentValues cv = new ContentValues();
+        cv.put(TYPE, type);
+        cv.put(LABEL_BG, label.bg);
+        cv.put(LABEL_EN, label.en);
+        return cv;
+    }
+
     public static class Label {
 
         @Expose
@@ -75,6 +95,11 @@ public class Nomenclature {
         public Label(Cursor cursor) {
             bg = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_BG));
             en = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN));
+        }
+
+        public Label(SpeciesNomenclature.Label label) {
+            bg = label.la + MULTIPLE_CHOICE_DELIMITER + label.bg;
+            en = label.la + MULTIPLE_CHOICE_DELIMITER + label.en;
         }
 
         @Override

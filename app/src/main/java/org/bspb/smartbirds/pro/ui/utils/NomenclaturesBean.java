@@ -31,15 +31,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures.CONTENT_URI;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 
 /**
  * Created by dani on 14-11-12.
@@ -98,6 +99,16 @@ public class NomenclaturesBean {
                 list.add(nomenclature);
             }
 
+            // load any missing nomenclatures from bundled - this is useful when updating, before sync with server
+            Set<String> missingNomenclatures = new HashSet<>();
+            for (SpeciesNomenclature species: loadBundledSpecies()) {
+                fillMissingNomenclature(missingNomenclatures, Nomenclature.from(species));
+            }
+            missingNomenclatures.clear();
+            for (Nomenclature nomenclature: loadBundledNomenclatures()) {
+                fillMissingNomenclature(missingNomenclatures, nomenclature);
+            }
+
             // sort nomenclatures
             for (List<Nomenclature> nomenclatures : data.values()) {
                 Collections.sort(nomenclatures, comparator);
@@ -107,14 +118,22 @@ public class NomenclaturesBean {
         }
     }
 
+    private void fillMissingNomenclature(Set<String> missingNomenclatures, Nomenclature nomenclature) {
+        List<Nomenclature> list;
+        if (!data.containsKey(nomenclature.type)) {
+            missingNomenclatures.add(nomenclature.type);
+            list = new LinkedList<>();
+            data.put(nomenclature.type, list);
+        } else if (missingNomenclatures.contains(nomenclature.type)) {
+            list = data.get(nomenclature.type);
+        } else return;
+        list.add(nomenclature);
+    }
+
     public Iterable<ContentValues> prepareNomenclatureCV(Iterable<Nomenclature> nomenclatures) {
         LinkedList<ContentValues> cvs = new LinkedList<>();
         for (Nomenclature nomenclature : nomenclatures) {
-            ContentValues cv = new ContentValues();
-            cv.put(TYPE, nomenclature.type);
-            cv.put(LABEL_BG, nomenclature.label.bg);
-            cv.put(LABEL_EN, nomenclature.label.en);
-            cvs.add(cv);
+            cvs.add(nomenclature.toCV());
         }
         return cvs;
     }
@@ -122,11 +141,7 @@ public class NomenclaturesBean {
     public Iterable<ContentValues> prepareSpeciesCV(Iterable<SpeciesNomenclature> speciesCollection) {
         LinkedList<ContentValues> cvs = new LinkedList<>();
         for (SpeciesNomenclature species : speciesCollection) {
-            ContentValues cv = new ContentValues();
-            cv.put(TYPE, "species_" + species.type);
-            cv.put(LABEL_BG, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.bg);
-            cv.put(LABEL_EN, species.label.la + MULTIPLE_CHOICE_DELIMITER + species.label.en);
-            cvs.add(cv);
+            cvs.add(Nomenclature.from(species).toCV());
         }
         return cvs;
     }
