@@ -13,6 +13,7 @@ import org.bspb.smartbirds.pro.forms.convert.CiconiaConverter;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
 import org.bspb.smartbirds.pro.forms.convert.HerpConverter;
 import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
+import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
 import org.bspb.smartbirds.pro.forms.upload.CiconiaUploader;
 import org.bspb.smartbirds.pro.forms.upload.HerpUploader;
 import org.bspb.smartbirds.pro.forms.upload.Uploader;
@@ -31,7 +32,7 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 public enum EntryType {
     BIRDS(new NewBirdsEntryFormFragment.Builder(), R.string.entry_type_birds, R.id.action_form_type_birds, "form_birds.csv", BirdsConverter.class, BirdsUploader.class),
     HUMID(new NewHumidBirdsEntryFragment.Builder(), R.string.entry_type_humid, R.id.action_form_type_humid, "form_humid.csv", BirdsConverter.class, BirdsUploader.class),
-    CBM(new NewCbmEntryFormFragment.Builder(), R.string.entry_type_cbm, R.id.action_form_type_cbm, "form_cbm.csv", CbmConverter.class, BirdsUploader.class),
+    CBM(new NewCbmEntryFormFragment.Builder(), R.string.entry_type_cbm, R.id.action_form_type_cbm, "form_cbm.csv", CbmConverter.class, CbmUploader.class),
     CICONIA(new NewCiconiaEntryFormFragment.Builder(), R.string.entry_type_ciconia, R.id.action_form_type_ciconia, "form_ciconia.csv", CiconiaConverter.class, CiconiaUploader.class),
     HERP(new NewHerpEntryFormFragment.Builder(), R.string.entry_type_herp, R.id.action_form_type_herp, "form_herp.csv", HerpConverter.class, HerpUploader.class),
     // prevent auto-formatting
