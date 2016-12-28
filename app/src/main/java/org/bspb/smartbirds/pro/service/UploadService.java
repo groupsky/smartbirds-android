@@ -101,7 +101,6 @@ public class UploadService extends IntentService {
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
         try {
-            uploadOnServer(monitoringPath, monitoringName);
             try {
                 uploadOnFtp(monitoringPath, monitoringName);
             } catch (Throwable t) {
@@ -109,15 +108,16 @@ public class UploadService extends IntentService {
                 Toast.makeText(
                         this,
                         String.format("Could not upload %s to ftp!\n" +
-                                "It is still uploaded on smartbirds.org", monitoringName),
+                                "It will still be uploaded on smartbirds.org", monitoringName),
                         Toast.LENGTH_SHORT).show();
             }
+            uploadOnServer(monitoringPath, monitoringName);
             file.renameTo(new File(monitoringPath.replace("-up", "")));
         } catch (Throwable e) {
             logException(e);
             Toast.makeText(
                     this,
-                    String.format("Could not upload %s to ftp!\n" +
+                    String.format("Could not upload %s to server!\n" +
                             "You will need to manually export.", monitoringName),
                     Toast.LENGTH_SHORT).show();
         }
@@ -194,54 +194,49 @@ public class UploadService extends IntentService {
             try {
                 List<String> header = csvReader.readHeader();
                 for (String[] row : csvReader) {
-                    try {
-                        HashMap<String, String> csv = new HashMap<>();
-                        Iterator<String> it = header.iterator();
-                        String columnName;
-                        for (int idx = 0; it.hasNext() && idx < row.length; idx++) {
-                            columnName = it.next();
-                            csv.put(columnName, row[idx]);
-                        }
-
-                        JsonObject data = converter.convert(csv);
-
-                        // convert pictures
-                        JsonArray pictures = new JsonArray();
-                        int idx = 0;
-                        while (true) {
-                            String fieldName = "Picture" + idx;
-                            idx++;
-                            if (!csv.containsKey(fieldName)) break;
-                            String filename = csv.get(fieldName);
-                            if (TextUtils.isEmpty(filename)) continue;
-                            JsonObject fileObj = fileObjs.get(filename);
-                            if (fileObj == null) {
-                                final String error = String.format("Missing image %s for %s", filename, monitoringName);
-                                logException(new IllegalStateException(error));
-                                Toast.makeText(this,
-                                        error,
-                                        Toast.LENGTH_SHORT).show();
-                                continue;
-                            }
-                            pictures.add(fileObj);
-                        }
-                        data.add("pictures", pictures);
-
-                        // convert gpx
-                        if (!fileObjs.containsKey("track.gpx")) {
-                            logException(new IllegalStateException("Missing track.gpx file"));
-                        } else {
-                            data.add("track", fileObjs.get("track.gpx").get("url"));
-                        }
-
-                        Call<ResponseBody> call = uploader.upload(backend.api(), data);
-                        Response<ResponseBody> response = call.execute();
-                        if (!response.isSuccessful())
-                            throw new IOException("Couldn't upload form");
-                    } catch (Throwable t) {
-                        logException(t);
-                        Toast.makeText(this, String.format("Coult not upload all records of %s", monitoringName), Toast.LENGTH_SHORT).show();
+                    HashMap<String, String> csv = new HashMap<>();
+                    Iterator<String> it = header.iterator();
+                    String columnName;
+                    for (int idx = 0; it.hasNext() && idx < row.length; idx++) {
+                        columnName = it.next();
+                        csv.put(columnName, row[idx]);
                     }
+
+                    JsonObject data = converter.convert(csv);
+
+                    // convert pictures
+                    JsonArray pictures = new JsonArray();
+                    int idx = 0;
+                    while (true) {
+                        String fieldName = "Picture" + idx;
+                        idx++;
+                        if (!csv.containsKey(fieldName)) break;
+                        String filename = csv.get(fieldName);
+                        if (TextUtils.isEmpty(filename)) continue;
+                        JsonObject fileObj = fileObjs.get(filename);
+                        if (fileObj == null) {
+                            final String error = String.format("Missing image %s for %s", filename, monitoringName);
+                            logException(new IllegalStateException(error));
+                            Toast.makeText(this,
+                                    error,
+                                    Toast.LENGTH_SHORT).show();
+                            continue;
+                        }
+                        pictures.add(fileObj);
+                    }
+                    data.add("pictures", pictures);
+
+                    // convert gpx
+                    if (!fileObjs.containsKey("track.gpx")) {
+                        logException(new IllegalStateException("Missing track.gpx file"));
+                    } else {
+                        data.add("track", fileObjs.get("track.gpx").get("url"));
+                    }
+
+                    Call<ResponseBody> call = uploader.upload(backend.api(), data);
+                    Response<ResponseBody> response = call.execute();
+                    if (!response.isSuccessful())
+                        throw new IOException("Couldn't upload form");
                 }
             } finally {
                 csvReader.close();
