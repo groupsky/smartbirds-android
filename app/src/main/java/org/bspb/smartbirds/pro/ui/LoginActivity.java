@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -142,6 +143,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    @Click(R.id.register_button)
+    protected void register() {
+        String registerUrl = "https://smartbirds.org/register";
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(registerUrl)));
+    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.
