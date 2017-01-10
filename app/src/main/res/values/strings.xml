@@ -157,7 +157,7 @@
     <string name="main_screen_btn_info">Information</string>
     <string name="main_screen_btn_help">Help</string>
     <string name="info_dialog_title">Information</string>
-    <string name="help_url">http://bspb.org/bg/SmartBirds_Pro_manual.html</string>
+    <string name="help_url" translatable="false">https://smartbirds.org/files/smartbirds-help-2.5.6-2015.pdf</string>
     <string name="info_text">
         <![CDATA[
             <p><b>SmartBirds Pro is a mobile application for monitoring of birds, amphibians, reptiles, and mammals</b></p>
