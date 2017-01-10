@@ -201,6 +201,18 @@
     <string name="monitoring_ciconia_sep_6">6. Данни за загинали малки</string>
     <string name="export_description">Експорт на всички данни, които не са качвани на сървъра (данните ще останат на устройството)</string>
     <string name="image_file_create_error">Не може да създаде снимка</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">Вход</string>
+    <string name="prompt_email">Е-поща</string>
+    <string name="prompt_password">Парола</string>
+    <string name="action_sign_in">Вход</string>
+    <string name="action_sign_in_short">Вход</string>
+    <string name="action_register">Регистриране</string>
+    <string name="error_invalid_email">Невалидна е-поща</string>
+    <string name="error_invalid_password">Паролата е прекалено къса</string>
+    <string name="error_incorrect_password">Неправилна парола</string>
+    <string name="error_field_required">Полето е задължително</string>
     <string name="monitoring_cbm_zone">Площадка</string>
     <string name="sum_decimal_number_form_input_plus">Сума | Следв.</string>
 </resources>
