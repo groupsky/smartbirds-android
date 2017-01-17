@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -22,10 +23,12 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +39,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
 import static android.widget.AdapterView.INVALID_POSITION;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.ITEM_COUNT_FOR_FILTER;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
 
@@ -207,18 +211,44 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         this.onSelectionChangeListener = onSelectionChangeListener;
     }
 
-    private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener {
+    private class PopupDialog implements DialogInterface.OnClickListener, TextWatcher, DialogInterface.OnCancelListener, Filter.FilterListener, DialogInterface.OnDismissListener {
 
         private AlertDialog mPopup;
         private NomenclatureItem mLastSelected = null;
+        private boolean needFilter;
+
+        private final DataSetObserver datasetObserver = new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                if (mPopup == null) return;
+                if (mLastSelected != null) return;
+                if (mSelectedItem == null) return;
+                mPopup.getListView().setSelection(mAdapter.getPosition(mSelectedItem));
+            }
+        };
 
         public void show() {
             loadData();
 
-            boolean needFilter = mAdapter.getCount() > 20;
+            needFilter = mAdapter.getCount() >= ITEM_COUNT_FOR_FILTER;
 
             EditText view = null;
             if (needFilter) {
+                final List<Nomenclature> recentItems = nomenclatures.getRecentNomenclatures(key.toString());
+                if (!recentItems.isEmpty()) {
+                    mAdapter.sort(new Comparator<NomenclatureItem>() {
+                        @Override
+                        public int compare(NomenclatureItem o1, NomenclatureItem o2) {
+                            int idx1 = recentItems.indexOf(o1.nomenclature);
+                            int idx2 = recentItems.indexOf(o2.nomenclature);
+                            if (idx1 >= 0 && idx2 >= 0) return idx1-idx2;
+                            if (idx1 >= 0) return -1;
+                            if (idx2 >= 0) return 1;
+                            return AlphanumComparator.compareStrings(o1.label, o2.label);
+                        }
+                    });
+                }
+
                 view = new EditText(getContext());
                 view.setImeOptions(view.getImeOptions() | IME_FLAG_NO_EXTRACT_UI | IME_ACTION_DONE);
                 view.setInputType(TYPE_TEXT_VARIATION_FILTER);
@@ -231,6 +261,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
             setSelection(new NomenclatureItem(getText().toString()));
 
+            mAdapter.registerDataSetObserver(datasetObserver);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                     .setTitle(getHint())
                     .setSingleChoiceItems(mAdapter, mSelectedItem != null ? mAdapter.getPosition(mSelectedItem) : INVALID_POSITION, this)
@@ -242,6 +274,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                 builder.setCustomTitle(view);
             }
             mPopup = builder.create();
+            mPopup.setOnDismissListener(this);
 
             final ListView listView = mPopup.getListView();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -270,6 +303,10 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                     setSelection(mLastSelected);
                     mPopup.dismiss();
                     ((Filterable) mAdapter).getFilter().filter(null, this);
+
+                    if (needFilter) {
+                        nomenclatures.addRecentNomenclature(getSelectedItem());
+                    }
                     break;
                 case BUTTON_NEUTRAL:
                     setSelection((NomenclatureItem) null);
@@ -305,6 +342,11 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         public void onFilterComplete(int count) {
             setSelection(new NomenclatureItem(getText().toString()));
         }
+
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+            mAdapter.unregisterDataSetObserver(datasetObserver);
+        }
     }
 
     static class NomenclatureItem {
@@ -312,13 +354,17 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         final String label;
 
         NomenclatureItem(String label) {
-            this.label = label;
             this.nomenclature = null;
+            this.label = prepare(label);
         }
 
         NomenclatureItem(Nomenclature nomenclature) {
             this.nomenclature = nomenclature;
-            label = TextUtils.join("\n", nomenclature.localeLabel.trim().split(MULTIPLE_CHOICE_SPLITTER));
+            this.label = prepare(nomenclature.localeLabel);
+        }
+
+        private String prepare(String label) {
+            return TextUtils.join("\n", label.trim().split(MULTIPLE_CHOICE_SPLITTER));
         }
 
 
