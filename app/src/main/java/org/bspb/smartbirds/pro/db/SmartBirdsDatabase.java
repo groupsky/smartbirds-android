@@ -20,7 +20,7 @@ import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_;
 public class SmartBirdsDatabase {
 
 
-    public static final int VERSION = 2;
+    public static final int VERSION = 3;
 
     @Table(NomenclatureColumns.class)
     public static final String NOMENCLATURES = "nomenclatures";
@@ -48,10 +48,10 @@ public class SmartBirdsDatabase {
             switch (oldVersion) {
                 case 1:
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.ZONES);
-                    db.execSQL(org.bspb.smartbirds.pro.db.generated
-                            .SmartBirdsDatabase.NOMENCLATURE_USES_COUNT);
                     break;
-
+                case 2:
+                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.NOMENCLATURE_USES_COUNT);
+                    break;
             }
         }
     }
