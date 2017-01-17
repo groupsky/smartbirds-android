@@ -5,9 +5,6 @@ import android.provider.BaseColumns;
 import net.simonvt.schematic.annotation.AutoIncrement;
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.PrimaryKey;
-import net.simonvt.schematic.annotation.References;
-
-import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 
 import static net.simonvt.schematic.annotation.DataType.Type.INTEGER;
 import static net.simonvt.schematic.annotation.DataType.Type.TEXT;
@@ -24,15 +21,14 @@ public interface NomenclatureUsesCountColumns {
     String _ID = BaseColumns._ID;
 
     @DataType(TEXT)
-    String TYPE = "type";
+    String TYPE = NomenclatureColumns.TYPE;
 
     @DataType(TEXT)
-    String LABEL_BG = "label_bg";
+    String LABEL_BG = NomenclatureColumns.LABEL_BG;
 
     @DataType(TEXT)
-    String LABEL_EN = "label_en";
+    String LABEL_EN = NomenclatureColumns.LABEL_EN;
 
     @DataType(INTEGER)
     String COUNT = "count";
-
 }

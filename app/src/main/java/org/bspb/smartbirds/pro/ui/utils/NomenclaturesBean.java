@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.utils;
 
 import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -18,7 +19,9 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
-import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
+import org.bspb.smartbirds.pro.db.NomenclatureUsesCountColumns;
+import org.bspb.smartbirds.pro.db.SmartBirdsProvider.NomenclatureUsesCount;
+import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 
 import java.io.BufferedInputStream;
@@ -60,6 +63,8 @@ public class NomenclaturesBean {
 
     Cursor cursor;
 
+    String localeColumn;
+
     final Loader.OnLoadCompleteListener<Cursor> listener = new Loader.OnLoadCompleteListener<Cursor>() {
         @Override
         public void onLoadComplete(Loader<Cursor> loader, Cursor data) {
@@ -77,7 +82,7 @@ public class NomenclaturesBean {
 
     @AfterInject
     void init() {
-        CursorLoader loader = new CursorLoader(context, SmartBirdsProvider.Nomenclatures.CONTENT_URI, PROJECTION, null, null, null);
+        CursorLoader loader = new CursorLoader(context, Nomenclatures.CONTENT_URI, PROJECTION, null, null, null);
         loader.registerListener(0, listener);
         loader.startLoading();
     }
@@ -86,7 +91,7 @@ public class NomenclaturesBean {
     public void loadData() {
         try {
             data.clear();
-            String localeColumn = context.getString(R.string.nomenclature_locale_column);
+            localeColumn = context.getString(R.string.nomenclature_locale_column);
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 final Nomenclature nomenclature = new Nomenclature(cursor, localeColumn);
                 List<Nomenclature> list;
@@ -101,11 +106,11 @@ public class NomenclaturesBean {
 
             // load any missing nomenclatures from bundled - this is useful when updating, before sync with server
             Set<String> missingNomenclatures = new HashSet<>();
-            for (SpeciesNomenclature species: loadBundledSpecies()) {
+            for (SpeciesNomenclature species : loadBundledSpecies()) {
                 fillMissingNomenclature(missingNomenclatures, Nomenclature.from(species));
             }
             missingNomenclatures.clear();
-            for (Nomenclature nomenclature: loadBundledNomenclatures()) {
+            for (Nomenclature nomenclature : loadBundledNomenclatures()) {
                 fillMissingNomenclature(missingNomenclatures, nomenclature);
             }
 
@@ -198,6 +203,48 @@ public class NomenclaturesBean {
         if (!data.containsKey(key))
             throw new IllegalArgumentException("Unknown nomenclature " + key);
         return data.get(key);
+    }
+
+    public List<Nomenclature> getRecentNomenclatures(String key) {
+        List<Nomenclature> nomenclatures = getNomenclature(key);
+        Cursor cursor = context.getContentResolver().query(NomenclatureUsesCount.forType(key), new String[]{localeColumn}, null, null, null);
+        if (cursor != null) try {
+            final ArrayList<Nomenclature> recentItems = new ArrayList<>(cursor.getCount());
+            Nomenclature temp = new Nomenclature();
+            int idx;
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                temp.localeLabel = cursor.getString(0);
+                idx = Collections.binarySearch(nomenclatures, temp, comparator);
+                if (idx < 0) continue;
+                recentItems.add(nomenclatures.get(idx));
+            }
+            return recentItems;
+        } finally {
+            cursor.close();
+        }
+        return new ArrayList<>(0);
+    }
+
+    @Background
+    public void addRecentNomenclature(Nomenclature nomenclature) {
+        ContentValues cv = nomenclature.toCV();
+        cv.put(NomenclatureUsesCountColumns.COUNT, 1);
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(NomenclatureUsesCount.forType(nomenclature.type),
+                new String[]{NomenclatureUsesCountColumns._ID, NomenclatureUsesCountColumns.COUNT},
+                localeColumn + "=?",
+                new String[]{nomenclature.localeLabel},
+                null);
+        if (cursor != null) try {
+            if (cursor.moveToFirst() && !cursor.isAfterLast()) {
+                cv.put(NomenclatureUsesCountColumns.COUNT, cursor.getInt(1) + 1);
+                resolver.update(NomenclatureUsesCount.forId(cursor.getLong(0)), cv, null, null);
+                return;
+            }
+        } finally {
+            cursor.close();
+        }
+        resolver.insert(NomenclatureUsesCount.CONTENT_URI, cv);
     }
 
 }
