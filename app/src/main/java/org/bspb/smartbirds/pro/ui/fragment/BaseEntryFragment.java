@@ -40,7 +40,6 @@ import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
-import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -51,7 +50,7 @@ import java.util.List;
  */
 @EFragment
 @OptionsMenu({R.menu.debug_menu, R.menu.form_entry})
-public abstract class BaseEntryFragment extends Fragment {
+public abstract class BaseEntryFragment extends BaseFormFragment {
 
     protected static final String ARG_LAT = "lat";
     protected static final String ARG_LON = "lon";
@@ -81,7 +80,6 @@ public abstract class BaseEntryFragment extends Fragment {
     protected ImageStruct currentImage;
     @InstanceState
     protected int picturesCount = 0;
-    protected FormUtils.FormModel form;
 
     protected abstract EntryType getEntryType();
 
@@ -109,18 +107,13 @@ public abstract class BaseEntryFragment extends Fragment {
         super.onStop();
     }
 
-    protected boolean isValid() {
-        ensureForm();
-        return form.validateFields();
-    }
-
-    protected void ensureForm() {
-        if (form == null)
-            form = FormUtils.traverseForm(getView());
+    @Override
+    protected final HashMap<String, String> serialize() {
+        return super.serialize();
     }
 
     protected HashMap<String, String> serialize(Date entryTime) {
-        HashMap<String, String> data = form.serialize();
+        HashMap<String, String> data = super.serialize();
         data.put(getString(R.string.tag_lat), Double.toString(lat));
         data.put(getString(R.string.tag_lon), Double.toString(lon));
         for (int i = 0; i < images.length; i++) {

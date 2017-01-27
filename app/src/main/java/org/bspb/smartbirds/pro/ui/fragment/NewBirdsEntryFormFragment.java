@@ -1,96 +1,44 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
+import android.support.v13.app.FragmentStatePagerAdapter;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.TextChange;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
-import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
-
-import java.util.Locale;
 
 
-@EFragment(R.layout.fragment_monitoring_form_birds)
-public class NewBirdsEntryFormFragment extends BaseEntryFragment {
+@EFragment
+public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
 
-    @ViewById(R.id.form_birds_count_units)
-    SingleChoiceFormInput countUnits;
+    @AfterViews
+    protected void setupTabs() {
+        setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
+            @Override
+            public android.app.Fragment getItem(int position) {
+                switch (position) {
+                    case 0: return NewBirdsEntryRequiredFormFragment_.builder().build();
+                    case 1: return NewBirdsEntryOptionalFormFragment_.builder().build();
+                    default: throw new IllegalArgumentException("Unhandled position"+position);
+                }
+            }
 
-    @ViewById(R.id.form_birds_count_type)
-    SingleChoiceFormInput countType;
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return getActivity().getString(position == 0 ? R.string.tab_required : R.string.tab_optional);
+            }
 
-    @ViewById(R.id.form_birds_count)
-    DecimalNumberFormInput count;
-    @ViewById(R.id.form_birds_count_min)
-    DecimalNumberFormInput countMin;
-    @ViewById(R.id.form_birds_count_max)
-    DecimalNumberFormInput countMax;
-
-    @Pref
-    BirdPrefs_ prefs;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        countUnits.setSelection(prefs.birdCountUnits().get());
-        countType.setSelection(prefs.birdCountType().get());
-        handleCountsLogic();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        prefs.birdCountUnits().put(countUnits.getSelection());
-        prefs.birdCountType().put(countType.getSelection());
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        });
     }
 
     @Override
     protected EntryType getEntryType() {
         return EntryType.BIRDS;
-    }
-
-    @TextChange(R.id.form_birds_count_type)
-    void handleCountsLogic() {
-        Nomenclature item = countType.getSelectedItem();
-        String countsType = item != null ? item.label.en : null;
-        switch (countsType != null ? countsType.toLowerCase(Locale.ENGLISH) : "") {
-            case "exact number": // Exact count
-                count.setEnabled(true);
-                countMin.setEnabled(false);
-                countMax.setEnabled(false);
-                break;
-            case "min.": // Min count
-                count.setEnabled(false);
-                countMin.setEnabled(true);
-                countMax.setEnabled(false);
-                break;
-            case "max.": // Max count
-                count.setEnabled(false);
-                countMin.setEnabled(false);
-                countMax.setEnabled(true);
-                break;
-            case "range": // Range count
-                count.setEnabled(false);
-                countMin.setEnabled(true);
-                countMax.setEnabled(true);
-                break;
-            case "unspecified number": // Unspecified
-                count.setEnabled(false);
-                countMin.setEnabled(false);
-                countMax.setEnabled(false);
-                break;
-            default:
-                count.setEnabled(true);
-                countMin.setEnabled(true);
-                countMax.setEnabled(true);
-                break;
-        }
     }
 
     public static class Builder implements BaseEntryFragment.Builder {
