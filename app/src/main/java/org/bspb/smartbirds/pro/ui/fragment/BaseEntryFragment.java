@@ -99,6 +99,15 @@ public abstract class BaseEntryFragment extends BaseFormFragment {
     public void onStart() {
         super.onStart();
         eventBus.register(this);
+
+        for (int i=0; i<pictures.size(); i++) {
+            pictures.get(i).setVisibility(i < picturesCount ? View.VISIBLE : View.GONE);
+            if (i <picturesCount) {
+                displayPicture(images[i], pictures.get(i));
+            } else {
+                hidePicture(pictures.get(i));
+            }
+        }
     }
 
     @Override
@@ -181,36 +190,43 @@ public abstract class BaseEntryFragment extends BaseFormFragment {
     @OnActivityResult(REQUEST_TAKE_PICTURE)
     void onTakePictureResult(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
-            // Get the dimensions of the View
-            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-            int targetW = (int) Math.round(320.0 / displayMetrics.density);
-            int targetH = (int) Math.round(320.0 / displayMetrics.density);
-
-            // Get the dimensions of the bitmap
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(currentImage.path, bmOptions);
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            // Determine how much to scale down the image
-            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-            // Decode the image file into a Bitmap sized to fill the View
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inSampleSize = scaleFactor;
-            bmOptions.inPurgeable = true;
-
-            Bitmap bitmap = BitmapFactory.decodeFile(currentImage.path, bmOptions);
             images[picturesCount] = currentImage;
             currentImage = null;
-            ImageView picture = pictures.get(picturesCount);
+            displayPicture(images[picturesCount], pictures.get(picturesCount));
             picturesCount++;
-            picture.setImageBitmap(bitmap);
-            picture.setVisibility(View.VISIBLE);
         } else {
             currentImage = null;
         }
+    }
+
+    void displayPicture(ImageStruct image, ImageView picture) {
+        // Get the dimensions of the View
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int targetW = (int) Math.round(320.0 / displayMetrics.density);
+        int targetH = (int) Math.round(320.0 / displayMetrics.density);
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(image.path, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(image.path, bmOptions);
+        picture.setImageBitmap(bitmap);
+        picture.setVisibility(View.VISIBLE);
+    }
+
+    void hidePicture(ImageView picture) {
+        picture.setVisibility(View.GONE);
     }
 
     @Click({R.id.picture1, R.id.picture2, R.id.picture3})
