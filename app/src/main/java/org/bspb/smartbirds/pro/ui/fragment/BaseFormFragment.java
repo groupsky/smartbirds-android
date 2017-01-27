@@ -43,7 +43,7 @@ public class BaseFormFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         ensureForm();
-        outState.putSerializable(KEY_FORM_DATA, form.serialize());
+        outState.putSerializable(KEY_FORM_DATA, serialize());
     }
 
     @Override
