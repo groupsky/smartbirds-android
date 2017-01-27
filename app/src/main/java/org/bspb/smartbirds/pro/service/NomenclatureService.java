@@ -8,9 +8,12 @@ import org.androidannotations.annotations.EIntentService;
 import org.androidannotations.annotations.ServiceAction;
 import org.androidannotations.api.support.app.AbstractIntentService;
 import org.bspb.smartbirds.pro.backend.Backend;
+import org.bspb.smartbirds.pro.backend.dto.Location;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
 import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
+import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Locations;
+import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures;
 import org.bspb.smartbirds.pro.events.DownloadCompleted;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingDownload;
@@ -18,11 +21,14 @@ import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import retrofit2.Response;
 
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.AUTHORITY;
-import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures.CONTENT_URI;
+import static org.bspb.smartbirds.pro.service.NomenclatureService.Downloading.LOCATIONS;
+import static org.bspb.smartbirds.pro.service.NomenclatureService.Downloading.NOMENCLATURES;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
@@ -32,7 +38,13 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 @EIntentService
 public class NomenclatureService extends AbstractIntentService {
 
-    public static boolean isDownloading = false;
+    enum Downloading {
+        LOCATIONS,
+        NOMENCLATURES,
+    }
+
+    public static final Set<Downloading> isDownloading = new HashSet<>();
+
     @Bean
     Backend backend;
     @Bean
@@ -45,8 +57,38 @@ public class NomenclatureService extends AbstractIntentService {
     }
 
     @ServiceAction
+    public void downloadLocations() {
+        isDownloading.add(LOCATIONS);
+        try {
+            bus.post(new StartingDownload());
+            try {
+                ArrayList<ContentProviderOperation> buffer = new ArrayList<>();
+                buffer.add(ContentProviderOperation.newDelete(Locations.CONTENT_URI).build());
+                Response<ResponseListEnvelope<Location>> response = backend.api().listLocations().execute();
+                if (!response.isSuccessful())
+                    throw new IOException("Server error: " + response.code() + " - " + response.message());
+                for (Location location : response.body().data) {
+                    buffer.add(ContentProviderOperation
+                            .newInsert(Locations.CONTENT_URI)
+                            .withValues(location.toCV())
+                            .build());
+                }
+                getContentResolver().applyBatch(AUTHORITY, buffer);
+            } catch (Throwable t) {
+                logException(t);
+                Toast.makeText(this, "Could not download locations. Try again.", Toast.LENGTH_SHORT).show();
+            }
+        } finally {
+            isDownloading.remove(LOCATIONS);
+            if (isDownloading.isEmpty()) {
+                bus.post(new DownloadCompleted());
+            }
+        }
+    }
+
+    @ServiceAction
     void updateNomenclatures() {
-        isDownloading = true;
+        isDownloading.add(NOMENCLATURES);
         try {
             bus.post(new StartingDownload());
             try {
@@ -63,7 +105,7 @@ public class NomenclatureService extends AbstractIntentService {
 
                 // if we received nomenclatures
                 if (!buffer.isEmpty()) {
-                    buffer.add(0, ContentProviderOperation.newDelete(CONTENT_URI).build());
+                    buffer.add(0, ContentProviderOperation.newDelete(Nomenclatures.CONTENT_URI).build());
                     getContentResolver().applyBatch(AUTHORITY, buffer);
                     buffer.clear();
 
@@ -88,9 +130,11 @@ public class NomenclatureService extends AbstractIntentService {
                 logException(t);
                 Toast.makeText(this, "Could not download nomenclatures. Try again.", Toast.LENGTH_SHORT).show();
             }
-            bus.post(new DownloadCompleted());
         } finally {
-            isDownloading = false;
+            isDownloading.remove(NOMENCLATURES);
+            if (isDownloading.isEmpty()) {
+                bus.post(new DownloadCompleted());
+            }
         }
     }
 }
