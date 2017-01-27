@@ -1,6 +1,10 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.os.Build;
+
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
@@ -10,6 +14,7 @@ import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -35,12 +40,47 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Pref
     BirdPrefs_ prefs;
 
+    @FragmentById(R.id.pictures_fragment)
+    NewEntryPicturesFragment picturesFragment;
+    private HashMap<String, String> pendingDeserialize;
+
     @Override
     public void onResume() {
         super.onResume();
         countUnits.setSelection(prefs.birdCountUnits().get());
         countType.setSelection(prefs.birdCountType().get());
         handleCountsLogic();
+    }
+
+    @Override
+    protected HashMap<String, String> serialize() {
+        HashMap<String, String> data = super.serialize();
+        data.putAll(picturesFragment.serialize());
+        return data;
+    }
+
+    @Override
+    protected void deserialize(HashMap<String, String> data) {
+        super.deserialize(data);
+        if (picturesFragment == null) {
+            pendingDeserialize = data;
+        } else {
+            picturesFragment.deserialize(data);
+        }
+    }
+
+    @AfterViews
+    protected void flushDeserialize() {
+        if (picturesFragment == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
+        }
+        if (picturesFragment == null) {
+            picturesFragment = (NewEntryPicturesFragment) getFragmentManager().findFragmentById(R.id.pictures_fragment);
+        }
+        if (pendingDeserialize != null) {
+            picturesFragment.deserialize(pendingDeserialize);
+            pendingDeserialize = null;
+        }
     }
 
     @Override

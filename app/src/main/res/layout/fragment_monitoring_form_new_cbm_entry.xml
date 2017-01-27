@@ -86,8 +86,11 @@
 
         <View style="@style/FieldSeparator" />
 
-
-        <include layout="@layout/partial_pictures" />
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
+            android:id="@+id/pictures_fragment" />
 
     </LinearLayout>
 </ScrollView>
