@@ -15,6 +15,7 @@ public class Configuration {
 
     public static final String MULTIPLE_CHOICE_DELIMITER = " | ";
     public static final String MULTIPLE_CHOICE_SPLITTER = " *\\| *";
+    public static final float MAX_DISTANCE_LOCATION_METERS = 50000;
     public static DateFormat STORAGE_DATE_TIME_FORMAT;
     public static DateFormat STORAGE_TIME_FORMAT;
     public static DateFormat STORAGE_DATE_FORMAT;

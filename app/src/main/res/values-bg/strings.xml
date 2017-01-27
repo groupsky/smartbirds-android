@@ -216,4 +216,5 @@
     <string name="sum_decimal_number_form_input_plus">Сума | Следв.</string>
     <string name="tab_required">Основни</string>
     <string name="tab_optional">Допълнителни</string>
+    <string name="no_place_nearby">Не са известни населени места наблизо</string>
 </resources>

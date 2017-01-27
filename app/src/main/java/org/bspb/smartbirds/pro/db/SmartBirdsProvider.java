@@ -23,11 +23,13 @@ public class SmartBirdsProvider {
     public static final String TYPE_ITEM = "vnd.android.cursor.item/";
 
     interface Path {
-        String NOMENCLATURES = "nomenclatures";
-        String ZONES = "zones";
-        String NOMENCLATURE_USES_COUNT = "nomenclature_uses_count";
         String BY_ID = "id";
         String BY_TYPE = "type";
+        String LIMIT = "limit";
+        String LOCATIONS = "locations";
+        String NOMENCLATURE_USES_COUNT = "nomenclature_uses_count";
+        String NOMENCLATURES = "nomenclatures";
+        String ZONES = "zones";
     }
 
     private static Uri buildUri(String... paths) {
@@ -36,6 +38,38 @@ public class SmartBirdsProvider {
             builder.appendPath(path);
         }
         return builder.build();
+    }
+
+    @TableEndpoint(table = SmartBirdsDatabase.LOCATIONS)
+    public static class Locations {
+        @ContentUri(
+                path = Path.LOCATIONS,
+                type = TYPE_LIST + Path.LOCATIONS,
+                defaultSort = LocationColumns._ID + " ASC")
+        public static final Uri CONTENT_URI = buildUri(Path.LOCATIONS);
+
+        @ContentUri(
+                path = Path.LOCATIONS + "/" + Path.LIMIT + "/1",
+                type = TYPE_ITEM + Path.LOCATIONS,
+                defaultSort = LocationColumns._ID + " ASC",
+                limit = "1")
+        public static final Uri CONTENT_URI_LIMIT_1 = buildUri(Path.LOCATIONS);
+
+        @InexactContentUri(
+                path = Path.LOCATIONS + "/#",
+                name = Path.LOCATIONS + "_ID",
+                type = TYPE_ITEM + Path.LOCATIONS,
+                whereColumn = LocationColumns._ID,
+                pathSegment = 1)
+        public static Uri byId(long id) {
+            return buildUri(Path.LOCATIONS, String.valueOf(id));
+        }
+
+        public static String[] distance(double lat, double lon) {
+            return new String[]{
+                    "(lat - " + lat + ")*(lat- " + lat + ") + " +
+                            "(lon - " + lon + ")*(lon - " + lon + ") as "+LocationColumns.DISTANCE};
+        }
     }
 
     @TableEndpoint(table = SmartBirdsDatabase.NOMENCLATURES)
@@ -57,15 +91,6 @@ public class SmartBirdsProvider {
         public static Uri withType(String type) {
             return buildUri(Path.NOMENCLATURES, type);
         }
-    }
-
-    @TableEndpoint(table = SmartBirdsDatabase.ZONES)
-    public static class Zones {
-        @ContentUri(
-                path = Path.ZONES,
-                type = TYPE_LIST + Path.ZONES,
-                defaultSort = ZoneColumns._ID + " ASC")
-        public static final Uri CONTENT_URI = buildUri(Path.ZONES);
     }
 
     @TableEndpoint(table = SmartBirdsDatabase.NOMENCLATURE_USES_COUNT)
@@ -97,5 +122,14 @@ public class SmartBirdsProvider {
         public static Uri forType(String type) {
             return buildUri(Path.NOMENCLATURE_USES_COUNT, Path.BY_TYPE, type);
         }
+    }
+    
+    @TableEndpoint(table = SmartBirdsDatabase.ZONES)
+    public static class Zones {
+        @ContentUri(
+                path = Path.ZONES,
+                type = TYPE_LIST + Path.ZONES,
+                defaultSort = ZoneColumns._ID + " ASC")
+        public static final Uri CONTENT_URI = buildUri(Path.ZONES);
     }
 }
