@@ -11,6 +11,21 @@
     <TableRow>
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:layout_span="2"
+            android:hint="@string/monitoring_birds_death"
+            android:tag="@string/tag_dead_specimen_reason"
+            app:entries="form_birds_death" />
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:hint="@string/monitoring_birds_marking"
+            android:tag="@string/tag_mark_presence"
+            app:entries="form_birds_marking" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:hint="@string/monitoring_birds_substrate"
             android:tag="@string/tag_substrate"
             app:entries="form_birds_nest_substrate" />

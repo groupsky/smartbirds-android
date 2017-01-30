@@ -214,4 +214,6 @@
     <string name="error_field_required">Полето е задължително</string>
     <string name="monitoring_cbm_zone">Площадка</string>
     <string name="sum_decimal_number_form_input_plus">Сума | Следв.</string>
+    <string name="tab_required">Основни</string>
+    <string name="tab_optional">Допълнителни</string>
 </resources>

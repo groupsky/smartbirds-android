@@ -8,10 +8,9 @@
     android:stretchColumns="*"
     tools:context="org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment">
 
-    <TableRow>
+    <TableRow android:id="@+id/row1">
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/field_name"
             android:layout_span="3"
             android:hint="@string/monitoring_birds_name"
             android:tag="@string/tag_species_scientific_name"
@@ -80,12 +79,6 @@
             android:tag="@string/tag_age"
             app:entries="form_birds_age" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:hint="@string/monitoring_birds_marking"
-            android:tag="@string/tag_mark_presence"
-            app:entries="form_birds_marking" />
-
-
     </TableRow>
 
     <TableRow>
@@ -103,12 +96,4 @@
             app:entries="form_birds_behaviour" />
     </TableRow>
 
-    <TableRow>
-
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:layout_span="2"
-            android:hint="@string/monitoring_birds_death"
-            android:tag="@string/tag_dead_specimen_reason"
-            app:entries="form_birds_death" />
-    </TableRow>
 </TableLayout>

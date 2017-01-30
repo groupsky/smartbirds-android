@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
+import android.os.Bundle;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -23,6 +24,8 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
     @ViewById(R.id.form_birds_list)
     FormBirdsList birdsList;
 
+    FormUtils.FormModel fakeForm = new FormUtils.FormModel();
+
     @Override
     protected EntryType getEntryType() {
         return EntryType.HUMID;
@@ -30,7 +33,29 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
 
     @Override
     protected void ensureForm() {
-        throw new IllegalStateException("Should not be called!");
+        if (form == null) {
+            throw new IllegalStateException("Should not be called with null form!");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        form = fakeForm;
+        try {
+            super.onSaveInstanceState(outState);
+        } finally {
+            form = null;
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        form = fakeForm;
+        try {
+            super.onRestoreInstanceState(savedInstanceState);
+        } finally {
+            form = null;
+        }
     }
 
     @Override
