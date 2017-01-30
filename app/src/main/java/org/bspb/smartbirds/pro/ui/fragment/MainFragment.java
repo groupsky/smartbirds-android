@@ -79,7 +79,7 @@ public class MainFragment extends Fragment {
         } else {
             onEvent(new UploadCompleted());
         }
-        if (NomenclatureService.isDownloading || ZoneService.isDownloading) {
+        if (!NomenclatureService.isDownloading.isEmpty() || ZoneService.isDownloading) {
             onEvent(new StartingDownload());
         } else {
             onEvent(new DownloadCompleted());
@@ -229,7 +229,7 @@ public class MainFragment extends Fragment {
 
     @UiThread
     public void onEvent(DownloadCompleted event) {
-        if (!(UploadService.isUploading || ZoneService.isDownloading || NomenclatureService.isDownloading) && progressDialog != null) {
+        if (!(UploadService.isUploading || ZoneService.isDownloading || !NomenclatureService.isDownloading.isEmpty()) && progressDialog != null) {
             progressDialog.cancel();
             progressDialog = null;
         }
@@ -245,7 +245,7 @@ public class MainFragment extends Fragment {
 
     @UiThread
     public void onEvent(UploadCompleted event) {
-        if (!(NomenclatureService.isDownloading || ZoneService.isDownloading) && progressDialog != null) {
+        if (!(!NomenclatureService.isDownloading.isEmpty() || ZoneService.isDownloading) && progressDialog != null) {
             progressDialog.cancel();
         }
         showNotSyncedCount();
