@@ -23,6 +23,7 @@ public class SyncService extends AbstractIntentService {
     @ServiceAction
     public void initialSync() {
         NomenclatureService_.intent(this).updateNomenclatures().start();
+        NomenclatureService_.intent(this).downloadLocations().start();
         ZoneService_.intent(this).downloadZones().start();
     }
 }
