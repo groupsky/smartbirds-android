@@ -19,6 +19,15 @@ public class Configuration {
     public static DateFormat STORAGE_TIME_FORMAT;
     public static DateFormat STORAGE_DATE_FORMAT;
 
+    /**
+     * The minimum number of items to display a filter
+     */
+    public static final int ITEM_COUNT_FOR_FILTER = 20;
+    /**
+     * How many recently used values to display, only applicable if @ITEM_COUNT_FOR_FILTER is matched
+     */
+    public static final int MAX_RECENT_USED_VALUES = 10;
+
     public static void init(Context context) {
         STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         STORAGE_TIME_FORMAT = new SimpleDateFormat("kk:mm:ss", Locale.ENGLISH);
