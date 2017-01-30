@@ -211,6 +211,8 @@ public class MonitoringCommonFormFragment extends Fragment implements LoaderMana
                     updatingLocationFromGPS = false;
                 }
             }
+        } else {
+            Toast.makeText(getActivity(), R.string.no_place_nearby, Toast.LENGTH_SHORT).show();
         }
     }
 
