@@ -222,4 +222,6 @@
     <string name="monitoring_cbm_zone">Zone</string>
     <string name="storage_permission_rationale">Storage permissions are required for map display</string>
     <string name="sum_decimal_number_form_input_plus">Sum | Next</string>
+    <string name="tab_required">Base</string>
+    <string name="tab_optional">Optional</string>
 </resources>

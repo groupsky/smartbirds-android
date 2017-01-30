@@ -12,22 +12,10 @@
 
         <include layout="@layout/fragment_monitoring_form_new_birds_entry" />
 
-        <View style="@style/FieldSeparator" />
-
-        <include layout="@layout/fragment_monitoring_form_new_birds_nest" />
-
-        <View style="@style/FieldSeparator" />
-
-        <EditText
-            style="@style/FieldInput.Memo"
+        <fragment
+            android:id="@+id/pictures_fragment"
+            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_birds_notes"
-            android:tag="@string/tag_remarks_type" />
-
-        <View style="@style/FieldSeparator" />
-
-        <include layout="@layout/partial_pictures"/>
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

@@ -1,41 +1,41 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
+import android.support.v13.app.FragmentStatePagerAdapter;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.prefs.HerpPrefs_;
-import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 
 /**
  * Created by dani on 14-11-11.
  */
-@EFragment(R.layout.fragment_monitoring_form_new_herp_entry)
-public class NewHerpEntryFormFragment extends BaseEntryFragment {
+@EFragment
+public class NewHerpEntryFormFragment extends BaseTabEntryFragment {
 
-    @ViewById(R.id.form_herp_habitat)
-    SingleChoiceFormInput habitat;
+    @AfterViews
+    protected void setupTabs() {
+        setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
+            @Override
+            public android.app.Fragment getItem(int position) {
+                switch (position) {
+                    case 0: return NewHerpEntryRequiredFormFragment_.builder().build();
+                    case 1: return NewHerpEntryOptionalFormFragment_.builder().build();
+                    default: throw new IllegalArgumentException("Unhandled position"+position);
+                }
+            }
 
-    @ViewById(R.id.form_herp_count)
-    DecimalNumberFormInput count;
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return getActivity().getString(position == 0 ? R.string.tab_required : R.string.tab_optional);
+            }
 
-    @Pref
-    HerpPrefs_ prefs;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        habitat.setText(prefs.herpHabitat().get());
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        prefs.herpHabitat().put(habitat.getText().toString());
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        });
     }
 
     @Override
