@@ -1,12 +1,15 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -41,21 +44,24 @@ import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
 import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by dani on 14-11-4.
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity {
+public class MonitoringActivity extends BaseActivity implements ServiceConnection {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -154,6 +160,11 @@ public class MonitoringActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataService_.intent(this).start();
+        try {
+            bindService(new TrackingServiceBuilder(this).getIntent(), this, BIND_ABOVE_CLIENT);
+        } catch (Throwable t) {
+            logException(t);
+        }
     }
 
     @Override
@@ -176,6 +187,16 @@ public class MonitoringActivity extends BaseActivity {
         eventBus.unregister(this);
         eventBus.unregister(osmMap);
         eventBus.unregister(googleMap);
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            unbindService(this);
+        } catch (Throwable t) {
+            logException(t);
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -699,5 +720,15 @@ public class MonitoringActivity extends BaseActivity {
         monitoringPrefs.edit().clear().apply();
         getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE).edit().clear().apply();
         getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        Log.d(TAG, String.format(Locale.ENGLISH, "service %s connected", name));
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
     }
 }

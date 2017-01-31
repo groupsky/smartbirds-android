@@ -1,9 +1,13 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -11,18 +15,25 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
+
+import java.util.Locale;
+
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EActivity(R.layout.activity_form)
-public class NewMonitoringEntryActivity extends BaseActivity {
+public class NewMonitoringEntryActivity extends BaseActivity implements ServiceConnection {
 
     public static final String EXTRA_LAT = "lat";
     public static final String EXTRA_LON = "lon";
     public static final String EXTRA_NAME = "name";
     public static final String EXTRA_TYPE = "entryType";
+    private static final String TAG = SmartBirdsApplication.TAG + ".NewMonAct";
 
     @Extra(EXTRA_LAT)
     double lat;
@@ -39,6 +50,11 @@ public class NewMonitoringEntryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
         DataService_.intent(this).start();
+        try {
+            bindService(new TrackingServiceBuilder(this).getIntent(), this, BIND_ABOVE_CLIENT);
+        } catch (Throwable t) {
+            logException(t);
+        }
     }
 
     @AfterViews
@@ -61,6 +77,16 @@ public class NewMonitoringEntryActivity extends BaseActivity {
     protected void onStop() {
         eventBus.unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            unbindService(this);
+        } catch (Throwable t) {
+            logException(t);
+        }
+        super.onDestroy();
     }
 
     public void onEvent(EntrySubmitted event) {
@@ -105,6 +131,16 @@ public class NewMonitoringEntryActivity extends BaseActivity {
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .show();
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        Log.d(TAG, String.format(Locale.ENGLISH, "service %s connected", name));
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
     }
 
 }
