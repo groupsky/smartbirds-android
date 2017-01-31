@@ -3,7 +3,6 @@ package org.bspb.smartbirds.pro.ui.fragment;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -88,7 +87,7 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
 
             @Override
             public void onPageSelected(int position) {
-                ab.setSelectedNavigationItem(position);
+                if (ab != null) ab.setSelectedNavigationItem(position);
             }
 
             @Override
@@ -98,39 +97,36 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
         });
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof Activity) {
-            ab = ((Activity) context).getActionBar();
-            if (ab != null) {
-                ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ab = activity.getActionBar();
+        if (ab != null) {
+            ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-                ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 
-                    @Override
-                    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                        if (viewPager != null)
-                            viewPager.setCurrentItem(tab.getPosition());
-                    }
+                @Override
+                public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                    if (viewPager != null)
+                        viewPager.setCurrentItem(tab.getPosition());
+                }
 
-                    @Override
-                    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                @Override
+                public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
-                    }
+                }
 
-                    @Override
-                    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                @Override
+                public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
-                    }
-                };
+                }
+            };
 
-                ab.addTab(ab.newTab().setText(R.string.tab_required).setTabListener(tabListener));
-                ab.addTab(ab.newTab().setText(R.string.tab_optional).setTabListener(tabListener));
-            }
+            ab.addTab(ab.newTab().setText(R.string.tab_required).setTabListener(tabListener));
+            ab.addTab(ab.newTab().setText(R.string.tab_optional).setTabListener(tabListener));
         }
-
-
     }
 
     @Override
