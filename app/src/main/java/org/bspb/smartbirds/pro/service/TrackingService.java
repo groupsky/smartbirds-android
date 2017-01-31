@@ -63,7 +63,7 @@ public class TrackingService extends Service implements LocationListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand...");
         startTracking();
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
