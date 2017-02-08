@@ -1,27 +1,37 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
+import android.location.Location;
 import android.os.Build;
+import android.util.Log;
+import android.view.View;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.prefs.CbmPrefs_;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.ZoneFormInput;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by dani on 14-11-11.
  */
 @EFragment(R.layout.fragment_monitoring_form_new_cbm_entry)
 public class NewCbmEntryFormFragment extends BaseEntryFragment {
+
+    private static final String TAG = SmartBirdsApplication.TAG + ".fCBM";
 
     @ViewById(R.id.form_cbm_primary_habitat)
     SingleChoiceFormInput primaryHabitatInput;
@@ -37,6 +47,9 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
 
     @ViewById(R.id.form_cbm_zone)
     ZoneFormInput zoneInput;
+
+    @ViewById(R.id.error_cbm_too_far)
+    View errorCbmTooFarView;
 
     @Pref
     CbmPrefs_ prefs;
@@ -89,6 +102,23 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
             picturesFragment.deserialize(pendingDeserialize);
             pendingDeserialize = null;
         }
+    }
+
+    @TextChange(R.id.form_cbm_zone)
+    protected void onZoneChange() {
+        Zone zone = zoneInput.getSelectedItem();
+        if (zone != null) {
+            Zone.Coordinate center = zone.getCenter();
+            float[] res = new float[1];
+            Location.distanceBetween(lat, lon, center.latitude, center.longitude, res);
+            Log.d(TAG, String.format(Locale.ENGLISH, "distance (m): %f", res[0]));
+
+            if (res[0] > Configuration.MAX_DISTANCE_TO_ZONE_METERS) {
+                errorCbmTooFarView.setVisibility(View.VISIBLE);
+                return;
+            }
+        }
+        errorCbmTooFarView.setVisibility(View.GONE);
     }
 
     @Override

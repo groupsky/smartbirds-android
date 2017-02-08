@@ -225,4 +225,5 @@
     <string name="tab_required">Base</string>
     <string name="tab_optional">Optional</string>
     <string name="no_place_nearby">There are no known places nearby</string>
+    <string name="error_cbm_zone_too_far">The zone is more than 5km from the location</string>
 </resources>

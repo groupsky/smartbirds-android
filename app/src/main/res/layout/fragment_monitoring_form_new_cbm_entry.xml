@@ -59,11 +59,28 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
-                    android:id="@+id/form_cbm_zone"
-                    android:hint="@string/monitoring_cbm_zone"
-                    android:tag="@string/tag_zone"
-                    app:required="true" />
+                <LinearLayout android:orientation="vertical">
+
+                    <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
+                        android:id="@+id/form_cbm_zone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_cbm_zone"
+                        android:tag="@string/tag_zone"
+                        app:required="true" />
+
+                    <TextView
+                        android:id="@+id/error_cbm_too_far"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4sp"
+                        android:layout_marginRight="4sp"
+                        android:text="@string/error_cbm_zone_too_far"
+                        android:textAppearance="?errorTextAppearance"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </LinearLayout>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_visit_number"
@@ -87,10 +104,10 @@
         <View style="@style/FieldSeparator" />
 
         <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/pictures_fragment"
             android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
-            android:id="@+id/pictures_fragment" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </ScrollView>
