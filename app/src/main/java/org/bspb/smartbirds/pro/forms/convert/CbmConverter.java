@@ -20,7 +20,8 @@ public class CbmConverter extends Converter {
         addSingle(R.string.tag_distance, "distance");
         addSpecies(R.string.tag_observed_bird, "species");
         add(R.string.tag_count_subject, "count");
-        add(R.string.tag_location, "zone");
+        add(R.string.tag_location, "location");
+        add(R.string.tag_zone, "zone");
     }
 
 }
