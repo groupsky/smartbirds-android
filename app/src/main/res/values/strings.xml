@@ -15,7 +15,7 @@
     <string name="entry_type_birds">Birds</string>
     <string name="entry_type_ciconia">White stork</string>
     <string name="entry_type_herp">Amphibians and reptiles / mammals</string>
-    <string name="entry_type_humid">Humid zones</string>
+    <string name="entry_type_humid">Wetlands zones</string>
     <string name="required_field">Required field</string>
     <string name="monitoring_notification_title">Monitoring</string>
     <string name="monitoring_notification_content">Monitoring started</string>
@@ -222,8 +222,8 @@
     <string name="monitoring_cbm_zone">Zone</string>
     <string name="storage_permission_rationale">Storage permissions are required for map display</string>
     <string name="sum_decimal_number_form_input_plus">Sum | Next</string>
-    <string name="tab_required">Base</string>
-    <string name="tab_optional">Optional</string>
+    <string name="tab_required">Main</string>
+    <string name="tab_optional">Additional</string>
     <string name="no_place_nearby">There are no known places nearby</string>
     <string name="error_cbm_zone_too_far">The zone is more than 5km from the location</string>
 </resources>
