@@ -60,6 +60,7 @@ public class ZoneFormInput extends TextViewFormInput implements SupportStorage {
                     mAdapter.add(new ZoneHolder(Zone.fromCursor(data)));
                 }
                 mAdapter.notifyDataSetChanged();
+                setSelection(new ZoneHolder(getText().toString()));
             }
         }
     };

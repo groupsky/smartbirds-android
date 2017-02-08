@@ -33,6 +33,8 @@ public class Zone {
     @SerializedName("locationId")
     public long locationId;
 
+    private transient Coordinate center;
+
     public static Zone fromCursor(Cursor cursor) {
         String data = cursor.getString(cursor.getColumnIndexOrThrow(ZoneColumns.DATA));
         return new Gson().fromJson(data, Zone.class);
@@ -49,9 +51,26 @@ public class Zone {
 
     public ContentValues toCV() {
         ContentValues cv = new ContentValues();
+        cv.put(ZoneColumns._ID, id);
         cv.put(ZoneColumns.LOCATION_ID, locationId);
         cv.put(ZoneColumns.DATA, new Gson().toJson(this));
         return cv;
+    }
+
+    public Coordinate getCenter() {
+        if (center != null) return center;
+        center = new Coordinate();
+        int cnt = 0;
+        for (Coordinate c : coordinates) {
+            cnt++;
+            center.latitude += c.latitude;
+            center.longitude += c.longitude;
+        }
+        if (cnt > 0) {
+            center.latitude /= cnt;
+            center.longitude /= cnt;
+        }
+        return center;
     }
 
     public static class Coordinate {
