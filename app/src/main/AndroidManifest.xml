@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.bspb.smartbirds.pro">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -56,7 +57,8 @@
             android:label="@string/title_activity_start_monitoring"
             android:parentActivityName=".ui.MainActivity_"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
@@ -65,7 +67,8 @@
             android:name=".ui.MonitoringActivity_"
             android:label="@string/title_activity_monitoring"
             android:parentActivityName=".ui.MainActivity_"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
@@ -83,7 +86,8 @@
             android:label="@string/title_activity_form"
             android:parentActivityName=".ui.MonitoringActivity_"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
@@ -93,7 +97,8 @@
             android:label="@string/title_activity_edit"
             android:parentActivityName=".ui.MonitoringActivity_"
             android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
@@ -101,8 +106,41 @@
 
         <activity
             android:name=".ui.LoginActivity_"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+
+        <activity
+            android:name=".ui.MonitoringListActivity_"
+            android:label="@string/title_monitoring_list"
+            android:parentActivityName=".ui.MainActivity_"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
+        </activity>
+        <activity
+            android:name=".ui.MonitoringDetailActivity_"
+            android:label="@string/title_monitoring_detail"
+            android:parentActivityName=".ui.MonitoringListActivity_"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
+        </activity>
+        <activity
+            android:name=".ui.EditMonitoringEntryActivity_"
+            android:label="@string/title_activity_form"
+            android:parentActivityName=".ui.MonitoringListActivity_"
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
+        </activity>
 
         <service
             android:name=".service.DataService_"

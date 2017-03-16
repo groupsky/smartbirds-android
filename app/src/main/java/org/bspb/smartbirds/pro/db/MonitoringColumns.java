@@ -28,6 +28,9 @@ public interface MonitoringColumns {
     @NotNull
     String CODE = "code";
 
+    /**
+     * {@link org.bspb.smartbirds.pro.content.Monitoring.Status}
+     */
     @DataType(TEXT)
     @NotNull
     String STATUS = "status";

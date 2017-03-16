@@ -18,6 +18,7 @@ import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 import org.bspb.smartbirds.pro.ui.utils.ViewUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by groupsky on 15.12.16.
@@ -167,6 +168,19 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
                 }
             }
 //            addRowIfNone();
+        } finally {
+            isUpdating = false;
+        }
+    }
+
+    public void deserialize(ArrayList<HashMap<String, String>> models) {
+        isUpdating = true;
+        try {
+            clearRows();
+            for (HashMap<String, String> model: models) {
+                FormBirdsRow row = addRow();
+                row.getModel().deserialize(model);
+            }
         } finally {
             isUpdating = false;
         }

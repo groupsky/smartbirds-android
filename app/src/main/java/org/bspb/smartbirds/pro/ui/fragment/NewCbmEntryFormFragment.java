@@ -86,7 +86,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         if (picturesFragment == null) {
             pendingDeserialize = data;
         } else {
-            picturesFragment.deserialize(data);
+            picturesFragment.doDeserialize(data);
         }
     }
 
@@ -99,7 +99,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
             picturesFragment = (NewEntryPicturesFragment) getFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         if (pendingDeserialize != null) {
-            picturesFragment.deserialize(pendingDeserialize);
+            picturesFragment.doDeserialize(pendingDeserialize);
             pendingDeserialize = null;
         }
     }
@@ -136,6 +136,11 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         @Override
         public Fragment build(double lat, double lon) {
             return NewCbmEntryFormFragment_.builder().lat(lat).lon(lon).build();
+        }
+
+        @Override
+        public Fragment load(long id) {
+            return NewCbmEntryFormFragment_.builder().entryId(id).build();
         }
     }
 

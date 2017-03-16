@@ -47,5 +47,10 @@ public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
         public Fragment build(double lat, double lon) {
             return NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).build();
         }
+
+        @Override
+        public Fragment load(long id) {
+            return NewBirdsEntryFormFragment_.builder().entryId(id).build();
+        }
     }
 }

@@ -284,7 +284,11 @@ public class DataService extends Service {
     public void onEvent(EntrySubmitted event) {
         Log.d(TAG, "onEntrySubmitted");
 
-        monitoringManager.newEntry(monitoring, event.entryType, event.data);
+        if (event.entryId > 0) {
+            monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
+        } else {
+            monitoringManager.newEntry(monitoring, event.entryType, event.data);
+        }
     }
 
     private File getEntriesFile(EntryType entryType) {

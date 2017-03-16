@@ -68,6 +68,10 @@ public enum EntryType {
         return builder.build(lat, lon);
     }
 
+    public Fragment loadFragment(long id) {
+        return builder.load(id);
+    }
+
     public static String[] getTitles(Resources resources) {
         final String[] titles = new String[values().length];
         int idx = 0;

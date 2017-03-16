@@ -3,7 +3,9 @@ package org.bspb.smartbirds.pro.ui.utils;
 import android.content.Context;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -36,5 +38,9 @@ public class Configuration {
         STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         STORAGE_TIME_FORMAT = new SimpleDateFormat("kk:mm:ss", Locale.ENGLISH);
         STORAGE_DATE_TIME_FORMAT = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss", Locale.ENGLISH);
+    }
+
+    public static Date parseDateTime(String date, String time) throws ParseException {
+        return STORAGE_DATE_TIME_FORMAT.parse(date + " "+time);
     }
 }

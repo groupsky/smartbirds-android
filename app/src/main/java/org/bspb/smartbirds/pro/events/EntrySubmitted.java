@@ -9,10 +9,14 @@ import java.util.HashMap;
  */
 public class EntrySubmitted {
 
+    public long entryId;
     public HashMap<String, String> data;
     public EntryType entryType;
+    public String monitoringCode;
 
-    public EntrySubmitted(HashMap<String, String> data, EntryType entryType) {
+    public EntrySubmitted(String monitoringCode, long entryId, HashMap<String, String> data, EntryType entryType) {
+        this.monitoringCode = monitoringCode;
+        this.entryId = entryId;
         this.data = data;
         this.entryType = entryType;
     }

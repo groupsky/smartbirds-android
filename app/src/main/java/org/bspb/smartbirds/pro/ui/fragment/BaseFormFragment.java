@@ -18,20 +18,32 @@ public class BaseFormFragment extends Fragment {
     protected static final String KEY_FORM_DATA = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.FORM_DATA";
 
     protected FormUtils.FormModel form;
+    private HashMap<String, String> pendingDeserializeData;
 
     protected boolean isValid() {
         ensureForm();
         return form.validateFields();
     }
 
-    protected void ensureForm() {
-        if (form == null)
-            form = FormUtils.traverseForm(getView());
+    protected boolean ensureForm() {
+        if (form != null) return true;
+        View view = getView();
+        if (view == null) return false;
+        form = FormUtils.traverseForm(view);
+        return true;
     }
 
     protected HashMap<String, String> serialize() {
         ensureForm();
         return form.serialize();
+    }
+
+    protected void doDeserialize(HashMap<String, String> data) {
+        if (ensureForm()) {
+            deserialize(data);
+            return;
+        }
+        pendingDeserializeData = data;
     }
 
     protected void deserialize(HashMap<String, String> data) {
@@ -49,14 +61,20 @@ public class BaseFormFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState != null) onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            onRestoreInstanceState(savedInstanceState);
+        } else if (pendingDeserializeData != null) {
+            doDeserialize(pendingDeserializeData);
+            pendingDeserializeData = null;
+        }
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState.containsKey(KEY_FORM_DATA)) {
             Serializable data = savedInstanceState.getSerializable(KEY_FORM_DATA);
             if (data instanceof HashMap) {
-                deserialize((HashMap<String, String>) data);
+                //noinspection unchecked
+                doDeserialize((HashMap<String, String>) data);
             }
         }
     }
