@@ -44,6 +44,7 @@ import org.bspb.smartbirds.pro.service.NomenclatureService;
 import org.bspb.smartbirds.pro.service.SyncService_;
 import org.bspb.smartbirds.pro.service.UploadService;
 import org.bspb.smartbirds.pro.service.ZoneService;
+import org.bspb.smartbirds.pro.ui.MonitoringListActivity_;
 
 import java.io.File;
 import java.util.Date;
@@ -181,6 +182,11 @@ public class MainFragment extends Fragment {
     void exportBtnClicked() {
         exportDialog = ProgressDialog.show(getActivity(), getString(R.string.export_dialog_title), getString(R.string.export_dialog_text), true);
         ExportService_.intent(getActivity()).prepareForExport().start();
+    }
+
+    @Click(R.id.btn_browse)
+    void browseBtnClicked() {
+        MonitoringListActivity_.intent(this).start();
     }
 
     @Click(R.id.btn_info)

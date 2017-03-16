@@ -49,6 +49,11 @@ public class NewHerpEntryFormFragment extends BaseTabEntryFragment {
         public Fragment build(double lat, double lon) {
             return NewHerpEntryFormFragment_.builder().lat(lat).lon(lon).build();
         }
+
+        @Override
+        public Fragment load(long id) {
+            return NewHerpEntryFormFragment_.builder().entryId(id).build();
+        }
     }
 
 }

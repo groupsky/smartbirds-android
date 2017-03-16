@@ -70,7 +70,7 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
         for (int i = 0; i < adapter.getCount(); i++) {
             Object fragment = adapter.instantiateItem(viewPager, i);
             if (!(fragment instanceof BaseFormFragment)) continue;
-            ((BaseFormFragment) fragment).deserialize(data);
+            ((BaseFormFragment) fragment).doDeserialize(data);
         }
     }
 

@@ -224,4 +224,7 @@
     <string name="tab_optional">Additional</string>
     <string name="no_place_nearby">There are no known places nearby</string>
     <string name="error_cbm_zone_too_far">The zone is more than 5km from the location</string>
+    <string name="main_screen_btn_browse">Browse</string>
+    <string name="title_monitoring_list">Monitorings</string>
+    <string name="title_monitoring_detail">Monitoring Detail</string>
 </resources>

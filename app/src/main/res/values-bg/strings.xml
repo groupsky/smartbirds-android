@@ -216,4 +216,7 @@
     <string name="tab_optional">Допълнителни</string>
     <string name="no_place_nearby">Не са известни населени места наблизо</string>
     <string name="error_cbm_zone_too_far">Площадката е на повече от 5км от позицията</string>
+    <string name="main_screen_btn_browse">Преглед</string>
+    <string name="title_monitoring_list">Наблюдения</string>
+    <string name="title_monitoring_detail">Monitoring Detail</string>
 </resources>

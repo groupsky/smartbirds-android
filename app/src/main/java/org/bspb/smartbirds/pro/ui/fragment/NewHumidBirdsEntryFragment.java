@@ -13,6 +13,7 @@ import org.bspb.smartbirds.pro.ui.views.FormBirdsList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 /**
  * Created by groupsky on 19.12.16.
@@ -32,10 +33,11 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
     }
 
     @Override
-    protected void ensureForm() {
+    protected boolean ensureForm() {
         if (form == null) {
             throw new IllegalStateException("Should not be called with null form!");
         }
+        return true;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
 
     @Override
     protected boolean isValid() {
-        for (FormUtils.FormModel model: birdsList.getModels()) {
+        for (FormUtils.FormModel model : birdsList.getModels()) {
             if (!model.validateFields())
                 return false;
         }
@@ -68,14 +70,40 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
     }
 
     @Override
+    protected void doDeserialize(HashMap<String, String> data) {
+        form = fakeForm;
+        try {
+            super.doDeserialize(data);
+        } finally {
+            form = null;
+        }
+    }
+
+    @Override
+    protected void deserialize(HashMap<String, String> data) {
+        form = fakeForm;
+        try {
+            super.deserialize(data);
+            ArrayList<HashMap<String, String>> models = new ArrayList<>();
+            models.add(data);
+            birdsList.deserialize(models);
+        } finally {
+            form = null;
+        }
+    }
+
+    @Override
     protected void submitData() {
         ArrayList<FormUtils.FormModel> models = birdsList.getModels();
         Calendar entryTime = new GregorianCalendar();
+        if (entryTimestamp != null) {
+            entryTime.setTime(entryTimestamp);
+        }
         entryTime.add(Calendar.SECOND, -models.size());
-        for (FormUtils.FormModel model: models) {
+        for (FormUtils.FormModel model : models) {
             form = model;
-            submitData(serialize(entryTime.getTime()));
             entryTime.add(Calendar.SECOND, 1);
+            submitData(serialize(entryTime.getTime()));
         }
     }
 
@@ -84,6 +112,11 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
         @Override
         public Fragment build(double lat, double lon) {
             return NewHumidBirdsEntryFragment_.builder().lat(lat).lon(lon).build();
+        }
+
+        @Override
+        public Fragment load(long id) {
+            return NewHumidBirdsEntryFragment_.builder().entryId(id).build();
         }
     }
 }

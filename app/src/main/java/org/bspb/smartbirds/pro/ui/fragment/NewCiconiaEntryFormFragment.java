@@ -41,7 +41,7 @@ public class NewCiconiaEntryFormFragment extends BaseEntryFragment {
         if (picturesFragment == null) {
             pendingDeserialize = data;
         } else {
-            picturesFragment.deserialize(data);
+            picturesFragment.doDeserialize(data);
         }
     }
 
@@ -54,7 +54,7 @@ public class NewCiconiaEntryFormFragment extends BaseEntryFragment {
             picturesFragment = (NewEntryPicturesFragment) getFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         if (pendingDeserialize != null) {
-            picturesFragment.deserialize(pendingDeserialize);
+            picturesFragment.doDeserialize(pendingDeserialize);
             pendingDeserialize = null;
         }
     }
@@ -64,6 +64,11 @@ public class NewCiconiaEntryFormFragment extends BaseEntryFragment {
         @Override
         public Fragment build(double lat, double lon) {
             return NewCiconiaEntryFormFragment_.builder().lat(lat).lon(lon).build();
+        }
+
+        @Override
+        public Fragment load(long id) {
+            return NewCiconiaEntryFormFragment_.builder().entryId(id).build();
         }
     }
 

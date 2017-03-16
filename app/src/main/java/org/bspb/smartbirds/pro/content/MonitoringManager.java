@@ -172,6 +172,14 @@ public class MonitoringManager {
         return entry;
     }
 
+    public MonitoringEntry updateEntry(@NonNull String monitoringCode, long entryId, @NonNull EntryType entryType, @NonNull HashMap<String, String> data) {
+        MonitoringEntry entry = new MonitoringEntry(monitoringCode, entryType);
+        entry.data.putAll(data);
+        entry.id = entryId;
+        contentResolver.update(SmartBirdsProvider.Forms.withId(entryId), toContentValues(entry), null, null);
+        return entry;
+    }
+
     public TrackingLocation newTracking(Monitoring monitoring, Location location) {
         TrackingLocation l = new TrackingLocation(monitoring.code, location);
         l.id = parseId(contentResolver.insert(SmartBirdsProvider.Tracking.CONTENT_URI, toContentValues(l)));

@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    tools:context="org.bspb.smartbirds.pro.ui.MonitoringListActivity">
+
+    <!--
+    This layout is a two-pane layout for the Monitorings
+    master/detail flow.
+    
+    -->
+
+    <FrameLayout
+        android:id="@+id/monitoring_list_container"
+        android:name="org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/monitoring_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
+
+</LinearLayout>
