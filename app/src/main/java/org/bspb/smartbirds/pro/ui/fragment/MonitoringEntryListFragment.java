@@ -1,37 +1,29 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.ListFragment;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.InstanceState;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.adapter.ModelCursorAdapter;
 import org.bspb.smartbirds.pro.adapter.ModelCursorFactory;
+import org.bspb.smartbirds.pro.beans.MonitoringCursorEntries;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
-import org.bspb.smartbirds.pro.db.FormColumns;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView;
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_;
-
-import java.util.Locale;
-
-import static android.text.TextUtils.isEmpty;
-import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Forms;
 
 
 /**
@@ -39,31 +31,23 @@ import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Forms;
  */
 
 @EFragment
-public class MonitoringEntryListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MonitoringEntryListFragment extends ListFragment implements MonitoringCursorEntries.Listener {
 
-    private static final String[] PROJECTION = {
-            FormColumns._ID,
-            FormColumns.DATA,
-            FormColumns.TYPE,
-            FormColumns.CODE,
-            FormColumns.LATITUDE,
-            FormColumns.LONGITUDE,
-    };
     private static final String TAG = SmartBirdsApplication.TAG + ".FFormLst";
 
     private CursorAdapter adapter;
 
-    @InstanceState
-    protected String monitoringCode;
+    @Bean
+    MonitoringCursorEntries entries;
 
-    private String lastMonitoringCode;
+    private String monitoringCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
-        adapter = new ModelCursorAdapter<MonitoringEntry>(getActivity(), R.layout.partial_monitoring_entry_list_row, null, new ModelCursorFactory<MonitoringEntry>() {
+        adapter = new ModelCursorAdapter<MonitoringEntry>(getActivity(), R.layout.partial_monitoring_entry_list_row, entries != null ? entries.getCursor() : null, new ModelCursorFactory<MonitoringEntry>() {
             @Override
             public MonitoringEntry createModelFromCursor(Cursor cursor) {
                 return MonitoringManager.entryFromCursor(cursor);
@@ -82,17 +66,13 @@ public class MonitoringEntryListFragment extends ListFragment implements LoaderM
             }
         };
         setListAdapter(adapter);
-        if (!TextUtils.equals(lastMonitoringCode, monitoringCode))
-            getLoaderManager().restartLoader(0, null, this);
     }
 
-    @Override
-    public void onResume() {
-        Log.d(TAG, "onResume");
-        super.onResume();
-
-        if (!TextUtils.equals(lastMonitoringCode, monitoringCode))
-            getLoaderManager().restartLoader(0, null, this);
+    @AfterInject
+    protected void setupLoader() {
+        entries.setMonitoringCode(monitoringCode);
+        entries.setListener(this);
+        if (adapter != null) adapter.swapCursor(entries.getCursor());
     }
 
     @Override
@@ -105,33 +85,15 @@ public class MonitoringEntryListFragment extends ListFragment implements LoaderM
         }
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, String.format(Locale.ENGLISH, "onCreateLoader: %s", monitoringCode));
-        lastMonitoringCode = monitoringCode;
-        return new CursorLoader(getActivity(),
-                isEmpty(monitoringCode) ? Forms.CONTENT_URI : Forms.withMonitoringCode(this.monitoringCode),
-                PROJECTION, null, null, FormColumns._ID + " desc");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        Log.d(TAG, String.format("onLoadFinished: %d", cursor.getCount()));
-        adapter.swapCursor(cursor);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        Log.d(TAG, "onLoaderReset");
-        adapter.swapCursor(null);
-    }
-
     @FragmentArg
     public void setMonitoringCode(String monitoringCode) {
-        if (TextUtils.equals(this.monitoringCode, monitoringCode)) return;
         this.monitoringCode = monitoringCode;
-        if (!TextUtils.equals(lastMonitoringCode, monitoringCode))
-            getLoaderManager().restartLoader(0, null, this);
+        if (entries != null) entries.setMonitoringCode(monitoringCode);
+    }
+
+    @Override
+    public void onMonitoringEntriesChanged(MonitoringCursorEntries entries) {
+        if (adapter != null) adapter.swapCursor(entries.getCursor());
     }
 
     public interface Listener {
