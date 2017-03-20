@@ -84,7 +84,7 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
     @Override
     public void onMonitoringSelected(String monitoringCode) {
         if (mTwoPane) {
-            MonitoringEntryListFragment fragment = MonitoringEntryListFragment_.builder().monitoringCode(monitoringCode).build();
+            MonitoringEntryListFragment fragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
             getFragmentManager().beginTransaction().replace(R.id.monitoring_detail_container, fragment).commit();
         } else {
             MonitoringDetailActivity_.intent(this).start();

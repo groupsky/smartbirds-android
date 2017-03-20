@@ -44,7 +44,7 @@ public class MonitoringDetailActivity extends BaseActivity implements Monitoring
     @AfterViews
     protected void setupFragment() {
         if (fragment == null) {
-            MonitoringEntryListFragment fragment = MonitoringEntryListFragment_.builder().monitoringCode(monitoringCode).build();
+            MonitoringEntryListFragment fragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
             getFragmentManager().beginTransaction()
                     .add(R.id.monitoring_detail_container, fragment)
                     .commit();
