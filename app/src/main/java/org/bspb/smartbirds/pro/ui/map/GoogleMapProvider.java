@@ -62,7 +62,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     private FragmentManager fragmentManager;
-    private BspbMapFragment_ fragment;
+    private BspbMapFragment fragment;
     private double zoomFactor;
     private LatLng lastPosition;
 
@@ -157,7 +157,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     public void showMap() {
         positioned = false;
         if (fragment == null) {
-            fragment = new BspbMapFragment_();
+            fragment = BspbMapFragment_.builder().build();
         }
 
         FragmentTransaction fragTransaction = fragmentManager.beginTransaction();
