@@ -272,6 +272,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     private void showCurrentMap() {
         switch (providerType) {
             case GOOGLE:
+            default:
                 currentMap = googleMap;
                 if (menuMap != null) {
                     menuMap.setEnabled(true);
@@ -283,12 +284,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
                     menuMap.setEnabled(false);
                     menuMap.setTitle(R.string.menu_monitoring_map_normal);
                     menuMapNormal.setChecked(true);
-                }
-                break;
-            default:
-                currentMap = googleMap;
-                if (menuMap != null) {
-                    menuMap.setEnabled(true);
                 }
                 break;
         }
