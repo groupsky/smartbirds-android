@@ -26,6 +26,7 @@ import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.content.TrackingLocation;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -37,6 +38,7 @@ import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
+import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
@@ -368,5 +370,9 @@ public class DataService extends Service {
     public void onEvent(@SuppressWarnings("UnusedParameters") UndoLastEntry event) {
         boolean success = monitoringManager.deleteLastEntry(monitoring);
         if (!success) Log.e(TAG, "could not delete last monitoring entry");
+    }
+
+    public void onEvent(@SuppressWarnings("UnusedParameters") QueryActiveMonitoringEvent event) {
+        bus.postSticky(new ActiveMonitoringEvent(monitoring));
     }
 }

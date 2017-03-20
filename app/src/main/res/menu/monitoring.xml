@@ -117,6 +117,28 @@
         </menu>
     </item>
     <item
+        android:id="@+id/menu_view_type"
+        android:menuCategory="alternative"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/view"
+        app:showAsAction="ifRoom|withText">
+        <menu>
+            <group
+                android:checkableBehavior="single"
+                android:menuCategory="alternative">
+                <item
+                    android:id="@+id/view_type_map"
+                    android:title="@string/map" />
+                <item
+                    android:id="@+id/view_type_list"
+                    android:title="@string/list" />
+                <item
+                    android:id="@+id/view_type_combined"
+                    android:title="@string/combined" />
+            </group>
+        </menu>
+    </item>
+    <item
         android:id="@+id/action_stay_awake"
         android:checkable="true"
         android:checked="false"

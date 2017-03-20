@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
@@ -24,27 +25,33 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
+import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
+import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
+import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
+import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -55,13 +62,16 @@ import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_COMBINED;
+import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_LIST;
+import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
 
 /**
  * Created by dani on 14-11-4.
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity implements ServiceConnection {
+public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -132,6 +142,12 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MenuItem menuCrash;
     @OptionsMenuItem(R.id.action_stay_awake)
     MenuItem menuStayAwake;
+    @OptionsMenuItem(R.id.view_type_map)
+    MenuItem menuViewTypeMap;
+    @OptionsMenuItem(R.id.view_type_list)
+    MenuItem menuViewTypeList;
+    @OptionsMenuItem(R.id.view_type_combined)
+    MenuItem menuViewTypeCombined;
     @InstanceState
     @Nullable
     EntryType entryType = null;
@@ -144,16 +160,46 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @InstanceState
     boolean stayAwake;
 
+    @FragmentById(R.id.list_container)
+    MonitoringEntryListFragment listFragment;
+
+    @InstanceState
+    String monitoringCode;
+
+    @ViewById(R.id.map_container)
+    View mapContainer;
+    @ViewById(R.id.list_container)
+    View listContainer;
+
     @AfterInject
     public void initProviders() {
         googleMap.setFragmentManager(getSupportFragmentManager());
         osmMap.setFragmentManager(getSupportFragmentManager());
+        eventBus.postSticky(new QueryActiveMonitoringEvent());
     }
 
     @AfterViews
     void init() {
         restoreState();
         showCurrentMap();
+        setupList();
+        updateViewType();
+    }
+
+    private void setupList() {
+        if (isEmpty(monitoringCode)) return;
+        if (listFragment == null) {
+            listFragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            getFragmentManager().beginTransaction().replace(R.id.list_container, listFragment).commit();
+        } else {
+            listFragment.setMonitoringCode(monitoringCode);
+        }
+    }
+
+    private void updateViewType() {
+        int viewType = prefs.viewType().get();
+        mapContainer.setVisibility((viewType & VIEWTYPE_MAP) != 0 ? View.VISIBLE : View.GONE);
+        listContainer.setVisibility((viewType & VIEWTYPE_LIST) != 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -176,7 +222,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @Override
     protected void onStart() {
         super.onStart();
-        eventBus.register(this);
+        eventBus.registerSticky(this);
         eventBus.register(osmMap);
         eventBus.register(googleMap);
     }
@@ -255,6 +301,13 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             default:
                 throw new IllegalStateException("Unhandled provider type: " + providerType);
         }
+        int viewType = prefs.viewType().get();
+        switch (viewType){
+            case VIEWTYPE_MAP: menuViewTypeMap.setChecked(true); break;
+            case VIEWTYPE_LIST: menuViewTypeList.setChecked(true); break;
+            case VIEWTYPE_COMBINED: menuViewTypeCombined.setChecked(true); break;
+        }
+
         updateCheckedEntryType(menu);
         menuStayAwake.setChecked(stayAwake);
         return super.onPrepareOptionsMenu(menu);
@@ -305,10 +358,33 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setProviderType(MapProvider.ProviderType.OSM);
     }
 
+    @OptionsItem(R.id.view_type_map)
+    void onViewTypeMap(MenuItem item) {
+        item.setChecked(true);
+        setViewType(VIEWTYPE_MAP);
+    }
+
+    @OptionsItem(R.id.view_type_list)
+    void onViewTypeList(MenuItem item) {
+        item.setChecked(true);
+        setViewType(VIEWTYPE_LIST);
+    }
+
+    @OptionsItem(R.id.view_type_combined)
+    void onViewTypeCombined(MenuItem item) {
+        item.setChecked(true);
+        setViewType(VIEWTYPE_COMBINED);
+    }
+
     public void setProviderType(@NonNull MapProvider.ProviderType providerType) {
         this.providerType = providerType;
         showCurrentMap();
         prefs.providerType().put(providerType.toString());
+    }
+
+    public void setViewType(int viewType) {
+        prefs.viewType().put(viewType);
+        updateViewType();
     }
 
     @OptionsItem(R.id.action_new_entry)
@@ -476,11 +552,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     })
     void setFormType(MenuItem sender) {
         final int senderId = sender.getItemId();
-        for (EntryType entryType: EntryType.values())
-        if (senderId == entryType.menuActionId) {
-            setEntryType(entryType);
-                    return;
-        }
+        for (EntryType entryType : EntryType.values())
+            if (senderId == entryType.menuActionId) {
+                setEntryType(entryType);
+                return;
+            }
     }
 
     public void setEntryType(@Nullable EntryType entryType) {
@@ -517,6 +593,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     public void onEvent(MapLongClickedEvent event) {
         startNewEntryAsking(event.position);
+    }
+
+    public void onEventMainThread(ActiveMonitoringEvent event) {
+        this.monitoringCode = event.monitoring != null ? event.monitoring.code : null;
+        setupList();
     }
 
     void startNewEntryWithoutAsking(final LatLng position) {
@@ -725,5 +806,10 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @Override
     public void onServiceDisconnected(ComponentName name) {
         Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
+    }
+
+    @Override
+    public void onMonitoringEntrySelected(long id, EntryType entryType) {
+        EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
     }
 }

@@ -219,4 +219,8 @@
     <string name="main_screen_btn_browse">Преглед</string>
     <string name="title_monitoring_list">Наблюдения</string>
     <string name="title_monitoring_detail">Monitoring Detail</string>
+    <string name="view">Изглед</string>
+    <string name="map">Карта</string>
+    <string name="list">Списък</string>
+    <string name="combined">Комбинирано</string>
 </resources>

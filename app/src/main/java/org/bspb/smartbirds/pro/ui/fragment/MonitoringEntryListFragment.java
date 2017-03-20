@@ -7,6 +7,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.InstanceState;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.adapter.ModelCursorAdapter;
@@ -25,6 +27,8 @@ import org.bspb.smartbirds.pro.db.FormColumns;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView;
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_;
+
+import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Forms;
@@ -49,8 +53,10 @@ public class MonitoringEntryListFragment extends ListFragment implements LoaderM
 
     private CursorAdapter adapter;
 
-    @FragmentArg
+    @InstanceState
     protected String monitoringCode;
+
+    private String lastMonitoringCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,8 @@ public class MonitoringEntryListFragment extends ListFragment implements LoaderM
             }
         };
         setListAdapter(adapter);
-        getLoaderManager().restartLoader(0, null, this);
+        if (!TextUtils.equals(lastMonitoringCode, monitoringCode))
+            getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
@@ -84,25 +91,27 @@ public class MonitoringEntryListFragment extends ListFragment implements LoaderM
         Log.d(TAG, "onResume");
         super.onResume();
 
-        getLoaderManager().restartLoader(0, null, this);
+        if (!TextUtils.equals(lastMonitoringCode, monitoringCode))
+            getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         MonitoringEntry entry = (MonitoringEntry) getListAdapter().getItem(position);
-        Log.d(TAG, "entry = "+entry);
+        Log.d(TAG, "entry = " + entry);
         if (entry != null && getActivity() instanceof Listener) {
-            ((Listener)getActivity()).onMonitoringEntrySelected(entry.id, entry.type);
+            ((Listener) getActivity()).onMonitoringEntrySelected(entry.id, entry.type);
         }
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "onCreateLoader");
+        Log.d(TAG, String.format(Locale.ENGLISH, "onCreateLoader: %s", monitoringCode));
+        lastMonitoringCode = monitoringCode;
         return new CursorLoader(getActivity(),
                 isEmpty(monitoringCode) ? Forms.CONTENT_URI : Forms.withMonitoringCode(this.monitoringCode),
-                PROJECTION, null, null, null);
+                PROJECTION, null, null, FormColumns._ID + " desc");
     }
 
     @Override
@@ -115,6 +124,14 @@ public class MonitoringEntryListFragment extends ListFragment implements LoaderM
     public void onLoaderReset(Loader<Cursor> loader) {
         Log.d(TAG, "onLoaderReset");
         adapter.swapCursor(null);
+    }
+
+    @FragmentArg
+    public void setMonitoringCode(String monitoringCode) {
+        if (TextUtils.equals(this.monitoringCode, monitoringCode)) return;
+        this.monitoringCode = monitoringCode;
+        if (!TextUtils.equals(lastMonitoringCode, monitoringCode))
+            getLoaderManager().restartLoader(0, null, this);
     }
 
     public interface Listener {
