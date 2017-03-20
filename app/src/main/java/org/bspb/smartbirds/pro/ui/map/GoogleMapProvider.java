@@ -32,6 +32,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
@@ -51,7 +52,9 @@ import org.osmdroid.util.GeoPoint;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dani on 14-11-6.
@@ -59,6 +62,7 @@ import java.util.List;
 @EBean
 public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback {
 
+    private static final String TAG = SmartBirdsApplication.TAG + ".GMap";
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     private FragmentManager fragmentManager;
@@ -68,7 +72,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Bean
     EEventBus eventBus;
-    private ArrayList<MapMarker> markers;
+    private final Set<MarkerHolder> markers = new HashSet<>();
     private ArrayList<LatLng> points;
     private Polyline path;
     private boolean positioned = false;
@@ -127,9 +131,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             }
         });
 
-        if (markers != null && !markers.isEmpty()) {
-            for (MapMarker marker : markers) {
-                addMarker(marker);
+        int cnt = 0;
+        for (MarkerHolder markerHolder : markers) {
+            if (markerHolder.marker == null) {
+                cnt++;
+                markerHolder.marker = addMarker(markerHolder.mapMarker);
             }
         }
 
@@ -219,19 +225,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         return mMap.getMyLocation();
     }
 
-    @Override
-    public void addMarker(MapMarker marker) {
-        if (mMap == null) return;
-        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(marker.getLatitude(), marker.getLongitude())).title(marker.getTitle());
+    private Marker addMarker(MapMarker newMapMarker) {
+        if (mMap == null) return null;
+        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(newMapMarker.getLatitude(), newMapMarker.getLongitude())).title(newMapMarker.getTitle());
         lastMarker = mMap.addMarker(markerOptions);
-    }
-
-    @Override
-    public void removeLastMarker() {
-        if (lastMarker != null) {
-            lastMarker.remove();
-            lastMarker = null;
-        }
+        return lastMarker;
     }
 
     @Override
@@ -245,8 +243,23 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     }
 
     @Override
-    public void setMarkers(ArrayList<MapMarker> markers) {
-        this.markers = markers;
+    public void setMarkers(Iterable<MapMarker> newMapMarkers) {
+        Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
+        MarkerHolder testHolder = new MarkerHolder(null, null);
+        int cnt = 0;
+        for (MapMarker mapMarker: newMapMarkers) {
+            cnt ++;
+            testHolder.mapMarker = mapMarker;
+            toDelete.remove(testHolder);
+            if (this.markers.contains(testHolder)) continue;
+            this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker)));
+        }
+        for (MarkerHolder markerHolder: toDelete) {
+            this.markers.remove(markerHolder);
+            if (markerHolder.marker != null) {
+                markerHolder.marker.remove();
+            }
+        }
     }
 
     @Override
@@ -376,6 +389,32 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             setUpMap();
         } else {
             fragment.getMapAsync(this);
+        }
+    }
+
+    static class MarkerHolder {
+        MapMarker mapMarker;
+        Marker marker;
+
+        public MarkerHolder(MapMarker mapMarker, Marker marker) {
+            this.mapMarker = mapMarker;
+            this.marker = marker;
+        }
+
+        @Override
+        public int hashCode() {
+            return mapMarker.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null) return false;
+
+            if (obj instanceof MarkerHolder) {
+                return mapMarker.equals(((MarkerHolder) obj).mapMarker);
+            }
+            return mapMarker.equals((obj));
         }
     }
 }

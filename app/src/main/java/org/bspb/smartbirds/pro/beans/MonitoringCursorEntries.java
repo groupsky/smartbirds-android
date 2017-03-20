@@ -7,12 +7,16 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.db.FormColumns;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
+
+import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -23,6 +27,7 @@ import static android.text.TextUtils.isEmpty;
 @EBean
 public class MonitoringCursorEntries implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final String TAG = SmartBirdsApplication.TAG + ".MonCurEn";
     private static final String[] PROJECTION = {
             FormColumns._ID,
             FormColumns.DATA,
@@ -66,6 +71,7 @@ public class MonitoringCursorEntries implements LoaderManager.LoaderCallbacks<Cu
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        Log.d(TAG, String.format(Locale.ENGLISH, "loaded %d", cursor.getCount()));
         this.cursor = cursor;
         if (listener != null) listener.onMonitoringEntriesChanged(this);
     }

@@ -47,7 +47,9 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dani on 14-11-6.
@@ -65,7 +67,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Bean
     EEventBus eventBus;
     private ItemizedIconOverlay<OverlayItem> markersOverlay;
-    private ArrayList<MapMarker> markers;
+    private final Set<MarkerHolder> markers = new HashSet<>();
     private ArrayList<LatLng> points;
     private PathOverlay pathOverlay;
 
@@ -89,6 +91,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     private void setUpMap() {
+        if (mMap == null) return;
         mMap.setMultiTouchControls(true);
         mMap.setTileSource(TileSourceFactory.MAPNIK);
         mMap.setBuiltInZoomControls(true);
@@ -124,12 +127,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         loadKmlFile();
 
-        if (markers != null && !markers.isEmpty()) {
-            for (MapMarker mapMarker : markers) {
-                addMarker(mapMarker);
+        for (MarkerHolder markerHolder : markers) {
+            if (markerHolder.marker == null) {
+                markerHolder.marker = addMarker(markerHolder.mapMarker);
             }
         }
-
 
         updateCamera();
     }
@@ -233,9 +235,8 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
 
-    @Override
-    public void addMarker(MapMarker mapMarker) {
-        if (mMap != null) {
+    protected Marker addMarker(MapMarker mapMarker) {
+        if (mMap == null) return null;
             Marker marker = lastMarker = new Marker(mMap);
             marker.setPosition(new GeoPoint(mapMarker.getLatitude(), mapMarker.getLongitude()));
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
@@ -243,16 +244,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             marker.setPanToView(false);
             mMap.getOverlays().add(marker);
             mMap.invalidate();
-        }
-    }
-
-    @Override
-    public void removeLastMarker() {
-        if (lastMarker != null) {
-            mMap.getOverlays().remove(lastMarker);
-            lastMarker = null;
-            mMap.invalidate();
-        }
+            return marker;
     }
 
     @Override
@@ -271,8 +263,21 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     @Override
-    public void setMarkers(ArrayList<MapMarker> markers) {
-        this.markers = markers;
+    public void setMarkers(Iterable<MapMarker> newMapMarkers) {
+        Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
+        MarkerHolder testHolder = new MarkerHolder(null, null);
+        for (MapMarker mapMarker: newMapMarkers) {
+            testHolder.mapMarker = mapMarker;
+            toDelete.remove(testHolder);
+            if (this.markers.contains(testHolder)) continue;
+            this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker)));
+        }
+        for (MarkerHolder markerHolder: toDelete) {
+            this.markers.remove(markerHolder);
+            if (mMap != null && markerHolder.marker != null) {
+                markerHolder.marker.remove(mMap);
+            }
+        }
     }
 
     @Override
@@ -424,6 +429,32 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         public void onDetach(MapView mapView) {
             super.onDetach(mapView);
             bus = null;
+        }
+    }
+
+    static class MarkerHolder {
+        MapMarker mapMarker;
+        Marker marker;
+
+        public MarkerHolder(MapMarker mapMarker, Marker marker) {
+            this.mapMarker = mapMarker;
+            this.marker = marker;
+        }
+
+        @Override
+        public int hashCode() {
+            return mapMarker.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null) return false;
+
+            if (obj instanceof MarkerHolder) {
+                return mapMarker.equals(((MarkerHolder) obj).mapMarker);
+            }
+            return mapMarker.equals((obj));
         }
     }
 }
