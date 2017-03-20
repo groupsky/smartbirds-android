@@ -36,6 +36,9 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.beans.EntriesToMapMarkersConverter;
+import org.bspb.smartbirds.pro.beans.MonitoringModelEntries;
+import org.bspb.smartbirds.pro.collections.IterableConverter;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
@@ -71,13 +74,12 @@ import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener {
+public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
     private static final int REQUEST_NEW_ENTRY = 1001;
 
-    private static final String PREFS_MARKERS = "markers";
     private static final String PREFS_POINTS = "points";
 
     @InstanceState
@@ -91,9 +93,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MapProvider googleMap;
     @Bean(OsmMapProvider.class)
     MapProvider osmMap;
-    @InstanceState
-    @NonNull
-    ArrayList<MapMarker> markers = new ArrayList<MapMarker>();
 
     MapProvider currentMap;
 
@@ -171,11 +170,26 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @ViewById(R.id.list_container)
     View listContainer;
 
+    @Bean
+    MonitoringModelEntries entries;
+    @Bean
+    EntriesToMapMarkersConverter mapMarkerConverter;
+
     @AfterInject
-    public void initProviders() {
+    protected void initProviders() {
         googleMap.setFragmentManager(getSupportFragmentManager());
         osmMap.setFragmentManager(getSupportFragmentManager());
+    }
+
+    @AfterInject
+    protected void fetchMonitoringCode() {
         eventBus.postSticky(new QueryActiveMonitoringEvent());
+    }
+
+    @AfterInject
+    protected void setupEntries() {
+        entries.setListener(this);
+        if (!isEmpty(monitoringCode)) entries.setMonitoringCode(monitoringCode);
     }
 
     @AfterViews
@@ -194,6 +208,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         } else {
             listFragment.setMonitoringCode(monitoringCode);
         }
+        if (entries != null) entries.setMonitoringCode(monitoringCode);
     }
 
     private void updateViewType() {
@@ -342,7 +357,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         }
         currentMap.setPosition(lastPosition);
         currentMap.setZoomFactor(zoomFactor);
-        currentMap.setMarkers(markers);
+        currentMap.setMarkers(getMarkers());
         currentMap.setPath(points);
         currentMap.setMapType(mapType);
         currentMap.showMap();
@@ -404,17 +419,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     void onNewEntry(int resultCode, Intent data) {
         if (resultCode != RESULT_OK)
             return;
-        MapMarker marker = new MapMarker(data.getExtras().getString(NewMonitoringEntryActivity.EXTRA_NAME, getString(R.string.marker_default_title)), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LAT, 0), data.getDoubleExtra(NewMonitoringEntryActivity.EXTRA_LON, 0));
-        addMarker(marker);
-    }
-
-    private void addMarker(MapMarker marker) {
-        markers.add(marker);
-        currentMap.addMarker(marker);
         if (menuUndoEntry != null) {
             menuUndoEntry.setEnabled(true);
         }
-        persistMarkers();
     }
 
     @OptionsItem(R.id.action_finish)
@@ -635,9 +642,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     void undoLastEntry() {
         menuUndoEntry.setEnabled(false);
         eventBus.post(new UndoLastEntry());
-        markers.remove(markers.size() - 1);
-        currentMap.removeLastMarker();
-        persistMarkers();
     }
 
     @OptionsItem(R.id.action_crash)
@@ -675,28 +679,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
             editor.apply();
 
-            persistMarkers();
             persistPoints();
-        }
-    }
-
-    private void persistMarkers() {
-        SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = markersPrefs.edit();
-        editor.clear();
-        try {
-            if (markers.isEmpty()) {
-                monitoringPrefs.markersCount().remove();
-                return;
-            }
-            monitoringPrefs.markersCount().put(markers.size());
-            for (int i = 0; i < markers.size(); i++) {
-                editor.putString("title_" + i, markers.get(i).getTitle());
-                editor.putFloat("lat_" + i, (float) markers.get(i).getLatitude());
-                editor.putFloat("lon_" + i, (float) markers.get(i).getLongitude());
-            }
-        } finally {
-            editor.apply();
         }
     }
 
@@ -753,7 +736,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
         setStayAwake(prefs.stayAwake().get());
 
-        restoreMarkers();
         restorePoints();
     }
 
@@ -773,28 +755,10 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         }
     }
 
-    private void restoreMarkers() {
-        int markersCount = monitoringPrefs.markersCount().get();
-        if (markersCount <= 0) {
-            return;
-        }
-
-        SharedPreferences markersPrefs = getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE);
-
-        markers.clear();
-        for (int i = 0; i < markersCount; i++) {
-            final String title = markersPrefs.getString("title_" + i, "");
-            final double lat = markersPrefs.getFloat("lat_" + i, 0);
-            final double lon = markersPrefs.getFloat("lon_" + i, 0);
-            markers.add(new MapMarker(title, lat, lon));
-        }
-    }
-
     private void clearPrefs() {
         Log.d(TAG, "clearing monitoring prefs");
         canceled = true;
         monitoringPrefs.edit().clear().apply();
-        getSharedPreferences(PREFS_MARKERS, Context.MODE_PRIVATE).edit().clear().apply();
         getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
@@ -812,4 +776,14 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     public void onMonitoringEntrySelected(long id, EntryType entryType) {
         EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
     }
+
+    private Iterable<MapMarker> getMarkers() {
+        return new IterableConverter<>(entries.iterable(), mapMarkerConverter);
+    }
+
+    @Override
+    public void onMonitoringEntriesChanged(MonitoringModelEntries entries) {
+        if (currentMap != null) currentMap.setMarkers(getMarkers());
+    }
+
 }

@@ -42,11 +42,7 @@ public interface MapProvider {
 
     void setPosition(LatLng position);
 
-    void addMarker(MapMarker marker);
-
-    void removeLastMarker();
-
-    void setMarkers(ArrayList<MapMarker> markers);
+    void setMarkers(Iterable<MapMarker> markers);
 
     void setPath(ArrayList<LatLng> points);
 
