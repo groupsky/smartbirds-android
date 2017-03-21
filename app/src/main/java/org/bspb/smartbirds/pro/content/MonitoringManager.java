@@ -1,10 +1,13 @@
 package org.bspb.smartbirds.pro.content;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.location.Location;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -32,6 +35,7 @@ import static android.content.ContentUris.parseId;
 import static java.lang.Double.parseDouble;
 import static org.androidannotations.annotations.EBean.Scope.Singleton;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by groupsky on 05.12.16.
@@ -188,7 +192,7 @@ public class MonitoringManager {
 
     public boolean deleteLastEntry(@NonNull Monitoring monitoring) {
         long rowId;
-        Cursor cursor = contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), new String[] {FormColumns._ID}, null, null, FormColumns._ID+" desc");
+        Cursor cursor = contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), new String[]{FormColumns._ID}, null, null, FormColumns._ID + " desc");
         if (cursor == null) return false;
         try {
             if (!cursor.moveToFirst()) return false;
@@ -197,7 +201,7 @@ public class MonitoringManager {
         } finally {
             cursor.close();
         }
-        return contentResolver.delete(SmartBirdsProvider.Forms.withId(rowId), null, null) == 1;
+        return contentResolver.delete(SmartBirdsProvider.Forms.CONTENT_URI, FormColumns._ID + "=?", new String[]{String.valueOf(rowId)}) == 1;
     }
 
     public Monitoring getMonitoring(@NonNull String monitoringCode) {
@@ -211,7 +215,7 @@ public class MonitoringManager {
     }
 
     public Cursor getEntries(Monitoring monitoring, EntryType entryType) {
-        return contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), ENTRY_PROJECTION, FormColumns.TYPE+"=?", new String[]{entryType.name()}, FormColumns._ID);
+        return contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), ENTRY_PROJECTION, FormColumns.TYPE + "=?", new String[]{entryType.name()}, FormColumns._ID);
     }
 
     public Monitoring getActiveMonitoring() {
@@ -227,8 +231,8 @@ public class MonitoringManager {
 
     public Iterable<String> monitoringCodesForStatus(Monitoring.Status status) {
         Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI,
-                new String[] {MonitoringColumns.CODE},
-                MonitoringColumns.STATUS+"=?", new String[]{status.name()},
+                new String[]{MonitoringColumns.CODE},
+                MonitoringColumns.STATUS + "=?", new String[]{status.name()},
                 MonitoringColumns._ID);
         if (cursor == null) return new ArrayList<>(0);
         try {
@@ -244,14 +248,25 @@ public class MonitoringManager {
 
     public int countMonitoringsForStatus(Monitoring.Status status) {
         Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI,
-                new String[] {MonitoringColumns.CODE},
-                MonitoringColumns.STATUS+"=?", new String[]{status.name()},
+                new String[]{MonitoringColumns.CODE},
+                MonitoringColumns.STATUS + "=?", new String[]{status.name()},
                 MonitoringColumns._ID);
         if (cursor == null) return 0;
         try {
             return cursor.getCount();
         } finally {
             cursor.close();
+        }
+    }
+
+    public void deleteEntries(long[] ids) {
+        ArrayList<ContentProviderOperation> ops = new ArrayList<>(ids.length);
+        for (long id : ids)
+            ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Forms.CONTENT_URI).withSelection(FormColumns._ID + "=?", new String[]{String.valueOf(id)}).build());
+        try {
+            contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, ops);
+        } catch (RemoteException | OperationApplicationException e) {
+            logException(e);
         }
     }
 }

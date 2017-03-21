@@ -1,8 +1,10 @@
 package org.bspb.smartbirds.pro.ui.partial;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.Checkable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +23,7 @@ import java.util.Locale;
  */
 
 @EViewGroup(R.layout.partial_monitoring_entry_list_row)
-public class MonitoringEntryListRowPartialView extends LinearLayout {
+public class MonitoringEntryListRowPartialView extends LinearLayout implements Checkable {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonEnLRPV";
 
@@ -36,6 +38,8 @@ public class MonitoringEntryListRowPartialView extends LinearLayout {
 
     @ViewById(R.id.status)
     TextView statusView;
+
+    private boolean isChecked;
 
     private MonitoringEntry entry;
 
@@ -108,5 +112,26 @@ public class MonitoringEntryListRowPartialView extends LinearLayout {
                 countView.setText("");
                 break;
         }
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        Log.d(TAG, String.format(Locale.ENGLISH, "setChecked: %s", checked));
+        isChecked = checked;
+        if (isChecked) {
+            setBackgroundResource(R.color.backgroundSelected);
+        } else {
+            setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    @Override
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    @Override
+    public void toggle() {
+        setChecked(!isChecked);
     }
 }
