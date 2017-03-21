@@ -127,11 +127,14 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         loadKmlFile();
 
+        boolean needInvalidate = false;
         for (MarkerHolder markerHolder : markers) {
             if (markerHolder.marker == null) {
-                markerHolder.marker = addMarker(markerHolder.mapMarker);
+                markerHolder.marker = addMarker(markerHolder.mapMarker, true);
+                needInvalidate = true;
             }
         }
+        if (needInvalidate) mMap.invalidate();
 
         updateCamera();
     }
@@ -235,16 +238,16 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
 
-    protected Marker addMarker(MapMarker mapMarker) {
+    protected Marker addMarker(MapMarker mapMarker, boolean bulk) {
         if (mMap == null) return null;
-            Marker marker = lastMarker = new Marker(mMap);
-            marker.setPosition(new GeoPoint(mapMarker.getLatitude(), mapMarker.getLongitude()));
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            marker.setTitle(mapMarker.getTitle());
-            marker.setPanToView(false);
-            mMap.getOverlays().add(marker);
-            mMap.invalidate();
-            return marker;
+        Marker marker = lastMarker = new Marker(mMap);
+        marker.setPosition(new GeoPoint(mapMarker.getLatitude(), mapMarker.getLongitude()));
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setTitle(mapMarker.getTitle());
+        marker.setPanToView(false);
+        mMap.getOverlays().add(marker);
+        if (!bulk) mMap.invalidate();
+        return marker;
     }
 
     @Override
@@ -264,20 +267,24 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void setMarkers(Iterable<MapMarker> newMapMarkers) {
+        boolean needInvalidate = false;
         Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
         MarkerHolder testHolder = new MarkerHolder(null, null);
-        for (MapMarker mapMarker: newMapMarkers) {
+        for (MapMarker mapMarker : newMapMarkers) {
             testHolder.mapMarker = mapMarker;
             toDelete.remove(testHolder);
             if (this.markers.contains(testHolder)) continue;
-            this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker)));
+            this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker, true)));
+            needInvalidate = true;
         }
-        for (MarkerHolder markerHolder: toDelete) {
+        for (MarkerHolder markerHolder : toDelete) {
             this.markers.remove(markerHolder);
             if (mMap != null && markerHolder.marker != null) {
                 markerHolder.marker.remove(mMap);
+                needInvalidate = true;
             }
         }
+        if (needInvalidate && mMap != null) mMap.invalidate();
     }
 
     @Override
