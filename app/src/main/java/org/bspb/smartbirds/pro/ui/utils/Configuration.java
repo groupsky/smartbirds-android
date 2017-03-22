@@ -11,7 +11,7 @@ import java.util.Locale;
  */
 public class Configuration {
 
-    public static final String STORAGE_VERSION_CODE = "3";
+    public static final String STORAGE_VERSION_CODE = "4";
 
     public static final String MULTIPLE_CHOICE_DELIMITER = " | ";
     public static final String MULTIPLE_CHOICE_SPLITTER = " *\\| *";

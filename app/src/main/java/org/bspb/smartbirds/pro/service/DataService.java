@@ -39,6 +39,7 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.DataServicePrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.tools.CsvPreparer;
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryConverter;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
@@ -62,6 +63,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
+
+import static org.bspb.smartbirds.pro.tools.CsvPreparer.prepareCsvLine;
 
 @EService
 public class DataService extends Service {
@@ -294,11 +297,13 @@ public class DataService extends Service {
     }
 
     private String[] convertToCsvLines(HashMap<String, String> data) throws IOException {
+        CsvPreparer.PreparedLine prepared = prepareCsvLine(data);
+
         StringWriter memory = new StringWriter();
         try {
             CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(memory).strategy(CSVStrategy.DEFAULT).entryConverter(new SmartBirdsCSVEntryConverter()).build();
-            csvWriter.write(data.keySet().toArray(new String[]{}));
-            csvWriter.write(data.values().toArray(new String[]{}));
+            csvWriter.write(prepared.keys);
+            csvWriter.write(prepared.values);
             memory.flush();
         } finally {
             //noinspection ThrowFromFinallyBlock
@@ -319,7 +324,7 @@ public class DataService extends Service {
     private void flushBuffer() {
         EntrySubmitted event = bufferedEntry;
         if (event == null) return;
-        HashMap<String, String> data = event.data;
+        CsvPreparer.PreparedLine prepared = prepareCsvLine(event.data);
 
         File file = getEntriesFile(event.entryType);
         boolean exists = file.exists();
@@ -329,8 +334,8 @@ public class DataService extends Service {
             try {
 
                 if (!exists)
-                    csvWriter.write(data.keySet().toArray(new String[]{}));
-                csvWriter.write(data.values().toArray(new String[]{}));
+                    csvWriter.write(prepared.keys);
+                csvWriter.write(prepared.values);
 
             } finally {
                 //noinspection ThrowFromFinallyBlock
