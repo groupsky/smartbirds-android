@@ -2,4 +2,7 @@
 <resources>
     <color name="bspb_color">#5086b4</color>
     <color name="backgroundSelected">#775086b4</color>
+    <color name="zone_color">#c33</color>
+    <color name="zone_fill_color">#66cc3333</color>
+    <color name="zone_stroke_color">#b2cc3333</color>
 </resources>

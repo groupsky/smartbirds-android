@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.ui.map;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EEventBus_;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
@@ -57,6 +60,7 @@ import java.util.Set;
 @EBean
 public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
+    private static final String TAG = SmartBirdsApplication.TAG + ".OsmMap";
     private FragmentManager fragmentManager;
     private OsmMapFragment_ fragment;
     private MapView mMap;
@@ -76,6 +80,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private boolean positioned = false;
     private Marker lastMarker;
     private EventsOverlay eventsOverlay;
+    private final ArrayList<Zone> zones = new ArrayList<>();
 
     @Override
     public void setUpMapIfNeeded() {
@@ -113,7 +118,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             for (LatLng point : points) {
                 pathOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
             }
-
         }
 
         eventsOverlay = new EventsOverlay(mMap.getContext(), this);
@@ -127,14 +131,15 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         loadKmlFile();
 
-        boolean needInvalidate = false;
         for (MarkerHolder markerHolder : markers) {
             if (markerHolder.marker == null) {
                 markerHolder.marker = addMarker(markerHolder.mapMarker, true);
-                needInvalidate = true;
             }
         }
-        if (needInvalidate) mMap.invalidate();
+        for (Zone zone: zones) {
+            addZone(zone);
+        }
+        mMap.invalidate();
 
         updateCamera();
     }
@@ -250,6 +255,21 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         return marker;
     }
 
+    protected PathOverlay addZone(Zone zone) {
+        if (mMap == null) return null;
+
+        PathOverlay zoneOverlay = new PathOverlay(mMap.getResources().getColor(R.color.zone_fill_color), mMap.getContext());
+        zoneOverlay.getPaint().setStrokeWidth(1);
+        zoneOverlay.getPaint().setStyle(Paint.Style.FILL);
+        for (Zone.Coordinate point : zone.coordinates) {
+            zoneOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
+        }
+        zoneOverlay.addPoint(new GeoPoint(zone.coordinates.get(0).latitude, zone.coordinates.get(0).longitude));
+
+        mMap.getOverlayManager().add(0, zoneOverlay);
+        return zoneOverlay;
+    }
+
     @Override
     public void setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
@@ -290,6 +310,18 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setPath(ArrayList<LatLng> points) {
         this.points = points;
+    }
+
+    @Override
+    public void setZones(Iterable<Zone> zones) {
+        boolean needInvalidate = false;
+        // we know that zones are not changing, so we just display all zones
+        for (Zone zone: zones) {
+            this.zones.add(zone);
+            addZone(zone);
+            needInvalidate = true;
+        }
+        if (needInvalidate && mMap != null) mMap.invalidate();
     }
 
     @Override
