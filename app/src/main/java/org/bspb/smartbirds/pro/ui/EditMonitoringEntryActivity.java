@@ -1,6 +1,8 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.Fragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -11,6 +13,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
+import org.bspb.smartbirds.pro.service.DataService_;
 
 /**
  * Created by groupsky on 16.03.17.
@@ -27,6 +30,12 @@ public class EditMonitoringEntryActivity extends BaseActivity {
     Fragment fragment;
     @Bean
     EEventBus eventBus;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DataService_.intent(this).start();
+    }
 
     @AfterViews
     protected void setupFragment() {
