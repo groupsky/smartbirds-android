@@ -108,8 +108,8 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
                 break;
             case CICONIA:
                 typeView.setText(R.string.entry_type_ciconia);
-                speciesView.setText("");
-                countView.setText("");
+                speciesView.setText(entry.data.get(context.getString(R.string.tag_substrate_type)));
+                countView.setText(entry.data.get(context.getString(R.string.tag_number_juveniles_in_nest)));
                 break;
         }
     }
