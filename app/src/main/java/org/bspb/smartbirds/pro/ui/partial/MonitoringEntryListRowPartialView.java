@@ -94,7 +94,7 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
                         count = "";
                         break;
                 }
-                countView.setText(entry.data.get(tagBirdsCountType) + " " + count + entry.data.get(context.getString(R.string.tag_count_unit)).toLowerCase(Locale.getDefault()));
+                countView.setText(entry.data.get(tagBirdsCountType) + " " + count + " " + entry.data.get(context.getString(R.string.tag_count_unit)).toLowerCase(Locale.getDefault()));
                 break;
             case CBM:
                 typeView.setText(R.string.entry_type_cbm);
