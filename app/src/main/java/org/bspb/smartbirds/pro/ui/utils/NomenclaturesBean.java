@@ -68,6 +68,7 @@ public class NomenclaturesBean {
     final Loader.OnLoadCompleteListener<Cursor> listener = new Loader.OnLoadCompleteListener<Cursor>() {
         @Override
         public void onLoadComplete(Loader<Cursor> loader, Cursor data) {
+            loading = false;
             cursor = data;
             if (cursor != null)
                 loadData();
@@ -79,9 +80,11 @@ public class NomenclaturesBean {
             return AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel);
         }
     };
+    private boolean loading;
 
     @AfterInject
     void init() {
+        loading = true;
         CursorLoader loader = new CursorLoader(context, Nomenclatures.CONTENT_URI, PROJECTION, null, null, null);
         loader.registerListener(0, listener);
         loader.startLoading();
@@ -200,8 +203,10 @@ public class NomenclaturesBean {
 
     public List<Nomenclature> getNomenclature(String key) {
         key = key.replaceFirst("^form_", "");
-        if (!data.containsKey(key))
+        if (!data.containsKey(key)) {
+            if (loading) throw new IllegalStateException("Still loading");
             throw new IllegalArgumentException("Unknown nomenclature " + key);
+        }
         return data.get(key);
     }
 
