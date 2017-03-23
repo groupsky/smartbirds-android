@@ -211,6 +211,7 @@ public class NomenclaturesBean {
     }
 
     public List<Nomenclature> getRecentNomenclatures(String key) {
+        key = key.replaceFirst("^form_", "");
         List<Nomenclature> nomenclatures = getNomenclature(key);
         Cursor cursor = context.getContentResolver().query(NomenclatureUsesCount.forType(key), new String[]{localeColumn}, null, null, null);
         if (cursor != null) try {
