@@ -21,8 +21,8 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
 import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
-import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
+import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
@@ -107,16 +107,6 @@ public class UploadService extends IntentService {
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
         try {
-            try {
-                uploadOnFtp(monitoringPath, monitoringName);
-            } catch (Throwable t) {
-                logException(t);
-                Toast.makeText(
-                        this,
-                        String.format("Could not upload %s to ftp!\n" +
-                                "It will still be uploaded on smartbirds.org", monitoringName),
-                        Toast.LENGTH_SHORT).show();
-            }
             uploadOnServer(monitoringPath, monitoringName);
             monitoringManager.updateStatus(monitoringName, uploaded);
         } catch (Throwable e) {
@@ -126,6 +116,15 @@ public class UploadService extends IntentService {
                     String.format("Could not upload %s to server!\n" +
                             "You will need to manually export.", monitoringName),
                     Toast.LENGTH_SHORT).show();
+            try {
+                uploadOnFtp(monitoringPath, monitoringName);
+            } catch (Throwable t) {
+                logException(t);
+                Toast.makeText(
+                        this,
+                        String.format("Could not upload %s to ftp!", monitoringName),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
