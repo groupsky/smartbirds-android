@@ -36,8 +36,10 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.beans.EntriesToMapMarkersConverter;
 import org.bspb.smartbirds.pro.beans.MonitoringModelEntries;
+import org.bspb.smartbirds.pro.beans.ZonesModelEntries;
 import org.bspb.smartbirds.pro.collections.IterableConverter;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
@@ -74,7 +76,7 @@ import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener {
+public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, ZonesModelEntries.Listener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -174,6 +176,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MonitoringModelEntries entries;
     @Bean
     EntriesToMapMarkersConverter mapMarkerConverter;
+    @Bean
+    ZonesModelEntries zones;
 
     @AfterInject
     protected void initProviders() {
@@ -190,6 +194,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     protected void setupEntries() {
         entries.setListener(this);
         if (!isEmpty(monitoringCode)) entries.setMonitoringCode(monitoringCode);
+        zones.setListener(this);
     }
 
     @AfterViews
@@ -360,6 +365,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         currentMap.setMarkers(getMarkers());
         currentMap.setPath(points);
         currentMap.setMapType(mapType);
+        currentMap.setZones(getZones());
         currentMap.showMap();
     }
 
@@ -781,9 +787,17 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         return new IterableConverter<>(entries.iterable(), mapMarkerConverter);
     }
 
+    private Iterable<Zone> getZones() {
+        return zones.iterable();
+    }
+
     @Override
     public void onMonitoringEntriesChanged(MonitoringModelEntries entries) {
         if (currentMap != null) currentMap.setMarkers(getMarkers());
     }
 
+    @Override
+    public void onZoneEntriesChanged(ZonesModelEntries entries) {
+        if (currentMap != null) currentMap.setZones(getZones());
+    }
 }

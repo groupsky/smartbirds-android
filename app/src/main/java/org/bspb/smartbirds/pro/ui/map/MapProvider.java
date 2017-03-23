@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.bspb.smartbirds.pro.backend.dto.Zone;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +47,8 @@ public interface MapProvider {
     void setMarkers(Iterable<MapMarker> markers);
 
     void setPath(ArrayList<LatLng> points);
+
+    void setZones(Iterable<Zone> zones);
 
     void updatePath(ArrayList<LatLng> points);
 }
