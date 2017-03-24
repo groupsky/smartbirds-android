@@ -91,7 +91,15 @@ public class UploadService extends IntentService {
                 File monitoringDir = new File(baseDir, monitoringCode);
                 if (!monitoringDir.exists()) continue;
                 if (!monitoringDir.isDirectory()) continue;
-                upload(monitoringDir.getAbsolutePath());
+                upload(monitoringDir.getAbsolutePath(), false);
+            }
+
+            // upload legacy monitorings
+            for (String monitoring : baseDir.list()) {
+                if (!monitoring.endsWith("-up")) continue;
+                File monitoringDir = new File(baseDir, monitoring);
+                if (!monitoringDir.isDirectory()) continue;
+                upload(monitoringDir.getAbsolutePath(), true);
             }
         } finally {
             isUploading = false;
@@ -100,15 +108,20 @@ public class UploadService extends IntentService {
     }
 
     @ServiceAction()
-    void upload(String monitoringPath) {
+    void upload(String monitoringPath, boolean legacy) {
         Log.d(TAG, String.format("uploading %s", monitoringPath));
         File file = new File(monitoringPath);
         String monitoringName = file.getName();
+        if (legacy) monitoringName = monitoringName.replace("-up", "");
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
         try {
             uploadOnServer(monitoringPath, monitoringName);
-            monitoringManager.updateStatus(monitoringName, uploaded);
+            if (legacy) {
+                file.renameTo(new File(monitoringPath.replace("-up", "")));
+            } else {
+                monitoringManager.updateStatus(monitoringName, uploaded);
+            }
         } catch (Throwable e) {
             logException(e);
             Toast.makeText(
