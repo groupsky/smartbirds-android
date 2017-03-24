@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -313,9 +314,23 @@ public class MainFragment extends Fragment {
         return true;
     }
 
+    @Background
     protected void showNotSyncedCount() {
-        File baseDir = getActivity().getExternalFilesDir(null);
         int notSyncedCount = monitoringManager.countMonitoringsForStatus(finished);
+
+        // count legacy monitorings
+        File baseDir = getActivity().getExternalFilesDir(null);
+        for (String monitoring : baseDir.list()) {
+            if (monitoring.endsWith("-up")) {
+                notSyncedCount++;
+            }
+        }
+
+        displayNotSyncedCount(notSyncedCount);
+    }
+
+    @UiThread
+    protected void displayNotSyncedCount(int notSyncedCount) {
         notSyncedCountView.setText(getString(R.string.not_synced_count, notSyncedCount));
     }
 }
