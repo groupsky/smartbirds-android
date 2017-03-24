@@ -70,10 +70,10 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
     }
 
     @Override
-    protected void doDeserialize(HashMap<String, String> data) {
+    protected void doDeserialize(String monitoringCode, HashMap<String, String> data) {
         form = fakeForm;
         try {
-            super.doDeserialize(data);
+            super.doDeserialize(monitoringCode, data);
         } finally {
             form = null;
         }

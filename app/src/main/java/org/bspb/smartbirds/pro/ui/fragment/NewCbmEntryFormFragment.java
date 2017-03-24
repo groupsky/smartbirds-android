@@ -86,7 +86,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         if (picturesFragment == null) {
             pendingDeserialize = data;
         } else {
-            picturesFragment.doDeserialize(data);
+            picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
 
@@ -99,7 +99,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
             picturesFragment = (NewEntryPicturesFragment) getFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         if (pendingDeserialize != null) {
-            picturesFragment.doDeserialize(pendingDeserialize);
+            picturesFragment.doDeserialize(monitoringCode, pendingDeserialize);
             pendingDeserialize = null;
         }
     }

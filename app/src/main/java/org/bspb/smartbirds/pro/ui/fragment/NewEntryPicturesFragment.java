@@ -28,11 +28,15 @@ import org.androidannotations.annotations.ViewsById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.GetImageFile;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
+import org.bspb.smartbirds.pro.events.ImageFileEvent;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static android.text.TextUtils.isEmpty;
 
 /**
  * Created by groupsky on 27.01.17.
@@ -96,6 +100,24 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
             data.put("Picture" + i, images[i] != null ? images[i].fileName : "");
         }
         return data;
+    }
+
+    @Override
+    protected void deserialize(HashMap<String, String> data) {
+        super.deserialize(data);
+        picturesCount = 0;
+        for (int i = 0; i < images.length; i++) {
+            String fileName = data.get("Picture" + i);
+            if (!isEmpty(fileName)) {
+                eventBus.post(new GetImageFile(monitoringCode, fileName));
+            }
+        }
+    }
+
+    public void onEvent(ImageFileEvent event) {
+        images[picturesCount] = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
+        displayPicture(images[picturesCount], pictures.get(picturesCount));
+        picturesCount++;
     }
 
     @OptionsItem(R.id.take_picture)

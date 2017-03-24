@@ -53,7 +53,7 @@ public class NewHerpEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             pendingDeserialize = data;
         } else {
-            picturesFragment.doDeserialize(data);
+            picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
 
@@ -66,7 +66,7 @@ public class NewHerpEntryRequiredFormFragment extends BaseFormFragment {
             picturesFragment = (NewEntryPicturesFragment) getFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         if (pendingDeserialize != null) {
-            picturesFragment.doDeserialize(pendingDeserialize);
+            picturesFragment.doDeserialize(monitoringCode, pendingDeserialize);
             pendingDeserialize = null;
         }
     }
