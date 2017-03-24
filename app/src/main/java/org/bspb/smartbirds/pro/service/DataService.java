@@ -57,6 +57,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.canceled;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
 
@@ -190,7 +191,7 @@ public class DataService extends Service {
 
     public void onEvent(@SuppressWarnings("UnusedParameters") FinishMonitoringEvent event) {
         if (monitoring.commonForm.containsKey(getResources().getString(R.string.end_time_key))) {
-            if (TextUtils.isEmpty(monitoring.commonForm.get(getResources().getString(R.string.end_time_key)))) {
+            if (isEmpty(monitoring.commonForm.get(getResources().getString(R.string.end_time_key)))) {
                 monitoring.commonForm.put(getResources().getString(R.string.end_time_key), Configuration.STORAGE_TIME_FORMAT.format(new Date()));
                 monitoringManager.update(monitoring);
             }
@@ -255,9 +256,12 @@ public class DataService extends Service {
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") CreateImageFile event) {
+        Monitoring monitoring = isEmpty(event.monitoringCode) || (this.monitoring != null && TextUtils.equals(event.monitoringCode, this.monitoring.code)) ?
+                this.monitoring :
+                monitoringManager.getMonitoring(event.monitoringCode);
         // Create an image file name
         int cnt = 100;
-        while (cnt-- > 0) {
+        while (monitoring != null && cnt-- > 0) {
             String index = Integer.toString(monitoring.pictureCounter++);
             monitoringManager.update(monitoring);
             while (index.length() < 4) index = '0' + index;
@@ -265,7 +269,7 @@ public class DataService extends Service {
             File image = new File(createMonitoringDir(monitoring), imageFileName);
             try {
                 if (image.createNewFile()) {
-                    bus.post(new ImageFileCreated(imageFileName, Uri.fromFile(image), image.getAbsolutePath()));
+                    bus.post(new ImageFileCreated(monitoring.code, imageFileName, Uri.fromFile(image), image.getAbsolutePath()));
                     return;
                 }
             } catch (IOException e) {
@@ -273,7 +277,7 @@ public class DataService extends Service {
                 Crashlytics.logException(e);
             }
         }
-        bus.post(new ImageFileCreatedFailed());
+        bus.post(new ImageFileCreatedFailed(monitoring != null ? monitoring.code : null));
     }
 
     public void onEvent(GetImageFile event) {

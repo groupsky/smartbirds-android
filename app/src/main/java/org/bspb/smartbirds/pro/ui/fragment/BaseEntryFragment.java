@@ -86,6 +86,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
      */
     @Nullable
     protected Date entryTimestamp;
+    private boolean haveDeserialized;
 
     protected abstract EntryType getEntryType();
 
@@ -95,7 +96,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         setHasOptionsMenu(true);
 
         if (entryId > 0) {
-            getLoaderManager().restartLoader(0, null, this);
+            getLoaderManager().restartLoader(this.hashCode(), null, this);
         }
     }
 
@@ -122,6 +123,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if (haveDeserialized) return;
         if (!cursor.moveToFirst()) {
             getActivity().finish();
             return;
@@ -144,6 +146,13 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     public void onStop() {
         eventBus.unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void doDeserialize(String monitoringCode, HashMap<String, String> data) {
+        haveDeserialized = true;
+        getLoaderManager().destroyLoader(this.hashCode());
+        super.doDeserialize(monitoringCode, data);
     }
 
     @Override

@@ -7,11 +7,13 @@ import android.net.Uri;
  */
 public class ImageFileCreated {
 
+    public final String monitoringCode;
     public final String imageFileName;
     public final Uri uri;
     public final String imagePath;
 
-    public ImageFileCreated(String imageFileName, Uri uri, String imagePath) {
+    public ImageFileCreated(String monitoringCode, String imageFileName, Uri uri, String imagePath) {
+        this.monitoringCode = monitoringCode;
         this.imageFileName = imageFileName;
         this.uri = uri;
         this.imagePath = imagePath;
