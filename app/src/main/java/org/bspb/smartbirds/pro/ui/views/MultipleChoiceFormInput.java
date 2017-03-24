@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -14,6 +15,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
@@ -22,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
 
 /**
@@ -36,6 +40,9 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
     private final CharSequence key;
     @Bean
     NomenclaturesBean nomenclatures;
+    @Bean
+    EEventBus bus;
+
     /**
      * The position within the adapter's data set of the currently selected item.
      */
@@ -84,8 +91,27 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
         return true;
     }
 
+    public void onEventMainThread(NomenclaturesReadyEvent e) {
+        Log.d(TAG, "nomenclatures loaded, preparing selected...");
+        prepareSelected();
+        try {
+            bus.unregister(this);
+        } catch (Throwable t) {
+            logException(t);
+        }
+    }
+
     void prepareSelected() {
         if (entries == null && key != null) {
+            if (nomenclatures.isLoading()) {
+                Log.d(TAG, "nomenclatures not loaded, waiting to load...");
+                try {
+                    bus.registerSticky(this);
+                } catch (Throwable t) {
+                    logException(t);
+                }
+                return;
+            }
             List<Nomenclature> values = nomenclatures.getNomenclature(key.toString());
             if (values != null) {
                 entries = new CharSequence[values.size()];
