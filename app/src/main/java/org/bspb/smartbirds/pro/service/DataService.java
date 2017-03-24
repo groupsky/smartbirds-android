@@ -281,8 +281,8 @@ public class DataService extends Service {
     }
 
     public void onEvent(GetImageFile event) {
-        File image = new File(DataOpsService_.getMonitoringDir(this, event.monitoringCode), event.fileName);
-        bus.post(new ImageFileEvent(event.monitoringCode, event.fileName, Uri.fromFile(image), image.getAbsolutePath()));
+        File image = new File(DataOpsService_.getMonitoringDir(this, isEmpty(event.monitoringCode) ? monitoring.code : event.monitoringCode), event.fileName);
+        bus.post(new ImageFileEvent(isEmpty(event.monitoringCode) ? monitoring.code : event.monitoringCode, event.fileName, Uri.fromFile(image), image.getAbsolutePath()));
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") GetMonitoringCommonData event) {
