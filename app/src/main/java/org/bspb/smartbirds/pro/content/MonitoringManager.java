@@ -201,7 +201,7 @@ public class MonitoringManager {
         } finally {
             cursor.close();
         }
-        return contentResolver.delete(SmartBirdsProvider.Forms.CONTENT_URI, FormColumns._ID + "=?", new String[]{String.valueOf(rowId)}) == 1;
+        return contentResolver.delete(SmartBirdsProvider.Forms.withId(rowId), null, null) == 1;
     }
 
     public Monitoring getMonitoring(@NonNull String monitoringCode) {
@@ -262,7 +262,7 @@ public class MonitoringManager {
     public void deleteEntries(long[] ids) {
         ArrayList<ContentProviderOperation> ops = new ArrayList<>(ids.length);
         for (long id : ids)
-            ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Forms.CONTENT_URI).withSelection(FormColumns._ID + "=?", new String[]{String.valueOf(id)}).build());
+            ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Forms.withId(id)).build());
         try {
             contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, ops);
         } catch (RemoteException | OperationApplicationException e) {

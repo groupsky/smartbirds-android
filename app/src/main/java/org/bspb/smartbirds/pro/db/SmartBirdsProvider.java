@@ -1,11 +1,22 @@
 package org.bspb.smartbirds.pro.db;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 
 import net.simonvt.schematic.annotation.ContentProvider;
 import net.simonvt.schematic.annotation.ContentUri;
 import net.simonvt.schematic.annotation.InexactContentUri;
+import net.simonvt.schematic.annotation.NotifyDelete;
+import net.simonvt.schematic.annotation.NotifyInsert;
+import net.simonvt.schematic.annotation.NotifyUpdate;
 import net.simonvt.schematic.annotation.TableEndpoint;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MAX_RECENT_USED_VALUES;
 
@@ -71,7 +82,7 @@ public class SmartBirdsProvider {
         public static String[] distance(double lat, double lon) {
             return new String[]{
                     "(lat - " + lat + ")*(lat- " + lat + ") + " +
-                            "(lon - " + lon + ")*(lon - " + lon + ") as "+LocationColumns.DISTANCE};
+                            "(lon - " + lon + ")*(lon - " + lon + ") as " + LocationColumns.DISTANCE};
         }
     }
 
@@ -126,7 +137,7 @@ public class SmartBirdsProvider {
             return buildUri(Path.NOMENCLATURE_USES_COUNT, Path.BY_TYPE, type);
         }
     }
-    
+
     @TableEndpoint(table = SmartBirdsDatabase.ZONES)
     public static class Zones {
         @ContentUri(
@@ -194,9 +205,66 @@ public class SmartBirdsProvider {
                 pathSegment = 2,
                 defaultSort = FormColumns._ID + " DESC",
                 limit = "1"
-            )
+        )
         public static Uri lastWithMonitoringCode(String monitoringCode) {
             return buildUri(Path.FORMS, "last_monitoring", monitoringCode);
+        }
+
+        private static void getNotifyUris(Context context, Uri uri, String where, String[] whereArgs, Collection<Uri> uris) {
+            Set<String> monitoringCodes = new HashSet<>();
+            Cursor c = context.getContentResolver().query(uri, new String[]{FormColumns._ID, FormColumns.CODE}, where, whereArgs, null);
+            if (c != null) try {
+                int idIdx = c.getColumnIndexOrThrow(FormColumns._ID);
+                int codeIdx = c.getColumnIndexOrThrow(FormColumns.CODE);
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    uris.add(withId(c.getLong(codeIdx)));
+                    monitoringCodes.add(c.getString(codeIdx));
+                }
+            } finally {
+                c.close();
+            }
+            for (String monitoringCode : monitoringCodes) {
+                uris.add(withMonitoringCode(monitoringCode));
+            }
+        }
+
+        @NotifyInsert(paths = {
+                Path.FORMS,
+                Path.FORMS + "/monitoring/*",
+        })
+        public static Uri[] onInsert(ContentValues contentValues) {
+            LinkedList<Uri> notifyUris = new LinkedList<>();
+            notifyUris.push(CONTENT_URI);
+            if (contentValues.containsKey(FormColumns.CODE)) {
+                notifyUris.push(withMonitoringCode(contentValues.getAsString(FormColumns.CODE)));
+            }
+            return notifyUris.toArray(new Uri[notifyUris.size()]);
+        }
+
+        @NotifyUpdate(paths = {
+                Path.FORMS,
+                Path.FORMS + "/#",
+                Path.FORMS + "/monitoring/*",
+        })
+        public static Uri[] onUpdate(Context context, Uri uri, String where, String[] whereArgs, ContentValues contentValues) {
+            LinkedList<Uri> notifyUris = new LinkedList<>();
+            notifyUris.push(CONTENT_URI);
+            if (contentValues.containsKey(FormColumns.CODE)) {
+                notifyUris.push(withMonitoringCode(contentValues.getAsString(FormColumns.CODE)));
+            }
+            getNotifyUris(context, uri, where, whereArgs, notifyUris);
+            return notifyUris.toArray(new Uri[notifyUris.size()]);
+        }
+
+        @NotifyDelete(paths = {
+                Path.FORMS + "/#",
+                Path.FORMS + "/monitoring/*",
+        })
+        public static Uri[] onDelete(Context context, Uri uri) {
+            LinkedList<Uri> notifyUris = new LinkedList<>();
+            notifyUris.push(CONTENT_URI);
+            getNotifyUris(context, uri, null, null, notifyUris);
+            return notifyUris.toArray(new Uri[notifyUris.size()]);
         }
     }
 
