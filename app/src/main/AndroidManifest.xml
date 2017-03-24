@@ -185,6 +185,10 @@
         <service
             android:name=".service.SyncService_"
             android:exported="false" />
+
+        <service
+            android:name=".service.DataOpsService_"
+            android:exported="false" />
     </application>
 
 </manifest>

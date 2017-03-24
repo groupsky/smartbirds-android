@@ -2,7 +2,6 @@ package org.bspb.smartbirds.pro.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.IBinder;
@@ -11,9 +10,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.googlecode.jcsv.CSVStrategy;
-import com.googlecode.jcsv.writer.CSVWriter;
-import com.googlecode.jcsv.writer.internal.CSVWriterBuilder;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -22,10 +18,8 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.Monitoring;
-import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.content.TrackingLocation;
-import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
@@ -43,9 +37,7 @@ import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
-import org.bspb.smartbirds.pro.tools.CsvPreparer;
 import org.bspb.smartbirds.pro.tools.GpxWriter;
-import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryConverter;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
@@ -56,19 +48,15 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.canceled;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
-
-import static org.bspb.smartbirds.pro.tools.CsvPreparer.prepareCsvLine;
 
 @EService
 public class DataService extends Service {
@@ -157,18 +145,7 @@ public class DataService extends Service {
     }
 
     private File createMonitoringDir(Monitoring monitoring) {
-        File dir = new File(getExternalFilesDir(null), monitoring.code);
-        if (dir.exists()) return dir;
-        if (dir.mkdirs()) return dir;
-
-        Log.w(TAG, String.format("Cannot create %s", dir));
-        dir = new File(getFilesDir(), monitoring.code);
-        if (dir.exists()) return dir;
-        if (dir.mkdirs()) return dir;
-
-        Log.e(TAG, String.format("Cannot create %s", dir));
-
-        return null;
+        return DataOpsService.createMonitoringDir(this, monitoring);
     }
 
     private boolean initGpxFile() {
@@ -220,67 +197,8 @@ public class DataService extends Service {
         monitoringManager.updateStatus(monitoring, finished);
 
         closeGpxFile();
-        combineCommonWithEntires();
+        DataOpsService_.intent(this).generateMonitoringFiles(monitoring.code).start();
         setMonitoring(null);
-    }
-
-    private void combineCommonWithEntires() {
-        try {
-            EntryType[] types = EntryType.values();
-            for (EntryType entryType : types) {
-                File entriesFile = getEntriesFile(entryType);
-                String[] commonLines = convertToCsvLines(monitoring.commonForm);
-
-                Cursor cursor = monitoringManager.getEntries(monitoring, entryType);
-                if (cursor != null) try {
-                    if (cursor.getCount() == 0) continue;
-                    BufferedWriter outWriter = new BufferedWriter(new FileWriter(entriesFile));
-                    //noinspection TryFinallyCanBeTryWithResources
-                    try {
-                        boolean firstLine = true;
-                        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                            MonitoringEntry entry = MonitoringManager.entryFromCursor(cursor);
-                            String[] lines = convertToCsvLines(entry.data);
-                            if (firstLine) {
-                                outWriter.write(commonLines[0]);
-                                outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
-                                outWriter.write(lines[0]);
-                                outWriter.newLine();
-                                firstLine = false;
-                            }
-                            outWriter.write(commonLines[1]);
-                            outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
-                            outWriter.write(lines[1]);
-                            outWriter.newLine();
-                        }
-                    } finally {
-                        //noinspection ThrowFromFinallyBlock
-                        outWriter.close();
-                    }
-                } finally {
-                    cursor.close();
-                }
-            }
-        } catch (Throwable t) {
-            Crashlytics.logException(t);
-        }
-    }
-
-    private String[] convertToCsvLines(HashMap<String, String> data) throws IOException {
-        CsvPreparer.PreparedLine prepared = prepareCsvLine(data);
-
-        StringWriter memory = new StringWriter();
-        try {
-            CSVWriter<String[]> csvWriter = new CSVWriterBuilder<String[]>(memory).strategy(CSVStrategy.DEFAULT).entryConverter(new SmartBirdsCSVEntryConverter()).build();
-            csvWriter.write(prepared.keys);
-            csvWriter.write(prepared.values);
-            memory.flush();
-        } finally {
-            //noinspection ThrowFromFinallyBlock
-            memory.close();
-        }
-        String commonData = memory.getBuffer().toString();
-        return commonData.split(System.getProperty("line.separator"));
     }
 
     public void onEvent(EntrySubmitted event) {
@@ -288,17 +206,10 @@ public class DataService extends Service {
 
         if (event.entryId > 0) {
             monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
+            DataOpsService_.intent(this).generateMonitoringFiles(event.monitoringCode).start();
         } else {
             monitoringManager.newEntry(monitoring, event.entryType, event.data);
         }
-    }
-
-    private File getEntriesFile(EntryType entryType) {
-        String filename = entryType.filename;
-        File file = new File(createMonitoringDir(monitoring), filename);
-        //noinspection ResultOfMethodCallIgnored
-        file.setReadable(true);
-        return file;
     }
 
     public void onEvent(Location location) {
