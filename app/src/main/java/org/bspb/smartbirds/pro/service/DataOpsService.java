@@ -86,7 +86,11 @@ public class DataOpsService extends AbstractIntentService {
 
                 Cursor cursor = monitoringManager.getEntries(monitoring, entryType);
                 if (cursor != null) try {
-                    if (cursor.getCount() == 0) continue;
+                    if (cursor.getCount() == 0) {
+                        if (entriesFile.exists())
+                            entriesFile.delete();
+                        continue;
+                    }
                     BufferedWriter outWriter = new BufferedWriter(new FileWriter(entriesFile));
                     //noinspection TryFinallyCanBeTryWithResources
                     try {
