@@ -7,12 +7,14 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.bspb.smartbirds.pro.R;
@@ -22,6 +24,8 @@ import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
 import org.bspb.smartbirds.pro.db.NomenclatureUsesCountColumns;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.NomenclatureUsesCount;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 
 import java.io.BufferedInputStream;
@@ -61,6 +65,9 @@ public class NomenclaturesBean {
     @RootContext
     Context context;
 
+    @Bean
+    EEventBus bus;
+
     Cursor cursor;
 
     String localeColumn;
@@ -68,10 +75,10 @@ public class NomenclaturesBean {
     final Loader.OnLoadCompleteListener<Cursor> listener = new Loader.OnLoadCompleteListener<Cursor>() {
         @Override
         public void onLoadComplete(Loader<Cursor> loader, Cursor data) {
-            loading = false;
             cursor = data;
-            if (cursor != null)
+            if (cursor != null) {
                 loadData();
+            }
         }
     };
     private final Comparator<? super Nomenclature> comparator = new Comparator<Nomenclature>() {
@@ -81,6 +88,10 @@ public class NomenclaturesBean {
         }
     };
     private boolean loading;
+
+    public boolean isLoading() {
+        return loading;
+    }
 
     @AfterInject
     void init() {
@@ -93,6 +104,7 @@ public class NomenclaturesBean {
     @Background
     public void loadData() {
         try {
+            Log.d(TAG, "loading data");
             data.clear();
             localeColumn = context.getString(R.string.nomenclature_locale_column);
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -121,6 +133,11 @@ public class NomenclaturesBean {
             for (List<Nomenclature> nomenclatures : data.values()) {
                 Collections.sort(nomenclatures, comparator);
             }
+
+            loading = false;
+            bus.postSticky(new NomenclaturesReadyEvent());
+
+            Log.d(TAG, "data loaded");
         } catch (Throwable t) {
             Crashlytics.logException(t);
         }
@@ -199,7 +216,6 @@ public class NomenclaturesBean {
             throw new IllegalStateException("Missing bundled file " + filename, e);
         }
     }
-
 
     public List<Nomenclature> getNomenclature(String key) {
         key = key.replaceFirst("^form_", "");

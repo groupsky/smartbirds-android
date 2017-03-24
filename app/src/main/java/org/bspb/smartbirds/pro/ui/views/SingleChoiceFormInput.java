@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -23,6 +24,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
@@ -39,6 +42,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
 import static android.widget.AdapterView.INVALID_POSITION;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.ITEM_COUNT_FOR_FILTER;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
@@ -53,6 +57,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
     @Bean
     NomenclaturesBean nomenclatures;
+    @Bean
+    EEventBus bus;
 
     private SmartArrayAdapter<NomenclatureItem> mAdapter;
     /**
@@ -61,6 +67,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     NomenclatureItem mSelectedItem = null;
 
     OnSelectionChangeListener onSelectionChangeListener;
+    private boolean settingSelection;
 
     public SingleChoiceFormInput(Context context) {
         this(context, null);
@@ -85,9 +92,29 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         }
     }
 
+    public void onEventMainThread(NomenclaturesReadyEvent e) {
+        Log.d(TAG, "nomenclatures loaded, loading data...");
+        loadData();
+        setText(getText());
+        try {
+            bus.unregister(this);
+        } catch (Throwable t) {
+            logException(t);
+        }
+    }
+
     @AfterInject
     void loadData() {
         if (key != null && !isInEditMode()) {
+            if (nomenclatures.isLoading()) {
+                Log.d(TAG, "nomenclatures not loaded, waiting to load...");
+                try {
+                    bus.registerSticky(this);
+                } catch (Throwable t) {
+                    logException(t);
+                }
+                return;
+            }
             List<Nomenclature> values = nomenclatures.getNomenclature(key.toString());
             mAdapter.clear();
             for (Nomenclature value : values) {
@@ -127,6 +154,17 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     }
 
     protected void setSelection(NomenclatureItem item) {
+        if (mAdapter == null || mAdapter.getCount() == 0) {
+            if (!settingSelection) {
+                settingSelection = true;
+                try {
+                    setText(item.label);
+                } finally {
+                    settingSelection = false;
+                }
+            }
+            return;
+        }
         // find our item that has nomenclature inside
         if (item != null) {
             int idx = mAdapter.getPosition(item);
@@ -234,7 +272,9 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
             EditText view = null;
             if (needFilter) {
-                final List<Nomenclature> recentItems = nomenclatures.getRecentNomenclatures(key.toString());
+                final List<Nomenclature> recentItems = nomenclatures.isLoading() ?
+                        new ArrayList<Nomenclature>() :
+                        nomenclatures.getRecentNomenclatures(key.toString());
                 if (!recentItems.isEmpty()) {
                     mAdapter.sort(new Comparator<NomenclatureItem>() {
                         @Override
