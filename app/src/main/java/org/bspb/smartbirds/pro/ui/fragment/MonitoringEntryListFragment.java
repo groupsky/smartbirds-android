@@ -29,6 +29,7 @@ import org.bspb.smartbirds.pro.beans.MonitoringCursorEntries;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.service.DataOpsService_;
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView;
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_;
 
@@ -128,6 +129,7 @@ public class MonitoringEntryListFragment extends ListFragment implements Monitor
                             public void onClick(DialogInterface dialog, int which) {
                                 mode.finish();
                                 monitoringManager.deleteEntries(selectedItems);
+                                DataOpsService_.intent(getActivity()).generateMonitoringFiles(monitoringCode).start();
                             }
                         });
                         builder.setNegativeButton(android.R.string.cancel, null);

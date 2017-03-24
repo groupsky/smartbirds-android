@@ -207,7 +207,7 @@ public class MonitoringManager {
     public Monitoring getMonitoring(@NonNull String monitoringCode) {
         Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.withCode(monitoringCode), MONITORING_PROJECTION, null, null, null);
         if (cursor != null) try {
-            return monitoringFromCursor(cursor);
+            return cursor.moveToFirst() ? monitoringFromCursor(cursor) : null;
         } finally {
             cursor.close();
         }
