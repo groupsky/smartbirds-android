@@ -26,9 +26,11 @@ import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
+import org.bspb.smartbirds.pro.events.GetImageFile;
 import org.bspb.smartbirds.pro.events.GetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
+import org.bspb.smartbirds.pro.events.ImageFileEvent;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
@@ -272,6 +274,11 @@ public class DataService extends Service {
             }
         }
         bus.post(new ImageFileCreatedFailed());
+    }
+
+    public void onEvent(GetImageFile event) {
+        File image = new File(DataOpsService_.getMonitoringDir(this, event.monitoringCode), event.fileName);
+        bus.post(new ImageFileEvent(event.monitoringCode, event.fileName, Uri.fromFile(image), image.getAbsolutePath()));
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") GetMonitoringCommonData event) {

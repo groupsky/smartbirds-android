@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
@@ -16,9 +17,15 @@ import java.util.HashMap;
 public class BaseFormFragment extends Fragment {
 
     protected static final String KEY_FORM_DATA = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.FORM_DATA";
+    private static final String KEY_MONITORING_CODE = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.MONITORING_FORM";
 
     protected FormUtils.FormModel form;
     private HashMap<String, String> pendingDeserializeData;
+    /**
+     * Available only when loaded from storage
+     */
+    @Nullable
+    protected String monitoringCode;
 
     protected boolean isValid() {
         ensureForm();
@@ -38,7 +45,8 @@ public class BaseFormFragment extends Fragment {
         return form.serialize();
     }
 
-    protected void doDeserialize(HashMap<String, String> data) {
+    protected void doDeserialize(String monitoringCode, HashMap<String, String> data) {
+        this.monitoringCode = monitoringCode;
         if (ensureForm()) {
             deserialize(data);
             return;
@@ -55,6 +63,7 @@ public class BaseFormFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         ensureForm();
+        outState.putString(KEY_MONITORING_CODE, monitoringCode);
         outState.putSerializable(KEY_FORM_DATA, serialize());
     }
 
@@ -64,17 +73,21 @@ public class BaseFormFragment extends Fragment {
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         } else if (pendingDeserializeData != null) {
-            doDeserialize(pendingDeserializeData);
+            doDeserialize(monitoringCode, pendingDeserializeData);
             pendingDeserializeData = null;
         }
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        String monitoringCode = null;
+        if (savedInstanceState.containsKey(KEY_MONITORING_CODE)) {
+            monitoringCode = savedInstanceState.getString(KEY_MONITORING_CODE);
+        }
         if (savedInstanceState.containsKey(KEY_FORM_DATA)) {
             Serializable data = savedInstanceState.getSerializable(KEY_FORM_DATA);
             if (data instanceof HashMap) {
                 //noinspection unchecked
-                doDeserialize((HashMap<String, String>) data);
+                doDeserialize(monitoringCode, (HashMap<String, String>) data);
             }
         }
     }

@@ -86,11 +86,6 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
      */
     @Nullable
     protected Date entryTimestamp;
-    /**
-     * Available only when loaded from storage
-     */
-    @Nullable
-    private String monitoringCode;
 
     protected abstract EntryType getEntryType();
 
@@ -136,8 +131,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
             getActivity().finish();
             return;
         }
-        monitoringCode = entry.monitoringCode;
-        doDeserialize(entry.data);
+        doDeserialize(entry.monitoringCode, entry.data);
     }
 
     @Override

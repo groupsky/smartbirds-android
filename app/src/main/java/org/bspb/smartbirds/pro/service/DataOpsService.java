@@ -47,13 +47,17 @@ public class DataOpsService extends AbstractIntentService {
         super("DataOpsService");
     }
 
+    public static File getMonitoringDir(Context context, String monitoringCode) {
+        return new File(context.getExternalFilesDir(null), monitoringCode);
+    }
+
     public static File createMonitoringDir(Context context, Monitoring monitoring) {
-        File dir = new File(context.getExternalFilesDir(null), monitoring.code);
+        File dir = getMonitoringDir(context, monitoring.code);
         if (dir.exists()) return dir;
         if (dir.mkdirs()) return dir;
 
         Log.w(TAG, String.format("Cannot create %s", dir));
-        dir = new File(context.getFilesDir(), monitoring.code);
+        dir = getMonitoringDir(context, monitoring.code);
         if (dir.exists()) return dir;
         if (dir.mkdirs()) return dir;
 
