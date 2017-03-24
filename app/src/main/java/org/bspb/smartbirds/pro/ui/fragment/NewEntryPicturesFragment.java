@@ -10,12 +10,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -26,6 +28,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewsById;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.CreateImageFile;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.GetImageFile;
@@ -35,6 +38,7 @@ import org.bspb.smartbirds.pro.events.ImageFileEvent;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -45,6 +49,8 @@ import static android.text.TextUtils.isEmpty;
 @EFragment(R.layout.fragment_form_pictures)
 @OptionsMenu(R.menu.form_pictures)
 public class NewEntryPicturesFragment extends BaseFormFragment {
+
+    private static final String TAG = SmartBirdsApplication.TAG + ".PicFrm";
 
     protected static final Intent INTENT_TAKE_PICTURE = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     protected static final Intent INTENT_VIEW_PICTURE = new Intent(Intent.ACTION_VIEW);
@@ -63,7 +69,6 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     protected ImageStruct[] images = new ImageStruct[3];
     @InstanceState
     protected ImageStruct currentImage;
-    @InstanceState
     protected int picturesCount = 0;
 
     @Override
@@ -72,14 +77,24 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         setHasOptionsMenu(true);
     }
 
+    @AfterInject
+    protected void registerBus() {
+        eventBus.register(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (eventBus != null) registerBus();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-        eventBus.register(this);
 
-        for (int i=0; i<pictures.size(); i++) {
+        for (int i = 0; i < pictures.size(); i++) {
             pictures.get(i).setVisibility(i < picturesCount ? View.VISIBLE : View.GONE);
-            if (i <picturesCount) {
+            if (i < picturesCount) {
                 displayPicture(images[i], pictures.get(i));
             } else {
                 hidePicture(pictures.get(i));
@@ -89,12 +104,18 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
 
     @Override
     public void onStop() {
-        eventBus.unregister(this);
         super.onStop();
     }
 
     @Override
+    public void onDetach() {
+        eventBus.unregister(this);
+        super.onDetach();
+    }
+
+    @Override
     protected HashMap<String, String> serialize() {
+        Log.d(TAG, String.format(Locale.ENGLISH, "serializing: %d", picturesCount));
         HashMap<String, String> data = super.serialize();
         for (int i = 0; i < images.length; i++) {
             data.put("Picture" + i, images[i] != null ? images[i].fileName : "");
@@ -105,6 +126,7 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
+        Log.d(TAG, String.format(Locale.ENGLISH, "deserializing: %d", picturesCount));
         picturesCount = 0;
         for (int i = 0; i < images.length; i++) {
             String fileName = data.get("Picture" + i);
@@ -114,9 +136,9 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         }
     }
 
-    public void onEvent(ImageFileEvent event) {
+    public void onEventMainThread(ImageFileEvent event) {
         images[picturesCount] = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
-        displayPicture(images[picturesCount], pictures.get(picturesCount));
+        if (pictures != null) displayPicture(images[picturesCount], pictures.get(picturesCount));
         picturesCount++;
     }
 
@@ -127,15 +149,15 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         }
         if (INTENT_TAKE_PICTURE.resolveActivity(getActivity().getPackageManager()) != null) {
             item.setEnabled(false);
-            eventBus.post(new CreateImageFile());
+            eventBus.post(new CreateImageFile(monitoringCode));
         }
     }
 
-    public void onEvent(ImageFileCreatedFailed event) {
+    public void onEventMainThread(@SuppressWarnings("UnusedParameters") ImageFileCreatedFailed event) {
         Toast.makeText(getActivity(), R.string.image_file_create_error, Toast.LENGTH_SHORT).show();
     }
 
-    public void onEvent(ImageFileCreated event) {
+    public void onEventMainThread(ImageFileCreated event) {
         currentImage = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
         Intent intent = new Intent(INTENT_TAKE_PICTURE).putExtra(MediaStore.EXTRA_OUTPUT, event.uri);
         startActivityForResult(intent, REQUEST_TAKE_PICTURE);
@@ -153,10 +175,15 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     @OnActivityResult(REQUEST_TAKE_PICTURE)
     void onTakePictureResult(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
-            images[picturesCount] = currentImage;
-            currentImage = null;
-            displayPicture(images[picturesCount], pictures.get(picturesCount));
-            picturesCount++;
+            getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    images[picturesCount] = currentImage;
+                    currentImage = null;
+                    displayPicture(images[picturesCount], pictures.get(picturesCount));
+                    picturesCount++;
+                }
+            });
         } else {
             currentImage = null;
         }
