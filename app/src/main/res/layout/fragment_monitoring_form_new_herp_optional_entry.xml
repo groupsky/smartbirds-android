@@ -39,15 +39,15 @@
 
         <TableRow>
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:hint="@string/monitoring_herp_t_substrate"
                 android:tag="@string/tag_t_substrate" />
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:hint="@string/monitoring_herp_t_vha"
                 android:tag="@string/tag_t_air" />
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:hint="@string/monitoring_herp_t_kloaka"
                 android:tag="@string/tag_t_cloaca" />
         </TableRow>
