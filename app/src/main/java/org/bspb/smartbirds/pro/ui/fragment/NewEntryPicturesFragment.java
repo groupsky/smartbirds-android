@@ -187,7 +187,9 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         } else {
             currentImage = null;
         }
-        takePicture.setEnabled(picturesCount < pictures.size());
+        if (takePicture != null) {
+            takePicture.setEnabled(picturesCount < pictures.size());
+        }
     }
 
     void displayPicture(ImageStruct image, ImageView picture) {
