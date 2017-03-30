@@ -253,8 +253,16 @@ public class UploadService extends IntentService {
 
                     Call<ResponseBody> call = uploader.upload(backend.api(), data);
                     Response<ResponseBody> response = call.execute();
-                    if (!response.isSuccessful())
-                        throw new IOException("Couldn't upload form");
+                    if (!response.isSuccessful()) {
+                        String error = "";
+                        try {
+                            error += response.code() + ": " + response.message();
+                            error += "\n" + response.errorBody().string();
+                        } catch (Throwable t) {
+                            logException(t);
+                        }
+                        throw new IOException("Couldn't upload form: " + error);
+                    }
                 }
             } finally {
                 csvReader.close();
