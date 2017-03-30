@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -38,6 +37,8 @@ import java.util.Map;
 import static android.app.Dialog.BUTTON_NEGATIVE;
 import static android.app.Dialog.BUTTON_NEUTRAL;
 import static android.app.Dialog.BUTTON_POSITIVE;
+import static android.text.TextUtils.isEmpty;
+import static android.text.TextUtils.join;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
@@ -118,6 +119,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
             List<Nomenclature> values = nomenclatures.getNomenclature(key.toString());
             mAdapter.clear();
             for (Nomenclature value : values) {
+                if (isEmpty(value.localeLabel)) continue;
                 mAdapter.add(new NomenclatureItem(value));
             }
             mAdapter.notifyDataSetChanged();
@@ -404,7 +406,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         }
 
         private String prepare(String label) {
-            return TextUtils.join("\n", label.trim().split(MULTIPLE_CHOICE_SPLITTER));
+            if (isEmpty(label)) return "";
+            return join("\n", label.trim().split(MULTIPLE_CHOICE_SPLITTER));
         }
 
 
