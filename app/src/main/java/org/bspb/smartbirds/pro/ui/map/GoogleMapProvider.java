@@ -180,6 +180,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void updateCamera() {
+        if (mMap == null) return;
         try {
             if (zoomFactor > 0) {
                 mMap.getUiSettings().setAllGesturesEnabled(false);
