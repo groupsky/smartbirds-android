@@ -26,4 +26,9 @@ public class DateConverter extends DateTimeConverter {
             return STORAGE_DATE_FORMAT.parse(dateValue);
         }
     }
+
+    @Override
+    public String toString() {
+        return "DateConverter{} " + super.toString();
+    }
 }

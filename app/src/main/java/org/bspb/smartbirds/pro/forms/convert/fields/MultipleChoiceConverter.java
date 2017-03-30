@@ -37,4 +37,13 @@ public class MultipleChoiceConverter implements FieldConverter {
         usedCsvFields.add(csvField);
         usedCsvFields.add(csvField + ".json");
     }
+
+    @Override
+    public String toString() {
+        return "MultipleChoiceConverter{" +
+                "locale='" + locale + '\'' +
+                ", csvField='" + csvField + '\'' +
+                ", jsonField='" + jsonField + '\'' +
+                '}';
+    }
 }

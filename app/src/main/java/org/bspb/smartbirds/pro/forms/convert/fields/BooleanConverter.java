@@ -27,4 +27,12 @@ public class BooleanConverter implements FieldConverter {
         }
         usedCsvFields.add(csvField);
     }
+
+    @Override
+    public String toString() {
+        return "BooleanConverter{" +
+                "csvField='" + csvField + '\'' +
+                ", jsonField='" + jsonField + '\'' +
+                '}';
+    }
 }

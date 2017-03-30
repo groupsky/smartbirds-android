@@ -99,7 +99,11 @@ public abstract class Converter {
         JsonObject result = new JsonObject();
         HashSet<String> usedCsvColumns = new HashSet<>();
         for (FieldConverter converter : fieldConverters) {
-            converter.convert(csv, result, usedCsvColumns);
+            try {
+                converter.convert(csv, result, usedCsvColumns);
+            } catch (Throwable t) {
+                throw new RuntimeException("Converter "+converter+" failed: "+t.getMessage(), t);
+            }
         }
 
         Set<String> unusedColumns = new HashSet<>(csv.keySet());

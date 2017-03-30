@@ -49,4 +49,13 @@ public class SingleChoiceConverter implements FieldConverter {
         usedCsvFields.add(csvField + ".bg");
         usedCsvFields.add(csvField + ".en");
     }
+
+    @Override
+    public String toString() {
+        return "SingleChoiceConverter{" +
+                "locale='" + locale + '\'' +
+                ", csvField='" + csvField + '\'' +
+                ", jsonField='" + jsonField + '\'' +
+                '}';
+    }
 }
