@@ -123,17 +123,22 @@ public class MainFragment extends Fragment {
             return false;
         }
         if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
-            Snackbar.make(notSyncedCountView, R.string.storage_permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+            try {
+                Snackbar.make(notSyncedCountView, R.string.storage_permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(android.R.string.ok, new View.OnClickListener() {
+                            @Override
+                            @TargetApi(Build.VERSION_CODES.M)
+                            public void onClick(View v) {
+                                requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+                            }
+                        });
+                return false;
+            } catch (Throwable t) {
+                // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
+                logException(t);
+            }
         }
+        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
         return false;
     }
 
@@ -146,17 +151,22 @@ public class MainFragment extends Fragment {
             return false;
         }
         if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
-            Snackbar.make(notSyncedCountView, R.string.monitoring_permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+            try {
+                Snackbar.make(notSyncedCountView, R.string.monitoring_permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(android.R.string.ok, new View.OnClickListener() {
+                            @Override
+                            @TargetApi(Build.VERSION_CODES.M)
+                            public void onClick(View v) {
+                                requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+                            }
+                        });
+                return false;
+            } catch (Throwable t) {
+                // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
+                logException(t);
+            }
         }
+        requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
         return false;
     }
 
@@ -165,7 +175,7 @@ public class MainFragment extends Fragment {
         switch (requestCode) {
             case REQUEST_LOCATION:
             case REQUEST_STORAGE:
-                for (int grantResult: grantResults)
+                for (int grantResult : grantResults)
                     if (grantResult != PERMISSION_GRANTED)
                         break;
                 startBirdsClicked();
