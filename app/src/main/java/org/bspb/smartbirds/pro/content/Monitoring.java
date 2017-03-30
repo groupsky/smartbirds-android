@@ -16,7 +16,13 @@ import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 public class Monitoring {
 
     public enum Status {
-        wip, finished, uploaded, canceled
+        wip ("wip"), finished("up"), uploaded(null), canceled("cancel");
+
+        public final String legacySuffix;
+
+        Status(String legacySuffix) {
+            this.legacySuffix = legacySuffix;
+        }
     }
 
     public long id;

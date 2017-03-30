@@ -47,7 +47,6 @@ import org.bspb.smartbirds.pro.service.UploadService;
 import org.bspb.smartbirds.pro.service.ZoneService;
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_;
 
-import java.io.File;
 import java.util.Date;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -316,16 +315,7 @@ public class MainFragment extends Fragment {
 
     @Background
     protected void showNotSyncedCount() {
-        int notSyncedCount = monitoringManager.countMonitoringsForStatus(finished);
-
-        // count legacy monitorings
-        File baseDir = getActivity().getExternalFilesDir(null);
-        for (String monitoring : baseDir.list()) {
-            if (monitoring.endsWith("-up")) {
-                notSyncedCount++;
-            }
-        }
-
+        final int notSyncedCount = monitoringManager.countMonitoringsForStatus(finished);
         displayNotSyncedCount(notSyncedCount);
     }
 
