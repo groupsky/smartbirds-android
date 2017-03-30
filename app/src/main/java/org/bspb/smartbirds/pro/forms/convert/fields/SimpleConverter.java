@@ -25,4 +25,13 @@ public class SimpleConverter implements FieldConverter {
         json.addProperty(jsonField, value);
         usedCsvFields.add(csvField);
     }
+
+    @Override
+    public String toString() {
+        return "SimpleConverter{" +
+                "csvField='" + csvField + '\'' +
+                ", jsonField='" + jsonField + '\'' +
+                ", defaultValue='" + defaultValue + '\'' +
+                '}';
+    }
 }

@@ -43,7 +43,7 @@ public class DateTimeConverter implements FieldConverter {
         if (TextUtils.isEmpty(dateValue) && TextUtils.isEmpty(timeValue)) {
             return null;
         } else {
-            return STORAGE_DATE_TIME_FORMAT.parse(dateValue+" "+timeValue);
+            return STORAGE_DATE_TIME_FORMAT.parse(dateValue + " " + timeValue);
         }
     }
 
@@ -59,5 +59,14 @@ public class DateTimeConverter implements FieldConverter {
 
             json.addProperty(jsonField, result);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "DateTimeConverter{" +
+                "csvDateField='" + csvDateField + '\'' +
+                ", csvTimeField='" + csvTimeField + '\'' +
+                ", jsonField='" + jsonField + '\'' +
+                '}';
     }
 }

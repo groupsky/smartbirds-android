@@ -37,4 +37,13 @@ public class SpeciesConverter implements FieldConverter {
         usedCsvFields.add(csvField + ".bg");
         usedCsvFields.add(csvField + ".en");
     }
+
+    @Override
+    public String toString() {
+        return "SpeciesConverter{" +
+                "locale='" + locale + '\'' +
+                ", csvField='" + csvField + '\'' +
+                ", jsonField='" + jsonField + '\'' +
+                '}';
+    }
 }
