@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,6 +58,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by dani on 14-11-6.
@@ -139,7 +142,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                 markerHolder.marker = addMarker(markerHolder.mapMarker);
             }
         }
-        for (Zone zone: zones) {
+        for (Zone zone : zones) {
             addZone(zone);
         }
 
@@ -177,29 +180,39 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void updateCamera() {
-        if (zoomFactor > 0) {
-            mMap.getUiSettings().setAllGesturesEnabled(false);
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-            mMap.getUiSettings().setZoomControlsEnabled(false);
+        try {
+            if (zoomFactor > 0) {
+                mMap.getUiSettings().setAllGesturesEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mMap.getUiSettings().setZoomControlsEnabled(false);
 
-            if (lastPosition == null) return;
+                if (lastPosition == null) return;
 
-            LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
-            LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
-            if (positioned) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
+                LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
+                LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
+                CameraUpdate cameraUpdate;
+                if (southwest.equals(northeast)) {
+                    cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lastPosition.latitude, lastPosition.longitude), 16);
+                } else {
+                    cameraUpdate = CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16);
+                }
+                if (!positioned) {
+                    positioned = true;
+                    mMap.animateCamera(cameraUpdate);
+                } else {
+                    mMap.moveCamera(cameraUpdate);
+                }
             } else {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(southwest, northeast), 16));
+                mMap.getUiSettings().setAllGesturesEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                if (!positioned && lastPosition != null) {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastPosition, 16));
+                    positioned = true;
+                }
             }
-            positioned = true;
-        } else {
-            mMap.getUiSettings().setAllGesturesEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            mMap.getUiSettings().setZoomControlsEnabled(true);
-            if (!positioned && lastPosition != null) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastPosition, 16));
-                positioned = true;
-            }
+        } catch (Throwable t) {
+            logException(t);
         }
     }
 
@@ -266,14 +279,14 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
         MarkerHolder testHolder = new MarkerHolder(null, null);
         int cnt = 0;
-        for (MapMarker mapMarker: newMapMarkers) {
-            cnt ++;
+        for (MapMarker mapMarker : newMapMarkers) {
+            cnt++;
             testHolder.mapMarker = mapMarker;
             toDelete.remove(testHolder);
             if (this.markers.contains(testHolder)) continue;
             this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker)));
         }
-        for (MarkerHolder markerHolder: toDelete) {
+        for (MarkerHolder markerHolder : toDelete) {
             this.markers.remove(markerHolder);
             if (markerHolder.marker != null) {
                 markerHolder.marker.remove();
@@ -288,7 +301,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void setZones(Iterable<Zone> zones) {
-        for (Zone zone: zones) {
+        for (Zone zone : zones) {
             this.zones.add(zone);
             addZone(zone);
         }
