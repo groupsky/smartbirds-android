@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * A login screen that offers login via email/password.
@@ -116,17 +117,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return false;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.login_permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+            try {
+                Snackbar.make(mEmailView, R.string.login_permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(android.R.string.ok, new View.OnClickListener() {
+                            @Override
+                            @TargetApi(Build.VERSION_CODES.M)
+                            public void onClick(View v) {
+                                requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+                            }
+                        });
+                return false;
+            } catch (Throwable t) {
+                // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
+                logException(t);
+            }
         }
+        requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
         return false;
     }
 
