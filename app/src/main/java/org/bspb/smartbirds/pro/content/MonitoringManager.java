@@ -21,6 +21,7 @@ import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
 import org.bspb.smartbirds.pro.db.TrackingColumns;
 import org.bspb.smartbirds.pro.enums.EntryType;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 import static android.content.ContentUris.parseId;
+import static android.text.TextUtils.isEmpty;
 import static java.lang.Double.parseDouble;
 import static org.androidannotations.annotations.EBean.Scope.Singleton;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
@@ -66,9 +68,11 @@ public class MonitoringManager {
     static String tagLongitude;
 
     ContentResolver contentResolver;
+    Context rootContext;
 
     public MonitoringManager(Context context) {
-        this.contentResolver = context.getApplicationContext().getContentResolver();
+        this.rootContext = context.getApplicationContext();
+        this.contentResolver = rootContext.getContentResolver();
     }
 
     @NonNull
@@ -247,16 +251,51 @@ public class MonitoringManager {
     }
 
     public int countMonitoringsForStatus(Monitoring.Status status) {
-        Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI,
-                new String[]{MonitoringColumns.CODE},
-                MonitoringColumns.STATUS + "=?", new String[]{status.name()},
-                MonitoringColumns._ID);
-        if (cursor == null) return 0;
+        int count = 0;
+
+        // count legacy monitorings
         try {
-            return cursor.getCount();
-        } finally {
-            cursor.close();
+            File baseDir = rootContext.getExternalFilesDir(null);
+            for (String monitoring : baseDir.list()) {
+                if (!isEmpty(status.legacySuffix)) {
+                    if (monitoring.endsWith('-' + status.legacySuffix)) {
+                        count++;
+                    }
+                } else {
+                    boolean match = true;
+                    for (Monitoring.Status s : Monitoring.Status.values()) {
+                        if (s.equals(status)) continue;
+                        if (isEmpty(s.legacySuffix)) continue;
+                        if (monitoring.endsWith('-' + s.legacySuffix)) {
+                            match = false;
+                            break;
+                        }
+                    }
+                    if (match) count++;
+                }
+            }
+        } catch (Throwable t) {
+            logException(t);
         }
+
+
+        // count db monitorings
+        try {
+            Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI,
+                    new String[]{MonitoringColumns.CODE},
+                    MonitoringColumns.STATUS + "=?", new String[]{status.name()},
+                    MonitoringColumns._ID);
+            if (cursor != null)
+                try {
+                    count += cursor.getCount();
+                } finally {
+                    cursor.close();
+                }
+        } catch (Throwable t) {
+            logException(t);
+        }
+
+        return count;
     }
 
     public void deleteEntries(long[] ids) {
