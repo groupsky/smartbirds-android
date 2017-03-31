@@ -11,6 +11,8 @@
     <string name="clear">Изчистване</string>
     <string name="cancel_entry">Отмяна на въвеждане</string>
     <string name="really_cancel_entry">Наистина ли желаете да отмените въвеждането?</string>
+    <string name="cancel_edit_entry">Отмяна на промените</string>
+    <string name="really_cancel_edit_entry">Наистина ли желаете да отмените промените?</string>
     <string name="entry_type_cbm">Мониторинг на обикновените видове птици (МОВП)</string>
     <string name="entry_type_birds">Птици</string>
     <string name="entry_type_ciconia">Бял щъркел</string>

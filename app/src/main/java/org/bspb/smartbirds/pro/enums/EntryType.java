@@ -97,4 +97,8 @@ public enum EntryType {
             throw new IllegalStateException("Could not instantiate uploader", e);
         }
     }
+
+    public interface EntryFragment {
+        boolean isDirty();
+    }
 }

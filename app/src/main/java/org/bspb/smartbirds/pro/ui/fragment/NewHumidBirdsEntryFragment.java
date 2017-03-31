@@ -100,10 +100,26 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
             entryTime.setTime(entryTimestamp);
         }
         entryTime.add(Calendar.SECOND, -models.size());
-        for (FormUtils.FormModel model : models) {
-            form = model;
-            entryTime.add(Calendar.SECOND, 1);
-            submitData(serialize(entryTime.getTime()));
+        try {
+            for (FormUtils.FormModel model : models) {
+                form = model;
+                entryTime.add(Calendar.SECOND, 1);
+                submitData(serialize(entryTime.getTime()));
+            }
+        } finally {
+            form = null;
+        }
+    }
+
+    @Override
+    public boolean isDirty() {
+        ArrayList<FormUtils.FormModel> models = birdsList.getModels();
+        if (models.size() != 1) return false;
+        form = models.get(0);
+        try {
+            return super.isDirty();
+        } finally {
+            form = null;
         }
     }
 
