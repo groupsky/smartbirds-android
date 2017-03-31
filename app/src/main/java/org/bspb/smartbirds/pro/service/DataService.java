@@ -233,6 +233,7 @@ public class DataService extends Service {
                 }
             } catch (IOException e) {
                 Crashlytics.logException(e);
+                Toast.makeText(this, "Could not write to track.gpx!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -251,6 +252,7 @@ public class DataService extends Service {
                 }
             } catch (IOException e) {
                 Crashlytics.logException(e);
+                Toast.makeText(this, "Could not write to track.gpx!", Toast.LENGTH_SHORT).show();
             }
         }
     }
