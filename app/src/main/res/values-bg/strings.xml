@@ -203,12 +203,12 @@
 
     <!-- Strings related to login -->
     <string name="title_activity_login">Вход</string>
-    <string name="prompt_email">Е-поща</string>
+    <string name="prompt_email">Имейл</string>
     <string name="prompt_password">Парола</string>
     <string name="action_sign_in">Вход</string>
     <string name="action_sign_in_short">Вход</string>
     <string name="action_register">Регистриране</string>
-    <string name="error_invalid_email">Невалидна е-поща</string>
+    <string name="error_invalid_email">Невалиден имейл</string>
     <string name="error_invalid_password">Паролата е прекалено къса</string>
     <string name="error_incorrect_password">Неправилна парола</string>
     <string name="error_field_required">Полето е задължително</string>
@@ -228,4 +228,10 @@
     <string name="select_all">Избиране на всичко</string>
     <string name="delete">Изтриване</string>
     <string name="confirm_delete_n">Изтриване на %1$d записа?</string>
+    <string name="download_dialog_text">Сваляне на данни</string>
+    <string name="download_dialog_title">Сваляне</string>
+    <string name="login_permission_rationale">"Достъп до контактите се използва за имейл подсказките"</string>
+    <string name="monitoring_permission_rationale">Достъп до местоположението е необходим за наблюденията</string>
+    <string name="storage_permission_rationale">Достъп до паметта е необходим за показване на картата</string>
+    <string name="permissions_required">Достъп до местоположението и паметта са задължителни</string>
 </resources>

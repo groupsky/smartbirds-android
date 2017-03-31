@@ -236,4 +236,5 @@
     <string name="select_all">Select all</string>
     <string name="delete">Delete</string>
     <string name="confirm_delete_n">Delete %1$d entries?</string>
+    <string name="permissions_required">Storage and location permissions are required</string>
 </resources>
