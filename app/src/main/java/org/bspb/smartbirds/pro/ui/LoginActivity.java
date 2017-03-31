@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             public void onClick(View v) {
                                 requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
                             }
-                        });
+                        }).show();
                 return false;
             } catch (Throwable t) {
                 // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
@@ -133,6 +134,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
         requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+        Toast.makeText(this, R.string.login_permission_rationale, Toast.LENGTH_SHORT).show();
         return false;
     }
 

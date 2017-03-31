@@ -131,7 +131,7 @@ public class MainFragment extends Fragment {
                             public void onClick(View v) {
                                 requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
                             }
-                        });
+                        }).show();
                 return false;
             } catch (Throwable t) {
                 // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
@@ -139,6 +139,7 @@ public class MainFragment extends Fragment {
             }
         }
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+        Toast.makeText(getActivity(), R.string.storage_permission_rationale, Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -159,7 +160,7 @@ public class MainFragment extends Fragment {
                             public void onClick(View v) {
                                 requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
                             }
-                        });
+                        }).show();
                 return false;
             } catch (Throwable t) {
                 // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
@@ -167,6 +168,7 @@ public class MainFragment extends Fragment {
             }
         }
         requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+        Toast.makeText(getActivity(), R.string.monitoring_permission_rationale, Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -175,10 +177,15 @@ public class MainFragment extends Fragment {
         switch (requestCode) {
             case REQUEST_LOCATION:
             case REQUEST_STORAGE:
+                boolean granted = true;
                 for (int grantResult : grantResults)
-                    if (grantResult != PERMISSION_GRANTED)
+                    if (grantResult != PERMISSION_GRANTED) {
+                        granted = false;
                         break;
-                startBirdsClicked();
+                    }
+                if (!granted) {
+                    Toast.makeText(getActivity(), R.string.permissions_required, Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
