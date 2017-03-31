@@ -17,6 +17,7 @@ import com.crashlytics.android.Crashlytics;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
@@ -47,7 +48,7 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
  */
 @EFragment
 @OptionsMenu({R.menu.debug_menu, R.menu.form_entry})
-public abstract class BaseEntryFragment extends BaseFormFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public abstract class BaseEntryFragment extends BaseFormFragment implements LoaderManager.LoaderCallbacks<Cursor>, EntryType.EntryFragment {
 
     protected static final String[] PROJECTION = {
             FormColumns._ID,
@@ -87,6 +88,9 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     @Nullable
     protected Date entryTimestamp;
     private boolean haveDeserialized;
+
+    @InstanceState
+    protected MonitoringEntry storedEntry;
 
     protected abstract EntryType getEntryType();
 
@@ -133,6 +137,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
             getActivity().finish();
             return;
         }
+        this.storedEntry = entry;
         doDeserialize(entry.monitoringCode, entry.data);
     }
 
@@ -213,6 +218,14 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     @OptionsItem(R.id.action_crash)
     void crash() {
         Crashlytics.getInstance().crash();
+    }
+
+    @Override
+    public boolean isDirty() {
+        if (storedEntry == null) return false;
+        if (entryTimestamp == null) return false;
+        HashMap<String, String> data = serialize(entryTimestamp);
+        return !data.equals(storedEntry.data);
     }
 
     public interface Builder {

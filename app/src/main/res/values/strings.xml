@@ -11,6 +11,8 @@
     <string name="clear">Clear</string>
     <string name="cancel_entry">Cancel entry</string>
     <string name="really_cancel_entry">Do you really want to cancel the entry?</string>
+    <string name="cancel_edit_entry">Cancel entry edit</string>
+    <string name="really_cancel_edit_entry">Do you really want to discard entry changes?</string>
     <string name="entry_type_cbm">Common Bird Monitoring(CBM)</string>
     <string name="entry_type_birds">Birds</string>
     <string name="entry_type_ciconia">White stork</string>

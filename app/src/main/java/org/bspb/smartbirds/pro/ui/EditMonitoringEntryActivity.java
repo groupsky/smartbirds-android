@@ -1,6 +1,8 @@
 package org.bspb.smartbirds.pro.ui;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -9,6 +11,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentById;
+import org.androidannotations.annotations.OptionsItem;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -53,6 +56,39 @@ public class EditMonitoringEntryActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         eventBus.register(this);
+    }
+
+    @OptionsItem(android.R.id.home)
+    boolean onUp() {
+        return confirmCancel();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!confirmCancel()) super.onBackPressed();
+    }
+
+    private boolean confirmCancel() {
+        if (fragment == null) return false;
+        if (!(fragment instanceof EntryType.EntryFragment)) return false;
+        if (!((EntryType.EntryFragment) fragment).isDirty()) return false;
+
+        //Ask the user if they want to quit
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.cancel_edit_entry)
+                .setMessage(R.string.really_cancel_edit_entry)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setResult(RESULT_CANCELED);
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+        return true;
     }
 
     @Override
