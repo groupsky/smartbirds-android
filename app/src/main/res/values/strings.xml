@@ -228,7 +228,7 @@
     <string name="error_cbm_zone_too_far">The zone is more than 5km from the location</string>
     <string name="main_screen_btn_browse">Browse</string>
     <string name="title_monitoring_list">Monitorings</string>
-    <string name="title_monitoring_detail">Monitoring Detail</string>
+    <string name="title_monitoring_detail">Monitoring Details</string>
     <string name="view">View</string>
     <string name="map">Map</string>
     <string name="list">List</string>
