@@ -256,7 +256,9 @@ public class UploadService extends IntentService {
 
                     // convert gpx
                     if (!fileObjs.containsKey("track.gpx")) {
-                        logException(new IllegalStateException("Missing track.gpx file"));
+                        String msg = "Missing track.gpx file for "+monitoringName;
+                        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+                        logException(new IllegalStateException(msg));
                     } else {
                         data.add("track", fileObjs.get("track.gpx").get("url"));
                     }
