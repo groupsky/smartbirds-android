@@ -338,6 +338,11 @@ public class MainFragment extends Fragment {
 
     @UiThread
     protected void displayNotSyncedCount(int notSyncedCount) {
-        notSyncedCountView.setText(getString(R.string.not_synced_count, notSyncedCount));
+        try {
+            notSyncedCountView.setText(getString(R.string.not_synced_count, notSyncedCount));
+        } catch (Throwable t) {
+            // IllegalStateException: not attached to Activity
+            logException(t);
+        }
     }
 }
