@@ -89,8 +89,18 @@ public class UploadService extends IntentService {
             File baseDir = getExternalFilesDir(null);
             for (String monitoringCode : monitoringManager.monitoringCodesForStatus(finished)) {
                 File monitoringDir = new File(baseDir, monitoringCode);
-                if (!monitoringDir.exists()) continue;
-                if (!monitoringDir.isDirectory()) continue;
+                if (!monitoringDir.exists()) {
+                    String msg = "Missing folder "+monitoringDir.getPath();
+                    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+                    logException(new Exception(msg));
+                    continue;
+                }
+                if (!monitoringDir.isDirectory()) {
+                    String msg = monitoringDir.getPath()+" is not a folder";
+                    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+                    logException(new Exception(msg));
+                    continue;
+                }
                 upload(monitoringDir.getAbsolutePath(), false);
             }
 
