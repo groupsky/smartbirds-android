@@ -160,7 +160,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
             if (!settingSelection) {
                 settingSelection = true;
                 try {
-                    setText(item.label);
+                    // in some cases item can be null
+                    setText(item != null ? item.label : null);
                 } finally {
                     settingSelection = false;
                 }
@@ -387,7 +388,13 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
         @Override
         public void onDismiss(DialogInterface dialog) {
-            mAdapter.unregisterDataSetObserver(datasetObserver);
+            // sometimes the observer is not registered
+            try {
+                mAdapter.unregisterDataSetObserver(datasetObserver);
+            } catch (IllegalStateException e) {
+                logException(e);
+            }
+
         }
     }
 

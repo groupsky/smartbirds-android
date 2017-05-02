@@ -37,7 +37,8 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
         if (form == null) {
             throw new IllegalStateException("Should not be called with null form!");
         }
-        return true;
+        // sometimes birdsList is null
+        return birdsList != null;
     }
 
     @Override
