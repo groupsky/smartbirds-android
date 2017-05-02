@@ -333,6 +333,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @UiThread
     void displayArea(KmlDocument kml) {
+        // sometimes map is null
+        if(mMap == null) {
+            return;
+        }
         displayItem(kml, kml.mKmlRoot);
     }
 

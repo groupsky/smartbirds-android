@@ -167,8 +167,9 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         if (takePicture != null) {
-            takePicture.setVisible(!pictures.isEmpty());
-            takePicture.setEnabled(picturesCount < pictures.size());
+            // sometimes pictures is null
+            takePicture.setVisible(pictures != null && !pictures.isEmpty());
+            takePicture.setEnabled(pictures != null && picturesCount < pictures.size());
         }
     }
 
@@ -193,6 +194,11 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     }
 
     void displayPicture(ImageStruct image, ImageView picture) {
+        // in some cases the fragment is not attached
+        if(!isAdded()) {
+            return;
+        }
+
         // Get the dimensions of the View
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int targetW = (int) Math.round(320.0 / displayMetrics.density);
