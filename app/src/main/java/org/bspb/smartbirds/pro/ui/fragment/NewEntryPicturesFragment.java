@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -41,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by groupsky on 27.01.17.
@@ -70,7 +72,7 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     @InstanceState
     protected ImageStruct currentImage;
     @InstanceState
-    protected int picturesCount = 0;
+    protected int picturesCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,10 +96,13 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         super.onStart();
 
         for (int i = 0; i < pictures.size(); i++) {
-            pictures.get(i).setVisibility(i < picturesCount ? View.VISIBLE : View.GONE);
+            pictures.get(i).setVisibility(i < picturesCount ? View.VISIBLE : View.INVISIBLE);
             if (i < picturesCount) {
                 displayPicture(images[i], pictures.get(i));
             } else {
+                if (images[i] != null) {
+                    logException(new IllegalStateException("Hiding picture that actually exists!"));
+                }
                 hidePicture(pictures.get(i));
             }
         }
@@ -131,16 +136,26 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         picturesCount = 0;
         for (int i = 0; i < images.length; i++) {
             String fileName = data.get("Picture" + i);
-            if (!isEmpty(fileName)) {
-                eventBus.post(new GetImageFile(monitoringCode, fileName));
+            if (isEmpty(fileName)) continue;
+            if (images[picturesCount] != null) {
+                if (TextUtils.equals(images[picturesCount].fileName, fileName)) {
+                    picturesCount++;
+                    continue;
+                }
             }
+            eventBus.post(new GetImageFile(monitoringCode, fileName));
         }
+        updateTakePicture();
     }
 
     public void onEventMainThread(ImageFileEvent event) {
+        if (images[picturesCount] != null) {
+            logException(new IllegalStateException("Overriding existing picture!"));
+        }
         images[picturesCount] = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
         if (pictures != null) displayPicture(images[picturesCount], pictures.get(picturesCount));
         picturesCount++;
+        updateTakePicture();
     }
 
     @OptionsItem(R.id.take_picture)
@@ -167,6 +182,10 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        updateTakePicture();
+    }
+
+    private void updateTakePicture() {
         if (takePicture != null) {
             // sometimes pictures is null
             takePicture.setVisible(pictures != null && !pictures.isEmpty());
@@ -180,10 +199,14 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
             getView().post(new Runnable() {
                 @Override
                 public void run() {
+                    if (images[picturesCount] != null) {
+                        logException(new IllegalStateException("Overriding existing picture!"));
+                    }
                     images[picturesCount] = currentImage;
                     currentImage = null;
                     displayPicture(images[picturesCount], pictures.get(picturesCount));
                     picturesCount++;
+                    updateTakePicture();
                 }
             });
         } else {
@@ -196,14 +219,14 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
 
     void displayPicture(ImageStruct image, ImageView picture) {
         // in some cases the fragment is not attached
-        if(!isAdded()) {
+        if (!isAdded()) {
             return;
         }
 
         // Get the dimensions of the View
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int targetW = (int) Math.round(320.0 / displayMetrics.density);
-        int targetH = (int) Math.round(320.0 / displayMetrics.density);
+        int targetW = (int) Math.round(displayMetrics.widthPixels / 3);
+        int targetH = (int) Math.round(displayMetrics.widthPixels / 3);
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -218,7 +241,6 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(image.path, bmOptions);
         picture.setImageBitmap(bitmap);
@@ -226,7 +248,7 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     }
 
     void hidePicture(ImageView picture) {
-        picture.setVisibility(View.GONE);
+        picture.setVisibility(View.INVISIBLE);
     }
 
     @Click({R.id.picture1, R.id.picture2, R.id.picture3})
