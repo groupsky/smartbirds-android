@@ -130,11 +130,13 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         if (haveDeserialized) return;
         if (!cursor.moveToFirst()) {
             getActivity().finish();
+            logException(new IllegalStateException("Loader found no data for id: "+entryId));
             return;
         }
         MonitoringEntry entry = MonitoringManager.entryFromCursor(cursor);
         if (entry == null) {
             getActivity().finish();
+            logException(new IllegalStateException("Entry couldn't be loaded for id: "+entryId));
             return;
         }
         this.storedEntry = entry;
