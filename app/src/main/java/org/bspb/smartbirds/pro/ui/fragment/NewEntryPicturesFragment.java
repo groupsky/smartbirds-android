@@ -69,6 +69,7 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     protected ImageStruct[] images = new ImageStruct[3];
     @InstanceState
     protected ImageStruct currentImage;
+    @InstanceState
     protected int picturesCount = 0;
 
     @Override
