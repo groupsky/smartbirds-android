@@ -7,24 +7,30 @@
         android:id="@+id/picture1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:layout_weight="1"
+        android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/picture2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:layout_weight="1"
+        android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/picture3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:layout_weight="1"
+        android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
 </LinearLayout>
