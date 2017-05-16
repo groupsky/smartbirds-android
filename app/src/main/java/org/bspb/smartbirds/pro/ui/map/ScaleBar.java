@@ -35,7 +35,6 @@ public class ScaleBar extends ImageView {
 
     float mXdpi;
     float mYdpi;
-    float mScreenWidth;
 
     private Canvas mCanvas;
     private Paint textPaint;
@@ -58,7 +57,6 @@ public class ScaleBar extends ImageView {
 
         mXdpi = context.getResources().getDisplayMetrics().xdpi;
         mYdpi = context.getResources().getDisplayMetrics().ydpi;
-        mScreenWidth = context.getResources().getDisplayMetrics().widthPixels;
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
@@ -74,7 +72,6 @@ public class ScaleBar extends ImageView {
     public void onDraw(Canvas canvas) {
         mCanvas = canvas;
         canvas.save();
-
         drawScaleBarPicture(canvas);
 
         canvas.restore();
@@ -118,8 +115,8 @@ public class ScaleBar extends ImageView {
 
                 int textSpacing = (int) (xTextRect.height() / 5.0);
 
-                float left = mScreenWidth/2 - mXdpi/2;
-                float right = mScreenWidth/2 + mXdpi/2;
+                float left = getWidth() /2 - mXdpi/2;
+                float right = getWidth() /2 + mXdpi/2;
 
                 canvas.drawRect(left, mYOffset, right, mYOffset + mLineWidth, barPaint);
                 canvas.drawRect(right, mYOffset, right + mLineWidth, mYOffset +
