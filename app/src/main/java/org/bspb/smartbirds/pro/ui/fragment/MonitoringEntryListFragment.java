@@ -91,6 +91,7 @@ public class MonitoringEntryListFragment extends ListFragment implements Monitor
     @AfterViews
     protected void setupListview() {
         final ListView lv = getListView();
+        setEmptyText(getText(R.string.emptyList));
         lv.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         lv.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override

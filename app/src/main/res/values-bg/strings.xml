@@ -234,4 +234,5 @@
     <string name="monitoring_permission_rationale">Достъп до местоположението е необходим за наблюденията</string>
     <string name="storage_permission_rationale">Достъп до паметта е необходим за показване на картата</string>
     <string name="permissions_required">Достъп до местоположението и паметта са задължителни</string>
+    <string name="emptyList">Няма записи в списъка</string>
 </resources>
