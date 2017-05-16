@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
@@ -113,5 +114,10 @@ public class MonitoringListFragment extends ListFragment implements LoaderManage
 
     public interface Listener {
         void onMonitoringSelected(String monitoringCode);
+    }
+
+    @AfterViews
+    protected void setupListView() {
+        setEmptyText(getText(R.string.emptyList));
     }
 }
