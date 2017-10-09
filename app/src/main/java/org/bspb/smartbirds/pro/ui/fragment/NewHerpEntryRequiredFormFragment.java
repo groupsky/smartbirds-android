@@ -37,7 +37,7 @@ public class NewHerpEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (isNewEntry) {
+        if (isNewEntry()) {
             habitat.setText(prefs.herpHabitat().get());
         }
     }

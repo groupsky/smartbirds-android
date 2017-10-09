@@ -33,8 +33,16 @@ public class BaseFormFragment extends Fragment {
     protected String monitoringCode;
 
 
+    private boolean newEntry;
+
+    public boolean isNewEntry() {
+        return newEntry;
+    }
+
     @FragmentArg(ARG_IS_NEW_ENTRY)
-    protected boolean isNewEntry;
+    public void setNewEntry(boolean isNewEntry) {
+        this.newEntry = isNewEntry;
+    }
 
     protected boolean isValid() {
         ensureForm();

@@ -49,7 +49,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (isNewEntry) {
+        if (isNewEntry()) {
             countUnits.setSelection(prefs.birdCountUnits().get());
             countType.setSelection(prefs.birdCountType().get());
         }
