@@ -4,6 +4,7 @@ import android.os.Build;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
@@ -23,6 +24,7 @@ import java.util.Locale;
 
 @EFragment(R.layout.fragment_monitoring_form_new_birds_required_entry)
 public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
+
 
     @ViewById(R.id.form_birds_count_units)
     SingleChoiceFormInput countUnits;
@@ -47,8 +49,10 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onResume() {
         super.onResume();
-        countUnits.setSelection(prefs.birdCountUnits().get());
-        countType.setSelection(prefs.birdCountType().get());
+        if (isNewEntry) {
+            countUnits.setSelection(prefs.birdCountUnits().get());
+            countType.setSelection(prefs.birdCountType().get());
+        }
         handleCountsLogic();
     }
 
