@@ -236,7 +236,8 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         Fragment load(long id);
     }
 
-    protected boolean isNewEntry() {
+    @Override
+    public boolean isNewEntry() {
         return entryId == 0;
     }
 }

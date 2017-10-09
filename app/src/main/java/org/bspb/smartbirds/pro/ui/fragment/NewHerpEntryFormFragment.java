@@ -20,8 +20,8 @@ public class NewHerpEntryFormFragment extends BaseTabEntryFragment {
             @Override
             public android.app.Fragment getItem(int position) {
                 switch (position) {
-                    case 0: return NewHerpEntryRequiredFormFragment_.builder().isNewEntry(isNewEntry()).build();
-                    case 1: return NewHerpEntryOptionalFormFragment_.builder().isNewEntry(isNewEntry()).build();
+                    case 0: return NewHerpEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                    case 1: return NewHerpEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
                     default: throw new IllegalArgumentException("Unhandled position"+position);
                 }
             }
