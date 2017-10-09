@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
 import java.io.Serializable;
@@ -14,10 +16,13 @@ import java.util.HashMap;
  * Created by groupsky on 26.01.17.
  */
 
+@EFragment
 public class BaseFormFragment extends Fragment {
 
     protected static final String KEY_FORM_DATA = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.FORM_DATA";
     private static final String KEY_MONITORING_CODE = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.MONITORING_FORM";
+
+    protected static final String ARG_IS_NEW_ENTRY = "isNewEntry";
 
     protected FormUtils.FormModel form;
     private HashMap<String, String> pendingDeserializeData;
@@ -26,6 +31,10 @@ public class BaseFormFragment extends Fragment {
      */
     @Nullable
     protected String monitoringCode;
+
+
+    @FragmentArg(ARG_IS_NEW_ENTRY)
+    protected boolean isNewEntry;
 
     protected boolean isValid() {
         ensureForm();
