@@ -261,6 +261,10 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         }
     }
 
+    @Override
+    public boolean isNewEntry() {
+        throw new UnsupportedOperationException("not implemented");
+    }
 
     static class ImageStruct implements Parcelable {
         public String fileName = null;
