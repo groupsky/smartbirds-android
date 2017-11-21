@@ -66,11 +66,14 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Override
     public void onResume() {
         super.onResume();
-        primaryHabitatInput.setText(prefs.cbmPrimaryHabitat().get());
-        secondaryHabitatInput.setText(prefs.cbmSecondaryHabitat().get());
-        visitInput.setText(prefs.cbmVisit().get());
-        sectorInput.setText(prefs.cbmSector().get());
-        zoneInput.setText(prefs.cbmZone().get());
+        if (isNewEntry()) {
+            primaryHabitatInput.setText(prefs.cbmPrimaryHabitat().get());
+            secondaryHabitatInput.setText(prefs.cbmSecondaryHabitat().get());
+            visitInput.setText(prefs.cbmVisit().get());
+            sectorInput.setText(prefs.cbmSector().get());
+            zoneInput.setText(prefs.cbmZone().get());
+        }
+
     }
 
     @Override

@@ -18,8 +18,8 @@ public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
             @Override
             public android.app.Fragment getItem(int position) {
                 switch (position) {
-                    case 0: return NewBirdsEntryRequiredFormFragment_.builder().build();
-                    case 1: return NewBirdsEntryOptionalFormFragment_.builder().build();
+                    case 0: return NewBirdsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                    case 1: return NewBirdsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
                     default: throw new IllegalArgumentException("Unhandled position"+position);
                 }
             }
