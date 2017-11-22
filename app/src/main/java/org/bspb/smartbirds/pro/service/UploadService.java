@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.googlecode.jcsv.CSVStrategy;
@@ -15,8 +16,10 @@ import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
 import org.androidannotations.annotations.ServiceAction;
+import org.androidannotations.annotations.res.StringRes;
 import org.apache.commons.net.ftp.FTPClient;
 import org.bspb.smartbirds.pro.BuildConfig;
+import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
@@ -50,6 +53,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static java.lang.Double.parseDouble;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.uploaded;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
@@ -71,6 +75,11 @@ public class UploadService extends IntentService {
     @Bean
     MonitoringManager monitoringManager;
 
+    @StringRes(R.string.tag_lat)
+    static String tagLatitude;
+    @StringRes(R.string.tag_lon)
+    static String tagLongitude;
+
     protected UploadService() {
         super("Upload Service");
     }
@@ -90,13 +99,13 @@ public class UploadService extends IntentService {
             for (String monitoringCode : monitoringManager.monitoringCodesForStatus(finished)) {
                 File monitoringDir = new File(baseDir, monitoringCode);
                 if (!monitoringDir.exists()) {
-                    String msg = "Missing folder "+monitoringDir.getPath();
+                    String msg = "Missing folder " + monitoringDir.getPath();
                     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
                     logException(new Exception(msg));
                     continue;
                 }
                 if (!monitoringDir.isDirectory()) {
-                    String msg = monitoringDir.getPath()+" is not a folder";
+                    String msg = monitoringDir.getPath() + " is not a folder";
                     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
                     logException(new Exception(msg));
                     continue;
@@ -230,7 +239,16 @@ public class UploadService extends IntentService {
                         csv.put(columnName, row[idx]);
                     }
 
+
                     JsonObject data = converter.convert(csv);
+
+                    try {
+                        if (data.get(tagLatitude).getAsDouble() == 0 || data.get(tagLongitude).getAsDouble() == 0) {
+                            throw new IllegalStateException();
+                        }
+                    } catch (Exception e) {
+                        logException(new IllegalStateException("Uploading entry with zero coordinates. " + data.toString()));
+                    }
 
                     // convert pictures
                     JsonArray pictures = new JsonArray();
@@ -256,7 +274,7 @@ public class UploadService extends IntentService {
 
                     // convert gpx
                     if (!fileObjs.containsKey("track.gpx")) {
-                        String msg = "Missing track.gpx file for "+monitoringName;
+                        String msg = "Missing track.gpx file for " + monitoringName;
                         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
                         logException(new IllegalStateException(msg));
                     } else {

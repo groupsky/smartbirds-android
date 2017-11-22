@@ -12,7 +12,9 @@ import com.googlecode.jcsv.writer.internal.CSVWriterBuilder;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
 import org.androidannotations.annotations.ServiceAction;
+import org.androidannotations.annotations.res.StringRes;
 import org.androidannotations.api.support.app.AbstractIntentService;
+import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.Monitoring;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
@@ -29,6 +31,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static java.lang.Double.parseDouble;
 import static org.bspb.smartbirds.pro.tools.CsvPreparer.prepareCsvLine;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
@@ -42,6 +45,11 @@ public class DataOpsService extends AbstractIntentService {
     private static final String TAG = SmartBirdsApplication.TAG + ".DataOpsSvc";
     @Bean
     MonitoringManager monitoringManager;
+
+    @StringRes(R.string.tag_lat)
+    static String tagLatitude;
+    @StringRes(R.string.tag_lon)
+    static String tagLongitude;
 
     public DataOpsService() {
         super("DataOpsService");
@@ -97,6 +105,14 @@ public class DataOpsService extends AbstractIntentService {
                         boolean firstLine = true;
                         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                             MonitoringEntry entry = MonitoringManager.entryFromCursor(cursor);
+                            try {
+                                if (parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
+                                    throw new IllegalStateException();
+                                }
+                            } catch (Exception e) {
+                                logException(new IllegalStateException("Saving in file entry " + entry.id + " with zero coordinates. Monitoring code is: " + entry.monitoringCode + " and type is " + entryType, e));
+                            }
+
                             String[] lines = convertToCsvLines(entry.data);
                             if (firstLine) {
                                 outWriter.write(commonLines[0]);

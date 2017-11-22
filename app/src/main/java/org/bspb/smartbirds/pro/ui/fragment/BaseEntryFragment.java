@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -130,13 +131,13 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         if (haveDeserialized) return;
         if (!cursor.moveToFirst()) {
             getActivity().finish();
-            logException(new IllegalStateException("Loader found no data for id: "+entryId));
+            logException(new IllegalStateException("Loader found no data for id: " + entryId));
             return;
         }
         MonitoringEntry entry = MonitoringManager.entryFromCursor(cursor);
         if (entry == null) {
             getActivity().finish();
-            logException(new IllegalStateException("Entry couldn't be loaded for id: "+entryId));
+            logException(new IllegalStateException("Entry couldn't be loaded for id: " + entryId));
             return;
         }
         this.storedEntry = entry;
@@ -170,6 +171,8 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         String lonVal = data.get(getString(R.string.tag_lon));
         if (!isEmpty(lonVal)) lon = Double.parseDouble(lonVal);
 
+        checkCoordinates();
+        
         String dateVal = data.get(getString(R.string.entry_date));
         String timeVal = data.get(getString(R.string.entry_time));
         if (!isEmpty(dateVal) && !isEmpty(timeVal)) try {
@@ -182,6 +185,13 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     @Override
     protected final HashMap<String, String> serialize() {
         return super.serialize();
+    }
+
+    @AfterInject
+    protected void checkCoordinates() {
+        if (lat == 0 || lon == 0) {
+            logException(new IllegalStateException("Creating entry fragment with zero coordinates"));
+        }
     }
 
     protected HashMap<String, String> serialize(Date entryTime) {
