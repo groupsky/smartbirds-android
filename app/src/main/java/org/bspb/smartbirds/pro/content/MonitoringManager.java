@@ -10,6 +10,7 @@ import android.location.Location;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.EBean;
@@ -176,6 +177,9 @@ public class MonitoringManager {
     public MonitoringEntry newEntry(@NonNull Monitoring monitoring, @NonNull EntryType entryType, @NonNull HashMap<String, String> data) {
         MonitoringEntry entry = new MonitoringEntry(monitoring.code, entryType);
         entry.data.putAll(data);
+        if(parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
+            logException(new IllegalStateException("Inserting new entry with zero coordinates. Monitoring code is: " + monitoring.code + " and type is " + entryType));
+        }
         entry.id = parseId(contentResolver.insert(SmartBirdsProvider.Forms.CONTENT_URI, toContentValues(entry)));
         return entry;
     }
@@ -184,6 +188,9 @@ public class MonitoringManager {
         MonitoringEntry entry = new MonitoringEntry(monitoringCode, entryType);
         entry.data.putAll(data);
         entry.id = entryId;
+        if(parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
+            logException(new IllegalStateException("Updating entry " + entryId + " with zero coordinates. Monitoring code is: " + monitoringCode + " and type is " + entryType));
+        }
         contentResolver.update(SmartBirdsProvider.Forms.withId(entryId), toContentValues(entry), null, null);
         return entry;
     }
