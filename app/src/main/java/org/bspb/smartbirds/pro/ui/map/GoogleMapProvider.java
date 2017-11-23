@@ -8,6 +8,7 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,9 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private Marker lastMarker;
     private MapType mapType;
     private ArrayList<Zone> zones = new ArrayList<>();
+    private boolean showZoneBackground;
+    private List<Polygon> zonePolygons = new ArrayList<>();
+
 
     @Override
     /**
@@ -142,8 +146,13 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                 markerHolder.marker = addMarker(markerHolder.mapMarker);
             }
         }
-        for (Zone zone : zones) {
-            addZone(zone);
+        if (zonePolygons.isEmpty()) {
+            for (Zone zone : zones) {
+                Polygon p = addZone(zone);
+                if (p != null) {
+                    zonePolygons.add(p);
+                }
+            }
         }
 
         drawArea();
@@ -159,6 +168,27 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void setZoomFactor(double zoomFactor) {
         this.zoomFactor = zoomFactor;
+    }
+
+    @Override
+    public void setShowZoneBackground(boolean showBackground) {
+        this.showZoneBackground = showBackground;
+        drawZones();
+    }
+
+    private void drawZones() {
+        for (Polygon p : zonePolygons) {
+            if (p.isVisible()) {
+                p.remove();
+            }
+        }
+        zonePolygons.clear();
+        for (Zone zone : zones) {
+            Polygon p = addZone(zone);
+            if (p != null) {
+                zonePolygons.add(p);
+            }
+        }
     }
 
     @Override
@@ -259,9 +289,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         }
 
         polygonOptions.strokeColor(fragment.getContext().getResources().getColor(R.color.zone_stroke_color));
-        polygonOptions.fillColor(fragment.getContext().getResources().getColor(R.color.zone_fill_color));
-        polygonOptions.strokeWidth(1f);
+        if (showZoneBackground) {
+            polygonOptions.fillColor(fragment.getContext().getResources().getColor(R.color.zone_fill_color));
+        }
 
+        polygonOptions.strokeWidth(1f);
         return mMap.addPolygon(polygonOptions);
     }
 
@@ -302,10 +334,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void setZones(Iterable<Zone> zones) {
+        this.zones.clear();
         for (Zone zone : zones) {
             this.zones.add(zone);
-            addZone(zone);
         }
+        drawZones();
     }
 
     @Override
@@ -334,7 +367,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @UiThread
     void displayArea(KmlDocument kml) {
         // sometimes map is null
-        if(mMap == null) {
+        if (mMap == null) {
             return;
         }
         displayItem(kml, kml.mKmlRoot);

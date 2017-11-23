@@ -26,4 +26,7 @@ public interface SmartBirdsPrefs {
 
     @DefaultInt(VIEWTYPE_MAP)
     int viewType();
+
+    @DefaultBoolean(true)
+    boolean showZoneBackground();
 }

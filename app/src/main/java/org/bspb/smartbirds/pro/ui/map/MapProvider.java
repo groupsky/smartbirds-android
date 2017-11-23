@@ -51,4 +51,6 @@ public interface MapProvider {
     void setZones(Iterable<Zone> zones);
 
     void updatePath(ArrayList<LatLng> points);
+
+    void setShowZoneBackground(boolean showBackground);
 }
