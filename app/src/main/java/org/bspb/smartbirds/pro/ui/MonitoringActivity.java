@@ -143,6 +143,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MenuItem menuCrash;
     @OptionsMenuItem(R.id.action_stay_awake)
     MenuItem menuStayAwake;
+    @OptionsMenuItem(R.id.action_show_zone_background)
+    MenuItem menuShowZoneBackground;
     @OptionsMenuItem(R.id.view_type_map)
     MenuItem menuViewTypeMap;
     @OptionsMenuItem(R.id.view_type_list)
@@ -160,6 +162,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     private boolean canceled = false;
     @InstanceState
     boolean stayAwake;
+    @InstanceState
+    boolean showZoneBackground;
 
     @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
@@ -322,14 +326,22 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
                 throw new IllegalStateException("Unhandled provider type: " + providerType);
         }
         int viewType = prefs.viewType().get();
-        switch (viewType){
-            case VIEWTYPE_MAP: menuViewTypeMap.setChecked(true); break;
-            case VIEWTYPE_LIST: menuViewTypeList.setChecked(true); break;
-            case VIEWTYPE_COMBINED: menuViewTypeCombined.setChecked(true); break;
+        switch (viewType) {
+            case VIEWTYPE_MAP:
+                menuViewTypeMap.setChecked(true);
+                break;
+            case VIEWTYPE_LIST:
+                menuViewTypeList.setChecked(true);
+                break;
+            case VIEWTYPE_COMBINED:
+                menuViewTypeCombined.setChecked(true);
+                break;
         }
 
         updateCheckedEntryType(menu);
         menuStayAwake.setChecked(stayAwake);
+        menuShowZoneBackground.setChecked(showZoneBackground);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -366,6 +378,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         currentMap.setPath(points);
         currentMap.setMapType(mapType);
         currentMap.setZones(getZones());
+        currentMap.setShowZoneBackground(showZoneBackground);
         currentMap.showMap();
     }
 
@@ -540,6 +553,21 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         prefs.mapType().put(mapType.toString());
     }
 
+    @OptionsItem(R.id.action_show_zone_background)
+    void setShowZoneBackground(MenuItem sender) {
+        sender.setChecked(!sender.isChecked());
+        setShowZoneBackground(sender.isChecked());
+    }
+
+    private void setShowZoneBackground(boolean showBackground) {
+        this.showZoneBackground = showBackground;
+        if (currentMap != null) {
+            currentMap.setShowZoneBackground(showBackground);
+            currentMap.updateCamera();
+        }
+        prefs.showZoneBackground().put(showBackground);
+    }
+
     @OptionsItem(R.id.action_stay_awake)
     void setStayAwake(MenuItem sender) {
         sender.setChecked(!sender.isChecked());
@@ -669,6 +697,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             prefs.providerType().put(providerType.toString());
             prefs.mapType().put(mapType.toString());
             prefs.stayAwake().put(stayAwake);
+            prefs.showZoneBackground().put(showZoneBackground);
             if (lastPosition != null) {
                 editor.lastPositionLat().put((float) lastPosition.latitude);
                 editor.lastPositionLon().put((float) lastPosition.longitude);
@@ -741,7 +770,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         }
 
         setStayAwake(prefs.stayAwake().get());
-
+        setShowZoneBackground(prefs.showZoneBackground().get());
         restorePoints();
     }
 

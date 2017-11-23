@@ -39,6 +39,7 @@
     <string name="menu_monitoring_map_provider_google">Google</string>
     <string name="menu_monitoring_map_provider_osm">OSM</string>
     <string name="menu_monitoring_stay_awake">Always on</string>
+    <string name="menu_monitoring_show_zone_background">Zones background</string>
     <string name="menu_monitoring_start">Start</string>
     <string name="menu_monitoring_save">Save</string>
     <string name="main_screen_btn_start">Start</string>

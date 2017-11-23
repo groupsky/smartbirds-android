@@ -81,6 +81,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private Marker lastMarker;
     private EventsOverlay eventsOverlay;
     private final ArrayList<Zone> zones = new ArrayList<>();
+    private boolean showZoneBackground;
 
     @Override
     public void setUpMapIfNeeded() {
@@ -136,7 +137,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
                 markerHolder.marker = addMarker(markerHolder.mapMarker, true);
             }
         }
-        for (Zone zone: zones) {
+        for (Zone zone : zones) {
             addZone(zone);
         }
         mMap.invalidate();
@@ -168,6 +169,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setZoomFactor(double zoomFactor) {
         this.zoomFactor = zoomFactor;
+    }
+
+    @Override
+    public void setShowZoneBackground(boolean showBackground) {
+        this.showZoneBackground = showBackground;
     }
 
     @Override
@@ -259,8 +265,12 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         if (mMap == null) return null;
 
         PathOverlay zoneOverlay = new PathOverlay(mMap.getResources().getColor(R.color.zone_fill_color), mMap.getContext());
-        zoneOverlay.getPaint().setStrokeWidth(1);
-        zoneOverlay.getPaint().setStyle(Paint.Style.FILL);
+        zoneOverlay.getPaint().setStrokeWidth(10f);
+        if (showZoneBackground) {
+            zoneOverlay.getPaint().setStyle(Paint.Style.FILL);
+        } else {
+            zoneOverlay.getPaint().setStyle(Paint.Style.STROKE);
+        }
         for (Zone.Coordinate point : zone.coordinates) {
             zoneOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
         }
@@ -316,7 +326,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     public void setZones(Iterable<Zone> zones) {
         boolean needInvalidate = false;
         // we know that zones are not changing, so we just display all zones
-        for (Zone zone: zones) {
+        for (Zone zone : zones) {
             this.zones.add(zone);
             addZone(zone);
             needInvalidate = true;
