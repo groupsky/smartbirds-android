@@ -8,7 +8,6 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -293,7 +292,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             polygonOptions.fillColor(fragment.getContext().getResources().getColor(R.color.zone_fill_color));
         }
 
-        polygonOptions.strokeWidth(1f);
+        polygonOptions.strokeWidth(6f);
         return mMap.addPolygon(polygonOptions);
     }
 
