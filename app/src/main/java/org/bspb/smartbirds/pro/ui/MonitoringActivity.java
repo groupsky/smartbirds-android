@@ -76,7 +76,7 @@ import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, ZonesModelEntries.Listener {
+public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, ZonesModelEntries.Listener, MapProvider.MarkerClickListener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -379,6 +379,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         currentMap.setMapType(mapType);
         currentMap.setZones(getZones());
         currentMap.setShowZoneBackground(showZoneBackground);
+        currentMap.setOnMarkerClickListener(this);
         currentMap.showMap();
     }
 
@@ -828,5 +829,10 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @Override
     public void onZoneEntriesChanged(ZonesModelEntries entries) {
         if (currentMap != null) currentMap.setZones(getZones());
+    }
+
+    @Override
+    public void onMarkerClicked(long entryId, EntryType type) {
+        onMonitoringEntrySelected(entryId, type);
     }
 }

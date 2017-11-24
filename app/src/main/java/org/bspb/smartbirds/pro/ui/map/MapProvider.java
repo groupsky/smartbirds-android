@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.bspb.smartbirds.pro.backend.dto.Zone;
+import org.bspb.smartbirds.pro.enums.EntryType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,10 @@ import java.util.List;
  * Created by dani on 14-11-4.
  */
 public interface MapProvider {
+
+    interface MarkerClickListener {
+        void onMarkerClicked(long entryId, EntryType type);
+    }
 
     public static final String AREA_FILE_PATH = Environment.getExternalStorageDirectory() + "/smartbirdspro/area.kml";
 
@@ -53,4 +58,6 @@ public interface MapProvider {
     void updatePath(ArrayList<LatLng> points);
 
     void setShowZoneBackground(boolean showBackground);
+
+    void setOnMarkerClickListener(MarkerClickListener listener);
 }

@@ -184,6 +184,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         drawZones();
     }
 
+    @Override
+    public void setOnMarkerClickListener(MarkerClickListener listener) {
+
+    }
+
     private void drawZones() {
         if (mMap != null) {
             mMap.getOverlayManager().removeAll(zoneOverlays);
