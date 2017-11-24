@@ -8,6 +8,7 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +56,11 @@ import org.osmdroid.util.GeoPoint;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
@@ -65,7 +69,7 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
  * Created by dani on 14-11-6.
  */
 @EBean
-public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback {
+public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".GMap";
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -77,7 +81,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Bean
     EEventBus eventBus;
-    private final Set<MarkerHolder> markers = new HashSet<>();
+    private final Map<Long, MarkerHolder> markers = new HashMap<>();
     private ArrayList<LatLng> points;
     private Polyline path;
     private boolean positioned = false;
@@ -86,7 +90,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private ArrayList<Zone> zones = new ArrayList<>();
     private boolean showZoneBackground;
     private List<Polygon> zonePolygons = new ArrayList<>();
-
+    private MarkerClickListener markerClickListener;
 
     @Override
     /**
@@ -117,6 +121,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         setMapType(mapType);
         mMap.setOnMapClickListener(this);
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
@@ -140,7 +146,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             }
         });
 
-        for (MarkerHolder markerHolder : markers) {
+        for (MarkerHolder markerHolder : markers.values()) {
             if (markerHolder.marker == null) {
                 markerHolder.marker = addMarker(markerHolder.mapMarker);
             }
@@ -276,6 +282,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         if (mMap == null) return null;
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(newMapMarker.getLatitude(), newMapMarker.getLongitude())).title(newMapMarker.getTitle());
         lastMarker = mMap.addMarker(markerOptions);
+        lastMarker.setTag(newMapMarker.getId());
         return lastMarker;
     }
 
@@ -308,18 +315,27 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void setMarkers(Iterable<MapMarker> newMapMarkers) {
-        Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
+        Set<MarkerHolder> currentMarkers = new HashSet<>(this.markers.values());
+        Set<MarkerHolder> markerHoldersToDelete = new HashSet<>(this.markers.values());
+        Set<Long> idsToDelete = new HashSet<>(this.markers.keySet());
+
         MarkerHolder testHolder = new MarkerHolder(null, null);
         int cnt = 0;
         for (MapMarker mapMarker : newMapMarkers) {
             cnt++;
+
             testHolder.mapMarker = mapMarker;
-            toDelete.remove(testHolder);
-            if (this.markers.contains(testHolder)) continue;
-            this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker)));
+            markerHoldersToDelete.remove(testHolder);
+            idsToDelete.remove(mapMarker.getId());
+            if (currentMarkers.contains(testHolder)) continue;
+            this.markers.put(mapMarker.getId(), new MarkerHolder(mapMarker, addMarker(mapMarker)));
         }
-        for (MarkerHolder markerHolder : toDelete) {
-            this.markers.remove(markerHolder);
+
+        for (Long id : idsToDelete) {
+            this.markers.remove(id);
+        }
+
+        for (MarkerHolder markerHolder : markerHoldersToDelete) {
             if (markerHolder.marker != null) {
                 markerHolder.marker.remove();
             }
@@ -344,6 +360,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     public void updatePath(ArrayList<LatLng> points) {
         this.points = points;
         path.setPoints(points);
+    }
+
+    @Override
+    public void setOnMarkerClickListener(MarkerClickListener listener) {
+        this.markerClickListener = listener;
     }
 
     @Background
@@ -466,6 +487,18 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             setUpMap();
         } else {
             fragment.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        if (markerClickListener != null) {
+            markerClickListener.onMarkerClicked(markers.get(marker.getTag()).mapMarker.getId(), markers.get(marker.getTag()).mapMarker.getEntryType());
         }
     }
 
