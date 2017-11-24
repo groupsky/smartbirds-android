@@ -81,6 +81,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private Marker lastMarker;
     private EventsOverlay eventsOverlay;
     private final ArrayList<Zone> zones = new ArrayList<>();
+    private boolean showZoneBackground;
+
+    private List<PathOverlay> zoneOverlays = new ArrayList<>();
 
     @Override
     public void setUpMapIfNeeded() {
@@ -136,8 +139,13 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
                 markerHolder.marker = addMarker(markerHolder.mapMarker, true);
             }
         }
-        for (Zone zone: zones) {
-            addZone(zone);
+        if (zoneOverlays.isEmpty()) {
+            for (Zone zone : zones) {
+                PathOverlay overlay = addZone(zone);
+                if (overlay != null) {
+                    zoneOverlays.add(overlay);
+                }
+            }
         }
         mMap.invalidate();
 
@@ -168,6 +176,26 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setZoomFactor(double zoomFactor) {
         this.zoomFactor = zoomFactor;
+    }
+
+    @Override
+    public void setShowZoneBackground(boolean showBackground) {
+        this.showZoneBackground = showBackground;
+        drawZones();
+    }
+
+    private void drawZones() {
+        if (mMap != null) {
+            mMap.getOverlayManager().removeAll(zoneOverlays);
+        }
+        zoneOverlays.clear();
+        for (Zone zone : zones) {
+            PathOverlay overlay = addZone(zone);
+            if (overlay != null) {
+                zoneOverlays.add(overlay);
+            }
+        }
+        if (mMap != null) mMap.invalidate();
     }
 
     @Override
@@ -259,8 +287,12 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         if (mMap == null) return null;
 
         PathOverlay zoneOverlay = new PathOverlay(mMap.getResources().getColor(R.color.zone_fill_color), mMap.getContext());
-        zoneOverlay.getPaint().setStrokeWidth(1);
-        zoneOverlay.getPaint().setStyle(Paint.Style.FILL);
+        zoneOverlay.getPaint().setStrokeWidth(6f);
+        if (showZoneBackground) {
+            zoneOverlay.getPaint().setStyle(Paint.Style.FILL);
+        } else {
+            zoneOverlay.getPaint().setStyle(Paint.Style.STROKE);
+        }
         for (Zone.Coordinate point : zone.coordinates) {
             zoneOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
         }
@@ -314,14 +346,15 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void setZones(Iterable<Zone> zones) {
-        boolean needInvalidate = false;
+        this.zones.clear();
+//        boolean needInvalidate = false;
         // we know that zones are not changing, so we just display all zones
-        for (Zone zone: zones) {
+        for (Zone zone : zones) {
             this.zones.add(zone);
-            addZone(zone);
-            needInvalidate = true;
+//            needInvalidate = true;
         }
-        if (needInvalidate && mMap != null) mMap.invalidate();
+        drawZones();
+//        if (needInvalidate && mMap != null) mMap.invalidate();
     }
 
     @Override
