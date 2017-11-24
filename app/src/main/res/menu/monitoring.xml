@@ -145,6 +145,15 @@
         android:enabled="true"
         android:menuCategory="system"
         android:title="@string/menu_monitoring_stay_awake" />
+
+    <item
+        android:id="@+id/action_show_zone_background"
+        android:checkable="true"
+        android:checked="true"
+        android:enabled="true"
+        android:menuCategory="system"
+        android:title="@string/menu_monitoring_show_zone_background" />
+
     <item
         android:id="@+id/menu_form_type"
         android:menuCategory="alternative"
