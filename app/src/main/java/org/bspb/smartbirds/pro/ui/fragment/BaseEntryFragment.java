@@ -172,7 +172,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         if (!isEmpty(lonVal)) lon = Double.parseDouble(lonVal);
 
         checkCoordinates();
-        
+
         String dateVal = data.get(getString(R.string.entry_date));
         String timeVal = data.get(getString(R.string.entry_time));
         if (!isEmpty(dateVal) && !isEmpty(timeVal)) try {
@@ -188,6 +188,12 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     }
 
     @AfterInject
+    protected void checkArguments() {
+        if (entryId == 0) {
+            checkCoordinates();
+        }
+    }
+
     protected void checkCoordinates() {
         if (lat == 0 || lon == 0) {
             logException(new IllegalStateException("Creating entry fragment with zero coordinates"));
