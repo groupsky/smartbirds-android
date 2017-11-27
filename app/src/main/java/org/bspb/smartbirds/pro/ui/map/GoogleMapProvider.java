@@ -8,7 +8,6 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ import org.osmdroid.util.GeoPoint;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -69,7 +67,7 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
  * Created by dani on 14-11-6.
  */
 @EBean
-public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".GMap";
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -121,7 +119,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         setMapType(mapType);
         mMap.setOnMapClickListener(this);
-        mMap.setOnMarkerClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
@@ -488,11 +485,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         } else {
             fragment.getMapAsync(this);
         }
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
     }
 
     @Override
