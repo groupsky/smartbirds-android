@@ -41,9 +41,7 @@ import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Overlay;
-import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.PathOverlay;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
@@ -71,7 +69,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Bean
     EEventBus eventBus;
-    private ItemizedIconOverlay<OverlayItem> markersOverlay;
     private final Set<MarkerHolder> markers = new HashSet<>();
     private ArrayList<LatLng> points;
     private PathOverlay pathOverlay;
@@ -137,8 +134,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         loadKmlFile();
 
         for (MarkerHolder markerHolder : markers) {
-            if (markerHolder.marker == null) {
+            if (markerHolder.marker == null || !mMap.getOverlayManager().contains(markerHolder.marker)) {
                 markerHolder.marker = addMarker(markerHolder.mapMarker, true);
+
             }
         }
         if (zoneOverlays.isEmpty()) {
@@ -296,6 +294,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         marker.setTitle(mapMarker.getTitle());
         marker.setPanToView(false);
         mMap.getOverlays().add(marker);
+
         if (!bulk) mMap.invalidate();
         return marker;
     }
@@ -339,13 +338,15 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         boolean needInvalidate = false;
         Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
         MarkerHolder testHolder = new MarkerHolder(null, null);
+
         for (MapMarker mapMarker : newMapMarkers) {
             testHolder.mapMarker = mapMarker;
             toDelete.remove(testHolder);
-            if (this.markers.contains(testHolder)) continue;
+//            if (this.markers.contains(testHolder)) continue;
             this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker, true)));
             needInvalidate = true;
         }
+
         for (MarkerHolder markerHolder : toDelete) {
             this.markers.remove(markerHolder);
             if (mMap != null && markerHolder.marker != null) {
