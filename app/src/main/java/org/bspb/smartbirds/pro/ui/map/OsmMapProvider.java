@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
@@ -84,6 +85,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private boolean showZoneBackground;
 
     private List<PathOverlay> zoneOverlays = new ArrayList<>();
+    private MarkerClickListener markerClickListener;
 
     @Override
     public void setUpMapIfNeeded() {
@@ -184,6 +186,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         drawZones();
     }
 
+    @Override
+    public void setOnMarkerClickListener(MarkerClickListener listener) {
+        this.markerClickListener = listener;
+    }
+
     private void drawZones() {
         if (mMap != null) {
             mMap.getOverlayManager().removeAll(zoneOverlays);
@@ -271,9 +278,19 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
 
-    protected Marker addMarker(MapMarker mapMarker, boolean bulk) {
+    protected Marker addMarker(final MapMarker mapMarker, boolean bulk) {
         if (mMap == null) return null;
         Marker marker = lastMarker = new Marker(mMap);
+        OsmInfoWindow infoWindow = new OsmInfoWindow(R.layout.bonuspack_bubble, mMap);
+        infoWindow.setClickListener(new OsmInfoWindow.OsmInfoWindowClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (markerClickListener != null) {
+                    markerClickListener.onMarkerClicked(mapMarker.getId(), mapMarker.getEntryType());
+                }
+            }
+        });
+        marker.setInfoWindow(infoWindow);
         marker.setPosition(new GeoPoint(mapMarker.getLatitude(), mapMarker.getLongitude()));
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         marker.setTitle(mapMarker.getTitle());

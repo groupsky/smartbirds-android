@@ -44,6 +44,6 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
                 name = item.data.get(tagSpecies2);
             }
         }
-        return new MapMarker(name, lat, lon);
+        return new MapMarker(name, lat, lon, item.id, item.type);
     }
 }
