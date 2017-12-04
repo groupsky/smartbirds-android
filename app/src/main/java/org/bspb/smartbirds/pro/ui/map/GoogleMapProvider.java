@@ -312,7 +312,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void setMarkers(Iterable<MapMarker> newMapMarkers) {
-        Set<MarkerHolder> currentMarkers = new HashSet<>(this.markers.values());
         Set<MarkerHolder> markerHoldersToDelete = new HashSet<>(this.markers.values());
         Set<Long> idsToDelete = new HashSet<>(this.markers.keySet());
 
@@ -320,11 +319,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         int cnt = 0;
         for (MapMarker mapMarker : newMapMarkers) {
             cnt++;
-
             testHolder.mapMarker = mapMarker;
             markerHoldersToDelete.remove(testHolder);
             idsToDelete.remove(mapMarker.getId());
-            if (currentMarkers.contains(testHolder)) continue;
+//            if (currentMarkers.contains(testHolder)) continue;
             this.markers.put(mapMarker.getId(), new MarkerHolder(mapMarker, addMarker(mapMarker)));
         }
 
