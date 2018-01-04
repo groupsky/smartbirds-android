@@ -224,7 +224,7 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
             View child = getChildAt(idx);
             if (child instanceof FormBirdsRow) {
                 FormBirdsRow row = (FormBirdsRow) child;
-                if (row.isPopulated()) {
+                if (row.isPopulated() || getChildCount() == 1) {
                     models.add(row.getModel());
                 }
             }
