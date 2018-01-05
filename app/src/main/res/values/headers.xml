@@ -55,6 +55,10 @@
     <string name="tag_mpl" translatable="false">MPL/Lcd/C (mm)</string>
     <string name="tag_mcw" translatable="false">MCW/A (mm)</string>
     <string name="tag_lcap" translatable="false">H /Lcap/Pl (mm)</string>
+    <string name="tag_l" translatable="false">L</string>
+    <string name="tag_c" translatable="false">C</string>
+    <string name="tag_a" translatable="false">A</string>
+    <string name="tag_pl" translatable="false">Pl</string>
     <string name="tag_sq_ventr" translatable="false">Sq_ventr</string>
     <string name="tag_sq_caud" translatable="false">Sq_caud</string>
     <string name="tag_sq_dors" translatable="false">Sq_dors</string>
