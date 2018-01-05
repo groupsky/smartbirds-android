@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.forms.convert.BirdsConverter;
@@ -30,6 +31,8 @@ import org.bspb.smartbirds.pro.ui.fragment.NewHerptileEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHumidBirdsEntryFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewMammalEntryFormFragment;
 
+import java.util.ArrayList;
+
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
@@ -40,9 +43,9 @@ public enum EntryType {
     HUMID(new NewHumidBirdsEntryFragment.Builder(), R.string.entry_type_humid, R.id.action_form_type_humid, "form_humid.csv", BirdsConverter.class, BirdsUploader.class),
     CBM(new NewCbmEntryFormFragment.Builder(), R.string.entry_type_cbm, R.id.action_form_type_cbm, "form_cbm.csv", CbmConverter.class, CbmUploader.class),
     CICONIA(new NewCiconiaEntryFormFragment.Builder(), R.string.entry_type_ciconia, R.id.action_form_type_ciconia, "form_ciconia.csv", CiconiaConverter.class, CiconiaUploader.class),
-    HERP(new NewHerpEntryFormFragment.Builder(), R.string.entry_type_herp, R.id.action_form_type_herp, "form_herp.csv", HerpConverter.class, HerpUploader.class),
     HERPTILE(new NewHerptileEntryFormFragment.Builder(), R.string.entry_type_herptile, R.id.action_form_type_herptile, "form_herptile.csv", HerptileConverter.class, HerptileUploader.class),
-    MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class)
+    MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class),
+    HERP(new NewHerpEntryFormFragment.Builder(), 0, R.id.action_form_type_herp, "form_herp.csv", HerpConverter.class, HerpUploader.class)
     // prevent auto-formatting
     ;
 
@@ -83,11 +86,17 @@ public enum EntryType {
     }
 
     public static String[] getTitles(Resources resources) {
-        final String[] titles = new String[values().length];
-        int idx = 0;
-        for (EntryType formType : values())
-            titles[idx++] = resources.getString(formType.titleId);
-        return titles;
+        final ArrayList<String> titles = new ArrayList<>();
+        for (EntryType formType : values()) {
+            if (formType.titleId > 0) {
+                String title = resources.getString(formType.titleId);
+                if (!TextUtils.isEmpty(title)) {
+                    titles.add(resources.getString(formType.titleId));
+                }
+            }
+        }
+
+        return titles.toArray(new String[]{});
     }
 
     public Converter getConverter(Context context) {
