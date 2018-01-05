@@ -39,13 +39,13 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
  * Created by dani on 14-11-11.
  */
 public enum EntryType {
-    BIRDS(new NewBirdsEntryFormFragment.Builder(), R.string.entry_type_birds, R.id.action_form_type_birds, "form_birds.csv", BirdsConverter.class, BirdsUploader.class),
-    HUMID(new NewHumidBirdsEntryFragment.Builder(), R.string.entry_type_humid, R.id.action_form_type_humid, "form_humid.csv", BirdsConverter.class, BirdsUploader.class),
-    CBM(new NewCbmEntryFormFragment.Builder(), R.string.entry_type_cbm, R.id.action_form_type_cbm, "form_cbm.csv", CbmConverter.class, CbmUploader.class),
-    CICONIA(new NewCiconiaEntryFormFragment.Builder(), R.string.entry_type_ciconia, R.id.action_form_type_ciconia, "form_ciconia.csv", CiconiaConverter.class, CiconiaUploader.class),
-    HERPTILE(new NewHerptileEntryFormFragment.Builder(), R.string.entry_type_herptile, R.id.action_form_type_herptile, "form_herptile.csv", HerptileConverter.class, HerptileUploader.class),
-    MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class),
-    HERP(new NewHerpEntryFormFragment.Builder(), 0, R.id.action_form_type_herp, "form_herp.csv", HerpConverter.class, HerpUploader.class)
+    BIRDS(new NewBirdsEntryFormFragment.Builder(), R.string.entry_type_birds, R.id.action_form_type_birds, "form_birds.csv", BirdsConverter.class, BirdsUploader.class, true),
+    HUMID(new NewHumidBirdsEntryFragment.Builder(), R.string.entry_type_humid, R.id.action_form_type_humid, "form_humid.csv", BirdsConverter.class, BirdsUploader.class, true),
+    CBM(new NewCbmEntryFormFragment.Builder(), R.string.entry_type_cbm, R.id.action_form_type_cbm, "form_cbm.csv", CbmConverter.class, CbmUploader.class, true),
+    CICONIA(new NewCiconiaEntryFormFragment.Builder(), R.string.entry_type_ciconia, R.id.action_form_type_ciconia, "form_ciconia.csv", CiconiaConverter.class, CiconiaUploader.class, true),
+    HERPTILE(new NewHerptileEntryFormFragment.Builder(), R.string.entry_type_herptile, R.id.action_form_type_herptile, "form_herptile.csv", HerptileConverter.class, HerptileUploader.class, true),
+    MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class, true),
+    HERP(new NewHerpEntryFormFragment.Builder(), R.string.entry_type_herp, R.id.action_form_type_herp, "form_herp.csv", HerpConverter.class, HerpUploader.class, false)
     // prevent auto-formatting
     ;
 
@@ -67,14 +67,16 @@ public enum EntryType {
     public final String filename;
     private final Class<? extends Converter> converterClass;
     private final Class<? extends Uploader> uploaderClass;
+    private final boolean enabled;
 
-    EntryType(BaseEntryFragment.Builder builder, @StringRes int titleId, @IdRes int menuActionId, String filename, Class<? extends Converter> converterClass, Class<? extends Uploader> uploaderClass) {
+    EntryType(BaseEntryFragment.Builder builder, @StringRes int titleId, @IdRes int menuActionId, String filename, Class<? extends Converter> converterClass, Class<? extends Uploader> uploaderClass, boolean enabled) {
         this.builder = builder;
         this.titleId = titleId;
         this.menuActionId = menuActionId;
         this.filename = filename;
         this.converterClass = converterClass;
         this.uploaderClass = uploaderClass;
+        this.enabled = enabled;
     }
 
     public Fragment buildFragment(double lat, double lon) {
@@ -89,8 +91,7 @@ public enum EntryType {
         final ArrayList<String> titles = new ArrayList<>();
         for (EntryType formType : values()) {
             if (formType.titleId > 0) {
-                String title = resources.getString(formType.titleId);
-                if (!TextUtils.isEmpty(title)) {
+                if (formType.enabled) {
                     titles.add(resources.getString(formType.titleId));
                 }
             }
