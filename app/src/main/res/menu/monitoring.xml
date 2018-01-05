@@ -183,7 +183,8 @@
 
                 <item
                     android:id="@+id/action_form_type_herp"
-                    android:title="@string/entry_type_herp" />
+                    android:title="@string/entry_type_herp"
+                    android:visible="false"/>
 
                 <item
                     android:id="@+id/action_form_type_herptile"
