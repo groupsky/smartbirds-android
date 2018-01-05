@@ -17,6 +17,8 @@
     <string name="entry_type_birds">Птици</string>
     <string name="entry_type_ciconia">Бял щъркел</string>
     <string name="entry_type_herp">Земноводни и влечуги / бозайници</string>
+    <string name="entry_type_herptile">Земноводни и влечуги</string>
+    <string name="entry_type_mammal">Бозайници</string>
     <string name="entry_type_humid">Влажни зони</string>
     <string name="required_field">Задължително поле</string>
     <string name="monitoring_notification_title">Мониторинг</string>
@@ -139,6 +141,10 @@
     <string name="monitoring_herp_sq_caud">Sq caud</string>
     <string name="monitoring_herp_sq_dors">Sq dors</string>
     <string name="monitoring_herp_notes">Бележки</string>
+    <string name="monitoring_mammal_L">L</string>
+    <string name="monitoring_mammal_C">C</string>
+    <string name="monitoring_mammal_A">A</string>
+    <string name="monitoring_mammal_Pl">Pl</string>
     <string name="error_message_create_monitoring_dir">Не може да създаде директорията за данните. Проверете имате ли достатъчно място.</string>
     <string name="toast_cancel_monitoring">Отмяна на мониторинг</string>
     <string name="marker_default_title">Отчитане</string>
