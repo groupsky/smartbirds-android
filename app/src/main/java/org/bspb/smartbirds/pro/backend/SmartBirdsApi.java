@@ -42,6 +42,12 @@ public interface SmartBirdsApi {
     @POST("herp")
     Call<ResponseBody> createHerp(@Body JsonObject request);
 
+    @POST("herptiles")
+    Call<ResponseBody> createHerptile(@Body JsonObject request);
+
+    @POST("mammals")
+    Call<ResponseBody> createMammal(@Body JsonObject request);
+
     @POST("ciconia")
     Call<ResponseBody> createCiconia(@Body JsonObject request);
 

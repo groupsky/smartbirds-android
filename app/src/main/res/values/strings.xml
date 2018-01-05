@@ -17,6 +17,8 @@
     <string name="entry_type_birds">Birds</string>
     <string name="entry_type_ciconia">White stork</string>
     <string name="entry_type_herp">Amphibians and reptiles / mammals</string>
+    <string name="entry_type_herptile">Amphibians and reptiles</string>
+    <string name="entry_type_mammal">Mammals</string>
     <string name="entry_type_humid">Wetlands zones</string>
     <string name="required_field">Required field</string>
     <string name="monitoring_notification_title">Monitoring</string>
@@ -139,6 +141,10 @@
     <string name="monitoring_herp_sq_caud">Sq caud</string>
     <string name="monitoring_herp_sq_dors">Sq dors</string>
     <string name="monitoring_herp_notes">Notes</string>
+    <string name="monitoring_mammal_L">L</string>
+    <string name="monitoring_mammal_C">C</string>
+    <string name="monitoring_mammal_A">A</string>
+    <string name="monitoring_mammal_Pl">Pl</string>
     <string name="error_message_create_monitoring_dir">Cannot create data folder. Please, check available space.</string>
     <string name="toast_cancel_monitoring">Cancel monitoring</string>
     <string name="marker_default_title">Entry</string>
