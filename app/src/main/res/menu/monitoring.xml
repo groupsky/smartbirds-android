@@ -185,6 +185,14 @@
                     android:id="@+id/action_form_type_herp"
                     android:title="@string/entry_type_herp" />
 
+                <item
+                    android:id="@+id/action_form_type_herptile"
+                    android:title="@string/entry_type_herptile" />
+
+                <item
+                    android:id="@+id/action_form_type_mammal"
+                    android:title="@string/entry_type_mammal" />
+
             </group>
         </menu>
     </item>
