@@ -71,6 +71,7 @@ public class NomenclaturesBean {
     Cursor cursor;
 
     String localeColumn;
+    String locale;
 
     final Loader.OnLoadCompleteListener<Cursor> listener = new Loader.OnLoadCompleteListener<Cursor>() {
         @Override
@@ -107,6 +108,7 @@ public class NomenclaturesBean {
             Log.d(TAG, "loading data");
             data.clear();
             localeColumn = context.getString(R.string.nomenclature_locale_column);
+            locale = context.getString(R.string.locale);
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 final Nomenclature nomenclature = new Nomenclature(cursor, localeColumn);
                 List<Nomenclature> list;
@@ -122,11 +124,11 @@ public class NomenclaturesBean {
             // load any missing nomenclatures from bundled - this is useful when updating, before sync with server
             Set<String> missingNomenclatures = new HashSet<>();
             for (SpeciesNomenclature species : loadBundledSpecies()) {
-                fillMissingNomenclature(missingNomenclatures, Nomenclature.from(species));
+                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(Nomenclature.from(species)));
             }
             missingNomenclatures.clear();
             for (Nomenclature nomenclature : loadBundledNomenclatures()) {
-                fillMissingNomenclature(missingNomenclatures, nomenclature);
+                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(nomenclature));
             }
 
             // sort nomenclatures
@@ -198,6 +200,15 @@ public class NomenclaturesBean {
 
     public Iterable<SpeciesNomenclature> loadBundledSpecies() {
         return loadBundledFile("species.json");
+    }
+
+    private Nomenclature localizeNomenclature(Nomenclature nomenclature) {
+            if("bg".equals(locale)) {
+                nomenclature.localeLabel = nomenclature.label.bg;
+            } else {
+                nomenclature.localeLabel = nomenclature.label.en;
+            }
+        return nomenclature;
     }
 
     @SafeVarargs
