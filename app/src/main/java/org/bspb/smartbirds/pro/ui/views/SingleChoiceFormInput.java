@@ -220,7 +220,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        if (mAdapter != null) {
+        if (mAdapter != null && text != null) {
             setSelection(new NomenclatureItem(text.toString()));
         }
         super.setText(text, type);
