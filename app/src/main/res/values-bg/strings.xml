@@ -164,6 +164,7 @@
     <string name="main_screen_btn_info">Информация</string>
     <string name="main_screen_btn_help">Помощ</string>
     <string name="info_dialog_title">Информация</string>
+    <string name="help_url">https://bspborg.github.io/files/org.bspb.smartbirds.pro/smartbirds-help-2.5.6-2015-bg.pdf</string>
     <string name="info_text">
         <![CDATA[
             <p><b>SmartBirds Pro е мобилно приложение за мониторинг на птици, земноводни, влечуги и бозайници</b></p>
