@@ -20,6 +20,7 @@
     <string name="entry_type_herptile">Земноводни и влечуги</string>
     <string name="entry_type_mammal">Бозайници</string>
     <string name="entry_type_humid">Влажни зони</string>
+    <string name="entry_type_invertebrates">Защитени безгръбначни</string>
     <string name="required_field">Задължително поле</string>
     <string name="monitoring_notification_title">Мониторинг</string>
     <string name="monitoring_notification_content">Стартиран мониторинг</string>
