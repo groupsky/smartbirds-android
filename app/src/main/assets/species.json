@@ -9668,5 +9668,935 @@
     },
     "euring": null,
     "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Anisus vorticulus",
+      "bg": null,
+      "en": "Lesser ramshorn snail"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Apatura metis",
+      "bg": null,
+      "en": "Freyer's Purple Emperor"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Astacus astacus",
+      "bg": null,
+      "en": "European crayfish"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Austropotamobius torrentium",
+      "bg": "Поточен рак",
+      "en": "Stone crayfish"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Carabus hungaricus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Carabus variolosus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Coenagrion ornatum",
+      "bg": null,
+      "en": "Ornate Bluet"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Cerambyx cerdo",
+      "bg": "Голям дъбов сечко",
+      "en": "Great capricorn beetle"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Cordulegaster heros",
+      "bg": null,
+      "en": "Balkan Goldenring"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Euphydryas aurinia",
+      "bg": null,
+      "en": "Marsh Fritillary"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Euplagia quadripunctaria",
+      "bg": null,
+      "en": "Jersey tiger"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Helix pomatia",
+      "bg": null,
+      "en": "Roman snail"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Euphydryas maturna",
+      "bg": null,
+      "en": "Scarce Fritillary"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Lucanus cervus",
+      "bg": "Еленов рогач",
+      "en": "Stag beetle"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Lycaena dispar",
+      "bg": null,
+      "en": "Large copper"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Maculinea arion",
+      "bg": null,
+      "en": "Large blue"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Maculinea nausithous",
+      "bg": null,
+      "en": "Dusky large blue"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Morimus asper funereus",
+      "bg": "Буков сечко",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Ophiogomphus cecilia",
+      "bg": null,
+      "en": "Green Gomphid"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Osmoderma barnabita",
+      "bg": null,
+      "en": "Hermit beetle"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Parnassius apollo",
+      "bg": null,
+      "en": "Apollo"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Parnassius mnemosyne",
+      "bg": null,
+      "en": "Clouded Apollo"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Polyommatus eroides",
+      "bg": null,
+      "en": "Eros blue"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Proserpinus proserpina",
+      "bg": null,
+      "en": "Willowherb hawkmoth"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Rosalia alpina",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Theodoxus transversalis",
+      "bg": null,
+      "en": "Striped nerite"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Unio crassus",
+      "bg": null,
+      "en": "Thick Shelled River Mussel"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Vertigo angustior",
+      "bg": null,
+      "en": "Narrow-mouthed Whorl Snail"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Vertigo moulinsiana",
+      "bg": null,
+      "en": "Desmoulin's Whorl Snail"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Zerynthia polyxena",
+      "bg": null,
+      "en": "Southern Festoon"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Coenonympha oedipрus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Dioszeghyana schmidtii",
+      "bg": null,
+      "en": "Carpathian quaker"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Erannis ankeraria",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Eriogaster catax",
+      "bg": null,
+      "en": "Eastern eggar"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Hyles hippophaes",
+      "bg": null,
+      "en": "Seathorn hawk-moth"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Lignyoptera fumidaria",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Limoniscus violaceus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Lindenia tetraphylla",
+      "bg": null,
+      "en": "Bladetail"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Lycaena helle",
+      "bg": null,
+      "en": "Violet copper"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Nymphalis vaualbum",
+      "bg": null,
+      "en": "Compton tortoiseshell"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Paracaloptenus caloptenoides",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Paracossulus thrips",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Saga pedo",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Bolbelasmus unicronis",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Rhysodes sulcatus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Carabus menetriesi pacholei",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Pilemia tigrina",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Cucujus cinnaberinus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Probaticus subrugosus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Pseudophilotes bavius",
+      "bg": null,
+      "en": "Bavius blue"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Arytrura musculus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Hirudo verbana",
+      "bg": null,
+      "en": "European medicinal leech"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Carabus intricatus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Propomacrus bimucronatus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Ergates faber",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Prionus coriarius",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Prionus besicanus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Perisomena caecigena",
+      "bg": null,
+      "en": "Autumn Emperor Moth"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Dolbina elegans",
+      "bg": null,
+      "en": "Ash hawkmoth"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Colias caucasica balcanica",
+      "bg": null,
+      "en": "Balkan clouded yellow"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Erebia rhodopensis",
+      "bg": null,
+      "en": "Nicholl's Ringlet"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Lethocerus patruelis",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Periplaneta americana",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Harmonia axyridis",
+      "bg": null,
+      "en": "Asian ladybeetle"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Cacyreus marshalli",
+      "bg": null,
+      "en": "Geranium Bronze"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Cameraria ohridella",
+      "bg": null,
+      "en": "Horse Chestnut Leaf-miner"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Cydalima perspectalis",
+      "bg": null,
+      "en": "Box tree moth"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Metcalfa pruinosa",
+      "bg": null,
+      "en": "Citrus flatid planthopper"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Ricania japonica",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Corythucha arcuata",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Corythucha ciliata",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Stephanitis rhododendri",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Oxycarenus lavaterae",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Leptoglossus occidentalis",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Halyomorpha halys",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Nezara viridula",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Perillus bioculatus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Orconectes limosus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Dreissena polymorpha",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Sinanodonta woodiana",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Calosoma sycophanta",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Carabus gigas",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Orictes nasicornis",
+      "bg": "Бръмбар носорог",
+      "en": "European rhinoceros beetle"
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Formica rufa",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Carabus scabrosus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Calosoma inquisitor",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Astacus leptodactylus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Dytiscus marginalis",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Hydrous piceus",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Helix lucorum",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Cybister lateralimarginalis",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Scolia flavifrons",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "invertebrates",
+    "label": {
+      "la": "Potamon fluviatile",
+      "bg": null,
+      "en": null
+    },
+    "euring": null,
+    "code": null
   }
 ]
