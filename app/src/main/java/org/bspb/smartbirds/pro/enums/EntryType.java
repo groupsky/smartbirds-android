@@ -14,12 +14,14 @@ import org.bspb.smartbirds.pro.forms.convert.CiconiaConverter;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
 import org.bspb.smartbirds.pro.forms.convert.HerpConverter;
 import org.bspb.smartbirds.pro.forms.convert.HerptileConverter;
+import org.bspb.smartbirds.pro.forms.convert.InvertebratesConverter;
 import org.bspb.smartbirds.pro.forms.convert.MammalConverter;
 import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
 import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
 import org.bspb.smartbirds.pro.forms.upload.CiconiaUploader;
 import org.bspb.smartbirds.pro.forms.upload.HerpUploader;
 import org.bspb.smartbirds.pro.forms.upload.HerptileUploader;
+import org.bspb.smartbirds.pro.forms.upload.InvertebratesUploader;
 import org.bspb.smartbirds.pro.forms.upload.MammalUploader;
 import org.bspb.smartbirds.pro.forms.upload.Uploader;
 import org.bspb.smartbirds.pro.ui.fragment.BaseEntryFragment;
@@ -29,6 +31,7 @@ import org.bspb.smartbirds.pro.ui.fragment.NewCiconiaEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHerpEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHerptileEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHumidBirdsEntryFragment;
+import org.bspb.smartbirds.pro.ui.fragment.NewInvertebratesEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewMammalEntryFormFragment;
 
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public enum EntryType {
     CICONIA(new NewCiconiaEntryFormFragment.Builder(), R.string.entry_type_ciconia, R.id.action_form_type_ciconia, "form_ciconia.csv", CiconiaConverter.class, CiconiaUploader.class, true),
     HERPTILE(new NewHerptileEntryFormFragment.Builder(), R.string.entry_type_herptile, R.id.action_form_type_herptile, "form_herptile.csv", HerptileConverter.class, HerptileUploader.class, true),
     MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class, true),
+    INVERTEBRATES(new NewInvertebratesEntryFormFragment.Builder(), R.string.entry_type_invertebrates, R.id.action_form_type_invertebrates, "form_invertebrates.csv", InvertebratesConverter.class, InvertebratesUploader.class, true),
     HERP(new NewHerpEntryFormFragment.Builder(), R.string.entry_type_herp, R.id.action_form_type_herp, "form_herp.csv", HerpConverter.class, HerpUploader.class, false)
     // prevent auto-formatting
     ;
@@ -56,7 +60,8 @@ public enum EntryType {
             R.id.action_form_type_herp,
             R.id.action_form_type_humid,
             R.id.action_form_type_herptile,
-            R.id.action_form_type_mammal
+            R.id.action_form_type_mammal,
+            R.id.action_form_type_invertebrates,
     };
 
     private final BaseEntryFragment.Builder builder;
