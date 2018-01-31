@@ -20,7 +20,7 @@
     <string name="entry_type_herptile">Amphibians and reptiles</string>
     <string name="entry_type_mammal">Mammals</string>
     <string name="entry_type_humid">Wetlands zones</string>
-    <string name="entry_type_invertebrates">Invertebrates</string>
+    <string name="entry_type_invertebrates">Protected invertebrates</string>
     <string name="required_field">Required field</string>
     <string name="monitoring_notification_title">Monitoring</string>
     <string name="monitoring_notification_content">Monitoring started</string>
