@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.prefs;
 
+import org.androidannotations.annotations.sharedpreferences.DefaultBoolean;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;
 
 /**
@@ -9,4 +10,7 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 public interface CommonPrefs {
 
     String commonOtherObservers();
+
+    @DefaultBoolean(false)
+    boolean confidentialRecord();
 }

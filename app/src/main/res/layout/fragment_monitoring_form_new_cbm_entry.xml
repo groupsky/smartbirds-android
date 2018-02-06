@@ -21,22 +21,36 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_name"
+                    android:layout_span="7"
                     android:hint="@string/monitoring_cbm_name"
                     android:tag="@string/tag_observed_bird"
                     app:entries="species_birds"
                     app:required="true" />
 
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_cbm_confidential"
+                    android:layout_span="3"
+                    android:tag="@string/tag_confidential"
+                    android:text="@string/monitoring_birds_private" />
+
+            </TableRow>
+
+            <TableRow>
+
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_distance"
+                    android:layout_span="5"
                     android:hint="@string/monitoring_cbm_distance"
                     android:tag="@string/tag_distance"
                     app:entries="form_cbm_distance"
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:layout_span="5"
                     android:hint="@string/monitoring_cbm_count"
                     android:tag="@string/tag_count_subject"
                     app:required="true" />
+
 
             </TableRow>
 
@@ -44,6 +58,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_primary_habitat"
+                    android:layout_span="5"
                     android:hint="@string/monitoring_cbm_primary_habitat"
                     android:tag="@string/tag_primary_habitat"
                     app:entries="form_cbm_habitat"
@@ -51,6 +66,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_secondary_habitat"
+                    android:layout_span="5"
                     android:hint="@string/monitoring_cbm_secondary_habitat"
                     android:tag="@string/tag_secondary_habitat"
                     app:entries="form_cbm_habitat" />
@@ -59,7 +75,9 @@
 
             <TableRow>
 
-                <LinearLayout android:orientation="vertical">
+                <LinearLayout
+                    android:layout_span="3"
+                    android:orientation="vertical">
 
                     <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
                         android:id="@+id/form_cbm_zone"
@@ -84,6 +102,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_visit_number"
+                    android:layout_span="3"
                     android:hint="@string/monitoring_cbm_visit_number"
                     android:tag="@string/tag_visit_number"
                     app:entries="form_cbm_visit_number"
@@ -91,6 +110,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_cbm_sector"
+                    android:layout_span="4"
                     android:hint="@string/monitoring_cbm_sector"
                     android:tag="@string/tag_transect_number"
                     app:entries="form_cbm_sector"

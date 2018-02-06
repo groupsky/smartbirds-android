@@ -17,8 +17,10 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.prefs.CbmPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
+import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 import org.bspb.smartbirds.pro.ui.views.ZoneFormInput;
 
 import java.util.Date;
@@ -51,8 +53,14 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @ViewById(R.id.error_cbm_too_far)
     View errorCbmTooFarView;
 
+    @ViewById(R.id.form_cbm_confidential)
+    SwitchFormInput confidential;
+
     @Pref
     CbmPrefs_ prefs;
+
+    @Pref
+    CommonPrefs_ commonPrefs;
 
     @FragmentById(R.id.pictures_fragment)
     NewEntryPicturesFragment picturesFragment;
@@ -72,6 +80,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
             visitInput.setText(prefs.cbmVisit().get());
             sectorInput.setText(prefs.cbmSector().get());
             zoneInput.setText(prefs.cbmZone().get());
+            confidential.setChecked(commonPrefs.confidentialRecord().get());
         }
 
     }
@@ -132,6 +141,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         prefs.cbmVisit().put(visitInput.getText().toString());
         prefs.cbmSector().put(sectorInput.getText().toString());
         prefs.cbmZone().put(zoneInput.getText().toString());
+        commonPrefs.confidentialRecord().put(confidential.isChecked());
     }
 
     public static class Builder implements BaseEntryFragment.Builder {

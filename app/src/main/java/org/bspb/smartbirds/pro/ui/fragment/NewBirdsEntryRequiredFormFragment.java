@@ -4,7 +4,6 @@ import android.os.Build;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
@@ -12,8 +11,10 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
+import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,8 +40,14 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.form_birds_count_max)
     DecimalNumberFormInput countMax;
 
+    @ViewById(R.id.form_birds_confidential)
+    SwitchFormInput confidential;
+
     @Pref
     BirdPrefs_ prefs;
+
+    @Pref
+    CommonPrefs_ commonPrefs;
 
     @FragmentById(R.id.pictures_fragment)
     NewEntryPicturesFragment picturesFragment;
@@ -52,6 +59,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         if (isNewEntry()) {
             countUnits.setSelection(prefs.birdCountUnits().get());
             countType.setSelection(prefs.birdCountType().get());
+            confidential.setChecked(commonPrefs.confidentialRecord().get());
         }
         handleCountsLogic();
     }
@@ -92,6 +100,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         super.onPause();
         prefs.birdCountUnits().put(countUnits.getSelection());
         prefs.birdCountType().put(countType.getSelection());
+        commonPrefs.confidentialRecord().put(confidential.isChecked());
     }
 
     @TextChange(R.id.form_birds_count_type)
