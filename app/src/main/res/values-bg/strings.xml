@@ -146,6 +146,9 @@
     <string name="monitoring_mammal_C">C</string>
     <string name="monitoring_mammal_A">A</string>
     <string name="monitoring_mammal_Pl">Pl</string>
+    <string name="monitoring_herptiles_private">Поверително</string>
+    <string name="monitoring_mammal_private">Поверително</string>
+    <string name="monitoring_invertebrates_private">Поверително</string>
     <string name="error_message_create_monitoring_dir">Не може да създаде директорията за данните. Проверете имате ли достатъчно място.</string>
     <string name="toast_cancel_monitoring">Отмяна на мониторинг</string>
     <string name="marker_default_title">Отчитане</string>

@@ -17,6 +17,7 @@ public class InvertebratesConverter extends Converter {
         add(R.string.tag_count, "count");
         add(R.string.tag_marking, "marking");
         add(R.string.tag_remarks_type, "speciesNotes");
+        addBool(R.string.tag_confidential, "confidential");
     }
 
 }

@@ -25,13 +25,11 @@
                     app:entries="species_herptiles"
                     app:required="true" />
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:id="@+id/form_herp_count"
-                    android:hint="@string/monitoring_herp_count"
-                    android:tag="@string/tag_count"
-                    android:text="1"
-                    app:required="true"
-                    tools:ignore="HardcodedText" />
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:layout_span="3"
+                    android:tag="@string/tag_confidential"
+                    android:text="@string/monitoring_herptiles_private" />
 
             </TableRow>
 
@@ -48,12 +46,21 @@
                     android:hint="@string/monitoring_herp_age"
                     android:tag="@string/tag_age"
                     app:entries="form_herptiles_age" />
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:id="@+id/form_herp_count"
+                    android:hint="@string/monitoring_herp_count"
+                    android:tag="@string/tag_count"
+                    android:text="1"
+                    app:required="true"
+                    android:layout_span="2"
+                    tools:ignore="HardcodedText" />
             </TableRow>
 
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
-                    android:layout_span="8"
+                    android:layout_span="10"
                     android:hint="@string/monitoring_herp_danger_observation"
                     android:tag="@string/tag_threats_other"
                     app:entries="form_herptiles_danger_observation" />
@@ -63,12 +70,12 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:layout_span="4"
+                    android:layout_span="5"
                     android:hint="@string/monitoring_herp_marking"
                     android:tag="@string/tag_marking" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:layout_span="4"
+                    android:layout_span="5"
                     android:hint="@string/monitoring_herp_axis_distance"
                     android:tag="@string/tag_distance_from_axis" />
 
@@ -78,7 +85,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_herp_habitat"
-                    android:layout_span="8"
+                    android:layout_span="10"
                     android:hint="@string/monitoring_herp_habitat"
                     android:tag="@string/tag_habitat"
                     app:entries="form_herptiles_habitat" />
@@ -88,7 +95,7 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
-                    android:layout_span="8"
+                    android:layout_span="10"
                     android:hint="@string/monitoring_herp_notes"
                     android:tag="@string/tag_remarks_type" />
             </TableRow>
