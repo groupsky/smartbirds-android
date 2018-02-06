@@ -29,6 +29,7 @@ public class MammalConverter extends Converter {
         add(R.string.tag_t_substrate, "tempSubstrat");
         add(R.string.tag_t_air, "tempAir");
         add(R.string.tag_remarks_type, "speciesNotes");
+        addBool(R.string.tag_confidential, "confidential");
     }
 
 }

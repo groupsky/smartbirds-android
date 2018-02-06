@@ -146,6 +146,9 @@
     <string name="monitoring_mammal_C">C</string>
     <string name="monitoring_mammal_A">A</string>
     <string name="monitoring_mammal_Pl">Pl</string>
+    <string name="monitoring_herptiles_private">Confidential</string>
+    <string name="monitoring_mammal_private">Confidential</string>
+    <string name="monitoring_invertebrates_private">Confidential</string>
     <string name="error_message_create_monitoring_dir">Cannot create data folder. Please, check available space.</string>
     <string name="toast_cancel_monitoring">Cancel monitoring</string>
     <string name="marker_default_title">Entry</string>
