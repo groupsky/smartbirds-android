@@ -26,6 +26,7 @@
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_invertebrates_confidential"
                     android:layout_span="3"
                     android:tag="@string/tag_confidential"
                     android:text="@string/monitoring_invertebrates_private" />
