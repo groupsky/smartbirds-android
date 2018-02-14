@@ -1,8 +1,12 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Build;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
@@ -43,6 +47,9 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.form_birds_confidential)
     SwitchFormInput confidential;
 
+    @ViewById(R.id.warning_confidential_nest)
+    TextView warningConfidential;
+
     @Pref
     BirdPrefs_ prefs;
 
@@ -62,6 +69,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
             confidential.setChecked(commonPrefs.confidentialRecord().get());
         }
         handleCountsLogic();
+        showConfidentialWarningIfNeeded();
     }
 
     @Override
@@ -103,6 +111,22 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         commonPrefs.confidentialRecord().put(confidential.isChecked());
     }
 
+    @TextChange(R.id.form_birds_count_units)
+    @CheckedChange(R.id.form_birds_confidential)
+    void showConfidentialWarningIfNeeded() {
+        Nomenclature item = countUnits.getSelectedItem();
+        String countUnit = item != null ? item.label.en : null;
+        if ("Nests".equals(countUnit)) {
+            if (!confidential.isChecked()) {
+                warningConfidential.setVisibility(View.VISIBLE);
+            } else {
+                warningConfidential.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            warningConfidential.setVisibility(View.INVISIBLE);
+        }
+    }
+
     @TextChange(R.id.form_birds_count_type)
     void handleCountsLogic() {
         Nomenclature item = countType.getSelectedItem();
@@ -140,5 +164,4 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
                 break;
         }
     }
-
 }

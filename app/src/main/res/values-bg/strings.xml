@@ -247,4 +247,5 @@
     <string name="storage_permission_rationale">Достъп до паметта е необходим за показване на картата</string>
     <string name="permissions_required">Достъп до местоположението и паметта са задължителни</string>
     <string name="emptyList">Няма записи в списъка</string>
+    <string name="warning_confidential_nest">Моля изберете \"поверително\" за да направите гнездото видимо само от Вас.</string>
 </resources>
