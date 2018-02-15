@@ -11,3 +11,9 @@
 
 the apk is located at **app/build/outputs/apk/app-release.apk**
 
+
+# License
+
+[Apache v2.0](LICENSE)
+
+Copyright (c) 2014-2018 [Bulgarian Society for the Protection of Birds](http://bspb.org)
