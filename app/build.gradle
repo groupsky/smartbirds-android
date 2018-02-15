@@ -25,9 +25,7 @@ android {
     signingConfigs {
         release {
             storeFile file("../release.jks")
-            storePassword "***REMOVED***"
             keyAlias "smartbirds-pro"
-            keyPassword "***REMOVED***"
         }
     }
     buildTypes {
