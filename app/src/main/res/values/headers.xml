@@ -96,6 +96,12 @@
     <string name="tag_t_air" translatable="false">Temp air</string>
     <string name="tag_t_cloaca" translatable="false">T cloaca</string>
     <string name="tag_notes" translatable="false">Notes</string>
+    <string name="tag_elevation" translatable="false">Elevation</string>
+    <string name="tag_accompanyingSpecies" translatable="false">Accompanying species</string>
+    <string name="tag_reportingUnit" translatable="false">Reporting unit</string>
+    <string name="tag_phenologicalPhase" translatable="false">Phenological phase</string>
+    <string name="tag_density" translatable="false">Density</string>
+    <string name="tag_cover" translatable="false">Cover</string>
 
     <string name="end_time_key" translatable="false">Hour_End</string>
     <string name="entry_time" translatable="false">Hour_Observation</string>
