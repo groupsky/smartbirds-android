@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:layout_span="9"
+                    android:hint="@string/monitoring_plants_name"
+                    android:tag="@string/tag_species_scientific_name"
+                    app:entries="species_plants"
+                    app:required="true" />
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:layout_span="3"
+                    android:tag="@string/tag_confidential"
+                    android:text="@string/monitoring_plants_private" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:layout_span="6"
+                    android:hint="@string/monitoring_plants_reporting_unit"
+                    android:tag="@string/tag_reportingUnit"
+                    app:entries="form_plants_reporting_unit" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:layout_span="6"
+                    android:hint="@string/monitoring_plants_phenological_phase"
+                    android:tag="@string/tag_phenologicalPhase"
+                    app:entries="form_plants_phenological_phase" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:layout_span="4"
+                    android:hint="@string/monitoring_plants_count"
+                    android:tag="@string/tag_count"
+                    android:text="1"
+                    tools:ignore="HardcodedText" />
+
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:layout_span="4"
+                    android:hint="@string/monitoring_plants_density"
+                    android:tag="@string/tag_density" />
+
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:layout_span="4"
+                    android:hint="@string/monitoring_plants_cover"
+                    android:tag="@string/tag_cover" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:layout_span="4"
+                    android:hint="@string/monitoring_plants_elevation"
+                    android:tag="@string/tag_elevation" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_plants_habitat"
+                    android:layout_span="8"
+                    android:hint="@string/monitoring_plants_habitat"
+                    android:tag="@string/tag_habitat"
+                    app:entries="form_plants_habitat" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                    android:layout_span="12"
+                    android:hint="@string/monitoring_plants_threats"
+                    android:tag="@string/tag_threats_other"
+                    app:entries="form_plants_threats" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
+                    android:layout_span="12"
+                    android:hint="@string/monitoring_plants_notes"
+                    android:tag="@string/tag_remarks_type" />
+            </TableRow>
+
+        </TableLayout>
+
+        <fragment
+            android:id="@+id/pictures_fragment"
+            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
