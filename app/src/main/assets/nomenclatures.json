@@ -4562,5 +4562,460 @@
       "bg": "Ветропарк",
       "en": "Wind park"
     }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Широколистна гора",
+      "en": "Deciduous forest"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Смесен храсталак",
+      "en": "Mixed bushes"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Отвесна скала – карбонат",
+      "en": "Vertical rock – carbonate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Крайморски пясъци",
+      "en": "Seaside sands"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Блато",
+      "en": "Swamp"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Дърво",
+      "en": "Tree"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Цветоносен стрък",
+      "en": "Flower-bearing stalk"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Млади връхни разклонения-турион",
+      "en": "Young tip branches-turion"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Развитие на листа",
+      "en": "Development of leaves"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Край на цъфтежа / спороносене",
+      "en": "End of flowering / spore bearing"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Соларен парк",
+      "en": "Solar park"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Иглолистна гора",
+      "en": "Coniferous forest"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Смесена гора",
+      "en": "Mixed forest"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Листопаден храсталак",
+      "en": "Deciduous bushes"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Комплекс храсталак-пасище",
+      "en": "Shrub-pasture complex"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Ливада",
+      "en": "Meadow"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Отвесна скала – силикат",
+      "en": "Vertical rock – silicate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Отделна скала – силикат",
+      "en": "Single rock – silicate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Отделна скала – карбонат",
+      "en": "Single rock – carbonate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Сипеи - карбонат",
+      "en": "Scree – carbonate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Крайречни пясъци",
+      "en": "Riverside sands"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Тресавище",
+      "en": "Quagmire"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Торфище",
+      "en": "Peatland"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Река",
+      "en": "River"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Крайбрежен участък на езеро",
+      "en": "Coastal area of a lake"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Крайбрежен участък на река",
+      "en": "Coastal area of a river"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Храст",
+      "en": "Bush"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Храстче",
+      "en": "Small bush"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Туфа",
+      "en": "Tussock"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Спороносен лист / стрък",
+      "en": "Spore-bearing leaf / stalk"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Вегетативни листни розетки",
+      "en": "Vegetative leafy rosettes"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Вегетативен летораст",
+      "en": "Vegetative shoot"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Група",
+      "en": "Group"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Поява на пъпки / поници",
+      "en": "Appearance of buds"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Начало на вегетация – набъбване / разпукване на пъпките",
+      "en": "Start of vegetation - swelling / bursting of the buds"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Бутонизация / спорообразуване",
+      "en": "Budding / spore formation"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Начало на цъфтежа / спорообразуване",
+      "en": "Beginning of flowering / spore formation"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Пълен цъфтеж / спороносене",
+      "en": "Complete flowering / spore bearing"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Зрели плодове / спорангии",
+      "en": "Mature fruits / sporangia"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Край на вегетация / отмиране",
+      "en": "End of vegetation / dying off"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Пожари",
+      "en": "Fires"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Кариери",
+      "en": "Quarries"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Събирачество/Бракониери",
+      "en": "Poachers"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Пътища",
+      "en": "Roads"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Ветропарк",
+      "en": "Wind park"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Други",
+      "en": "Others"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Премахване на храсти",
+      "en": "Removal of shrubs"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Пресъхващи водни тела",
+      "en": "Dried up waterbodies"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Вечнозелен храсталак",
+      "en": "Evergreen bushes"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Пасище",
+      "en": "Pasture"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Сипеи - силикат",
+      "en": "Scree – silicate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Мочурище",
+      "en": "Fen"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Езеро",
+      "en": "Lake"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Отделно тревисто растение",
+      "en": "Separate herbaceous plant"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Генеративен летораст",
+      "en": "Generative shoot"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Пълно разтваряне на пъпките",
+      "en": "Complete opening of buds"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Появяване на съцветия / спорангии",
+      "en": "Appearance of inflorescences / sporangia"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Сечи",
+      "en": "Logging"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Замърсяване",
+      "en": "Pollution"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
+    }
   }
 ]

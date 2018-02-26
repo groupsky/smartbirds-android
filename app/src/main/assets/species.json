@@ -10598,5 +10598,505 @@
     },
     "euring": null,
     "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Acanthus spinosus*",
+      "bg": "Бодлив страшник",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Acer heldreichii subsp. visianii*",
+      "bg": "Визианов клен",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Achillea kotschyi (= Achillea urumoffii)*",
+      "bg": "Урумов равнец",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Achillea leptophylla*",
+      "bg": "Прилегналовлакнест равнец",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Achillea thracica*",
+      "bg": "Тракийски равнец",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Adonis volgensis*",
+      "bg": "Волжки горицвет",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Acorus calamus*",
+      "bg": "Блатен аир",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Achillea ochroleuca*",
+      "bg": "Бледожълт равнец",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Adiantum capillus-veneris*",
+      "bg": "Венерин косъм",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Aesculus hippocastanum*",
+      "bg": "Конски кестен",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Aethionema arabicum*",
+      "bg": "Арабска етионема",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alchemilla achtarovii*",
+      "bg": "Ахтарово шапиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alchemilla asteroantha*",
+      "bg": "Звездоцветно шапиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alchemilla bandericensis*",
+      "bg": "Бъндерицово шапиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alchemilla jumrukczalica*",
+      "bg": "Юмрукчалско шапиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alchemilla mollis*",
+      "bg": "Меколистно шапиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alchemilla pirinica*",
+      "bg": "Пиринско шапиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alkanna jordanovii*",
+      "bg": "Йорданова айважива",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Aldrovanda vesiculosa*",
+      "bg": "Жлезиста алдрованда",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alkanna stribrnyi*",
+      "bg": "Стрибърнова айважива",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alkanna tinctoria*",
+      "bg": "Синя айважива",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Allium angulosum*",
+      "bg": "Ръбестостъблен лук",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Allium jubatum*",
+      "bg": "Качулест лук",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Allium montanum*",
+      "bg": "Планински лук",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Allium stojanovii*",
+      "bg": "Стоянов лук",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alyssum borzaeanum*",
+      "bg": "Борзеанов игловръх",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alyssum cuneifolium subsp. pirinicum*",
+      "bg": "Пирински игловръх",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alyssum orbelicum*",
+      "bg": "Орбелийски игловръх",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Alyssum stribrnyi*",
+      "bg": "Стрибърнов игловръх",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Ammania verticillata*",
+      "bg": "Прешленолистна амания",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Amygdalus webbii*",
+      "bg": "Вебиев див бадем",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anacamptis pyramidalis*",
+      "bg": "Обикновен анакамптис",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anchusa davidovii*",
+      "bg": "Давидово винче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anchusa gmelinii*",
+      "bg": "Гмелиново винче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anchusa macedonica*",
+      "bg": "Македонско винче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anchusa stylosa*",
+      "bg": "Дългостълбчесто винче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anchusa velenovskyi*",
+      "bg": "Веленовскиево винче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Androsace obtusifolia*",
+      "bg": "Тъполистен оклоп",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anemone narcissiflora*",
+      "bg": "Нарцисова съсънка",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anemone pavonina*",
+      "bg": "Червена съсънка",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anemone sylvestris*",
+      "bg": "Горска съсънка",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis argyrophylla*",
+      "bg": "Сребристовлакнесто подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis gaudium-solis*",
+      "bg": "Оранжево подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis jordanovii*",
+      "bg": "Йорданово подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis macrantha*",
+      "bg": "Едрокошничесто подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis orbelica*",
+      "bg": "Рилско подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis regis-borisii*",
+      "bg": "Борисово подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis rumelica*",
+      "bg": "Влакнесто подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis sancti-johanis*",
+      "bg": "Иваново подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
+  },
+  {
+    "type": "plants",
+    "label": {
+      "la": "Anthemis stribrnyi*",
+      "bg": "Стрибърново подрумиче",
+      "en": null
+    },
+    "euring": null,
+    "code": null
   }
 ]
