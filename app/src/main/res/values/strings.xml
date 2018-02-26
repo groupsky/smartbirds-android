@@ -21,6 +21,7 @@
     <string name="entry_type_mammal">Mammals</string>
     <string name="entry_type_humid">Wetlands zones</string>
     <string name="entry_type_invertebrates">Protected invertebrates</string>
+    <string name="entry_type_plants">Plants</string>
     <string name="required_field">Required field</string>
     <string name="monitoring_notification_title">Monitoring</string>
     <string name="monitoring_notification_content">Monitoring started</string>
@@ -149,6 +150,17 @@
     <string name="monitoring_herptiles_private">Confidential</string>
     <string name="monitoring_mammal_private">Confidential</string>
     <string name="monitoring_invertebrates_private">Confidential</string>
+    <string name="monitoring_plants_name">Target species</string>
+    <string name="monitoring_plants_private">Confidential</string>
+    <string name="monitoring_plants_reporting_unit">Reporting unit</string>
+    <string name="monitoring_plants_phenological_phase">Phenological phase</string>
+    <string name="monitoring_plants_count">Count</string>
+    <string name="monitoring_plants_density">Density (sq. m)</string>
+    <string name="monitoring_plants_cover">Cover</string>
+    <string name="monitoring_plants_elevation">Elevation</string>
+    <string name="monitoring_plants_habitat">Habitat</string>
+    <string name="monitoring_plants_threats">Threats and impacts</string>
+    <string name="monitoring_plants_notes">Notes</string>
     <string name="error_message_create_monitoring_dir">Cannot create data folder. Please, check available space.</string>
     <string name="toast_cancel_monitoring">Cancel monitoring</string>
     <string name="marker_default_title">Entry</string>

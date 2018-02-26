@@ -198,6 +198,10 @@
                     android:id="@+id/action_form_type_invertebrates"
                     android:title="@string/entry_type_invertebrates" />
 
+                <item
+                    android:id="@+id/action_form_type_plants"
+                    android:title="@string/entry_type_plants" />
+
             </group>
         </menu>
     </item>

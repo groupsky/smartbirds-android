@@ -57,6 +57,9 @@ public interface SmartBirdsApi {
     @POST("cbm")
     Call<ResponseBody> createCbm(@Body JsonObject request);
 
+    @POST("plants")
+    Call<ResponseBody> createPlants(@Body JsonObject request);
+
     @Multipart
     @POST("storage")
     Call<ResponseEnvelope<FileId>> upload(@Part MultipartBody.Part file);
