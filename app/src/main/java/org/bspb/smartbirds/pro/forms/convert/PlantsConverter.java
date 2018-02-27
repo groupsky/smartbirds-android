@@ -17,7 +17,7 @@ public class PlantsConverter extends Converter {
         addSpecies(R.string.tag_species_scientific_name, "species");
         add(R.string.tag_elevation, "elevation");
         addSingle(R.string.tag_habitat, "habitat");
-        addMulti(R.string.tag_accompanyingSpecies, "accompanyingSpecies");
+        addSpeciesMulti(R.string.tag_accompanyingSpecies, "accompanyingSpecies");
         addSingle(R.string.tag_reportingUnit, "reportingUnit");
         addSingle(R.string.tag_phenologicalPhase, "phenologicalPhase");
         add(R.string.tag_count, "count", "0");

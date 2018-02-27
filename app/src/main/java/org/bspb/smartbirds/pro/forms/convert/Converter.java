@@ -17,6 +17,7 @@ import org.bspb.smartbirds.pro.forms.convert.fields.MultipleChoiceConverter;
 import org.bspb.smartbirds.pro.forms.convert.fields.SimpleConverter;
 import org.bspb.smartbirds.pro.forms.convert.fields.SingleChoiceConverter;
 import org.bspb.smartbirds.pro.forms.convert.fields.SpeciesConverter;
+import org.bspb.smartbirds.pro.forms.convert.fields.SpeciesMultiConverter;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -87,6 +88,10 @@ public abstract class Converter {
         add(new SpeciesConverter(context, context.getString(csvFieldName), jsonFieldName));
     }
 
+    protected void addSpeciesMulti(@StringRes int csvFieldName, String jsonFieldName) {
+        add(new SpeciesMultiConverter(context, context.getString(csvFieldName), jsonFieldName));
+    }
+
     protected void addDateTime(@StringRes int csvDateFieldName, @StringRes int csvTimeFieldName, String jsonFieldName) {
         add(new DateTimeConverter(context.getString(csvDateFieldName), context.getString(csvTimeFieldName), jsonFieldName));
     }
@@ -102,7 +107,7 @@ public abstract class Converter {
             try {
                 converter.convert(csv, result, usedCsvColumns);
             } catch (Throwable t) {
-                throw new RuntimeException("Converter "+converter+" failed: "+t.getMessage(), t);
+                throw new RuntimeException("Converter " + converter + " failed: " + t.getMessage(), t);
             }
         }
 

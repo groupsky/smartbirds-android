@@ -26,6 +26,7 @@
                     app:required="true" />
 
                 <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_plants_confidential"
                     android:layout_span="3"
                     android:tag="@string/tag_confidential"
                     android:text="@string/monitoring_plants_private" />
@@ -51,9 +52,7 @@
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:layout_span="4"
                     android:hint="@string/monitoring_plants_count"
-                    android:tag="@string/tag_count"
-                    android:text="1"
-                    tools:ignore="HardcodedText" />
+                    android:tag="@string/tag_count" />
 
                 <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                     android:layout_span="4"

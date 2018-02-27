@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/multiple_choice_full_screen">
+
+    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+        android:id="@+id/field_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:text="X" />
+
+</merge>
