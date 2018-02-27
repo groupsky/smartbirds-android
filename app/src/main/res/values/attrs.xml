@@ -4,6 +4,7 @@
     <declare-styleable name="Theme">
         <attr name="singleChoiceFormInputStyle" format="reference" />
         <attr name="multipleChoiceFormInputStyle" format="reference" />
+        <attr name="multipleChoiceFullScreenFormInputStyle" format="reference" />
         <attr name="dateFormInputStyle" format="reference" />
         <attr name="timeFormInputStyle" format="reference" />
         <attr name="textFormInputStyle" format="reference" />
@@ -21,6 +22,7 @@
     </declare-styleable>
 
     <attr name="entries" format="string" />
+    <attr name="hint" format="string" />
 
     <!-- Stylable attributes for SingleChoiceFormInput -->
     <declare-styleable name="SingleChoiceFormInput">
@@ -30,6 +32,12 @@
     <!-- Stylable attributes for MultipleChoiceFormInput -->
     <declare-styleable name="MultipleChoiceFormInput">
         <attr name="entries" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for MultipleChoiceFullScreenFormInput -->
+    <declare-styleable name="MultipleChoiceFullScreenFormInput">
+        <attr name="entries" />
+        <attr name="hint" />
     </declare-styleable>
 
 </resources>

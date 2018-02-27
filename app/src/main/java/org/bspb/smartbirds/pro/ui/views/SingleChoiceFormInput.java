@@ -54,7 +54,7 @@ import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPL
 @EView
 public class SingleChoiceFormInput extends TextViewFormInput implements SupportStorage {
 
-    private final CharSequence key;
+    private CharSequence key;
 
     @Bean
     NomenclaturesBean nomenclatures;
@@ -91,6 +91,11 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         } finally {
             a.recycle();
         }
+    }
+
+    public void setKey(CharSequence key) {
+        this.key = key;
+        loadData();
     }
 
     public void onEventMainThread(NomenclaturesReadyEvent e) {

@@ -161,6 +161,7 @@
     <string name="monitoring_plants_habitat">Местообитание</string>
     <string name="monitoring_plants_threats">Заплахи и въздействия</string>
     <string name="monitoring_plants_notes">Бележки</string>
+    <string name="monitoring_plants_accompanying_species">Съпътстващи видове</string>
     <string name="error_message_create_monitoring_dir">Не може да създаде директорията за данните. Проверете имате ли достатъчно място.</string>
     <string name="toast_cancel_monitoring">Отмяна на мониторинг</string>
     <string name="marker_default_title">Отчитане</string>
