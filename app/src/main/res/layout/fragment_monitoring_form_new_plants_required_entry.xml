@@ -68,6 +68,7 @@
             <TableRow>
 
                 <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_plants_elevation"
                     android:layout_span="4"
                     android:hint="@string/monitoring_plants_elevation"
                     android:tag="@string/tag_elevation" />
