@@ -20,7 +20,7 @@ public class PlantsConverter extends Converter {
         addSpeciesMulti(R.string.tag_accompanyingSpecies, "accompanyingSpecies");
         addSingle(R.string.tag_reportingUnit, "reportingUnit");
         addSingle(R.string.tag_phenologicalPhase, "phenologicalPhase");
-        add(R.string.tag_count, "count", "0");
+        add(R.string.tag_count, "count");
         add(R.string.tag_density, "density");
         add(R.string.tag_cover, "cover");
         addMulti(R.string.tag_threats_other, "threatsPlants");
