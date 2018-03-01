@@ -1,12 +1,14 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.service.DataService_;
@@ -23,6 +25,18 @@ public class EditCommonFormActivity extends BaseActivity {
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
     MonitoringCommonFormFragment formFragment;
 
+    @Extra
+    boolean isFinishing = false;
+
+    @OptionsMenuItem(R.id.action_submit)
+    void setMenuSubmit(MenuItem menuSubmit) {
+        if (isFinishing) {
+            menuSubmit.setTitle(R.string.menu_monitoring_finish);
+        } else {
+            menuSubmit.setTitle(R.string.menu_monitoring_save);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +52,19 @@ public class EditCommonFormActivity extends BaseActivity {
                     .add(R.id.container, formFragment)
                     .commit();
         }
+
+        if(isFinishing) {
+            setTitle(R.string.title_activity_finish);
+        } else {
+            setTitle(R.string.title_activity_edit);
+        }
     }
 
     @OptionsItem(R.id.action_submit)
     void save() {
         if (formFragment.validate()) {
             formFragment.save();
+            setResult(RESULT_OK);
             finish();
         }
     }
