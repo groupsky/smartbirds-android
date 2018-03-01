@@ -24,6 +24,7 @@
         android:textColor="@android:color/white" />
 
     <LinearLayout
+        android:id="@+id/right_buttons_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -64,18 +65,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="@string/main_screen_btn_export"
             android:contentDescription="@string/export_description"
+            android:text="@string/main_screen_btn_export"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:scaleType="centerInside"
-        android:src="@drawable/logo_mtel" />
+        android:layout_below="@id/right_buttons_container"
+        android:gravity="right|bottom"
+        android:paddingTop="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo_natura_2000" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/logo_life" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_info"
