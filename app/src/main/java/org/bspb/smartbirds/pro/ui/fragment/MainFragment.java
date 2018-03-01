@@ -226,6 +226,12 @@ public class MainFragment extends Fragment {
                     case "logo_mtel":
                         drawable = getResources().getDrawable(R.drawable.logo_mtel);
                         break;
+                    case "life_NEW":
+                        drawable = getResources().getDrawable(R.drawable.logo_life);
+                        break;
+                    case "natura2000_NEW":
+                        drawable = getResources().getDrawable(R.drawable.logo_natura_2000);
+                        break;
                 }
                 if (drawable == null) {
                     logException(new IllegalArgumentException("Unknown image: " + s));
