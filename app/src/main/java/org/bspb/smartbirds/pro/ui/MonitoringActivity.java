@@ -82,6 +82,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     private static final int REQUEST_NEW_ENTRY = 1001;
 
+    private static final int REQUEST_FINISH_MONITORING = 1002;
+
     private static final String PREFS_POINTS = "points";
 
     @InstanceState
@@ -444,11 +446,19 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         }
     }
 
-    @OptionsItem(R.id.action_finish)
-    void onFinish() {
+    @OnActivityResult(REQUEST_FINISH_MONITORING)
+    void onFinishConfirm(int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
         clearPrefs();
         eventBus.post(new FinishMonitoringEvent());
         finish();
+    }
+
+    @OptionsItem(R.id.action_finish)
+    void onFinish() {
+        EditCommonFormActivity_.intent(this).isFinishing(true).startForResult(REQUEST_FINISH_MONITORING);
     }
 
     @OptionsItem(android.R.id.home)
