@@ -5,7 +5,6 @@
 <string name="title_activity_monitoring">"Monitoring"</string>
 <string name="title_activity_form">"Active form"</string>
 <string name="title_activity_edit">"Edit common form"</string>
-<string name="title_activity_finish">"Finish monitoring"</string>
 <string name="cancel_monitoring">"Cancel monitoring"</string>
 <string name="really_cancel_monitoring">"This will delete all data from this monitoring!
 Do you really want to cancel the monitoring?"</string>
@@ -264,4 +263,5 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_plants_threats">"Threats and impacts"</string>
 <string name="monitoring_plants_notes">"Notes"</string>
 <string name="monitoring_plants_accompanying_species">"Accompanying species"</string>
+<string name="title_activity_finish">"Common form check before save"</string>
 </resources>

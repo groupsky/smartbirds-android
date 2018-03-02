@@ -5,7 +5,6 @@
 <string name="title_activity_monitoring">"Мониторинг"</string>
 <string name="title_activity_form">"Активна форма"</string>
 <string name="title_activity_edit">"Редакция на обща форма"</string>
-<string name="title_activity_finish">"Завършване на мониторинг"</string>
 <string name="cancel_monitoring">"Отмяна на мониторинг"</string>
 <string name="really_cancel_monitoring">"Това ще изтрие всички събрани данни от този мониторинг!
 Наистина ли желаете да отмените мониторинга?"</string>
@@ -263,4 +262,5 @@
 <string name="monitoring_plants_threats">"Заплахи и въздействия"</string>
 <string name="monitoring_plants_notes">"Бележки"</string>
 <string name="monitoring_plants_accompanying_species">"Съпътстващи видове"</string>
+<string name="title_activity_finish">"Проверка на общата форма преди завършване"</string>
 </resources>
