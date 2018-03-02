@@ -17,6 +17,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 
@@ -35,7 +36,7 @@ public class NewPlantsEntryRequiredFormFragment extends BaseFormFragment {
     SwitchFormInput confidential;
 
     @ViewById(R.id.form_plants_elevation)
-    FloatNumberFormInput elevation;
+    DecimalNumberFormInput elevation;
 
     @Pref
     CommonPrefs_ commonPrefs;
@@ -107,7 +108,7 @@ public class NewPlantsEntryRequiredFormFragment extends BaseFormFragment {
 
     public void onEvent(Location location) {
         if (location != null && location.hasAltitude() && TextUtils.isEmpty(elevation.getText())) {
-            elevation.setText(location.getAltitude() + "");
+            elevation.setText(Integer.toString((int) location.getAltitude()));
 
             // unregister for the events since we need the altitude only once
             eventBus.unregister(this);

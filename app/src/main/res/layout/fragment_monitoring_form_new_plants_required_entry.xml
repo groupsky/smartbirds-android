@@ -67,7 +67,7 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                     android:id="@+id/form_plants_elevation"
                     android:layout_span="4"
                     android:hint="@string/monitoring_plants_elevation"
