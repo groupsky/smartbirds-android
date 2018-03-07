@@ -86,7 +86,7 @@
                         android:paddingRight="16dp"
                         android:textColor="?android:textColorHint"
                         android:gravity="bottom"
-                        android:text="m н.в."/>
+                        android:text="@string/monitoring_plants_elevation_units"/>
                 </LinearLayout>
 
 
