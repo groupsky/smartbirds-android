@@ -125,7 +125,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
                 String[] selected = getText().toString().split(MULTIPLE_CHOICE_SPLITTER);
                 Arrays.sort(selected);
                 for (int idx=0; idx < entries.length; idx++) {
-                    mSelected[idx] = Arrays.binarySearch(selected, entries[idx]) == 0;
+                    mSelected[idx] = Arrays.binarySearch(selected, entries[idx]) >= 0;
                 }
             }
         }
