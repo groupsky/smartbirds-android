@@ -67,11 +67,28 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:id="@+id/form_plants_elevation"
+                <LinearLayout
                     android:layout_span="4"
-                    android:hint="@string/monitoring_plants_elevation"
-                    android:tag="@string/tag_elevation" />
+                    android:orientation="horizontal">
+
+                    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                        android:id="@+id/form_plants_elevation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/monitoring_plants_elevation"
+                        android:tag="@string/tag_elevation" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="16dp"
+                        android:textColor="?android:textColorHint"
+                        android:gravity="bottom"
+                        android:text="m н.в."/>
+                </LinearLayout>
+
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_plants_habitat"
