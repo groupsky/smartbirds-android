@@ -13,7 +13,6 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.service.DataService_;
-import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -38,7 +37,6 @@ public class SplashScreenActivity extends BaseActivity implements Runnable {
     protected void onResume() {
         super.onResume();
         content.postDelayed(this, SPLASH_DURATION);
-        NotificationUtils.hideMonitoringNotification(this);
     }
 
     @Override
