@@ -265,4 +265,6 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_plants_accompanying_species">"Accompanying species"</string>
 <string name="title_activity_finish">"Common form check before save"</string>
 <string name="monitoring_plants_elevation_units">"m a.s.l."</string>
+<string name="gdpr_agree_checkbox">I agree with the GDPR</string>
+<string name="error_missing_gdpr_consent">You have to agree with gdpr</string>
 </resources>

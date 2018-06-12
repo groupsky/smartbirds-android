@@ -9,6 +9,7 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EApplication;
 import org.bspb.smartbirds.pro.backend.AddCookiesInterceptor;
+import org.bspb.smartbirds.pro.backend.AddLanguageInterceptor;
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.ReceivedCookiesInterceptor;
@@ -54,6 +55,7 @@ public class SmartBirdsApplication extends Application {
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));
         backend.addInterceptor(authenticationInterceptor);
+        backend.addInterceptor(new AddLanguageInterceptor());
 
         bus.register(this);
 

@@ -13,10 +13,14 @@ public class LoginRequest {
     @SerializedName("password")
     @Expose
     public String password;
+    @SerializedName("gdprConsent")
+    @Expose
+    public boolean gdprConsent;
 
-    public LoginRequest(String email, String password) {
+    public LoginRequest(String email, String password, boolean gdprConsent) {
         this.email = email;
         this.password = password;
+        this.gdprConsent = gdprConsent;
     }
 
     @Override
@@ -24,6 +28,7 @@ public class LoginRequest {
         return "LoginRequest{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", gdprConsent='" + gdprConsent + '\'' +
                 '}';
     }
 }

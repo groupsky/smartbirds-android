@@ -30,4 +30,6 @@ public interface UserPrefs {
     String lastName();
 
     String email();
+
+    boolean gdprConsent();
 }
