@@ -2,6 +2,9 @@ package org.bspb.smartbirds.pro.service;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
 import org.androidannotations.annotations.ServiceAction;
@@ -52,11 +55,11 @@ public class AuthenticationService extends AbstractIntentService {
     }
 
     @ServiceAction
-    void login(String email, String password) {
+    void login(String email, String password, boolean gdprConsent) {
         Log.d(TAG, String.format("login: %s %s", email, password));
         bus.postSticky(new LoginStateEvent(true));
         try {
-            LoginResultEvent result = doLogin(email, password);
+            LoginResultEvent result = doLogin(email, password, gdprConsent);
             Log.d(TAG, String.format("login: %s %s => %s", email, password, result));
             bus.postSticky(result);
         } finally {
@@ -64,33 +67,46 @@ public class AuthenticationService extends AbstractIntentService {
         }
     }
 
-    private LoginResultEvent doLogin(String email, String password) {
+    private LoginResultEvent doLogin(String email, String password, boolean gdprConsent) {
 
         Response<LoginResponse> response = null;
         try {
-            response = backend.api().login(new LoginRequest(email, password)).execute();
+            response = backend.api().login(new LoginRequest(email, password, gdprConsent)).execute();
         } catch (IOException e) {
             logException(e);
             return new LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY);
         }
 
         if (!response.isSuccessful()) {
+            String errorResponse = "";
             try {
-                Log.i(TAG, String.format("Login error %d: %s", response.code(), response.errorBody().string()));
+                errorResponse = response.errorBody().string();
+                Log.i(TAG, String.format("Login error %d: %s", response.code(), errorResponse));
             } catch (IOException e) {
                 logException(e);
             }
+
+            LoginResponse loginResponse = new Gson().fromJson(errorResponse, LoginResponse.class);
+            String errorMessage = null;
+            if(loginResponse != null) {
+                errorMessage = loginResponse.error;
+            }
             switch (response.code()) {
                 case Backend.HTTP_STATUS_BAD_REQUEST:
-                    return new LoginResultEvent(LoginResultEvent.Status.BAD_PASSWORD);
+                    return new LoginResultEvent(LoginResultEvent.Status.ERROR, errorMessage);
                 case Backend.HTTP_STATUS_UNAUTHORIZED:
+                    if (loginResponse != null && loginResponse.token == null) {
+                        if (LoginResponse.REQUIRE_GDPR.equals(loginResponse.require)) {
+                            return new LoginResultEvent(LoginResultEvent.Status.MISSING_GDPR, loginResponse.error);
+                        }
+                    }
                     return new LoginResultEvent(LoginResultEvent.Status.BAD_PASSWORD);
                 default:
                     return new LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY);
             }
         }
 
-        authenticationInterceptor.setAuthorization(response.body().token, email, password);
+        authenticationInterceptor.setAuthorization(response.body().token, email, password, gdprConsent);
 
         SyncService_.intent(this).initialSync().start();
 

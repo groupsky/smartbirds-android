@@ -22,7 +22,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
@@ -69,6 +71,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     View mProgressView;
     @ViewById(R.id.login_form)
     View mLoginFormView;
+    @ViewById(R.id.gdpr_panel)
+    View mGdprPanel;
+    @ViewById(R.id.gdpr_consent)
+    CheckBox mGdprConsent;
+    @ViewById(R.id.gdpr_info)
+    TextView mGdprInfo;
+    @ViewById(R.id.login_error)
+    TextView mError;
 
     @Bean
     Backend backend;
@@ -78,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     UserPrefs_ prefs;
 
     private boolean isLoginRunning;
+    private boolean missingGdpr = false;
 
     @Override
     protected void onStart() {
@@ -89,6 +100,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onStop() {
         bus.unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        bus.removeStickyEvent(LoginResultEvent.class);
+        super.onDestroy();
     }
 
     @AfterViews
@@ -172,10 +189,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mError.setText("");
+        mError.setVisibility(View.GONE);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        boolean gdprConsent = mGdprConsent.isChecked();
 
         boolean cancel = false;
         View focusView = null;
@@ -202,6 +222,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
+        // Check for gdpr consent
+        if (missingGdpr) {
+            if (!gdprConsent) {
+                mGdprConsent.setError(getString(R.string.error_missing_gdpr_consent));
+                focusView = mGdprConsent;
+                cancel = true;
+            }
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -210,7 +239,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            AuthenticationService_.intent(this).login(email, password).start();
+            bus.removeStickyEvent(LoginResultEvent.class);
+            AuthenticationService_.intent(this).login(email, password, gdprConsent).start();
         }
     }
 
@@ -320,6 +350,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void onEventMainThread(LoginResultEvent loginResult) {
         Log.d(TAG, String.format("login result: %s", loginResult));
+        mGdprPanel.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        mError.setText("");
         switch (loginResult.status) {
             case SUCCESS:
                 prefs.userId().put(loginResult.user.id);
@@ -340,6 +373,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             case BAD_PASSWORD:
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+                break;
+            case MISSING_GDPR:
+                missingGdpr = true;
+                mGdprPanel.setVisibility(View.VISIBLE);
+                mError.setVisibility(View.VISIBLE);
+                mError.setText(loginResult.message);
+                break;
+            case ERROR:
+                if (loginResult.message != null) {
+                    mError.setVisibility(View.VISIBLE);
+                    mError.setText(loginResult.message);
+                }
                 break;
         }
     }

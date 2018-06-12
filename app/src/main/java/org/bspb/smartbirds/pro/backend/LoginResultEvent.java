@@ -11,12 +11,16 @@ public class LoginResultEvent {
         SUCCESS,
         PASSWORD_SHORT,
         CONNECTIVITY,
-        BAD_PASSWORD
+        BAD_PASSWORD,
+        MISSING_GDPR,
+        ERROR
     }
 
     public Status status;
 
     public User user;
+
+    public String message;
 
     public LoginResultEvent(Status status) {
         this.status = status;
@@ -27,11 +31,17 @@ public class LoginResultEvent {
         this.user = user;
     }
 
+    public LoginResultEvent(Status status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
     @Override
     public String toString() {
         return "LoginResultEvent{" +
                 "status=" + status +
                 ", user=" + user +
+                ", message=" + message +
                 '}';
     }
 

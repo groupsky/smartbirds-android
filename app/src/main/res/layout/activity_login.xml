@@ -30,6 +30,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/login_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/error_background"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
             <AutoCompleteTextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -50,6 +62,30 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
+
+            <LinearLayout
+                android:id="@+id/gdpr_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <CheckBox
+                    android:id="@+id/gdpr_consent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/gdpr_agree_checkbox" />
+
+                <TextView
+                    android:id="@+id/gdpr_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="view" />
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/email_sign_in_button"
