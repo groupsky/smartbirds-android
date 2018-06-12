@@ -15,12 +15,16 @@ public class LoginRequest {
     public String password;
     @SerializedName("gdprConsent")
     @Expose
-    public boolean gdprConsent;
+    public Boolean gdprConsent;
 
-    public LoginRequest(String email, String password, boolean gdprConsent) {
+    public LoginRequest(String email, String password, Boolean gdprConsent) {
         this.email = email;
         this.password = password;
         this.gdprConsent = gdprConsent;
+    }
+
+    public LoginRequest(String email, String password) {
+        this(email, password, null);
     }
 
     @Override

@@ -58,20 +58,19 @@ public class AuthenticationInterceptor implements Interceptor {
         prefs.isAuthenticated().put(false);
     }
 
-    public void setAuthorization(String authorization, String username, String password, boolean gdprConsent) {
+    public void setAuthorization(String authorization, String username, String password) {
         this.authorization = authorization;
         prefs.authToken().put(authorization);
         prefs.isAuthenticated().put(!TextUtils.isEmpty(authorization));
         prefs.username().put(username);
         prefs.password().put(password);
-        prefs.gdprConsent().put(gdprConsent);
         Log.i(TAG, String.format("Authorization: %s", authorization));
     }
 
     synchronized boolean tryRelogin(String failedAuth) {
         try {
             if (!TextUtils.equals(this.authorization, failedAuth)) return !isEmpty(authorization);
-            retrofit2.Response<LoginResponse> loginResponse = backend.api().login(new LoginRequest(prefs.username().get(), prefs.password().get(), prefs.gdprConsent().get())).execute();
+            retrofit2.Response<LoginResponse> loginResponse = backend.api().login(new LoginRequest(prefs.username().get(), prefs.password().get())).execute();
             if (loginResponse.isSuccessful()) {
                 this.authorization = loginResponse.body().token;
                 prefs.authToken().put(this.authorization);
