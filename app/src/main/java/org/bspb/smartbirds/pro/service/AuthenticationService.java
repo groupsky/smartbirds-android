@@ -55,7 +55,7 @@ public class AuthenticationService extends AbstractIntentService {
     }
 
     @ServiceAction
-    void login(String email, String password, boolean gdprConsent) {
+    void login(String email, String password, Boolean gdprConsent) {
         Log.d(TAG, String.format("login: %s %s", email, password));
         bus.postSticky(new LoginStateEvent(true));
         try {
@@ -67,7 +67,7 @@ public class AuthenticationService extends AbstractIntentService {
         }
     }
 
-    private LoginResultEvent doLogin(String email, String password, boolean gdprConsent) {
+    private LoginResultEvent doLogin(String email, String password, Boolean gdprConsent) {
 
         Response<LoginResponse> response = null;
         try {
@@ -106,7 +106,7 @@ public class AuthenticationService extends AbstractIntentService {
             }
         }
 
-        authenticationInterceptor.setAuthorization(response.body().token, email, password, gdprConsent);
+        authenticationInterceptor.setAuthorization(response.body().token, email, password);
 
         SyncService_.intent(this).initialSync().start();
 

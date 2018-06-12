@@ -267,5 +267,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_plants_elevation_units">"m a.s.l."</string>
 <string name="gdpr_agree_checkbox">I agree with the GDPR</string>
 <string name="error_missing_gdpr_consent">You have to agree with gdpr</string>
-    <string name="view_gdpr">view</string>
+<string name="view_gdpr">view</string>
+<string translatable="false" name="register_url">https://smartbirds.org/register</string>
+<string translatable="false" name="gdpr_info_url">https://smartbirds.org/gdpr</string>
 </resources>

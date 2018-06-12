@@ -170,13 +170,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Click(R.id.register_button)
     protected void register() {
-        String registerUrl = "https://smartbirds.org/register";
+        String registerUrl = getString(R.string.register_url);
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(registerUrl)));
     }
 
     @Click(R.id.gdpr_info)
     protected void showGdprInfo() {
-        String gdprUrl = "https://smartbirds.org/gdpr";
+        String gdprUrl = getString(R.string.gdpr_info_url);
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(gdprUrl)));
     }
 
@@ -197,11 +197,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
         mError.setText("");
         mError.setVisibility(View.GONE);
+        bus.removeStickyEvent(LoginResultEvent.class);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        boolean gdprConsent = mGdprConsent.isChecked();
+        Boolean gdprConsent = null;
+        if (missingGdpr) {
+            gdprConsent = mGdprConsent.isChecked();
+        }
+
 
         boolean cancel = false;
         View focusView = null;
@@ -245,7 +250,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            bus.removeStickyEvent(LoginResultEvent.class);
             AuthenticationService_.intent(this).login(email, password, gdprConsent).start();
         }
     }
@@ -359,6 +363,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mGdprPanel.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
         mError.setText("");
+        missingGdpr = false;
         switch (loginResult.status) {
             case SUCCESS:
                 prefs.userId().put(loginResult.user.id);

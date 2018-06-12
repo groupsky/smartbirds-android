@@ -31,5 +31,4 @@ public interface UserPrefs {
 
     String email();
 
-    boolean gdprConsent();
 }
