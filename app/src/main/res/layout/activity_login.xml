@@ -72,17 +72,19 @@
 
                 <CheckBox
                     android:id="@+id/gdpr_consent"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/gdpr_agree_checkbox" />
 
                 <TextView
                     android:id="@+id/gdpr_info"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
                     android:paddingLeft="10dp"
-                    android:text="view" />
+                    android:text="@string/view_gdpr"
+                    android:textColor="@color/link_color" />
 
             </LinearLayout>
 
