@@ -6,4 +6,5 @@
     <color name="zone_fill_color">#66cc3333</color>
     <color name="zone_stroke_color">#b2cc3333</color>
     <color name="error_color">#c0ff0000</color>
+    <color name="link_color">#00F</color>
 </resources>

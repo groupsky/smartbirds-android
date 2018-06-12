@@ -174,6 +174,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(registerUrl)));
     }
 
+    @Click(R.id.gdpr_info)
+    protected void showGdprInfo() {
+        String gdprUrl = "https://smartbirds.org/gdpr";
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(gdprUrl)));
+    }
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
