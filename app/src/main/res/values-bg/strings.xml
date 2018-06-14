@@ -167,7 +167,6 @@
 <string name="main_screen_btn_info">"Информация"</string>
 <string name="main_screen_btn_help">"Помощ"</string>
 <string name="info_dialog_title">"Информация"</string>
-<string name="help_url">"https://bspborg.github.io/files/org.bspb.smartbirds.pro/smartbirds-help-2.5.6-2015-bg.pdf"</string>
 <string name="info_text"><![CDATA[
             <p><b>SmartBirds Pro е мобилно приложение за мониторинг на птици, земноводни, влечуги, бозайници, защитени безгръбначни животни и растения</b></p>
             <p>Този продукт е създаден от Българско дружество за защита на птиците / BirdLife България,</p>
@@ -264,4 +263,7 @@
 <string name="monitoring_plants_accompanying_species">"Съпътстващи видове"</string>
 <string name="title_activity_finish">"Проверка на общата форма преди завършване"</string>
 <string name="monitoring_plants_elevation_units">"м н.в."</string>
+<string name="gdpr_agree_checkbox">"Съгласен съм с условията на Общия регламент за защита на личните данни (GDPR)"</string>
+<string name="error_missing_gdpr_consent">"Трябва да се съгласите с условията на Общия регламент за защита на личните данни (GDPR)"</string>
+<string name="view_gdpr">"виж"</string>
 </resources>

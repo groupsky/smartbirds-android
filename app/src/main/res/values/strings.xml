@@ -13,7 +13,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="really_cancel_entry">"Do you really want to cancel the entry?"</string>
 <string name="cancel_edit_entry">"Cancel entry edit"</string>
 <string name="really_cancel_edit_entry">"Do you really want to discard entry changes?"</string>
-<string name="entry_type_cbm">"Common Bird Monitoring(CBM)"</string>
+<string name="entry_type_cbm">"Common Bird Monitoring (CBM)"</string>
 <string name="entry_type_birds">"Birds"</string>
 <string name="entry_type_ciconia">"White stork"</string>
 <string name="entry_type_herp">"Amphibians and reptiles / mammals"</string>
@@ -126,7 +126,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_herp_gender">"Sex"</string>
 <string name="monitoring_herp_age">"Age"</string>
 <string name="monitoring_herp_habitat">"Habitat"</string>
-<string name="monitoring_herp_danger_observation">"Threats, other "</string>
+<string name="monitoring_herp_danger_observation">"Threats, other"</string>
 <string name="monitoring_herp_count">"Count"</string>
 <string name="monitoring_herp_marking">"Marking"</string>
 <string name="monitoring_herp_axis_distance">"Distance from axis"</string>
@@ -134,7 +134,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_herp_scl">"SCL/L (mm)"</string>
 <string name="monitoring_herp_mpl">"MPL/Lcd/C (mm)"</string>
 <string name="monitoring_herp_mcw">"MCW/A (mm)"</string>
-<string name="monitoring_herp_h">"H /Lcap/Pl (mm)"</string>
+<string name="monitoring_herp_h">"H/Lcap/Pl (mm)"</string>
 <string name="monitoring_herp_t_substrate">"Т, substrate"</string>
 <string name="monitoring_herp_t_vha">"Т, air"</string>
 <string name="monitoring_herp_t_kloaka">"Т, cloaca"</string>
@@ -167,7 +167,6 @@ Do you really want to cancel the monitoring?"</string>
 <string name="main_screen_btn_info">"Information"</string>
 <string name="main_screen_btn_help">"Help"</string>
 <string name="info_dialog_title">"Information"</string>
-<string name="help_url">"https://bspborg.github.io/files/org.bspb.smartbirds.pro/smartbirds-help-2.5.6-2015-en.pdf"</string>
 <string name="info_text"><![CDATA[
             <p><b>SmartBirds Pro is a mobile application for monitoring of birds, amphibians, reptiles, mammals, protected invertebrates and plants</b></p>
             <p>This product was developed by the Bulgarian Society for the Protection of Birds / BirdLife Bulgaria,</p>
@@ -210,7 +209,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_ciconia_sep_5">"5."</string>
 <string name="monitoring_ciconia_sep_6">"6. Data for dead juveniles"</string>
 <string name="export_description">"Export all data not yet uploaded to the server (all data is still kept on the device)"</string>
-<string name="image_file_create_error">"Can't create photo"</string>
+<string name="image_file_create_error">"Cannot create photo"</string>
 
 <!-- Strings related to login -->
 <string name="title_activity_login">"Sign in"</string>
@@ -233,7 +232,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="tab_required">"Main"</string>
 <string name="tab_optional">"Additional"</string>
 <string name="no_place_nearby">"There are no known places nearby"</string>
-<string name="error_cbm_zone_too_far">"The zone is more than 5km from the location"</string>
+<string name="error_cbm_zone_too_far">"The zone is more than 5 km from the location"</string>
 <string name="main_screen_btn_browse">"Browse"</string>
 <string name="title_monitoring_list">"Monitorings"</string>
 <string name="title_monitoring_detail">"Monitoring Details"</string>
@@ -265,9 +264,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_plants_accompanying_species">"Accompanying species"</string>
 <string name="title_activity_finish">"Common form check before save"</string>
 <string name="monitoring_plants_elevation_units">"m a.s.l."</string>
-<string name="gdpr_agree_checkbox">I agree with the GDPR</string>
-<string name="error_missing_gdpr_consent">You have to agree with gdpr</string>
-<string name="view_gdpr">view</string>
-<string translatable="false" name="register_url">https://smartbirds.org/register</string>
-<string translatable="false" name="gdpr_info_url">https://smartbirds.org/gdpr</string>
+<string name="gdpr_agree_checkbox">"I agree with the conditions of the General Data Protection Regulation (GDPR)"</string>
+<string name="error_missing_gdpr_consent">"You have to agree with the conditions of the General Data Protection Regulation (GDPR)"</string>
+<string name="view_gdpr">"view"</string>
 </resources>
