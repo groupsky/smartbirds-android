@@ -1,6 +1,10 @@
 package org.bspb.smartbirds.pro.service;
 
 import android.content.ContentProviderOperation;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.MainThread;
+import android.support.annotation.UiThread;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;
@@ -61,11 +65,21 @@ public class ZoneService extends AbstractIntentService {
                 getContentResolver().applyBatch(AUTHORITY, buffer);
             } catch (Throwable t) {
                 logException(t);
-                Toast.makeText(this, "Could not download zones. Try again.", Toast.LENGTH_SHORT).show();
+                showToast("Could not download zones. Try again.");
             }
             bus.post(new DownloadCompleted());
         } finally {
             isDownloading = false;
         }
+    }
+
+    private void showToast(final String message) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

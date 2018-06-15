@@ -1,6 +1,10 @@
 package org.bspb.smartbirds.pro.service;
 
 import android.content.ContentProviderOperation;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.MainThread;
+import android.support.annotation.UiThread;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;
@@ -56,6 +60,7 @@ public class NomenclatureService extends AbstractIntentService {
         super("NomenclatureService");
     }
 
+
     @ServiceAction
     public void downloadLocations() {
         isDownloading.add(LOCATIONS);
@@ -76,7 +81,7 @@ public class NomenclatureService extends AbstractIntentService {
                 getContentResolver().applyBatch(AUTHORITY, buffer);
             } catch (Throwable t) {
                 logException(t);
-                Toast.makeText(this, "Could not download locations. Try again.", Toast.LENGTH_SHORT).show();
+                showToast("Could not download locations. Try again.");
             }
         } finally {
             isDownloading.remove(LOCATIONS);
@@ -128,7 +133,7 @@ public class NomenclatureService extends AbstractIntentService {
 
             } catch (Throwable t) {
                 logException(t);
-                Toast.makeText(this, "Could not download nomenclatures. Try again.", Toast.LENGTH_SHORT).show();
+                showToast("Could not download nomenclatures. Try again.");
             }
         } finally {
             isDownloading.remove(NOMENCLATURES);
@@ -136,5 +141,14 @@ public class NomenclatureService extends AbstractIntentService {
                 bus.post(new DownloadCompleted());
             }
         }
+    }
+
+    protected void showToast(final String message) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
