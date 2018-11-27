@@ -5,4 +5,5 @@
     <string name="help_url">https://bspborg.github.io/files/org.bspb.smartbirds.pro/smartbirds-help-2.5.6-2015-en.pdf</string>
     <string name="register_url" translatable="false">https://smartbirds.org/register</string>
     <string name="gdpr_info_url" translatable="false">https://smartbirds.org/gdpr</string>
+    <string name="stats_url" translatable="false">http://192.168.0.106:9966/mobile-stats</string>
 </resources>

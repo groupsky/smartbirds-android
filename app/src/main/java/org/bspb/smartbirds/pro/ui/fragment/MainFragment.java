@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.Html;
@@ -20,6 +21,7 @@ import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebViewFragment;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ import org.bspb.smartbirds.pro.service.SyncService_;
 import org.bspb.smartbirds.pro.service.UploadService;
 import org.bspb.smartbirds.pro.service.ZoneService;
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_;
+import org.bspb.smartbirds.pro.ui.StatsActivity_;
 
 import java.util.Date;
 
@@ -251,6 +254,12 @@ public class MainFragment extends Fragment {
     void helpBtnClicked() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(getString(R.string.help_url)));
+        startActivity(intent);
+    }
+
+    @Click(R.id.btn_stats)
+    void showStats() {
+        Intent intent = new Intent(getActivity(), StatsActivity_.class);
         startActivity(intent);
     }
 
