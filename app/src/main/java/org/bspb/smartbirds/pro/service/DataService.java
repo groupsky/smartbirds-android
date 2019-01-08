@@ -4,7 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.sharedpreferences.Pref;
+import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.Monitoring;
@@ -271,7 +274,8 @@ public class DataService extends Service {
             File image = new File(createMonitoringDir(monitoring), imageFileName);
             try {
                 if (image.createNewFile()) {
-                    bus.post(new ImageFileCreated(monitoring.code, imageFileName, Uri.fromFile(image), image.getAbsolutePath()));
+                    Uri uri = FileProvider.getUriForFile(getApplicationContext(), SmartBirdsApplication.AUTH_FILES, image);
+                    bus.post(new ImageFileCreated(monitoring.code, imageFileName, uri, image.getAbsolutePath()));
                     return;
                 }
             } catch (IOException e) {
