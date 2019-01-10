@@ -1,10 +1,12 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -177,6 +179,10 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     public void onEventMainThread(ImageFileCreated event) {
         currentImage = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
         Intent intent = new Intent(INTENT_TAKE_PICTURE).putExtra(MediaStore.EXTRA_OUTPUT, event.uri);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            intent.setClipData(ClipData.newRawUri("", event.uri));
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
         startActivityForResult(intent, REQUEST_TAKE_PICTURE);
     }
 
