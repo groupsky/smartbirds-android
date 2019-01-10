@@ -64,6 +64,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    // TODO: migrate to v3.x
     implementation 'de.greenrobot:eventbus:2.4.1'
     // Crashlytics Kit
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
