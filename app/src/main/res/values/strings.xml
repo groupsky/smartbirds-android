@@ -5,6 +5,7 @@
 <string name="title_activity_monitoring">"Monitoring"</string>
 <string name="title_activity_form">"Active form"</string>
 <string name="title_activity_edit">"Edit common form"</string>
+<string name="title_activity_stats">"Statistics"</string>
 <string name="cancel_monitoring">"Cancel monitoring"</string>
 <string name="really_cancel_monitoring">"This will delete all data from this monitoring!
 Do you really want to cancel the monitoring?"</string>
@@ -166,6 +167,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_type">"Type of observation"</string>
 <string name="main_screen_btn_info">"Information"</string>
 <string name="main_screen_btn_help">"Help"</string>
+<string name="main_screen_btn_stats">"Statistics"</string>
 <string name="info_dialog_title">"Information"</string>
 <string name="info_text"><![CDATA[
             <p><b>SmartBirds Pro is a mobile application for monitoring of birds, amphibians, reptiles, mammals, protected invertebrates and plants</b></p>
@@ -179,7 +181,7 @@ Do you really want to cancel the monitoring?"</string>
 			<br />
             <p>and the Programme LIFE of the EU<p>
             <img src="life_NEW" width="120" height="120"/>
-            <img src="natura2000_NEW" width="120" height="120"/>            
+            <img src="natura2000_NEW" width="120" height="120"/>
             <br />
             <br />
                  <p>

@@ -116,4 +116,15 @@
         android:layout_toRightOf="@id/btn_info"
         android:text="@string/main_screen_btn_help"
         android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btn_stats"
+        style="@style/Buttonbspb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_help"
+        android:text="@string/main_screen_btn_stats"
+        android:textColor="@android:color/white" />
 </RelativeLayout>
