@@ -259,8 +259,7 @@ public class MainFragment extends Fragment {
 
     @Click(R.id.btn_stats)
     void showStats() {
-        Intent intent = new Intent(getActivity(), StatsActivity_.class);
-        startActivity(intent);
+        StatsActivity_.intent(getActivity()).start();
     }
 
     @UiThread
