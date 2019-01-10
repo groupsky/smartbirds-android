@@ -181,7 +181,7 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         Intent intent = new Intent(INTENT_TAKE_PICTURE).putExtra(MediaStore.EXTRA_OUTPUT, event.uri);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
             intent.setClipData(ClipData.newRawUri("", event.uri));
-            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         startActivityForResult(intent, REQUEST_TAKE_PICTURE);
     }
