@@ -30,7 +30,7 @@ public class SmartBirdsApplication extends Application {
 
     public static final String TAG = "SBP";
 
-    public static final String AUTH_FILES = BuildConfig.APPLICATION_ID + ".SmartBirdsFileProvider";
+    public static final String FILES_AUTHORITY = BuildConfig.APPLICATION_ID + ".SmartBirdsFileProvider";
 
     @Bean
     EEventBus bus;
