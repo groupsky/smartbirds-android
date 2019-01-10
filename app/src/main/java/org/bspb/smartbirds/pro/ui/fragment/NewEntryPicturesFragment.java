@@ -1,14 +1,17 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -176,6 +179,10 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     public void onEventMainThread(ImageFileCreated event) {
         currentImage = new ImageStruct(event.imageFileName, event.imagePath, event.uri);
         Intent intent = new Intent(INTENT_TAKE_PICTURE).putExtra(MediaStore.EXTRA_OUTPUT, event.uri);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            intent.setClipData(ClipData.newRawUri("", event.uri));
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
         startActivityForResult(intent, REQUEST_TAKE_PICTURE);
     }
 
@@ -255,7 +262,7 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     void Click(View v) {
         int idx = pictures.indexOf(v);
         if (idx < 0 || idx >= images.length) return;
-        Intent intent = new Intent(INTENT_VIEW_PICTURE).setDataAndType(images[idx].uri, "image/jpg");
+        Intent intent = new Intent(INTENT_VIEW_PICTURE).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).setDataAndType(images[idx].uri, "image/jpg");
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }

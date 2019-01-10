@@ -4,18 +4,15 @@ def versionCodeBase = 45
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
-        minSdkVersion 15
-        // keep 23 until we resolve the FileUriExposedException on api 24+
-        // @see http://stackoverflow.com/questions/32623304/when-take-photo-get-java-lang-throwable-file-uri-exposed-through-clipdata
-        targetSdkVersion 23
+        minSdkVersion 16
+        targetSdkVersion 28
         versionCode versionCodeBase
         versionName "${versionNameBase}"
 
@@ -50,7 +47,7 @@ android {
 
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    output.outputFile = new File(output.outputFile.parent, "smartbirdspro-${variant.versionName}-${versionCodeBase}.apk")
+                    output.outputFileName = "smartbirdspro-${variant.versionName}-${versionCodeBase}.apk"
                 }
             }
 
@@ -61,38 +58,35 @@ android {
     }
 }
 
-apt {
-    arguments {
-        resourcePackageName android.defaultConfig.applicationId
-        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
-    }
-}
-
 dependencies {
-    apt "org.androidannotations:androidannotations:4.0.0"
-    compile "org.androidannotations:androidannotations-api:4.0.0"
+    annotationProcessor "org.androidannotations:androidannotations:4.4.0"
+    implementation "org.androidannotations:androidannotations-api:4.4.0"
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.gms:play-services-maps:9.6.1'
-    compile 'de.greenrobot:eventbus:2.4.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    // TODO: migrate to v3.x
+    implementation 'de.greenrobot:eventbus:2.4.1'
     // Crashlytics Kit
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true
     }
-    compile 'com.googlecode.jcsv:jcsv:1.4.0'
-    compile 'commons-net:commons-net:3.3'
-    compile 'com.google.maps.android:android-maps-utils:0.3.2'
-    compile 'org.osmdroid:osmdroid-android:4.2'
-    compile 'com.android.support:design:24.2.1'
-    compile "com.android.support:support-v13:24.2.1"
+    // TODO: migrate to https://commons.apache.org/proper/commons-csv/
+    implementation 'com.googlecode.jcsv:jcsv:1.4.0'
+    implementation 'commons-net:commons-net:3.3'
+    implementation 'com.google.maps.android:android-maps-utils:0.3.2'
+    // TODO: migrate to v6.x
+    implementation 'org.osmdroid:osmdroid-android:4.2'
+    implementation 'com.android.support:design:28.0.0'
+    implementation "com.android.support:support-v13:28.0.0"
 
     // http://square.github.io/retrofit/
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
 
     // https://github.com/SimonVT/schematic
-    apt 'net.simonvt.schematic:schematic-compiler:0.6.3'
-    compile 'net.simonvt.schematic:schematic:0.6.7'
+    // TODO: migrate to v0.7.x
+    annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.6.3'
+    implementation 'net.simonvt.schematic:schematic:0.6.7'
 }

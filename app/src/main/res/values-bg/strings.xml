@@ -268,4 +268,6 @@
 <string name="gdpr_agree_checkbox">"Съгласен съм с условията на Общия регламент за защита на личните данни (GDPR)"</string>
 <string name="error_missing_gdpr_consent">"Трябва да се съгласите с условията на Общия регламент за защита на личните данни (GDPR)"</string>
 <string name="view_gdpr">"виж"</string>
+<string name="notifications_channel_name">Мониторинг</string>
+<string name="notifications_channel_description">Известия за мониторинг</string>
 </resources>
