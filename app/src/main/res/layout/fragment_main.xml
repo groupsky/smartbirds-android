@@ -13,30 +13,57 @@
         android:src="@drawable/logo_bspb" />
 
 
-    <Button
-        android:id="@+id/btn_start_birds"
-        style="@style/Buttonbspb"
+    <LinearLayout
+        android:id="@+id/center_buttons_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:padding="24dp"
-        android:text="@string/main_screen_btn_start"
-        android:textColor="@android:color/white" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_start_birds"
+            style="@style/Buttonbspb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:text="@string/main_screen_btn_start"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_resume_birds"
+            style="@style/Buttonbspb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:text="@string/main_screen_btn_resume"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_cancel_birds"
+            style="@style/Buttonbspb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:text="@string/main_screen_btn_cancel"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/right_buttons_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/not_synced_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
             android:paddingRight="4dp"
+            android:paddingBottom="12dp"
             android:text="@string/not_synced_count"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
@@ -73,9 +100,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@id/right_buttons_container"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:gravity="right|bottom"
         android:paddingTop="16dp">
 
@@ -101,8 +128,8 @@
         style="@style/Buttonbspb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:text="@string/main_screen_btn_info"
         android:textColor="@android:color/white" />
 
