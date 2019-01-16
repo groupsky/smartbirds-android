@@ -32,8 +32,10 @@ import org.bspb.smartbirds.pro.events.GetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.ImageFileEvent;
+import org.bspb.smartbirds.pro.events.MonitoringCanceledEvent;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringPausedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringResumedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
@@ -182,8 +184,15 @@ public class DataService extends Service {
 
         if (isMonitoring()) {
             monitoringManager.updateStatus(monitoring, canceled);
+        } else {
+            Monitoring pausedMonitoring = monitoringManager.getPausedMonitoring();
+            if (pausedMonitoring != null) {
+                monitoringManager.updateStatus(pausedMonitoring, canceled);
+            }
         }
+        globalPrefs.pausedMonitoring().put(false);
         setMonitoring(null);
+        bus.postSticky(new MonitoringCanceledEvent());
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
     }
 
@@ -209,6 +218,7 @@ public class DataService extends Service {
         closeGpxFile();
         DataOpsService_.intent(this).generateMonitoringFiles(monitoring.code).start();
         setMonitoring(null);
+        bus.postSticky(new MonitoringFinishedEvent());
     }
 
     public void onEvent(EntrySubmitted event) {
@@ -324,6 +334,7 @@ public class DataService extends Service {
             return;
         }
 
+        globalPrefs.pausedMonitoring().put(false);
         setMonitoring(monitoringManager.getPausedMonitoring());
         monitoringManager.updateStatus(monitoring, wip);
         bus.postSticky(new MonitoringResumedEvent());

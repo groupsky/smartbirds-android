@@ -33,6 +33,8 @@ public class SmartBirdsApplication extends Application {
 
     public static final String FILES_AUTHORITY = BuildConfig.APPLICATION_ID + ".SmartBirdsFileProvider";
 
+    public static final String PREFS_MONITORING_POINTS = "points";
+
     @Bean
     EEventBus bus;
     @Bean

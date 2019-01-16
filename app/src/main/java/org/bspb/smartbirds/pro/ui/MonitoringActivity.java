@@ -87,8 +87,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     private static final int REQUEST_FINISH_MONITORING = 1002;
 
-    private static final String PREFS_POINTS = "points";
-
     @InstanceState
     @NonNull
     MapProvider.ProviderType providerType = MapProvider.ProviderType.GOOGLE;
@@ -474,30 +472,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         pauseMonitoring();
     }
 
-    private void confirmCancel() {
-        //Ask the user if they want to quit
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(R.string.cancel_monitoring)
-                .setMessage(R.string.really_cancel_monitoring)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        doCancel();
-                        finish();
-                    }
-
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .show();
-    }
-
-    void doCancel() {
-        clearPrefs();
-        eventBus.post(new CancelMonitoringEvent());
-    }
-
     void pauseMonitoring() {
         eventBus.post(new PauseMonitoringEvent());
         finish();
@@ -747,7 +721,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     }
 
     private void persistPoints() {
-        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
+        SharedPreferences pointsPrefs = getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pointsPrefs.edit();
         editor.clear();
         try {
@@ -808,7 +782,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             return;
         }
 
-        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
+        SharedPreferences pointsPrefs = getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE);
 
         points.clear();
         for (int i = 0; i < pointsCount; i++) {
@@ -822,7 +796,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         Log.d(TAG, "clearing monitoring prefs");
         canceled = true;
         monitoringPrefs.edit().clear().apply();
-        getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
+        getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
     @Override
