@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
@@ -138,7 +139,11 @@ public class DataService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand...");
-        return START_STICKY;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return START_NOT_STICKY;
+        } else {
+            return START_STICKY;
+        }
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") StartMonitoringEvent event) {
