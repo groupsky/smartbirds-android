@@ -47,6 +47,7 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.tools.GpxWriter;
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
@@ -335,8 +336,16 @@ public class DataService extends Service {
         }
 
         globalPrefs.pausedMonitoring().put(false);
-        setMonitoring(monitoringManager.getPausedMonitoring());
-        monitoringManager.updateStatus(monitoring, wip);
+
+        Monitoring pausedMonitoring = monitoringManager.getPausedMonitoring();
+        if (pausedMonitoring != null) {
+            setMonitoring(pausedMonitoring);
+            monitoringManager.updateStatus(monitoring, wip);
+        } else {
+            Reporting.logException(new IllegalStateException("Trying to resume missing monitoring"));
+            setMonitoring(monitoringManager.createNew());
+        }
+
         bus.postSticky(new MonitoringResumedEvent());
     }
 }
