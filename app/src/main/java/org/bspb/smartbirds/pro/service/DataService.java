@@ -186,7 +186,7 @@ public class DataService extends Service {
             monitoringManager.updateStatus(monitoring, canceled);
         } else {
             Monitoring pausedMonitoring = monitoringManager.getPausedMonitoring();
-            if (pausedMonitoring != null) {
+            if (isMonitoring()) {
                 monitoringManager.updateStatus(pausedMonitoring, canceled);
             }
         }
@@ -275,12 +275,12 @@ public class DataService extends Service {
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") CreateImageFile event) {
-        Monitoring monitoring = isEmpty(event.monitoringCode) || (this.monitoring != null && TextUtils.equals(event.monitoringCode, this.monitoring.code)) ?
+        Monitoring monitoring = isEmpty(event.monitoringCode) || (isMonitoring() && TextUtils.equals(event.monitoringCode, this.monitoring.code)) ?
                 this.monitoring :
                 monitoringManager.getMonitoring(event.monitoringCode);
         // Create an image file name
         int cnt = 100;
-        while (monitoring != null && cnt-- > 0) {
+        while (isMonitoring() && cnt-- > 0) {
             String index = Integer.toString(monitoring.pictureCounter++);
             monitoringManager.update(monitoring);
             while (index.length() < 4) index = '0' + index;
@@ -297,7 +297,7 @@ public class DataService extends Service {
                 Crashlytics.logException(e);
             }
         }
-        bus.post(new ImageFileCreatedFailed(monitoring != null ? monitoring.code : null));
+        bus.post(new ImageFileCreatedFailed(isMonitoring() ? monitoring.code : null));
     }
 
     public void onEvent(GetImageFile event) {
@@ -319,7 +319,7 @@ public class DataService extends Service {
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") PauseMonitoringEvent event) {
-        if (monitoring != null) {
+        if (isMonitoring()) {
             monitoringManager.updateStatus(monitoring, paused);
             setMonitoring(null);
         }
