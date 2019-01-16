@@ -12,6 +12,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LogoutEvent;
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
@@ -69,6 +70,10 @@ public class MainActivity extends BaseActivity {
 
     public void onEvent(StartMonitoringEvent event) {
         StartMonitoringActivity_.intent(this).start();
+    }
+
+    public void onEvent(ResumeMonitoringEvent event) {
+        MonitoringActivity_.intent(this).start();
     }
 
     public void onEvent(LogoutEvent event) {

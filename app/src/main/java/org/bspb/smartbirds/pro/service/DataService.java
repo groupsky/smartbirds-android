@@ -34,8 +34,12 @@ import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.ImageFileEvent;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringPausedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringResumedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
+import org.bspb.smartbirds.pro.events.PauseMonitoringEvent;
 import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
@@ -61,6 +65,8 @@ import java.util.TimeZone;
 import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.canceled;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.paused;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 
 @EService
 public class DataService extends Service {
@@ -300,5 +306,26 @@ public class DataService extends Service {
 
     public void onEvent(@SuppressWarnings("UnusedParameters") QueryActiveMonitoringEvent event) {
         bus.postSticky(new ActiveMonitoringEvent(monitoring));
+    }
+
+    public void onEvent(@SuppressWarnings("UnusedParameters") PauseMonitoringEvent event) {
+        if (monitoring != null) {
+            monitoringManager.updateStatus(monitoring, paused);
+            setMonitoring(null);
+        }
+
+        globalPrefs.pausedMonitoring().put(true);
+        bus.postSticky(new MonitoringPausedEvent());
+    }
+
+    public void onEvent(@SuppressWarnings("UnusedParameters") ResumeMonitoringEvent event) {
+        if (isMonitoring()) {
+            bus.postSticky(new MonitoringResumedEvent());
+            return;
+        }
+
+        setMonitoring(monitoringManager.getPausedMonitoring());
+        monitoringManager.updateStatus(monitoring, wip);
+        bus.postSticky(new MonitoringResumedEvent());
     }
 }

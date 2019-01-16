@@ -49,7 +49,10 @@ import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringResumedEvent;
+import org.bspb.smartbirds.pro.events.PauseMonitoringEvent;
 import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
@@ -463,12 +466,12 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @OptionsItem(android.R.id.home)
     void onUp() {
-        confirmCancel();
+        pauseMonitoring();
     }
 
     @Override
     public void onBackPressed() {
-        confirmCancel();
+        pauseMonitoring();
     }
 
     private void confirmCancel() {
@@ -493,6 +496,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     void doCancel() {
         clearPrefs();
         eventBus.post(new CancelMonitoringEvent());
+    }
+
+    void pauseMonitoring() {
+        eventBus.post(new PauseMonitoringEvent());
+        finish();
     }
 
     @OptionsItem(R.id.action_zoom_1km)
@@ -654,6 +662,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     public void onEventMainThread(ActiveMonitoringEvent event) {
         this.monitoringCode = event.monitoring != null ? event.monitoring.code : null;
         setupList();
+    }
+
+    public void onEvent(MonitoringResumedEvent event) {
+        eventBus.removeStickyEvent(ResumeMonitoringEvent.class);
+        eventBus.removeStickyEvent(MonitoringResumedEvent.class);
     }
 
     void startNewEntryWithoutAsking(final LatLng position) {

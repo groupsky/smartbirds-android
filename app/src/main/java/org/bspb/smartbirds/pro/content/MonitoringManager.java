@@ -37,6 +37,7 @@ import static android.content.ContentUris.parseId;
 import static android.text.TextUtils.isEmpty;
 import static java.lang.Double.parseDouble;
 import static org.androidannotations.annotations.EBean.Scope.Singleton;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.paused;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
@@ -313,6 +314,17 @@ public class MonitoringManager {
             contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, ops);
         } catch (RemoteException | OperationApplicationException e) {
             logException(e);
+        }
+    }
+
+    public Monitoring getPausedMonitoring() {
+        Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI, MONITORING_PROJECTION, MonitoringColumns.STATUS + "=?", new String[]{paused.name()}, MonitoringColumns._ID + " desc");
+        if (cursor == null) return null;
+        try {
+            if (!cursor.moveToFirst()) return null;
+            return monitoringFromCursor(cursor);
+        } finally {
+            cursor.close();
         }
     }
 }
