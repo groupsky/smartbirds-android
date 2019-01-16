@@ -29,4 +29,7 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(true)
     boolean showZoneBackground();
+
+    @DefaultBoolean(false)
+    boolean pausedMonitoring();
 }

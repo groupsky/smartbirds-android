@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -22,9 +23,11 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebViewFragment;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -32,16 +35,25 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
+import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.DownloadCompleted;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ExportFailedEvent;
 import org.bspb.smartbirds.pro.events.ExportPreparedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringCanceledEvent;
+import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringPausedEvent;
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartingDownload;
 import org.bspb.smartbirds.pro.events.StartingUpload;
 import org.bspb.smartbirds.pro.events.UploadCompleted;
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.service.ExportService_;
 import org.bspb.smartbirds.pro.service.NomenclatureService;
 import org.bspb.smartbirds.pro.service.SyncService_;
@@ -79,10 +91,25 @@ public class MainFragment extends Fragment {
     @ViewById(R.id.not_synced_count)
     TextView notSyncedCountView;
 
+    @ViewById(R.id.btn_start_birds)
+    Button btnStartBirds;
+
+    @ViewById(R.id.btn_resume_birds)
+    Button btnResumeBirds;
+
+    @ViewById(R.id.btn_cancel_birds)
+    Button btnCancelBirds;
+
+    @Pref
+    SmartBirdsPrefs_ prefs;
+
+    @Pref
+    MonitoringPrefs_ monitoringPrefs;
+
     @Override
     public void onStart() {
         super.onStart();
-        bus.register(this);
+        bus.registerSticky(this);
         if (UploadService.isUploading) {
             onEvent(new StartingUpload());
         } else {
@@ -107,10 +134,57 @@ public class MainFragment extends Fragment {
         showNotSyncedCount();
     }
 
+    @AfterViews
+    void setupMonitoringButtons() {
+        if (prefs.pausedMonitoring().get()) {
+            btnStartBirds.setVisibility(View.GONE);
+            btnResumeBirds.setVisibility(View.VISIBLE);
+            btnCancelBirds.setVisibility(View.VISIBLE);
+        } else {
+            btnStartBirds.setVisibility(View.VISIBLE);
+            btnResumeBirds.setVisibility(View.GONE);
+            btnCancelBirds.setVisibility(View.GONE);
+        }
+    }
+
     @Click(R.id.btn_start_birds)
     void startBirdsClicked() {
         if (!permissionsGranted()) return;
         bus.postSticky(new StartMonitoringEvent());
+    }
+
+    @Click(R.id.btn_resume_birds)
+    void resumeBirdsClicked() {
+        bus.postSticky(new ResumeMonitoringEvent());
+    }
+
+    @Click(R.id.btn_cancel_birds)
+    void cancelBirdsClicked() {
+        confirmCancel();
+    }
+
+    private void confirmCancel() {
+        //Ask the user if they want to quit
+        new AlertDialog.Builder(getActivity())
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.cancel_monitoring)
+                .setMessage(R.string.really_cancel_monitoring)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        doCancel();
+                    }
+
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+    }
+
+    private void doCancel() {
+        monitoringPrefs.edit().clear().apply();
+        getActivity().getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
+        bus.postSticky(new CancelMonitoringEvent());
     }
 
     private boolean permissionsGranted() {
@@ -313,6 +387,24 @@ public class MainFragment extends Fragment {
         }
         Toast.makeText(getActivity(), getString(R.string.export_failed_error), Toast.LENGTH_LONG).
                 show();
+    }
+
+    @UiThread
+    public void onEvent(MonitoringPausedEvent event) {
+        setupMonitoringButtons();
+        bus.removeStickyEvent(MonitoringPausedEvent.class);
+    }
+
+    @UiThread
+    public void onEvent(MonitoringCanceledEvent event) {
+        setupMonitoringButtons();
+        bus.removeStickyEvent(MonitoringCanceledEvent.class);
+    }
+
+    @UiThread
+    public void onEvent(MonitoringFinishedEvent event) {
+        setupMonitoringButtons();
+        bus.removeStickyEvent(MonitoringFinishedEvent.class);
     }
 
     @LongClick(R.id.btn_export)

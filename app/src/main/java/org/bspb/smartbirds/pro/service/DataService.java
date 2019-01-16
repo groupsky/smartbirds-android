@@ -32,15 +32,22 @@ import org.bspb.smartbirds.pro.events.GetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.ImageFileEvent;
+import org.bspb.smartbirds.pro.events.MonitoringCanceledEvent;
 import org.bspb.smartbirds.pro.events.MonitoringCommonData;
 import org.bspb.smartbirds.pro.events.MonitoringFailedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringPausedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringResumedEvent;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
+import org.bspb.smartbirds.pro.events.PauseMonitoringEvent;
 import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.tools.GpxWriter;
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
@@ -61,6 +68,8 @@ import java.util.TimeZone;
 import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.canceled;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.paused;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 
 @EService
 public class DataService extends Service {
@@ -176,8 +185,15 @@ public class DataService extends Service {
 
         if (isMonitoring()) {
             monitoringManager.updateStatus(monitoring, canceled);
+        } else {
+            Monitoring pausedMonitoring = monitoringManager.getPausedMonitoring();
+            if (isMonitoring()) {
+                monitoringManager.updateStatus(pausedMonitoring, canceled);
+            }
         }
+        globalPrefs.pausedMonitoring().put(false);
         setMonitoring(null);
+        bus.postSticky(new MonitoringCanceledEvent());
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
     }
 
@@ -203,6 +219,7 @@ public class DataService extends Service {
         closeGpxFile();
         DataOpsService_.intent(this).generateMonitoringFiles(monitoring.code).start();
         setMonitoring(null);
+        bus.postSticky(new MonitoringFinishedEvent());
     }
 
     public void onEvent(EntrySubmitted event) {
@@ -259,12 +276,12 @@ public class DataService extends Service {
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") CreateImageFile event) {
-        Monitoring monitoring = isEmpty(event.monitoringCode) || (this.monitoring != null && TextUtils.equals(event.monitoringCode, this.monitoring.code)) ?
+        Monitoring monitoring = isEmpty(event.monitoringCode) || (isMonitoring() && TextUtils.equals(event.monitoringCode, this.monitoring.code)) ?
                 this.monitoring :
                 monitoringManager.getMonitoring(event.monitoringCode);
         // Create an image file name
         int cnt = 100;
-        while (monitoring != null && cnt-- > 0) {
+        while (isMonitoring() && cnt-- > 0) {
             String index = Integer.toString(monitoring.pictureCounter++);
             monitoringManager.update(monitoring);
             while (index.length() < 4) index = '0' + index;
@@ -281,7 +298,7 @@ public class DataService extends Service {
                 Crashlytics.logException(e);
             }
         }
-        bus.post(new ImageFileCreatedFailed(monitoring != null ? monitoring.code : null));
+        bus.post(new ImageFileCreatedFailed(isMonitoring() ? monitoring.code : null));
     }
 
     public void onEvent(GetImageFile event) {
@@ -300,5 +317,35 @@ public class DataService extends Service {
 
     public void onEvent(@SuppressWarnings("UnusedParameters") QueryActiveMonitoringEvent event) {
         bus.postSticky(new ActiveMonitoringEvent(monitoring));
+    }
+
+    public void onEvent(@SuppressWarnings("UnusedParameters") PauseMonitoringEvent event) {
+        if (isMonitoring()) {
+            monitoringManager.updateStatus(monitoring, paused);
+            setMonitoring(null);
+        }
+
+        globalPrefs.pausedMonitoring().put(true);
+        bus.postSticky(new MonitoringPausedEvent());
+    }
+
+    public void onEvent(@SuppressWarnings("UnusedParameters") ResumeMonitoringEvent event) {
+        if (isMonitoring()) {
+            bus.postSticky(new MonitoringResumedEvent());
+            return;
+        }
+
+        globalPrefs.pausedMonitoring().put(false);
+
+        Monitoring pausedMonitoring = monitoringManager.getPausedMonitoring();
+        if (pausedMonitoring != null) {
+            setMonitoring(pausedMonitoring);
+            monitoringManager.updateStatus(monitoring, wip);
+        } else {
+            Reporting.logException(new IllegalStateException("Trying to resume missing monitoring"));
+            setMonitoring(monitoringManager.createNew());
+        }
+
+        bus.postSticky(new MonitoringResumedEvent());
     }
 }

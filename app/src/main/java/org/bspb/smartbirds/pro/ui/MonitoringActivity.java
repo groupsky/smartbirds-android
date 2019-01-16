@@ -49,7 +49,10 @@ import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
+import org.bspb.smartbirds.pro.events.MonitoringResumedEvent;
+import org.bspb.smartbirds.pro.events.PauseMonitoringEvent;
 import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
@@ -83,8 +86,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     private static final int REQUEST_NEW_ENTRY = 1001;
 
     private static final int REQUEST_FINISH_MONITORING = 1002;
-
-    private static final String PREFS_POINTS = "points";
 
     @InstanceState
     @NonNull
@@ -463,36 +464,17 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @OptionsItem(android.R.id.home)
     void onUp() {
-        confirmCancel();
+        pauseMonitoring();
     }
 
     @Override
     public void onBackPressed() {
-        confirmCancel();
+        pauseMonitoring();
     }
 
-    private void confirmCancel() {
-        //Ask the user if they want to quit
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(R.string.cancel_monitoring)
-                .setMessage(R.string.really_cancel_monitoring)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        doCancel();
-                        finish();
-                    }
-
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .show();
-    }
-
-    void doCancel() {
-        clearPrefs();
-        eventBus.post(new CancelMonitoringEvent());
+    void pauseMonitoring() {
+        eventBus.post(new PauseMonitoringEvent());
+        finish();
     }
 
     @OptionsItem(R.id.action_zoom_1km)
@@ -656,6 +638,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setupList();
     }
 
+    public void onEvent(MonitoringResumedEvent event) {
+        eventBus.removeStickyEvent(ResumeMonitoringEvent.class);
+        eventBus.removeStickyEvent(MonitoringResumedEvent.class);
+    }
+
     void startNewEntryWithoutAsking(final LatLng position) {
         if (entryType == null) {
             startNewEntryAsking(position);
@@ -734,7 +721,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     }
 
     private void persistPoints() {
-        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
+        SharedPreferences pointsPrefs = getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pointsPrefs.edit();
         editor.clear();
         try {
@@ -795,7 +782,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             return;
         }
 
-        SharedPreferences pointsPrefs = getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE);
+        SharedPreferences pointsPrefs = getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE);
 
         points.clear();
         for (int i = 0; i < pointsCount; i++) {
@@ -809,7 +796,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         Log.d(TAG, "clearing monitoring prefs");
         canceled = true;
         monitoringPrefs.edit().clear().apply();
-        getSharedPreferences(PREFS_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
+        getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
     @Override

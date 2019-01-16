@@ -15,6 +15,7 @@ import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.ReceivedCookiesInterceptor;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
@@ -31,6 +32,8 @@ public class SmartBirdsApplication extends Application {
     public static final String TAG = "SBP";
 
     public static final String FILES_AUTHORITY = BuildConfig.APPLICATION_ID + ".SmartBirdsFileProvider";
+
+    public static final String PREFS_MONITORING_POINTS = "points";
 
     @Bean
     EEventBus bus;
@@ -66,6 +69,10 @@ public class SmartBirdsApplication extends Application {
     }
 
     public void onEvent(StartMonitoringEvent event) {
+        DataService_.intent(this).start();
+    }
+
+    public void onEvent(ResumeMonitoringEvent event) {
         DataService_.intent(this).start();
     }
 
