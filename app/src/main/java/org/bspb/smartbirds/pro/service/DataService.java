@@ -139,6 +139,10 @@ public class DataService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand...");
+
+        // Start sticky only if the device is with SDK lower than Oreo, otherwise there is a crash
+        // when the service is killed and recreated. The reason is that in Oreo there are
+        // limitations for starting services when the app is in background.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return START_NOT_STICKY;
         } else {
