@@ -108,7 +108,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @Bean
     EEventBus eventBus;
 
-    @InstanceState
     @NonNull
     ArrayList<LatLng> points = new ArrayList<LatLng>();
     @InstanceState
