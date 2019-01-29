@@ -32,4 +32,7 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean pausedMonitoring();
+
+    @DefaultBoolean(false)
+    boolean isBatteryOptimizationDialogShown();
 }
