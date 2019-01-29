@@ -131,8 +131,12 @@ public class DataService extends Service {
     public void onDestroy() {
         Log.d(TAG, "destroying...");
         bus.unregister(this);
-        if (isMonitoring()) DataService_.intent(this).start();
-
+        // Restart service only if the device is with SDK lower than Oreo, otherwise there is a crash
+        // when the service is killed and recreated. The reason is that in Oreo there are
+        // limitations for starting services when the app is in background.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            if (isMonitoring()) DataService_.intent(this).start();
+        }
         super.onDestroy();
     }
 
