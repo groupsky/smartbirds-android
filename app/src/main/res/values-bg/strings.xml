@@ -5,7 +5,6 @@
 <string name="title_activity_monitoring">"Мониторинг"</string>
 <string name="title_activity_form">"Активна форма"</string>
 <string name="title_activity_edit">"Редакция на обща форма"</string>
-<string name="title_activity_stats">"Статистики"</string>
 <string name="cancel_monitoring">"Отмяна на мониторинг"</string>
 <string name="really_cancel_monitoring">"Това ще изтрие всички събрани данни от този мониторинг!
 Наистина ли желаете да отмените мониторинга?"</string>
@@ -167,7 +166,6 @@
 <string name="monitoring_type">"Тип наблюдение"</string>
 <string name="main_screen_btn_info">"Информация"</string>
 <string name="main_screen_btn_help">"Помощ"</string>
-<string name="main_screen_btn_stats">"Статистики"</string>
 <string name="info_dialog_title">"Информация"</string>
 <string name="info_text"><![CDATA[
             <p><b>SmartBirds Pro е мобилно приложение за мониторинг на птици, земноводни, влечуги, бозайници, защитени безгръбначни животни и растения</b></p>
@@ -184,7 +182,7 @@
             <img src="natura2000_NEW" width="120" height="120"/>
             <br />
             <br />
-
+          
             <p>
                 <b>Идеен проект:</b>
                 <br />
@@ -268,6 +266,12 @@
 <string name="gdpr_agree_checkbox">"Съгласен съм с условията на Общия регламент за защита на личните данни (GDPR)"</string>
 <string name="error_missing_gdpr_consent">"Трябва да се съгласите с условията на Общия регламент за защита на личните данни (GDPR)"</string>
 <string name="view_gdpr">"виж"</string>
-<string name="notifications_channel_name">Мониторинг</string>
-<string name="notifications_channel_description">Известия за мониторинг</string>
+<string name="title_activity_stats">"Статистика"</string>
+<string name="main_screen_btn_resume">"Продължи"</string>
+<string name="main_screen_btn_cancel">"Отмяна"</string>
+<string name="main_screen_btn_stats">"Статистики"</string>
+<string name="notifications_channel_name">"Мониторинг"</string>
+<string name="notifications_channel_description">"Уведомления от мониторинг"</string>
+<string name="battery_optimization_title">"Оптимизиране на батерия"</string>
+<string name="battery_optimization_message">"SmartBirds Pro не е в белия списък (whitelist) с програми в настройките за оптимизация на батерията. Това може да повлияе на работата на приложението. За по-добра работа настойте приложението да игнорира оптимизация на батерията в Настройки &gt; Батерия &gt; Оптимизация на батерията."</string>
 </resources>
