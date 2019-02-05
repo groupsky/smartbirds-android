@@ -5,7 +5,6 @@
 <string name="title_activity_monitoring">"Monitoring"</string>
 <string name="title_activity_form">"Active form"</string>
 <string name="title_activity_edit">"Edit common form"</string>
-<string name="title_activity_stats">"Statistics"</string>
 <string name="cancel_monitoring">"Cancel monitoring"</string>
 <string name="really_cancel_monitoring">"This will delete all data from this monitoring!
 Do you really want to cancel the monitoring?"</string>
@@ -47,8 +46,6 @@ Do you really want to cancel the monitoring?"</string>
 <string name="menu_monitoring_start">"Start"</string>
 <string name="menu_monitoring_save">"Save"</string>
 <string name="main_screen_btn_start">"Start"</string>
-<string name="main_screen_btn_resume">"Resume"</string>
-<string name="main_screen_btn_cancel">"Cancel"</string>
 <string name="main_screen_btn_upload">"Upload to smartbirds.org"</string>
 <string name="monitoring_birds_notes">"Remarks"</string>
 <string name="monitoring_common_source">"Source"</string>
@@ -169,7 +166,6 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_type">"Type of observation"</string>
 <string name="main_screen_btn_info">"Information"</string>
 <string name="main_screen_btn_help">"Help"</string>
-<string name="main_screen_btn_stats">"Statistics"</string>
 <string name="info_dialog_title">"Information"</string>
 <string name="info_text"><![CDATA[
             <p><b>SmartBirds Pro is a mobile application for monitoring of birds, amphibians, reptiles, mammals, protected invertebrates and plants</b></p>
@@ -183,7 +179,7 @@ Do you really want to cancel the monitoring?"</string>
 			<br />
             <p>and the Programme LIFE of the EU<p>
             <img src="life_NEW" width="120" height="120"/>
-            <img src="natura2000_NEW" width="120" height="120"/>
+            <img src="natura2000_NEW" width="120" height="120"/>            
             <br />
             <br />
                  <p>
@@ -271,6 +267,12 @@ Do you really want to cancel the monitoring?"</string>
 <string name="gdpr_agree_checkbox">"I agree with the conditions of the General Data Protection Regulation (GDPR)"</string>
 <string name="error_missing_gdpr_consent">"You have to agree with the conditions of the General Data Protection Regulation (GDPR)"</string>
 <string name="view_gdpr">"view"</string>
-<string name="notifications_channel_name">Monitoring</string>
-<string name="notifications_channel_description">Monitoring notifications</string>
+<string name="title_activity_stats">"Statistics"</string>
+<string name="main_screen_btn_resume">"Resume"</string>
+<string name="main_screen_btn_cancel">"Cancel"</string>
+<string name="main_screen_btn_stats">"Statistics"</string>
+<string name="notifications_channel_name">"Monitoring"</string>
+<string name="notifications_channel_description">"Monitoring notifications"</string>
+<string name="battery_optimization_title">"Battery optimization"</string>
+<string name="battery_optimization_message">"SmartBirds Pro is not whitelisted in battery optimization setting. This may affect how the app is working. For better performance set app to ignore battery optimization in Settings &gt; Battery &gt; Battery optimization."</string>
 </resources>
