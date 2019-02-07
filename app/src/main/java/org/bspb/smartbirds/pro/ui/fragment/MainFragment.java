@@ -473,14 +473,14 @@ public class MainFragment extends Fragment {
 
     private void checkBatteryOptimization() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!prefs.isBatteryOptimizationDialogShown().get()) {
-                showBatteryOptimizationDialog();
-                prefs.isBatteryOptimizationDialogShown().put(true);
-            }
             PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
             if (pm.isIgnoringBatteryOptimizations(getContext().getPackageName())) {
                 btnBatteryOptimization.setVisibility(View.GONE);
             } else {
+                if (!prefs.isBatteryOptimizationDialogShown().get()) {
+                    showBatteryOptimizationDialog();
+                    prefs.isBatteryOptimizationDialogShown().put(true);
+                }
                 btnBatteryOptimization.setVisibility(View.VISIBLE);
             }
         } else {
