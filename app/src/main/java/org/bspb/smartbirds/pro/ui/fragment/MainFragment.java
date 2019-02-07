@@ -11,19 +11,20 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.webkit.WebViewFragment;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +101,9 @@ public class MainFragment extends Fragment {
     @ViewById(R.id.btn_cancel_birds)
     Button btnCancelBirds;
 
+    @ViewById(R.id.btn_battery_optimization)
+    ImageButton btnBatteryOptimization;
+
     @Pref
     SmartBirdsPrefs_ prefs;
 
@@ -131,6 +135,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        checkBatteryOptimization();
         showNotSyncedCount();
     }
 
@@ -336,6 +341,20 @@ public class MainFragment extends Fragment {
         StatsActivity_.intent(getActivity()).start();
     }
 
+    @Click(R.id.btn_battery_optimization)
+    void showBatteryOptimizationDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.battery_optimization_title))
+                .setMessage(getString(R.string.battery_optimization_message))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
     @UiThread
     public void onEvent(StartingUpload event) {
         if (progressDialog == null || !progressDialog.isShowing()) {
@@ -449,6 +468,23 @@ public class MainFragment extends Fragment {
         } catch (Throwable t) {
             // IllegalStateException: not attached to Activity
             logException(t);
+        }
+    }
+
+    private void checkBatteryOptimization() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+            if (pm.isIgnoringBatteryOptimizations(getContext().getPackageName())) {
+                btnBatteryOptimization.setVisibility(View.GONE);
+            } else {
+                if (!prefs.isBatteryOptimizationDialogShown().get()) {
+                    showBatteryOptimizationDialog();
+                    prefs.isBatteryOptimizationDialogShown().put(true);
+                }
+                btnBatteryOptimization.setVisibility(View.VISIBLE);
+            }
+        } else {
+            btnBatteryOptimization.setVisibility(View.GONE);
         }
     }
 }
