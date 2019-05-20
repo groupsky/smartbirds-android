@@ -33,6 +33,7 @@ public class HerpConverter extends Converter {
         add(R.string.tag_sq_caud, "sqCaud");
         add(R.string.tag_sq_dors, "sqDors");
         add(R.string.tag_remarks_type, "speciesNotes");
+        addMulti(R.string.tag_threats, "threats");
     }
 
 }

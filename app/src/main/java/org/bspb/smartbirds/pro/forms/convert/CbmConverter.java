@@ -22,6 +22,7 @@ public class CbmConverter extends Converter {
         add(R.string.tag_count_subject, "count");
         add(R.string.tag_location, "location");
         add(R.string.tag_zone, "zone");
+        addMulti(R.string.tag_threats, "threats");
     }
 
 }

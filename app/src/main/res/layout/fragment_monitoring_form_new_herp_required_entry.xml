@@ -87,6 +87,17 @@
 
             <TableRow>
 
+                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="8"
+                    android:hint="@string/monitoring_common_threats"
+                    android:tag="@string/tag_threats"
+                    app:entries="form_main_threats" />
+            </TableRow>
+
+            <TableRow>
+
                 <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
                     android:layout_span="8"
                     android:hint="@string/monitoring_herp_notes"

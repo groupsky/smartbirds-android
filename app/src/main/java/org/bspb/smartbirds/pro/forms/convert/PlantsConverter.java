@@ -23,7 +23,7 @@ public class PlantsConverter extends Converter {
         add(R.string.tag_count, "count");
         add(R.string.tag_density, "density");
         add(R.string.tag_cover, "cover");
-        addMulti(R.string.tag_threats_other, "threatsPlants");
+        addMulti(R.string.tag_threats, "threats");
         add(R.string.tag_remarks_type, "speciesNotes");
         addBool(R.string.tag_confidential, "confidential");
     }

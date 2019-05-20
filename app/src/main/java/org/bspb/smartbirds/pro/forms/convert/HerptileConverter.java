@@ -34,6 +34,7 @@ public class HerptileConverter extends Converter {
         add(R.string.tag_sq_dors, "sqDors");
         add(R.string.tag_remarks_type, "speciesNotes");
         addBool(R.string.tag_confidential, "confidential");
+        addMulti(R.string.tag_threats, "threats");
     }
 
 }

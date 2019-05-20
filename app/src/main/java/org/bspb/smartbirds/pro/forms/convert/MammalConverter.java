@@ -30,6 +30,7 @@ public class MammalConverter extends Converter {
         add(R.string.tag_t_air, "tempAir");
         add(R.string.tag_remarks_type, "speciesNotes");
         addBool(R.string.tag_confidential, "confidential");
+        addMulti(R.string.tag_threats, "threats");
     }
 
 }

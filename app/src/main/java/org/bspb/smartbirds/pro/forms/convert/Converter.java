@@ -57,7 +57,6 @@ public abstract class Converter {
         add(R.string.tag_visibility_km, "visibility");
         add(R.string.tag_weather_other, "mto");
         add(R.string.tag_notes, "notes");
-        addMulti(R.string.tag_threats, "threats");
     }
 
     protected void add(FieldConverter fieldConverter) {
