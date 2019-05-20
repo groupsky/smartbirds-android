@@ -17,7 +17,7 @@ public class HerptileConverter extends Converter {
         addSingle(R.string.tag_sex, "sex");
         addSingle(R.string.tag_age, "age");
         addSingle(R.string.tag_habitat, "habitat");
-        addMulti(R.string.tag_threats_other, "threatsHerptiles");
+        addMulti(R.string.tag_threats_other, "findings");
         add(R.string.tag_count, "count");
         add(R.string.tag_marking, "marking");
         add(R.string.tag_distance_from_axis, "axisDistance");

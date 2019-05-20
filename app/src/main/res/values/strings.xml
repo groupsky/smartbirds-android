@@ -126,7 +126,7 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_herp_gender">"Sex"</string>
 <string name="monitoring_herp_age">"Age"</string>
 <string name="monitoring_herp_habitat">"Habitat"</string>
-<string name="monitoring_herp_danger_observation">"Threats, other"</string>
+<string name="monitoring_herp_danger_observation">"Findings"</string>
 <string name="monitoring_herp_count">"Count"</string>
 <string name="monitoring_herp_marking">"Marking"</string>
 <string name="monitoring_herp_axis_distance">"Distance from axis"</string>
