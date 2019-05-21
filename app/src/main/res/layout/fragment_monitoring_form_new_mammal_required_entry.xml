@@ -64,7 +64,7 @@
                     android:layout_span="10"
                     android:hint="@string/monitoring_herp_danger_observation"
                     android:tag="@string/tag_findings"
-                    app:entries="form_mammals_danger_observation" />
+                    app:entries="form_mammals_findings" />
 
             </TableRow>
 
