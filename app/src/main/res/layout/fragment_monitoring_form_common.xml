@@ -170,15 +170,6 @@
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_common_threats"
-            android:tag="@string/tag_threats"
-            app:entries="form_main_threats" />
-
-        <View style="@style/FieldSeparator" />
-
         <org.bspb.smartbirds.pro.ui.views.MemoFormInput
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

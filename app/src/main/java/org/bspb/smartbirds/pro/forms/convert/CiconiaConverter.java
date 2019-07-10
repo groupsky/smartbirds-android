@@ -33,6 +33,7 @@ public class CiconiaConverter extends Converter {
         add(R.string.tag_died_from_other_causes, "diedOtherReasons");
         add(R.string.tag_cause, "reason");
         add(R.string.tag_ciconia_remarks_type, "speciesNotes");
+        addMulti(R.string.tag_threats, "threats");
     }
 
 }

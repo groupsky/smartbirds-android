@@ -82,11 +82,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="bottom"
                         android:paddingLeft="8dp"
                         android:paddingRight="16dp"
-                        android:textColor="?android:textColorHint"
-                        android:gravity="bottom"
-                        android:text="@string/monitoring_plants_elevation_units"/>
+                        android:text="@string/monitoring_plants_elevation_units"
+                        android:textColor="?android:textColorHint" />
                 </LinearLayout>
 
 
@@ -105,6 +105,17 @@
                     android:hint="@string/monitoring_plants_threats"
                     android:tag="@string/tag_threats_other"
                     app:entries="form_plants_threats" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="12"
+                    android:hint="@string/monitoring_common_threats"
+                    android:tag="@string/tag_threats"
+                    app:entries="form_main_threats" />
             </TableRow>
 
             <TableRow>

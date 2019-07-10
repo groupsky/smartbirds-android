@@ -18,6 +18,7 @@ public class MammalConverter extends Converter {
         addSingle(R.string.tag_age, "age");
         addSingle(R.string.tag_habitat, "habitat");
         addMulti(R.string.tag_threats_other, "threatsMammals");
+        addMulti(R.string.tag_findings, "findings");
         add(R.string.tag_count, "count");
         add(R.string.tag_marking, "marking");
         add(R.string.tag_distance_from_axis, "axisDistance");
@@ -30,6 +31,7 @@ public class MammalConverter extends Converter {
         add(R.string.tag_t_air, "tempAir");
         add(R.string.tag_remarks_type, "speciesNotes");
         addBool(R.string.tag_confidential, "confidential");
+        addMulti(R.string.tag_threats, "threats");
     }
 
 }

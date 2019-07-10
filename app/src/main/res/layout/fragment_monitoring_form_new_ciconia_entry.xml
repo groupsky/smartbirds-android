@@ -19,8 +19,7 @@
 
             <TextView
                 style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_1"
-                />
+                android:text="@string/monitoring_ciconia_sep_1" />
 
             <TableRow>
 
@@ -73,8 +72,7 @@
 
             <TextView
                 style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_2"
-                />
+                android:text="@string/monitoring_ciconia_sep_2" />
 
             <TableRow>
 
@@ -102,8 +100,7 @@
 
             <TextView
                 style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_3"
-                />
+                android:text="@string/monitoring_ciconia_sep_3" />
 
             <TableRow>
 
@@ -115,8 +112,7 @@
 
             <TextView
                 style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_4"
-                />
+                android:text="@string/monitoring_ciconia_sep_4" />
 
             <TableRow>
 
@@ -127,8 +123,7 @@
 
             <TextView
                 style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_5"
-                />
+                android:text="@string/monitoring_ciconia_sep_5" />
 
             <TableRow>
 
@@ -139,8 +134,7 @@
 
             <TextView
                 style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_6"
-                />
+                android:text="@string/monitoring_ciconia_sep_6" />
 
             <TableRow>
 
@@ -166,10 +160,18 @@
 
             <TableRow>
 
+                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_common_threats"
+                    android:tag="@string/tag_threats"
+                    app:entries="form_main_threats" />
+
                 <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
                     android:hint="@string/monitoring_ciconia_notes"
                     android:tag="@string/tag_ciconia_remarks_type" />
             </TableRow>
+
         </TableLayout>
 
         <View style="@style/FieldSeparator" />

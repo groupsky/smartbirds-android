@@ -49,8 +49,8 @@
                     app:entries="form_mammals_age" />
 
                 <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:layout_span="2"
                     android:id="@+id/form_herp_count"
+                    android:layout_span="2"
                     android:hint="@string/monitoring_herp_count"
                     android:tag="@string/tag_count"
                     android:text="1"
@@ -63,8 +63,8 @@
                 <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
                     android:layout_span="10"
                     android:hint="@string/monitoring_herp_danger_observation"
-                    android:tag="@string/tag_threats_other"
-                    app:entries="form_mammals_danger_observation" />
+                    android:tag="@string/tag_findings"
+                    app:entries="form_mammals_findings" />
 
             </TableRow>
 
@@ -91,6 +91,17 @@
                     android:tag="@string/tag_habitat"
                     app:entries="form_mammals_habitat" />
 
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="10"
+                    android:hint="@string/monitoring_common_threats"
+                    android:tag="@string/tag_threats"
+                    app:entries="form_main_threats" />
             </TableRow>
 
             <TableRow>
