@@ -15,6 +15,7 @@
         <attr name="memoFormInputStyle" format="reference" />
         <attr name="switchFormInputStyle" format="reference" />
         <attr name="zoneFormInputStyle" format="reference" />
+        <attr name="singleChoiceRadioFormInputStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SupportRequiredView">
@@ -40,4 +41,10 @@
         <attr name="hint" />
     </declare-styleable>
 
+    <!-- Stylable attributes for SingleChoiceRadioFormInput-->
+    <declare-styleable name="SingleChoiceRadioFormInput">
+        <attr name="config_entries" />
+        <attr name="hint" />
+        <attr name="required" />
+    </declare-styleable>
 </resources>
