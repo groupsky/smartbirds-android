@@ -119,4 +119,18 @@
     <string name="tag_user_email" translatable="false">email</string>
     <string name="tag_zone" translatable="false">zone</string>
 
+    <string name="tag_category" translatable="false">Category</string>
+    <string name="tag_class" translatable="false">Class</string>
+    <string name="tag_estimate" translatable="false">Estimate</string>
+    <string name="tag_poisoned_type" translatable="false">Poisoned_Type</string>
+    <string name="tag_state_carcass" translatable="false">State_Carcass</string>
+    <string name="tag_sample_taken_1" translatable="false">Sample_Taken_1</string>
+    <string name="tag_sample_taken_2" translatable="false">Sample_Taken_2</string>
+    <string name="tag_sample_taken_3" translatable="false">Sample_Taken_3</string>
+    <string name="tag_sample_code_1" translatable="false">Sample_Code_1</string>
+    <string name="tag_sample_code_2" translatable="false">Sample_Code_2</string>
+    <string name="tag_sample_code_3" translatable="false">Sample_Code_3</string>
+    <string name="tag_threats_notes" translatable="false">Notes_Threats</string>
+    <string name="tag_primary_type" translatable="false">Primary_Type</string>
+
 </resources>
