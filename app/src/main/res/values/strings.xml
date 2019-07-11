@@ -275,4 +275,16 @@ Do you really want to cancel the monitoring?"</string>
 <string name="notifications_channel_description">"Monitoring notifications"</string>
 <string name="battery_optimization_title">"Battery optimization"</string>
 <string name="battery_optimization_message">"SmartBirds Pro is not whitelisted in battery optimization setting. This may affect how the app is working. For better performance set app to ignore battery optimization in Settings &gt; Battery &gt; Battery optimization."</string>
+<string name="class_birds">Birds</string>
+<string name="class_herptiles">Herptiles</string>
+<string name="class_mammals">Mammals</string>
+<string name="class_invertebrates">Invertebrates</string>
+<string name="class_plants">Plants</string>
+<string name="primary_type_threat">Threat</string>
+<string name="primary_type_poison">Poison</string>
+<string name="poisoned_type_dead">Dead</string>
+<string name="poisoned_type_alive">Alive</string>
+<string name="poisoned_type_bait">Bait</string>
+<string name="monitoring_threats_primary_type">Type</string>
+<string name="entry_type_threats">"Threats"</string>
 </resources>

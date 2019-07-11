@@ -585,7 +585,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             R.id.action_form_type_herptile,
             R.id.action_form_type_mammal,
             R.id.action_form_type_invertebrates,
-            R.id.action_form_type_plants
+            R.id.action_form_type_plants,
+            R.id.action_form_type_threats
     })
     void setFormType(MenuItem sender) {
         final int senderId = sender.getItemId();
