@@ -60,6 +60,9 @@ public interface SmartBirdsApi {
     @POST("plants")
     Call<ResponseBody> createPlants(@Body JsonObject request);
 
+    @POST("threats")
+    Call<ResponseBody> createThreats(@Body JsonObject request);
+
     @Multipart
     @POST("storage")
     Call<ResponseEnvelope<FileId>> upload(@Part MultipartBody.Part file);
