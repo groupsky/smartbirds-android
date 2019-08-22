@@ -15,7 +15,9 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -132,8 +134,19 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
                 countView.setText(entry.data.get(context.getString(R.string.tag_count)));
                 break;
             case THREATS:
-                typeView.setText(R.string.entry_type_threats);
-                speciesView.setText(entry.data.get(context.getString(R.string.tag_species_scientific_name)));
+                String primaryType = entry.data.get(context.getString(R.string.tag_primary_type));
+
+                if ("threat".equalsIgnoreCase(primaryType)) {
+                    int idx = Arrays.asList(FormsConfig.threats_primary_types.getValues()).indexOf(primaryType);
+                    typeView.setText(FormsConfig.threats_primary_types.getLabels()[idx]);
+                    speciesView.setText(entry.data.get(context.getString(R.string.tag_category)));
+                } else {
+                    String poisonedType = entry.data.get(context.getString(R.string.tag_poisoned_type));
+                    int idxPoisoned = Arrays.asList(FormsConfig.threats_poisoned_types.getValues()).indexOf(poisonedType);
+                    int idxPrimary = Arrays.asList(FormsConfig.threats_primary_types.getValues()).indexOf(primaryType);
+                    typeView.setText(FormsConfig.threats_primary_types.getLabels()[idxPrimary]);
+                    speciesView.setText(FormsConfig.threats_poisoned_types.getLabels()[idxPoisoned]);
+                }
                 countView.setText(entry.data.get(context.getString(R.string.tag_count)));
                 break;
         }
