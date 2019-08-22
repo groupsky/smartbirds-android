@@ -47,4 +47,9 @@
         <attr name="hint" />
         <attr name="required" />
     </declare-styleable>
+
+    <!-- Stylable attributes for SingleChoiceConfigFormInput-->
+    <declare-styleable name="SingleChoiceConfigFormInput">
+        <attr name="entries" />
+    </declare-styleable>
 </resources>

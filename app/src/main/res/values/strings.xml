@@ -287,4 +287,12 @@ Do you really want to cancel the monitoring?"</string>
 <string name="poisoned_type_bait">Bait</string>
 <string name="monitoring_threats_primary_type">Type</string>
 <string name="entry_type_threats">"Threats"</string>
+<string name="monitoring_threats_notes">Notes</string>
+<string name="monitoring_threats_category">Category</string>
+<string name="monitoring_threats_species">"Species"</string>
+<string name="monitoring_threats_class">Class</string>
+<string name="monitoring_threats_count">Count</string>
+<string name="monitoring_threats_estimate">Estimate</string>
+<string name="monitoring_threats_poisoned_type">Poisoned type</string>
+<string name="monitoring_threats_state_carcass">State carcass</string>
 </resources>

@@ -11,7 +11,7 @@ public class ThreatsConverter extends Converter {
 
         // threats
         addSingle(R.string.tag_category, "category");
-        addSingle(R.string.tag_class, "class");
+        add(R.string.tag_class, "class");
         addSpecies(R.string.tag_species_scientific_name, "species");
         addSingle(R.string.tag_estimate, "estimate");
         add(R.string.tag_poisoned_type, "poisonedType");

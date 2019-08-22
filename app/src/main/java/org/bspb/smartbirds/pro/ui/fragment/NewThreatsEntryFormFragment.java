@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Build;
+import android.support.v13.app.FragmentStatePagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -15,48 +16,39 @@ import java.util.HashMap;
 /**
  * Created by dani on 11-07-19.
  */
-@EFragment(R.layout.fragment_monitoring_form_new_threats_entry)
+@EFragment
+public class NewThreatsEntryFormFragment extends BaseTabEntryFragment {
 
-public class NewThreatsEntryFormFragment extends BaseEntryFragment {
+    @AfterViews
+    protected void setupTabs() {
+        setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
+            @Override
+            public android.app.Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return NewThreatsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                    case 1:
+                        return NewThreatsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                    default:
+                        throw new IllegalArgumentException("Unhandled position" + position);
+                }
+            }
 
-    @FragmentById(R.id.pictures_fragment)
-    NewEntryPicturesFragment picturesFragment;
-    private HashMap<String, String> pendingDeserialize;
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return getActivity().getString(position == 0 ? R.string.tab_required : R.string.tab_optional);
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        });
+    }
 
     @Override
     protected EntryType getEntryType() {
         return EntryType.THREATS;
-    }
-
-    @Override
-    protected HashMap<String, String> serialize(Date entryTime) {
-        HashMap<String, String> data = super.serialize(entryTime);
-        data.putAll(picturesFragment.serialize());
-        return data;
-    }
-
-    @Override
-    protected void deserialize(HashMap<String, String> data) {
-        super.deserialize(data);
-        if (picturesFragment == null) {
-            pendingDeserialize = data;
-        } else {
-            picturesFragment.doDeserialize(monitoringCode, data);
-        }
-    }
-
-    @AfterViews
-    protected void flushDeserialize() {
-        if (picturesFragment == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
-        }
-        if (picturesFragment == null) {
-            picturesFragment = (NewEntryPicturesFragment) getFragmentManager().findFragmentById(R.id.pictures_fragment);
-        }
-        if (pendingDeserialize != null) {
-            picturesFragment.doDeserialize(monitoringCode, pendingDeserialize);
-            pendingDeserialize = null;
-        }
     }
 
     public static class Builder implements BaseEntryFragment.Builder {

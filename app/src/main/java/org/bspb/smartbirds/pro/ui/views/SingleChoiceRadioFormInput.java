@@ -20,10 +20,12 @@ import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
 import java.util.Map;
 
-import retrofit2.http.POST;
-
 @EViewGroup(R.layout.single_choice_radio)
 public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRequiredView, SupportStorage {
+
+    public interface OnValueChangeListener {
+        void onValueChanged(String value);
+    }
 
     private boolean mRequired;
     private CharSequence mEntriesKey;
@@ -34,7 +36,8 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
     @ViewById(R.id.single_choice_radio_group)
     protected RadioGroup radioGroup;
     private FormsConfig mConfig;
-
+    private OnValueChangeListener mOnValueChangeListener;
+    private String mSelectedItem;
 
     public SingleChoiceRadioFormInput(Context context) {
         this(context, null);
@@ -65,6 +68,21 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
                 if (checkedId != -1) {
                     ((RadioButton) group.getChildAt(group.getChildCount() - 1)).setError(null);
                 }
+
+                if (mOnValueChangeListener != null) {
+                    if (checkedId == -1) {
+                        mSelectedItem = null;
+                        mOnValueChangeListener.onValueChanged(null);
+                    } else {
+                        View radioButton = radioGroup.findViewById(checkedId);
+                        int idx = radioGroup.indexOfChild(radioButton);
+                        mSelectedItem = mConfig.getValues()[idx];
+                        mOnValueChangeListener.onValueChanged(mSelectedItem);
+
+
+                    }
+
+                }
             }
         });
 
@@ -77,7 +95,6 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
         }
 
         mConfig = FormsConfig.valueOf(mEntriesKey.toString());
-
         for (int i = 0; i < mConfig.getValues().length; i++) {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setText(mConfig.getLabels()[i]);
@@ -126,8 +143,17 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
         for (int i = 0; i < mConfig.getValues().length; i++) {
             if (mConfig.getValues()[i].equals(value)) {
                 ((RadioButton) radioGroup.getChildAt(i)).setChecked(true);
+                mSelectedItem = value;
                 break;
             }
         }
+    }
+
+    public void setOnValueChangeListener(OnValueChangeListener onValueChangeListener) {
+        this.mOnValueChangeListener = onValueChangeListener;
+    }
+
+    public String getSelectedItem() {
+        return mSelectedItem;
     }
 }
