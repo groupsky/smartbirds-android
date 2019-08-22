@@ -8,46 +8,25 @@ import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
-import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 import static android.app.Dialog.BUTTON_NEGATIVE;
 import static android.app.Dialog.BUTTON_NEUTRAL;
 import static android.app.Dialog.BUTTON_POSITIVE;
-import static android.text.TextUtils.isEmpty;
-import static android.text.TextUtils.join;
-import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
-import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
 import static android.widget.AdapterView.INVALID_POSITION;
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.ITEM_COUNT_FOR_FILTER;
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
 
 @EView
 public class SingleChoiceConfigFormInput extends TextViewFormInput implements SupportStorage {
@@ -181,7 +160,6 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
     @Override
     public void restoreFromStorage(Map<String, String> storage, String fieldName) {
         String value = storage.get(fieldName);
-        Log.d("++++++", "Restored value: " + value);
         setSelection(value);
     }
 
