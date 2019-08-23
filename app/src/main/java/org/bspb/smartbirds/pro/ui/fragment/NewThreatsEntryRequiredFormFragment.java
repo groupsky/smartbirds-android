@@ -21,6 +21,10 @@ import java.util.HashMap;
 @EFragment(R.layout.fragment_monitoring_form_new_threats_required_entry)
 public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
 
+    interface OnPrimaryTypeChangedListener {
+        void onPrimaryTypeChange(String primaryType);
+    }
+
     @ViewById(R.id.form_threats_confidential)
     SwitchFormInput confidential;
 
@@ -55,6 +59,8 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
 
     @Pref
     CommonPrefs_ commonPrefs;
+
+    private OnPrimaryTypeChangedListener primaryTypeChangedListener;
 
     @Override
     public void onResume() {
@@ -125,6 +131,9 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
                 handleClassInput(view.getSelectedItem());
             }
         });
+        if (primaryTypeChangedListener != null) {
+            primaryTypeChangedListener.onPrimaryTypeChange(primaryType.getSelectedItem());
+        }
     }
 
     private void handlePoisonedType(String type) {
@@ -163,6 +172,10 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
                 poisonedType.setVisibility(View.VISIBLE);
                 poisonedType.setRequired(true);
                 break;
+        }
+
+        if (primaryTypeChangedListener != null) {
+            primaryTypeChangedListener.onPrimaryTypeChange(primaryTypeValue);
         }
     }
 
@@ -218,6 +231,10 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
                     showBaitForm();
                     break;
             }
+        }
+
+        if (primaryTypeChangedListener != null) {
+            primaryTypeChangedListener.onPrimaryTypeChange(primaryTypeValue);
         }
     }
 
@@ -282,6 +299,10 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         count.setVisibility(View.VISIBLE);
 
         count.setRequired(true);
+    }
+
+    public void setOnPrimaryTypeChangedListener(OnPrimaryTypeChangedListener primaryTypeChangedListener) {
+        this.primaryTypeChangedListener = primaryTypeChangedListener;
     }
 
 }

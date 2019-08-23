@@ -295,4 +295,10 @@ Do you really want to cancel the monitoring?"</string>
 <string name="monitoring_threats_estimate">Estimate</string>
 <string name="monitoring_threats_poisoned_type">Poisoned type</string>
 <string name="monitoring_threats_state_carcass">State carcass</string>
+<string name="monitoring_threats_sample_taken_1">Sample 1</string>
+<string name="monitoring_threats_sample_code_1">Sample code 1</string>
+<string name="monitoring_threats_sample_taken_2">Sample 2</string>
+<string name="monitoring_threats_sample_code_2">Sample code 2</string>
+<string name="monitoring_threats_sample_taken_3">Sample 3</string>
+<string name="monitoring_threats_sample_code_3">Sample code 3</string>
 </resources>

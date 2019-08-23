@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,12 +15,58 @@
             android:shrinkColumns="*"
             android:stretchColumns="*">
 
+            <TableRow android:id="@+id/sample_container_1">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:layout_span="8"
+                    android:hint="@string/monitoring_threats_sample_taken_1"
+                    android:tag="@string/tag_sample_taken_1"
+                    app:entries="threats_sample_taken"
+                    app:required="false" />
+
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                    android:layout_span="4"
+                    android:hint="@string/monitoring_threats_sample_code_1"
+                    android:tag="@string/tag_sample_code_1" />
+            </TableRow>
+
+            <TableRow android:id="@+id/sample_container_2">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:layout_span="8"
+                    android:hint="@string/monitoring_threats_sample_taken_2"
+                    android:tag="@string/tag_sample_taken_2"
+                    app:entries="threats_sample_taken"
+                    app:required="false" />
+
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                    android:layout_span="4"
+                    android:hint="@string/monitoring_threats_sample_code_2"
+                    android:tag="@string/tag_sample_code_2" />
+            </TableRow>
+
+            <TableRow android:id="@+id/sample_container_3">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:layout_span="8"
+                    android:hint="@string/monitoring_threats_sample_taken_3"
+                    android:tag="@string/tag_sample_taken_3"
+                    app:entries="threats_sample_taken"
+                    app:required="false" />
+
+                <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                    android:layout_span="4"
+                    android:hint="@string/monitoring_threats_sample_code_3"
+                    android:tag="@string/tag_sample_code_3" />
+            </TableRow>
+
             <TableRow>
 
                 <EditText
                     style="@style/FieldInput.Memo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_span="12"
                     android:hint="@string/monitoring_threats_notes"
                     android:tag="@string/tag_threats_notes" />
             </TableRow>

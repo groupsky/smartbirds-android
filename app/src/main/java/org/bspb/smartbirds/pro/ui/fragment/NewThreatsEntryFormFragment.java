@@ -19,16 +19,28 @@ import java.util.HashMap;
 @EFragment
 public class NewThreatsEntryFormFragment extends BaseTabEntryFragment {
 
+    NewThreatsEntryRequiredFormFragment requiredFormFragment;
+    NewThreatsEntryOptionalFormFragment optionalFormFragment;
+
     @AfterViews
     protected void setupTabs() {
         setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
+
             @Override
             public android.app.Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return NewThreatsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        requiredFormFragment = NewThreatsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        if (optionalFormFragment != null) {
+                            requiredFormFragment.setOnPrimaryTypeChangedListener(optionalFormFragment);
+                        }
+                        return requiredFormFragment;
                     case 1:
-                        return NewThreatsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        optionalFormFragment = NewThreatsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        if (requiredFormFragment != null) {
+                            requiredFormFragment.setOnPrimaryTypeChangedListener(optionalFormFragment);
+                        }
+                        return optionalFormFragment;
                     default:
                         throw new IllegalArgumentException("Unhandled position" + position);
                 }
