@@ -21,7 +21,7 @@
                     android:layout_span="8"
                     android:hint="@string/monitoring_threats_sample_taken_1"
                     android:tag="@string/tag_sample_taken_1"
-                    app:entries="threats_sample_taken"
+                    app:entries="threats_sample"
                     app:required="false" />
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
@@ -36,7 +36,7 @@
                     android:layout_span="8"
                     android:hint="@string/monitoring_threats_sample_taken_2"
                     android:tag="@string/tag_sample_taken_2"
-                    app:entries="threats_sample_taken"
+                    app:entries="threats_sample"
                     app:required="false" />
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
@@ -51,7 +51,7 @@
                     android:layout_span="8"
                     android:hint="@string/monitoring_threats_sample_taken_3"
                     android:tag="@string/tag_sample_taken_3"
-                    app:entries="threats_sample_taken"
+                    app:entries="threats_sample"
                     app:required="false" />
 
                 <org.bspb.smartbirds.pro.ui.views.TextFormInput
