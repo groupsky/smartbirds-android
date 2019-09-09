@@ -73,11 +73,5 @@
 
         </TableLayout>
 
-        <fragment
-            android:id="@+id/pictures_fragment"
-            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 </ScrollView>
