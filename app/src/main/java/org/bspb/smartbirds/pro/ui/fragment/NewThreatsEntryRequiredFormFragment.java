@@ -66,11 +66,9 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            hideAllFields();
             confidential.setChecked(commonPrefs.confidentialRecord().get());
-        } else {
-            handleInitialState();
         }
+        handleInitialState();
     }
 
     @Override
