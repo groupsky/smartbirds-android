@@ -39,14 +39,11 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
     @StringRes(R.string.tag_primary_type)
     protected String tagThreatsPrimaryType;
 
-    @StringRes(R.string.tag_poisoned_type)
-    protected String tagThreatsPoisonedType;
-
     @StringRes(R.string.tag_category)
     protected String tagThreatsCategory;
 
-    @RootContext
-    Context rootContext;
+    @StringRes(R.string.monitoring_threats_poisoned)
+    protected String poisonedString;
 
     @Override
     public MapMarker convert(MonitoringEntry item) {
@@ -59,12 +56,9 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
         } else if (EntryType.THREATS.equals(item.type)) {
             String primaryType = item.data.get(tagThreatsPrimaryType);
             if ("threat".equalsIgnoreCase(primaryType)) {
-                String category = item.data.get(tagThreatsCategory);
-                name = category;
+                name = item.data.get(tagThreatsCategory);
             } else {
-                String poisonedType = item.data.get(tagThreatsPoisonedType);
-                int idx = Arrays.asList(FormsConfig.threats_poisoned_types.getValues()).indexOf(poisonedType);
-                name = rootContext.getString(FormsConfig.threats_poisoned_types.getLabels()[idx]);
+                name = poisonedString;
             }
 
         } else {
