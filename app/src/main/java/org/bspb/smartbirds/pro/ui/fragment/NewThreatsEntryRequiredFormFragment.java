@@ -10,6 +10,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
@@ -142,14 +143,15 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
             return;
         }
 
-        switch (type) {
-            case "dead":
+        FormsConfig.ThreatsPoisonedType poisonedType = FormsConfig.ThreatsPoisonedType.valueOf(type);
+        switch (poisonedType) {
+            case dead:
                 showDeadForm();
                 break;
-            case "alive":
+            case alive:
                 showAliveForm();
                 break;
-            case "bait":
+            case bait:
                 showBaitForm();
                 break;
         }
@@ -161,11 +163,12 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
             return;
         }
 
-        switch (primaryTypeValue) {
-            case "threat":
+        FormsConfig.ThreatsPrymaryType primaryType = FormsConfig.ThreatsPrymaryType.valueOf(primaryTypeValue);
+        switch (primaryType) {
+            case threat:
                 showThreatForm();
                 break;
-            case "poison":
+            case poison:
                 hideAllFields();
                 poisonedType.setVisibility(View.VISIBLE);
                 poisonedType.setRequired(true);
@@ -179,20 +182,25 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
 
     private void handleClassInput(String value) {
         species.setSelection(null);
-        switch (value) {
-            case "birds":
+        if (value == null) {
+            return;
+        }
+
+        FormsConfig.SpeciesClass speciesClass = FormsConfig.SpeciesClass.valueOf(value);
+        switch (speciesClass) {
+            case birds:
                 species.setKey("species_birds");
                 break;
-            case "herptiles":
+            case herptiles:
                 species.setKey("species_herptiles");
                 break;
-            case "mammals":
+            case mammals:
                 species.setKey("species_mammals");
                 break;
-            case "invertebrates":
+            case invertebrates:
                 species.setKey("species_invertebrates");
                 break;
-            case "plants":
+            case plants:
                 species.setKey("species_plants");
                 break;
             default:
@@ -203,12 +211,13 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
 
     private void handleInitialState() {
         String primaryTypeValue = primaryType.getSelectedItem();
+
         if (primaryTypeValue == null) {
             hideAllFields();
             return;
         }
 
-        if ("threat".equals(primaryTypeValue)) {
+        if (FormsConfig.ThreatsPrymaryType.threat.name().equals(primaryTypeValue)) {
             showThreatForm();
         } else {
             String poisonedTypeValue = poisonedType.getSelectedItem();
@@ -217,15 +226,15 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
                 poisonedType.setVisibility(View.VISIBLE);
                 return;
             }
-
-            switch (poisonedTypeValue) {
-                case "dead":
+            FormsConfig.ThreatsPoisonedType poisonedType = FormsConfig.ThreatsPoisonedType.valueOf(poisonedTypeValue);
+            switch (poisonedType) {
+                case dead:
                     showDeadForm();
                     break;
-                case "alive":
+                case alive:
                     showAliveForm();
                     break;
-                case "bait":
+                case bait:
                     showBaitForm();
                     break;
             }

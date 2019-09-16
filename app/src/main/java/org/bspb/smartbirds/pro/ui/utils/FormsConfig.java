@@ -2,33 +2,92 @@ package org.bspb.smartbirds.pro.ui.utils;
 
 import org.bspb.smartbirds.pro.R;
 
-public enum FormsConfig {
-    species_class(
-            new String[]{"birds", "herptiles", "mammals", "invertebrates", "plants"},
-            new int[]{R.string.class_birds, R.string.class_herptiles, R.string.class_mammals, R.string.class_invertebrates, R.string.class_plants}
-    ),
-    threats_primary_types(
-            new String[]{"threat", "poison"},
-            new int[]{R.string.primary_type_threat, R.string.primary_type_poison}
-    ),
-    threats_poisoned_types(
-            new String[]{"dead", "alive", "bait"},
-            new int[]{R.string.poisoned_type_dead, R.string.poisoned_type_alive, R.string.poisoned_type_bait}
-    );
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    private String[] values;
-    private int[] labels;
+public class FormsConfig {
 
-    FormsConfig(String[] values, int[] labels) {
-        this.values = values;
-        this.labels = labels;
+    public interface NomenclatureConfig {
+        int getLabelId();
+
+        String getId();
     }
 
-    public String[] getValues() {
-        return values;
+
+    public enum SpeciesClass implements NomenclatureConfig {
+        birds(R.string.class_birds),
+        herptiles(R.string.class_herptiles),
+        mammals(R.string.class_mammals),
+        invertebrates(R.string.class_invertebrates),
+        plants(R.string.class_plants);
+
+        int labelId;
+
+        SpeciesClass(int labelId) {
+            this.labelId = labelId;
+        }
+
+        @Override
+        public int getLabelId() {
+            return labelId;
+        }
+
+        @Override
+        public String getId() {
+            return name();
+        }
     }
 
-    public int[] getLabels() {
-        return labels;
+    public enum ThreatsPrymaryType implements NomenclatureConfig {
+        threat(R.string.primary_type_threat),
+        poison(R.string.primary_type_poison);
+
+        int labelId;
+
+        ThreatsPrymaryType(int labelId) {
+            this.labelId = labelId;
+        }
+
+        @Override
+        public int getLabelId() {
+            return labelId;
+        }
+
+        @Override
+        public String getId() {
+            return name();
+        }
     }
+
+    public enum ThreatsPoisonedType implements NomenclatureConfig {
+        dead(R.string.poisoned_type_dead),
+        alive(R.string.poisoned_type_alive),
+        bait(R.string.poisoned_type_bait);
+
+        int labelId;
+
+        ThreatsPoisonedType(int labelId) {
+            this.labelId = labelId;
+        }
+
+        @Override
+        public int getLabelId() {
+            return labelId;
+        }
+
+        @Override
+        public String getId() {
+            return name();
+        }
+    }
+
+    public static List<NomenclatureConfig[]> configs = new ArrayList<NomenclatureConfig[]>() {
+        {
+            add(SpeciesClass.values());
+            add(ThreatsPrymaryType.values());
+            add(ThreatsPoisonedType.values());
+        }
+    };
 }

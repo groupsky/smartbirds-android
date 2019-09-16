@@ -31,7 +31,7 @@ import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DEL
 @EView
 public class SingleChoiceConfigFormInput extends TextViewFormInput implements SupportStorage {
 
-    private CharSequence key;
+    private int key;
 
     private SmartArrayAdapter<ConfigItem> mAdapter;
     /**
@@ -40,7 +40,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
     ConfigItem mSelectedItem = null;
 
     OnSelectionChangeListener onSelectionChangeListener;
-    FormsConfig mConfig;
+    FormsConfig.NomenclatureConfig[] mConfig;
 
     public SingleChoiceConfigFormInput(Context context) {
         this(context, null);
@@ -55,7 +55,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceConfigFormInput, defStyle, 0);
         try {
-            key = a.getText(R.styleable.SingleChoiceConfigFormInput_entries);
+            key = a.getInteger(R.styleable.SingleChoiceConfigFormInput_config_entries, -1);
             SmartArrayAdapter<ConfigItem> adapter = new SmartArrayAdapter<>(context,
                     android.R.layout.select_dialog_singlechoice, new ArrayList<ConfigItem>());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -65,18 +65,18 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
         }
     }
 
-    public void setKey(CharSequence key) {
+    public void setKey(int key) {
         this.key = key;
         loadData();
     }
 
     @AfterInject
     void loadData() {
-        if (key != null && !isInEditMode()) {
-            mConfig = FormsConfig.valueOf(key.toString());
+        if (key != -1 && !isInEditMode()) {
+            mConfig = FormsConfig.configs.get(key);
             mAdapter.clear();
-            for (int i = 0; i < mConfig.getValues().length; i++) {
-                mAdapter.add(new ConfigItem(mConfig.getValues()[i], mConfig.getLabels()[i]));
+            for (int i = 0; i < mConfig.length; i++) {
+                mAdapter.add(new ConfigItem(mConfig[i]));
             }
             mAdapter.notifyDataSetChanged();
             if (mAdapter.getCount() == 1) {
@@ -99,16 +99,17 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
     public String getSelectedItem() {
         return mSelectedItem != null
-                ? mSelectedItem.value
+                ? mSelectedItem.config.getId()
                 : null;
     }
 
     public void setSelection(String value) {
-        int idx = Arrays.asList(mConfig.getValues()).indexOf(value);
-        if (idx != INVALID_POSITION) {
-            setSelection(new ConfigItem(mConfig.getValues()[idx], mConfig.getLabels()[idx]));
+        for (FormsConfig.NomenclatureConfig config : mConfig) {
+            if (config.getId().equals(value)) {
+                setSelection(new ConfigItem(config));
+                break;
+            }
         }
-
     }
 
     protected void setSelection(ConfigItem item) {
@@ -131,7 +132,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
         mSelectedItem = item;
         if (item != null) {
-            setText(item.label);
+            setText(item.config.getLabelId());
             setError(null);
         } else {
             setText("");
@@ -151,7 +152,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
     public void serializeToStorage(Map<String, String> storage, String fieldName) {
         storage.put(fieldName, getText().toString().replace("\n", MULTIPLE_CHOICE_DELIMITER));
         if (mSelectedItem != null) {
-            storage.put(fieldName, mSelectedItem.value);
+            storage.put(fieldName, mSelectedItem.config.getId());
         } else {
             storage.put(fieldName, "");
         }
@@ -256,12 +257,10 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
     }
 
     class ConfigItem {
-        final String value;
-        final int label;
+        final FormsConfig.NomenclatureConfig config;
 
-        ConfigItem(String value, int label) {
-            this.value = value;
-            this.label = label;
+        ConfigItem(FormsConfig.NomenclatureConfig config) {
+            this.config = config;
         }
 
         @Override
@@ -271,18 +270,18 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
             ConfigItem that = (ConfigItem) o;
 
-            return value.equals(that.value);
+            return config.equals(that.config);
 
         }
 
         @Override
         public int hashCode() {
-            return value.hashCode();
+            return config.hashCode();
         }
 
         @Override
         public String toString() {
-            return value;
+            return config.getId();
         }
     }
 

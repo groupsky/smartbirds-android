@@ -7,6 +7,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.tools.Reporting;
+import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
 /**
  * Created by groupsky on 26.01.17.
@@ -35,7 +36,7 @@ public class NewThreatsEntryOptionalFormFragment extends BaseFormFragment implem
         }
 
         try {
-            if (primaryType != null && "poison".equalsIgnoreCase(primaryType)) {
+            if (primaryType != null && FormsConfig.ThreatsPrymaryType.poison.name().equalsIgnoreCase(primaryType)) {
                 getView().findViewById(R.id.sample_container_1).setVisibility(View.VISIBLE);
                 getView().findViewById(R.id.sample_container_2).setVisibility(View.VISIBLE);
                 getView().findViewById(R.id.sample_container_3).setVisibility(View.VISIBLE);

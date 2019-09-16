@@ -15,6 +15,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
 import java.util.Arrays;
@@ -134,21 +135,39 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
                 countView.setText(entry.data.get(context.getString(R.string.tag_count)));
                 break;
             case THREATS:
-                String primaryType = entry.data.get(context.getString(R.string.tag_primary_type));
-
-                if ("threat".equalsIgnoreCase(primaryType)) {
-                    int idx = Arrays.asList(FormsConfig.threats_primary_types.getValues()).indexOf(primaryType);
-                    typeView.setText(FormsConfig.threats_primary_types.getLabels()[idx]);
-                    speciesView.setText(entry.data.get(context.getString(R.string.tag_category)));
-                } else {
-                    String poisonedType = entry.data.get(context.getString(R.string.tag_poisoned_type));
-                    int idxPoisoned = Arrays.asList(FormsConfig.threats_poisoned_types.getValues()).indexOf(poisonedType);
-                    int idxPrimary = Arrays.asList(FormsConfig.threats_primary_types.getValues()).indexOf(primaryType);
-                    typeView.setText(FormsConfig.threats_primary_types.getLabels()[idxPrimary]);
-                    speciesView.setText(FormsConfig.threats_poisoned_types.getLabels()[idxPoisoned]);
-                }
+                fillThreatTypeText();
+                fillThreatSpeciesView();
                 countView.setText(entry.data.get(context.getString(R.string.tag_count)));
                 break;
+        }
+    }
+
+    private void fillThreatTypeText() {
+        FormsConfig.ThreatsPrymaryType primaryType = null;
+        try {
+            primaryType = FormsConfig.ThreatsPrymaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+        } catch (IllegalArgumentException e) {
+            Reporting.logException(e);
+        }
+
+        if (primaryType != null) {
+            typeView.setText(primaryType.getLabelId());
+        } else {
+            typeView.setText(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+        }
+    }
+
+    private void fillThreatSpeciesView() {
+        try {
+            FormsConfig.ThreatsPrymaryType primaryType = FormsConfig.ThreatsPrymaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+            if (FormsConfig.ThreatsPrymaryType.threat.equals(primaryType)) {
+                speciesView.setText(entry.data.get(getContext().getString(R.string.tag_category)));
+            } else {
+                FormsConfig.ThreatsPoisonedType poisonedType = FormsConfig.ThreatsPoisonedType.valueOf(entry.data.get(getContext().getString(R.string.tag_poisoned_type)));
+                speciesView.setText(poisonedType.getLabelId());
+            }
+        } catch (IllegalArgumentException e) {
+            Reporting.logException(e);
         }
     }
 

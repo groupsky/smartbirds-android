@@ -28,14 +28,14 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
     }
 
     private boolean mRequired;
-    private CharSequence mEntriesKey;
+    private int mEntriesKey;
     private CharSequence mHint;
 
     @ViewById(R.id.single_choice_radio_hint)
     protected TextView hintTextView;
     @ViewById(R.id.single_choice_radio_group)
     protected RadioGroup radioGroup;
-    private FormsConfig mConfig;
+    private FormsConfig.NomenclatureConfig[] mConfig;
     private OnValueChangeListener mOnValueChangeListener;
     private String mSelectedItem;
 
@@ -53,7 +53,7 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceRadioFormInput, defStyleAttr, 0);
         try {
             mHint = a.getText(R.styleable.SingleChoiceRadioFormInput_hint);
-            mEntriesKey = a.getText(R.styleable.SingleChoiceRadioFormInput_config_entries);
+            mEntriesKey = a.getInteger(R.styleable.SingleChoiceRadioFormInput_config_entries, -1);
             mRequired = a.getBoolean(R.styleable.SingleChoiceRadioFormInput_required, false);
         } finally {
             a.recycle();
@@ -76,7 +76,7 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
                     } else {
                         View radioButton = radioGroup.findViewById(checkedId);
                         int idx = radioGroup.indexOfChild(radioButton);
-                        mSelectedItem = mConfig.getValues()[idx];
+                        mSelectedItem = mConfig[idx].getId();
                         mOnValueChangeListener.onValueChanged(mSelectedItem);
 
 
@@ -90,14 +90,14 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
             hintTextView.setText(mHint + ":");
         }
 
-        if (mEntriesKey == null) {
+        if (mEntriesKey == -1) {
             throw new IllegalArgumentException("Entries are required for this form input.");
         }
 
-        mConfig = FormsConfig.valueOf(mEntriesKey.toString());
-        for (int i = 0; i < mConfig.getValues().length; i++) {
+        mConfig = FormsConfig.configs.get(mEntriesKey);
+        for (int i = 0; i < mConfig.length; i++) {
             RadioButton radioButton = new RadioButton(getContext());
-            radioButton.setText(mConfig.getLabels()[i]);
+            radioButton.setText(mConfig[i].getLabelId());
             radioGroup.addView(radioButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
     }
@@ -130,7 +130,7 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
         if (radioButtonID != -1) {
             View radioButton = radioGroup.findViewById(radioButtonID);
             int idx = radioGroup.indexOfChild(radioButton);
-            storage.put(fieldName, mConfig.getValues()[idx]);
+            storage.put(fieldName, mConfig[idx].getId());
         } else {
             storage.put(fieldName, "");
         }
@@ -140,8 +140,8 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
     @Override
     public void restoreFromStorage(Map<String, String> storage, String fieldName) {
         String value = storage.get(fieldName);
-        for (int i = 0; i < mConfig.getValues().length; i++) {
-            if (mConfig.getValues()[i].equals(value)) {
+        for (int i = 0; i < mConfig.length; i++) {
+            if (mConfig[i].getId().equals(value)) {
                 ((RadioButton) radioGroup.getChildAt(i)).setChecked(true);
                 mSelectedItem = value;
                 break;

@@ -55,7 +55,7 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
             name = entryTypeCiconia;
         } else if (EntryType.THREATS.equals(item.type)) {
             String primaryType = item.data.get(tagThreatsPrimaryType);
-            if ("threat".equalsIgnoreCase(primaryType)) {
+            if (FormsConfig.ThreatsPrymaryType.threat.name().equalsIgnoreCase(primaryType)) {
                 name = item.data.get(tagThreatsCategory);
             } else {
                 name = poisonedString;

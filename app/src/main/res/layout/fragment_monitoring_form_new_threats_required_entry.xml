@@ -21,7 +21,7 @@
                     android:id="@+id/form_threats_primary_type"
                     android:layout_span="9"
                     android:tag="@string/tag_primary_type"
-                    app:config_entries="threats_primary_types"
+                    app:config_entries="threatsPrimaryType"
                     app:hint="@string/monitoring_threats_primary_type"
                     app:required="true" />
 
@@ -38,7 +38,7 @@
                     android:id="@+id/form_threats_poisoned_type"
                     android:layout_span="9"
                     android:tag="@string/tag_poisoned_type"
-                    app:config_entries="threats_poisoned_types"
+                    app:config_entries="threatsPoisonedType"
                     app:hint="@string/monitoring_threats_poisoned_type" />
             </TableRow>
 
@@ -59,7 +59,7 @@
                     android:layout_span="5"
                     android:hint="@string/monitoring_threats_class"
                     android:tag="@string/tag_class"
-                    app:entries="species_class" />
+                    app:config_entries="speciesClass"/>
 
                 <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                     android:id="@+id/form_threats_species"
