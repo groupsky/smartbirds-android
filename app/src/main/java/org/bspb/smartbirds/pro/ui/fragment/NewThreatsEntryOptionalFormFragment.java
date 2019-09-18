@@ -1,6 +1,5 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.util.Log;
 import android.view.View;
 
 import org.androidannotations.annotations.AfterViews;
@@ -36,7 +35,7 @@ public class NewThreatsEntryOptionalFormFragment extends BaseFormFragment implem
         }
 
         try {
-            if (primaryType != null && FormsConfig.ThreatsPrymaryType.poison.name().equalsIgnoreCase(primaryType)) {
+            if (primaryType != null && FormsConfig.ThreatsPrimaryType.poison.isSame(primaryType)) {
                 getView().findViewById(R.id.sample_container_1).setVisibility(View.VISIBLE);
                 getView().findViewById(R.id.sample_container_2).setVisibility(View.VISIBLE);
                 getView().findViewById(R.id.sample_container_3).setVisibility(View.VISIBLE);

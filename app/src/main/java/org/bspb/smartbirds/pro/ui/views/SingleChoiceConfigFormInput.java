@@ -33,11 +33,11 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
     private int key;
 
-    private SmartArrayAdapter<ConfigItem> mAdapter;
+    private SmartArrayAdapter<FormsConfig.NomenclatureConfig> mAdapter;
     /**
      * The currently selected item.
      */
-    ConfigItem mSelectedItem = null;
+    FormsConfig.NomenclatureConfig mSelectedItem = null;
 
     OnSelectionChangeListener onSelectionChangeListener;
     FormsConfig.NomenclatureConfig[] mConfig;
@@ -56,8 +56,8 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceConfigFormInput, defStyle, 0);
         try {
             key = a.getInteger(R.styleable.SingleChoiceConfigFormInput_config_entries, -1);
-            SmartArrayAdapter<ConfigItem> adapter = new SmartArrayAdapter<>(context,
-                    android.R.layout.select_dialog_singlechoice, new ArrayList<ConfigItem>());
+            SmartArrayAdapter<FormsConfig.NomenclatureConfig> adapter = new SmartArrayAdapter<>(context,
+                    android.R.layout.select_dialog_singlechoice, new ArrayList<FormsConfig.NomenclatureConfig>());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             setAdapter(adapter);
         } finally {
@@ -76,7 +76,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
             mConfig = FormsConfig.configs.get(key);
             mAdapter.clear();
             for (int i = 0; i < mConfig.length; i++) {
-                mAdapter.add(new ConfigItem(mConfig[i]));
+                mAdapter.add(mConfig[i]);
             }
             mAdapter.notifyDataSetChanged();
             if (mAdapter.getCount() == 1) {
@@ -92,27 +92,27 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
      *
      * @param adapter The SpinnerAdapter to use for this Spinner
      */
-    public void setAdapter(SmartArrayAdapter<ConfigItem> adapter) {
+    public void setAdapter(SmartArrayAdapter<FormsConfig.NomenclatureConfig> adapter) {
         mAdapter = adapter;
         setText(getText());
     }
 
     public String getSelectedItem() {
         return mSelectedItem != null
-                ? mSelectedItem.config.getId()
+                ? mSelectedItem.getId()
                 : null;
     }
 
     public void setSelection(String value) {
         for (FormsConfig.NomenclatureConfig config : mConfig) {
             if (config.getId().equals(value)) {
-                setSelection(new ConfigItem(config));
+                setSelection(config);
                 break;
             }
         }
     }
 
-    protected void setSelection(ConfigItem item) {
+    protected void setSelection(FormsConfig.NomenclatureConfig item) {
         if (mAdapter == null || mAdapter.getCount() == 0) {
             return;
         }
@@ -132,7 +132,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
         mSelectedItem = item;
         if (item != null) {
-            setText(item.config.getLabelId());
+            setText(item.getLabelId());
             setError(null);
         } else {
             setText("");
@@ -152,7 +152,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
     public void serializeToStorage(Map<String, String> storage, String fieldName) {
         storage.put(fieldName, getText().toString().replace("\n", MULTIPLE_CHOICE_DELIMITER));
         if (mSelectedItem != null) {
-            storage.put(fieldName, mSelectedItem.config.getId());
+            storage.put(fieldName, mSelectedItem.getId());
         } else {
             storage.put(fieldName, "");
         }
@@ -193,7 +193,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
     private class PopupDialog implements DialogInterface.OnClickListener {
 
         private AlertDialog mPopup;
-        private ConfigItem mLastSelected = null;
+        private FormsConfig.NomenclatureConfig mLastSelected = null;
 
         private final DataSetObserver datasetObserver = new DataSetObserver() {
             @Override
@@ -245,7 +245,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
                     mPopup.dismiss();
                     break;
                 case BUTTON_NEUTRAL:
-                    setSelection((ConfigItem) null);
+                    setSelection((String) null);
                     mPopup.dismiss();
                     break;
                 default:
@@ -253,35 +253,6 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
                     onClick(dialog, BUTTON_POSITIVE);
                     break;
             }
-        }
-    }
-
-    class ConfigItem {
-        final FormsConfig.NomenclatureConfig config;
-
-        ConfigItem(FormsConfig.NomenclatureConfig config) {
-            this.config = config;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            ConfigItem that = (ConfigItem) o;
-
-            return config.equals(that.config);
-
-        }
-
-        @Override
-        public int hashCode() {
-            return config.hashCode();
-        }
-
-        @Override
-        public String toString() {
-            return config.getId();
         }
     }
 

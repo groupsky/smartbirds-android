@@ -1,10 +1,6 @@
 package org.bspb.smartbirds.pro.beans;
 
-import android.content.Context;
-import android.util.Log;
-
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.res.StringRes;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.collections.Converter;
@@ -12,8 +8,6 @@ import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
-
-import java.util.Arrays;
 
 /**
  * Created by groupsky on 20.03.17.
@@ -55,7 +49,7 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
             name = entryTypeCiconia;
         } else if (EntryType.THREATS.equals(item.type)) {
             String primaryType = item.data.get(tagThreatsPrimaryType);
-            if (FormsConfig.ThreatsPrymaryType.threat.name().equalsIgnoreCase(primaryType)) {
+            if (FormsConfig.ThreatsPrimaryType.threat.isSame(primaryType)) {
                 name = item.data.get(tagThreatsCategory);
             } else {
                 name = poisonedString;

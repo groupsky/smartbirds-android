@@ -18,7 +18,6 @@ import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -143,9 +142,9 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
     }
 
     private void fillThreatTypeText() {
-        FormsConfig.ThreatsPrymaryType primaryType = null;
+        FormsConfig.ThreatsPrimaryType primaryType = null;
         try {
-            primaryType = FormsConfig.ThreatsPrymaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+            primaryType = FormsConfig.ThreatsPrimaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
         } catch (IllegalArgumentException e) {
             Reporting.logException(e);
         }
@@ -159,8 +158,8 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
 
     private void fillThreatSpeciesView() {
         try {
-            FormsConfig.ThreatsPrymaryType primaryType = FormsConfig.ThreatsPrymaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
-            if (FormsConfig.ThreatsPrymaryType.threat.equals(primaryType)) {
+            FormsConfig.ThreatsPrimaryType primaryType = FormsConfig.ThreatsPrimaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+            if (FormsConfig.ThreatsPrimaryType.threat.equals(primaryType)) {
                 speciesView.setText(entry.data.get(getContext().getString(R.string.tag_category)));
             } else {
                 FormsConfig.ThreatsPoisonedType poisonedType = FormsConfig.ThreatsPoisonedType.valueOf(entry.data.get(getContext().getString(R.string.tag_poisoned_type)));

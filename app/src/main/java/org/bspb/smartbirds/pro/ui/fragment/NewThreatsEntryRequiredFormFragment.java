@@ -163,7 +163,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
             return;
         }
 
-        FormsConfig.ThreatsPrymaryType primaryType = FormsConfig.ThreatsPrymaryType.valueOf(primaryTypeValue);
+        FormsConfig.ThreatsPrimaryType primaryType = FormsConfig.ThreatsPrimaryType.valueOf(primaryTypeValue);
         switch (primaryType) {
             case threat:
                 showThreatForm();
@@ -217,7 +217,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
             return;
         }
 
-        if (FormsConfig.ThreatsPrymaryType.threat.name().equals(primaryTypeValue)) {
+        if (FormsConfig.ThreatsPrimaryType.threat.isSame(primaryTypeValue)) {
             showThreatForm();
         } else {
             String poisonedTypeValue = poisonedType.getSelectedItem();

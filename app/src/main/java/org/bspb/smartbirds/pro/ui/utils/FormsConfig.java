@@ -2,10 +2,8 @@ package org.bspb.smartbirds.pro.ui.utils;
 
 import org.bspb.smartbirds.pro.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class FormsConfig {
 
@@ -13,6 +11,10 @@ public class FormsConfig {
         int getLabelId();
 
         String getId();
+
+        boolean isSame(String value);
+
+        NomenclatureConfig find(String value);
     }
 
 
@@ -23,9 +25,9 @@ public class FormsConfig {
         invertebrates(R.string.class_invertebrates),
         plants(R.string.class_plants);
 
-        int labelId;
+        final int labelId;
 
-        SpeciesClass(int labelId) {
+        SpeciesClass(final int labelId) {
             this.labelId = labelId;
         }
 
@@ -37,16 +39,30 @@ public class FormsConfig {
         @Override
         public String getId() {
             return name();
+        }
+
+        @Override
+        public boolean isSame(String value) {
+            return this.name().equals(value);
+        }
+
+        @Override
+        public NomenclatureConfig find(String value) {
+            try {
+                return valueOf(value);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
         }
     }
 
-    public enum ThreatsPrymaryType implements NomenclatureConfig {
+    public enum ThreatsPrimaryType implements NomenclatureConfig {
         threat(R.string.primary_type_threat),
         poison(R.string.primary_type_poison);
 
-        int labelId;
+        final int labelId;
 
-        ThreatsPrymaryType(int labelId) {
+        ThreatsPrimaryType(final int labelId) {
             this.labelId = labelId;
         }
 
@@ -58,6 +74,20 @@ public class FormsConfig {
         @Override
         public String getId() {
             return name();
+        }
+
+        @Override
+        public boolean isSame(String value) {
+            return this.name().equals(value);
+        }
+
+        @Override
+        public NomenclatureConfig find(String value) {
+            try {
+                return valueOf(value);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
         }
     }
 
@@ -66,9 +96,9 @@ public class FormsConfig {
         alive(R.string.poisoned_type_alive),
         bait(R.string.poisoned_type_bait);
 
-        int labelId;
+        final int labelId;
 
-        ThreatsPoisonedType(int labelId) {
+        ThreatsPoisonedType(final int labelId) {
             this.labelId = labelId;
         }
 
@@ -81,13 +111,27 @@ public class FormsConfig {
         public String getId() {
             return name();
         }
+
+        @Override
+        public boolean isSame(String value) {
+            return this.name().equals(value);
+        }
+
+        @Override
+        public NomenclatureConfig find(String value) {
+            try {
+                return valueOf(value);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+        }
     }
 
-    public static List<NomenclatureConfig[]> configs = new ArrayList<NomenclatureConfig[]>() {
-        {
-            add(SpeciesClass.values());
-            add(ThreatsPrymaryType.values());
-            add(ThreatsPoisonedType.values());
-        }
-    };
+    public static final List<NomenclatureConfig[]> configs = Arrays.asList(
+            new NomenclatureConfig[][]{
+                    SpeciesClass.values(),
+                    ThreatsPrimaryType.values(),
+                    ThreatsPoisonedType.values()
+            }
+    );
 }
