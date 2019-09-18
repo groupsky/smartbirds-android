@@ -24,7 +24,7 @@
 
     <attr name="entries" format="string" />
     <attr name="hint" format="string" />
-    <!--Value of the enum represent configs index in FormsConfig-->
+    <!-- Value of the enum represent configs index in FormsConfig -->
     <attr name="config_entries" format="enum">
         <enum name="speciesClass" value="0" />
         <enum name="threatsPrimaryType" value="1" />
