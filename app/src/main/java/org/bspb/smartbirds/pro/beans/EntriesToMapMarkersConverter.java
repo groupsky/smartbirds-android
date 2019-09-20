@@ -7,6 +7,7 @@ import org.bspb.smartbirds.pro.collections.Converter;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.map.MapMarker;
+import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
 /**
  * Created by groupsky on 20.03.17.
@@ -29,6 +30,15 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
     @StringRes(R.string.tag_observed_bird)
     protected String tagSpecies2;
 
+    @StringRes(R.string.tag_primary_type)
+    protected String tagThreatsPrimaryType;
+
+    @StringRes(R.string.tag_category)
+    protected String tagThreatsCategory;
+
+    @StringRes(R.string.monitoring_threats_poisoned)
+    protected String poisonedString;
+
     @Override
     public MapMarker convert(MonitoringEntry item) {
         double lat = Double.valueOf(item.data.get(tagLatitude));
@@ -37,6 +47,14 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
 
         if (EntryType.CICONIA.equals(item.type)) {
             name = entryTypeCiconia;
+        } else if (EntryType.THREATS.equals(item.type)) {
+            String primaryType = item.data.get(tagThreatsPrimaryType);
+            if (FormsConfig.ThreatsPrimaryType.threat.isSame(primaryType)) {
+                name = item.data.get(tagThreatsCategory);
+            } else {
+                name = poisonedString;
+            }
+
         } else {
             if (item.data.containsKey(tagSpecies1)) {
                 name = item.data.get(tagSpecies1);

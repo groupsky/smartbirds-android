@@ -15,6 +15,8 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.tools.Reporting;
+import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
 import java.util.Locale;
 
@@ -131,6 +133,40 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
                 speciesView.setText(entry.data.get(context.getString(R.string.tag_species_scientific_name)));
                 countView.setText(entry.data.get(context.getString(R.string.tag_count)));
                 break;
+            case THREATS:
+                fillThreatTypeText();
+                fillThreatSpeciesView();
+                countView.setText(entry.data.get(context.getString(R.string.tag_count)));
+                break;
+        }
+    }
+
+    private void fillThreatTypeText() {
+        FormsConfig.ThreatsPrimaryType primaryType = null;
+        try {
+            primaryType = FormsConfig.ThreatsPrimaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+        } catch (IllegalArgumentException e) {
+            Reporting.logException(e);
+        }
+
+        if (primaryType != null) {
+            typeView.setText(primaryType.getLabelId());
+        } else {
+            typeView.setText(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+        }
+    }
+
+    private void fillThreatSpeciesView() {
+        try {
+            FormsConfig.ThreatsPrimaryType primaryType = FormsConfig.ThreatsPrimaryType.valueOf(entry.data.get(getContext().getString(R.string.tag_primary_type)));
+            if (FormsConfig.ThreatsPrimaryType.threat.equals(primaryType)) {
+                speciesView.setText(entry.data.get(getContext().getString(R.string.tag_category)));
+            } else {
+                FormsConfig.ThreatsPoisonedType poisonedType = FormsConfig.ThreatsPoisonedType.valueOf(entry.data.get(getContext().getString(R.string.tag_poisoned_type)));
+                speciesView.setText(poisonedType.getLabelId());
+            }
+        } catch (IllegalArgumentException e) {
+            Reporting.logException(e);
         }
     }
 

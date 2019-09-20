@@ -5017,5 +5017,362 @@
       "bg": "Мини ВЕЦ",
       "en": "Small hydroelectric"
     }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Пожари",
+      "en": "Fires"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Сечи",
+      "en": "Logging"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Замърсяване",
+      "en": "Pollution"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Кариери",
+      "en": "Quarries"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Зарибяване",
+      "en": "Stocking with fish"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Бракониери",
+      "en": "Poachers"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Пътища",
+      "en": "Roads"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Ветропарк",
+      "en": "Wind park"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Соларен парк",
+      "en": "Solar park"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Премахване на храсти",
+      "en": "Removal of shrubs"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Пресъхващи водни тела",
+      "en": "Dried up waterbodies"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Убит на пътя",
+      "en": "Dead on road"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Ловна преса",
+      "en": "Hunting"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Тровене",
+      "en": "Poisoning"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Безпокойство",
+      "en": "Disturbance"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Иманярство",
+      "en": "Treasure hunting"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Екстремни спортове",
+      "en": "Extreme sports"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Туристическа дейност",
+      "en": "Touristic activities"
+    }
+  },
+  {
+    "type": "threats_estimate",
+    "label": {
+      "bg": "Ниско",
+      "en": "Low"
+    }
+  },
+  {
+    "type": "threats_estimate",
+    "label": {
+      "bg": "Средно",
+      "en": "Average"
+    }
+  },
+  {
+    "type": "threats_estimate",
+    "label": {
+      "bg": "Високо",
+      "en": "High"
+    }
+  },
+  {
+    "type": "threats_state_carcass",
+    "label": {
+      "bg": "Сежо/ново",
+      "en": "Fresh"
+    }
+  },
+  {
+    "type": "threats_state_carcass",
+    "label": {
+      "bg": "Подуто",
+      "en": "Bloat"
+    }
+  },
+  {
+    "type": "threats_state_carcass",
+    "label": {
+      "bg": "Активно разлагане",
+      "en": "Active decay"
+    }
+  },
+  {
+    "type": "threats_state_carcass",
+    "label": {
+      "bg": "Напреднало разлагане",
+      "en": "Advanced decay"
+    }
+  },
+  {
+    "type": "threats_state_carcass",
+    "label": {
+      "bg": "Сухо/останки",
+      "en": "Dry/remains"
+    }
+  },
+  {
+    "type": "threats_state_carcass",
+    "label": {
+      "bg": "Неизвестно/няма",
+      "en": "Unknown/Not available"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Цял труп",
+      "en": "Whole body"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Стомах",
+      "en": "Stomach"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Гуша",
+      "en": "Crop"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Черен дроб",
+      "en": "Liver"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Мозък",
+      "en": "Brain"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Нокти",
+      "en": "Talons/ Claws"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Не",
+      "en": "None"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Няма",
+      "en": "Unknown/Not available"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Бъбреци",
+      "en": "Kidney"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Далак",
+      "en": "Spleen"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Кости",
+      "en": "Bones"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Жлъчка",
+      "en": "Gall"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Бял дроб",
+      "en": "Lungs"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Сърце",
+      "en": "Heart"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Пера",
+      "en": "Feathers"
+    }
   }
 ]

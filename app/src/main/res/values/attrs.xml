@@ -15,6 +15,7 @@
         <attr name="memoFormInputStyle" format="reference" />
         <attr name="switchFormInputStyle" format="reference" />
         <attr name="zoneFormInputStyle" format="reference" />
+        <attr name="singleChoiceRadioFormInputStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SupportRequiredView">
@@ -23,6 +24,12 @@
 
     <attr name="entries" format="string" />
     <attr name="hint" format="string" />
+    <!-- Value of the enum represent configs index in FormsConfig -->
+    <attr name="config_entries" format="enum">
+        <enum name="speciesClass" value="0" />
+        <enum name="threatsPrimaryType" value="1" />
+        <enum name="threatsPoisonedType" value="2" />
+    </attr>
 
     <!-- Stylable attributes for SingleChoiceFormInput -->
     <declare-styleable name="SingleChoiceFormInput">
@@ -40,4 +47,15 @@
         <attr name="hint" />
     </declare-styleable>
 
+    <!-- Stylable attributes for SingleChoiceRadioFormInput-->
+    <declare-styleable name="SingleChoiceRadioFormInput">
+        <attr name="config_entries" />
+        <attr name="hint" />
+        <attr name="required" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for SingleChoiceConfigFormInput-->
+    <declare-styleable name="SingleChoiceConfigFormInput">
+        <attr name="config_entries" />
+    </declare-styleable>
 </resources>
