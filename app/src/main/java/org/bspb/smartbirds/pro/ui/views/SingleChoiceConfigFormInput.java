@@ -107,9 +107,11 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
         for (FormsConfig.NomenclatureConfig config : mConfig) {
             if (config.getId().equals(value)) {
                 setSelection(config);
-                break;
+                return;
             }
         }
+        mSelectedItem = null;
+        setText("");
     }
 
     protected void setSelection(FormsConfig.NomenclatureConfig item) {

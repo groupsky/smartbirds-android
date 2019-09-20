@@ -13,8 +13,6 @@ public class FormsConfig {
         String getId();
 
         boolean isSame(String value);
-
-        NomenclatureConfig find(String value);
     }
 
 
@@ -45,15 +43,6 @@ public class FormsConfig {
         public boolean isSame(String value) {
             return this.name().equals(value);
         }
-
-        @Override
-        public NomenclatureConfig find(String value) {
-            try {
-                return valueOf(value);
-            } catch (IllegalArgumentException e) {
-                return null;
-            }
-        }
     }
 
     public enum ThreatsPrimaryType implements NomenclatureConfig {
@@ -79,15 +68,6 @@ public class FormsConfig {
         @Override
         public boolean isSame(String value) {
             return this.name().equals(value);
-        }
-
-        @Override
-        public NomenclatureConfig find(String value) {
-            try {
-                return valueOf(value);
-            } catch (IllegalArgumentException e) {
-                return null;
-            }
         }
     }
 
@@ -115,15 +95,6 @@ public class FormsConfig {
         @Override
         public boolean isSame(String value) {
             return this.name().equals(value);
-        }
-
-        @Override
-        public NomenclatureConfig find(String value) {
-            try {
-                return valueOf(value);
-            } catch (IllegalArgumentException e) {
-                return null;
-            }
         }
     }
 
