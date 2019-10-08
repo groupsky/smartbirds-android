@@ -286,7 +286,7 @@
     <string name="poisoned_type_bait">"Стръв"</string>
     <string name="monitoring_threats_primary_type">"Тип"</string>
     <string name="entry_type_threats">"Заплахи"</string>
-    <string name="monitoring_threats_notes">"Notes"</string>
+    <string name="monitoring_threats_notes">"Бележки"</string>
     <string name="monitoring_threats_category">"Категория"</string>
     <string name="monitoring_threats_species">"Вид"</string>
     <string name="monitoring_threats_class">"Клас"</string>
