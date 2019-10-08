@@ -67,7 +67,7 @@ dependencies {
     // TODO: migrate to v3.x
     implementation 'de.greenrobot:eventbus:2.4.1'
     // Crashlytics Kit
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true
     }
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
