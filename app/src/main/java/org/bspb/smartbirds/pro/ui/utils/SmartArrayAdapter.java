@@ -381,7 +381,9 @@ public class SmartArrayAdapter<T> extends BaseAdapter implements Filterable {
 
         T item = getItem(position);
         if (item instanceof CharSequence) {
-            text.setText((CharSequence)item);
+            text.setText((CharSequence) item);
+        } else if (item instanceof FormsConfig.NomenclatureConfig) {
+            text.setText(((FormsConfig.NomenclatureConfig)item).getLabelId());
         } else {
             text.setText(item.toString());
         }
