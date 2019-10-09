@@ -72,7 +72,7 @@ dependencies {
     }
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
     implementation 'com.googlecode.jcsv:jcsv:1.4.0'
-    implementation 'commons-net:commons-net:3.3'
+    implementation 'commons-net:commons-net:3.6'
     implementation 'com.google.maps.android:android-maps-utils:0.3.2'
     // TODO: migrate to v6.x
     implementation 'org.osmdroid:osmdroid-android:4.2'
