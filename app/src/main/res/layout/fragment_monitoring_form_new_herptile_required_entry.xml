@@ -62,7 +62,7 @@
 
                 <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
                     android:layout_span="10"
-                    android:hint="@string/monitoring_herp_danger_observation"
+                    android:hint="@string/monitoring_herptiles_danger_observation"
                     android:tag="@string/tag_findings"
                     app:entries="form_herptiles_findings" />
 
