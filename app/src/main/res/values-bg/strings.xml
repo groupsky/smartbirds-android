@@ -126,7 +126,7 @@
     <string name="monitoring_herp_gender">"Пол"</string>
     <string name="monitoring_herp_age">"Възраст"</string>
     <string name="monitoring_herp_habitat">"Местообитание"</string>
-    <string name="monitoring_herp_danger_observation">"Заплахи, констатации"</string>
+    <string name="monitoring_herp_danger_observation">"Констатации"</string>
     <string name="monitoring_herp_count">"Брой"</string>
     <string name="monitoring_herp_marking">"Маркировка"</string>
     <string name="monitoring_herp_axis_distance">"Разстояние от оста"</string>
@@ -301,4 +301,7 @@
     <string name="monitoring_threats_sample_taken_3">"Проба 3"</string>
     <string name="monitoring_threats_sample_code_3">"Код на проба 3"</string>
     <string name="monitoring_threats_poisoned">"Отровен"</string>
+    <string name="monitoring_mammal_danger_observation">"Констатации"</string>
+    <string name="monitoring_herptiles_danger_observation">"Констатации"</string>
+    <string name="monitoring_invertebrates_danger_observation">"Констатации"</string>
 </resources>

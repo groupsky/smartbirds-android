@@ -126,7 +126,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_herp_gender">"Sex"</string>
     <string name="monitoring_herp_age">"Age"</string>
     <string name="monitoring_herp_habitat">"Habitat"</string>
-    <string name="monitoring_herp_danger_observation">"Threats, other"</string>
+    <string name="monitoring_herp_danger_observation">"Findings"</string>
     <string name="monitoring_herp_count">"Count"</string>
     <string name="monitoring_herp_marking">"Marking"</string>
     <string name="monitoring_herp_axis_distance">"Distance from axis"</string>
@@ -302,4 +302,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_threats_sample_taken_3">"Sample 3"</string>
     <string name="monitoring_threats_sample_code_3">"Code of sample 3"</string>
     <string name="monitoring_threats_poisoned">"Poisoned"</string>
+    <string name="monitoring_mammal_danger_observation">"Findings"</string>
+    <string name="monitoring_herptiles_danger_observation">"Findings"</string>
+    <string name="monitoring_invertebrates_danger_observation">"Findings"</string>
 </resources>
