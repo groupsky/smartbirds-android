@@ -1,9 +1,9 @@
 [
   {
-    "type": "main_source",
+    "type": "herptiles_gender",
     "label": {
-      "bg": "Единични наблюдения",
-      "en": "Single observations"
+      "bg": "M (мъжки)",
+      "en": "M (Male)"
     }
   },
   {
@@ -35,10 +35,10 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "herptiles_age",
     "label": {
-      "bg": "Култивация",
-      "en": "Cultivation"
+      "bg": "Ad (Възрастен)",
+      "en": "Ad"
     }
   },
   {
@@ -91,10 +91,10 @@
     }
   },
   {
-    "type": "birds_behaviour",
+    "type": "herptiles_gender",
     "label": {
-      "bg": "Храни се",
-      "en": "Feeding"
+      "bg": "F (женски)",
+      "en": "F (Female)"
     }
   },
   {
@@ -147,6 +147,20 @@
     }
   },
   {
+    "type": "herptiles_age",
+    "label": {
+      "bg": "Sub (млад, неполовозрял)",
+      "en": "Sub"
+    }
+  },
+  {
+    "type": "herp_gender",
+    "label": {
+      "bg": "M (мъжки)",
+      "en": "M (Male)"
+    }
+  },
+  {
     "type": "herp_age",
     "label": {
       "bg": "Ad (Възрастен)",
@@ -154,17 +168,17 @@
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "herptiles_gender",
     "label": {
-      "bg": "1. Светли иглолистни гори с храсталаци",
-      "en": "1. Bright coniferous forests with undergrowth"
+      "bg": "Двойка/Копула",
+      "en": "Couple/Copula"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "herptiles_age",
     "label": {
-      "bg": "Пожари",
-      "en": "Fires"
+      "bg": "Juv (ювенилен, новоизлюпен)",
+      "en": "Juv"
     }
   },
   {
@@ -203,6 +217,13 @@
     }
   },
   {
+    "type": "herptiles_age",
+    "label": {
+      "bg": "Eggs (яйца)",
+      "en": "Eggs"
+    }
+  },
+  {
     "type": "ciconia_column",
     "label": {
       "bg": "с жици",
@@ -224,279 +245,6 @@
     }
   },
   {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "покрив на църква",
-      "en": "roof of church"
-    }
-  },
-  {
-    "type": "ciconia_not_occupied",
-    "label": {
-      "bg": "тази година не са идвали въобще",
-      "en": "Have not appeared at all this year"
-    }
-  },
-  {
-    "type": "ciconia_new_birds",
-    "label": {
-      "bg": "ДВЕ птици",
-      "en": "TWO birds"
-    }
-  },
-  {
-    "type": "main_source",
-    "label": {
-      "bg": "Мониторинг влажни зони",
-      "en": "Monitoring wetlands"
-    }
-  },
-  {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "NE",
-      "en": "NE"
-    }
-  },
-  {
-    "type": "main_wind_force",
-    "label": {
-      "bg": "4 - Умерен вятър",
-      "en": "4 - Moderate breeze"
-    }
-  },
-  {
-    "type": "main_cloud_level",
-    "label": {
-      "bg": "40%",
-      "en": "40%"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Паша",
-      "en": "Grazing"
-    }
-  },
-  {
-    "type": "birds_count_units",
-    "label": {
-      "bg": "Семейство ad + juv.",
-      "en": "Family / individuals (ad. + juv.)"
-    }
-  },
-  {
-    "type": "birds_count_type",
-    "label": {
-      "bg": "Неопределен брой",
-      "en": "Unspecified number"
-    }
-  },
-  {
-    "type": "birds_age",
-    "label": {
-      "bg": "Pull",
-      "en": "Pull"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Твърде вероятно гнездене",
-      "en": "Probable breeding"
-    }
-  },
-  {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Брачни игри / ухажване / копулация",
-      "en": "Courtship / mating"
-    }
-  },
-  {
-    "type": "birds_death",
-    "label": {
-      "bg": "Болест",
-      "en": "Disease"
-    }
-  },
-  {
-    "type": "birds_nest_substrate",
-    "label": {
-      "bg": "На земята",
-      "en": "On the ground"
-    }
-  },
-  {
-    "type": "birds_age_individual",
-    "label": {
-      "bg": "Pull",
-      "en": "Pull"
-    }
-  },
-  {
-    "type": "birds_nest_success",
-    "label": {
-      "bg": "Неуспешно гнездо (Oтсичане на дървото)",
-      "en": "Unsuccessful nest (The tree has been cut down)"
-    }
-  },
-  {
-    "type": "herp_age",
-    "label": {
-      "bg": "Eggs (яйца)",
-      "en": "Eggs"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "3.1. поляни, пасища, ливади с разпръснати храсти",
-      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Замърсяване",
-      "en": "Pollution"
-    }
-  },
-  {
-    "type": "cbm_sector",
-    "label": {
-      "bg": "5",
-      "en": "5"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "B.1 - Храсталаци на местата с умерен климат",
-      "en": "B.1 Temperate scrub"
-    }
-  },
-  {
-    "type": "ciconia_tree",
-    "label": {
-      "bg": "дъб",
-      "en": "Oak"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "покрив на кметство",
-      "en": "roof of town hall"
-    }
-  },
-  {
-    "type": "main_source",
-    "label": {
-      "bg": "Средно зимно преброяване",
-      "en": "Mid-winter Bird Count"
-    }
-  },
-  {
-    "type": "main_source",
-    "label": {
-      "bg": "МОВП",
-      "en": "Common Bird Monitoring"
-    }
-  },
-  {
-    "type": "main_source",
-    "label": {
-      "bg": "Миграция",
-      "en": "Migration"
-    }
-  },
-  {
-    "type": "main_rain",
-    "label": {
-      "bg": "Преваляване",
-      "en": "Rainy"
-    }
-  },
-  {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "ESE",
-      "en": "ESE"
-    }
-  },
-  {
-    "type": "main_wind_force",
-    "label": {
-      "bg": "2 - Лек бриз",
-      "en": "2 - Light breeze"
-    }
-  },
-  {
-    "type": "main_cloud_level",
-    "label": {
-      "bg": "20%",
-      "en": "20%"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Наторяване",
-      "en": "Mulching"
-    }
-  },
-  {
-    "type": "birds_count_units",
-    "label": {
-      "bg": "Гнездо(а)",
-      "en": "Nests"
-    }
-  },
-  {
-    "type": "birds_count_type",
-    "label": {
-      "bg": "Макс.",
-      "en": "Max."
-    }
-  },
-  {
-    "type": "birds_sex",
-    "label": {
-      "bg": "Неопределен",
-      "en": "Undefined"
-    }
-  },
-  {
-    "type": "birds_age",
-    "label": {
-      "bg": "Imm.",
-      "en": "Imm."
-    }
-  },
-  {
-    "type": "birds_marking",
-    "label": {
-      "bg": "Крилометка",
-      "en": "Wing tag"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Вид в гнездови хабитат",
-      "en": "Species in nesting habitat"
-    }
-  },
-  {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "N",
-      "en": "N"
-    }
-  },
-  {
     "type": "main_rain",
     "label": {
       "bg": "Ръми",
@@ -504,969 +252,10 @@
     }
   },
   {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Строеж на гнездо / гнездова камера",
-      "en": "Building of a nest / nest chamber"
-    }
-  },
-  {
-    "type": "birds_death",
-    "label": {
-      "bg": "Лов",
-      "en": "Hunting"
-    }
-  },
-  {
-    "type": "birds_nest_substrate",
-    "label": {
-      "bg": "На скали",
-      "en": "On cliffs / rocks"
-    }
-  },
-  {
-    "type": "birds_nest_location",
-    "label": {
-      "bg": "Окрайнина на гора",
-      "en": "Forest edge"
-    }
-  },
-  {
-    "type": "birds_nest_height",
-    "label": {
-      "bg": "5-10 м.",
-      "en": "5-10 m."
-    }
-  },
-  {
-    "type": "birds_nest_position",
-    "label": {
-      "bg": "На върха",
-      "en": "On top"
-    }
-  },
-  {
-    "type": "birds_age_individual",
-    "label": {
-      "bg": "Imm.",
-      "en": "Imm."
-    }
-  },
-  {
-    "type": "birds_nest_success",
-    "label": {
-      "bg": "Pull.",
-      "en": "Pull."
-    }
-  },
-  {
-    "type": "herp_gender",
-    "label": {
-      "bg": "M (мъжки)",
-      "en": "M (Male)"
-    }
-  },
-  {
-    "type": "herp_age",
-    "label": {
-      "bg": "Juv (ювенилен, новоизлюпен)",
-      "en": "Juv"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "2. смесени гори",
-      "en": "2. Mixed forests"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Строежи",
-      "en": "Construction / development"
-    }
-  },
-  {
-    "type": "cbm_distance",
-    "label": {
-      "bg": "3 - (над 100 m)",
-      "en": "3 - (over 100 m)"
-    }
-  },
-  {
-    "type": "cbm_sector",
-    "label": {
-      "bg": "3",
-      "en": "3"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "A.3 - Смесени гори",
-      "en": "A.3 Mixed woodland"
-    }
-  },
-  {
-    "type": "ciconia_substratum",
-    "label": {
-      "bg": "Покрив",
-      "en": "Roof"
-    }
-  },
-  {
-    "type": "ciconia_column_type",
-    "label": {
-      "bg": "дървен",
-      "en": "wooden"
-    }
-  },
-  {
-    "type": "ciconia_tree",
-    "label": {
-      "bg": "бор",
-      "en": "Pine"
-    }
-  },
-  {
     "type": "ciconia_building",
     "label": {
-      "bg": "покрив на училище",
-      "en": "roof of school"
-    }
-  },
-  {
-    "type": "main_source",
-    "label": {
-      "bg": "Мониторинг на египетски лешояд",
-      "en": "Egyptian vultures monitoring"
-    }
-  },
-  {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "NW",
-      "en": "NW"
-    }
-  },
-  {
-    "type": "main_wind_force",
-    "label": {
-      "bg": "7 - Доста силен вятър",
-      "en": "7 - High wind,Moderate gale,Near gale"
-    }
-  },
-  {
-    "type": "main_cloud_level",
-    "label": {
-      "bg": "70%",
-      "en": "70%"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Отстраняване на плетове и храсти",
-      "en": "Removal of hedges and shrubs"
-    }
-  },
-  {
-    "type": "herp_gender",
-    "label": {
-      "bg": "Двойка/Копула",
-      "en": "Couple/Copula"
-    }
-  },
-  {
-    "type": "birds_age",
-    "label": {
-      "bg": "2 година",
-      "en": "2 years"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Брачни игри",
-      "en": "Courtship and display"
-    }
-  },
-  {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Излетели индивиди от местата за нощуване (основно за гъски)",
-      "en": "Individuals flying out of roosting (esp. for geese)"
-    }
-  },
-  {
-    "type": "birds_nest_substrate",
-    "label": {
-      "bg": "На ел. стълбове",
-      "en": "On electric poles"
-    }
-  },
-  {
-    "type": "birds_age_individual",
-    "label": {
-      "bg": "2 година",
-      "en": "2 years"
-    }
-  },
-  {
-    "type": "birds_nest_success",
-    "label": {
-      "bg": "Неуспешно гнездо (Безпокойство)",
-      "en": "Unsuccessful nest (Disturbance)"
-    }
-  },
-  {
-    "type": "herp_gender",
-    "label": {
-      "bg": "F (женски)",
-      "en": "F (Female)"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "5. силно разредени широколистни гори с храсталаци",
-      "en": "5. Very sparse deciduous forests with undergrowth"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Соларен парк",
-      "en": "Solar park"
-    }
-  },
-  {
-    "type": "cbm_sector",
-    "label": {
-      "bg": "8",
-      "en": "8"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "B.4 - Тревни съобщества по сухи силикатни терени",
-      "en": "B.4 Grassland on try siliceorous terrain"
-    }
-  },
-  {
-    "type": "ciconia_tree",
-    "label": {
-      "bg": "чинар",
-      "en": "Plane tree"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "покрив на фабрика",
-      "en": "roof of factory"
-    }
-  },
-  {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "SW",
-      "en": "SW"
-    }
-  },
-  {
-    "type": "main_wind_force",
-    "label": {
-      "bg": "12 - Ураган",
-      "en": "12 - Hurricane-force"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Залесяване",
-      "en": "Afforestation"
-    }
-  },
-  {
-    "type": "herptiles_age",
-    "label": {
-      "bg": "Ad (Възрастен)",
-      "en": "Ad"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Сигурно гнездене",
-      "en": "Confirmed breeding"
-    }
-  },
-  {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Брачни игри, ухажване",
-      "en": "Courting"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "1. Светли иглолистни гори с храсталаци",
-      "en": "1. Bright coniferous forests with undergrowth"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "10. скални местообитания",
-      "en": "10. Rocky habitats"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Пресъхващи водни тела",
-      "en": "Dried up waterbodies"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "C.2 - Посеви и други тревни култури",
-      "en": "C.2 Agricultural land (crops)"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "комин на училище",
-      "en": "chimney of school"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Общо управление на горите",
-      "en": "Common forest management"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Пожари",
-      "en": "Fires"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Гнездо с яйца",
-      "en": "Nest with eggs"
-    }
-  },
-  {
-    "type": "herptiles_age",
-    "label": {
-      "bg": "Eggs (яйца)",
-      "en": "Eggs"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14. Водни местообитания:",
-      "en": "14. Water habitats:"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Мъртъв екземпляр",
-      "en": "Dead individual"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "D.4 - Градски паркове и градини",
-      "en": "D.4 Urban parks and gardens"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "комин на баня",
-      "en": "chimney of bath house"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Професионален риболов",
-      "en": "Professional fishing"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "3.1. поляни, пасища, ливади с разпръснати храсти",
-      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Замърсяване",
-      "en": "Pollution"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.5 канал",
-      "en": "14.5 Canal"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "E.4 - Пещери",
-      "en": "E.3 Sand dunes"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Риболов с плаващи мрежи",
-      "en": "Fishing with floating nets"
-    }
-  },
-  {
-    "type": "herptiles_gender",
-    "label": {
-      "bg": "M (мъжки)",
-      "en": "M (Male)"
-    }
-  },
-  {
-    "type": "herptiles_age",
-    "label": {
-      "bg": "Juv (ювенилен, новоизлюпен)",
-      "en": "Juv"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.8. коловоз",
-      "en": "14.8 Rut on a road"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "2. смесени гори",
-      "en": "2. Mixed forests"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Строежи",
-      "en": "Construction / development"
-    }
-  },
-  {
-    "type": "herptiles_gender",
-    "label": {
-      "bg": "Двойка/Копула",
-      "en": "Couple/Copula"
-    }
-  },
-  {
-    "type": "herptiles_gender",
-    "label": {
-      "bg": "F (женски)",
-      "en": "F (Female)"
-    }
-  },
-  {
-    "type": "main_wind_force",
-    "label": {
-      "bg": "3 - Слаб вятър",
-      "en": "3 - Gentle breeze"
-    }
-  },
-  {
-    "type": "main_cloud_level",
-    "label": {
-      "bg": "30%",
-      "en": "30%"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Напояване",
-      "en": "Irrigation"
-    }
-  },
-  {
-    "type": "humid_birds_count_type",
-    "label": {
-      "bg": "Точен брой",
-      "en": "Exact number"
-    }
-  },
-  {
-    "type": "birds_count_units",
-    "label": {
-      "bg": "Пеещ мъжки",
-      "en": "Singing males"
-    }
-  },
-  {
-    "type": "birds_count_type",
-    "label": {
-      "bg": "Диапазон",
-      "en": "Range"
-    }
-  },
-  {
-    "type": "birds_age",
-    "label": {
-      "bg": "Juv",
-      "en": "Juv"
-    }
-  },
-  {
-    "type": "birds_marking",
-    "label": {
-      "bg": "Трансмитер",
-      "en": "Transmitter"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Пеещ мъжки",
-      "en": "Singing male"
-    }
-  },
-  {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Възрастни хранещи малки",
-      "en": "Adults feeding chicks"
-    }
-  },
-  {
-    "type": "birds_death",
-    "label": {
-      "bg": "Неизвестна",
-      "en": "Unknown"
-    }
-  },
-  {
-    "type": "birds_nest_substrate",
-    "label": {
-      "bg": "В тръстика",
-      "en": "In the reeds"
-    }
-  },
-  {
-    "type": "birds_nest_location",
-    "label": {
-      "bg": "В гора",
-      "en": "In forest"
-    }
-  },
-  {
-    "type": "birds_nest_height",
-    "label": {
-      "bg": "над 10 м.",
-      "en": "over 10 m."
-    }
-  },
-  {
-    "type": "birds_age_individual",
-    "label": {
-      "bg": "Juv",
-      "en": "Juv"
-    }
-  },
-  {
-    "type": "birds_nest_success",
-    "label": {
-      "bg": "Излетели малки",
-      "en": "Fledglings"
-    }
-  },
-  {
-    "type": "humid_birds_count_units",
-    "label": {
-      "bg": "Индивиди",
-      "en": "Individuals"
-    }
-  },
-  {
-    "type": "herp_age",
-    "label": {
-      "bg": "Larvae (Ларва)",
-      "en": "Larvae"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "3. силно разредени иглолистни гори с храсталаци",
-      "en": "3. Very sparse coniferous forests with undergrowth"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Кариери",
-      "en": "Quarries"
-    }
-  },
-  {
-    "type": "cbm_distance",
-    "label": {
-      "bg": "f - (птици в полет)",
-      "en": "f - birds in flight"
-    }
-  },
-  {
-    "type": "cbm_sector",
-    "label": {
-      "bg": "4",
-      "en": "4"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "A.4 - Алувиални и много влажни гори и храсталаци",
-      "en": "A.4 Water-logged woodland"
-    }
-  },
-  {
-    "type": "ciconia_substratum",
-    "label": {
-      "bg": "Комин",
-      "en": "Chimney"
-    }
-  },
-  {
-    "type": "ciconia_tree",
-    "label": {
-      "bg": "върба",
-      "en": "Willow"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "покрив на читалище",
-      "en": "roof of community center"
-    }
-  },
-  {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "S",
-      "en": "S"
-    }
-  },
-  {
-    "type": "main_wind_force",
-    "label": {
-      "bg": "8 - Много силен вятър",
-      "en": "8 - Gale,Fresh gale"
-    }
-  },
-  {
-    "type": "main_cloud_level",
-    "label": {
-      "bg": "80%",
-      "en": "80%"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Животновъдство",
-      "en": "Livestock breeding"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "5. силно разредени широколистни гори с храсталаци",
-      "en": "5. Very sparse deciduous forests with undergrowth"
-    }
-  },
-  {
-    "type": "birds_age",
-    "label": {
-      "bg": "3 година",
-      "en": "3 years"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Посещаване на вероятно гнездо",
-      "en": "Visiting probable nest-site"
-    }
-  },
-  {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Кацнала (дърво, храст, стълб, на земята)",
-      "en": "Perched (tree, shrub, pylon, on the ground)"
-    }
-  },
-  {
-    "type": "birds_nest_substrate",
-    "label": {
-      "bg": "Друго (свободен текст)",
-      "en": "Other"
-    }
-  },
-  {
-    "type": "birds_age_individual",
-    "label": {
-      "bg": "3 година",
-      "en": "3 years"
-    }
-  },
-  {
-    "type": "birds_nest_success",
-    "label": {
-      "bg": "Неуспешно гнездо (Хищничество / канибализъм)",
-      "en": "Unsuccessful nest (Predation / cannibalism)"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Соларен парк",
-      "en": "Solar park"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "6. екотон дървесно-храстова, тревна растителност",
-      "en": "6. Borderline trees, bushes, grass"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Мини ВЕЦ",
-      "en": "mini hydroelectric"
-    }
-  },
-  {
-    "type": "cbm_sector",
-    "label": {
-      "bg": "9",
-      "en": "9"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "B.5 - Алпийски и субалпийски тревни съобщества",
-      "en": "B.5 Alpine and subalpine grassland"
-    }
-  },
-  {
-    "type": "ciconia_tree",
-    "label": {
-      "bg": "черница",
-      "en": "Mulberry"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "покрив на баня",
-      "en": "roof of bath house"
-    }
-  },
-  {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "W",
-      "en": "W"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Горскостопански сечи",
-      "en": "Forest management felling"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "10. скални местообитания",
-      "en": "10. Rocky habitats"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Симулиране на ранена птица",
-      "en": "Distraction-display/injury-feigning"
-    }
-  },
-  {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "В полет",
-      "en": "In flight"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Пресъхващи водни тела",
-      "en": "Dried up waterbodies"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "11. дюни обрасли с хр-астова растителност",
-      "en": "11. Dunes overgrown with bushes"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Пътища",
-      "en": "Roads"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "C.3 - Овощни градини, дървесни и храстови плантации",
-      "en": "C.3 Orchards, vineyards, tree plantations"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "комин на читалище",
-      "en": "chimney of community center"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Отстраняване на мъртви и загиващи дървета",
-      "en": "Removal of dead and dying trees"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14. Водни местообитания:",
-      "en": "14. Water habitats:"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Носене на храна за малки",
-      "en": "Carrying a faecal sac or food for young"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Мъртъв екземпляр",
-      "en": "Dead individual"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "13. влажни зони - крайбрежия обрасли с тръстика",
-      "en": "13. Wetlands - Shores overgrown with reeds"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Убит на пътя",
-      "en": "Dead on road"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "D.3 - Индустриални зони",
-      "en": "D.3 Industrial zones"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "комин на фабрика",
-      "en": "chimney of factory"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Отглеждане на рибни и черупчести аквакултури",
-      "en": "Cultivation of fish and shellfish aquaculture"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.5 канал",
-      "en": "14.5 Canal"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Вагрант / скитащ",
-      "en": "Vagrant / wandering"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.6 други",
-      "en": "14.6 Other"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.8. коловоз",
-      "en": "14.8 Rut on a road"
-    }
-  },
-  {
-    "type": "herptiles_age",
-    "label": {
-      "bg": "Larvae (Ларва)",
-      "en": "Larvae"
+      "bg": "покрив на църква",
+      "en": "roof of church"
     }
   },
   {
@@ -1477,10 +266,24 @@
     }
   },
   {
+    "type": "ciconia_not_occupied",
+    "label": {
+      "bg": "тази година не са идвали въобще",
+      "en": "Have not appeared at all this year"
+    }
+  },
+  {
     "type": "main_wind_force",
     "label": {
       "bg": "1 - Тих вятър",
       "en": "1 - Light air"
+    }
+  },
+  {
+    "type": "ciconia_new_birds",
+    "label": {
+      "bg": "ДВЕ птици",
+      "en": "TWO birds"
     }
   },
   {
@@ -1491,17 +294,10 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "herptiles_age",
     "label": {
-      "bg": "Използване на пестициди",
-      "en": "Use of pesticides"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "3. силно разредени иглолистни гори с храсталаци",
-      "en": "3. Very sparse coniferous forests with undergrowth"
+      "bg": "Larvae (Ларва)",
+      "en": "Larvae"
     }
   },
   {
@@ -1554,10 +350,10 @@
     }
   },
   {
-    "type": "birds_behaviour",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Ловува",
-      "en": "Hunting"
+      "bg": "Пожари",
+      "en": "Fires"
     }
   },
   {
@@ -1612,8 +408,15 @@
   {
     "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Кариери",
-      "en": "Quarries"
+      "bg": "Сечи",
+      "en": "Logging"
+    }
+  },
+  {
+    "type": "herp_gender",
+    "label": {
+      "bg": "F (женски)",
+      "en": "F (Female)"
     }
   },
   {
@@ -1624,17 +427,17 @@
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "1.1. гъсти иглолистни гори - култури и други",
-      "en": "1.1. Dense coniferous forests - crops and others"
+      "bg": "Строежи",
+      "en": "Construction / development"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Сечи",
-      "en": "Logging"
+      "bg": "Замърсяване",
+      "en": "Pollution"
     }
   },
   {
@@ -1715,6 +518,615 @@
     }
   },
   {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Кариери",
+      "en": "Quarries"
+    }
+  },
+  {
+    "type": "main_rain",
+    "label": {
+      "bg": "Преваляване",
+      "en": "Rainy"
+    }
+  },
+  {
+    "type": "main_wind_direction",
+    "label": {
+      "bg": "ESE",
+      "en": "ESE"
+    }
+  },
+  {
+    "type": "main_wind_force",
+    "label": {
+      "bg": "2 - Лек бриз",
+      "en": "2 - Light breeze"
+    }
+  },
+  {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
+    }
+  },
+  {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Зарибяване",
+      "en": "Stocking with fish"
+    }
+  },
+  {
+    "type": "main_cloud_level",
+    "label": {
+      "bg": "20%",
+      "en": "20%"
+    }
+  },
+  {
+    "type": "birds_death",
+    "label": {
+      "bg": "Лов",
+      "en": "Hunting"
+    }
+  },
+  {
+    "type": "birds_count_units",
+    "label": {
+      "bg": "Гнездо(а)",
+      "en": "Nests"
+    }
+  },
+  {
+    "type": "birds_count_type",
+    "label": {
+      "bg": "Макс.",
+      "en": "Max."
+    }
+  },
+  {
+    "type": "birds_sex",
+    "label": {
+      "bg": "Неопределен",
+      "en": "Undefined"
+    }
+  },
+  {
+    "type": "birds_age",
+    "label": {
+      "bg": "Imm.",
+      "en": "Imm."
+    }
+  },
+  {
+    "type": "birds_marking",
+    "label": {
+      "bg": "Крилометка",
+      "en": "Wing tag"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Вид в гнездови хабитат",
+      "en": "Species in nesting habitat"
+    }
+  },
+  {
+    "type": "birds_death",
+    "label": {
+      "bg": "Болест",
+      "en": "Disease"
+    }
+  },
+  {
+    "type": "birds_death",
+    "label": {
+      "bg": "Неизвестна",
+      "en": "Unknown"
+    }
+  },
+  {
+    "type": "birds_nest_substrate",
+    "label": {
+      "bg": "На скали",
+      "en": "On cliffs / rocks"
+    }
+  },
+  {
+    "type": "birds_nest_location",
+    "label": {
+      "bg": "Окрайнина на гора",
+      "en": "Forest edge"
+    }
+  },
+  {
+    "type": "birds_nest_height",
+    "label": {
+      "bg": "5-10 м.",
+      "en": "5-10 m."
+    }
+  },
+  {
+    "type": "birds_nest_position",
+    "label": {
+      "bg": "На върха",
+      "en": "On top"
+    }
+  },
+  {
+    "type": "birds_age_individual",
+    "label": {
+      "bg": "Imm.",
+      "en": "Imm."
+    }
+  },
+  {
+    "type": "birds_nest_success",
+    "label": {
+      "bg": "Pull.",
+      "en": "Pull."
+    }
+  },
+  {
+    "type": "herp_gender",
+    "label": {
+      "bg": "Двойка/Копула",
+      "en": "Couple/Copula"
+    }
+  },
+  {
+    "type": "herp_age",
+    "label": {
+      "bg": "Juv (ювенилен, новоизлюпен)",
+      "en": "Juv"
+    }
+  },
+  {
+    "type": "cbm_distance",
+    "label": {
+      "bg": "3 - (над 100 m)",
+      "en": "3 - (over 100 m)"
+    }
+  },
+  {
+    "type": "cbm_sector",
+    "label": {
+      "bg": "3",
+      "en": "3"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "A.3 - Смесени гори",
+      "en": "A.3 Mixed woodland"
+    }
+  },
+  {
+    "type": "ciconia_substratum",
+    "label": {
+      "bg": "Покрив",
+      "en": "Roof"
+    }
+  },
+  {
+    "type": "ciconia_column_type",
+    "label": {
+      "bg": "дървен",
+      "en": "wooden"
+    }
+  },
+  {
+    "type": "ciconia_tree",
+    "label": {
+      "bg": "бор",
+      "en": "Pine"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "покрив на училище",
+      "en": "roof of school"
+    }
+  },
+  {
+    "type": "main_wind_direction",
+    "label": {
+      "bg": "NE",
+      "en": "NE"
+    }
+  },
+  {
+    "type": "main_wind_force",
+    "label": {
+      "bg": "4 - Умерен вятър",
+      "en": "4 - Moderate breeze"
+    }
+  },
+  {
+    "type": "main_cloud_level",
+    "label": {
+      "bg": "40%",
+      "en": "40%"
+    }
+  },
+  {
+    "type": "birds_count_units",
+    "label": {
+      "bg": "Семейство ad + juv.",
+      "en": "Family / individuals (ad. + juv.)"
+    }
+  },
+  {
+    "type": "birds_count_type",
+    "label": {
+      "bg": "Неопределен брой",
+      "en": "Unspecified number"
+    }
+  },
+  {
+    "type": "birds_age",
+    "label": {
+      "bg": "Pull",
+      "en": "Pull"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Твърде вероятно гнездене",
+      "en": "Probable breeding"
+    }
+  },
+  {
+    "type": "birds_nest_substrate",
+    "label": {
+      "bg": "На земята",
+      "en": "On the ground"
+    }
+  },
+  {
+    "type": "birds_age_individual",
+    "label": {
+      "bg": "Pull",
+      "en": "Pull"
+    }
+  },
+  {
+    "type": "birds_nest_success",
+    "label": {
+      "bg": "Неуспешно гнездо (Oтсичане на дървото)",
+      "en": "Unsuccessful nest (The tree has been cut down)"
+    }
+  },
+  {
+    "type": "herp_age",
+    "label": {
+      "bg": "Eggs (яйца)",
+      "en": "Eggs"
+    }
+  },
+  {
+    "type": "cbm_sector",
+    "label": {
+      "bg": "5",
+      "en": "5"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "B.1 - Храсталаци на местата с умерен климат",
+      "en": "B.1 Temperate scrub"
+    }
+  },
+  {
+    "type": "ciconia_tree",
+    "label": {
+      "bg": "дъб",
+      "en": "Oak"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "покрив на кметство",
+      "en": "roof of town hall"
+    }
+  },
+  {
+    "type": "main_wind_direction",
+    "label": {
+      "bg": "N",
+      "en": "N"
+    }
+  },
+  {
+    "type": "main_wind_force",
+    "label": {
+      "bg": "3 - Слаб вятър",
+      "en": "3 - Gentle breeze"
+    }
+  },
+  {
+    "type": "main_cloud_level",
+    "label": {
+      "bg": "30%",
+      "en": "30%"
+    }
+  },
+  {
+    "type": "birds_count_units",
+    "label": {
+      "bg": "Пеещ мъжки",
+      "en": "Singing males"
+    }
+  },
+  {
+    "type": "birds_count_type",
+    "label": {
+      "bg": "Диапазон",
+      "en": "Range"
+    }
+  },
+  {
+    "type": "birds_age",
+    "label": {
+      "bg": "Juv",
+      "en": "Juv"
+    }
+  },
+  {
+    "type": "birds_marking",
+    "label": {
+      "bg": "Трансмитер",
+      "en": "Transmitter"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Пеещ мъжки",
+      "en": "Singing male"
+    }
+  },
+  {
+    "type": "birds_nest_substrate",
+    "label": {
+      "bg": "В тръстика",
+      "en": "In the reeds"
+    }
+  },
+  {
+    "type": "birds_nest_location",
+    "label": {
+      "bg": "В гора",
+      "en": "In forest"
+    }
+  },
+  {
+    "type": "birds_nest_height",
+    "label": {
+      "bg": "над 10 м.",
+      "en": "over 10 m."
+    }
+  },
+  {
+    "type": "birds_age_individual",
+    "label": {
+      "bg": "Juv",
+      "en": "Juv"
+    }
+  },
+  {
+    "type": "birds_nest_success",
+    "label": {
+      "bg": "Излетели малки",
+      "en": "Fledglings"
+    }
+  },
+  {
+    "type": "herp_age",
+    "label": {
+      "bg": "Larvae (Ларва)",
+      "en": "Larvae"
+    }
+  },
+  {
+    "type": "cbm_distance",
+    "label": {
+      "bg": "f - (птици в полет)",
+      "en": "f - birds in flight"
+    }
+  },
+  {
+    "type": "cbm_sector",
+    "label": {
+      "bg": "4",
+      "en": "4"
+    }
+  },
+  {
+    "type": "main_wind_direction",
+    "label": {
+      "bg": "S",
+      "en": "S"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Пожари",
+      "en": "Fires"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Сечи",
+      "en": "Logging"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Замърсяване",
+      "en": "Pollution"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Кариери",
+      "en": "Quarries"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Зарибяване",
+      "en": "Stocking with fish"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Съблекло",
+      "en": "Moult"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Бракониери",
+      "en": "Poachers"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Пътища",
+      "en": "Roads"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Ветропарк",
+      "en": "Wind park"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Изпражнения",
+      "en": "Feces"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Соларен парк",
+      "en": "Solar park"
+    }
+  },
+  {
+    "type": "invertebrates_gender",
+    "label": {
+      "bg": "M (мъжки)",
+      "en": "M (Male)"
+    }
+  },
+  {
+    "type": "invertebrates_age",
+    "label": {
+      "bg": "Ad (Възрастен)",
+      "en": "Ad"
+    }
+  },
+  {
+    "type": "invertebrates_gender",
+    "label": {
+      "bg": "F (женски)",
+      "en": "F (Female)"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "A.4 - Алувиални и много влажни гори и храсталаци",
+      "en": "A.4 Water-logged woodland"
+    }
+  },
+  {
+    "type": "ciconia_substratum",
+    "label": {
+      "bg": "Комин",
+      "en": "Chimney"
+    }
+  },
+  {
+    "type": "ciconia_tree",
+    "label": {
+      "bg": "върба",
+      "en": "Willow"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "покрив на читалище",
+      "en": "roof of community center"
+    }
+  },
+  {
     "type": "main_wind_direction",
     "label": {
       "bg": "SE",
@@ -1736,20 +1148,6 @@
     }
   },
   {
-    "type": "main_threats",
-    "label": {
-      "bg": "Хранене на добитък",
-      "en": "Feeding livestock"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "6. екотон дървесно-храстова, тревна растителност",
-      "en": "6. Borderline trees, bushes, grass"
-    }
-  },
-  {
     "type": "birds_age",
     "label": {
       "bg": "4 година",
@@ -1764,13 +1162,6 @@
     }
   },
   {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Представен",
-      "en": "Presented"
-    }
-  },
-  {
     "type": "birds_age_individual",
     "label": {
       "bg": "4 година",
@@ -1782,27 +1173,6 @@
     "label": {
       "bg": "Неуспешно гнездо (Неизвестни причини)",
       "en": "Unsuccessful nest (Unknown)"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Мини ВЕЦ",
-      "en": "mini hydroelectric"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "7. пасища и ливади без да има наблизо гори или храсти или само с единични такива",
-      "en": "7. Grassland without nearby forests or shrubs or only single ones"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Разораване на пасища и мери",
-      "en": "Plowing of pastures"
     }
   },
   {
@@ -1834,80 +1204,24 @@
     }
   },
   {
-    "type": "main_wind_direction",
-    "label": {
-      "bg": "WSW",
-      "en": "WSW"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Косене / сечи",
-      "en": "Cutting / felling"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "11. дюни обрасли с хр-астова растителност",
-      "en": "11. Dunes overgrown with bushes"
-    }
-  },
-  {
     "type": "birds_status",
     "label": {
-      "bg": "Нелетящи млади",
-      "en": "Recently fledged/downy young"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Пътища",
-      "en": "Roads"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "12. галерийните гори край реките",
-      "en": "12. Gallery forests along rivers"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Други",
-      "en": "Other"
+      "bg": "Посещаване на скрито гнездо/мътене",
+      "en": "Visiting hidden nest/incubating"
     }
   },
   {
     "type": "cbm_habitat",
     "label": {
-      "bg": "D.1 - Градове",
-      "en": "D.1 Cities"
+      "bg": "D.2 - Села",
+      "en": "D.2 Villages"
     }
   },
   {
     "type": "ciconia_building",
     "label": {
-      "bg": "комин на частна къща",
-      "en": "chimney of private house"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Повторно засаждане",
-      "en": "Replanting"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "13. влажни зони - крайбрежия обрасли с тръстика",
-      "en": "13. Wetlands - Shores overgrown with reeds"
+      "bg": "комин на трафопост",
+      "en": "chimney of substation"
     }
   },
   {
@@ -1918,27 +1232,6 @@
     }
   },
   {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Убит на пътя",
-      "en": "Dead on road"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.2 езера",
-      "en": "14.2 Lake"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Съблекло",
-      "en": "Moult"
-    }
-  },
-  {
     "type": "cbm_habitat",
     "label": {
       "bg": "E.1 - Сипеи",
@@ -1946,31 +1239,241 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "mammals_habitat",
     "label": {
-      "bg": "Риболов на определени места",
-      "en": "Fishing at particular places"
+      "bg": "1. Светли иглолистни гори с храсталаци",
+      "en": "1. Bright coniferous forests with undergrowth"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "F.1 - Торфени блата и мочурища",
+      "en": "E.5 Areas with permanent ice and snow"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "1.1. Гъсти иглолистни гори - култури и други",
+      "en": "1.1. Dense coniferous forests - crops and others"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "2. Смесени гори",
+      "en": "2. Mixed forests"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "3.1. Поляни, пасища, ливади с разпръснати храсти",
+      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "G.3 - Стоящи бракични води",
+      "en": "G.2 Freshwater lakes"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "3. Силно разредени иглолистни гори с храсталаци",
+      "en": "3. Very sparse coniferous forests with undergrowth"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "7. Пасища и ливади без да има наблизо гори или храсти или само с единични такива",
+      "en": "7. Grassland without nearby forests or shrubs or only single ones"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "12.1. Дерета",
+      "en": "12.1. Ravines"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.4 - Тинести и пясъчни морски плитчини",
+      "en": "H.3 Estuarine"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.2 Езера",
+      "en": "14.2 Lake"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.7 Корито на чешма",
+      "en": "14.7 Bed of a water fountain"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "15.1 от 0 до 33 %",
+      "en": "15.1  from 0 to 33 %"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.9 - Острови, островчета, надводни скали и камъни",
+      "en": "H.8 Cliff - vertical/steep slopes"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "16.2. Зеленчукови градини",
+      "en": "16.2. Vegetable gardens"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "19. Постройки (извън населени места)",
+      "en": "19. Buildings (outside settlements)"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.14. Калище",
+      "en": "14.14. Mud hole"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "4. Светли широколистни гори с храсталаци",
+      "en": "4. Bright deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Премахване на храсти",
+      "en": "Removal of shrubs"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Пресъхващи водни тела",
+      "en": "Dried up waterbodies"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Убит на пътя",
+      "en": "Dead on road"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Пеещ мъжки",
+      "en": "Singing male"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Дупка",
+      "en": "Hole"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Капан",
+      "en": "Trap"
+    }
+  },
+  {
+    "type": "herp_danger_observation",
+    "label": {
+      "bg": "Стъпка(и)",
+      "en": "Footprint(s)"
     }
   },
   {
     "type": "herptiles_habitat",
     "label": {
-      "bg": "14.6 други",
-      "en": "14.6 Other"
+      "bg": "4.1. Гъсти широколистни гори",
+      "en": "4.1. Dense deciduous forests"
     }
   },
   {
-    "type": "herptiles_age",
+    "type": "herptiles_habitat",
     "label": {
-      "bg": "Sub (млад, неполовозрял)",
-      "en": "Sub"
+      "bg": "9. Интензивни овощни градини и лозя - лишени от тревно покритие",
+      "en": "9. Intensive orchards and vineyards - No grass cover"
     }
   },
   {
-    "type": "main_source",
+    "type": "herptiles_habitat",
     "label": {
-      "bg": "Наблюдения на земноводни, влечуги и бозайници",
-      "en": "Herp and mammal observations"
+      "bg": "12. Галерийните гори край реките",
+      "en": "12. Gallery forests along rivers"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.3 Язовир",
+      "en": "14.3 Reservoir"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.8. Коловоз",
+      "en": "14.8 Rut on a road"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "15.2 от 34 до 66 %",
+      "en": "15.2 from 34 to 66 %"
+    }
+  },
+  {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Съблекло",
+      "en": "Moult"
     }
   },
   {
@@ -1995,17 +1498,10 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Изоставяне на пасторални системи",
-      "en": "Abandonment of pastoral systems"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "1.1. гъсти иглолистни гори - култури и други",
-      "en": "1.1. Dense coniferous forests - crops and others"
+      "bg": "Бракониери",
+      "en": "Poachers"
     }
   },
   {
@@ -2023,10 +1519,10 @@
     }
   },
   {
-    "type": "birds_behaviour",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "В полет (РП, ПП, АП)",
-      "en": "In flight (SF, GF, AF)"
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
     }
   },
   {
@@ -2053,22 +1549,22 @@
   {
     "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Сечи",
-      "en": "Logging"
+      "bg": "Пътища",
+      "en": "Roads"
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "4. светли широколистни гори с храсталаци",
-      "en": "4. Bright deciduous forests with undergrowth"
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Бракониери",
-      "en": "Poachers"
+      "bg": "Ветропарк",
+      "en": "Wind park"
     }
   },
   {
@@ -2121,17 +1617,10 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Модифициране на култивационните практики",
-      "en": "Modification of cultural practices"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "7. пасища и ливади без да има наблизо гори или храсти или само с единични такива",
-      "en": "7. Grassland without nearby forests or shrubs or only single ones"
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
     }
   },
   {
@@ -2149,10 +1638,10 @@
     }
   },
   {
-    "type": "birds_behaviour",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "зимуващ(и)",
-      "en": "Wintering"
+      "bg": "Други",
+      "en": "Other"
     }
   },
   {
@@ -2165,22 +1654,22 @@
   {
     "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Разораване на пасища и мери",
-      "en": "Plowing of pastures"
+      "bg": "Изпражнения",
+      "en": "Feces"
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "8. смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
-      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
+      "bg": "Соларен парк",
+      "en": "Solar park"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Залесяване с нетипични видове",
-      "en": "Planting with non-typical species"
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
     }
   },
   {
@@ -2207,197 +1696,225 @@
   {
     "type": "main_wind_direction",
     "label": {
-      "bg": "WNW",
-      "en": "WNW"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Експлоатация без повторно засаждане",
-      "en": "Exploitation without re-planting"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "12. галерийните гори край реките",
-      "en": "12. Gallery forests along rivers"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Гнездо/черупки от яйца",
-      "en": "Used nest or eggshells"
-    }
-  },
-  {
-    "type": "birds_behaviour",
-    "label": {
-      "bg": "Пеещ(и) мъжки",
-      "en": "Singing male(s)"
+      "bg": "W",
+      "en": "W"
     }
   },
   {
     "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Други",
-      "en": "Other"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "11.1. лонгозни гори",
-      "en": "11.1 Longose forests"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Инвазивни видове",
-      "en": "Invasive species"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "C.4 - Ивици дървета, храсти и мозайки от тях",
-      "en": "C.4 Mosaic landscape (tree and scrubs lines)"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "комин на кметство",
-      "en": "chimney of town hall"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Изкуствено залесяване",
-      "en": "Artificial afforestation"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.2 езера",
-      "en": "14.2 Lake"
-    }
-  },
-  {
-    "type": "birds_status",
-    "label": {
-      "bg": "Гнездо с малки",
-      "en": "Nest with young"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Съблекло",
-      "en": "Moult"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.1 рекa",
-      "en": "14.1 River"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
     "label": {
       "bg": "Премахване на храсти",
       "en": "Removal of shrubs"
     }
   },
   {
-    "type": "cbm_habitat",
+    "type": "birds_status",
     "label": {
-      "bg": "D.5 - Индустриални водоеми",
-      "en": "D.5 Industrial water bodies"
-    }
-  },
-  {
-    "type": "ciconia_building",
-    "label": {
-      "bg": "комин на друга",
-      "en": "chimney of another building"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Тралене",
-      "en": "Trawling"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "4. светли широколистни гори с храсталаци",
-      "en": "4. Bright deciduous forests with undergrowth"
+      "bg": "Симулиране на ранена птица",
+      "en": "Distraction-display/injury-feigning"
     }
   },
   {
     "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Бракониери",
-      "en": "Poachers"
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "14.7 корито на чешма",
-      "en": "14.7 Bed of a water fountain"
+      "bg": "Пресъхващи водни тела",
+      "en": "Dried up waterbodies"
     }
   },
   {
-    "type": "cbm_habitat",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "F.1 - Торфени блата и мочурища",
-      "en": "E.5 Areas with permanent ice and snow"
+      "bg": "Убит на пътя",
+      "en": "Dead on road"
     }
   },
   {
-    "type": "main_threats",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Вземане от гнездото (соколи)",
-      "en": "Taking from the nest (Falcons)"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "15. покритие на брегова растителност",
-      "en": "15. coverage of coastal vegetation"
+      "bg": "Пеещ мъжки",
+      "en": "Singing male"
     }
   },
   {
     "type": "cbm_habitat",
     "label": {
-      "bg": "G.2 - Стоящи пресни води",
-      "en": "G.1 Lagoons"
+      "bg": "C.3 - Овощни градини, дървесни и храстови плантации",
+      "en": "C.3 Orchards, vineyards, tree plantations"
     }
   },
   {
-    "type": "main_threats",
+    "type": "ciconia_building",
     "label": {
-      "bg": "Отстраняване на седименти (тиня...)",
-      "en": "Removal of sediment (silt ...)"
+      "bg": "комин на читалище",
+      "en": "chimney of community center"
     }
   },
   {
-    "type": "main_source",
+    "type": "herptiles_danger_observation",
     "label": {
-      "bg": "Горите на орела",
-      "en": "Eagles forests"
+      "bg": "Дупка",
+      "en": "Hole"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Гнездо с яйца",
+      "en": "Nest with eggs"
+    }
+  },
+  {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Капан",
+      "en": "Trap"
+    }
+  },
+  {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Къртичина",
+      "en": "Molehill"
+    }
+  },
+  {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Стъпка(и)",
+      "en": "Footprint(s)"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "D.4 - Градски паркове и градини",
+      "en": "D.4 Urban parks and gardens"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "комин на баня",
+      "en": "chimney of bath house"
+    }
+  },
+  {
+    "type": "herptiles_danger_observation",
+    "label": {
+      "bg": "Колония",
+      "en": "Colony"
+    }
+  },
+  {
+    "type": "birds_death",
+    "label": {
+      "bg": "Замърсяване с нефтопродукти",
+      "en": "Pollution by petroleum products"
+    }
+  },
+  {
+    "type": "birds_death",
+    "label": {
+      "bg": "Риболовни мрежи",
+      "en": "Fishing net"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "E.4 - Пещери",
+      "en": "E.3 Sand dunes"
+    }
+  },
+  {
+    "type": "birds_death",
+    "label": {
+      "bg": "Токов удар",
+      "en": "Electrocution"
+    }
+  },
+  {
+    "type": "birds_death",
+    "label": {
+      "bg": "Сблъсък с ел. мрежа",
+      "en": "Collision"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "G.1 - Лагуни",
+      "en": "F.3 Riverine bogs and marshes"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Храни се",
+      "en": "Feeding"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Ловува",
+      "en": "Hunting"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Представен",
+      "en": "Presented"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "В полет (РП, ПП, АП)",
+      "en": "In flight (SF, GF, AF)"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "зимуващ(и)",
+      "en": "Wintering"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "В полет",
+      "en": "In flight"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Нощувка (извън гнездовия период)",
+      "en": "Roosting (outside of the breeding season)"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Храни се / ловува",
+      "en": "Feeding / hunting"
+    }
+  },
+  {
+    "type": "invertebrates_danger_observation",
+    "label": {
+      "bg": "Пожари",
+      "en": "Fires"
     }
   },
   {
@@ -2422,17 +1939,10 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Реорганизация на селскостопански земи",
-      "en": "Reorganization of agricultural land"
-    }
-  },
-  {
-    "type": "mammals_age",
-    "label": {
-      "bg": "Ad (Възрастен)",
-      "en": "Ad"
+      "bg": "Сечи",
+      "en": "Logging"
     }
   },
   {
@@ -2450,10 +1960,10 @@
     }
   },
   {
-    "type": "birds_behaviour",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Нощувка (извън гнездовия период)",
-      "en": "Roosting (outside of the breeding season)"
+      "bg": "Строежи",
+      "en": "Construction / development"
     }
   },
   {
@@ -2478,24 +1988,24 @@
     }
   },
   {
-    "type": "mammals_habitat",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "1. Светли иглолистни гори с храсталаци",
-      "en": "1. Bright coniferous forests with undergrowth"
+      "bg": "Замърсяване",
+      "en": "Pollution"
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "4.1. гъсти широколистни гори",
-      "en": "4.1. Dense deciduous forests"
+      "bg": "Кариери",
+      "en": "Quarries"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Ветропарк",
-      "en": "Wind park"
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
     }
   },
   {
@@ -2541,17 +2051,10 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Селскостопански и горскостопански дейности, които не са посочени по-горе",
-      "en": "Agricultural and forestry activities, not listed above"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Пожари",
-      "en": "Fires"
+      "bg": "Зарибяване",
+      "en": "Stocking with fish"
     }
   },
   {
@@ -2569,10 +2072,10 @@
     }
   },
   {
-    "type": "birds_behaviour",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Храни се / ловува",
-      "en": "Feeding / hunting"
+      "bg": "Съблекло",
+      "en": "Moult"
     }
   },
   {
@@ -2583,24 +2086,24 @@
     }
   },
   {
-    "type": "mammals_age",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Eggs (яйца)",
-      "en": "Eggs"
+      "bg": "Бракониери",
+      "en": "Poachers"
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "9. интензивни овощни градини и лозя - лишени от тревно покритие",
-      "en": "9. Intensive orchards and vineyards - No grass cover"
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Прекомерно обрастване на пасища",
-      "en": "Excessive overgrowth of pastures"
+      "bg": "Пътища",
+      "en": "Roads"
     }
   },
   {
@@ -2618,73 +2121,66 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "main_wind_direction",
     "label": {
-      "bg": "Отстраняване на подраст",
-      "en": "Removal of undergrowth"
+      "bg": "WSW",
+      "en": "WSW"
     }
   },
   {
-    "type": "mammals_habitat",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "3.1. поляни, пасища, ливади с разпръснати храсти",
-      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
     }
   },
   {
     "type": "birds_status",
     "label": {
-      "bg": "Посещаване на скрито гнездо/мътене",
-      "en": "Visiting hidden nest/incubating"
+      "bg": "Нелетящи млади",
+      "en": "Recently fledged/downy young"
     }
   },
   {
-    "type": "mammals_danger_observation",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Замърсяване",
-      "en": "Pollution"
+      "bg": "Ветропарк",
+      "en": "Wind park"
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "12.1. дерета",
-      "en": "12.1. Ravines"
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Зарибяване",
-      "en": "Stocking with fish"
+      "bg": "Други",
+      "en": "Other"
     }
   },
   {
     "type": "cbm_habitat",
     "label": {
-      "bg": "D.2 - Села",
-      "en": "D.2 Villages"
+      "bg": "D.1 - Градове",
+      "en": "D.1 Cities"
     }
   },
   {
     "type": "ciconia_building",
     "label": {
-      "bg": "комин на трафопост",
-      "en": "chimney of substation"
+      "bg": "комин на частна къща",
+      "en": "chimney of private house"
     }
   },
   {
-    "type": "main_threats",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Изгаряне",
-      "en": "Burning"
-    }
-  },
-  {
-    "type": "mammals_gender",
-    "label": {
-      "bg": "M (мъжки)",
-      "en": "M (Male)"
+      "bg": "Изпражнения",
+      "en": "Feces"
     }
   },
   {
@@ -2695,24 +2191,24 @@
     }
   },
   {
-    "type": "mammals_age",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Juv (ювенилен, новоизлюпен)",
-      "en": "Juv"
+      "bg": "Соларен парк",
+      "en": "Solar park"
     }
   },
   {
-    "type": "herp_habitat",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "14.3 язовир",
-      "en": "14.3 Reservoir"
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
     }
   },
   {
-    "type": "herp_danger_observation",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Изпражнения",
-      "en": "Feces"
+      "bg": "Премахване на храсти",
+      "en": "Removal of shrubs"
     }
   },
   {
@@ -2723,920 +2219,24 @@
     }
   },
   {
-    "type": "main_threats",
+    "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Лов",
-      "en": "Hunting"
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
     }
   },
   {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "2. смесени гори",
-      "en": "2. Mixed forests"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Строежи",
-      "en": "Construction / development"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.10 локва на пътя",
-      "en": "14.10 Puddle on the road"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "G.1 - Лагуни",
-      "en": "F.3 Riverine bogs and marshes"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Запълване на канавки, отводнителни канали, езера, вирове, блата или изкопи",
-      "en": "Filling of ditches, drains, ponds, pools, ponds or ditches"
-    }
-  },
-  {
-    "type": "mammals_gender",
-    "label": {
-      "bg": "Двойка/Копула",
-      "en": "Couple/Copula"
-    }
-  },
-  {
-    "type": "mammals_gender",
-    "label": {
-      "bg": "F (женски)",
-      "en": "F (Female)"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "15.3 от 67 до 99 %",
-      "en": "15.3 from 67 to 99 %"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.1 - Море",
-      "en": "G.4 Rivers"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Канализация",
-      "en": "Sewage"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "5. силно разредени широколистни гори с храсталаци",
-      "en": "5. Very sparse deciduous forests with undergrowth"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Соларен парк",
-      "en": "Solar park"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "16.3. зърнени култури",
-      "en": "16.3. Grain cultures"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.5 - Засолени терени с халофитна растителност",
-      "en": "H.4 Mud or silt marine shallow areas"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "10. скални местообитания",
-      "en": "10. Rocky habitats"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
+    "type": "invertebrates_danger_observation",
     "label": {
       "bg": "Пресъхващи водни тела",
       "en": "Dried up waterbodies"
     }
   },
   {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14. Водни местообитания:",
-      "en": "14. Water habitats:"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "8. смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
-      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.4 микроязовир",
-      "en": "14.4 Micro-reservoir"
-    }
-  },
-  {
-    "type": "herp_danger_observation",
-    "label": {
-      "bg": "Пеещ мъжки",
-      "en": "Singing male"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "E.3 - Пясъчни дюни и полета във вътрешността на страната",
-      "en": "E.2 Rocks and cliffs"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Събиране на примамки",
-      "en": "Collection of baits"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Залесяване с нетипични видове",
-      "en": "Planting with non-typical species"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "11.1. лонгозни гори",
-      "en": "11.1 Longose forests"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.9. канавки",
-      "en": "14.9 Ditch along a road"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "F.3 - Крайречни и приизворни мочурища",
-      "en": "F.2 Water vegetation"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Сметища, възстановяване на земи и пресушаване",
-      "en": "Landfills, recovery of land and drainage"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Инвазивни видове",
-      "en": "Invasive species"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.1 рекa",
-      "en": "14.1 River"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "15.2 от 34 до 66 %",
-      "en": "15.2 from 34 to 66 %"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "G.4 - Течащи води",
-      "en": "G.3 Brakish lakes"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Управление на водните нива",
-      "en": "Water-level management"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Премахване на храсти",
-      "en": "Removal of shrubs"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.7 корито на чешма",
-      "en": "14.7 Bed of a water fountain"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "17. черен път",
-      "en": "17. Dirt road"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.7 - Чакълести морски брегове",
-      "en": "H.6 Shoreline and sand dunes"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Добив на торф",
-      "en": "Extraction of peat"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "15. покритие на брегова растителност",
-      "en": "15. coverage of coastal vegetation"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "4.1. гъсти широколистни гори",
-      "en": "4.1. Dense deciduous forests"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "21. Градски територии",
-      "en": "21. Urban territories"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Мини",
-      "en": "Mining"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Ветропарк",
-      "en": "Wind park"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "9. интензивни овощни градини и лозя - лишени от тревно покритие",
-      "en": "9. Intensive orchards and vineyards - No grass cover"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.14. Калище",
-      "en": "14.14. Rock face"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Замърсяване на въздуха",
-      "en": "Air pollution"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Прекомерно обрастване на пасища",
-      "en": "Excessive overgrowth of pastures"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "12.1. дерета",
-      "en": "12.1. Ravines"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Зарибяване",
-      "en": "Stocking with fish"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.3 язовир",
-      "en": "14.3 Reservoir"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Изпражнения",
-      "en": "Feces"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.10 локва на пътя",
-      "en": "14.10 Puddle on the road"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "15.3 от 67 до 99 %",
-      "en": "15.3 from 67 to 99 %"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "16.3. зърнени култури",
-      "en": "16.3. Grain cultures"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.4 микроязовир",
-      "en": "14.4 Micro-reservoir"
-    }
-  },
-  {
-    "type": "herptiles_danger_observation",
-    "label": {
-      "bg": "Пеещ мъжки",
-      "en": "Singing male"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.9. канавки",
-      "en": "14.9 Ditch along a road"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "15.2 от 34 до 66 %",
-      "en": "15.2 from 34 to 66 %"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "17. черен път",
-      "en": "17. Dirt road"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "21. Градски територии",
-      "en": "21. Urban territories"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.14. Калище",
-      "en": "14.14. Rock face"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "15.1 от 0 до 33 %",
-      "en": "15.1  from 0 to 33 %"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "16.1. угар",
-      "en": "16.1. Fallow"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "19. Постройки (извън населени места)",
-      "en": "19. Buildings (outside settlements)"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.12. Малко езеро (до 30 кв. м)",
-      "en": "14.12. Small lake (up to 30 sq. m)"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "99. други",
-      "en": "99. Other"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "16. обработваеми земи",
-      "en": "16. Farmland"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "16.4. люцерни",
-      "en": "16.4. Alfalfa"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "20. Селищни територии",
-      "en": "20. Settlement territories"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "10.1.Шкарп",
-      "en": "10.1.Шкарп"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "16.2. зеленчукови градини",
-      "en": "16.2. Vegetable gardens"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "18. Асфалтов път",
-      "en": "18. Asphalt road"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.13. Шахта",
-      "en": "14.13. Shaft"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "14.11. Мочур",
-      "en": "14.11. Marsh"
-    }
-  },
-  {
-    "type": "herptiles_habitat",
-    "label": {
-      "bg": "22. Сечище",
-      "en": "22. Woodcutting area"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "E.5 - Участъци с вечен лед и снаг",
-      "en": "E.4 Caves"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Други въздействия, свързани с отдиха и туризма, които не са посочени по-горе",
-      "en": "Other impacts associated with recreation and tourism, not listed above"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Мъртъв екземпляр",
-      "en": "Dead individual"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.5 канал",
-      "en": "14.5 Canal"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "15.1 от 0 до 33 %",
-      "en": "15.1  from 0 to 33 %"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "G.3 - Стоящи бракични води",
-      "en": "G.2 Freshwater lakes"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Управление на водната или крайбрежна растителност за целите на дренажа",
-      "en": "Management of water and coastal vegetation for drainage"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.8. коловоз",
-      "en": "14.8 Rut on a road"
-    }
-  },
-  {
-    "type": "mammals_age",
-    "label": {
-      "bg": "Larvae (Ларва)",
-      "en": "Larvae"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "16.1. угар",
-      "en": "16.1. Fallow"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.3 - Естуари",
-      "en": "H.2 Marine - sea bays"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Кариери",
-      "en": "Quarries"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "3. силно разредени иглолистни гори с храсталаци",
-      "en": "3. Very sparse coniferous forests with undergrowth"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Кариери",
-      "en": "Quarries"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "19. Постройки (извън населени места)",
-      "en": "19. Buildings (outside settlements)"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.9 - Острови, островчета, надводни скали и камъни",
-      "en": "H.8 Cliff - vertical/steep slopes"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Механично събиране на торф",
-      "en": "Mechanical collection of peat"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "6. екотон дървесно-храстова, тревна растителност",
-      "en": "6. Borderline trees, bushes, grass"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Мини ВЕЦ",
-      "en": "mini hydroelectric"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.12. Малко езеро (до 30 кв. м)",
-      "en": "14.12. Small lake (up to 30 sq. m)"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Дейности, свързани с минното дело и добива на материали, които не са посочени по-горе",
-      "en": "Activities related to mining and extraction of materials, not listed above"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "11. дюни обрасли с хр-астова растителност",
-      "en": "11. Dunes overgrown with bushes"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Пътища",
-      "en": "Roads"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "99. други",
-      "en": "99. Other"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Преустановена урбанизация",
-      "en": "Discontinued urbanization"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "13. влажни зони - крайбрежия обрасли с тръстика",
-      "en": "13. Wetlands - Shores overgrown with reeds"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
+    "type": "invertebrates_danger_observation",
     "label": {
       "bg": "Убит на пътя",
       "en": "Dead on road"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.6 други",
-      "en": "14.6 Other"
-    }
-  },
-  {
-    "type": "mammals_age",
-    "label": {
-      "bg": "Sub (млад, неполовозрял)",
-      "en": "Sub"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "1.1. гъсти иглолистни гори - култури и други",
-      "en": "1.1. Dense coniferous forests - crops and others"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Сечи",
-      "en": "Logging"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "7. пасища и ливади без да има наблизо гори или храсти или само с единични такива",
-      "en": "7. Grassland without nearby forests or shrubs or only single ones"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Разораване на пасища и мери",
-      "en": "Plowing of pastures"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "12. галерийните гори край реките",
-      "en": "12. Gallery forests along rivers"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Други",
-      "en": "Other"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.2 езера",
-      "en": "14.2 Lake"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Съблекло",
-      "en": "Moult"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "4. светли широколистни гори с храсталаци",
-      "en": "4. Bright deciduous forests with undergrowth"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Бракониери",
-      "en": "Poachers"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "8. смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
-      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Залесяване с нетипични видове",
-      "en": "Planting with non-typical species"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "11.1. лонгозни гори",
-      "en": "11.1 Longose forests"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Инвазивни видове",
-      "en": "Invasive species"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.1 рекa",
-      "en": "14.1 River"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Премахване на храсти",
-      "en": "Removal of shrubs"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.7 корито на чешма",
-      "en": "14.7 Bed of a water fountain"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "15. покритие на брегова растителност",
-      "en": "15. coverage of coastal vegetation"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "4.1. гъсти широколистни гори",
-      "en": "4.1. Dense deciduous forests"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Ветропарк",
-      "en": "Wind park"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "9. интензивни овощни градини и лозя - лишени от тревно покритие",
-      "en": "9. Intensive orchards and vineyards - No grass cover"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Прекомерно обрастване на пасища",
-      "en": "Excessive overgrowth of pastures"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "12.1. дерета",
-      "en": "12.1. Ravines"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Зарибяване",
-      "en": "Stocking with fish"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.3 язовир",
-      "en": "14.3 Reservoir"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Изпражнения",
-      "en": "Feces"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.10 локва на пътя",
-      "en": "14.10 Puddle on the road"
     }
   },
   {
@@ -3647,895 +2247,6 @@
     }
   },
   {
-    "type": "main_threats",
-    "label": {
-      "bg": "Пресушаване",
-      "en": "Drainage"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "15.3 от 67 до 99 %",
-      "en": "15.3 from 67 to 99 %"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "16.3. зърнени култури",
-      "en": "16.3. Grain cultures"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "16. обработваеми земи",
-      "en": "16. Farmland"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.2 - Тесни морски заливи",
-      "en": "H.1 Marine - open shore"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Диги, насипи, изкуствени плажове, общо",
-      "en": "Dikes, embankments, artificial beaches, general"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.4 микроязовир",
-      "en": "14.4 Micro-reservoir"
-    }
-  },
-  {
-    "type": "mammals_danger_observation",
-    "label": {
-      "bg": "Пеещ мъжки",
-      "en": "Singing male"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "16.4. люцерни",
-      "en": "16.4. Alfalfa"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.6 - Крайбрежни плажове и пясъчни дюни",
-      "en": "H.5 Fully vegetated saline areas"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Отнемане на материали от плажната ивица",
-      "en": "Withdrawal of materials from the beach"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.9. канавки",
-      "en": "14.9 Ditch along a road"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "15.2 от 34 до 66 %",
-      "en": "15.2 from 34 to 66 %"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "20. Селищни територии",
-      "en": "20. Settlement territories"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "D.6 - Пустеещи земи",
-      "en": "H.9 Islands and rocks in water"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Открити мини",
-      "en": "Open mine(s)"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "17. черен път",
-      "en": "17. Dirt road"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "21. Градски територии",
-      "en": "21. Urban territories"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "10.1.Шкарп",
-      "en": "10.1.Шкарп"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Замърсяване на почвите",
-      "en": "Soil pollution"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.14. Калище",
-      "en": "14.14. Rock face"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "15.1 от 0 до 33 %",
-      "en": "15.1  from 0 to 33 %"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Разпръснати селища",
-      "en": "Scattered settlements"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "16.1. угар",
-      "en": "16.1. Fallow"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "19. Постройки (извън населени места)",
-      "en": "19. Buildings (outside settlements)"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.12. Малко езеро (до 30 кв. м)",
-      "en": "14.12. Small lake (up to 30 sq. m)"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "99. други",
-      "en": "99. Other"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "16. обработваеми земи",
-      "en": "16. Farmland"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "16.4. люцерни",
-      "en": "16.4. Alfalfa"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "20. Селищни територии",
-      "en": "20. Settlement territories"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "10.1.Шкарп",
-      "en": "10.1.Шкарп"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "16.2. зеленчукови градини",
-      "en": "16.2. Vegetable gardens"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "18. Асфалтов път",
-      "en": "18. Asphalt road"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.13. Шахта",
-      "en": "14.13. Shaft"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "14.11. Мочур",
-      "en": "14.11. Marsh"
-    }
-  },
-  {
-    "type": "mammals_habitat",
-    "label": {
-      "bg": "22. Сечище",
-      "en": "22. Woodcutting area"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "16.2. зеленчукови градини",
-      "en": "16.2. Vegetable gardens"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.4 - Тинести и пясъчни морски плитчини",
-      "en": "H.3 Estuarine"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Добив на пясък и чакъл",
-      "en": "Extraction of sand and gravel"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "18. Асфалтов път",
-      "en": "18. Asphalt road"
-    }
-  },
-  {
-    "type": "cbm_habitat",
-    "label": {
-      "bg": "H.8 - Стръмни скалисти брегове",
-      "en": "H.7 Silt marine shoreline"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Проучване и добив на петрол или газ",
-      "en": "Exploration and production of oil or gas"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.13. Шахта",
-      "en": "14.13. Shaft"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Замърсяване на водите",
-      "en": "Water pollution"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Текуща урбанизация",
-      "en": "Ongoing urbanization"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Ръчно събиране на торф",
-      "en": "Manual collection of peat"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "14.11. Мочур",
-      "en": "14.11. Marsh"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Солници",
-      "en": "Saltwork"
-    }
-  },
-  {
-    "type": "herp_habitat",
-    "label": {
-      "bg": "22. Сечище",
-      "en": "22. Woodcutting area"
-    }
-  },
-  {
-    "type": "main_threats",
-    "label": {
-      "bg": "Урбанизирани райони, обитавани от човека области",
-      "en": "Urbanized territories, inhabited by people"
-    }
-  },
-  {
-    "type": "invertebrates_age",
-    "label": {
-      "bg": "Ad (Възрастен)",
-      "en": "Ad"
-    }
-  },
-  {
-    "type": "invertebrates_age",
-    "label": {
-      "bg": "Eggs (яйца)",
-      "en": "Eggs"
-    }
-  },
-  {
-    "type": "invertebrates_age",
-    "label": {
-      "bg": "Juv (ювенилен, новоизлюпен)",
-      "en": "Juv"
-    }
-  },
-  {
-    "type": "invertebrates_age",
-    "label": {
-      "bg": "Larvae (Ларва)",
-      "en": "Larvae"
-    }
-  },
-  {
-    "type": "invertebrates_age",
-    "label": {
-      "bg": "Sub (млад, неполовозрял)",
-      "en": "Sub"
-    }
-  },
-  {
-    "type": "invertebrates_gender",
-    "label": {
-      "bg": "Двойка/Копула",
-      "en": "Couple/Copula"
-    }
-  },
-  {
-    "type": "invertebrates_gender",
-    "label": {
-      "bg": "F (женски)",
-      "en": "F (Female)"
-    }
-  },
-  {
-    "type": "invertebrates_gender",
-    "label": {
-      "bg": "M (мъжки)",
-      "en": "M (Male)"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "10.1.Шкарп",
-      "en": "10.1.Шкарп"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "10. скални местообитания",
-      "en": "10. Rocky habitats"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "11.1. лонгозни гори",
-      "en": "11.1 Longose forests"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "1.1. гъсти иглолистни гори - култури и други",
-      "en": "1.1. Dense coniferous forests - crops and others"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "11. дюни обрасли с хр-астова растителност",
-      "en": "11. Dunes overgrown with bushes"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "12.1. дерета",
-      "en": "12.1. Ravines"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "12. галерийните гори край реките",
-      "en": "12. Gallery forests along rivers"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "13. влажни зони - крайбрежия обрасли с тръстика",
-      "en": "13. Wetlands - Shores overgrown with reeds"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.10 локва на пътя",
-      "en": "14.10 Puddle on the road"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.11. Мочур",
-      "en": "14.11. Marsh"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.12. Малко езеро (до 30 кв. м)",
-      "en": "14.12. Small lake (up to 30 sq. m)"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.13. Шахта",
-      "en": "14.13. Shaft"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.14. Калище",
-      "en": "14.14. Rock face"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.1 рекa",
-      "en": "14.1 River"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.2 езера",
-      "en": "14.2 Lake"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.3 язовир",
-      "en": "14.3 Reservoir"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.4 микроязовир",
-      "en": "14.4 Micro-reservoir"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.5 канал",
-      "en": "14.5 Canal"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.6 други",
-      "en": "14.6 Other"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.7 корито на чешма",
-      "en": "14.7 Bed of a water fountain"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.8. коловоз",
-      "en": "14.8 Rut on a road"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14.9. канавки",
-      "en": "14.9 Ditch along a road"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "14. Водни местообитания:",
-      "en": "14. Water habitats:"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "15.1 от 0 до 33 %",
-      "en": "15.1  from 0 to 33 %"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "15.2 от 34 до 66 %",
-      "en": "15.2 from 34 to 66 %"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "15.3 от 67 до 99 %",
-      "en": "15.3 from 67 to 99 %"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "15. покритие на брегова растителност",
-      "en": "15. coverage of coastal vegetation"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "16.1. угар",
-      "en": "16.1. Fallow"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "16.2. зеленчукови градини",
-      "en": "16.2. Vegetable gardens"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "16.3. зърнени култури",
-      "en": "16.3. Grain cultures"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "16.4. люцерни",
-      "en": "16.4. Alfalfa"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "16. обработваеми земи",
-      "en": "16. Farmland"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "17. черен път",
-      "en": "17. Dirt road"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "18. Асфалтов път",
-      "en": "18. Asphalt road"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "19. Постройки (извън населени места)",
-      "en": "19. Buildings (outside settlements)"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "1. Светли иглолистни гори с храсталаци",
-      "en": "1. Bright coniferous forests with undergrowth"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "20. Селищни територии",
-      "en": "20. Settlement territories"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "21. Градски територии",
-      "en": "21. Urban territories"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "22. Сечище",
-      "en": "22. Woodcutting area"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "2. смесени гори",
-      "en": "2. Mixed forests"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "3.1. поляни, пасища, ливади с разпръснати храсти",
-      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "3. силно разредени иглолистни гори с храсталаци",
-      "en": "3. Very sparse coniferous forests with undergrowth"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "4.1. гъсти широколистни гори",
-      "en": "4.1. Dense deciduous forests"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "4. светли широколистни гори с храсталаци",
-      "en": "4. Bright deciduous forests with undergrowth"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "5. силно разредени широколистни гори с храсталаци",
-      "en": "5. Very sparse deciduous forests with undergrowth"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "6. екотон дървесно-храстова, тревна растителност",
-      "en": "6. Borderline trees, bushes, grass"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "7. пасища и ливади без да има наблизо гори или храсти или само с единични такива",
-      "en": "7. Grassland without nearby forests or shrubs or only single ones"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "8. смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
-      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "99. други",
-      "en": "99. Other"
-    }
-  },
-  {
-    "type": "invertebrates_habitat",
-    "label": {
-      "bg": "9. интензивни овощни градини и лозя - лишени от тревно покритие",
-      "en": "9. Intensive orchards and vineyards - No grass cover"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Строежи",
-      "en": "Construction / development"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Мъртъв екземпляр",
-      "en": "Dead individual"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Убит на пътя",
-      "en": "Dead on road"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Пресъхващи водни тела",
-      "en": "Dried up waterbodies"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Прекомерно обрастване на пасища",
-      "en": "Excessive overgrowth of pastures"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Изпражнения",
-      "en": "Feces"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Пожари",
-      "en": "Fires"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Инвазивни видове",
-      "en": "Invasive species"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Сечи",
-      "en": "Logging"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Мини ВЕЦ",
-      "en": "mini hydroelectric"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Съблекло",
-      "en": "Moult"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Други",
-      "en": "Other"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Залесяване с нетипични видове",
-      "en": "Planting with non-typical species"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Разораване на пасища и мери",
-      "en": "Plowing of pastures"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Бракониери",
-      "en": "Poachers"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Замърсяване",
-      "en": "Pollution"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Кариери",
-      "en": "Quarries"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Премахване на храсти",
-      "en": "Removal of shrubs"
-    }
-  },
-  {
-    "type": "invertebrates_danger_observation",
-    "label": {
-      "bg": "Пътища",
-      "en": "Roads"
-    }
-  },
-  {
     "type": "invertebrates_danger_observation",
     "label": {
       "bg": "Пеещ мъжки",
@@ -4545,22 +2256,36 @@
   {
     "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Соларен парк",
-      "en": "Solar park"
+      "bg": "Дупка",
+      "en": "Hole"
     }
   },
   {
     "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Зарибяване",
-      "en": "Stocking with fish"
+      "bg": "Капан",
+      "en": "Trap"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "G.4 - Течащи води",
+      "en": "G.3 Brakish lakes"
     }
   },
   {
     "type": "invertebrates_danger_observation",
     "label": {
-      "bg": "Ветропарк",
-      "en": "Wind park"
+      "bg": "Къртичина",
+      "en": "Molehill"
+    }
+  },
+  {
+    "type": "invertebrates_danger_observation",
+    "label": {
+      "bg": "Колония",
+      "en": "Colony"
     }
   },
   {
@@ -4568,6 +2293,13 @@
     "label": {
       "bg": "Широколистна гора",
       "en": "Deciduous forest"
+    }
+  },
+  {
+    "type": "mammals_gender",
+    "label": {
+      "bg": "M (мъжки)",
+      "en": "M (Male)"
     }
   },
   {
@@ -4580,8 +2312,2465 @@
   {
     "type": "plants_habitat",
     "label": {
+      "bg": "Комплекс храсталак-пасище",
+      "en": "Shrub-pasture complex"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Пасище",
+      "en": "Pasture"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Отвесна скала – силикат",
+      "en": "Vertical rock – silicate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
       "bg": "Отвесна скала – карбонат",
       "en": "Vertical rock – carbonate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Листопаден храсталак",
+      "en": "Deciduous bushes"
+    }
+  },
+  {
+    "type": "main_wind_direction",
+    "label": {
+      "bg": "NW",
+      "en": "NW"
+    }
+  },
+  {
+    "type": "main_wind_force",
+    "label": {
+      "bg": "7 - Доста силен вятър",
+      "en": "7 - High wind,Moderate gale,Near gale"
+    }
+  },
+  {
+    "type": "main_cloud_level",
+    "label": {
+      "bg": "70%",
+      "en": "70%"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Ливада",
+      "en": "Meadow"
+    }
+  },
+  {
+    "type": "birds_age",
+    "label": {
+      "bg": "2 година",
+      "en": "2 years"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Брачни игри",
+      "en": "Courtship and display"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Мочурище",
+      "en": "Fen"
+    }
+  },
+  {
+    "type": "birds_nest_substrate",
+    "label": {
+      "bg": "На ел. стълбове",
+      "en": "On electric poles"
+    }
+  },
+  {
+    "type": "birds_age_individual",
+    "label": {
+      "bg": "2 година",
+      "en": "2 years"
+    }
+  },
+  {
+    "type": "birds_nest_success",
+    "label": {
+      "bg": "Неуспешно гнездо (Безпокойство)",
+      "en": "Unsuccessful nest (Disturbance)"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Река",
+      "en": "River"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Храст",
+      "en": "Bush"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Туфа",
+      "en": "Tussock"
+    }
+  },
+  {
+    "type": "cbm_sector",
+    "label": {
+      "bg": "8",
+      "en": "8"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "B.4 - Тревни съобщества по сухи силикатни терени",
+      "en": "B.4 Grassland on try siliceorous terrain"
+    }
+  },
+  {
+    "type": "ciconia_tree",
+    "label": {
+      "bg": "чинар",
+      "en": "Plane tree"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "покрив на фабрика",
+      "en": "roof of factory"
+    }
+  },
+  {
+    "type": "main_wind_direction",
+    "label": {
+      "bg": "WNW",
+      "en": "WNW"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Вегетативни листни розетки",
+      "en": "Vegetative leafy rosettes"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Гнездо/черупки от яйца",
+      "en": "Used nest or eggshells"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Млади връхни разклонения-турион",
+      "en": "Young tip branches-turion"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Начало на вегетация – набъбване / разпукване на пъпките",
+      "en": "Start of vegetation - swelling / bursting of the buds"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Появяване на съцветия / спорангии",
+      "en": "Appearance of inflorescences / sporangia"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "C.4 - Ивици дървета, храсти и мозайки от тях",
+      "en": "C.4 Mosaic landscape (tree and scrubs lines)"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "комин на кметство",
+      "en": "chimney of town hall"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Ветропарк",
+      "en": "Wind park"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Гнездо с малки",
+      "en": "Nest with young"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "D.5 - Индустриални водоеми",
+      "en": "D.5 Industrial water bodies"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "комин на друга",
+      "en": "chimney of another building"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Излетели индивиди от местата за нощуване (основно за гъски)",
+      "en": "Individuals flying out of roosting (esp. for geese)"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Кацнала (дърво, храст, стълб, на земята)",
+      "en": "Perched (tree, shrub, pylon, on the ground)"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "E.5 - Участъци с вечен лед и снаг",
+      "en": "E.4 Caves"
+    }
+  },
+  {
+    "type": "birds_behaviour",
+    "label": {
+      "bg": "Обаждане",
+      "en": "Calling"
+    }
+  },
+  {
+    "type": "threats_state_carcass",
+    "label": {
+      "bg": "Неизвестно/няма",
+      "en": "Unknown/Not available"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Цял труп",
+      "en": "Whole body"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "G.2 - Стоящи пресни води",
+      "en": "G.1 Lagoons"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Стомах",
+      "en": "Stomach"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Гуша",
+      "en": "Crop"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Черен дроб",
+      "en": "Liver"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.3 - Естуари",
+      "en": "H.2 Marine - sea bays"
+    }
+  },
+  {
+    "type": "mammals_gender",
+    "label": {
+      "bg": "F (женски)",
+      "en": "F (Female)"
+    }
+  },
+  {
+    "type": "mammals_gender",
+    "label": {
+      "bg": "Двойка",
+      "en": "Couple"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "16.3. Зърнени култури",
+      "en": "16.3. Grain cultures"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.8 - Стръмни скалисти брегове",
+      "en": "H.7 Silt marine shoreline"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "5. Силно разредени широколистни гори с храсталаци",
+      "en": "5. Very sparse deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "11.1. Лонгозни гори",
+      "en": "11.1 Longose forests"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.1 Рекa",
+      "en": "14.1 River"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.6 Други",
+      "en": "14.6 Other"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "15. Покритие на брегова растителност",
+      "en": "15. coverage of coastal vegetation"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Мозък",
+      "en": "Brain"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Нокти",
+      "en": "Talons/ Claws"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Не",
+      "en": "None"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Няма",
+      "en": "Unknown/Not available"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Бъбреци",
+      "en": "Kidney"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Далак",
+      "en": "Spleen"
+    }
+  },
+  {
+    "type": "threats_sample",
+    "label": {
+      "bg": "Кости",
+      "en": "Bones"
+    }
+  },
+  {
+    "type": "main_wind_force",
+    "label": {
+      "bg": "8 - Много силен вятър",
+      "en": "8 - Gale,Fresh gale"
+    }
+  },
+  {
+    "type": "main_cloud_level",
+    "label": {
+      "bg": "80%",
+      "en": "80%"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "8. Смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
+      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
+    }
+  },
+  {
+    "type": "birds_age",
+    "label": {
+      "bg": "3 година",
+      "en": "3 years"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Посещаване на вероятно гнездо",
+      "en": "Visiting probable nest-site"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "11. Дюни обрасли с храстова растителност",
+      "en": "11. Dunes overgrown with bushes"
+    }
+  },
+  {
+    "type": "birds_nest_substrate",
+    "label": {
+      "bg": "Друго (свободен текст)",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "birds_age_individual",
+    "label": {
+      "bg": "3 година",
+      "en": "3 years"
+    }
+  },
+  {
+    "type": "birds_nest_success",
+    "label": {
+      "bg": "Неуспешно гнездо (Хищничество / канибализъм)",
+      "en": "Unsuccessful nest (Predation / cannibalism)"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14. Водни местообитания:",
+      "en": "14. Water habitats:"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.5. Канал",
+      "en": "14.5 Canal"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.10. Локва на пътя",
+      "en": "14.10 Puddle on the road"
+    }
+  },
+  {
+    "type": "cbm_sector",
+    "label": {
+      "bg": "9",
+      "en": "9"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "B.5 - Алпийски и субалпийски тревни съобщества",
+      "en": "B.5 Alpine and subalpine grassland"
+    }
+  },
+  {
+    "type": "ciconia_tree",
+    "label": {
+      "bg": "черница",
+      "en": "Mulberry"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "покрив на баня",
+      "en": "roof of bath house"
+    }
+  },
+  {
+    "type": "main_wind_direction",
+    "label": {
+      "bg": "SW",
+      "en": "SW"
+    }
+  },
+  {
+    "type": "main_wind_force",
+    "label": {
+      "bg": "12 - Ураган",
+      "en": "12 - Hurricane-force"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "4.1. Гъсти широколистни гори",
+      "en": "4.1. Dense deciduous forests"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Сигурно гнездене",
+      "en": "Confirmed breeding"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "9. Интензивни овощни градини и лозя - лишени от тревно покритие",
+      "en": "9. Intensive orchards and vineyards - No grass cover"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "12. Галерийните гори край реките",
+      "en": "12. Gallery forests along rivers"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.3 Язовир",
+      "en": "14.3 Reservoir"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.8. Коловоз",
+      "en": "14.8 Rut on a road"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "C.2 - Посеви и други тревни култури",
+      "en": "C.2 Agricultural land (crops)"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "комин на училище",
+      "en": "chimney of school"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "15.2 от 34 до 66 %",
+      "en": "15.2 from 34 to 66 %"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Носене на храна за малки",
+      "en": "Carrying a faecal sac or food for young"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "16.3. Зърнени култури",
+      "en": "16.3. Grain cultures"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "5. Силно разредени широколистни гори с храсталаци",
+      "en": "5. Very sparse deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "11.1. Лонгозни гори",
+      "en": "11.1 Longose forests"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "D.3 - Индустриални зони",
+      "en": "D.3 Industrial zones"
+    }
+  },
+  {
+    "type": "ciconia_building",
+    "label": {
+      "bg": "комин на фабрика",
+      "en": "chimney of factory"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.1 Рекa",
+      "en": "14.1 River"
+    }
+  },
+  {
+    "type": "birds_status",
+    "label": {
+      "bg": "Вагрант / скитащ",
+      "en": "Vagrant / wandering"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.6 Други",
+      "en": "14.6 Other"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "15. Покритие на брегова растителност",
+      "en": "15. coverage of coastal vegetation"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "16.1. Угар",
+      "en": "16.1. Fallow"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "E.3 - Пясъчни дюни и полета във вътрешността на страната",
+      "en": "E.2 Rocks and cliffs"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "18. Асфалтов път",
+      "en": "18. Asphalt road"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.12. Малко езеро (до 30 кв. м)",
+      "en": "14.12. Small lake (up to 30 sq. m)"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "6. Екотон дървесно-храстова, тревна растителност",
+      "en": "6. Borderline trees, bushes, grass"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "F.3 - Крайречни и приизворни мочурища",
+      "en": "F.2 Water vegetation"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "10. Скални местообитания",
+      "en": "10. Rocky habitats"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "13. Влажни зони - крайбрежия обрасли с тръстика",
+      "en": "13. Wetlands - Shores overgrown with reeds"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.4 Микроязовир",
+      "en": "14.4 Micro-reservoir"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.1 - Море",
+      "en": "G.4 Rivers"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.9. Канавки",
+      "en": "14.9 Ditch along a road"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "15.3 от 67 до 99 %",
+      "en": "15.3 from 67 to 99 %"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "16.4. Люцерни",
+      "en": "16.4. Alfalfa"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.6 - Крайбрежни плажове и пясъчни дюни",
+      "en": "H.5 Fully vegetated saline areas"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "16. Обработваеми земи",
+      "en": "16. Farmland"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Иглолистна гора",
+      "en": "Coniferous forest"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Сипеи - силикат",
+      "en": "Scree – silicate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Крайречни пясъци",
+      "en": "Riverside sands"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.2 - Тесни морски заливи",
+      "en": "H.1 Marine - open shore"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Крайбрежен участък на езеро",
+      "en": "Coastal area of a lake"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Пълен цъфтеж / спороносене",
+      "en": "Complete flowering / spore bearing"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Край на вегетация / отмиране",
+      "en": "End of vegetation / dying off"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.7 - Чакълести морски брегове",
+      "en": "H.6 Shoreline and sand dunes"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Кариери",
+      "en": "Quarries"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Соларен парк",
+      "en": "Solar park"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "17. Черен път",
+      "en": "17. Dirt road"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.11. Мочур",
+      "en": "14.11. Marsh"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "22. Сечище",
+      "en": "22. Woodcutting area"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "20. Селищни територии",
+      "en": "20. Settlement territories"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "14.13. Шахта",
+      "en": "14.13. Shaft"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "21. Градски територии",
+      "en": "21. Urban territories"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "10.1. Шкарп",
+      "en": "10.1. Rock face"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "99. Други",
+      "en": "99. Other"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "2.1. Разредени смесени гори",
+      "en": "2.1. Sparse mixed forests"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "2.2. Гъсти смесени гори",
+      "en": "2.2. Dense mixed forests"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "3.2. Храстови формации",
+      "en": "3.2. Bush formations"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "6.1. Група от храсти (храсталак)",
+      "en": "6.1. A cluster of bushes"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "6.2. Група от храсти (храсталак) и струпани камъни",
+      "en": "6.2. A cluster of bushes with a rock pile"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "6.3. Група дървета (до 20)",
+      "en": "6.3. A cluster of trees (up to 20)"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "6.4. Група дървета (до 20) и струпани камъни",
+      "en": "6.4. A cluster of trees (up to 20) with a rock pile"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "10.2. Каменен зид",
+      "en": "10.2. Stone wall"
+    }
+  },
+  {
+    "type": "mammals_habitat",
+    "label": {
+      "bg": "10.3. Струпани камъни",
+      "en": "10.3. Rock pile"
+    }
+  },
+  {
+    "type": "mammals_age",
+    "label": {
+      "bg": "Ad (Възрастен)",
+      "en": "Ad"
+    }
+  },
+  {
+    "type": "mammals_age",
+    "label": {
+      "bg": "Sub (млад, неполовозрял)",
+      "en": "Sub"
+    }
+  },
+  {
+    "type": "mammals_age",
+    "label": {
+      "bg": "Juv (ювенилен)",
+      "en": "Juv"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "16.1. Угар",
+      "en": "16.1. Fallow"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "18. Асфалтов път",
+      "en": "18. Asphalt road"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.12. Малко езеро (до 30 кв. м)",
+      "en": "14.12. Small lake (up to 30 sq. m)"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "6. Екотон дървесно-храстова, тревна растителност",
+      "en": "6. Borderline trees, bushes, grass"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "10. Скални местообитания",
+      "en": "10. Rocky habitats"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "13. Влажни зони - крайбрежия обрасли с тръстика",
+      "en": "13. Wetlands - Shores overgrown with reeds"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.4 Микроязовир",
+      "en": "14.4 Micro-reservoir"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.9. Канавки",
+      "en": "14.9 Ditch along a road"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "15.3 от 67 до 99 %",
+      "en": "15.3 from 67 to 99 %"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "16.4. Люцерни",
+      "en": "16.4. Alfalfa"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "16. Обработваеми земи",
+      "en": "16. Farmland"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "17. Черен път",
+      "en": "17. Dirt road"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.11. Мочур",
+      "en": "14.11. Marsh"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "22. Сечище",
+      "en": "22. Woodcutting area"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "20. Селищни територии",
+      "en": "20. Settlement territories"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.13. Шахта",
+      "en": "14.13. Shaft"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "21. Градски територии",
+      "en": "21. Urban territories"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "10.1. Шкарп",
+      "en": "10.1. Rock face"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "99. Други",
+      "en": "99. Other"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "2.1. Разредени смесени гори",
+      "en": "2.1. Sparse mixed forests"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "2.2. Гъсти смесени гори",
+      "en": "2.2. Dense mixed forests"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "3.2. Храстови формации",
+      "en": "3.2. Bush formations"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "6.1. Група от храсти (храсталак)",
+      "en": "6.1. A cluster of bushes"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "6.2. Група от храсти (храсталак) и струпани камъни",
+      "en": "6.2. A cluster of bushes with a rock pile"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "6.3. Група дървета (до 20)",
+      "en": "6.3. A cluster of trees (up to 20)"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "6.4. Група дървета (до 20) и струпани камъни",
+      "en": "6.4. A cluster of trees (up to 20) with a rock pile"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "H.5 - Засолени терени с халофитна растителност",
+      "en": "H.4 Mud or silt marine shallow areas"
+    }
+  },
+  {
+    "type": "humid_birds_count_type",
+    "label": {
+      "bg": "Точен брой",
+      "en": "Exact number"
+    }
+  },
+  {
+    "type": "humid_birds_count_units",
+    "label": {
+      "bg": "Индивиди",
+      "en": "Individuals"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Смесена гора",
+      "en": "Mixed forest"
+    }
+  },
+  {
+    "type": "cbm_habitat",
+    "label": {
+      "bg": "D.6 - Пустеещи земи",
+      "en": "H.9 Islands and rocks in water"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Отделна скала – силикат",
+      "en": "Single rock – silicate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Тресавище",
+      "en": "Quagmire"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Отделно тревисто растение",
+      "en": "Separate herbaceous plant"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Пожари",
+      "en": "Fires"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Пожари",
+      "en": "Fires"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Сечи",
+      "en": "Logging"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Замърсяване",
+      "en": "Pollution"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Кариери",
+      "en": "Quarries"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Зарибяване",
+      "en": "Stocking with fish"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Бракониери",
+      "en": "Poachers"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Пътища",
+      "en": "Roads"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Ветропарк",
+      "en": "Wind park"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Изпражнения",
+      "en": "Feces"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Соларен парк",
+      "en": "Solar park"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Премахване на храсти",
+      "en": "Removal of shrubs"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Пресъхващи водни тела",
+      "en": "Dried up waterbodies"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Убит на пътя",
+      "en": "Dead on road"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Дупка",
+      "en": "Hole"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Капан",
+      "en": "Trap"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Къртичина",
+      "en": "Molehill"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Стъпка(и)",
+      "en": "Footprint(s)"
+    }
+  },
+  {
+    "type": "mammals_danger_observation",
+    "label": {
+      "bg": "Колония",
+      "en": "Colony"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "10.2. Каменен зид",
+      "en": "10.2. Stone wall"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "10.3. Струпани камъни",
+      "en": "10.3. Rock pile"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.16. Поток (малка река)",
+      "en": "14.16. Stream (small river)"
+    }
+  },
+  {
+    "type": "invertebrates_age",
+    "label": {
+      "bg": "Sub (млад, неполовозрял)",
+      "en": "Sub"
+    }
+  },
+  {
+    "type": "invertebrates_gender",
+    "label": {
+      "bg": "Двойка/Копула",
+      "en": "Couple/Copula"
+    }
+  },
+  {
+    "type": "invertebrates_age",
+    "label": {
+      "bg": "Juv (ювенилен, новоизлюпен)",
+      "en": "Juv"
+    }
+  },
+  {
+    "type": "invertebrates_age",
+    "label": {
+      "bg": "Eggs (яйца)",
+      "en": "Eggs"
+    }
+  },
+  {
+    "type": "invertebrates_age",
+    "label": {
+      "bg": "Larvae (Ларва)",
+      "en": "Larvae"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "4.1. Гъсти широколистни гори",
+      "en": "4.1. Dense deciduous forests"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "9. Интензивни овощни градини и лозя - лишени от тревно покритие",
+      "en": "9. Intensive orchards and vineyards - No grass cover"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Пътища",
+      "en": "Roads"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Пресъхващи водни тела",
+      "en": "Dried up waterbodies"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "1. Светли иглолистни гори с храсталаци",
+      "en": "1. Bright coniferous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "1.1. Гъсти иглолистни гори - култури и други",
+      "en": "1.1. Dense coniferous forests - crops and others"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "2. Смесени гори",
+      "en": "2. Mixed forests"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "3.1. Поляни, пасища, ливади с разпръснати храсти",
+      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "3. Силно разредени иглолистни гори с храсталаци",
+      "en": "3. Very sparse coniferous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "7. Пасища и ливади без да има наблизо гори или храсти или само с единични такива",
+      "en": "7. Grassland without nearby forests or shrubs or only single ones"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "12.1. Дерета",
+      "en": "12.1. Ravines"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.2 Езера",
+      "en": "14.2 Lake"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.7 Корито на чешма",
+      "en": "14.7 Bed of a water fountain"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "15.1 от 0 до 33 %",
+      "en": "15.1  from 0 to 33 %"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "16.2. Зеленчукови градини",
+      "en": "16.2. Vegetable gardens"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "19. Постройки (извън населени места)",
+      "en": "19. Buildings (outside settlements)"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.14. Калище",
+      "en": "14.14. Mud hole"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "4. Светли широколистни гори с храсталаци",
+      "en": "4. Bright deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "8. Смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
+      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "11. Дюни обрасли с храстова растителност",
+      "en": "11. Dunes overgrown with bushes"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14. Водни местообитания:",
+      "en": "14. Water habitats:"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.5. Канал",
+      "en": "14.5 Canal"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.10. Локва на пътя",
+      "en": "14.10 Puddle on the road"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "4.1. Гъсти широколистни гори",
+      "en": "4.1. Dense deciduous forests"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "9. Интензивни овощни градини и лозя - лишени от тревно покритие",
+      "en": "9. Intensive orchards and vineyards - No grass cover"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "12. Галерийните гори край реките",
+      "en": "12. Gallery forests along rivers"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.3 Язовир",
+      "en": "14.3 Reservoir"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.8. Коловоз",
+      "en": "14.8 Rut on a road"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "15.2 от 34 до 66 %",
+      "en": "15.2 from 34 to 66 %"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "16.3. Зърнени култури",
+      "en": "16.3. Grain cultures"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "5. Силно разредени широколистни гори с храсталаци",
+      "en": "5. Very sparse deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "11.1. Лонгозни гори",
+      "en": "11.1 Longose forests"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.1 Рекa",
+      "en": "14.1 River"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.6 Други",
+      "en": "14.6 Other"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "15. Покритие на брегова растителност",
+      "en": "15. coverage of coastal vegetation"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "16.1. Угар",
+      "en": "16.1. Fallow"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "18. Асфалтов път",
+      "en": "18. Asphalt road"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.12. Малко езеро (до 30 кв. м)",
+      "en": "14.12. Small lake (up to 30 sq. m)"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "6. Екотон дървесно-храстова, тревна растителност",
+      "en": "6. Borderline trees, bushes, grass"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "10. Скални местообитания",
+      "en": "10. Rocky habitats"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "13. Влажни зони - крайбрежия обрасли с тръстика",
+      "en": "13. Wetlands - Shores overgrown with reeds"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.4 Микроязовир",
+      "en": "14.4 Micro-reservoir"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.9. Канавки",
+      "en": "14.9 Ditch along a road"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "15.3 от 67 до 99 %",
+      "en": "15.3 from 67 to 99 %"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "16.4. Люцерни",
+      "en": "16.4. Alfalfa"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "16. Обработваеми земи",
+      "en": "16. Farmland"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "17. Черен път",
+      "en": "17. Dirt road"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.11. Мочур",
+      "en": "14.11. Marsh"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "22. Сечище",
+      "en": "22. Woodcutting area"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "20. Селищни територии",
+      "en": "20. Settlement territories"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "14.13. Шахта",
+      "en": "14.13. Shaft"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "21. Градски територии",
+      "en": "21. Urban territories"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "10.1. Шкарп",
+      "en": "10.1. Rock face"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "99. Други",
+      "en": "99. Other"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "2.1. Разредени смесени гори",
+      "en": "2.1. Sparse mixed forests"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "2.2. Гъсти смесени гори",
+      "en": "2.2. Dense mixed forests"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "3.2. Храстови формации",
+      "en": "3.2. Bush formations"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "6.1. Група от храсти (храсталак)",
+      "en": "6.1. A cluster of bushes"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "6.2. Група от храсти (храсталак) и струпани камъни",
+      "en": "6.2. A cluster of bushes with a rock pile"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "6.3. Група дървета (до 20)",
+      "en": "6.3. A cluster of trees (up to 20)"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "6.4. Група дървета (до 20) и струпани камъни",
+      "en": "6.4. A cluster of trees (up to 20) with a rock pile"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "10.2. Каменен зид",
+      "en": "10.2. Stone wall"
+    }
+  },
+  {
+    "type": "herp_habitat",
+    "label": {
+      "bg": "10.3. Струпани камъни",
+      "en": "10.3. Rock pile"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Вечнозелен храсталак",
+      "en": "Evergreen bushes"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Отделна скала – карбонат",
+      "en": "Single rock – carbonate"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Торфище",
+      "en": "Peatland"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Крайбрежен участък на река",
+      "en": "Coastal area of a river"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Цветоносен стрък",
+      "en": "Flower-bearing stalk"
+    }
+  },
+  {
+    "type": "plants_reporting_unit",
+    "label": {
+      "bg": "Вегетативен летораст",
+      "en": "Vegetative shoot"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Поява на пъпки / поници",
+      "en": "Appearance of buds"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Развитие на листа",
+      "en": "Development of leaves"
+    }
+  },
+  {
+    "type": "plants_phenological_phase",
+    "label": {
+      "bg": "Начало на цъфтежа / спорообразуване",
+      "en": "Beginning of flowering / spore formation"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Сечи",
+      "en": "Logging"
+    }
+  },
+  {
+    "type": "plants_threats",
+    "label": {
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "1. Светли иглолистни гори с храсталаци",
+      "en": "1. Bright coniferous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "1.1. Гъсти иглолистни гори - култури и други",
+      "en": "1.1. Dense coniferous forests - crops and others"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "2. Смесени гори",
+      "en": "2. Mixed forests"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "3.1. Поляни, пасища, ливади с разпръснати храсти",
+      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "3. Силно разредени иглолистни гори с храсталаци",
+      "en": "3. Very sparse coniferous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "7. Пасища и ливади без да има наблизо гори или храсти или само с единични такива",
+      "en": "7. Grassland without nearby forests or shrubs or only single ones"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "12.1. Дерета",
+      "en": "12.1. Ravines"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.2 Езера",
+      "en": "14.2 Lake"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.7 Корито на чешма",
+      "en": "14.7 Bed of a water fountain"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "15.1 от 0 до 33 %",
+      "en": "15.1  from 0 to 33 %"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "16.2. Зеленчукови градини",
+      "en": "16.2. Vegetable gardens"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "19. Постройки (извън населени места)",
+      "en": "19. Buildings (outside settlements)"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.14. Калище",
+      "en": "14.14. Mud hole"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "4. Светли широколистни гори с храсталаци",
+      "en": "4. Bright deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "8. Смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
+      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "11. Дюни обрасли с храстова растителност",
+      "en": "11. Dunes overgrown with bushes"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14. Водни местообитания:",
+      "en": "14. Water habitats:"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.5. Канал",
+      "en": "14.5 Canal"
+    }
+  },
+  {
+    "type": "herptiles_habitat",
+    "label": {
+      "bg": "14.10. Локва на пътя",
+      "en": "14.10 Puddle on the road"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "12. Галерийните гори край реките",
+      "en": "12. Gallery forests along rivers"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.3 Язовир",
+      "en": "14.3 Reservoir"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.8. Коловоз",
+      "en": "14.8 Rut on a road"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "15.2 от 34 до 66 %",
+      "en": "15.2 from 34 to 66 %"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "16.3. Зърнени култури",
+      "en": "16.3. Grain cultures"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "5. Силно разредени широколистни гори с храсталаци",
+      "en": "5. Very sparse deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "11.1. Лонгозни гори",
+      "en": "11.1 Longose forests"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.1 Рекa",
+      "en": "14.1 River"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.6 Други",
+      "en": "14.6 Other"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "15. Покритие на брегова растителност",
+      "en": "15. coverage of coastal vegetation"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "16.1. Угар",
+      "en": "16.1. Fallow"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "18. Асфалтов път",
+      "en": "18. Asphalt road"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.12. Малко езеро (до 30 кв. м)",
+      "en": "14.12. Small lake (up to 30 sq. m)"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "6. Екотон дървесно-храстова, тревна растителност",
+      "en": "6. Borderline trees, bushes, grass"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "10. Скални местообитания",
+      "en": "10. Rocky habitats"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "13. Влажни зони - крайбрежия обрасли с тръстика",
+      "en": "13. Wetlands - Shores overgrown with reeds"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.4 Микроязовир",
+      "en": "14.4 Micro-reservoir"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.9. Канавки",
+      "en": "14.9 Ditch along a road"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "15.3 от 67 до 99 %",
+      "en": "15.3 from 67 to 99 %"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "16.4. Люцерни",
+      "en": "16.4. Alfalfa"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "16. Обработваеми земи",
+      "en": "16. Farmland"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "17. Черен път",
+      "en": "17. Dirt road"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.11. Мочур",
+      "en": "14.11. Marsh"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "22. Сечище",
+      "en": "22. Woodcutting area"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "20. Селищни територии",
+      "en": "20. Settlement territories"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.13. Шахта",
+      "en": "14.13. Shaft"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "21. Градски територии",
+      "en": "21. Urban territories"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "10.1. Шкарп",
+      "en": "10.1. Rock face"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "99. Други",
+      "en": "99. Other"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "2.1. Разредени смесени гори",
+      "en": "2.1. Sparse mixed forests"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "2.2. Гъсти смесени гори",
+      "en": "2.2. Dense mixed forests"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "3.2. Храстови формации",
+      "en": "3.2. Bush formations"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "6.1. Група от храсти (храсталак)",
+      "en": "6.1. A cluster of bushes"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "6.2. Група от храсти (храсталак) и струпани камъни",
+      "en": "6.2. A cluster of bushes with a rock pile"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "6.3. Група дървета (до 20)",
+      "en": "6.3. A cluster of trees (up to 20)"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "6.4. Група дървета (до 20) и струпани камъни",
+      "en": "6.4. A cluster of trees (up to 20) with a rock pile"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "10.2. Каменен зид",
+      "en": "10.2. Stone wall"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "10.3. Струпани камъни",
+      "en": "10.3. Rock pile"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.16. Поток (малка река)",
+      "en": "14.16. Stream (small river)"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "1. Светли иглолистни гори с храсталаци",
+      "en": "1. Bright coniferous forests with undergrowth"
+    }
+  },
+  {
+    "type": "plants_habitat",
+    "label": {
+      "bg": "Сипеи - карбонат",
+      "en": "Scree – carbonate"
     }
   },
   {
@@ -4599,171 +4788,17 @@
     }
   },
   {
-    "type": "plants_reporting_unit",
+    "type": "plants_habitat",
     "label": {
-      "bg": "Дърво",
-      "en": "Tree"
-    }
-  },
-  {
-    "type": "plants_reporting_unit",
-    "label": {
-      "bg": "Цветоносен стрък",
-      "en": "Flower-bearing stalk"
+      "bg": "Езеро",
+      "en": "Lake"
     }
   },
   {
     "type": "plants_reporting_unit",
     "label": {
-      "bg": "Млади връхни разклонения-турион",
-      "en": "Young tip branches-turion"
-    }
-  },
-  {
-    "type": "plants_phenological_phase",
-    "label": {
-      "bg": "Развитие на листа",
-      "en": "Development of leaves"
-    }
-  },
-  {
-    "type": "plants_phenological_phase",
-    "label": {
-      "bg": "Край на цъфтежа / спороносене",
-      "en": "End of flowering / spore bearing"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
-      "bg": "Строежи",
-      "en": "Construction / development"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
-      "bg": "Залесяване с нетипични видове",
-      "en": "Planting with non-typical species"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
-      "bg": "Соларен парк",
-      "en": "Solar park"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Иглолистна гора",
-      "en": "Coniferous forest"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Смесена гора",
-      "en": "Mixed forest"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Листопаден храсталак",
-      "en": "Deciduous bushes"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Комплекс храсталак-пасище",
-      "en": "Shrub-pasture complex"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Ливада",
-      "en": "Meadow"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Отвесна скала – силикат",
-      "en": "Vertical rock – silicate"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Отделна скала – силикат",
-      "en": "Single rock – silicate"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Отделна скала – карбонат",
-      "en": "Single rock – carbonate"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Сипеи - карбонат",
-      "en": "Scree – carbonate"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Крайречни пясъци",
-      "en": "Riverside sands"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Тресавище",
-      "en": "Quagmire"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Торфище",
-      "en": "Peatland"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Река",
-      "en": "River"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Крайбрежен участък на езеро",
-      "en": "Coastal area of a lake"
-    }
-  },
-  {
-    "type": "plants_habitat",
-    "label": {
-      "bg": "Крайбрежен участък на река",
-      "en": "Coastal area of a river"
-    }
-  },
-  {
-    "type": "plants_reporting_unit",
-    "label": {
-      "bg": "Храст",
-      "en": "Bush"
+      "bg": "Дърво",
+      "en": "Tree"
     }
   },
   {
@@ -4776,13 +4811,6 @@
   {
     "type": "plants_reporting_unit",
     "label": {
-      "bg": "Туфа",
-      "en": "Tussock"
-    }
-  },
-  {
-    "type": "plants_reporting_unit",
-    "label": {
       "bg": "Спороносен лист / стрък",
       "en": "Spore-bearing leaf / stalk"
     }
@@ -4790,15 +4818,8 @@
   {
     "type": "plants_reporting_unit",
     "label": {
-      "bg": "Вегетативни листни розетки",
-      "en": "Vegetative leafy rosettes"
-    }
-  },
-  {
-    "type": "plants_reporting_unit",
-    "label": {
-      "bg": "Вегетативен летораст",
-      "en": "Vegetative shoot"
+      "bg": "Генеративен летораст",
+      "en": "Generative shoot"
     }
   },
   {
@@ -4811,15 +4832,8 @@
   {
     "type": "plants_phenological_phase",
     "label": {
-      "bg": "Поява на пъпки / поници",
-      "en": "Appearance of buds"
-    }
-  },
-  {
-    "type": "plants_phenological_phase",
-    "label": {
-      "bg": "Начало на вегетация – набъбване / разпукване на пъпките",
-      "en": "Start of vegetation - swelling / bursting of the buds"
+      "bg": "Пълно разтваряне на пъпките",
+      "en": "Complete opening of buds"
     }
   },
   {
@@ -4832,15 +4846,8 @@
   {
     "type": "plants_phenological_phase",
     "label": {
-      "bg": "Начало на цъфтежа / спорообразуване",
-      "en": "Beginning of flowering / spore formation"
-    }
-  },
-  {
-    "type": "plants_phenological_phase",
-    "label": {
-      "bg": "Пълен цъфтеж / спороносене",
-      "en": "Complete flowering / spore bearing"
+      "bg": "Край на цъфтежа / спороносене",
+      "en": "End of flowering / spore bearing"
     }
   },
   {
@@ -4851,31 +4858,10 @@
     }
   },
   {
-    "type": "plants_phenological_phase",
-    "label": {
-      "bg": "Край на вегетация / отмиране",
-      "en": "End of vegetation / dying off"
-    }
-  },
-  {
     "type": "plants_threats",
     "label": {
-      "bg": "Пожари",
-      "en": "Fires"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
-      "bg": "Кариери",
-      "en": "Quarries"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
-      "bg": "Разораване на пасища и мери",
-      "en": "Plowing of pastures"
+      "bg": "Замърсяване",
+      "en": "Pollution"
     }
   },
   {
@@ -4888,20 +4874,6 @@
   {
     "type": "plants_threats",
     "label": {
-      "bg": "Пътища",
-      "en": "Roads"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
-      "bg": "Ветропарк",
-      "en": "Wind park"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
       "bg": "Други",
       "en": "Others"
     }
@@ -4909,292 +4881,397 @@
   {
     "type": "plants_threats",
     "label": {
-      "bg": "Инвазивни видове",
-      "en": "Invasive species"
-    }
-  },
-  {
-    "type": "plants_threats",
-    "label": {
       "bg": "Премахване на храсти",
       "en": "Removal of shrubs"
     }
   },
   {
-    "type": "plants_threats",
+    "type": "main_source",
     "label": {
-      "bg": "Пресъхващи водни тела",
-      "en": "Dried up waterbodies"
+      "bg": "Единични наблюдения",
+      "en": "Single observations"
     }
   },
   {
-    "type": "plants_habitat",
+    "type": "main_source",
     "label": {
-      "bg": "Вечнозелен храсталак",
-      "en": "Evergreen bushes"
+      "bg": "Средно зимно преброяване",
+      "en": "Mid-winter Bird Count"
     }
   },
   {
-    "type": "plants_habitat",
+    "type": "main_source",
     "label": {
-      "bg": "Пасище",
-      "en": "Pasture"
+      "bg": "МОВП",
+      "en": "Common Bird Monitoring"
     }
   },
   {
-    "type": "plants_habitat",
+    "type": "main_source",
     "label": {
-      "bg": "Сипеи - силикат",
-      "en": "Scree – silicate"
+      "bg": "Мониторинг влажни зони",
+      "en": "Monitoring wetlands"
     }
   },
   {
-    "type": "plants_habitat",
+    "type": "main_source",
     "label": {
-      "bg": "Мочурище",
-      "en": "Fen"
+      "bg": "Миграция",
+      "en": "Migration"
     }
   },
   {
-    "type": "plants_habitat",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Езеро",
-      "en": "Lake"
+      "bg": "1.1. Гъсти иглолистни гори - култури и други",
+      "en": "1.1. Dense coniferous forests - crops and others"
     }
   },
   {
-    "type": "plants_reporting_unit",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Отделно тревисто растение",
-      "en": "Separate herbaceous plant"
+      "bg": "2. Смесени гори",
+      "en": "2. Mixed forests"
     }
   },
   {
-    "type": "plants_reporting_unit",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Генеративен летораст",
-      "en": "Generative shoot"
+      "bg": "3.1. Поляни, пасища, ливади с разпръснати храсти",
+      "en": "3.1. Meadows, pastures, meadows with scattered shrubs"
     }
   },
   {
-    "type": "plants_phenological_phase",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Пълно разтваряне на пъпките",
-      "en": "Complete opening of buds"
+      "bg": "3. Силно разредени иглолистни гори с храсталаци",
+      "en": "3. Very sparse coniferous forests with undergrowth"
     }
   },
   {
-    "type": "plants_phenological_phase",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Появяване на съцветия / спорангии",
-      "en": "Appearance of inflorescences / sporangia"
+      "bg": "7. Пасища и ливади без да има наблизо гори или храсти или само с единични такива",
+      "en": "7. Grassland without nearby forests or shrubs or only single ones"
     }
   },
   {
-    "type": "plants_threats",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Сечи",
-      "en": "Logging"
+      "bg": "12.1. Дерета",
+      "en": "12.1. Ravines"
     }
   },
   {
-    "type": "plants_threats",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Замърсяване",
-      "en": "Pollution"
+      "bg": "14.2 Езера",
+      "en": "14.2 Lake"
     }
   },
   {
-    "type": "plants_threats",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Прекомерно обрастване на пасища",
-      "en": "Excessive overgrowth of pastures"
+      "bg": "14.7 Корито на чешма",
+      "en": "14.7 Bed of a water fountain"
     }
   },
   {
-    "type": "plants_threats",
+    "type": "invertebrates_habitat",
     "label": {
-      "bg": "Мини ВЕЦ",
-      "en": "Small hydroelectric"
+      "bg": "15.1 от 0 до 33 %",
+      "en": "15.1  from 0 to 33 %"
     }
   },
   {
-    "type": "threats_category",
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "16.2. Зеленчукови градини",
+      "en": "16.2. Vegetable gardens"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "19. Постройки (извън населени места)",
+      "en": "19. Buildings (outside settlements)"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.14. Калище",
+      "en": "14.14. Mud hole"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "4. Светли широколистни гори с храсталаци",
+      "en": "4. Bright deciduous forests with undergrowth"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "8. Смесица от градини, лозя, пасища, ливади, синури, горички или храсти",
+      "en": "8. Mix of gardens, vineyards, pastures, meadows, field borders, groves or bushes"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "11. Дюни обрасли с храстова растителност",
+      "en": "11. Dunes overgrown with bushes"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14. Водни местообитания:",
+      "en": "14. Water habitats:"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.5. Канал",
+      "en": "14.5 Canal"
+    }
+  },
+  {
+    "type": "invertebrates_habitat",
+    "label": {
+      "bg": "14.10. Локва на пътя",
+      "en": "14.10 Puddle on the road"
+    }
+  },
+  {
+    "type": "main_threats",
     "label": {
       "bg": "Пожари",
       "en": "Fires"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Сечи",
       "en": "Logging"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Строежи",
       "en": "Construction / development"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Замърсяване",
       "en": "Pollution"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Кариери",
       "en": "Quarries"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Разораване на пасища и мери",
       "en": "Plowing of pastures"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Зарибяване",
       "en": "Stocking with fish"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Бракониери",
       "en": "Poachers"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Залесяване с нетипични видове",
       "en": "Planting with non-typical species"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Пътища",
       "en": "Roads"
     }
   },
   {
-    "type": "threats_category",
-    "label": {
-      "bg": "Мъртъв екземпляр",
-      "en": "Dead individual"
-    }
-  },
-  {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Ветропарк",
       "en": "Wind park"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Прекомерно обрастване на пасища",
       "en": "Excessive overgrowth of pastures"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Други",
       "en": "Other"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Соларен парк",
       "en": "Solar park"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Инвазивни видове",
       "en": "Invasive species"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Премахване на храсти",
       "en": "Removal of shrubs"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Мини ВЕЦ",
       "en": "Small hydroelectric"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Пресъхващи водни тела",
       "en": "Dried up waterbodies"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_source",
     "label": {
-      "bg": "Убит на пътя",
+      "bg": "Наблюдения на земноводни и влечуги",
+      "en": "Herp observations"
+    }
+  },
+  {
+    "type": "main_source",
+    "label": {
+      "bg": "Горите на орела",
+      "en": "Eagles forests"
+    }
+  },
+  {
+    "type": "main_source",
+    "label": {
+      "bg": "Мониторинг на египетски лешояд",
+      "en": "Egyptian vultures monitoring"
+    }
+  },
+  {
+    "type": "main_source",
+    "label": {
+      "bg": "Проучване на грабливи птици",
+      "en": "Study of raptors"
+    }
+  },
+  {
+    "type": "main_source",
+    "label": {
+      "bg": "Литературни данни",
+      "en": "Literature data"
+    }
+  },
+  {
+    "type": "main_source",
+    "label": {
+      "bg": "Пълен списък",
+      "en": "Complete list"
+    }
+  },
+  {
+    "type": "main_source",
+    "label": {
+      "bg": "Наблюдения на бозайници",
+      "en": "Mammals observations"
+    }
+  },
+  {
+    "type": "main_source",
+    "label": {
+      "bg": "Мониторинг на зимуващи гъски",
+      "en": "Wintering Geese Monitoring"
+    }
+  },
+  {
+    "type": "main_threats",
+    "label": {
+      "bg": "Опасен път",
       "en": "Dead on road"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Ловна преса",
       "en": "Hunting"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Тровене",
       "en": "Poisoning"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Безпокойство",
       "en": "Disturbance"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Иманярство",
       "en": "Treasure hunting"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Екстремни спортове",
       "en": "Extreme sports"
     }
   },
   {
-    "type": "threats_category",
+    "type": "main_threats",
     "label": {
       "bg": "Туристическа дейност",
       "en": "Touristic activities"
@@ -5257,97 +5334,6 @@
     }
   },
   {
-    "type": "threats_state_carcass",
-    "label": {
-      "bg": "Неизвестно/няма",
-      "en": "Unknown/Not available"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Цял труп",
-      "en": "Whole body"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Стомах",
-      "en": "Stomach"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Гуша",
-      "en": "Crop"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Черен дроб",
-      "en": "Liver"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Мозък",
-      "en": "Brain"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Нокти",
-      "en": "Talons/ Claws"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Други",
-      "en": "Other"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Не",
-      "en": "None"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Няма",
-      "en": "Unknown/Not available"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Бъбреци",
-      "en": "Kidney"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Далак",
-      "en": "Spleen"
-    }
-  },
-  {
-    "type": "threats_sample",
-    "label": {
-      "bg": "Кости",
-      "en": "Bones"
-    }
-  },
-  {
     "type": "threats_sample",
     "label": {
       "bg": "Жлъчка",
@@ -5373,6 +5359,412 @@
     "label": {
       "bg": "Пера",
       "en": "Feathers"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Съблекло",
+      "en": "Moult"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Изпражнения",
+      "en": "Feces"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Пеещ мъжки",
+      "en": "Singing male"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Дупка",
+      "en": "Hole"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Капан",
+      "en": "Trap"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Къртичина",
+      "en": "Molehill"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Стъпка(и)",
+      "en": "Footprint(s)"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Колония",
+      "en": "Colony"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Убит на пътя",
+      "en": "Dead on road"
+    }
+  },
+  {
+    "type": "herptiles_findings",
+    "label": {
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Съблекло",
+      "en": "Moult"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Изпражнения",
+      "en": "Feces"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Пеещ мъжки",
+      "en": "Singing male"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Дупка",
+      "en": "Hole"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Капан",
+      "en": "Trap"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Къртичина",
+      "en": "Molehill"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Колония",
+      "en": "Colony"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Убит на пътя",
+      "en": "Dead on road"
+    }
+  },
+  {
+    "type": "invertebrates_findings",
+    "label": {
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Изпражнения",
+      "en": "Feces"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Дупка",
+      "en": "Hole"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Капан",
+      "en": "Trap"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Къртичина",
+      "en": "Molehill"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Стъпка(и)",
+      "en": "Footprint(s)"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Колония",
+      "en": "Colony"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Убит на пътя",
+      "en": "Dead on road"
+    }
+  },
+  {
+    "type": "mammals_findings",
+    "label": {
+      "bg": "Мъртъв екземпляр",
+      "en": "Dead individual"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Пожари",
+      "en": "Fires"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Сечи",
+      "en": "Logging"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Строежи",
+      "en": "Construction / development"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Замърсяване",
+      "en": "Pollution"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Кариери",
+      "en": "Quarries"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Разораване на пасища и мери",
+      "en": "Plowing of pastures"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Зарибяване",
+      "en": "Stocking with fish"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Бракониери",
+      "en": "Poachers"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Залесяване с нетипични видове",
+      "en": "Planting with non-typical species"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Пътища",
+      "en": "Roads"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Ветропарк",
+      "en": "Wind park"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Прекомерно обрастване на пасища",
+      "en": "Excessive overgrowth of pastures"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Други",
+      "en": "Other"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Соларен парк",
+      "en": "Solar park"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Инвазивни видове",
+      "en": "Invasive species"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Премахване на храсти",
+      "en": "Removal of shrubs"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Мини ВЕЦ",
+      "en": "Small hydroelectric"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Пресъхващи водни тела",
+      "en": "Dried up waterbodies"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Ловна преса",
+      "en": "Hunting"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Тровене",
+      "en": "Poisoning"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Безпокойство",
+      "en": "Disturbance"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Иманярство",
+      "en": "Treasure hunting"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Екстремни спортове",
+      "en": "Extreme sports"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Туристическа дейност",
+      "en": "Touristic activities"
+    }
+  },
+  {
+    "type": "threats_category",
+    "label": {
+      "bg": "Опасен път",
+      "en": "Dangerous road"
     }
   }
 ]
