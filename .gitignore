@@ -9,3 +9,6 @@
 # crashlytics config
 com_crashlytics_export_strings.xml
 crashlytics-build.properties
+
+keystore/
+keystore.properties
