@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui;
 
-import android.content.Intent;
-import android.support.v4.app.TaskStackBuilder;
+import androidx.core.app.TaskStackBuilder;
 import android.view.View;
 import android.view.Window;
 

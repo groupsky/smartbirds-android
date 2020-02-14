@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import androidx.legacy.app.FragmentStatePagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;

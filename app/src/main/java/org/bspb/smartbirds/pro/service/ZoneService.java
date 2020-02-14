@@ -3,8 +3,8 @@ package org.bspb.smartbirds.pro.service;
 import android.content.ContentProviderOperation;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.MainThread;
-import android.support.annotation.UiThread;
+import androidx.annotation.MainThread;
+import androidx.annotation.UiThread;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;

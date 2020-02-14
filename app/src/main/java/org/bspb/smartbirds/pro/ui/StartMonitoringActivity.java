@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterViews;

@@ -3,9 +3,8 @@ package org.bspb.smartbirds.pro.enums;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.IdRes;
-import android.support.annotation.StringRes;
-import android.text.TextUtils;
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.forms.convert.BirdsConverter;

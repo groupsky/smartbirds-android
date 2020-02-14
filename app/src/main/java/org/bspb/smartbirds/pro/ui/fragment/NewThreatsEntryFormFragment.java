@@ -1,17 +1,13 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
-import android.os.Build;
-import android.support.v13.app.FragmentStatePagerAdapter;
+
+import androidx.legacy.app.FragmentStatePagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
-
-import java.util.Date;
-import java.util.HashMap;
 
 /**
  * Created by dani on 11-07-19.

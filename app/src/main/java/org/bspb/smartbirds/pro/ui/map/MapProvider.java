@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.ui.map;
 
 import android.location.Location;
 import android.os.Environment;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.maps.model.LatLng;
 

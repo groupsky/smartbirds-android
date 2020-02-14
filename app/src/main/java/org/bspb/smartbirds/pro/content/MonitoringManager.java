@@ -8,9 +8,8 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.EBean;

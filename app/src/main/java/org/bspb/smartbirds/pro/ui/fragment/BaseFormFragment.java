@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import org.androidannotations.annotations.EFragment;
