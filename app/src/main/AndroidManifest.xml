@@ -48,7 +48,7 @@
         <activity
             android:name=".ui.SplashScreenActivity_"
             android:label="SmartBirds Pro"
-            android:screenOrientation="sensorLandscape">
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

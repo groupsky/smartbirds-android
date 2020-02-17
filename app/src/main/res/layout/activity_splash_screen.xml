@@ -9,9 +9,10 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="centerInside"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/splash_screen_logo_top_margin"
+        android:scaleType="centerInside"
         android:src="@drawable/logo_bspb" />
 
 
@@ -27,8 +28,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:scaleType="centerInside"
         android:src="@drawable/logo_natura_2000" />
 
@@ -36,8 +37,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:scaleType="centerInside"
         android:src="@drawable/logo_life" />
 
