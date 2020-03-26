@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.forms.convert;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.text.TextUtils;
 import android.util.Log;
 

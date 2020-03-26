@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

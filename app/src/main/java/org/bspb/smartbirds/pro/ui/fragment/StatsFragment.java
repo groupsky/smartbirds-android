@@ -1,6 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.webkit.WebView;
 
 import org.androidannotations.annotations.AfterViews;

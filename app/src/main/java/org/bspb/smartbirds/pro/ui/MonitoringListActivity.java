@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.ui;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
+import androidx.core.app.NavUtils;
 import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
