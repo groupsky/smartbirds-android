@@ -8,7 +8,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.6.1'
         // The Fabric Gradle plugin uses an open ended version to react
         // quickly to Android tooling updates
         //noinspection GradleDynamicVersion
