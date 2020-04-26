@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"SmartBirds Pro"</string>
+    <string name="title_activity_start_monitoring">"Fillo monitorimin"</string>
+    <string name="title_activity_monitoring">"Monitorimi"</string>
+    <string name="title_activity_form">"Formati aktiv"</string>
+    <string name="title_activity_edit">"Modifiko formatin standard"</string>
+    <string name="cancel_monitoring">"Ndalo monitorimin"</string>
+    <string name="really_cancel_monitoring">"Kjo do të fshijë gjithë të dhënat e monitorimit!
+Jeni i sigurt që doni të ndaloni monitorimin?"</string>
+    <string name="clear">"Fshi"</string>
+    <string name="cancel_entry">"Anulo regjistrimin"</string>
+    <string name="really_cancel_entry">"Jeni i sigurt që doni të anuloni regjistrimin?"</string>
+    <string name="cancel_edit_entry">"Anuloni modifikimin e regjistrimit"</string>
+    <string name="really_cancel_edit_entry">"Jeni i sigurt që nuk doni të ruani ndryshimet mbi regjistrimin?"</string>
+    <string name="entry_type_cbm">"Monitorim i Shpendëve të Zakonshëm (CBM)"</string>
+    <string name="entry_type_birds">"Shpendët"</string>
+    <string name="entry_type_ciconia">"Lejleku"</string>
+    <string name="entry_type_herp">"Amfibët dhe zvarranikët / gjitarët"</string>
+    <string name="entry_type_herptile">"Amfibët dhe zvarranikët"</string>
+    <string name="entry_type_mammal">"Gjitarët"</string>
+    <string name="entry_type_humid">"Zona ligatinore"</string>
+    <string name="entry_type_invertebrates">"Invertebrorë të mbrojtur"</string>
+    <string name="required_field">"Fushë që kërkohet"</string>
+    <string name="monitoring_notification_title">"Monitorimi"</string>
+    <string name="monitoring_notification_content">"Filloi monitorimi"</string>
+    <string name="menu_entry_save">"Ruaj"</string>
+    <string name="menu_entry_add_photo">"+ Foto"</string>
+    <string name="menu_monitoring_finish">"Përfundo"</string>
+    <string name="menu_monitoring_new_entry">"Regjistrim i ri"</string>
+    <string name="menu_monitoring_new_specific_entry">"Regjistrimi i ri %s"</string>
+    <string name="menu_monitoring_common">"I zakonshëm"</string>
+    <string name="menu_monitoring_zoom_500">"500 m"</string>
+    <string name="menu_monitoring_zoom_free">"E lirë"</string>
+    <string name="menu_monitoring_zoom_1000">"1 km"</string>
+    <string name="menu_monitoring_zoom_250">"250 m"</string>
+    <string name="menu_monitoring_zoom_100">"100 m"</string>
+    <string name="menu_monitoring_map_normal">"Normal"</string>
+    <string name="menu_monitoring_map_satellite">"Satelitor"</string>
+    <string name="menu_monitoring_map_hybrid">"Hibrid"</string>
+    <string name="menu_monitoring_map_provider">"Harta nga:"</string>
+    <string name="menu_monitoring_map_provider_google">"Google"</string>
+    <string name="menu_monitoring_map_provider_osm">"OSM"</string>
+    <string name="menu_monitoring_stay_awake">"Gjithmonë aktive"</string>
+    <string name="menu_monitoring_show_zone_background">"Sfondi i zonës"</string>
+    <string name="menu_monitoring_start">"Fillo"</string>
+    <string name="menu_monitoring_save">"Ruaj"</string>
+    <string name="main_screen_btn_start">"Fillo"</string>
+    <string name="main_screen_btn_upload">"Ngarko në smartbirds.org"</string>
+    <string name="monitoring_birds_notes">"Shënime"</string>
+    <string name="monitoring_common_source">"Burime"</string>
+    <string name="monitoring_common_start_date">"Nisja:"</string>
+    <string name="monitoring_common_date">"Data"</string>
+    <string name="monitoring_common_time">"Koha"</string>
+    <string name="monitoring_common_place">"Vendi"</string>
+    <string name="monitoring_common_end_date">"Përfundimi:"</string>
+    <string name="monitoring_common_observers">"Vrojtues të tjerë"</string>
+    <string name="monitoring_common_rain">"Shi"</string>
+    <string name="monitoring_common_temperature">"Temp °C"</string>
+    <string name="monitoring_common_wind_strength">"Forca e erës"</string>
+    <string name="monitoring_common_wind_direction">"Drejtimi i erës"</string>
+    <string name="monitoring_common_clouds">"Tipi i reve"</string>
+    <string name="monitoring_common_cloudiness">"% e vranësirës"</string>
+    <string name="monitoring_common_mto">"Moti (Tjetër)"</string>
+    <string name="monitoring_common_visibility">"Shikueshmëria km"</string>
+    <string name="monitoring_common_threats">"Kërcënimet"</string>
+    <string name="monitoring_common_notes">"Shënime"</string>
+    <string name="monitoring_birds_name">"Shpendi i vrojtuar"</string>
+    <string name="monitoring_birds_private">"E fshehtë"</string>
+    <string name="monitoring_birds_count_unit">"Njësia e numëruar"</string>
+    <string name="monitoring_birds_count_type">"Tipi i numërimit"</string>
+    <string name="monitoring_birds_nesting">"Tipi i folesë"</string>
+    <string name="monitoring_birds_count">"Numri"</string>
+    <string name="monitoring_birds_min">"Min."</string>
+    <string name="monitoring_birds_max">"Maks."</string>
+    <string name="monitoring_birds_gender">"Gjinia"</string>
+    <string name="monitoring_birds_age">"Mosha"</string>
+    <string name="monitoring_birds_marking">"Shenja të markimit"</string>
+    <string name="monitoring_birds_status">"Statusi i shpendit"</string>
+    <string name="monitoring_birds_behaviour">"Sjellja"</string>
+    <string name="monitoring_birds_death">"Lloj i ngordhur (arsyet)"</string>
+    <string name="monitoring_birds_substrate">"Substrati"</string>
+    <string name="monitoring_birds_tree">"Pemë"</string>
+    <string name="monitoring_birds_tree_height">"Gjatësia e pemës"</string>
+    <string name="monitoring_birds_tree_location">"Vendodhja e pemës"</string>
+    <string name="monitoring_birds_nest_height">"Gjatësia e folesë"</string>
+    <string name="monitoring_birds_nest_location">"Vendodhja e folesë"</string>
+    <string name="monitoring_birds_incubation">"Inkubimi"</string>
+    <string name="monitoring_birds_eggs_count">"Numri i vezëve"</string>
+    <string name="monitoring_birds_small_downy_count">"Numri i zogjve me pendë pushi"</string>
+    <string name="monitoring_birds_small_feathered_count">"Numri i zogjve që mund të lënë folenë"</string>
+    <string name="monitoring_birds_takeoff_count">"Numri i zogjve që kanë lënë folenë"</string>
+    <string name="monitoring_birds_nest_guard">"Ruajtja e folesë"</string>
+    <string name="monitoring_birds_female_age">"Mosha e individit femër"</string>
+    <string name="monitoring_birds_male_age">"Mosha e individit mashkull"</string>
+    <string name="monitoring_birds_nest_success">"Suksesi i riprodhimit"</string>
+    <string name="monitoring_birds_land_use">"Përdorimi i tokës, rrezja 300 m"</string>
+    <string name="monitoring_cbm_name">"Shpendi i vrojtuar"</string>
+    <string name="monitoring_cbm_distance">"Distanca"</string>
+    <string name="monitoring_cbm_count">"Numri"</string>
+    <string name="monitoring_cbm_primary_habitat">"Habitat parësor"</string>
+    <string name="monitoring_cbm_secondary_habitat">"Habitat dytësor"</string>
+    <string name="monitoring_cbm_visit_number">"Numri i vizitave"</string>
+    <string name="monitoring_cbm_sector">"Numri i transekteve"</string>
+    <string name="monitoring_ciconia_substratum">"Substrati"</string>
+    <string name="monitoring_ciconia_column">"Shtylla"</string>
+    <string name="monitoring_ciconia_nest_artificial">"Fole mbi platformë artificiale"</string>
+    <string name="monitoring_ciconia_column_type">"Tipi i shtyllës"</string>
+    <string name="monitoring_ciconia_tree">"Pemë"</string>
+    <string name="monitoring_ciconia_building">"Ndërtesë"</string>
+    <string name="monitoring_ciconia_nest_artificial_human">"Fole mbi një platformë artificiale të ndërtuar nga njeriu"</string>
+    <string name="monitoring_ciconia_nest_other">"Fole mbi një substrat tjetër"</string>
+    <string name="monitoring_ciconia_not_occupied">"Këtë vit foleja nuk është zënë nga lejlekët"</string>
+    <string name="monitoring_ciconia_new_birds">"Këtë vit një/dy shpendë zunë folenë"</string>
+    <string name="monitoring_ciconia_date_appear">"Data e përafërt e mbërritjes së lejlekut"</string>
+    <string name="monitoring_ciconia_disappear">"Data e përafërt e largimit të lejlekut"</string>
+    <string name="monitoring_ciconia_this_year">"Këtë vit në fole u shfaqën"</string>
+    <string name="monitoring_ciconia_small_count">"Numri i zogjve në fole"</string>
+    <string name="monitoring_ciconia_not_occupied_more_than_year">"Foleja NUK është banuar për më shumë se një vit"</string>
+    <string name="monitoring_ciconia_small_death_electricity">"Informacion mbi zogjtë që kanë pësuar elektroshok"</string>
+    <string name="monitoring_ciconia_small_death_from_parent">"Informacion mbi zogjtë që janë refuzuar nga prindërit"</string>
+    <string name="monitoring_ciconia_small_death_other">"Zogjtë kanë ngordhur nga shkaqe të tjera"</string>
+    <string name="monitoring_ciconia_cause">"Shkaku"</string>
+    <string name="monitoring_ciconia_notes">"Shënime"</string>
+    <string name="monitoring_herp_name">"Lloji"</string>
+    <string name="monitoring_herp_gender">"Gjinia"</string>
+    <string name="monitoring_herp_age">"Mosha"</string>
+    <string name="monitoring_herp_habitat">"Habitati"</string>
+    <string name="monitoring_herp_danger_observation">"Zbulime"</string>
+    <string name="monitoring_herp_count">"Numri"</string>
+    <string name="monitoring_herp_marking">"Markimi"</string>
+    <string name="monitoring_herp_axis_distance">"Distanca nga boshti"</string>
+    <string name="monitoring_herp_weight">"Pesha"</string>
+    <string name="monitoring_herp_scl">"Gjatësia e zonës kaudale/gjatësia (mm)"</string>
+    <string name="monitoring_herp_mpl">"MPL/Lcd/C (mm)"</string>
+    <string name="monitoring_herp_mcw">"MCW/A (mm)"</string>
+    <string name="monitoring_herp_h">"H/Lcap/Pl (mm)"</string>
+    <string name="monitoring_herp_t_substrate">"Т, substrati"</string>
+    <string name="monitoring_herp_t_vha">"Т, ajri"</string>
+    <string name="monitoring_herp_t_kloaka">"Т, kloaka"</string>
+    <string name="monitoring_herp_sq_ventr">"Sq ventr"</string>
+    <string name="monitoring_herp_sq_caud">"Sq caud"</string>
+    <string name="monitoring_herp_sq_dors">"Sq dors"</string>
+    <string name="monitoring_herp_notes">"Shënime"</string>
+    <string name="monitoring_mammal_L">"L"</string>
+    <string name="monitoring_mammal_C">"C"</string>
+    <string name="monitoring_mammal_A">"A"</string>
+    <string name="monitoring_mammal_Pl">"PI"</string>
+    <string name="error_message_create_monitoring_dir">"Nuk mund të krijohet dosje të dhënash. Ju lutem, kontrolloni hapësirën e disponueshme."</string>
+    <string name="toast_cancel_monitoring">"Ndalo monitorimin"</string>
+    <string name="marker_default_title">"Regjistrimi"</string>
+    <string name="undo_last_entry">"Anulo regjistrimin e fundit"</string>
+    <string name="not_synced_count">"Për tu ngarkuar: %d"</string>
+    <string name="main_footer_text">"Aplikacioni u krijua me mbështetjen e Mtel"</string>
+    <string name="main_screen_btn_export">"Eksporto"</string>
+    <string name="export_failed_error">"Nuk mund të krijojë dosje me të dhëna për eksport"</string>
+    <string name="export_dialog_title">"Eksporto"</string>
+    <string name="export_dialog_text">"Duke u përgatitur për eksportim..."</string>
+    <string name="upload_dialog_title">"Ngarko"</string>
+    <string name="upload_dialog_text">"Të dhënat po ngarkohen..."</string>
+    <string name="download_dialog_title">"Shkarko"</string>
+    <string name="download_dialog_text">"Të dhënat po shkarkohen..."</string>
+    <string name="export_subject">"Eksport i SmartBirds pro"</string>
+    <string name="export_text">"%s e eksportuar e monitorimit"</string>
+    <string name="export_app_chooser">"Eksporto monitorimin:"</string>
+    <string name="monitoring_type">"Tipi i vrojtimit"</string>
+    <string name="main_screen_btn_info">"Informacion"</string>
+    <string name="main_screen_btn_help">"Ndihmë"</string>
+    <string name="info_dialog_title">"Informacion"</string>
+    <string name="info_text">"&lt;![CDATA[
+             &lt;p&gt;&lt;b&gt;SmartBirds Pro është një aplikacion për celularin që përdoret për monitorimin e shpendëve, amfibëve, zvarranikëve, gjitarëve, bimëve dhe invertebrorëve të mbrojtur&lt;/b&gt;&lt;/p&gt;
+             &lt;p&gt;Ky produkt u krijua nga Shoqata Bullgare për Mbrojtjen e Shpendëve / BirdLife Bulgaria,&lt;/p&gt;
+            &lt;img src=\"logo_bspb\" gjerësia=\"120\" gjatësia=\"120\"/&gt;
+            &lt;br /&gt;
+            &lt;br /&gt;
+             &lt;a href=\"http://www.bspb.org\"&gt;www.bspb.org&lt;/a&gt;
+            &lt;p&gt;me mbështetjen e Programit  „Mtel eco grant\"&lt;/p&gt;
+            &lt;img src=\"logo_mtel\" gjerësia=\"120\" gjatësia=\"120\"/&gt;
+                      &lt;br /&gt;
+            &lt;p&gt; dhe programin LIFE të BE&lt;p&gt;
+            &lt;img src=\"life_NEW\" gjerësia=\"120\" gjatësia=\"120\"/&gt;
+            &lt;img src=\"natura2000_NEW\" gjerësia=\"120\" gjatësia=\"120\"/&gt; 
+            &lt;br /&gt;
+            &lt;br /&gt;
+                  &lt;p&gt;
+                 &lt;b&gt;Concept:&lt;/b&gt;
+                 &lt;br /&gt;
+                 Georgi Popgeorgiev
+                 &lt;br /&gt;
+                  Svetoslav Spasov
+                 &lt;br /&gt;
+                 Yurii Kornilev
+             &lt;/p&gt;
+
+             &lt;p&gt;U jemi mirënjohës Boryana Mihova, Dimitar Plachiyski, Yordanka Goranova-Lukanova, Yordan Hristov, Stoycho Stoychev, Teodora Petrova dhe të gjithë kolegëve të tjerë të BSPB, që ndihmuan në realizimin e këtij projekti&lt;/p&gt;
+
+              &lt;p&gt;
+                  &lt;b&gt; Modelimi dhe programimi&lt;/b&gt;
+                  &lt;br /&gt;
+                  &lt;a href=\"https://github.com/groupsky\"&gt;Geno Roupsky&lt;/a&gt;
+            &lt;/p&gt;
+                   
+              &lt;p&gt;Nga Google Play mund të shkarkoni gjithashtu aplikacionin &lt;a href=\"https://play.google.com/store/apps/details?id=zz.android.smartbirds&amp;hl=bg\"&gt;SmartBirds&lt;/a&gt;, që përmban një bllok elektronik, një udhëzues për shpendët folezues në Bullgari dhe informacion në lidhje me Zonat e Mbrojtura me rëndësi të vecantë / NATURA 2000.&lt;/p&gt;
+"</string>
+    <string name="monitoring_ciconia_sep_1">"1. Foleja e lejlektëve është në:"</string>
+    <string name="monitoring_ciconia_sep_2">"2."</string>
+    <string name="monitoring_ciconia_sep_3">"3. Në fole nuk janë parë zogj"</string>
+    <string name="monitoring_ciconia_sep_4">"4. Në fole janë parë:"</string>
+    <string name="monitoring_ciconia_sep_5">"5."</string>
+    <string name="monitoring_ciconia_sep_6">"6. Të dhëna mbi zogjtë e ngordhur"</string>
+    <string name="export_description">"Eksporto të dhënat që nuk janë ngarkuar akoma në rrjet (të gjithë të dhënat do të ruhen në pajisje)"</string>
+    <string name="image_file_create_error">"Nuk mund të krijojë foto"</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">"Hyr"</string>
+    <string name="prompt_email">"Email"</string>
+    <string name="prompt_password">"Fjalëkalimi"</string>
+    <string name="action_sign_in">"Hyr"</string>
+    <string name="action_sign_in_short">"Hyr"</string>
+    <string name="action_register">"Regjistrohu"</string>
+    <string name="error_invalid_email">"Adresa e emailit nuk është e vlefshme"</string>
+    <string name="error_invalid_password">"Fjalëkalimi është i shkurtër"</string>
+    <string name="error_incorrect_password">"Fjalëkalimi nuk është i saktë"</string>
+    <string name="error_field_required">"Kërkohet fusha"</string>
+    <string name="login_permission_rationale">"Lejet për kontaktet janë të nevojshme për të plotësuar email-in"</string>
+    <string name="monitoring_permission_rationale">"Kërkohet leje për të regjistruar vendodhjen"</string>
+    <string name="monitoring_cbm_zone">"Zona"</string>
+    <string name="storage_permission_rationale">"Kërkohet leje për hapësirë për shfaqjen e hartës"</string>
+    <string name="sum_decimal_number_form_input_plus">"Shuma | Tjetër"</string>
+    <string name="tab_required">"Kryesore"</string>
+    <string name="tab_optional">"Shtesë"</string>
+    <string name="no_place_nearby">"Nuk ka vende të njohura afër"</string>
+    <string name="error_cbm_zone_too_far">"Zona është më shumë se 5 km larg vendodhjes"</string>
+    <string name="main_screen_btn_browse">"Shfleto"</string>
+    <string name="title_monitoring_list">"Monitorimet"</string>
+    <string name="title_monitoring_detail">"Detaje të monitorimit"</string>
+    <string name="view">"Shiko/Pamja"</string>
+    <string name="map">"Harta"</string>
+    <string name="list">"Lista"</string>
+    <string name="combined">"Të kombinuar"</string>
+    <string name="select_all">"Selekto të gjitha"</string>
+    <string name="delete">"Fshi"</string>
+    <string name="confirm_delete_n">"Fshini %1$d e regjistrimeve?"</string>
+    <string name="permissions_required">"Kërkohet autorizim për të dhënat e ruajtura dhe vendodhjen"</string>
+    <string name="emptyList">"Nuk ka artikuj në listë"</string>
+    <string name="monitoring_herptiles_private">"E fshehtë"</string>
+    <string name="monitoring_mammal_private">"E fshehtë"</string>
+    <string name="monitoring_invertebrates_private">"E fshehtë"</string>
+    <string name="warning_confidential_nest">"Ju lutem selektoni \"e fshehtë\" në mënyrë që vendodhja e folesë të shfaqet vetëm për ju."</string>
+    <string name="entry_type_plants">"Bimët"</string>
+    <string name="monitoring_plants_name">"Lloje target"</string>
+    <string name="monitoring_plants_private">"E fshehtë"</string>
+    <string name="monitoring_plants_reporting_unit">"Njësia e raportuar"</string>
+    <string name="monitoring_plants_phenological_phase">"Faza e lulëzimit"</string>
+    <string name="monitoring_plants_count">"Numri"</string>
+    <string name="monitoring_plants_density">"Dendësia (sq. m)"</string>
+    <string name="monitoring_plants_cover">"Mbulesa"</string>
+    <string name="monitoring_plants_elevation">"Lartësia"</string>
+    <string name="monitoring_plants_habitat">"Habitati"</string>
+    <string name="monitoring_plants_threats">"Kercënimet dhe ndikimet"</string>
+    <string name="monitoring_plants_notes">"Shënime"</string>
+    <string name="monitoring_plants_accompanying_species">"Llojet shoqëruese"</string>
+    <string name="title_activity_finish">"Kontroll i zakonshëm i formatit përpara se të ruhet"</string>
+    <string name="monitoring_plants_elevation_units">"Lartësia në metra mbi nivelin e detit"</string>
+    <string name="gdpr_agree_checkbox">"Bie dakord me kushtet e Rregullores së Përgjithshme për Mbrojtjen e të Dhënave (GDPR)"</string>
+    <string name="error_missing_gdpr_consent">"Duhet të bini dakord me kushtet e Rregullores së Përgjithshme për Mbrojtjen e të Dhënave (GDPR)"</string>
+    <string name="view_gdpr">"shiko/pamje"</string>
+    <string name="title_activity_stats">"Statistika"</string>
+    <string name="main_screen_btn_resume">"Vazhdo"</string>
+    <string name="main_screen_btn_cancel">"Anulo"</string>
+    <string name="main_screen_btn_stats">"Statistika"</string>
+    <string name="notifications_channel_name">"Monitorimi"</string>
+    <string name="notifications_channel_description">"Njoftimet e monitorimit"</string>
+    <string name="battery_optimization_title">"Bateri në gjendje optimale"</string>
+    <string name="battery_optimization_message">"SmartBirds Pro nuk është listuar në konfigurimet për ruajtjen e baterisë. Kjo mund të ndikojë në mënyrën si funksionon aplikacioni. Për një performancë më të mirë inaktivizoni opsionin ruajtjen e baterisë në Settings &gt; Battery &gt; Battery optimization"</string>
+    <string name="class_birds">"Shpendët"</string>
+    <string name="class_herptiles">"Zvarranik/Amfib"</string>
+    <string name="class_mammals">"Gjitarët"</string>
+    <string name="class_invertebrates">"Invertebrorët"</string>
+    <string name="class_plants">"Bimët"</string>
+    <string name="primary_type_threat">"Kërcënim"</string>
+    <string name="primary_type_poison">"Helmim"</string>
+    <string name="poisoned_type_dead">"Individ i ngordhur"</string>
+    <string name="poisoned_type_alive">"Individ i gjallë"</string>
+    <string name="poisoned_type_bait">"Karrem"</string>
+    <string name="monitoring_threats_primary_type">"Tipi"</string>
+    <string name="entry_type_threats">"Kërcënimet"</string>
+    <string name="monitoring_threats_notes">"Shënime"</string>
+    <string name="monitoring_threats_category">"Kategori"</string>
+    <string name="monitoring_threats_species">"Lloji"</string>
+    <string name="monitoring_threats_class">"Klasa"</string>
+    <string name="monitoring_threats_count">"Numri"</string>
+    <string name="monitoring_threats_estimate">"Vlerëso"</string>
+    <string name="monitoring_threats_poisoned_type">"Helmim"</string>
+    <string name="monitoring_threats_state_carcass">"Gjendja e kufomës"</string>
+    <string name="monitoring_threats_sample_taken_1">"Mostra 1"</string>
+    <string name="monitoring_threats_sample_code_1">"Kodi i mostrës 1"</string>
+    <string name="monitoring_threats_sample_taken_2">"Mostra 2"</string>
+    <string name="monitoring_threats_sample_code_2">"Kodi i mostrës 2"</string>
+    <string name="monitoring_threats_sample_taken_3">"Mostra 3"</string>
+    <string name="monitoring_threats_sample_code_3">"Kodi i mostrës 3"</string>
+    <string name="monitoring_threats_poisoned">"Të helmuar"</string>
+    <string name="monitoring_mammal_danger_observation">"Zbulime"</string>
+    <string name="monitoring_herptiles_danger_observation">"Zbulime"</string>
+    <string name="monitoring_invertebrates_danger_observation">"Zbulime"</string>
+</resources>
