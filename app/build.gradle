@@ -36,7 +36,7 @@ android {
         debug {
             versionNameSuffix "-DEBUG"
             buildConfigField "String", "GIT_SHA", "\"DEBUG\""
-            buildConfigField "String", "BACKEND_BASE_URL", "\"http://sb.87.252.173.51.xip.io:8082/api/\""
+            buildConfigField "String", "BACKEND_BASE_URL", "\"https://staging.smartbirds.org/api/staging/\""
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
         }
