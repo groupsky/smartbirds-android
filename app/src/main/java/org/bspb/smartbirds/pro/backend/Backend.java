@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Label;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -75,6 +76,7 @@ public class Backend {
     public Gson getGson() {
         if (gson == null) {
             gson = new GsonBuilder()
+                    .registerTypeAdapter(Label.class, new LabelDeserializer())
                     .create();
         }
         return gson;

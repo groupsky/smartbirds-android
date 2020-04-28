@@ -28,12 +28,6 @@ public interface LocationColumns {
     @DataType(REAL)
     String LON = "lon";
 
-    @DataType(TEXT)
-    String NAME_EN = "name_en";
-
-    @DataType(TEXT)
-    String NAME_BG = "name_bg";
-
     @DataType(BLOB)
     String DATA = "data";
 
