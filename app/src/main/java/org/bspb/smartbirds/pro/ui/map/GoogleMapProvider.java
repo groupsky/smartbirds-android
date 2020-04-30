@@ -15,6 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -410,11 +415,13 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         if (!file.exists()) {
             return;
         }
+
         try {
             kml.parseKMLFile(file);
             if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
                 displayArea(kml);
             }
+
         } catch (Throwable t) {
             Crashlytics.logException(t);
         }
@@ -546,6 +553,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         if (markerClickListener != null) {
             markerClickListener.onMarkerClicked(markers.get(marker.getTag()).mapMarker.getId(), markers.get(marker.getTag()).mapMarker.getEntryType());
         }
+    }
+
+    @Override
+    public void setLifeCycle(Lifecycle lifecycle) {
+
     }
 
     static class MarkerHolder {

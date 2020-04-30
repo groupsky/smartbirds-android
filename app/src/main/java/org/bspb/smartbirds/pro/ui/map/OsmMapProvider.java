@@ -10,7 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,18 +38,20 @@ import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.osmdroid.bonuspack.kml.KmlDocument;
-import org.osmdroid.bonuspack.overlays.FolderOverlay;
-import org.osmdroid.bonuspack.overlays.InfoWindow;
-import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
-import org.osmdroid.bonuspack.overlays.Marker;
+import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
+import org.osmdroid.views.overlay.FolderOverlay;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
-import org.osmdroid.views.overlay.PathOverlay;
+import org.osmdroid.views.overlay.Polygon;
+import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
+import org.osmdroid.views.overlay.infowindow.InfoWindow;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
@@ -73,7 +79,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     EEventBus eventBus;
     private final Set<MarkerHolder> markers = new HashSet<>();
     private ArrayList<LatLng> points;
-    private PathOverlay pathOverlay;
+    private Polyline pathOverlay;
 
     private MyLocationNewOverlay locationOverlay;
 
@@ -83,7 +89,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private final ArrayList<Zone> zones = new ArrayList<>();
     private boolean showZoneBackground;
 
-    private List<PathOverlay> zoneOverlays = new ArrayList<>();
+    private List<Polygon> zoneOverlays = new ArrayList<>();
     private MarkerClickListener markerClickListener;
 
     @Override
@@ -103,21 +109,23 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         if (mMap == null) return;
         mMap.setMultiTouchControls(true);
         mMap.setTileSource(TileSourceFactory.MAPNIK);
-        mMap.setBuiltInZoomControls(true);
-        mMap.getController().setZoom(16);
+        mMap.getZoomController().setShowFadeOutDelays(10000, 2000);
+        mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT);
+        mMap.getController().setZoom(16f);
 
-        locationOverlay = new LocationRetrievalOverlay(mMap.getContext(), mMap);
+        locationOverlay = new LocationRetrievalOverlay(mMap);
         locationOverlay.enableMyLocation();
         locationOverlay.enableFollowLocation();
 
         locationOverlay.setDrawAccuracyEnabled(true);
 
-        ScaleBarOverlay scaleBarOverlay = new ScaleBarOverlay(mMap.getContext());
+        ScaleBarOverlay scaleBarOverlay = new ScaleBarOverlay(mMap);
         scaleBarOverlay.setUnitsOfMeasure(ScaleBarOverlay.UnitsOfMeasure.metric);
         scaleBarOverlay.setEnableAdjustLength(true);
 
-        pathOverlay = new PathOverlay(Color.BLUE, mMap.getContext());
-        pathOverlay.getPaint().setStrokeWidth(5);
+        pathOverlay = new Polyline();
+        pathOverlay.getOutlinePaint().setColor(Color.BLUE);
+        pathOverlay.getOutlinePaint().setStrokeWidth(5);
         if (points != null && !points.isEmpty()) {
             for (LatLng point : points) {
                 pathOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
@@ -143,7 +151,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         }
         if (zoneOverlays.isEmpty()) {
             for (Zone zone : zones) {
-                PathOverlay overlay = addZone(zone);
+                Polygon overlay = addZone(zone);
                 if (overlay != null) {
                     zoneOverlays.add(overlay);
                 }
@@ -160,7 +168,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         File file = new File(AREA_FILE_PATH);
         if (file.exists()) {
             try {
-                kml.parseKMLFile(file);
+                boolean res = kml.parseKMLFile(file);
+                Log.d("+++++", "Res: " + res);
+                Log.d("+++++", "Root: " + kml.mKmlRoot.mId);
                 FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
                 displayKml(kmlOverlay);
             } catch (Throwable t) {
@@ -202,7 +212,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         }
         zoneOverlays.clear();
         for (Zone zone : zones) {
-            PathOverlay overlay = addZone(zone);
+            Polygon overlay = addZone(zone);
             if (overlay != null) {
                 zoneOverlays.add(overlay);
             }
@@ -232,7 +242,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void updateCamera() {
         if (zoomFactor > 0) {
-            mMap.setBuiltInZoomControls(false);
+            mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
             mMap.setMultiTouchControls(false);
             locationOverlay.enableFollowLocation();
             eventsOverlay.setLocked(true);
@@ -242,27 +252,26 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             LatLng southwest = SphericalUtil.computeOffset(lastPosition, zoomFactor, 225);
             LatLng northeast = SphericalUtil.computeOffset(lastPosition, zoomFactor, 45);
 
-            ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
+            ArrayList<GeoPoint> geoPoints = new ArrayList<>();
             geoPoints.add(new GeoPoint(southwest.latitude, southwest.longitude));
             geoPoints.add(new GeoPoint(northeast.latitude, northeast.longitude));
-            final BoundingBoxE6 boundingBox = BoundingBoxE6.fromGeoPoints(geoPoints);
+            final BoundingBox boundingBox = BoundingBox.fromGeoPoints(geoPoints);
 
-            mMap.post(new Runnable() {
-                @Override
-                public void run() {
-                    mMap.getController().setCenter(boundingBox.getCenter());
-                    mMap.getController().zoomToSpan(boundingBox.getLatitudeSpanE6(), boundingBox.getLongitudeSpanE6());
-                }
+            mMap.post(() -> {
+                mMap.getController().setCenter(boundingBox.getCenterWithDateLine());
+                mMap.getController().zoomToSpan(boundingBox.getLatitudeSpan(), boundingBox.getLongitudeSpanWithDateLine());
             });
             mMap.invalidate();
             positioned = false;
         } else {
             mMap.setMultiTouchControls(true);
-            mMap.setBuiltInZoomControls(true);
+            mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT);
             locationOverlay.disableFollowLocation();
             eventsOverlay.setLocked(false);
             if (!positioned && lastPosition != null) {
-                mMap.getController().animateTo(new GeoPoint(lastPosition.latitude, lastPosition.longitude));
+                // TODO investigate why animateTo is not working
+                mMap.getController().setCenter(new GeoPoint(lastPosition.latitude, lastPosition.longitude));
+//                mMap.getController().animateTo(new GeoPoint(lastPosition.latitude, lastPosition.longitude));
                 positioned = true;
             }
         }
@@ -287,12 +296,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         if (mMap == null) return null;
         Marker marker = lastMarker = new Marker(mMap);
         OsmInfoWindow infoWindow = new OsmInfoWindow(R.layout.bonuspack_bubble, mMap);
-        infoWindow.setClickListener(new OsmInfoWindow.OsmInfoWindowClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (markerClickListener != null) {
-                    markerClickListener.onMarkerClicked(mapMarker.getId(), mapMarker.getEntryType());
-                }
+        infoWindow.setClickListener(view -> {
+            if (markerClickListener != null) {
+                markerClickListener.onMarkerClicked(mapMarker.getId(), mapMarker.getEntryType());
             }
         });
         marker.setInfoWindow(infoWindow);
@@ -306,15 +312,18 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         return marker;
     }
 
-    protected PathOverlay addZone(Zone zone) {
+    protected Polygon addZone(Zone zone) {
         if (mMap == null) return null;
 
-        PathOverlay zoneOverlay = new PathOverlay(mMap.getResources().getColor(R.color.zone_fill_color), mMap.getContext());
-        zoneOverlay.getPaint().setStrokeWidth(6f);
+
+        Polygon zoneOverlay = new Polygon();
+        zoneOverlay.getOutlinePaint().setStrokeWidth(6f);
+        zoneOverlay.getOutlinePaint().setColor(mMap.getResources().getColor(R.color.zone_fill_color));
+        zoneOverlay.getFillPaint().setColor(mMap.getResources().getColor(R.color.zone_fill_color));
         if (showZoneBackground) {
-            zoneOverlay.getPaint().setStyle(Paint.Style.FILL);
+            zoneOverlay.getFillPaint().setStyle(Paint.Style.FILL_AND_STROKE);
         } else {
-            zoneOverlay.getPaint().setStyle(Paint.Style.STROKE);
+            zoneOverlay.getFillPaint().setStyle(Paint.Style.STROKE);
         }
         for (Zone.Coordinate point : zone.coordinates) {
             zoneOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
@@ -378,6 +387,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             this.zones.add(zone);
 //            needInvalidate = true;
         }
+        Log.d("+++++++", "ZONES: " + this.zones);
         drawZones();
 //        if (needInvalidate && mMap != null) mMap.invalidate();
     }
@@ -385,7 +395,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void updatePath(ArrayList<LatLng> points) {
         this.points = points;
-        pathOverlay.clearPath();
+        pathOverlay.setPoints(new ArrayList<>());
         if (points != null && !points.isEmpty()) {
             for (LatLng point : points) {
                 pathOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
@@ -405,6 +415,27 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         InfoWindow.closeAllInfoWindowsOn(mMap);
         eventBus.post(new MapLongClickedEvent(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude())));
         return true;
+    }
+
+    @Override
+    public void setLifeCycle(Lifecycle lifecycle) {
+        lifecycle.addObserver(new DefaultLifecycleObserver() {
+            @Override
+            public void onResume(@NonNull LifecycleOwner owner) {
+                if (mMap == null) {
+                    return;
+                }
+                mMap.onResume();
+            }
+
+            @Override
+            public void onPause(@NonNull LifecycleOwner owner) {
+                if (mMap == null) {
+                    return;
+                }
+                mMap.onPause();
+            }
+        });
     }
 
     private static class EventsOverlay extends Overlay {
@@ -427,7 +458,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         }
 
         @Override
-        protected void draw(Canvas c, MapView osmv, boolean shadow) {
+        public void draw(Canvas c, MapView osmv, boolean shadow) {
         }
 
         @Override
@@ -509,9 +540,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         @Nullable
         private EEventBus bus;
 
-        public LocationRetrievalOverlay(@NonNull Context ctx, @NonNull MapView mapView) {
-            super(ctx, mapView);
-            bus = EEventBus_.getInstance_(ctx);
+        public LocationRetrievalOverlay(MapView mapView) {
+            super(mapView);
+            bus = EEventBus_.getInstance_(mapView.getContext());
         }
 
         @Override

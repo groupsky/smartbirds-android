@@ -14,6 +14,7 @@ import android.os.IBinder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,6 +66,7 @@ import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
 import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
+import org.osmdroid.config.Configuration;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -194,6 +196,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     protected void initProviders() {
         googleMap.setFragmentManager(getSupportFragmentManager());
         osmMap.setFragmentManager(getSupportFragmentManager());
+        osmMap.setLifeCycle(getLifecycle());
     }
 
     @AfterInject
@@ -235,6 +238,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Context ctx = getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         super.onCreate(savedInstanceState);
         DataService_.intent(this).start();
         try {
