@@ -11,16 +11,17 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.LabelDeserializer;
+import org.bspb.smartbirds.pro.backend.dto.Label;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
-import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
 import org.bspb.smartbirds.pro.db.NomenclatureUsesCountColumns;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.NomenclatureUsesCount;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures;
@@ -41,9 +42,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import static org.bspb.smartbirds.pro.db.NomenclatureColumns.DATA;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
@@ -57,7 +60,11 @@ public class NomenclaturesBean {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".NomenclaturesBean";
     private static final String[] PROJECTION = {
-            TYPE, LABEL_BG, LABEL_EN,
+            TYPE, LABEL_BG, LABEL_EN, DATA
+    };
+
+    private static final String[] USES_COUNT_PROJECTION = {
+            NomenclatureUsesCountColumns.TYPE, NomenclatureUsesCountColumns.LABEL_BG, NomenclatureUsesCountColumns.LABEL_EN, NomenclatureUsesCountColumns.DATA
     };
 
     private final Map<String, List<Nomenclature>> data = new HashMap<>();
@@ -70,9 +77,6 @@ public class NomenclaturesBean {
 
     Cursor cursor;
 
-    String localeColumn;
-    String locale;
-
     final Loader.OnLoadCompleteListener<Cursor> listener = new Loader.OnLoadCompleteListener<Cursor>() {
         @Override
         public void onLoadComplete(Loader<Cursor> loader, Cursor data) {
@@ -82,12 +86,9 @@ public class NomenclaturesBean {
             }
         }
     };
-    private final Comparator<? super Nomenclature> comparator = new Comparator<Nomenclature>() {
-        @Override
-        public int compare(Nomenclature o1, Nomenclature o2) {
-            return AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel);
-        }
-    };
+    private final Comparator<? super Nomenclature> comparator =
+            (Comparator<Nomenclature>) (o1, o2)
+                    -> AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel);
     private boolean loading;
 
     public boolean isLoading() {
@@ -107,10 +108,8 @@ public class NomenclaturesBean {
         try {
             Log.d(TAG, "loading data");
             data.clear();
-            localeColumn = context.getString(R.string.nomenclature_locale_column);
-            locale = context.getString(R.string.locale);
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                final Nomenclature nomenclature = new Nomenclature(cursor, localeColumn);
+                final Nomenclature nomenclature = Nomenclature.fromCursor(cursor, Locale.getDefault());
                 List<Nomenclature> list;
                 if (!data.containsKey(nomenclature.type)) {
                     list = new ArrayList<>();
@@ -123,8 +122,8 @@ public class NomenclaturesBean {
 
             // load any missing nomenclatures from bundled - this is useful when updating, before sync with server
             Set<String> missingNomenclatures = new HashSet<>();
-            for (SpeciesNomenclature species : loadBundledSpecies()) {
-                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(Nomenclature.from(species)));
+            for (Nomenclature species : loadBundledSpecies()) {
+                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(Nomenclature.fromSpecies(species)));
             }
             missingNomenclatures.clear();
             for (Nomenclature nomenclature : loadBundledNomenclatures()) {
@@ -165,10 +164,10 @@ public class NomenclaturesBean {
         return cvs;
     }
 
-    public Iterable<ContentValues> prepareSpeciesCV(Iterable<SpeciesNomenclature> speciesCollection) {
+    public Iterable<ContentValues> prepareSpeciesCV(Iterable<Nomenclature> speciesCollection) {
         LinkedList<ContentValues> cvs = new LinkedList<>();
-        for (SpeciesNomenclature species : speciesCollection) {
-            cvs.add(Nomenclature.from(species).toCV());
+        for (Nomenclature species : speciesCollection) {
+            cvs.add(Nomenclature.fromSpecies(species).toCV());
         }
         return cvs;
     }
@@ -190,7 +189,7 @@ public class NomenclaturesBean {
         return prepareCPO(prepareNomenclatureCV(nomenclatureItems), buffer);
     }
 
-    public int prepareSpeciesCPO(Iterable<SpeciesNomenclature> speciesItems, Collection<ContentProviderOperation> buffer) {
+    public int prepareSpeciesCPO(Iterable<Nomenclature> speciesItems, Collection<ContentProviderOperation> buffer) {
         return prepareCPO(prepareSpeciesCV(speciesItems), buffer);
     }
 
@@ -198,27 +197,23 @@ public class NomenclaturesBean {
         return loadBundledFile("nomenclatures.json");
     }
 
-    public Iterable<SpeciesNomenclature> loadBundledSpecies() {
+    public Iterable<Nomenclature> loadBundledSpecies() {
         return loadBundledFile("species.json");
     }
 
     private Nomenclature localizeNomenclature(Nomenclature nomenclature) {
-            if("bg".equals(locale)) {
-                nomenclature.localeLabel = nomenclature.label.bg;
-            } else {
-                nomenclature.localeLabel = nomenclature.label.en;
-            }
+        nomenclature.localeLabel = nomenclature.label.get(Locale.getDefault());
         return nomenclature;
     }
 
-    @SafeVarargs
-    private final <T> Iterable<T> loadBundledFile(final String filename,
-                                                  // this is a hack to get a concrete array class on the T and bypass the type erasue
-                                                  final T... arrayType) {
+    private final Iterable<Nomenclature> loadBundledFile(final String filename) {
         try {
             InputStream is = new BufferedInputStream(context.getAssets().open(filename));
             try {
-                return Arrays.asList((T[]) new Gson().fromJson(new InputStreamReader(is), arrayType.getClass()));
+                Gson gson = new GsonBuilder()
+                        .registerTypeAdapter(Label.class, new LabelDeserializer())
+                        .create();
+                return Arrays.asList(gson.fromJson(new InputStreamReader(is), Nomenclature[].class));
             } finally {
                 is.close();
             }
@@ -240,13 +235,12 @@ public class NomenclaturesBean {
     public List<Nomenclature> getRecentNomenclatures(String key) {
         key = key.replaceFirst("^form_", "");
         List<Nomenclature> nomenclatures = getNomenclature(key);
-        Cursor cursor = context.getContentResolver().query(NomenclatureUsesCount.forType(key), new String[]{localeColumn}, null, null, null);
+        Cursor cursor = context.getContentResolver().query(NomenclatureUsesCount.forType(key), USES_COUNT_PROJECTION, null, null, null);
         if (cursor != null) try {
             final ArrayList<Nomenclature> recentItems = new ArrayList<>(cursor.getCount());
-            Nomenclature temp = new Nomenclature();
             int idx;
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                temp.localeLabel = cursor.getString(0);
+                Nomenclature temp = Nomenclature.fromCursor(cursor, Locale.getDefault());
                 idx = Collections.binarySearch(nomenclatures, temp, comparator);
                 if (idx < 0) continue;
                 recentItems.add(nomenclatures.get(idx));
@@ -265,8 +259,8 @@ public class NomenclaturesBean {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(NomenclatureUsesCount.forType(nomenclature.type),
                 new String[]{NomenclatureUsesCountColumns._ID, NomenclatureUsesCountColumns.COUNT},
-                localeColumn + "=?",
-                new String[]{nomenclature.localeLabel},
+                NomenclatureUsesCountColumns.LABEL_EN + "=?",
+                new String[]{nomenclature.labelId},
                 null);
         if (cursor != null) try {
             if (cursor.moveToFirst() && !cursor.isAfterLast()) {

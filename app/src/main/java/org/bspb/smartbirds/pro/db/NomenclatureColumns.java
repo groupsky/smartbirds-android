@@ -6,6 +6,7 @@ import net.simonvt.schematic.annotation.AutoIncrement;
 import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.PrimaryKey;
 
+import static net.simonvt.schematic.annotation.DataType.Type.BLOB;
 import static net.simonvt.schematic.annotation.DataType.Type.INTEGER;
 import static net.simonvt.schematic.annotation.DataType.Type.TEXT;
 
@@ -28,5 +29,8 @@ public interface NomenclatureColumns {
 
     @DataType(TEXT)
     String LABEL_EN = "label_en";
+
+    @DataType(BLOB)
+    String DATA = "data";
 
 }

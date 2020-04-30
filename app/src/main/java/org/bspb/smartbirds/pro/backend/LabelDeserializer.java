@@ -30,8 +30,14 @@ public class LabelDeserializer implements JsonDeserializer<Label> {
         for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
 
             String key = entry.getKey();
+            if (entry.getValue().isJsonNull()) {
+                continue;
+            }
+
             String value = entry.getValue().getAsString();
-            labelValues.put(key, value);
+            if (value != null) {
+                labelValues.put(key, value);
+            }
         }
 
         Label label = new Label();

@@ -1,11 +1,16 @@
 package org.bspb.smartbirds.pro.backend.dto;
 
+import com.google.gson.Gson;
+
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
+
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class Label {
 
-    private Map<String, String> values;
+    protected Map<String, String> values;
 
 
     public void setValues(Map<String, String> values) {
@@ -24,17 +29,40 @@ public class Label {
         return sb.toString();
     }
 
-    public String get(Locale locale) {
+    public String get(String localeString) {
         if (values == null) {
             return null;
         }
 
-        if (locale != null) {
-            if (values.containsKey(locale.getLanguage())) {
-                return values.get(locale.getLanguage());
+        if (localeString != null) {
+            if (values.containsKey(localeString)) {
+                return values.get(localeString);
             }
         }
 
-        return values.get("en");
+        return values.get(Configuration.FALLBACK_LANGUAGE);
+    }
+
+    public String get(Locale locale) {
+        if (locale == null) {
+            return null;
+        }
+
+        return get(locale.getLanguage());
+    }
+
+    public String getLabelId() {
+        return get(Configuration.FALLBACK_LANGUAGE);
+    }
+
+    public String toJsonString() {
+        return new Gson().toJson(this);
+    }
+
+    public void addValue(String lang, String value) {
+        if (values == null) {
+            values = new HashMap<>();
+        }
+        values.put(lang, value);
     }
 }

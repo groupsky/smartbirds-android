@@ -209,8 +209,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     public void serializeToStorage(Map<String, String> storage, String fieldName) {
         storage.put(fieldName, getText().toString().replace("\n", MULTIPLE_CHOICE_DELIMITER));
         if (mSelectedItem != null) {
-            storage.put(fieldName + ".bg", mSelectedItem.nomenclature.label.bg);
-            storage.put(fieldName + ".en", mSelectedItem.nomenclature.label.en);
+            storage.put(fieldName + ".bg", mSelectedItem.nomenclature.label.get("bg"));
+            storage.put(fieldName + ".en", mSelectedItem.nomenclature.label.get("en"));
         } else {
             storage.put(fieldName + ".bg", "");
             storage.put(fieldName + ".en", "");

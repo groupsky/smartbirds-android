@@ -115,7 +115,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @CheckedChange(R.id.form_birds_confidential)
     void showConfidentialWarningIfNeeded() {
         Nomenclature item = countUnits.getSelectedItem();
-        String countUnit = item != null ? item.label.en : null;
+        String countUnit = item != null ? item.label.get("en") : null;
         if ("Nests".equals(countUnit)) {
             if (!confidential.isChecked()) {
                 warningConfidential.setVisibility(View.VISIBLE);
@@ -130,7 +130,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @TextChange(R.id.form_birds_count_type)
     void handleCountsLogic() {
         Nomenclature item = countType.getSelectedItem();
-        String countsType = item != null ? item.label.en : null;
+        String countsType = item != null ? item.label.get("en") : null;
         switch (countsType != null ? countsType.toLowerCase(Locale.ENGLISH) : "") {
             case "exact number": // Exact count
                 count.setEnabled(true);

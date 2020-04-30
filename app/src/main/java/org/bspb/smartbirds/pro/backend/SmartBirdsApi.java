@@ -3,13 +3,12 @@ package org.bspb.smartbirds.pro.backend;
 import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.backend.dto.FileId;
+import org.bspb.smartbirds.pro.backend.dto.Location;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
-import org.bspb.smartbirds.pro.backend.dto.Location;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
-import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 
 import okhttp3.MultipartBody;
@@ -34,7 +33,7 @@ public interface SmartBirdsApi {
     Call<ResponseListEnvelope<Nomenclature>> nomenclatures(@Query("limit") int limit, @Query("offset") int offset);
 
     @GET("species")
-    Call<ResponseListEnvelope<SpeciesNomenclature>> species(@Query("limit") int limit, @Query("offset") int offset);
+    Call<ResponseListEnvelope<Nomenclature>> species(@Query("limit") int limit, @Query("offset") int offset);
 
     @POST("birds")
     Call<ResponseBody> createBirds(@Body JsonObject request);
