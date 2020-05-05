@@ -10,8 +10,10 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,7 +62,7 @@ import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
-import org.bspb.smartbirds.pro.ui.map.MapMarker;
+import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
 import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
 
@@ -146,6 +148,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MenuItem menuStayAwake;
     @OptionsMenuItem(R.id.action_show_zone_background)
     MenuItem menuShowZoneBackground;
+    @OptionsMenuItem(R.id.action_show_local_projects)
+    MenuItem menuShowLocalProjects;
     @OptionsMenuItem(R.id.view_type_map)
     MenuItem menuViewTypeMap;
     @OptionsMenuItem(R.id.view_type_list)
@@ -165,6 +169,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     boolean stayAwake;
     @InstanceState
     boolean showZoneBackground;
+    @InstanceState
+    boolean showLocalProjects;
 
     @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
@@ -342,6 +348,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         updateCheckedEntryType(menu);
         menuStayAwake.setChecked(stayAwake);
         menuShowZoneBackground.setChecked(showZoneBackground);
+        menuShowLocalProjects.setChecked(showLocalProjects);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -380,6 +387,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         currentMap.setMapType(mapType);
         currentMap.setZones(getZones());
         currentMap.setShowZoneBackground(showZoneBackground);
+        currentMap.setShowLocalProjects(showLocalProjects);
         currentMap.setOnMarkerClickListener(this);
         currentMap.showMap();
     }
@@ -550,6 +558,12 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setShowZoneBackground(sender.isChecked());
     }
 
+    @OptionsItem(R.id.action_show_local_projects)
+    void setShowLocalProjects(MenuItem sender) {
+        sender.setChecked(!sender.isChecked());
+        setShowLocalProjects(sender.isChecked());
+    }
+
     private void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
         if (currentMap != null) {
@@ -557,6 +571,15 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             currentMap.updateCamera();
         }
         prefs.showZoneBackground().put(showBackground);
+    }
+
+    private void setShowLocalProjects(boolean showLocalProjects) {
+        this.showLocalProjects = showLocalProjects;
+        if (currentMap != null) {
+            currentMap.setShowLocalProjects(showLocalProjects);
+            currentMap.updateCamera();
+        }
+        prefs.showLocalProjects().put(showLocalProjects);
     }
 
     @OptionsItem(R.id.action_stay_awake)
@@ -699,6 +722,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             prefs.mapType().put(mapType.toString());
             prefs.stayAwake().put(stayAwake);
             prefs.showZoneBackground().put(showZoneBackground);
+            prefs.showLocalProjects().put(showLocalProjects);
             if (lastPosition != null) {
                 editor.lastPositionLat().put((float) lastPosition.latitude);
                 editor.lastPositionLon().put((float) lastPosition.longitude);
@@ -772,6 +796,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
         setStayAwake(prefs.stayAwake().get());
         setShowZoneBackground(prefs.showZoneBackground().get());
+        setShowLocalProjects(prefs.showLocalProjects().get());
         restorePoints();
     }
 
@@ -813,7 +838,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
     }
 
-    private Iterable<MapMarker> getMarkers() {
+    private Iterable<EntryMapMarker> getMarkers() {
         return new IterableConverter<>(entries.iterable(), mapMarkerConverter);
     }
 

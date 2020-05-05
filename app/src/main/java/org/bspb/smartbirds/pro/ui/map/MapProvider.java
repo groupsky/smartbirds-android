@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.ui.map;
 
 import android.location.Location;
 import android.os.Environment;
+
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -49,7 +50,7 @@ public interface MapProvider {
 
     void setPosition(LatLng position);
 
-    void setMarkers(Iterable<MapMarker> markers);
+    void setMarkers(Iterable<EntryMapMarker> markers);
 
     void setPath(ArrayList<LatLng> points);
 
@@ -60,4 +61,6 @@ public interface MapProvider {
     void setShowZoneBackground(boolean showBackground);
 
     void setOnMarkerClickListener(MarkerClickListener listener);
+
+    void setShowLocalProjects(boolean showLocalProjects);
 }

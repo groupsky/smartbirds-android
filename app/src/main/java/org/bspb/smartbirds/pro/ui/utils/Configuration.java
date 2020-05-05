@@ -25,6 +25,8 @@ public class Configuration {
     public static DateFormat STORAGE_TIME_FORMAT;
     public static DateFormat STORAGE_DATE_FORMAT;
 
+    public static final String LOCAL_PROJECTS_KML_FILE = "white_stork.kml";
+
     /**
      * The minimum number of items to display a filter
      */
@@ -41,6 +43,6 @@ public class Configuration {
     }
 
     public static Date parseDateTime(String date, String time) throws ParseException {
-        return STORAGE_DATE_TIME_FORMAT.parse(date + " "+time);
+        return STORAGE_DATE_TIME_FORMAT.parse(date + " " + time);
     }
 }
