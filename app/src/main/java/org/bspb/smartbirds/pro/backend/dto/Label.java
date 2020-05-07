@@ -21,6 +21,14 @@ public class Label {
         return values;
     }
 
+    public boolean hasValue(String locale) {
+        if (values == null) {
+            return false;
+        }
+
+        return values.containsKey(locale);
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Label{");

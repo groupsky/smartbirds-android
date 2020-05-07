@@ -4,10 +4,14 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.backend.LabelDeserializer;
+import org.bspb.smartbirds.pro.backend.LabelSerializer;
+import org.bspb.smartbirds.pro.backend.dto.Label;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 
 import java.util.Map;
@@ -29,7 +33,10 @@ public class MultipleChoiceConverter implements FieldConverter {
         String value = csv.get(csvField + ".json");
         if (!TextUtils.isEmpty(value)) {
             Nomenclature[] values = new Gson().fromJson(value, Nomenclature[].class);
-            json.add(jsonField, new Gson().toJsonTree(values));
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Label.class, new LabelSerializer())
+                    .create();
+            json.add(jsonField, gson.toJsonTree(values));
         } else {
             json.add(jsonField, JsonNull.INSTANCE);
         }

@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.backend.dto;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
@@ -76,6 +77,9 @@ public class Nomenclature {
             nomenclature.label = label;
         } else {
             nomenclature = new Gson().fromJson(data, Nomenclature.class);
+        }
+        if (nomenclature.type.startsWith("species_")) {
+            nomenclature.label = new SpeciesLabel(nomenclature.label);
         }
         nomenclature.localeLabel = nomenclature.label.get(locale);
         nomenclature.labelId = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN));
