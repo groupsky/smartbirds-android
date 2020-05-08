@@ -28,7 +28,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import static java.lang.Double.parseDouble;
@@ -111,6 +113,20 @@ public class DataOpsService extends AbstractIntentService {
                                 }
                             } catch (Exception e) {
                                 logException(new IllegalStateException("Saving in file entry " + entry.id + " with zero coordinates. Monitoring code is: " + entry.monitoringCode + " and type is " + entryType, e));
+                            }
+
+                            // Remove bg values for legacy records if locale is not bg
+                            if (!"bg".equalsIgnoreCase(getString(R.string.locale))) {
+                                List<String> keysToDelete = new ArrayList<>();
+                                for (String key : entry.data.keySet()) {
+                                    if (key.endsWith(".bg")) {
+                                        Log.d(TAG, "Found legacy bg value for removal: " + key);
+                                        keysToDelete.add(key);
+                                    }
+                                }
+                                for (String key : keysToDelete) {
+                                    entry.data.remove(key);
+                                }
                             }
 
                             String[] lines = convertToCsvLines(entry.data);
