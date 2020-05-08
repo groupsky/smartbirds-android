@@ -9,7 +9,6 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.backend.LabelDeserializer;
 import org.bspb.smartbirds.pro.backend.LabelSerializer;
 import org.bspb.smartbirds.pro.backend.dto.Label;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;

@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.backend.dto;
 
+import android.text.TextUtils;
+
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 
 import java.util.Locale;
@@ -19,6 +21,6 @@ public class SpeciesLabel extends Label {
     public String get(Locale locale) {
         String localeLabel = super.get(locale);
         String laLabel = values.get("la");
-        return laLabel + Configuration.MULTIPLE_CHOICE_DELIMITER + localeLabel;
+        return !TextUtils.isEmpty(laLabel) ? laLabel + Configuration.MULTIPLE_CHOICE_DELIMITER + localeLabel : localeLabel;
     }
 }
