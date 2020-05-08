@@ -3,11 +3,11 @@ package org.bspb.smartbirds.pro.backend.dto;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.util.Locale;
 
@@ -76,7 +76,7 @@ public class Nomenclature {
             label.addValue("en", cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN)));
             nomenclature.label = label;
         } else {
-            nomenclature = new Gson().fromJson(data, Nomenclature.class);
+            nomenclature = SBGsonParser.createParser().fromJson(data, Nomenclature.class);
         }
         if (nomenclature.type.startsWith("species_")) {
             nomenclature.label = new SpeciesLabel(nomenclature.label);
@@ -97,11 +97,7 @@ public class Nomenclature {
         ContentValues cv = new ContentValues();
         cv.put(TYPE, type);
         cv.put(LABEL_EN, label.getLabelId());
-        cv.put(DATA, new Gson().toJson(this));
+        cv.put(DATA, SBGsonParser.createParser().toJson(this));
         return cv;
-    }
-
-    public String toJsonString() {
-        return new Gson().toJson(this);
     }
 }

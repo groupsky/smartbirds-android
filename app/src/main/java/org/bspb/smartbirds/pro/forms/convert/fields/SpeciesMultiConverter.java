@@ -3,11 +3,11 @@ package org.bspb.smartbirds.pro.forms.convert.fields;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +30,12 @@ public class SpeciesMultiConverter implements FieldConverter {
     public void convert(Map<String, String> csv, JsonObject json, Set<String> usedCsvFields) throws Exception {
         String value = csv.get(csvField);
         if (!TextUtils.isEmpty(value)) {
-            List<String> items = new Gson().fromJson(value, List.class);
+            List<String> items = SBGsonParser.createParser().fromJson(value, List.class);
             List<String> values = new ArrayList<>();
             for (String item : items) {
                 values.add(item.split(" *\n *")[0]);
             }
-            json.add(jsonField, new Gson().toJsonTree(values));
+            json.add(jsonField, SBGsonParser.createParser().toJsonTree(values));
         } else {
             json.add(jsonField, JsonNull.INSTANCE);
         }

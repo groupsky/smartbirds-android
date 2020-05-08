@@ -3,12 +3,11 @@ package org.bspb.smartbirds.pro.backend;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.backend.dto.Label;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -73,21 +72,14 @@ public class Backend {
         return client;
     }
 
-    public Gson getGson() {
-        if (gson == null) {
-            gson = new GsonBuilder()
-                    .registerTypeAdapter(Label.class, new LabelDeserializer())
-                    .create();
-        }
-        return gson;
-    }
-
     public Retrofit getRetrofit() {
+        gson = SBGsonParser.createParser();
+
         if (retrofit == null) {
             Log.d(TAG, String.format("Backend base url: %s", BuildConfig.BACKEND_BASE_URL));
             retrofit = new Retrofit.Builder()
                     .baseUrl(BuildConfig.BACKEND_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(getGson()))
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getClient())
                     .build();
         }

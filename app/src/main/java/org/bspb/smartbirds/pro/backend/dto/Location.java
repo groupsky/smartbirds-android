@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
+
 import static org.bspb.smartbirds.pro.db.LocationColumns.DATA;
 import static org.bspb.smartbirds.pro.db.LocationColumns.LAT;
 import static org.bspb.smartbirds.pro.db.LocationColumns.LON;
@@ -56,7 +58,7 @@ public class Location {
 
     public static Location fromCursor(Cursor cursor) {
         String data = cursor.getString(cursor.getColumnIndexOrThrow(DATA));
-        return new Gson().fromJson(data, Location.class);
+        return SBGsonParser.createParser().fromJson(data, Location.class);
     }
 
     @Override
@@ -78,7 +80,7 @@ public class Location {
         cv.put(_ID, id);
         cv.put(LAT, latitude);
         cv.put(LON, longitude);
-        cv.put(DATA, new Gson().toJson(this));
+        cv.put(DATA, SBGsonParser.createParser().toJson(this));
         return cv;
     }
 

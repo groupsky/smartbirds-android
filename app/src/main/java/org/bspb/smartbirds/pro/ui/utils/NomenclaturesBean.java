@@ -10,8 +10,6 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
@@ -19,8 +17,6 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.backend.LabelDeserializer;
-import org.bspb.smartbirds.pro.backend.dto.Label;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.db.NomenclatureUsesCountColumns;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.NomenclatureUsesCount;
@@ -28,6 +24,7 @@ import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -210,10 +207,7 @@ public class NomenclaturesBean {
         try {
             InputStream is = new BufferedInputStream(context.getAssets().open(filename));
             try {
-                Gson gson = new GsonBuilder()
-                        .registerTypeAdapter(Label.class, new LabelDeserializer())
-                        .create();
-                return Arrays.asList(gson.fromJson(new InputStreamReader(is), Nomenclature[].class));
+                return Arrays.asList(SBGsonParser.createParser().fromJson(new InputStreamReader(is), Nomenclature[].class));
             } finally {
                 is.close();
             }

@@ -8,6 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.bspb.smartbirds.pro.db.ZoneColumns;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class Zone {
 
     public static Zone fromCursor(Cursor cursor) {
         String data = cursor.getString(cursor.getColumnIndexOrThrow(ZoneColumns.DATA));
-        return new Gson().fromJson(data, Zone.class);
+        return SBGsonParser.createParser().fromJson(data, Zone.class);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class Zone {
         ContentValues cv = new ContentValues();
         cv.put(ZoneColumns._ID, id);
         cv.put(ZoneColumns.LOCATION_ID, locationId);
-        cv.put(ZoneColumns.DATA, new Gson().toJson(this));
+        cv.put(ZoneColumns.DATA, SBGsonParser.createParser().toJson(this));
         return cv;
     }
 

@@ -8,6 +8,7 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.RemoteException;
+
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -20,6 +21,7 @@ import org.bspb.smartbirds.pro.db.MonitoringColumns;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
 import org.bspb.smartbirds.pro.db.TrackingColumns;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -48,7 +50,7 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 public class MonitoringManager {
 
     private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
-    private static final Gson SERIALIZER = new Gson();
+    private static final Gson SERIALIZER = SBGsonParser.createParser();
     public static final String[] MONITORING_PROJECTION = {
             MonitoringColumns._ID,
             MonitoringColumns.STATUS,
@@ -177,7 +179,7 @@ public class MonitoringManager {
     public MonitoringEntry newEntry(@NonNull Monitoring monitoring, @NonNull EntryType entryType, @NonNull HashMap<String, String> data) {
         MonitoringEntry entry = new MonitoringEntry(monitoring.code, entryType);
         entry.data.putAll(data);
-        if(parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
+        if (parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
             logException(new IllegalStateException("Inserting new entry with zero coordinates. Monitoring code is: " + monitoring.code + " and type is " + entryType));
         }
         entry.id = parseId(contentResolver.insert(SmartBirdsProvider.Forms.CONTENT_URI, toContentValues(entry)));
@@ -188,7 +190,7 @@ public class MonitoringManager {
         MonitoringEntry entry = new MonitoringEntry(monitoringCode, entryType);
         entry.data.putAll(data);
         entry.id = entryId;
-        if(parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
+        if (parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
             logException(new IllegalStateException("Updating entry " + entryId + " with zero coordinates. Monitoring code is: " + monitoringCode + " and type is " + entryType));
         }
         contentResolver.update(SmartBirdsProvider.Forms.withId(entryId), toContentValues(entry), null, null);

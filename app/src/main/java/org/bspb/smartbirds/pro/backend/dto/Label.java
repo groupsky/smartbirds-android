@@ -63,10 +63,6 @@ public class Label {
         return get(Configuration.FALLBACK_LANGUAGE);
     }
 
-    public String toJsonString() {
-        return new Gson().toJson(this);
-    }
-
     public void addValue(String lang, String value) {
         if (values == null) {
             values = new HashMap<>();
