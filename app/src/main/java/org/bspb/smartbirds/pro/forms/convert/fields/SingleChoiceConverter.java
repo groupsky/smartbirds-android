@@ -30,12 +30,17 @@ public class SingleChoiceConverter implements FieldConverter {
             json.add(jsonField, JsonNull.INSTANCE);
         } else {
             JsonObject label = new JsonObject();
-            label.addProperty(locale, value);
-            {
-                String en = csv.get(csvField + ".en");
-                if (!TextUtils.isEmpty(en))
-                    label.addProperty("en", en);
+
+            String localValue = csv.get(csvField + "." + locale);
+            if (!TextUtils.isEmpty(localValue)) {
+                label.addProperty(locale, localValue);
             }
+
+            String en = csv.get(csvField + ".en");
+            if (!TextUtils.isEmpty(en)) {
+                label.addProperty("en", en);
+            }
+
             JsonObject field = new JsonObject();
             field.add("label", label);
             json.add(jsonField, field);
