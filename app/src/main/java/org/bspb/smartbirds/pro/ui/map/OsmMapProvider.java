@@ -188,7 +188,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void setShowLocalProjects(boolean showKml) {
-
+        // TODO implement after upgrade OSM dependency
     }
 
     @Override
