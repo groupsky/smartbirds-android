@@ -17,8 +17,7 @@ public class SpeciesLabel extends Label {
         return get("la");
     }
 
-    @Override
-    public String get(Locale locale) {
+    public String get(String locale) {
         String localeLabel = super.get(locale);
         String laLabel = values.get("la");
         return !TextUtils.isEmpty(laLabel) ? laLabel + Configuration.MULTIPLE_CHOICE_DELIMITER + localeLabel : localeLabel;
