@@ -219,6 +219,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         }
 
         if (showKml) {
+            if (localProjectsMarkers.size() > 0) {
+                return;
+            }
+
             List<SimpleMapMarker> localProjectsPoints = KmlUtils.readLocalProjectsPointsFromKml(fragment.getContext());
             for (SimpleMapMarker mapMarker : localProjectsPoints) {
                 MarkerOptions markerOptions = new MarkerOptions()
