@@ -16,6 +16,7 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.db.NomenclatureUsesCountColumns;
@@ -104,9 +105,10 @@ public class NomenclaturesBean {
     public void loadData() {
         try {
             Log.d(TAG, "loading data");
+            String locale = context.getString(R.string.locale);
             data.clear();
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                final Nomenclature nomenclature = Nomenclature.fromCursor(cursor, Locale.getDefault());
+                final Nomenclature nomenclature = Nomenclature.fromCursor(cursor, locale);
                 List<Nomenclature> list;
                 if (!data.containsKey(nomenclature.type)) {
                     list = new ArrayList<>();
@@ -120,11 +122,11 @@ public class NomenclaturesBean {
             // load any missing nomenclatures from bundled - this is useful when updating, before sync with server
             Set<String> missingNomenclatures = new HashSet<>();
             for (Nomenclature species : loadBundledSpecies()) {
-                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(Nomenclature.fromSpecies(species)));
+                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(Nomenclature.fromSpecies(species), locale));
             }
             missingNomenclatures.clear();
             for (Nomenclature nomenclature : loadBundledNomenclatures()) {
-                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(nomenclature));
+                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(nomenclature, locale));
             }
 
             // sort nomenclatures
@@ -198,8 +200,8 @@ public class NomenclaturesBean {
         return loadBundledFile("species.json");
     }
 
-    private Nomenclature localizeNomenclature(Nomenclature nomenclature) {
-        nomenclature.localeLabel = nomenclature.label.get(Locale.getDefault());
+    private Nomenclature localizeNomenclature(Nomenclature nomenclature, String locale) {
+        nomenclature.localeLabel = nomenclature.label.get(locale);
         return nomenclature;
     }
 
@@ -234,7 +236,7 @@ public class NomenclaturesBean {
             final ArrayList<Nomenclature> recentItems = new ArrayList<>(cursor.getCount());
             int idx;
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                Nomenclature temp = Nomenclature.fromCursor(cursor, Locale.getDefault());
+                Nomenclature temp = Nomenclature.fromCursor(cursor, context.getString(R.string.locale));
                 idx = Collections.binarySearch(nomenclatures, temp, comparator);
                 if (idx < 0) continue;
                 recentItems.add(nomenclatures.get(idx));

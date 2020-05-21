@@ -206,7 +206,7 @@ public class MonitoringCommonFormFragment extends Fragment implements LoaderMana
             if (!manualLocation) {
                 updatingLocationFromGPS = true;
                 try {
-                    locationView.setText(location.name.get(Locale.getDefault()));
+                    locationView.setText(location.name.get(getString(R.string.locale)));
                 } finally {
                     updatingLocationFromGPS = false;
                 }

@@ -65,7 +65,7 @@ public class Nomenclature {
         return sb.toString();
     }
 
-    public static Nomenclature fromCursor(Cursor cursor, Locale locale) {
+    public static Nomenclature fromCursor(Cursor cursor, String locale) {
         String data = cursor.getString(cursor.getColumnIndexOrThrow(DATA));
         Nomenclature nomenclature;
         if (TextUtils.isEmpty(data)) {

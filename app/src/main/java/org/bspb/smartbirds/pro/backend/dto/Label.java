@@ -51,14 +51,6 @@ public class Label {
         return values.get(Configuration.FALLBACK_LANGUAGE);
     }
 
-    public String get(Locale locale) {
-        if (locale == null) {
-            return null;
-        }
-
-        return get(locale.getLanguage());
-    }
-
     public String getLabelId() {
         return get(Configuration.FALLBACK_LANGUAGE);
     }
