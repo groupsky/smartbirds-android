@@ -29,7 +29,10 @@ public class Nomenclature {
     @SerializedName("label")
     public Label label;
 
-    transient public String labelId;
+    /**
+     * @deprecated Should use label.get(locale) instead.
+     */
+    @Deprecated
     transient public String localeLabel;
 
     public Nomenclature() {
@@ -59,7 +62,6 @@ public class Nomenclature {
         final StringBuffer sb = new StringBuffer("Nomenclature{");
         sb.append("type='").append(type).append('\'');
         sb.append(", label=").append(label);
-        sb.append(", labelId='").append(labelId).append('\'');
         sb.append(", localeLabel='").append(localeLabel).append('\'');
         sb.append('}');
         return sb.toString();
@@ -82,7 +84,6 @@ public class Nomenclature {
             nomenclature.label = new SpeciesLabel(nomenclature.label);
         }
         nomenclature.localeLabel = nomenclature.label.get(locale);
-        nomenclature.labelId = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN));
         return nomenclature;
     }
 
@@ -96,7 +97,6 @@ public class Nomenclature {
     public ContentValues toCV() {
         ContentValues cv = new ContentValues();
         cv.put(TYPE, type);
-        cv.put(LABEL_EN, label.getLabelId());
         cv.put(DATA, SBGsonParser.createParser().toJson(this));
         return cv;
     }

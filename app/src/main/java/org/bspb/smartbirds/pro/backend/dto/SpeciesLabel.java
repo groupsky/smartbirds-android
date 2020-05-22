@@ -12,11 +12,6 @@ public class SpeciesLabel extends Label {
         this.values = label.values;
     }
 
-    @Override
-    public String getLabelId() {
-        return get("la");
-    }
-
     public String get(String locale) {
         String localeLabel = super.get(locale);
         String laLabel = values.get("la");

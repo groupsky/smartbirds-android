@@ -51,10 +51,6 @@ public class Label {
         return values.get(Configuration.FALLBACK_LANGUAGE);
     }
 
-    public String getLabelId() {
-        return get(Configuration.FALLBACK_LANGUAGE);
-    }
-
     public void addValue(String lang, String value) {
         if (values == null) {
             values = new HashMap<>();
