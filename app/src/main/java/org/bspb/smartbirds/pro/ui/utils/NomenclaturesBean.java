@@ -122,7 +122,7 @@ public class NomenclaturesBean {
             // load any missing nomenclatures from bundled - this is useful when updating, before sync with server
             Set<String> missingNomenclatures = new HashSet<>();
             for (Nomenclature species : loadBundledSpecies()) {
-                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(Nomenclature.fromSpecies(species), locale));
+                fillMissingNomenclature(missingNomenclatures, localizeNomenclature(Nomenclature.fromSpecies(species, locale), locale));
             }
             missingNomenclatures.clear();
             for (Nomenclature nomenclature : loadBundledNomenclatures()) {
@@ -166,7 +166,7 @@ public class NomenclaturesBean {
     public Iterable<ContentValues> prepareSpeciesCV(Iterable<Nomenclature> speciesCollection) {
         LinkedList<ContentValues> cvs = new LinkedList<>();
         for (Nomenclature species : speciesCollection) {
-            cvs.add(Nomenclature.fromSpecies(species).toCV());
+            cvs.add(Nomenclature.fromSpecies(species, context.getString(R.string.locale)).toCV());
         }
         return cvs;
     }

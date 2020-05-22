@@ -87,10 +87,11 @@ public class Nomenclature {
         return nomenclature;
     }
 
-    public static Nomenclature fromSpecies(Nomenclature species) {
+    public static Nomenclature fromSpecies(Nomenclature species, String locale) {
         Nomenclature nomenclature = new Nomenclature();
         nomenclature.type = "species_" + species.type;
         nomenclature.label = new SpeciesLabel(species.label);
+        nomenclature.localeLabel = nomenclature.label.get(locale);
         return nomenclature;
     }
 
