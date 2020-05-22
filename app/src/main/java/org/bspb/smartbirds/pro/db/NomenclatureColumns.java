@@ -24,9 +24,17 @@ public interface NomenclatureColumns {
     @DataType(TEXT)
     String TYPE = "type";
 
+    /**
+     * @deprecated This field is not used anymore. Instead all the labels are read from data column
+     */
+    @Deprecated
     @DataType(TEXT)
     String LABEL_BG = "label_bg";
 
+    /**
+     * @deprecated This field is not used anymore. Instead all the labels are read from data column
+     */
+    @Deprecated
     @DataType(TEXT)
     String LABEL_EN = "label_en";
 
