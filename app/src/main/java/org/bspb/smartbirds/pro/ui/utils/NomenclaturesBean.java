@@ -256,7 +256,7 @@ public class NomenclaturesBean {
         Cursor cursor = resolver.query(NomenclatureUsesCount.forType(nomenclature.type),
                 new String[]{NomenclatureUsesCountColumns._ID, NomenclatureUsesCountColumns.COUNT},
                 NomenclatureUsesCountColumns.LABEL_EN + "=?",
-                new String[]{nomenclature.labelId},
+                new String[]{nomenclature.label.get(Configuration.NOMENCLATURE_ID_LANGUAGE)},
                 null);
         if (cursor != null) try {
             if (cursor.moveToFirst() && !cursor.isAfterLast()) {
