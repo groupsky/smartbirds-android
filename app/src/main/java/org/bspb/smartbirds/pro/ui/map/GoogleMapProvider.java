@@ -5,9 +5,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -42,6 +45,7 @@ import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapDetachedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
+import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlFolder;
@@ -49,6 +53,7 @@ import org.osmdroid.bonuspack.kml.KmlGeometry;
 import org.osmdroid.bonuspack.kml.KmlLineString;
 import org.osmdroid.bonuspack.kml.KmlMultiGeometry;
 import org.osmdroid.bonuspack.kml.KmlPlacemark;
+import org.osmdroid.bonuspack.kml.KmlPoint;
 import org.osmdroid.bonuspack.kml.KmlPolygon;
 import org.osmdroid.bonuspack.kml.Style;
 import org.osmdroid.util.GeoPoint;
@@ -89,6 +94,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private boolean showZoneBackground;
     private List<Polygon> zonePolygons = new ArrayList<>();
     private MarkerClickListener markerClickListener;
+    private List<Marker> localProjectsMarkers = new ArrayList<>();
+    private boolean showLocalProjects;
 
     @Override
     /**
@@ -157,6 +164,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             }
         }
 
+        drawLocalProjects(showLocalProjects);
+
         drawArea();
         fragment.getView().post(new Runnable() {
             @Override
@@ -178,6 +187,12 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         drawZones();
     }
 
+    @Override
+    public void setShowLocalProjects(boolean showKml) {
+        this.showLocalProjects = showKml;
+        drawLocalProjects(showKml);
+    }
+
     private void drawZones() {
         for (Polygon p : zonePolygons) {
             if (p.isVisible()) {
@@ -196,6 +211,32 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void drawPath(List<LatLng> points) {
 
+    }
+
+    private void drawLocalProjects(boolean showKml) {
+        if (fragment == null || fragment.getContext() == null) {
+            return;
+        }
+
+        if (showKml) {
+            if (localProjectsMarkers.size() > 0) {
+                return;
+            }
+
+            List<SimpleMapMarker> localProjectsPoints = KmlUtils.readLocalProjectsPointsFromKml(fragment.getContext());
+            for (SimpleMapMarker mapMarker : localProjectsPoints) {
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(new LatLng(mapMarker.getLatitude(), mapMarker.getLongitude()))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                        .title(mapMarker.getTitle());
+                localProjectsMarkers.add(mMap.addMarker(markerOptions));
+            }
+        } else {
+            for (Marker marker : localProjectsMarkers) {
+                marker.remove();
+            }
+            localProjectsMarkers.clear();
+        }
     }
 
     @Override
@@ -275,7 +316,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         return mMap.getMyLocation();
     }
 
-    private Marker addMarker(MapMarker newMapMarker) {
+    private Marker addMarker(EntryMapMarker newMapMarker) {
         if (mMap == null) return null;
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(newMapMarker.getLatitude(), newMapMarker.getLongitude())).title(newMapMarker.getTitle());
         lastMarker = mMap.addMarker(markerOptions);
@@ -311,13 +352,13 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     }
 
     @Override
-    public void setMarkers(Iterable<MapMarker> newMapMarkers) {
+    public void setMarkers(Iterable<EntryMapMarker> newMapMarkers) {
         Set<MarkerHolder> markerHoldersToDelete = new HashSet<>(this.markers.values());
         Set<Long> idsToDelete = new HashSet<>(this.markers.keySet());
 
         MarkerHolder testHolder = new MarkerHolder(null, null);
         int cnt = 0;
-        for (MapMarker mapMarker : newMapMarkers) {
+        for (EntryMapMarker mapMarker : newMapMarkers) {
             cnt++;
             testHolder.mapMarker = mapMarker;
             markerHoldersToDelete.remove(testHolder);
@@ -379,6 +420,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         }
     }
 
+
     @UiThread
     void displayArea(KmlDocument kml) {
         // sometimes map is null
@@ -398,11 +440,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             KmlPlacemark placemark = (KmlPlacemark) item;
             Style style = kml.getStyle(placemark.mStyle);
 
-            displayGeometry(placemark.mGeometry, style);
+            displayGeometry(placemark.mGeometry, style, placemark.mName);
         }
     }
 
-    private void displayGeometry(KmlGeometry geometry, Style style) {
+    private void displayGeometry(KmlGeometry geometry, Style style, String name) {
         if (geometry instanceof KmlPolygon || geometry instanceof KmlLineString) {
             ArrayList<GeoPoint> geopoints = geometry.mCoordinates;
             ArrayList<LatLng> points = new ArrayList<LatLng>();
@@ -426,7 +468,17 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         } else if (geometry instanceof KmlMultiGeometry) {
             KmlMultiGeometry multiGeometry = (KmlMultiGeometry) geometry;
             for (KmlGeometry subGeometry : multiGeometry.mItems) {
-                displayGeometry(subGeometry, style);
+                displayGeometry(subGeometry, style, null);
+            }
+        } else if (geometry instanceof KmlPoint) {
+            KmlPoint kmlPoint = (KmlPoint) geometry;
+            ArrayList<GeoPoint> geopoints = kmlPoint.mCoordinates;
+            for (GeoPoint point : geopoints) {
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(new LatLng(point.getLatitude(), point.getLongitude()))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                        .title(name);
+                mMap.addMarker(markerOptions);
             }
         }
     }
@@ -487,16 +539,20 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        if (marker.getTag() == null) {
+            return;
+        }
+
         if (markerClickListener != null) {
             markerClickListener.onMarkerClicked(markers.get(marker.getTag()).mapMarker.getId(), markers.get(marker.getTag()).mapMarker.getEntryType());
         }
     }
 
     static class MarkerHolder {
-        MapMarker mapMarker;
+        EntryMapMarker mapMarker;
         Marker marker;
 
-        public MarkerHolder(MapMarker mapMarker, Marker marker) {
+        public MarkerHolder(EntryMapMarker mapMarker, Marker marker) {
             this.mapMarker = mapMarker;
             this.marker = marker;
         }

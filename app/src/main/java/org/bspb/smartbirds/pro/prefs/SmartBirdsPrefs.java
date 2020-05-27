@@ -35,4 +35,7 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean isBatteryOptimizationDialogShown();
+
+    @DefaultBoolean(false)
+    boolean showLocalProjects();
 }

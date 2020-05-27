@@ -6,14 +6,14 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.collections.Converter;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.ui.map.MapMarker;
+import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
 /**
  * Created by groupsky on 20.03.17.
  */
 @EBean(scope = EBean.Scope.Singleton)
-public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, MapMarker> {
+public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, EntryMapMarker> {
 
     @StringRes(R.string.tag_lat)
     protected String tagLatitude;
@@ -40,7 +40,7 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
     protected String poisonedString;
 
     @Override
-    public MapMarker convert(MonitoringEntry item) {
+    public EntryMapMarker convert(MonitoringEntry item) {
         double lat = Double.valueOf(item.data.get(tagLatitude));
         double lon = Double.valueOf(item.data.get(tagLongitude));
         String name = null;
@@ -62,6 +62,6 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
                 name = item.data.get(tagSpecies2);
             }
         }
-        return new MapMarker(name, lat, lon, item.id, item.type);
+        return new EntryMapMarker(name, lat, lon, item.id, item.type);
     }
 }

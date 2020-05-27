@@ -5,10 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -185,6 +187,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     @Override
+    public void setShowLocalProjects(boolean showKml) {
+        // TODO implement after upgrade OSM dependency
+    }
+
+    @Override
     public void setOnMarkerClickListener(MarkerClickListener listener) {
         this.markerClickListener = listener;
     }
@@ -276,7 +283,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
 
-    protected Marker addMarker(final MapMarker mapMarker, boolean bulk) {
+    protected Marker addMarker(final EntryMapMarker mapMarker, boolean bulk) {
         if (mMap == null) return null;
         Marker marker = lastMarker = new Marker(mMap);
         OsmInfoWindow infoWindow = new OsmInfoWindow(R.layout.bonuspack_bubble, mMap);
@@ -334,12 +341,12 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     @Override
-    public void setMarkers(Iterable<MapMarker> newMapMarkers) {
+    public void setMarkers(Iterable<EntryMapMarker> newMapMarkers) {
         boolean needInvalidate = false;
         Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
         MarkerHolder testHolder = new MarkerHolder(null, null);
 
-        for (MapMarker mapMarker : newMapMarkers) {
+        for (EntryMapMarker mapMarker : newMapMarkers) {
             testHolder.mapMarker = mapMarker;
             toDelete.remove(testHolder);
 //            if (this.markers.contains(testHolder)) continue;
@@ -523,10 +530,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     static class MarkerHolder {
-        MapMarker mapMarker;
+        EntryMapMarker mapMarker;
         Marker marker;
 
-        public MarkerHolder(MapMarker mapMarker, Marker marker) {
+        public MarkerHolder(EntryMapMarker mapMarker, Marker marker) {
             this.mapMarker = mapMarker;
             this.marker = marker;
         }
