@@ -42,6 +42,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.DATA;
@@ -62,7 +63,7 @@ public class NomenclaturesBean {
     };
 
     private static final String[] USES_COUNT_PROJECTION = {
-            NomenclatureUsesCountColumns.TYPE, NomenclatureUsesCountColumns.LABEL_BG, NomenclatureUsesCountColumns.LABEL_EN, NomenclatureUsesCountColumns.DATA
+            NomenclatureUsesCountColumns.TYPE, NomenclatureUsesCountColumns.LABEL_BG, NomenclatureUsesCountColumns.LABEL_EN, NomenclatureUsesCountColumns.LABEL_ID, NomenclatureUsesCountColumns.DATA
     };
 
     private final Map<String, List<Nomenclature>> data = new HashMap<>();
@@ -85,8 +86,12 @@ public class NomenclaturesBean {
         }
     };
     private final Comparator<? super Nomenclature> comparator =
-            (Comparator<Nomenclature>) (o1, o2)
-                    -> AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel);
+            (Comparator<Nomenclature>) (o1, o2) -> {
+                if (o1.label.getLabelId().equalsIgnoreCase(o2.label.getLabelId())) {
+                    return 0;
+                }
+                return AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel);
+            };
     private boolean loading;
 
     public boolean isLoading() {
@@ -255,8 +260,8 @@ public class NomenclaturesBean {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(NomenclatureUsesCount.forType(nomenclature.type),
                 new String[]{NomenclatureUsesCountColumns._ID, NomenclatureUsesCountColumns.COUNT},
-                NomenclatureUsesCountColumns.LABEL_EN + "=?",
-                new String[]{nomenclature.label.get(Configuration.NOMENCLATURE_ID_LANGUAGE)},
+                NomenclatureUsesCountColumns.LABEL_ID + "=?",
+                new String[]{nomenclature.label.getLabelId()},
                 null);
         if (cursor != null) try {
             if (cursor.moveToFirst() && !cursor.isAfterLast()) {
@@ -267,6 +272,8 @@ public class NomenclaturesBean {
         } finally {
             cursor.close();
         }
+
+        cv.put(NomenclatureUsesCountColumns.LABEL_ID, nomenclature.label.getLabelId());
         resolver.insert(NomenclatureUsesCount.CONTENT_URI, cv);
     }
 

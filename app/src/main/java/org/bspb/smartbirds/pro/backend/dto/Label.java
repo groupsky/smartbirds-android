@@ -57,4 +57,8 @@ public class Label {
         }
         values.put(lang, value);
     }
+
+    public String getLabelId() {
+        return values.get(Configuration.NOMENCLATURE_ID_LANGUAGE);
+    }
 }

@@ -25,14 +25,16 @@ public interface NomenclatureColumns {
     String TYPE = "type";
 
     /**
-     * @deprecated This field is not used anymore. Instead all the labels are read from data column
+     * @deprecated This field is used only with legacy data stored in local DB and will not be used
+     * after new nomenclatures are downloaded from server. Instead all the labels are read from data column.
      */
     @Deprecated
     @DataType(TEXT)
     String LABEL_BG = "label_bg";
 
     /**
-     * @deprecated This field is not used anymore. Instead all the labels are read from data column
+     * @deprecated This field is used only with legacy data stored in local DB and will not be used
+     * after new nomenclatures are downloaded from server. Instead all the labels are read from data column.
      */
     @Deprecated
     @DataType(TEXT)

@@ -75,6 +75,8 @@ public class SmartBirdsDatabase {
                 case 5:
                     db.execSQL("ALTER TABLE nomenclatures ADD COLUMN data BLOB");
                     db.execSQL("ALTER TABLE nomenclature_uses_count ADD COLUMN data BLOB");
+                    db.execSQL("DELETE FROM nomenclature_uses_count");
+                    db.execSQL("ALTER TABLE nomenclature_uses_count ADD COLUMN label_id TEXT");
                     break;
             }
         }

@@ -17,4 +17,9 @@ public class SpeciesLabel extends Label {
         String laLabel = values.get("la");
         return !TextUtils.isEmpty(laLabel) ? laLabel + Configuration.MULTIPLE_CHOICE_DELIMITER + localeLabel : localeLabel;
     }
+
+    @Override
+    public String getLabelId() {
+        return values.containsKey("la") ? values.get("la") : super.getLabelId();
+    }
 }
