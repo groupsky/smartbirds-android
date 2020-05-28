@@ -26,6 +26,8 @@ public class Configuration {
     public static DateFormat STORAGE_DATE_FORMAT;
 
     public static final String LOCAL_PROJECTS_KML_FILE = "white_stork.kml";
+    public static final String FALLBACK_LANGUAGE = "en";
+    public static final String NOMENCLATURE_ID_LANGUAGE = "en";
 
     /**
      * The minimum number of items to display a filter

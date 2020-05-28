@@ -12,11 +12,10 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.utils.ViewUtils;
 
 import java.util.LinkedList;
@@ -69,13 +68,13 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
             }
         }
 
-        storage.put(fieldName, new Gson().toJson(selectedItems, List.class));
+        storage.put(fieldName, SBGsonParser.createParser().toJson(selectedItems, List.class));
     }
 
     @Override
     public void restoreFromStorage(Map<String, String> storage, String fieldName) {
         final String jsonString = storage.get(fieldName);
-        List<String> items = new Gson().fromJson(jsonString, List.class);
+        List<String> items = SBGsonParser.createParser().fromJson(jsonString, List.class);
         deserialize(items);
     }
 

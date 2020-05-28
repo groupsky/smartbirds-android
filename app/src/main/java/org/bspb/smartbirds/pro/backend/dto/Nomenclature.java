@@ -2,14 +2,19 @@ package org.bspb.smartbirds.pro.backend.dto;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
+
+import java.util.Locale;
+
+import static org.bspb.smartbirds.pro.db.NomenclatureColumns.DATA;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
 import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
 
 /**
  * Created by groupsky on 27.09.16.
@@ -19,26 +24,19 @@ public class Nomenclature {
     @Expose
     @SerializedName("type")
     public String type;
+
     @Expose
     @SerializedName("label")
     public Label label;
 
+    /**
+     * @deprecated Should use label.get(locale) instead.
+     */
+    @Deprecated
     transient public String localeLabel;
 
     public Nomenclature() {
     }
-
-    public Nomenclature(Cursor cursor, String localeColumn) {
-        type = cursor.getString(cursor.getColumnIndexOrThrow(TYPE));
-        label = new Label(cursor);
-        localeLabel = cursor.getString(cursor.getColumnIndexOrThrow(localeColumn));
-    }
-
-    public Nomenclature(SpeciesNomenclature species) {
-        type = "species_"+species.type;
-        label = new Label(species.label);
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -61,72 +59,46 @@ public class Nomenclature {
 
     @Override
     public String toString() {
-        return "Nomenclature{" +
-                "type='" + type + '\'' +
-                ", label=" + label +
-                '}';
+        final StringBuffer sb = new StringBuffer("Nomenclature{");
+        sb.append("type='").append(type).append('\'');
+        sb.append(", label=").append(label);
+        sb.append(", localeLabel='").append(localeLabel).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
-    public static Nomenclature from(SpeciesNomenclature species) {
-        return new Nomenclature(species);
+    public static Nomenclature fromCursor(Cursor cursor, String locale) {
+        String data = cursor.getString(cursor.getColumnIndexOrThrow(DATA));
+        Nomenclature nomenclature;
+        if (TextUtils.isEmpty(data)) {
+            nomenclature = new Nomenclature();
+            nomenclature.type = cursor.getString(cursor.getColumnIndexOrThrow(TYPE));
+            Label label = new Label();
+            label.addValue("bg", cursor.getString(cursor.getColumnIndexOrThrow(LABEL_BG)));
+            label.addValue("en", cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN)));
+            nomenclature.label = label;
+        } else {
+            nomenclature = SBGsonParser.createParser().fromJson(data, Nomenclature.class);
+        }
+        if (nomenclature.type.startsWith("species_")) {
+            nomenclature.label = new SpeciesLabel(nomenclature.label);
+        }
+        nomenclature.localeLabel = nomenclature.label.get(locale);
+        return nomenclature;
+    }
+
+    public static Nomenclature fromSpecies(Nomenclature species, String locale) {
+        Nomenclature nomenclature = new Nomenclature();
+        nomenclature.type = "species_" + species.type;
+        nomenclature.label = new SpeciesLabel(species.label);
+        nomenclature.localeLabel = nomenclature.label.get(locale);
+        return nomenclature;
     }
 
     public ContentValues toCV() {
         ContentValues cv = new ContentValues();
         cv.put(TYPE, type);
-        cv.put(LABEL_BG, label.bg);
-        cv.put(LABEL_EN, label.en);
+        cv.put(DATA, SBGsonParser.createParser().toJson(this));
         return cv;
-    }
-
-    public static class Label {
-
-        @Expose
-        @SerializedName("bg")
-        public String bg;
-
-        @Expose
-        @SerializedName("en")
-        public String en;
-
-        public Label() {
-        }
-
-        public Label(Cursor cursor) {
-            bg = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_BG));
-            en = cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN));
-        }
-
-        public Label(SpeciesNomenclature.Label label) {
-            bg = label.la + MULTIPLE_CHOICE_DELIMITER + label.bg;
-            en = label.la + MULTIPLE_CHOICE_DELIMITER + label.en;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Label label = (Label) o;
-
-            if (bg != null ? !bg.equals(label.bg) : label.bg != null) return false;
-            return en != null ? en.equals(label.en) : label.en == null;
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result = bg != null ? bg.hashCode() : 0;
-            result = 31 * result + (en != null ? en.hashCode() : 0);
-            return result;
-        }
-
-        @Override
-        public String toString() {
-            return "Label{" +
-                    "bg='" + bg + '\'' +
-                    ", en='" + en + '\'' +
-                    '}';
-        }
     }
 }

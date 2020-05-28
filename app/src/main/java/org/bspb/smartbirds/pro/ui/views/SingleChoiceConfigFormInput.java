@@ -19,7 +19,6 @@ import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 import static android.app.Dialog.BUTTON_NEGATIVE;

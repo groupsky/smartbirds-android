@@ -12,10 +12,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
+
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;

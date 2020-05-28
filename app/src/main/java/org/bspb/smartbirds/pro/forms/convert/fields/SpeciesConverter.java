@@ -34,7 +34,7 @@ public class SpeciesConverter implements FieldConverter {
         }
 
         usedCsvFields.add(csvField);
-        usedCsvFields.add(csvField + ".bg");
+        usedCsvFields.add(csvField + "." + locale);
         usedCsvFields.add(csvField + ".en");
     }
 

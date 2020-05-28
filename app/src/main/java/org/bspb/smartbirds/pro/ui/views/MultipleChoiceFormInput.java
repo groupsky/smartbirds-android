@@ -9,14 +9,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
@@ -141,7 +140,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
                 selectedItems.add(items[idx]);
             }
         }
-        storage.put(fieldName+".json", new Gson().toJson(selectedItems));
+        storage.put(fieldName+".json", SBGsonParser.createParser().toJson(selectedItems));
     }
 
     @Override

@@ -3,8 +3,6 @@ package org.bspb.smartbirds.pro.service;
 import android.content.ContentProviderOperation;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.MainThread;
-import androidx.annotation.UiThread;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;
@@ -15,7 +13,6 @@ import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.dto.Location;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
-import org.bspb.smartbirds.pro.backend.dto.SpeciesNomenclature;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Locations;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures;
 import org.bspb.smartbirds.pro.events.DownloadCompleted;
@@ -117,7 +114,7 @@ public class NomenclatureService extends AbstractIntentService {
                     limit = 500;
                     offset = 0;
                     while (true) {
-                        Response<ResponseListEnvelope<SpeciesNomenclature>> response = backend.api().species(limit, offset).execute();
+                        Response<ResponseListEnvelope<Nomenclature>> response = backend.api().species(limit, offset).execute();
                         if (!response.isSuccessful())
                             throw new IOException("Server error: " + response.code() + " - " + response.message());
                         if (response.body().data.isEmpty()) break;

@@ -20,7 +20,7 @@ import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_;
 public class SmartBirdsDatabase {
 
 
-    public static final int VERSION = 5;
+    public static final int VERSION = 6;
 
     @Table(FormColumns.class)
     public static final String FORMS = "forms";
@@ -71,6 +71,12 @@ public class SmartBirdsDatabase {
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.MONITORINGS);
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.FORMS);
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.TRACKING);
+                    break;
+                case 5:
+                    db.execSQL("ALTER TABLE nomenclatures ADD COLUMN data BLOB");
+                    db.execSQL("ALTER TABLE nomenclature_uses_count ADD COLUMN data BLOB");
+                    db.execSQL("DELETE FROM nomenclature_uses_count");
+                    db.execSQL("ALTER TABLE nomenclature_uses_count ADD COLUMN label_id TEXT");
                     break;
             }
         }

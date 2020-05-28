@@ -28,8 +28,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static java.lang.Double.parseDouble;
 import static org.bspb.smartbirds.pro.tools.CsvPreparer.prepareCsvLine;
@@ -103,8 +107,26 @@ public class DataOpsService extends AbstractIntentService {
                     //noinspection TryFinallyCanBeTryWithResources
                     try {
                         boolean firstLine = true;
+                        List<MonitoringEntry> entries = new ArrayList<>();
                         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                            MonitoringEntry entry = MonitoringManager.entryFromCursor(cursor);
+                            entries.add(MonitoringManager.entryFromCursor(cursor));
+                        }
+
+                        // Retain only keys available in all entries
+                        Set<String> normalizedKeys = new HashSet<>();
+                        for (MonitoringEntry entry : entries) {
+                            if (normalizedKeys.size() == 0) {
+                                // fill with initial values
+                                normalizedKeys.addAll(entry.data.keySet());
+                            }
+                            normalizedKeys.retainAll(entry.data.keySet());
+                        }
+
+                        for (MonitoringEntry entry : entries) {
+
+                            // Remove keys missing in other entries
+                            entry.data.keySet().retainAll(normalizedKeys);
+
                             try {
                                 if (parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
                                     throw new IllegalStateException();

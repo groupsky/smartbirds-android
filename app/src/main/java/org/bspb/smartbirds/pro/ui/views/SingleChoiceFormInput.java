@@ -26,12 +26,14 @@ import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.app.Dialog.BUTTON_NEGATIVE;
@@ -208,11 +210,14 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
     @Override
     public void serializeToStorage(Map<String, String> storage, String fieldName) {
         storage.put(fieldName, getText().toString().replace("\n", MULTIPLE_CHOICE_DELIMITER));
+        String locale = getContext().getString(R.string.locale);
         if (mSelectedItem != null) {
-            storage.put(fieldName + ".bg", mSelectedItem.nomenclature.label.bg);
-            storage.put(fieldName + ".en", mSelectedItem.nomenclature.label.en);
+            if (mSelectedItem.nomenclature.label.hasValue(locale)) {
+                storage.put(fieldName + "." + locale, mSelectedItem.nomenclature.label.get(locale));
+            }
+            storage.put(fieldName + ".en", mSelectedItem.nomenclature.label.get("en"));
         } else {
-            storage.put(fieldName + ".bg", "");
+            storage.put(fieldName + "." + locale, "");
             storage.put(fieldName + ".en", "");
         }
     }
@@ -289,7 +294,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                         public int compare(NomenclatureItem o1, NomenclatureItem o2) {
                             int idx1 = recentItems.indexOf(o1.nomenclature);
                             int idx2 = recentItems.indexOf(o2.nomenclature);
-                            if (idx1 >= 0 && idx2 >= 0) return idx1-idx2;
+                            if (idx1 >= 0 && idx2 >= 0) return idx1 - idx2;
                             if (idx1 >= 0) return -1;
                             if (idx2 >= 0) return 1;
                             return AlphanumComparator.compareStrings(o1.label, o2.label);

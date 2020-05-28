@@ -20,6 +20,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LoginStateEvent;
 import org.bspb.smartbirds.pro.events.LogoutEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.io.IOException;
 
@@ -86,7 +87,7 @@ public class AuthenticationService extends AbstractIntentService {
                 logException(e);
             }
 
-            LoginResponse loginResponse = new Gson().fromJson(errorResponse, LoginResponse.class);
+            LoginResponse loginResponse = SBGsonParser.createParser().fromJson(errorResponse, LoginResponse.class);
             String errorMessage = null;
             if(loginResponse != null) {
                 errorMessage = loginResponse.error;
