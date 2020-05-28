@@ -35,6 +35,7 @@ import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.*
+import org.bspb.smartbirds.pro.tools.DBExporter
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
 import org.bspb.smartbirds.pro.ui.StatsActivity_
@@ -211,6 +212,13 @@ open class MainFragment : Fragment() {
     @OptionsItem(R.id.menu_statistics)
     open fun showStats() {
         StatsActivity_.intent(activity).start()
+    }
+
+    @OptionsItem(R.id.menu_export_db)
+    open fun exportDB() {
+        if (context == null) return
+        if (!storagePermissionsGranted()) return
+        DBExporter.exportDB(context)
     }
 
     //    @LongClick(R.id.btn_export)

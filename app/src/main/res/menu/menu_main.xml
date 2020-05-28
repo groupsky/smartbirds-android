@@ -29,6 +29,12 @@
         tools:ignore="AppCompatResource" />
 
     <item
+        android:id="@+id/menu_export_db"
+        android:showAsAction="never"
+        android:title="@string/export_db"
+        tools:ignore="AppCompatResource" />
+
+    <item
         android:id="@+id/menu_help"
         android:showAsAction="never"
         android:title="@string/main_screen_btn_help"
