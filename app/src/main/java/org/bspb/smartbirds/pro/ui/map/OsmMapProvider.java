@@ -43,6 +43,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
+import org.osmdroid.views.CustomZoomButtonsDisplay;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.FolderOverlay;
@@ -109,8 +110,12 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         if (mMap == null) return;
         mMap.setMultiTouchControls(true);
         mMap.setTileSource(TileSourceFactory.MAPNIK);
-        mMap.getZoomController().setShowFadeOutDelays(10000, 2000);
-        mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT);
+        mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.ALWAYS);
+        mMap.getZoomController().getDisplay().setPositions(
+                false,
+                CustomZoomButtonsDisplay.HorizontalPosition.RIGHT,
+                CustomZoomButtonsDisplay.VerticalPosition.BOTTOM);
+        mMap.getZoomController().getDisplay().setMarginPadding(0.5f, 0.1f);
         mMap.getController().setZoom(16f);
 
         locationOverlay = new LocationRetrievalOverlay(mMap);
@@ -168,11 +173,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         File file = new File(AREA_FILE_PATH);
         if (file.exists()) {
             try {
-                boolean res = kml.parseKMLFile(file);
-                Log.d("+++++", "Res: " + res);
-                Log.d("+++++", "Root: " + kml.mKmlRoot.mId);
-                FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
-                displayKml(kmlOverlay);
+                if (kml.parseKMLFile(file)) {
+                    FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, null, kml);
+                    displayKml(kmlOverlay);
+                }
             } catch (Throwable t) {
                 Crashlytics.logException(t);
             }
@@ -265,7 +269,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             positioned = false;
         } else {
             mMap.setMultiTouchControls(true);
-            mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT);
+            mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.ALWAYS);
             locationOverlay.disableFollowLocation();
             eventsOverlay.setLocked(false);
             if (!positioned && lastPosition != null) {
