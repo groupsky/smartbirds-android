@@ -1,10 +1,14 @@
 package org.bspb.smartbirds.pro.ui.map;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,11 +17,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
-
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,13 +36,11 @@ import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
+import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
+import org.osmdroid.bonuspack.kml.IconStyle;
 import org.osmdroid.bonuspack.kml.KmlDocument;
-import org.osmdroid.bonuspack.kml.KmlFeature;
-import org.osmdroid.bonuspack.kml.KmlLineString;
-import org.osmdroid.bonuspack.kml.KmlPlacemark;
-import org.osmdroid.bonuspack.kml.KmlPoint;
-import org.osmdroid.bonuspack.kml.KmlPolygon;
-import org.osmdroid.bonuspack.kml.KmlTrack;
+import org.osmdroid.bonuspack.kml.Style;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
@@ -98,6 +95,8 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     private List<Polygon> zoneOverlays = new ArrayList<>();
     private MarkerClickListener markerClickListener;
+    private boolean showLocalProjects;
+    private FolderOverlay localProjectsOverlay;
 
     @Override
     public void setUpMapIfNeeded() {
@@ -153,6 +152,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         mMap.getOverlayManager().add(eventsOverlay);
 
         loadKmlFile();
+        drawLocalProjects(showLocalProjects);
 
         for (MarkerHolder markerHolder : markers) {
             if (markerHolder.marker == null || !mMap.getOverlayManager().contains(markerHolder.marker)) {
@@ -208,7 +208,36 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void setShowLocalProjects(boolean showKml) {
-        // TODO implement after upgrade OSM dependency
+        this.showLocalProjects = showKml;
+        drawLocalProjects(showKml);
+    }
+
+    private void drawLocalProjects(boolean showKml) {
+        if (fragment == null || fragment.getContext() == null) {
+            return;
+        }
+
+        if (showKml) {
+            if (localProjectsOverlay != null && mMap.getOverlayManager().overlays().contains(localProjectsOverlay)) {
+                return;
+            }
+
+            try {
+                KmlDocument kml = KmlUtils.readKmlFromAssets(fragment.getContext(), Configuration.LOCAL_PROJECTS_KML_FILE);
+                Style style = new Style();
+                style.mIconStyle = new IconStyle();
+                style.mIconStyle.mIcon = BitmapFactory.decodeResource(fragment.getContext().getApplicationContext().getResources(), R.drawable.ic_place);
+                localProjectsOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, style, null, kml);
+                mMap.getOverlayManager().add(localProjectsOverlay);
+                mMap.invalidate();
+            } catch (Throwable t) {
+                Crashlytics.logException(t);
+            }
+        } else {
+            mMap.getOverlayManager().overlays().remove(localProjectsOverlay);
+            localProjectsOverlay = null;
+            mMap.invalidate();
+        }
     }
 
     @Override
