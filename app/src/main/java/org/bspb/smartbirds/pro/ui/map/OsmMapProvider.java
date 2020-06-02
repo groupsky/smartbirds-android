@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -426,7 +425,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             this.zones.add(zone);
 //            needInvalidate = true;
         }
-        Log.d("+++++++", "ZONES: " + this.zones);
         drawZones();
 //        if (needInvalidate && mMap != null) mMap.invalidate();
     }
