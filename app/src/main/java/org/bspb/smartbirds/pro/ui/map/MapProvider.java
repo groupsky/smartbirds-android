@@ -4,6 +4,7 @@ import android.location.Location;
 import android.os.Environment;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -63,4 +64,6 @@ public interface MapProvider {
     void setOnMarkerClickListener(MarkerClickListener listener);
 
     void setShowLocalProjects(boolean showLocalProjects);
+
+    void setLifeCycle(Lifecycle lifecycle);
 }

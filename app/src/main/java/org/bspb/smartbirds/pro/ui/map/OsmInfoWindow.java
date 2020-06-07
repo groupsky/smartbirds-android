@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import org.bspb.smartbirds.pro.R;
-import org.osmdroid.bonuspack.overlays.MarkerInfoWindow;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow;
 
 /**
  * Created by dani on 27/11/17.
