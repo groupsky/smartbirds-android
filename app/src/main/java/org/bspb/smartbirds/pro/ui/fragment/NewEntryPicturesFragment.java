@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
+
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -40,6 +42,7 @@ import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.ImageFileEvent;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -262,7 +265,9 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     void Click(View v) {
         int idx = pictures.indexOf(v);
         if (idx < 0 || idx >= images.length) return;
-        Intent intent = new Intent(INTENT_VIEW_PICTURE).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).setDataAndType(images[idx].uri, "image/jpg");
+        Uri uri = FileProvider.getUriForFile(getContext(), SmartBirdsApplication.FILES_AUTHORITY,
+                new File(images[idx].path));
+        Intent intent = new Intent(INTENT_VIEW_PICTURE).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).setDataAndType(uri, "image/jpg");
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
