@@ -92,6 +92,9 @@ public class AuthenticationInterceptor implements Interceptor {
             return chain.proceed(chain.request());
         }
         int retries = 0;
+
+        Response response = null;
+
         while (true) {
             String auth = authorization;
             if (TextUtils.isEmpty(auth)) {
@@ -100,7 +103,10 @@ public class AuthenticationInterceptor implements Interceptor {
             }
             Request newRequest = chain.request().newBuilder().addHeader("x-sb-csrf-token", auth).build();
             Log.d(TAG, String.format("Authorization: %s", auth));
-            Response response = chain.proceed(newRequest);
+            if (response != null) {
+                response.close();
+            }
+            response = chain.proceed(newRequest);
             if (!response.isSuccessful() && response.code() == 401) {
                 Log.w(TAG, "Invalid authorization!");
                 if (retries++ > 3 || !tryRelogin(auth)) {
