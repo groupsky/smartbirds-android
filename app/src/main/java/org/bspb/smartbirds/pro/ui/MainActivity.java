@@ -16,6 +16,7 @@ import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.ui.fragment.HomeFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
@@ -43,9 +44,9 @@ public class MainActivity extends BaseActivity {
 
     @AfterViews
     void createFragment() {
-        if (getFragmentManager().findFragmentById(R.id.container) == null)
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, MainFragment_.builder().build())
+        if (getSupportFragmentManager().findFragmentById(R.id.container) == null)
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, HomeFragment_.builder().build())
                     .commit();
     }
 
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity {
 
     @AfterInject
     protected void requireAuthentication() {
-        if(!prefs.isAuthenticated().get() && !isFinishing()) {
+        if (!prefs.isAuthenticated().get() && !isFinishing()) {
             startActivity(new Intent(this, LoginActivity_.class));
             finish();
         }
