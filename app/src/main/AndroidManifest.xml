@@ -62,7 +62,6 @@
             android:name=".ui.StartMonitoringActivity_"
             android:label="@string/title_activity_start_monitoring"
             android:parentActivityName=".ui.MainActivity_"
-            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data

@@ -56,6 +56,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_common_place">"Place"</string>
     <string name="monitoring_common_end_date">"End:"</string>
     <string name="monitoring_common_observers">"Other observers"</string>
+    <string name="monitoring_common_weather">"Weather:"</string>
     <string name="monitoring_common_rain">"Rain"</string>
     <string name="monitoring_common_temperature">"Temp °C"</string>
     <string name="monitoring_common_wind_strength">"Wind strength"</string>

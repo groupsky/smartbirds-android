@@ -2,6 +2,8 @@ package org.bspb.smartbirds.pro.ui.views;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -13,6 +15,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -104,4 +107,61 @@ public class TimeFormInput extends TextViewFormInput implements SupportStorage {
         }
     }
 
+    @Override
+    public Parcelable onSaveInstanceState() {
+        return new InstanceState(super.onSaveInstanceState(), mValue != null ? mValue.getTimeInMillis() : 0);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof InstanceState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        InstanceState ss = (InstanceState) state;
+        super.onRestoreInstanceState(((InstanceState) state).getSuperState());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(ss.timestamp);
+        setValue(calendar);
+    }
+
+    public static class InstanceState extends BaseSavedState {
+        private long timestamp;
+
+        public InstanceState(Parcelable superState, long timestamp) {
+            super(superState);
+            this.timestamp = timestamp;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeLong(this.timestamp);
+        }
+
+        protected InstanceState(Parcel source, ClassLoader loader) {
+            super(source);
+            this.timestamp = source.readLong();
+        }
+
+        public static final ClassLoaderCreator<InstanceState> CREATOR = new ClassLoaderCreator<InstanceState>() {
+
+            @Override
+            public InstanceState createFromParcel(Parcel source, ClassLoader loader) {
+                return new InstanceState(source, loader);
+            }
+
+            @Override
+            public InstanceState createFromParcel(Parcel source) {
+                return createFromParcel(source, null);
+            }
+
+            @Override
+            public InstanceState[] newArray(int size) {
+                return new TimeFormInput.InstanceState[size];
+            }
+        };
+    }
 }

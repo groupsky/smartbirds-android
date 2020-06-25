@@ -8,104 +8,109 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp"
+        android:paddingRight="12dp">
 
-        <TableLayout
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_common_source"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:hint="@string/monitoring_common_source"
+            android:tag="@string/tag_source"
+            app:entries="form_main_source"
+            app:required="true" />
 
-            <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_common_source"
-                    android:tag="@string/tag_source"
-                    app:entries="form_main_source"
-                    app:required="true" />
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/monitoring_common_place"
+                android:inputType="text|textCapWords|textPostalAddress"
+                android:tag="@string/tag_location"
+                app:required="true" />
 
-                <TextView
-                    style="@style/FieldLabel"
-                    android:text="@string/monitoring_common_start_date" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:id="@+id/form_common_start_date"
-                    android:hint="@string/monitoring_common_date"
-                    android:tag="@string/tag_begin_date"
-                    app:required="true" />
-
-                <org.bspb.smartbirds.pro.ui.views.TimeFormInput
-                    android:id="@+id/form_common_start_time"
-                    android:hint="@string/monitoring_common_time"
-                    android:tag="@string/tag_begin_time"
-                    app:required="true" />
-
-            </TableRow>
-
-            <TableRow>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageButton
+                    android:id="@+id/button_refresh_location"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
-
-                    <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                        android:id="@+id/location"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/monitoring_common_place"
-                        android:inputType="text|textCapWords|textPostalAddress"
-                        android:tag="@string/tag_location"
-                        app:required="true" />
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageButton
-                            android:id="@+id/button_refresh_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:src="@drawable/ic_my_location"
-                            android:visibility="invisible"
-                            tools:visibility="visible" />
-
-                        <ProgressBar
-                            android:id="@+id/progress_location_refreshing"
-                            style="@android:style/Widget.ProgressBar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:visibility="visible"
-                            tools:visibility="visible" />
-                    </FrameLayout>
-                </LinearLayout>
-
-                <TextView
-                    style="@style/FieldLabel"
                     android:layout_gravity="bottom"
-                    android:text="@string/monitoring_common_end_date" />
+                    android:src="@drawable/ic_my_location"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
 
-                <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:id="@+id/form_common_end_date"
-                    android:layout_gravity="bottom"
-                    android:hint="@string/monitoring_common_date"
-                    android:tag="@string/tag_end_date"
-                    app:required="true" />
+                <ProgressBar
+                    android:id="@+id/progress_location_refreshing"
+                    style="@android:style/Widget.ProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
+            </FrameLayout>
+        </LinearLayout>
 
-                <org.bspb.smartbirds.pro.ui.views.TimeFormInput
-                    android:layout_gravity="bottom"
-                    android:hint="@string/monitoring_common_time"
-                    android:tag="@string/tag_end_time"
-                    app:required="false" />
+        <View style="@style/FieldSeparator" />
 
+        <TextView
+            style="@style/FieldLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/monitoring_common_start_date" />
 
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.DateFormInput
+            android:id="@+id/form_common_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_date"
+            android:tag="@string/tag_begin_date"
+            app:required="true" />
 
-        </TableLayout>
+        <org.bspb.smartbirds.pro.ui.views.TimeFormInput
+            android:id="@+id/form_common_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_time"
+            android:tag="@string/tag_begin_time"
+            app:required="true" />
+
+        <View style="@style/FieldSeparator" />
+
+        <TextView
+            style="@style/FieldLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/monitoring_common_end_date" />
+
+        <org.bspb.smartbirds.pro.ui.views.DateFormInput
+            android:id="@+id/form_common_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_date"
+            android:tag="@string/tag_end_date"
+            app:required="true" />
+
+        <org.bspb.smartbirds.pro.ui.views.TimeFormInput
+            android:id="@+id/form_common_end_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_time"
+            android:tag="@string/tag_end_time"
+            app:required="false" />
+
+        <View style="@style/FieldSeparator" />
 
         <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
             android:id="@+id/observers"
@@ -117,63 +122,80 @@
 
         <View style="@style/FieldSeparator" />
 
-        <TableLayout
+        <TextView
+            style="@style/FieldLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:collapseColumns="*"
-            android:stretchColumns="*">
+            android:text="@string/monitoring_common_weather" />
 
-            <TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_common_rain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_rain"
+            android:tag="@string/tag_rain"
+            app:entries="form_main_rain" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_common_rain"
-                    android:tag="@string/tag_rain"
-                    app:entries="form_main_rain" />
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_common_temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_temperature"
+            android:tag="@string/tag_temperature" />
 
-                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                    android:hint="@string/monitoring_common_temperature"
-                    android:tag="@string/tag_temperature" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_common_wind_strength"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_wind_strength"
+            android:tag="@string/tag_wind_strength"
+            app:entries="form_main_wind_force" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_common_wind_strength"
-                    android:tag="@string/tag_wind_strength"
-                    app:entries="form_main_wind_force" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_common_wind_direction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_wind_direction"
+            android:tag="@string/tag_wind_direction"
+            app:entries="form_main_wind_direction" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_common_wind_direction"
-                    android:tag="@string/tag_wind_direction"
-                    app:entries="form_main_wind_direction" />
+        <org.bspb.smartbirds.pro.ui.views.TextFormInput
+            android:id="@+id/form_common_clouds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_clouds"
+            android:tag="@string/tag_clouds_type" />
 
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_common_cloudiness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_cloudiness"
+            android:tag="@string/tag_cloudiness"
+            app:entries="form_main_cloud_level" />
 
-            <TableRow>
+        <org.bspb.smartbirds.pro.ui.views.TextFormInput
+            android:id="@+id/form_common_weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_mto"
+            android:tag="@string/tag_weather_other" />
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="@string/monitoring_common_clouds"
-                    android:tag="@string/tag_clouds_type" />
-
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_common_cloudiness"
-                    android:tag="@string/tag_cloudiness"
-                    app:entries="form_main_cloud_level" />
-
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="@string/monitoring_common_mto"
-                    android:tag="@string/tag_weather_other" />
-
-                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                    android:hint="@string/monitoring_common_visibility"
-                    android:tag="@string/tag_visibility_km" />
-
-            </TableRow>
-        </TableLayout>
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_common_visibility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_visibility"
+            android:tag="@string/tag_visibility_km" />
 
         <View style="@style/FieldSeparator" />
 
         <org.bspb.smartbirds.pro.ui.views.MemoFormInput
+            android:id="@+id/form_common_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/monitoring_common_notes"
             android:tag="@string/tag_remarks" />
+
     </LinearLayout>
 </ScrollView>
