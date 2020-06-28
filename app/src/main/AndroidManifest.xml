@@ -114,7 +114,6 @@
         <activity
             android:name=".ui.LoginActivity_"
             android:label="@string/title_activity_login"
-            android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
 
         <activity
