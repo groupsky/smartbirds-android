@@ -34,15 +34,6 @@
         android:orientation="vertical"
         android:paddingTop="50dp">
 
-        <Button
-            android:id="@+id/btn_upload"
-            style="@style/Buttonbspb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/main_screen_btn_upload"
-            android:textColor="@android:color/white" />
-
         <LinearLayout
             android:id="@+id/center_buttons_container"
             android:layout_width="wrap_content"
@@ -89,8 +80,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right|bottom"
         android:paddingTop="16dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_upload"
+                style="@style/Buttonbspb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_screen_btn_upload"
+                android:textColor="@android:color/white" />
+
+        </FrameLayout>
+
 
         <ImageView
             android:layout_width="wrap_content"
