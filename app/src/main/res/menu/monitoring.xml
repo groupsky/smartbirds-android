@@ -7,41 +7,31 @@
 
     <item
         android:id="@+id/action_finish"
-        android:menuCategory="container"
-        android:orderInCategory="50"
-        android:showAsAction="always"
-        android:title="@string/menu_monitoring_finish"
-        app:showAsAction="always" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_monitoring_finish" />
     <item
         android:id="@+id/action_new_entry"
         android:enabled="false"
-        android:menuCategory="container"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/menu_monitoring_new_entry"
-        app:showAsAction="always" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_monitoring_new_entry" />
+
+    <item
+        android:id="@+id/action_common_form"
+        android:showAsAction="never"
+        android:title="@string/menu_monitoring_common" />
+
     <item
         android:id="@+id/action_undo_last_entry"
         android:enabled="false"
         android:menuCategory="container"
-        android:orderInCategory="125"
-        android:showAsAction="ifRoom"
-        android:title="@string/undo_last_entry"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_common_form"
-        android:menuCategory="container"
-        android:orderInCategory="75"
-        android:showAsAction="always"
-        android:title="@string/menu_monitoring_common"
-        app:showAsAction="always" />
+        android:showAsAction="never"
+        android:title="@string/undo_last_entry" />
 
     <item
         android:id="@+id/menu_zoom"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_monitoring_zoom_500"
-        app:showAsAction="ifRoom">
+        android:showAsAction="never"
+        android:title="@string/menu_monitoring_zoom_500">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -71,9 +61,8 @@
     <item
         android:id="@+id/menu_map"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_monitoring_map_normal"
-        app:showAsAction="ifRoom|withText">
+        android:showAsAction="never"
+        android:title="@string/menu_monitoring_map_normal">
         <menu>
 
             <group
@@ -97,9 +86,8 @@
     <item
         android:id="@+id/menu_map_provider"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_monitoring_map_provider"
-        app:showAsAction="ifRoom|withText">
+        android:showAsAction="never"
+        android:title="@string/menu_monitoring_map_provider">
         <menu>
 
             <group
@@ -119,9 +107,8 @@
     <item
         android:id="@+id/menu_view_type"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/view"
-        app:showAsAction="ifRoom|withText">
+        android:showAsAction="never"
+        android:title="@string/view">
         <menu>
             <group
                 android:checkableBehavior="single"
@@ -165,9 +152,8 @@
     <item
         android:id="@+id/menu_form_type"
         android:menuCategory="alternative"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/monitoring_type"
-        app:showAsAction="ifRoom|withText">
+        android:showAsAction="never"
+        android:title="@string/monitoring_type">
         <menu>
 
             <group
