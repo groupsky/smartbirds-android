@@ -132,7 +132,7 @@
 
         </TableLayout>
 
-        <View style="@style/FieldSeparator" />
+        <View style="@style/GroupSeparator" />
 
         <fragment
             android:id="@+id/pictures_fragment"

@@ -16,9 +16,14 @@
         <item name="zoneFormInputStyle">@style/FieldInput.SingleChoice</item>
     </style>
 
-    <style name="FieldSeparator">
+    <style name="GroupSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">24dp</item>
+    </style>
+
+    <style name="FieldSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">12dp</item>
     </style>
 
     <style name="FieldSeparator.Ciconia" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
@@ -55,7 +60,9 @@
     </style>
 
     <style name="FieldInput.DecimalNumber.Sum" parent="FieldInput.Text">
-        <item name="android:imeOptions">actionUnspecified|flagNavigateNext|flagNoFullscreen|flagNoExtractUi</item>
+        <item name="android:imeOptions">
+            actionUnspecified|flagNavigateNext|flagNoFullscreen|flagNoExtractUi
+        </item>
         <item name="android:imeActionLabel">@string/sum_decimal_number_form_input_plus</item>
         <item name="android:inputType">number</item>
         <item name="android:digits">0123456789+</item>
