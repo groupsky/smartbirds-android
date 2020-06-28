@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.content.res.Configuration;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
@@ -117,10 +118,18 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
             if (!confidential.isChecked()) {
                 warningConfidential.setVisibility(View.VISIBLE);
             } else {
-                warningConfidential.setVisibility(View.INVISIBLE);
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    warningConfidential.setVisibility(View.INVISIBLE);
+                } else {
+                    warningConfidential.setVisibility(View.GONE);
+                }
             }
         } else {
-            warningConfidential.setVisibility(View.INVISIBLE);
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                warningConfidential.setVisibility(View.INVISIBLE);
+            } else {
+                warningConfidential.setVisibility(View.GONE);
+            }
         }
     }
 
