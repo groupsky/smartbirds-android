@@ -116,7 +116,6 @@
             android:name=".ui.MonitoringListActivity_"
             android:label="@string/title_monitoring_list"
             android:parentActivityName=".ui.MainActivity_"
-            android:screenOrientation="sensorLandscape"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
