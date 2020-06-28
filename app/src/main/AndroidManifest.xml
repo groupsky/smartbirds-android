@@ -148,7 +148,6 @@
             android:name=".ui.StatsActivity_"
             android:label="@string/title_activity_stats"
             android:parentActivityName=".ui.MainActivity_"
-            android:screenOrientation="sensorLandscape"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
