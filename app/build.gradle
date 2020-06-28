@@ -5,6 +5,7 @@ def versionCodeBase = 60
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 def keystorePropertiesFile = rootProject.file('keystore.properties')
@@ -79,11 +80,15 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    annotationProcessor "org.androidannotations:androidannotations:4.7.0"
+    kapt "org.androidannotations:androidannotations:4.7.0"
     implementation "org.androidannotations:androidannotations-api:4.7.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -120,7 +125,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
 
     // https://github.com/SimonVT/schematic
-    annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.7.0'
+    kapt 'net.simonvt.schematic:schematic-compiler:0.7.0'
     implementation 'net.simonvt.schematic:schematic:0.7.0'
 
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
