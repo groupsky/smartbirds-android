@@ -117,7 +117,7 @@
             android:inputType="text|textCapWords|textPersonName"
             android:tag="@string/tag_other_observers" />
 
-        <View style="@style/FieldSeparator" />
+        <View style="@style/GroupSeparator" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -178,7 +178,7 @@
             </TableRow>
         </TableLayout>
 
-        <View style="@style/FieldSeparator" />
+        <View style="@style/GroupSeparator" />
 
         <org.bspb.smartbirds.pro.ui.views.MemoFormInput
             android:id="@+id/form_common_notes"
