@@ -89,7 +89,6 @@
             android:name=".ui.NewMonitoringEntryActivity_"
             android:label="@string/title_activity_form"
             android:parentActivityName=".ui.MonitoringActivity_"
-            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data
@@ -134,7 +133,6 @@
             android:name=".ui.EditMonitoringEntryActivity_"
             android:label="@string/title_activity_form"
             android:parentActivityName=".ui.MonitoringListActivity_"
-            android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data

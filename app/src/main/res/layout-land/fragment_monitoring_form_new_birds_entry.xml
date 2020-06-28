@@ -1,0 +1,134 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:showDividers="beginning"
+    android:shrinkColumns="*"
+    android:stretchColumns="*"
+    tools:context="org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment">
+
+    <TableRow android:id="@+id/row1">
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_species"
+            android:layout_span="9"
+            android:hint="@string/monitoring_birds_name"
+            android:tag="@string/tag_species_scientific_name"
+            app:entries="species_birds"
+            app:required="true" />
+
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:id="@+id/form_birds_confidential"
+            android:layout_span="3"
+            android:tag="@string/tag_confidential"
+            android:text="@string/monitoring_birds_private" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="9"
+            android:showDividers="beginning"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_birds_count_units"
+                    android:hint="@string/monitoring_birds_count_unit"
+                    android:tag="@string/tag_count_unit"
+                    app:entries="form_birds_count_units"
+                    app:required="true" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_birds_count_type"
+                    android:hint="@string/monitoring_birds_count_type"
+                    android:tag="@string/tag_count_type"
+                    app:entries="form_birds_count_type"
+                    app:required="true" />
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_birds_nesting"
+                    android:hint="@string/monitoring_birds_nesting"
+                    android:tag="@string/tag_nest_type"
+                    app:entries="form_birds_nesting" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
+                    android:id="@+id/form_birds_count"
+                    android:hint="@string/monitoring_birds_count"
+                    android:tag="@string/tag_count"
+                    app:required="true" />
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:id="@+id/form_birds_count_min"
+                    android:hint="@string/monitoring_birds_min"
+                    android:tag="@string/tag_min"
+                    app:required="true" />
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:id="@+id/form_birds_count_max"
+                    android:hint="@string/monitoring_birds_max"
+                    android:tag="@string/tag_max"
+                    app:required="true" />
+
+            </TableRow>
+        </TableLayout>
+
+
+        <TextView
+            android:id="@+id/warning_confidential_nest"
+            android:layout_marginLeft="4sp"
+            android:layout_marginRight="4sp"
+            android:layout_span="3"
+            android:gravity="top"
+            android:text="@string/warning_confidential_nest"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:visibility="visible" />
+    </TableRow>
+
+    <TableRow>
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_sex"
+            android:layout_span="6"
+            android:hint="@string/monitoring_birds_gender"
+            android:tag="@string/tag_sex"
+            app:entries="form_birds_sex" />
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_age"
+            android:layout_span="6"
+            android:hint="@string/monitoring_birds_age"
+            android:tag="@string/tag_age"
+            app:entries="form_birds_age" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_status"
+            android:layout_span="6"
+            android:hint="@string/monitoring_birds_status"
+            android:tag="@string/tag_bird_status"
+            app:entries="form_birds_status" />
+
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            android:id="@+id/form_birds_behaviour"
+            android:layout_span="6"
+            android:hint="@string/monitoring_birds_behaviour"
+            android:tag="@string/tag_behavior"
+            app:entries="form_birds_behaviour" />
+    </TableRow>
+
+</TableLayout>
