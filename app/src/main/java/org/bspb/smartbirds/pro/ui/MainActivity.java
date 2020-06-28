@@ -43,8 +43,8 @@ public class MainActivity extends BaseActivity {
 
     @AfterViews
     void createFragment() {
-        if (getFragmentManager().findFragmentById(R.id.container) == null)
-            getFragmentManager().beginTransaction()
+        if (getSupportFragmentManager().findFragmentById(R.id.container) == null)
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, MainFragment_.builder().build())
                     .commit();
     }
@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity {
 
     @AfterInject
     protected void requireAuthentication() {
-        if(!prefs.isAuthenticated().get() && !isFinishing()) {
+        if (!prefs.isAuthenticated().get() && !isFinishing()) {
             startActivity(new Intent(this, LoginActivity_.class));
             finish();
         }

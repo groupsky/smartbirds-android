@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/menu_browse"
+        android:showAsAction="never"
+        android:title="@string/main_screen_btn_browse"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_export"
+        android:showAsAction="never"
+        android:title="@string/main_screen_btn_export"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_statistics"
+        android:showAsAction="never"
+        android:title="@string/main_screen_btn_stats"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_information"
+        android:showAsAction="never"
+        android:title="@string/main_screen_btn_info"
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/menu_help"
+        android:showAsAction="never"
+        android:title="@string/main_screen_btn_help"
+        tools:ignore="AppCompatResource" />
+</menu>
