@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -167,7 +168,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
     @Override
     public Parcelable onSaveInstanceState() {
-        return new InstanceState(super.onSaveInstanceState(), getText());
+        return new InstanceState(super.onSaveInstanceState(), mSelectedItem != null ? mSelectedItem.getId() : null);
     }
 
     @Override
@@ -179,8 +180,7 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
 
         InstanceState ss = (InstanceState) state;
         super.onRestoreInstanceState(((InstanceState) state).getSuperState());
-
-        setText(ss.text);
+        setSelection(ss.text);
     }
 
     public OnSelectionChangeListener getOnSelectionChangeListener() {

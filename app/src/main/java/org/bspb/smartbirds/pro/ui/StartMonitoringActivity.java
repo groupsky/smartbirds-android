@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterViews;
@@ -37,10 +36,10 @@ public class StartMonitoringActivity extends BaseActivity {
 
     @AfterViews
     void createFragment() {
-        formFragment = (MonitoringCommonFormFragment) getFragmentManager().findFragmentById(R.id.container);
+        formFragment = (MonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
             formFragment = MonitoringCommonFormFragment_.builder().build();
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, formFragment)
                     .commit();
         }
