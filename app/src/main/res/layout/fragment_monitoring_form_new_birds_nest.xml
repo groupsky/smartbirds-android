@@ -12,7 +12,8 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/form_horizontal_spacing"
         android:paddingTop="@dimen/form_vertical_spacing"
-        android:paddingRight="@dimen/form_horizontal_spacing">
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:id="@+id/form_birds_death"
