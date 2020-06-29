@@ -1,54 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:shrinkColumns="*"
-        android:stretchColumns="*">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/form_horizontal_spacing"
+        android:paddingTop="@dimen/form_vertical_spacing"
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
 
-        <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_l"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/monitoring_mammal_L"
                 android:tag="@string/tag_l" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_c"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/monitoring_mammal_C"
                 android:tag="@string/tag_c" />
+        </LinearLayout>
 
-        </TableRow>
-
-        <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_a"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/monitoring_mammal_A"
                 android:tag="@string/tag_a" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_pl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/monitoring_mammal_Pl"
                 android:tag="@string/tag_pl" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_weight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_weight"
                 android:tag="@string/tag_weight_g" />
+        </LinearLayout>
 
-        </TableRow>
-
-        <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_t_substrate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_t_substrate"
                 android:tag="@string/tag_t_substrate" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_t_air"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_t_vha"
                 android:tag="@string/tag_t_air" />
+        </LinearLayout>
 
-        </TableRow>
-
-    </TableLayout>
+    </LinearLayout>
 
 </ScrollView>
