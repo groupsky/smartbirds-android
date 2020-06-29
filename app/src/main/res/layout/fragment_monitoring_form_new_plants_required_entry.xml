@@ -3,136 +3,157 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/form_horizontal_spacing"
+        android:paddingTop="@dimen/form_vertical_spacing"
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
 
-        <TableLayout
+
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:id="@+id/form_plants_confidential"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:tag="@string/tag_confidential"
+            android:text="@string/monitoring_plants_private" />
+
+        <View style="@style/GroupSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_plants_species"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:hint="@string/monitoring_plants_name"
+            android:tag="@string/tag_species_scientific_name"
+            app:entries="species_plants"
+            app:required="true" />
 
-            <TableRow>
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:layout_span="9"
-                    android:hint="@string/monitoring_plants_name"
-                    android:tag="@string/tag_species_scientific_name"
-                    app:entries="species_plants"
-                    app:required="true" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_plants_reporting_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_reporting_unit"
+            android:tag="@string/tag_reportingUnit"
+            app:entries="form_plants_reporting_unit" />
 
-                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:id="@+id/form_plants_confidential"
-                    android:layout_span="3"
-                    android:tag="@string/tag_confidential"
-                    android:text="@string/monitoring_plants_private" />
-            </TableRow>
+        <View style="@style/GroupSeparator" />
 
-            <TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_plants_phenological_phase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_phenological_phase"
+            android:tag="@string/tag_phenologicalPhase"
+            app:entries="form_plants_phenological_phase" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:layout_span="6"
-                    android:hint="@string/monitoring_plants_reporting_unit"
-                    android:tag="@string/tag_reportingUnit"
-                    app:entries="form_plants_reporting_unit" />
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:layout_span="6"
-                    android:hint="@string/monitoring_plants_phenological_phase"
-                    android:tag="@string/tag_phenologicalPhase"
-                    app:entries="form_plants_phenological_phase" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+            android:id="@+id/form_plants_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_count"
+            android:tag="@string/tag_count" />
 
-            <TableRow>
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_plants_count"
-                    android:tag="@string/tag_count" />
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_plants_density"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_density"
+            android:tag="@string/tag_density" />
 
-                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_plants_density"
-                    android:tag="@string/tag_density" />
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_plants_cover"
-                    android:tag="@string/tag_cover" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_plants_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_cover"
+            android:tag="@string/tag_cover" />
 
-            <TableRow>
+        <View style="@style/GroupSeparator" />
 
-                <LinearLayout
-                    android:layout_span="4"
-                    android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                        android:id="@+id/form_plants_elevation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/monitoring_plants_elevation"
-                        android:tag="@string/tag_elevation" />
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_plants_elevation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/monitoring_plants_elevation"
+                android:tag="@string/tag_elevation" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="16dp"
-                        android:text="@string/monitoring_plants_elevation_units"
-                        android:textColor="?android:textColorHint" />
-                </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingLeft="8dp"
+                android:paddingRight="16dp"
+                android:text="@string/monitoring_plants_elevation_units"
+                android:textColor="?android:textColorHint" />
+        </LinearLayout>
 
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_plants_habitat"
-                    android:layout_span="8"
-                    android:hint="@string/monitoring_plants_habitat"
-                    android:tag="@string/tag_habitat"
-                    app:entries="form_plants_habitat" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_plants_habitat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_habitat"
+            android:tag="@string/tag_habitat"
+            app:entries="form_plants_habitat" />
 
-            <TableRow>
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
-                    android:layout_span="12"
-                    android:hint="@string/monitoring_plants_threats"
-                    android:tag="@string/tag_threats_other"
-                    app:entries="form_plants_threats" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            android:id="@+id/form_plants_threats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_threats"
+            android:tag="@string/tag_threats_other"
+            app:entries="form_plants_threats" />
 
-            <TableRow>
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="12"
-                    android:hint="@string/monitoring_common_threats"
-                    android:tag="@string/tag_threats"
-                    app:entries="form_main_threats" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            android:id="@+id/form_plants_threats_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_threats"
+            android:tag="@string/tag_threats"
+            app:entries="form_main_threats" />
 
-            <TableRow>
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
-                    android:layout_span="12"
-                    android:hint="@string/monitoring_plants_notes"
-                    android:tag="@string/tag_remarks_type" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
+            android:id="@+id/form_plants_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_plants_notes"
+            android:tag="@string/tag_remarks_type" />
 
-        </TableLayout>
+        <View style="@style/GroupSeparator" />
 
         <fragment
             android:id="@+id/pictures_fragment"
             android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
 
     </LinearLayout>
 </ScrollView>
