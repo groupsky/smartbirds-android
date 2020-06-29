@@ -14,8 +14,6 @@ import android.os.PowerManager
 import android.text.Html
 import android.text.Html.ImageGetter
 import android.text.TextUtils
-import android.text.method.LinkMovementMethod
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -186,11 +184,10 @@ open class MainFragment : Fragment() {
         val density = resources.displayMetrics.density
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(getString(R.string.info_dialog_title))
-        val view = TextView(activity)
-        view.setPadding((10 * density).toInt(), (10 * density).toInt(), (10 * density).toInt(), (10 * density).toInt())
-        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        view.movementMethod = LinkMovementMethod.getInstance()
-        view.text = Html.fromHtml(getString(R.string.info_text), ImageGetter { s ->
+        val dialogView = layoutInflater.inflate(R.layout.dialog_information, null, false)
+
+        val textView: TextView = dialogView.findViewById(R.id.info_text)
+        textView.text = Html.fromHtml(getString(R.string.info_text), ImageGetter { s ->
             var drawable: Drawable? = null
             when (s) {
                 "logo_bspb" -> drawable = resources.getDrawable(R.drawable.logo_bspb)
@@ -206,7 +203,8 @@ open class MainFragment : Fragment() {
             }
             drawable!!
         }, null)
-        builder.setView(view)
+
+        builder.setView(dialogView)
         builder.create().show()
     }
 
