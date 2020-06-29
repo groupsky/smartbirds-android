@@ -11,168 +11,298 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TableLayout
+        <TextView
+            style="@style/FieldSeparator.Ciconia"
+            android:text="@string/monitoring_ciconia_sep_1" />
+
+        <View style="@style/FieldSeparator" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing">
 
-            <TextView
-                style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_1" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_substratum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_substratum"
+                android:tag="@string/tag_substrate_type"
+                app:entries="form_ciconia_substratum" />
 
-            <TableRow>
+            <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_substratum"
-                    android:tag="@string/tag_substrate_type"
-                    app:entries="form_ciconia_substratum" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_pylon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_column"
+                android:tag="@string/tag_pylon"
+                app:entries="form_ciconia_column" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_column"
-                    android:tag="@string/tag_pylon"
-                    app:entries="form_ciconia_column" />
-            </TableRow>
+            <View style="@style/FieldSeparator" />
 
-            <TableRow>
+            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                android:id="@+id/form_ciconia_nest_artificial_platform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_nest_artificial"
+                android:tag="@string/tag_nest_artificial_platform" />
 
-                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:hint="@string/monitoring_ciconia_nest_artificial"
-                    android:tag="@string/tag_nest_artificial_platform" />
+            <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_column_type"
-                    android:tag="@string/tag_pylon_type"
-                    app:entries="form_ciconia_column_type" />
-            </TableRow>
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_pylon_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_column_type"
+                android:tag="@string/tag_pylon_type"
+                app:entries="form_ciconia_column_type" />
 
-            <TableRow>
+            <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_tree"
-                    android:tag="@string/tag_ciconia_tree"
-                    app:entries="form_ciconia_tree" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_tree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_tree"
+                android:tag="@string/tag_ciconia_tree"
+                app:entries="form_ciconia_tree" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_building"
-                    android:tag="@string/tag_building"
-                    app:entries="form_ciconia_building" />
-            </TableRow>
+            <View style="@style/FieldSeparator" />
 
-            <TableRow>
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_building"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_building"
+                android:tag="@string/tag_building"
+                app:entries="form_ciconia_building" />
 
-                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:hint="@string/monitoring_ciconia_nest_artificial_human"
-                    android:tag="@string/tag_nest_artificial_platform_human" />
+            <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="@string/monitoring_ciconia_nest_other"
-                    android:tag="@string/tag_nest_another_substrate" />
-            </TableRow>
+            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                android:id="@+id/form_ciconia_artificial_platform_human"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_nest_artificial_human"
+                android:tag="@string/tag_nest_artificial_platform_human" />
 
-            <TextView
-                style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_2" />
+            <View style="@style/FieldSeparator" />
 
-            <TableRow>
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/form_ciconia_nest_another_substrate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_nest_other"
+                android:tag="@string/tag_nest_another_substrate" />
+        </LinearLayout>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_not_occupied"
-                    android:tag="@string/tag_nest_not_occupied_this_year"
-                    app:entries="form_ciconia_not_occupied" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_new_birds"
-                    android:tag="@string/tag_birds_come_to_nest_this_year"
-                    app:entries="form_ciconia_new_birds" />
-            </TableRow>
+        <View style="@style/FieldSeparator" />
 
-            <TableRow>
+        <TextView
+            style="@style/FieldSeparator.Ciconia"
+            android:text="@string/monitoring_ciconia_sep_2" />
 
-                <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:hint="@string/monitoring_ciconia_date_appear"
-                    android:tag="@string/tag_approximate_date_stork_arrival" />
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.DateFormInput
-                    android:hint="@string/monitoring_ciconia_disappear"
-                    android:tag="@string/tag_approximate_date_stork_disappear" />
-            </TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing">
 
-            <TextView
-                style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_3" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_not_occupied"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_not_occupied"
+                android:tag="@string/tag_nest_not_occupied_this_year"
+                app:entries="form_ciconia_not_occupied" />
 
-            <TableRow>
+            <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:hint="@string/monitoring_ciconia_this_year"
-                    android:tag="@string/tag_this_year_in_the_nest_appeared"
-                    app:entries="form_ciconia_new_birds" />
-            </TableRow>
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_new_birds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_new_birds"
+                android:tag="@string/tag_birds_come_to_nest_this_year"
+                app:entries="form_ciconia_new_birds" />
 
-            <TextView
-                style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_4" />
+            <View style="@style/FieldSeparator" />
 
-            <TableRow>
+            <org.bspb.smartbirds.pro.ui.views.DateFormInput
+                android:id="@+id/form_ciconia_approximate_date_stork_arrival"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_date_appear"
+                android:tag="@string/tag_approximate_date_stork_arrival" />
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="@string/monitoring_ciconia_small_count"
-                    android:tag="@string/tag_number_juveniles_in_nest" />
-            </TableRow>
+            <View style="@style/FieldSeparator" />
 
-            <TextView
-                style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_5" />
+            <org.bspb.smartbirds.pro.ui.views.DateFormInput
+                android:id="@+id/form_ciconia_approximate_date_stork_disappear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_disappear"
+                android:tag="@string/tag_approximate_date_stork_disappear" />
+        </LinearLayout>
 
-            <TableRow>
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="@string/monitoring_ciconia_not_occupied_more_than_year"
-                    android:tag="@string/tag_nest_not_inhabited_more_than_year" />
-            </TableRow>
+        <TextView
+            style="@style/FieldSeparator.Ciconia"
+            android:text="@string/monitoring_ciconia_sep_3" />
 
-            <TextView
-                style="@style/FieldSeparator.Ciconia"
-                android:text="@string/monitoring_ciconia_sep_6" />
+        <View style="@style/FieldSeparator" />
 
-            <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing">
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="@string/monitoring_ciconia_small_death_electricity"
-                    android:tag="@string/tag_info_for_juveniles_electrocuted" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_ciconia_this_year_in_nest_appeared"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_this_year"
+                android:tag="@string/tag_this_year_in_the_nest_appeared"
+                app:entries="form_ciconia_new_birds" />
+        </LinearLayout>
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="@string/monitoring_ciconia_small_death_from_parent"
-                    android:tag="@string/tag_info_for_juveniles_rejected_by_parents" />
-            </TableRow>
+        <View style="@style/FieldSeparator" />
 
-            <TableRow>
+        <TextView
+            style="@style/FieldSeparator.Ciconia"
+            android:text="@string/monitoring_ciconia_sep_4" />
 
-                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                    android:hint="@string/monitoring_ciconia_small_death_other"
-                    android:tag="@string/tag_died_from_other_causes" />
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:hint="@string/monitoring_ciconia_cause"
-                    android:tag="@string/tag_cause" />
-            </TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing">
 
-            <TableRow>
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_ciconia_number_juveniles_in_nest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_small_count"
+                android:tag="@string/tag_number_juveniles_in_nest" />
+        </LinearLayout>
 
-                <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/monitoring_common_threats"
-                    android:tag="@string/tag_threats"
-                    app:entries="form_main_threats" />
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
-                    android:hint="@string/monitoring_ciconia_notes"
-                    android:tag="@string/tag_ciconia_remarks_type" />
-            </TableRow>
+        <TextView
+            style="@style/FieldSeparator.Ciconia"
+            android:text="@string/monitoring_ciconia_sep_5" />
 
-        </TableLayout>
+        <View style="@style/FieldSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing">
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_ciconia_nest_not_inhabited_more_than_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_not_occupied_more_than_year"
+                android:tag="@string/tag_nest_not_inhabited_more_than_year" />
+        </LinearLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <TextView
+            style="@style/FieldSeparator.Ciconia"
+            android:text="@string/monitoring_ciconia_sep_6" />
+
+        <View style="@style/FieldSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing">
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_ciconia_small_death_electricity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_small_death_electricity"
+                android:tag="@string/tag_info_for_juveniles_electrocuted" />
+
+            <View style="@style/FieldSeparator" />
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_ciconia_juveniles_rejected_by_parents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_small_death_from_parent"
+                android:tag="@string/tag_info_for_juveniles_rejected_by_parents" />
+
+            <View style="@style/FieldSeparator" />
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_ciconia_died_from_other_causes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_small_death_other"
+                android:tag="@string/tag_died_from_other_causes" />
+
+            <View style="@style/FieldSeparator" />
+
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/form_ciconia_cause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_cause"
+                android:tag="@string/tag_cause" />
+
+            <View style="@style/FieldSeparator" />
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                android:id="@+id/form_ciconia_main_threats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_common_threats"
+                android:tag="@string/tag_threats"
+                app:entries="form_main_threats" />
+
+            <View style="@style/FieldSeparator" />
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
+                android:id="@+id/form_ciconia_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_notes"
+                android:tag="@string/tag_ciconia_remarks_type" />
+        </LinearLayout>
 
         <View style="@style/GroupSeparator" />
 
@@ -181,6 +311,5 @@
             android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 </ScrollView>

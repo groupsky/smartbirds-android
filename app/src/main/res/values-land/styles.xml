@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="FieldSeparator.Ciconia" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">18sp</item>
+        <item name="android:textAppearance">?android:actionMenuTextAppearance</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+</resources>
