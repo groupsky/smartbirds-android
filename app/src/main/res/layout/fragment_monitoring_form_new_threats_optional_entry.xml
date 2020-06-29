@@ -1,77 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/form_horizontal_spacing"
+        android:paddingTop="@dimen/form_vertical_spacing"
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:orientation="vertical">
 
-            <TableRow android:id="@+id/sample_container_1">
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_threats_sample_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_threats_sample_taken_1"
+                android:tag="@string/tag_sample_taken_1"
+                app:entries="threats_sample"
+                app:required="false" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:layout_span="8"
-                    android:hint="@string/monitoring_threats_sample_taken_1"
-                    android:tag="@string/tag_sample_taken_1"
-                    app:entries="threats_sample"
-                    app:required="false" />
+            <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_threats_sample_code_1"
-                    android:tag="@string/tag_sample_code_1" />
-            </TableRow>
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/form_threats_sample_code_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_threats_sample_code_1"
+                android:tag="@string/tag_sample_code_1" />
+        </LinearLayout>
 
-            <TableRow android:id="@+id/sample_container_2">
+        <View style="@style/GroupSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:layout_span="8"
-                    android:hint="@string/monitoring_threats_sample_taken_2"
-                    android:tag="@string/tag_sample_taken_2"
-                    app:entries="threats_sample"
-                    app:required="false" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_threats_sample_code_2"
-                    android:tag="@string/tag_sample_code_2" />
-            </TableRow>
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_threats_sample_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_threats_sample_taken_2"
+                android:tag="@string/tag_sample_taken_2"
+                app:entries="threats_sample"
+                app:required="false" />
 
-            <TableRow android:id="@+id/sample_container_3">
+            <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:layout_span="8"
-                    android:hint="@string/monitoring_threats_sample_taken_3"
-                    android:tag="@string/tag_sample_taken_3"
-                    app:entries="threats_sample"
-                    app:required="false" />
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/form_threats_sample_code_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_threats_sample_code_2"
+                android:tag="@string/tag_sample_code_2" />
+        </LinearLayout>
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_threats_sample_code_3"
-                    android:tag="@string/tag_sample_code_3" />
-            </TableRow>
+        <View style="@style/GroupSeparator" />
 
-            <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-                <EditText
-                    style="@style/FieldInput.Memo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="12"
-                    android:hint="@string/monitoring_threats_notes"
-                    android:tag="@string/tag_threats_notes" />
-            </TableRow>
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_threats_sample_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_threats_sample_taken_3"
+                android:tag="@string/tag_sample_taken_3"
+                app:entries="threats_sample"
+                app:required="false" />
 
-        </TableLayout>
+            <View style="@style/FieldSeparator" />
+
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/form_threats_sample_code_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_threats_sample_code_3"
+                android:tag="@string/tag_sample_code_3" />
+
+        </LinearLayout>
+
+        <View style="@style/GroupSeparator" />
+
+        <EditText
+            android:id="@+id/form_threats_notes"
+            style="@style/FieldInput.Memo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_threats_notes"
+            android:tag="@string/tag_threats_notes" />
 
     </LinearLayout>
 </ScrollView>
