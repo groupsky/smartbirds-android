@@ -4,69 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/z_design_partial_form_birds_row">
 
-    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-        android:id="@+id/field_name"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:hint="@string/monitoring_birds_name"
-        android:tag="@string/tag_species_scientific_name"
-        app:entries="species_birds"
-        app:required="true" />
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/form_horizontal_spacing"
+        android:paddingTop="@dimen/form_vertical_spacing"
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
 
-    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-        android:id="@+id/form_birds_count_units"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="@string/monitoring_birds_count_unit"
-        android:tag="@string/tag_count_unit"
-        android:visibility="gone"
-        app:entries="form_humid_birds_count_units"
-        app:required="true"
-        tools:visibility="visible" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/field_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_birds_name"
+            android:tag="@string/tag_species_scientific_name"
+            app:entries="species_birds"
+            app:required="true" />
 
-    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-        android:id="@+id/form_birds_count_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="@string/monitoring_birds_count_type"
-        android:tag="@string/tag_count_type"
-        android:visibility="gone"
-        app:entries="form_humid_birds_count_type"
-        app:required="true"
-        tools:visibility="visible" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_count_units"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_birds_count_unit"
+            android:tag="@string/tag_count_unit"
+            android:visibility="gone"
+            app:entries="form_humid_birds_count_units"
+            app:required="true"
+            tools:visibility="visible" />
 
-    <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
-        android:id="@+id/form_birds_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="@string/monitoring_birds_count"
-        android:tag="@string/tag_count"
-        app:required="true" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_count_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_birds_count_type"
+            android:tag="@string/tag_count_type"
+            android:visibility="gone"
+            app:entries="form_humid_birds_count_type"
+            app:required="true"
+            tools:visibility="visible" />
 
-    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="@string/monitoring_birds_gender"
-        android:tag="@string/tag_sex"
-        app:entries="form_birds_sex" />
+        <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
+            android:id="@+id/form_birds_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_birds_count"
+            android:tag="@string/tag_count"
+            app:required="true" />
 
-    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="@string/monitoring_birds_age"
-        android:tag="@string/tag_age"
-        app:entries="form_birds_age" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/monitoring_birds_gender"
+            android:tag="@string/tag_sex"
+            app:entries="form_birds_sex" />
 
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:text="X" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_birds_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/monitoring_birds_age"
+            android:tag="@string/tag_age"
+            app:entries="form_birds_age" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_delete" />
+
+        <View style="@style/GroupSeparator" />
+    </LinearLayout>
+
 
 </merge>
