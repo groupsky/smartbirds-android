@@ -1,97 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/form_horizontal_spacing"
+        android:paddingTop="@dimen/form_vertical_spacing"
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
 
-        <TableLayout
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:id="@+id/form_threats_confidential"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:tag="@string/tag_confidential"
+            android:text="@string/monitoring_plants_private" />
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
+            android:id="@+id/form_threats_primary_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:tag="@string/tag_primary_type"
+            app:config_entries="threatsPrimaryType"
+            app:hint="@string/monitoring_threats_primary_type"
+            app:required="true" />
 
-            <TableRow>
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
-                    android:id="@+id/form_threats_primary_type"
-                    android:layout_span="9"
-                    android:tag="@string/tag_primary_type"
-                    app:config_entries="threatsPrimaryType"
-                    app:hint="@string/monitoring_threats_primary_type"
-                    app:required="true" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
+            android:id="@+id/form_threats_poisoned_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="@string/tag_poisoned_type"
+            app:config_entries="threatsPoisonedType"
+            app:hint="@string/monitoring_threats_poisoned_type" />
 
-                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:id="@+id/form_threats_confidential"
-                    android:layout_span="3"
-                    android:tag="@string/tag_confidential"
-                    android:text="@string/monitoring_plants_private" />
-            </TableRow>
+        <View style="@style/FieldSeparator" />
 
-            <TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_threats_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_threats_category"
+            android:tag="@string/tag_category"
+            app:entries="threats_category" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
-                    android:id="@+id/form_threats_poisoned_type"
-                    android:layout_span="9"
-                    android:tag="@string/tag_poisoned_type"
-                    app:config_entries="threatsPoisonedType"
-                    app:hint="@string/monitoring_threats_poisoned_type" />
-            </TableRow>
+        <View style="@style/FieldSeparator" />
 
-            <TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput_
+            android:id="@+id/form_threats_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_threats_class"
+            android:tag="@string/tag_class"
+            app:config_entries="speciesClass" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_threats_category"
-                    android:layout_span="10"
-                    android:hint="@string/monitoring_threats_category"
-                    android:tag="@string/tag_category"
-                    app:entries="threats_category" />
-            </TableRow>
+        <View style="@style/FieldSeparator" />
 
-            <TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_threats_species"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_threats_species"
+            android:tag="@string/tag_species_scientific_name" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput_
-                    android:id="@+id/form_threats_class"
-                    android:layout_span="5"
-                    android:hint="@string/monitoring_threats_class"
-                    android:tag="@string/tag_class"
-                    app:config_entries="speciesClass"/>
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_threats_species"
-                    android:layout_span="5"
-                    android:hint="@string/monitoring_threats_species"
-                    android:tag="@string/tag_species_scientific_name" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
+            android:id="@+id/form_threats_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_threats_count"
+            android:tag="@string/tag_count" />
 
-            <TableRow>
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
-                    android:id="@+id/form_threats_count"
-                    android:layout_span="5"
-                    android:hint="@string/monitoring_threats_count"
-                    android:tag="@string/tag_count" />
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_threats_estimate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_threats_estimate"
+            android:tag="@string/tag_estimate"
+            app:entries="threats_estimate" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_threats_estimate"
-                    android:layout_span="5"
-                    android:hint="@string/monitoring_threats_estimate"
-                    android:tag="@string/tag_estimate"
-                    app:entries="threats_estimate" />
+        <View style="@style/FieldSeparator" />
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_threats_state_carcass"
-                    android:layout_span="5"
-                    android:hint="@string/monitoring_threats_state_carcass"
-                    android:tag="@string/tag_state_carcass"
-                    app:entries="threats_state_carcass" />
-            </TableRow>
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_threats_state_carcass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_threats_state_carcass"
+            android:tag="@string/tag_state_carcass"
+            app:entries="threats_state_carcass" />
 
-        </TableLayout>
+        <View style="@style/GroupSeparator" />
 
         <fragment
             android:id="@+id/pictures_fragment"

@@ -4,6 +4,7 @@ import android.view.View;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.InstanceState;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
@@ -15,6 +16,7 @@ import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 @EFragment(R.layout.fragment_monitoring_form_new_threats_optional_entry)
 public class NewThreatsEntryOptionalFormFragment extends BaseFormFragment implements NewThreatsEntryRequiredFormFragment.OnPrimaryTypeChangedListener {
 
+    @InstanceState
     String primaryType;
 
 
