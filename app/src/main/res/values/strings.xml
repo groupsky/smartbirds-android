@@ -307,4 +307,5 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_mammal_danger_observation">"Findings"</string>
     <string name="monitoring_herptiles_danger_observation">"Findings"</string>
     <string name="monitoring_invertebrates_danger_observation">"Findings"</string>
+    <string name="btn_delete">remove</string>
 </resources>
