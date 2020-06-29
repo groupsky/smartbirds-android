@@ -1,135 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/form_horizontal_spacing"
-        android:paddingTop="@dimen/form_vertical_spacing"
-        android:paddingRight="@dimen/form_horizontal_spacing"
-        android:paddingBottom="@dimen/form_vertical_spacing">
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <TableRow>
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_scl"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_scl"
                 android:tag="@string/tag_scl" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_mpl"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_mpl"
                 android:tag="@string/tag_mpl" />
-        </LinearLayout>
 
-        <View style="@style/FieldSeparator" />
+        </TableRow>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <TableRow>
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_mcw"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_mcw"
                 android:tag="@string/tag_mcw" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_lcap"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_h"
                 android:tag="@string/tag_lcap" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_wight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_weight"
                 android:tag="@string/tag_weight_g" />
-        </LinearLayout>
 
-        <View style="@style/FieldSeparator" />
+        </TableRow>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <TableRow>
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_t_substrate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_t_substrate"
                 android:tag="@string/tag_t_substrate" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_t_air"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_t_vha"
                 android:tag="@string/tag_t_air" />
 
             <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
                 android:id="@+id/form_herptiles_t_cloaca"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_t_kloaka"
                 android:tag="@string/tag_t_cloaca" />
-        </LinearLayout>
+        </TableRow>
 
-        <View style="@style/FieldSeparator" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <TableRow>
 
             <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                 android:id="@+id/form_herptiles_sq_ventr"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_sq_ventr"
                 android:tag="@string/tag_sq_ventr" />
 
             <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                 android:id="@+id/form_herptiles_sq_caud"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_sq_caud"
                 android:tag="@string/tag_sq_caud" />
 
             <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                 android:id="@+id/form_herptiles_sq_dors"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/monitoring_herp_sq_dors"
                 android:tag="@string/tag_sq_dors" />
-        </LinearLayout>
-    </LinearLayout>
+        </TableRow>
+
+    </TableLayout>
+
 </ScrollView>
