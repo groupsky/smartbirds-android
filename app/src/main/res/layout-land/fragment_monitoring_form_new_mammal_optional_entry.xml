@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
+
+        <TableRow>
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_l"
+                android:hint="@string/monitoring_mammal_L"
+                android:tag="@string/tag_l" />
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_c"
+                android:hint="@string/monitoring_mammal_C"
+                android:tag="@string/tag_c" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_a"
+                android:hint="@string/monitoring_mammal_A"
+                android:tag="@string/tag_a" />
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_pl"
+                android:hint="@string/monitoring_mammal_Pl"
+                android:tag="@string/tag_pl" />
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_weight"
+                android:hint="@string/monitoring_herp_weight"
+                android:tag="@string/tag_weight_g" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_t_substrate"
+                android:hint="@string/monitoring_herp_t_substrate"
+                android:tag="@string/tag_t_substrate" />
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_mammals_t_air"
+                android:hint="@string/monitoring_herp_t_vha"
+                android:tag="@string/tag_t_air" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</ScrollView>
