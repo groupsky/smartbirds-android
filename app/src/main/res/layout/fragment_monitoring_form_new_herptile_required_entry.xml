@@ -68,6 +68,16 @@
 
         <View style="@style/FieldSeparator" />
 
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_herp_habitat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_herp_habitat"
+            android:tag="@string/tag_habitat"
+            app:entries="form_herptiles_habitat" />
+
+        <View style="@style/FieldSeparator" />
+
         <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
             android:id="@+id/form_herptiles_findings"
             android:layout_width="match_parent"
@@ -93,16 +103,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/monitoring_herp_axis_distance"
             android:tag="@string/tag_distance_from_axis" />
-
-        <View style="@style/FieldSeparator" />
-
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_herp_habitat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_herp_habitat"
-            android:tag="@string/tag_habitat"
-            app:entries="form_herptiles_habitat" />
 
         <View style="@style/FieldSeparator" />
 
