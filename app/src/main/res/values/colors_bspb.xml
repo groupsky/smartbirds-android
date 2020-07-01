@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#428bca</color>
+    <color name="white">#ffffff</color>
+
     <color name="bspb_color">#5086b4</color>
     <color name="backgroundSelected">#775086b4</color>
     <color name="zone_color">#c33</color>
