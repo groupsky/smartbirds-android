@@ -235,11 +235,7 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
     public void onPopulate(MultipleChoiceFullScreenRow row) {
         if (row.getId() == View.NO_ID) {
             // set id to the row, so instansce state is preserved
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                row.setId(View.generateViewId());
-            } else {
-                row.setId(ViewUtils.generateViewId());
-            }
+            row.setId(View.generateViewId());
         }
         // the row is used, so we need to add an empty one
         if (!isUpdating) {

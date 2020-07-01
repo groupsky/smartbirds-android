@@ -98,11 +98,8 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     @AfterViews
     protected void flushDeserialize() {
         initViews();
-        if (picturesFragment == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
-        }
         if (picturesFragment == null) {
-            picturesFragment = (NewEntryPicturesFragment) getFragmentManager().findFragmentById(R.id.pictures_fragment);
+            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         if (pendingDeserialize != null) {
             picturesFragment.doDeserialize(monitoringCode, pendingDeserialize);
