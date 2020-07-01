@@ -213,10 +213,8 @@ public class ZoneFormInput extends TextViewFormInput implements SupportStorage {
             mPopup = builder.create();
 
             final ListView listView = mPopup.getListView();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                listView.setTextDirection(getTextDirection());
-                listView.setTextAlignment(getTextAlignment());
-            }
+            listView.setTextDirection(getTextDirection());
+            listView.setTextAlignment(getTextAlignment());
 
             mPopup.show();
 

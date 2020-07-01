@@ -164,11 +164,9 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
                     .setPositiveButton(android.R.string.ok, this)
                     .setNegativeButton(android.R.string.cancel, this)
                     .create();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                final ListView listView = mPopup.getListView();
-                listView.setTextDirection(getTextDirection());
-                listView.setTextAlignment(getTextAlignment());
-            }
+            final ListView listView = mPopup.getListView();
+            listView.setTextDirection(getTextDirection());
+            listView.setTextAlignment(getTextAlignment());
             mPopup.show();
         }
 

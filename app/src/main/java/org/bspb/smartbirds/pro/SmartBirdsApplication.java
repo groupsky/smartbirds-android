@@ -2,8 +2,6 @@ package org.bspb.smartbirds.pro;
 
 import android.app.Application;
 
-import androidx.multidex.MultiDexApplication;
-
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -29,7 +27,7 @@ import io.fabric.sdk.android.Fabric;
  * Created by groupsky on 14-9-25.
  */
 @EApplication
-public class SmartBirdsApplication extends MultiDexApplication {
+public class SmartBirdsApplication extends Application {
 
     public static final String TAG = "SBP";
 

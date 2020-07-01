@@ -16,13 +16,10 @@ android {
 
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode versionCodeBase
         versionName "${versionNameBase}"
-
-        // TODO remove when drop android 4 support
-        multiDexEnabled true
 
         def buildTime = new GregorianCalendar().format("MM-dd-yyyy' 'HH:mm:ss Z")
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
@@ -91,9 +88,6 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-
-    // TODO remove when drop android 4 support
-    implementation 'com.android.support:multidex:1.0.3'
 
     // TODO: migrate to v3.x
     implementation 'de.greenrobot:eventbus:2.4.1'
