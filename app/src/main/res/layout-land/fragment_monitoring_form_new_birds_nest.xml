@@ -135,4 +135,23 @@
             android:tag="@string/tag_land_uses_300m" />
 
     </TableRow>
+
+    <TableRow>
+
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            android:layout_span="3"
+            android:hint="@string/monitoring_common_threats"
+            android:tag="@string/tag_threats"
+            app:entries="form_main_threats" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <EditText
+            style="@style/FieldInput.Memo"
+            android:layout_span="3"
+            android:hint="@string/monitoring_birds_notes"
+            android:tag="@string/tag_remarks_type" />
+    </TableRow>
 </TableLayout>
