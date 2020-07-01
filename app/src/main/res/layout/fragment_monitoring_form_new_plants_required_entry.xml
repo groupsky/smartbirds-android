@@ -23,7 +23,7 @@
             android:tag="@string/tag_confidential"
             android:text="@string/monitoring_plants_private" />
 
-        <View style="@style/GroupSeparator" />
+        <View style="@style/FieldSeparator" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:id="@+id/form_plants_species"
@@ -83,31 +83,6 @@
 
         <View style="@style/GroupSeparator" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                android:id="@+id/form_plants_elevation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/monitoring_plants_elevation"
-                android:tag="@string/tag_elevation" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:paddingLeft="8dp"
-                android:paddingRight="16dp"
-                android:text="@string/monitoring_plants_elevation_units"
-                android:textColor="?android:textColorHint" />
-        </LinearLayout>
-
-        <View style="@style/GroupSeparator" />
-
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:id="@+id/form_plants_habitat"
             android:layout_width="match_parent"
@@ -135,6 +110,31 @@
             android:hint="@string/monitoring_common_threats"
             android:tag="@string/tag_threats"
             app:entries="form_main_threats" />
+
+        <View style="@style/GroupSeparator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_plants_elevation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/monitoring_plants_elevation"
+                android:tag="@string/tag_elevation" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingLeft="8dp"
+                android:paddingRight="16dp"
+                android:text="@string/monitoring_plants_elevation_units"
+                android:textColor="?android:textColorHint" />
+        </LinearLayout>
 
         <View style="@style/GroupSeparator" />
 
