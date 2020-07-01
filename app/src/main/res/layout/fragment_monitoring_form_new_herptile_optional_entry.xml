@@ -59,14 +59,16 @@
                 android:hint="@string/monitoring_herp_h"
                 android:tag="@string/tag_lcap" />
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_wight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/monitoring_herp_weight"
-                android:tag="@string/tag_weight_g" />
         </LinearLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_herptiles_wight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_herp_weight"
+            android:tag="@string/tag_weight_g" />
 
         <View style="@style/FieldSeparator" />
 
@@ -91,14 +93,16 @@
                 android:hint="@string/monitoring_herp_t_vha"
                 android:tag="@string/tag_t_air" />
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_t_cloaca"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/monitoring_herp_t_kloaka"
-                android:tag="@string/tag_t_cloaca" />
         </LinearLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_herptiles_t_cloaca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_herp_t_kloaka"
+            android:tag="@string/tag_t_cloaca" />
 
         <View style="@style/FieldSeparator" />
 
@@ -123,13 +127,15 @@
                 android:hint="@string/monitoring_herp_sq_caud"
                 android:tag="@string/tag_sq_caud" />
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                android:id="@+id/form_herptiles_sq_dors"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/monitoring_herp_sq_dors"
-                android:tag="@string/tag_sq_dors" />
         </LinearLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+            android:id="@+id/form_herptiles_sq_dors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_herp_sq_dors"
+            android:tag="@string/tag_sq_dors" />
     </LinearLayout>
 </ScrollView>
