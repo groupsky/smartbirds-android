@@ -190,6 +190,24 @@
             android:hint="@string/monitoring_birds_land_use"
             android:lines="1"
             android:tag="@string/tag_land_uses_300m" />
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_common_threats"
+            android:tag="@string/tag_threats"
+            app:entries="form_main_threats" />
+
+        <View style="@style/FieldSeparator" />
+
+        <EditText
+            style="@style/FieldInput.Memo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_birds_notes"
+            android:tag="@string/tag_remarks_type" />
     </LinearLayout>
 
 </ScrollView>
