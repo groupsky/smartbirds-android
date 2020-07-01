@@ -30,6 +30,8 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
     private boolean mRequired;
     private int mEntriesKey;
     private CharSequence mHint;
+    private boolean mIsVertical;
+
 
     @ViewById(R.id.single_choice_radio_hint)
     protected TextView hintTextView;
@@ -55,6 +57,7 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
             mHint = a.getText(R.styleable.SingleChoiceRadioFormInput_hint);
             mEntriesKey = a.getInteger(R.styleable.SingleChoiceRadioFormInput_config_entries, -1);
             mRequired = a.getBoolean(R.styleable.SingleChoiceRadioFormInput_required, false);
+            mIsVertical = a.getInteger(R.styleable.SingleChoiceRadioFormInput_orientation, 0) == 1;
         } finally {
             a.recycle();
         }
@@ -62,6 +65,9 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
 
     @AfterViews
     protected void init() {
+        if (mIsVertical) {
+            radioGroup.setOrientation(LinearLayout.VERTICAL);
+        }
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
