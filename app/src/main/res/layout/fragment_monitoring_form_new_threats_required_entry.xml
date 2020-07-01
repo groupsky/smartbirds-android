@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:tag="@string/tag_poisoned_type"
             app:config_entries="threatsPoisonedType"
-            app:hint="@string/monitoring_threats_poisoned_type" />
+            app:hint="@string/monitoring_threats_poisoned_type"
+            app:orientation="vertical" />
 
         <View style="@style/FieldSeparator" />
 

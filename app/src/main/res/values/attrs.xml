@@ -52,6 +52,10 @@
         <attr name="config_entries" />
         <attr name="hint" />
         <attr name="required" />
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
     </declare-styleable>
 
     <!-- Stylable attributes for SingleChoiceConfigFormInput-->
