@@ -58,6 +58,17 @@
         <View style="@style/FieldSeparator" />
 
         <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            android:id="@+id/form_cbm_sector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_cbm_sector"
+            android:tag="@string/tag_transect_number"
+            app:entries="form_cbm_sector"
+            app:required="true" />
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
             android:id="@+id/form_cbm_primary_habitat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,17 +118,6 @@
             android:hint="@string/monitoring_cbm_visit_number"
             android:tag="@string/tag_visit_number"
             app:entries="form_cbm_visit_number"
-            app:required="true" />
-
-        <View style="@style/FieldSeparator" />
-
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_cbm_sector"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_sector"
-            android:tag="@string/tag_transect_number"
-            app:entries="form_cbm_sector"
             app:required="true" />
 
         <View style="@style/FieldSeparator" />
