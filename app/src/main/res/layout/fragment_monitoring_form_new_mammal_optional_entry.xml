@@ -36,6 +36,8 @@
                 android:tag="@string/tag_c" />
         </LinearLayout>
 
+        <View style="@style/FieldSeparator" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,14 +59,18 @@
                 android:hint="@string/monitoring_mammal_Pl"
                 android:tag="@string/tag_pl" />
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_mammals_weight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/monitoring_herp_weight"
-                android:tag="@string/tag_weight_g" />
         </LinearLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+            android:id="@+id/form_mammals_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/monitoring_herp_weight"
+            android:tag="@string/tag_weight_g" />
+
+        <View style="@style/FieldSeparator" />
 
         <LinearLayout
             android:layout_width="match_parent"
