@@ -1,13 +1,15 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -101,7 +103,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         setHasOptionsMenu(true);
 
         if (entryId > 0) {
-            getLoaderManager().restartLoader(this.hashCode(), null, this);
+            LoaderManager.getInstance(getActivity()).restartLoader(this.hashCode(), null, this);
         }
     }
 
@@ -159,7 +161,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     @Override
     protected void doDeserialize(String monitoringCode, HashMap<String, String> data) {
         haveDeserialized = true;
-        getLoaderManager().destroyLoader(this.hashCode());
+        LoaderManager.getInstance(getActivity()).destroyLoader(this.hashCode());
         super.doDeserialize(monitoringCode, data);
     }
 

@@ -60,8 +60,8 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
     @AfterViews
     void createFragment() {
         setTitle(entryType.titleId);
-        if (getFragmentManager().findFragmentById(R.id.container) == null) {
-            getFragmentManager().beginTransaction()
+        if (getSupportFragmentManager().findFragmentById(R.id.container) == null) {
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, entryType.buildFragment(lat, lon))
                     .commit();
         }

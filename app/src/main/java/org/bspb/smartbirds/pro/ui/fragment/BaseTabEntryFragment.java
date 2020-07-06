@@ -1,11 +1,15 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,27 +105,31 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ab = activity.getActionBar();
+        if (activity instanceof AppCompatActivity) {
+            ab = ((AppCompatActivity) activity).getSupportActionBar();
+        }
+
         if (ab != null) {
             ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-            ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            ActionBar.TabListener tabListener = new androidx.appcompat.app.ActionBar.TabListener() {
 
                 @Override
-                public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                public void onTabSelected(androidx.appcompat.app.ActionBar.Tab tab, FragmentTransaction ft) {
                     if (viewPager != null)
                         viewPager.setCurrentItem(tab.getPosition());
                 }
 
                 @Override
-                public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                public void onTabUnselected(androidx.appcompat.app.ActionBar.Tab tab, FragmentTransaction ft) {
 
                 }
 
                 @Override
-                public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                public void onTabReselected(androidx.appcompat.app.ActionBar.Tab tab, FragmentTransaction ft) {
 
                 }
+
             };
 
             ab.addTab(ab.newTab().setText(R.string.tab_required).setTabListener(tabListener));

@@ -1,10 +1,11 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -48,7 +49,7 @@ public class EditMonitoringEntryActivity extends BaseActivity {
         }
         if (fragment == null) {
             fragment = entryType.loadFragment(entryId);
-            getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         }
     }
 
