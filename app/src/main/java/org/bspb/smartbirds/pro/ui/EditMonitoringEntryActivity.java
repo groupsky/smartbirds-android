@@ -76,7 +76,7 @@ public class EditMonitoringEntryActivity extends BaseActivity {
 
         //Ask the user if they want to quit
         new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_alert)
                 .setTitle(R.string.cancel_edit_entry)
                 .setMessage(R.string.really_cancel_edit_entry)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
