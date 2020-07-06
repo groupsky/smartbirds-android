@@ -1,7 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/zone_color</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+        <item name="imageButtonStyle">@style/Widget.AppCompat.Button.Colored</item>
+
         <item name="singleChoiceFormInputStyle">@style/FieldInput.SingleChoice</item>
         <item name="multipleChoiceFormInputStyle">@style/FieldInput.MultipleChoice</item>
         <item name="dateFormInputStyle">@style/FieldInput.Date</item>
@@ -26,7 +33,7 @@
         <item name="android:layout_height">12dp</item>
     </style>
 
-    <style name="FieldSeparator.Ciconia" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+    <style name="FieldSeparator.Ciconia" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">32dp</item>
         <item name="android:gravity">center_vertical</item>
@@ -41,7 +48,7 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <style name="FieldInput.Text" parent="android:Widget.Holo.Light.EditText">
+    <style name="FieldInput.Text" parent="Widget.AppCompat.EditText">
         <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
@@ -50,7 +57,7 @@
         <item name="android:inputType">text</item>
     </style>
 
-    <style name="FieldInput.MultipleText" parent="FieldInput.Text"></style>
+    <style name="FieldInput.MultipleText" parent="FieldInput.Text" />
 
     <style name="FieldInput.FloatNumber" parent="FieldInput.Text">
         <item name="android:inputType">numberDecimal|numberSigned</item>
@@ -76,7 +83,7 @@
         <item name="android:gravity">top|left</item>
     </style>
 
-    <style name="FieldInput.SemiSpinner" parent="android:Widget.Holo.Light.Spinner">
+    <style name="FieldInput.SemiSpinner" parent="Widget.AppCompat.Spinner">
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingBottom">5dp</item>
@@ -84,14 +91,14 @@
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
-    <style name="FieldInput.Date" parent="FieldInput.SemiSpinner"></style>
+    <style name="FieldInput.Date" parent="FieldInput.SemiSpinner" />
 
-    <style name="FieldInput.Time" parent="FieldInput.SemiSpinner"></style>
+    <style name="FieldInput.Time" parent="FieldInput.SemiSpinner" />
 
-    <style name="FieldInput.MultipleChoice" parent="FieldInput.SemiSpinner"></style>
+    <style name="FieldInput.MultipleChoice" parent="FieldInput.SemiSpinner" />
 
-    <style name="FieldInput.SingleChoice" parent="FieldInput.SemiSpinner"></style>
+    <style name="FieldInput.SingleChoice" parent="FieldInput.SemiSpinner" />
 
-    <style name="FieldInput.Switch" parent="android:Widget.Holo.Light.CompoundButton.CheckBox"></style>
+    <style name="FieldInput.Switch" parent="Widget.AppCompat.CompoundButton.CheckBox" />
 
 </resources>

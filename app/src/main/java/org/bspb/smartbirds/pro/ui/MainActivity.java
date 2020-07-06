@@ -8,6 +8,7 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.WindowFeature;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -19,6 +20,7 @@ import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
+@WindowFeature({Window.FEATURE_INDETERMINATE_PROGRESS})
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
 
@@ -34,7 +36,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         requireAuthentication();
         if (!isFinishing() && globalPrefs.runningMonitoring().get()) {
             MonitoringActivity_.intent(this).start();
