@@ -9,6 +9,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.AutoCompleteTextView;
 
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
@@ -16,7 +18,7 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 /**
  * Created by groupsky on 14-10-17.
  */
-public class TextFormInput extends AutoCompleteTextView implements SupportRequiredView {
+public class TextFormInput extends AppCompatAutoCompleteTextView implements SupportRequiredView {
 
     protected final String TAG = SmartBirdsApplication.TAG + '.' + getClass().getSimpleName();
 

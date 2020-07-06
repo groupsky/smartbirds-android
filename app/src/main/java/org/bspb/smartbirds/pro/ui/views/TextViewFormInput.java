@@ -8,6 +8,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
@@ -15,7 +17,7 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 /**
  * Created by groupsky on 26.11.14.
  */
-public class TextViewFormInput extends TextView implements SupportRequiredView {
+public class TextViewFormInput extends AppCompatTextView implements SupportRequiredView {
 
     protected final String TAG = SmartBirdsApplication.TAG + '.' + getClass().getSimpleName();
 

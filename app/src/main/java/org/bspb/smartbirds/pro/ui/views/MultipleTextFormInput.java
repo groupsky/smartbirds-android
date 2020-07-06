@@ -8,6 +8,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.MultiAutoCompleteTextView;
 
+import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView;
+
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
@@ -15,7 +17,7 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 /**
  * Created by groupsky on 14-10-17.
  */
-public class MultipleTextFormInput extends MultiAutoCompleteTextView implements SupportRequiredView {
+public class MultipleTextFormInput extends AppCompatMultiAutoCompleteTextView implements SupportRequiredView {
 
     protected final String TAG = SmartBirdsApplication.TAG + '.' + getClass().getSimpleName();
 
