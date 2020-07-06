@@ -388,7 +388,7 @@ open class MainFragment : Fragment() {
     private fun confirmCancel() {
         //Ask the user if they want to quit
         AlertDialog.Builder(activity)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_alert)
                 .setTitle(R.string.cancel_monitoring)
                 .setMessage(R.string.really_cancel_monitoring)
                 .setPositiveButton(android.R.string.yes) { _, _ -> doCancel() }
