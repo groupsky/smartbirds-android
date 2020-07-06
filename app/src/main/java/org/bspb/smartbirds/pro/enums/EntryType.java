@@ -1,10 +1,11 @@
 package org.bspb.smartbirds.pro.enums;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
+
 import androidx.annotation.IdRes;
 import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.forms.convert.BirdsConverter;

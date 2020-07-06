@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.app.Fragment;
-import androidx.legacy.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -16,11 +16,14 @@ public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
     protected void setupTabs() {
         setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
             @Override
-            public android.app.Fragment getItem(int position) {
+            public androidx.fragment.app.Fragment getItem(int position) {
                 switch (position) {
-                    case 0: return NewBirdsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    case 1: return NewBirdsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    default: throw new IllegalArgumentException("Unhandled position"+position);
+                    case 0:
+                        return NewBirdsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                    case 1:
+                        return NewBirdsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                    default:
+                        throw new IllegalArgumentException("Unhandled position" + position);
                 }
             }
 

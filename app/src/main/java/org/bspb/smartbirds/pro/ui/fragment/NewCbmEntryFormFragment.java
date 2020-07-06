@@ -1,10 +1,10 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.app.Fragment;
 import android.location.Location;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
+
+import androidx.fragment.app.Fragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
