@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#78A4C9"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context="org.bspb.smartbirds.pro.ui.MainActivity_">
@@ -44,7 +43,6 @@
 
             <Button
                 android:id="@+id/btn_start_birds"
-                style="@style/Buttonbspb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -54,7 +52,6 @@
 
             <Button
                 android:id="@+id/btn_resume_birds"
-                style="@style/Buttonbspb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -65,7 +62,6 @@
 
             <Button
                 android:id="@+id/btn_cancel_birds"
-                style="@style/Buttonbspb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -90,7 +86,6 @@
 
             <Button
                 android:id="@+id/btn_upload"
-                style="@style/Buttonbspb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_screen_btn_upload"

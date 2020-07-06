@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import org.bspb.smartbirds.pro.service.DataService_;
@@ -14,7 +16,7 @@ import org.bspb.smartbirds.pro.service.DataService_;
  * <p>
  * Created by Ilian Georgiev.
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
