@@ -99,4 +99,6 @@
 
     <style name="FieldInput.Switch" parent="Widget.AppCompat.CompoundButton.CheckBox" />
 
+    <style name="TextInputLayout" parent="Widget.Design.TextInputLayout" />
+
 </resources>

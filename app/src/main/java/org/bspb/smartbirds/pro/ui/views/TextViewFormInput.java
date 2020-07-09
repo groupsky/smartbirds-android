@@ -2,12 +2,14 @@ package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import org.bspb.smartbirds.pro.R;
@@ -17,7 +19,7 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 /**
  * Created by groupsky on 26.11.14.
  */
-public class TextViewFormInput extends AppCompatTextView implements SupportRequiredView {
+public class TextViewFormInput extends AppCompatEditText implements SupportRequiredView {
 
     protected final String TAG = SmartBirdsApplication.TAG + '.' + getClass().getSimpleName();
 
@@ -40,6 +42,12 @@ public class TextViewFormInput extends AppCompatTextView implements SupportRequi
         } finally {
             a.recycle();
         }
+
+        setClickable(true);
+        setFocusable(false);
+        setCursorVisible(false);
+        setInputType(InputType.TYPE_TEXT_VARIATION_FILTER | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        setSingleLine(false);
     }
 
     @Override
