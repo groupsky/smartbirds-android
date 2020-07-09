@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/form_vertical_spacing"
     android:showDividers="beginning"
     android:shrinkColumns="*"
     android:stretchColumns="*"
@@ -10,148 +11,303 @@
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_death"
-            android:layout_span="2"
-            android:hint="@string/monitoring_birds_death"
-            android:tag="@string/tag_dead_specimen_reason"
-            app:entries="form_birds_death" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_marking"
-            android:hint="@string/monitoring_birds_marking"
-            android:tag="@string/tag_mark_presence"
-            app:entries="form_birds_marking" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_death"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_death"
+                android:tag="@string/tag_dead_specimen_reason"
+                app:entries="form_birds_death" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_marking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_marking"
+                android:tag="@string/tag_mark_presence"
+                app:entries="form_birds_marking" />
+        </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_nest_substrate"
-            android:hint="@string/monitoring_birds_substrate"
-            android:tag="@string/tag_substrate"
-            app:entries="form_birds_nest_substrate" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <org.bspb.smartbirds.pro.ui.views.TextFormInput
-            android:id="@+id/form_birds_tree"
-            android:hint="@string/monitoring_birds_tree"
-            android:tag="@string/tag_tree" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_nest_substrate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_substrate"
+                android:tag="@string/tag_substrate"
+                app:entries="form_birds_nest_substrate" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-            android:id="@+id/form_birds_tree_height"
-            android:hint="@string/monitoring_birds_tree_height"
-            android:tag="@string/tag_tree_height" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/form_birds_tree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_tree"
+                android:tag="@string/tag_tree" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_birds_tree_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_tree_height"
+                android:tag="@string/tag_tree_height" />
+        </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_nest_location"
-            android:hint="@string/monitoring_birds_tree_location"
-            android:tag="@string/tag_tree_location"
-            app:entries="form_birds_nest_location" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_nest_height"
-            android:hint="@string/monitoring_birds_nest_height"
-            android:tag="@string/tag_nest_height"
-            app:entries="form_birds_nest_height" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_nest_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_tree_location"
+                android:tag="@string/tag_tree_location"
+                app:entries="form_birds_nest_location" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_nest_position"
-            android:hint="@string/monitoring_birds_nest_location"
-            android:tag="@string/tag_nest_location"
-            app:entries="form_birds_nest_position" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_nest_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_nest_height"
+                android:tag="@string/tag_nest_height"
+                app:entries="form_birds_nest_height" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_nest_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_nest_location"
+                android:tag="@string/tag_nest_location"
+                app:entries="form_birds_nest_position" />
+        </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-            android:id="@+id/form_birds_incubation"
-            android:tag="@string/tag_incubation"
-            android:text="@string/monitoring_birds_incubation" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-            android:id="@+id/form_birds_number_of_eggs"
-            android:hint="@string/monitoring_birds_eggs_count"
-            android:tag="@string/tag_number_of_eggs" />
+            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                android:id="@+id/form_birds_incubation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tag="@string/tag_incubation"
+                android:text="@string/monitoring_birds_incubation" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-            android:id="@+id/form_birds_number_of_pull"
-            android:hint="@string/monitoring_birds_small_downy_count"
-            android:tag="@string/tag_number_of_pull" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_birds_number_of_eggs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_eggs_count"
+                android:tag="@string/tag_number_of_eggs" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_birds_number_of_pull"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_small_downy_count"
+                android:tag="@string/tag_number_of_pull" />
+        </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-            android:id="@+id/form_birds_number_of_fledglings"
-            android:hint="@string/monitoring_birds_small_feathered_count"
-            android:tag="@string/tag_number_of_fledglings" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-            android:id="@+id/form_birds_number_fledged_juveniles"
-            android:hint="@string/monitoring_birds_takeoff_count"
-            android:tag="@string/tag_number_fledged_juveniles" />
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_birds_number_of_fledglings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_small_feathered_count"
+                android:tag="@string/tag_number_of_fledglings" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-            android:id="@+id/form_birds_nest_guard"
-            android:tag="@string/tag_nest_guarding"
-            android:text="@string/monitoring_birds_nest_guard" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_birds_number_fledged_juveniles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_takeoff_count"
+                android:tag="@string/tag_number_fledged_juveniles" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                android:id="@+id/form_birds_nest_guard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tag="@string/tag_nest_guarding"
+                android:text="@string/monitoring_birds_nest_guard" />
+        </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
     <TableRow android:gravity="bottom">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_age_female"
-            android:hint="@string/monitoring_birds_female_age"
-            android:tag="@string/tag_age_female"
-            app:entries="form_birds_age_individual" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_age_male"
-            android:hint="@string/monitoring_birds_male_age"
-            android:tag="@string/tag_age_male"
-            app:entries="form_birds_age_individual" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_age_female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_female_age"
+                android:tag="@string/tag_age_female"
+                app:entries="form_birds_age_individual" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_nest_success"
-            android:hint="@string/monitoring_birds_nest_success"
-            android:tag="@string/tag_breeding_success"
-            app:entries="form_birds_nest_success" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_age_male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_male_age"
+                android:tag="@string/tag_age_male"
+                app:entries="form_birds_age_individual" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_nest_success"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_nest_success"
+                android:tag="@string/tag_breeding_success"
+                app:entries="form_birds_nest_success" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </TableRow>
+
+    <TableRow>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="3">
+
+            <org.bspb.smartbirds.pro.ui.views.MemoFormInput
+                android:id="@+id/form_birds_land_uses_300m"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_land_use"
+                android:lines="1"
+                android:tag="@string/tag_land_uses_300m" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </TableRow>
+
+    <TableRow>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="3">
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_common_threats"
+                android:tag="@string/tag_threats"
+                app:entries="form_main_threats" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </TableRow>
 
     <TableRow>
 
-        <org.bspb.smartbirds.pro.ui.views.MemoFormInput
-            android:id="@+id/form_birds_land_uses_300m"
-            android:layout_span="3"
-            android:hint="@string/monitoring_birds_land_use"
-            android:lines="1"
-            android:tag="@string/tag_land_uses_300m" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="3">
 
-    </TableRow>
-
-    <TableRow>
-
-        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
-            android:layout_span="3"
-            android:hint="@string/monitoring_common_threats"
-            android:tag="@string/tag_threats"
-            app:entries="form_main_threats" />
-
-    </TableRow>
-
-    <TableRow>
-
-        <EditText
-            style="@style/FieldInput.Memo"
-            android:layout_span="3"
-            android:hint="@string/monitoring_birds_notes"
-            android:tag="@string/tag_remarks_type" />
+            <EditText
+                style="@style/FieldInput.Memo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_notes"
+                android:tag="@string/tag_remarks_type" />
+        </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 </TableLayout>
