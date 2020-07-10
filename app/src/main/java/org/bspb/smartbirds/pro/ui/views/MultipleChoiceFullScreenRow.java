@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
@@ -26,6 +28,10 @@ public class MultipleChoiceFullScreenRow extends LinearLayout {
 
     @ViewById(R.id.field_input)
     protected SingleChoiceFormInput input;
+
+    @ViewById(R.id.field_hint)
+    protected TextInputLayout hintView;
+
 
     CharSequence key;
     CharSequence hint;
@@ -62,7 +68,7 @@ public class MultipleChoiceFullScreenRow extends LinearLayout {
         setGravity(Gravity.BOTTOM);
         setOrientation(HORIZONTAL);
         input.setKey(key);
-        input.setHint(hint);
+        hintView.setHint(hint);
     }
 
     @Click(R.id.btn_delete)
