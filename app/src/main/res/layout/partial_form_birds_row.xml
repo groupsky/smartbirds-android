@@ -13,62 +13,107 @@
         android:paddingRight="@dimen/form_horizontal_spacing"
         android:paddingBottom="@dimen/form_vertical_spacing">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/field_name"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_birds_name"
-            android:tag="@string/tag_species_scientific_name"
-            app:entries="species_birds"
-            app:required="true" />
+            android:layout_height="wrap_content">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_count_units"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_birds_count_unit"
-            android:tag="@string/tag_count_unit"
-            android:visibility="gone"
-            app:entries="form_humid_birds_count_units"
-            app:required="true"
-            tools:visibility="visible" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/field_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_name"
+                android:tag="@string/tag_species_scientific_name"
+                app:entries="species_birds"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_count_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_birds_count_type"
-            android:tag="@string/tag_count_type"
-            android:visibility="gone"
-            app:entries="form_humid_birds_count_type"
-            app:required="true"
-            tools:visibility="visible" />
+        <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
-            android:id="@+id/form_birds_count"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/monitoring_birds_count"
-            android:tag="@string/tag_count"
-            app:required="true" />
+            android:visibility="gone">
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_sex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/monitoring_birds_gender"
-            android:tag="@string/tag_sex"
-            app:entries="form_birds_sex" />
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_count_units"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_count_unit"
+                android:tag="@string/tag_count_unit"
+                android:visibility="gone"
+                app:entries="form_humid_birds_count_units"
+                app:required="true"
+                tools:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_birds_age"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/monitoring_birds_age"
-            android:tag="@string/tag_age"
-            app:entries="form_birds_age" />
+            android:visibility="gone">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_count_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_count_type"
+                android:tag="@string/tag_count_type"
+                android:visibility="gone"
+                app:entries="form_humid_birds_count_type"
+                app:required="true"
+                tools:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
+                android:id="@+id/form_birds_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_count"
+                android:tag="@string/tag_count"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_gender"
+                android:tag="@string/tag_sex"
+                app:entries="form_birds_sex" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/monitoring_birds_age"
+                android:tag="@string/tag_age"
+                app:entries="form_birds_age" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
 
         <Button
             android:id="@+id/btn_delete"
