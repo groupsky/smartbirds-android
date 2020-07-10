@@ -25,77 +25,119 @@
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_cbm_name"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_name"
-            android:tag="@string/tag_observed_bird"
-            app:entries="species_birds"
-            app:required="true" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_cbm_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_name"
+                android:tag="@string/tag_observed_bird"
+                app:entries="species_birds"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_cbm_distance"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_distance"
-            android:tag="@string/tag_distance"
-            app:entries="form_cbm_distance"
-            app:required="true" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_cbm_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_distance"
+                android:tag="@string/tag_distance"
+                app:entries="form_cbm_distance"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-            android:id="@+id/form_cbm_count"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_count"
-            android:tag="@string/tag_count_subject"
-            app:required="true" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                android:id="@+id/form_cbm_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_count"
+                android:tag="@string/tag_count_subject"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_cbm_sector"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_sector"
-            android:tag="@string/tag_transect_number"
-            app:entries="form_cbm_sector"
-            app:required="true" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_cbm_sector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_sector"
+                android:tag="@string/tag_transect_number"
+                app:entries="form_cbm_sector"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_cbm_primary_habitat"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_primary_habitat"
-            android:tag="@string/tag_primary_habitat"
-            app:entries="form_cbm_habitat"
-            app:required="true" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_cbm_primary_habitat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_primary_habitat"
+                android:tag="@string/tag_primary_habitat"
+                app:entries="form_cbm_habitat"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_cbm_secondary_habitat"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_secondary_habitat"
-            android:tag="@string/tag_secondary_habitat"
-            app:entries="form_cbm_habitat" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_cbm_secondary_habitat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_secondary_habitat"
+                android:tag="@string/tag_secondary_habitat"
+                app:entries="form_cbm_habitat" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
-            android:id="@+id/form_cbm_zone"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_zone"
-            android:tag="@string/tag_zone"
-            app:required="true" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
+                android:id="@+id/form_cbm_zone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_zone"
+                android:tag="@string/tag_zone"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/error_cbm_too_far"
@@ -111,24 +153,36 @@
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-            android:id="@+id/form_cbm_visit_number"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_cbm_visit_number"
-            android:tag="@string/tag_visit_number"
-            app:entries="form_cbm_visit_number"
-            app:required="true" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_cbm_visit_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_cbm_visit_number"
+                android:tag="@string/tag_visit_number"
+                app:entries="form_cbm_visit_number"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
-            android:id="@+id/form_cbm_threats"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/monitoring_common_threats"
-            android:tag="@string/tag_threats"
-            app:entries="form_main_threats" />
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                android:id="@+id/form_cbm_threats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_common_threats"
+                android:tag="@string/tag_threats"
+                app:entries="form_main_threats" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
 
