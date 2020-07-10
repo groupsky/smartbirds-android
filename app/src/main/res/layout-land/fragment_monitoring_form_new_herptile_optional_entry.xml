@@ -6,76 +6,164 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:shrinkColumns="*"
         android:stretchColumns="*">
 
         <TableRow>
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_scl"
-                android:hint="@string/monitoring_herp_scl"
-                android:tag="@string/tag_scl" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_mpl"
-                android:hint="@string/monitoring_herp_mpl"
-                android:tag="@string/tag_mpl" />
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_scl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_scl"
+                    android:tag="@string/tag_scl" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        </TableRow>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TableRow>
-
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_mcw"
-                android:hint="@string/monitoring_herp_mcw"
-                android:tag="@string/tag_mcw" />
-
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_lcap"
-                android:hint="@string/monitoring_herp_h"
-                android:tag="@string/tag_lcap" />
-
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_wight"
-                android:hint="@string/monitoring_herp_weight"
-                android:tag="@string/tag_weight_g" />
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_mpl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_mpl"
+                    android:tag="@string/tag_mpl" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </TableRow>
 
         <TableRow>
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_t_substrate"
-                android:hint="@string/monitoring_herp_t_substrate"
-                android:tag="@string/tag_t_substrate" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_t_air"
-                android:hint="@string/monitoring_herp_t_vha"
-                android:tag="@string/tag_t_air" />
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_mcw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_mcw"
+                    android:tag="@string/tag_mcw" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_herptiles_t_cloaca"
-                android:hint="@string/monitoring_herp_t_kloaka"
-                android:tag="@string/tag_t_cloaca" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_lcap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_h"
+                    android:tag="@string/tag_lcap" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_wight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_weight"
+                    android:tag="@string/tag_weight_g" />
+            </com.google.android.material.textfield.TextInputLayout>
         </TableRow>
 
         <TableRow>
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                android:id="@+id/form_herptiles_sq_ventr"
-                android:hint="@string/monitoring_herp_sq_ventr"
-                android:tag="@string/tag_sq_ventr" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                android:id="@+id/form_herptiles_sq_caud"
-                android:hint="@string/monitoring_herp_sq_caud"
-                android:tag="@string/tag_sq_caud" />
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_t_substrate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_t_substrate"
+                    android:tag="@string/tag_t_substrate" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
-                android:id="@+id/form_herptiles_sq_dors"
-                android:hint="@string/monitoring_herp_sq_dors"
-                android:tag="@string/tag_sq_dors" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_t_air"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_t_vha"
+                    android:tag="@string/tag_t_air" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_herptiles_t_cloaca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_t_kloaka"
+                    android:tag="@string/tag_t_cloaca" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </TableRow>
+
+        <TableRow>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:id="@+id/form_herptiles_sq_ventr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_sq_ventr"
+                    android:tag="@string/tag_sq_ventr" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:id="@+id/form_herptiles_sq_caud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_sq_caud"
+                    android:tag="@string/tag_sq_caud" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    android:id="@+id/form_herptiles_sq_dors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_herp_sq_dors"
+                    android:tag="@string/tag_sq_dors" />
+            </com.google.android.material.textfield.TextInputLayout>
         </TableRow>
 
     </TableLayout>
