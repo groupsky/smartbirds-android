@@ -1,7 +1,10 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -53,6 +56,23 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.form_threats_state_carcass)
     SingleChoiceFormInput stateCarcass;
 
+    @ViewById(R.id.form_threats_category_hint)
+    TextInputLayout categoryHint;
+
+    @ViewById(R.id.form_threats_estimate_hint)
+    TextInputLayout estimateHint;
+
+    @ViewById(R.id.form_threats_class_hint)
+    TextInputLayout classInputHint;
+
+    @ViewById(R.id.form_threats_species_hint)
+    TextInputLayout speciesHint;
+
+    @ViewById(R.id.form_threats_count_hint)
+    TextInputLayout countHint;
+
+    @ViewById(R.id.form_threats_state_carcass_hint)
+    TextInputLayout stateCarcassHint;
 
     @FragmentById(R.id.pictures_fragment)
     NewEntryPicturesFragment picturesFragment;
@@ -127,6 +147,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
                 handleClassInput(view.getSelectedItem());
             }
         });
+
         if (primaryTypeChangedListener != null) {
             primaryTypeChangedListener.onPrimaryTypeChange(primaryType.getSelectedItem());
         }
@@ -172,7 +193,9 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
                 break;
         }
 
+        Log.d("++++++", "Primary type changed.....");
         if (primaryTypeChangedListener != null) {
+            Log.d("++++++", ".....");
             primaryTypeChangedListener.onPrimaryTypeChange(primaryTypeValue);
         }
     }
@@ -251,6 +274,13 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         count.setVisibility(View.GONE);
         stateCarcass.setVisibility(View.GONE);
 
+        categoryHint.setVisibility(View.GONE);
+        estimateHint.setVisibility(View.GONE);
+        classInputHint.setVisibility(View.GONE);
+        speciesHint.setVisibility(View.GONE);
+        countHint.setVisibility(View.GONE);
+        stateCarcassHint.setVisibility(View.GONE);
+
         poisonedType.setRequired(false);
         category.setRequired(false);
         estimate.setRequired(false);
@@ -268,6 +298,12 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         count.setVisibility(View.VISIBLE);
         estimate.setVisibility(View.VISIBLE);
 
+        categoryHint.setVisibility(View.VISIBLE);
+        classInputHint.setVisibility(View.VISIBLE);
+        speciesHint.setVisibility(View.VISIBLE);
+        countHint.setVisibility(View.VISIBLE);
+        estimateHint.setVisibility(View.VISIBLE);
+
         category.setRequired(true);
     }
 
@@ -278,6 +314,11 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         species.setVisibility(View.VISIBLE);
         count.setVisibility(View.VISIBLE);
         stateCarcass.setVisibility(View.VISIBLE);
+
+        classInputHint.setVisibility(View.VISIBLE);
+        speciesHint.setVisibility(View.VISIBLE);
+        countHint.setVisibility(View.VISIBLE);
+        stateCarcassHint.setVisibility(View.VISIBLE);
 
         classInput.setRequired(true);
         species.setRequired(true);
@@ -292,6 +333,10 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         species.setVisibility(View.VISIBLE);
         count.setVisibility(View.VISIBLE);
 
+        classInputHint.setVisibility(View.VISIBLE);
+        speciesHint.setVisibility(View.VISIBLE);
+        countHint.setVisibility(View.VISIBLE);
+
         classInput.setRequired(true);
         species.setRequired(true);
         count.setRequired(true);
@@ -301,6 +346,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         hideAllFields();
         poisonedType.setVisibility(View.VISIBLE);
         count.setVisibility(View.VISIBLE);
+        countHint.setVisibility(View.VISIBLE);
 
         count.setRequired(true);
     }
