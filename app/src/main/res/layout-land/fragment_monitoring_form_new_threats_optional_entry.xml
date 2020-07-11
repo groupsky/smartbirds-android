@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -17,65 +18,119 @@
 
             <TableRow android:id="@+id/sample_container_1">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_threats_sample_1"
-                    android:layout_span="8"
-                    android:hint="@string/monitoring_threats_sample_taken_1"
-                    android:tag="@string/tag_sample_taken_1"
-                    app:entries="threats_sample"
-                    app:required="false" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="8">
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:id="@+id/form_threats_sample_code_1"
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_threats_sample_code_1"
-                    android:tag="@string/tag_sample_code_1" />
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                        android:id="@+id/form_threats_sample_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_threats_sample_taken_1"
+                        android:tag="@string/tag_sample_taken_1"
+                        app:entries="threats_sample"
+                        app:required="false" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="4">
+
+                    <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                        android:id="@+id/form_threats_sample_code_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_threats_sample_code_1"
+                        android:tag="@string/tag_sample_code_1" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
             <TableRow android:id="@+id/sample_container_2">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_threats_sample_2"
-                    android:layout_span="8"
-                    android:hint="@string/monitoring_threats_sample_taken_2"
-                    android:tag="@string/tag_sample_taken_2"
-                    app:entries="threats_sample"
-                    app:required="false" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="8">
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:id="@+id/form_threats_sample_code_2"
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_threats_sample_code_2"
-                    android:tag="@string/tag_sample_code_2" />
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                        android:id="@+id/form_threats_sample_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_threats_sample_taken_2"
+                        android:tag="@string/tag_sample_taken_2"
+                        app:entries="threats_sample"
+                        app:required="false" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="4">
+
+                    <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                        android:id="@+id/form_threats_sample_code_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_threats_sample_code_2"
+                        android:tag="@string/tag_sample_code_2" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
             <TableRow android:id="@+id/sample_container_3">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                    android:id="@+id/form_threats_sample_3"
-                    android:layout_span="8"
-                    android:hint="@string/monitoring_threats_sample_taken_3"
-                    android:tag="@string/tag_sample_taken_3"
-                    app:entries="threats_sample"
-                    app:required="false" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="8">
 
-                <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                    android:id="@+id/form_threats_sample_code_3"
-                    android:layout_span="4"
-                    android:hint="@string/monitoring_threats_sample_code_3"
-                    android:tag="@string/tag_sample_code_3" />
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                        android:id="@+id/form_threats_sample_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_threats_sample_taken_3"
+                        android:tag="@string/tag_sample_taken_3"
+                        app:entries="threats_sample"
+                        app:required="false" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="4">
+
+                    <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                        android:id="@+id/form_threats_sample_code_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_threats_sample_code_3"
+                        android:tag="@string/tag_sample_code_3" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
             <TableRow>
 
-                <EditText
-                    android:id="@+id/form_threats_notes"
-                    style="@style/FieldInput.Memo"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="12"
-                    android:hint="@string/monitoring_threats_notes"
-                    android:tag="@string/tag_threats_notes" />
+                    android:layout_span="12">
+
+                    <EditText
+                        android:id="@+id/form_threats_notes"
+                        style="@style/FieldInput.Memo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_threats_notes"
+                        android:tag="@string/tag_threats_notes" />
+                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
         </TableLayout>
