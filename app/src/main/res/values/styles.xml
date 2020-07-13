@@ -8,6 +8,7 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
         <item name="imageButtonStyle">@style/Widget.AppCompat.Button.Colored</item>
+        <item name="android:alertDialogTheme">@style/SBDialogTheme</item>
 
         <item name="singleChoiceFormInputStyle">@style/FieldInput.SingleChoice</item>
         <item name="multipleChoiceFormInputStyle">@style/FieldInput.MultipleChoice</item>
@@ -100,5 +101,10 @@
     <style name="FieldInput.Switch" parent="Widget.AppCompat.CompoundButton.CheckBox" />
 
     <style name="TextInputLayout" parent="Widget.Design.TextInputLayout" />
+
+    <style name="SBDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 
 </resources>
