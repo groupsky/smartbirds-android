@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment">
 
     <LinearLayout
