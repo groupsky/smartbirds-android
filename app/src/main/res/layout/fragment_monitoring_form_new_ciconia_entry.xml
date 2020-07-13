@@ -58,18 +58,12 @@
 
             <View style="@style/FieldSeparator" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/TextInputLayout"
+            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                android:id="@+id/form_ciconia_nest_artificial_platform"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:id="@+id/form_ciconia_nest_artificial_platform"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/monitoring_ciconia_nest_artificial"
-                    android:tag="@string/tag_nest_artificial_platform" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_ciconia_nest_artificial"
+                android:tag="@string/tag_nest_artificial_platform" />
 
             <View style="@style/FieldSeparator" />
 

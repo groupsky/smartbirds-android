@@ -131,18 +131,13 @@
 
     <TableRow>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayout"
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:id="@+id/form_birds_incubation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                android:id="@+id/form_birds_incubation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:tag="@string/tag_incubation"
-                android:text="@string/monitoring_birds_incubation" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:tag="@string/tag_incubation"
+            android:text="@string/monitoring_birds_incubation" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/TextInputLayout"
@@ -199,18 +194,12 @@
                 android:tag="@string/tag_number_fledged_juveniles" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayout"
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:id="@+id/form_birds_nest_guard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                android:id="@+id/form_birds_nest_guard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:tag="@string/tag_nest_guarding"
-                android:text="@string/monitoring_birds_nest_guard" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:tag="@string/tag_nest_guarding"
+            android:text="@string/monitoring_birds_nest_guard" />
     </TableRow>
 
     <TableRow android:gravity="bottom">
