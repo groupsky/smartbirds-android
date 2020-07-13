@@ -28,7 +28,7 @@
     <string name="menu_entry_add_photo">"+ Снимка"</string>
     <string name="menu_monitoring_finish">"Завършване"</string>
     <string name="menu_monitoring_new_entry">"Ново отчитане"</string>
-    <string name="menu_monitoring_new_specific_entry">"Ново отичтане %s"</string>
+    <string name="menu_monitoring_new_specific_entry">"Ново отчитане %s"</string>
     <string name="menu_monitoring_common">"Общи"</string>
     <string name="menu_monitoring_zoom_500">"500 m"</string>
     <string name="menu_monitoring_zoom_free">"Свободно"</string>
@@ -42,7 +42,6 @@
     <string name="menu_monitoring_map_provider_google">"Google"</string>
     <string name="menu_monitoring_map_provider_osm">"OSM"</string>
     <string name="menu_monitoring_stay_awake">"Постоянно включен"</string>
-    <string name="menu_monitoring_show_local_projects">"Щъркели в Белозем"</string>
     <string name="menu_monitoring_show_zone_background">"Фон на площадките"</string>
     <string name="menu_monitoring_start">"Начало"</string>
     <string name="menu_monitoring_save">"Запис"</string>
@@ -132,21 +131,21 @@
     <string name="monitoring_herp_marking">"Маркировка"</string>
     <string name="monitoring_herp_axis_distance">"Разстояние от оста"</string>
     <string name="monitoring_herp_weight">"Тегло (g)"</string>
-    <string name="monitoring_herp_scl">"SCL/L (mm)"</string>
-    <string name="monitoring_herp_mpl">"MPL/Lcd/C (mm)"</string>
-    <string name="monitoring_herp_mcw">"MCW/A (mm)"</string>
-    <string name="monitoring_herp_h">"H /Lcap/Pl (mm)"</string>
-    <string name="monitoring_herp_t_substrate">"Т на субстрата"</string>
-    <string name="monitoring_herp_t_vha">"Т на в-ха"</string>
-    <string name="monitoring_herp_t_kloaka">"Т на клоака"</string>
+    <string name="monitoring_herp_scl">"SCL / L (mm)"</string>
+    <string name="monitoring_herp_mpl">"MPL / Lcd (mm)"</string>
+    <string name="monitoring_herp_mcw">"MCW (mm)"</string>
+    <string name="monitoring_herp_h">"H / Lcap (mm)"</string>
+    <string name="monitoring_herp_t_substrate">"Т, субстрат"</string>
+    <string name="monitoring_herp_t_vha">"Т, въздух"</string>
+    <string name="monitoring_herp_t_kloaka">"Т, клоака"</string>
     <string name="monitoring_herp_sq_ventr">"Sq ventr"</string>
     <string name="monitoring_herp_sq_caud">"Sq caud"</string>
     <string name="monitoring_herp_sq_dors">"Sq dors"</string>
     <string name="monitoring_herp_notes">"Бележки"</string>
-    <string name="monitoring_mammal_L">"L"</string>
-    <string name="monitoring_mammal_C">"C"</string>
-    <string name="monitoring_mammal_A">"A"</string>
-    <string name="monitoring_mammal_Pl">"Pl"</string>
+    <string name="monitoring_mammal_L">"L (mm)"</string>
+    <string name="monitoring_mammal_C">"C (mm)"</string>
+    <string name="monitoring_mammal_A">"A (mm)"</string>
+    <string name="monitoring_mammal_Pl">"Pl (mm)"</string>
     <string name="error_message_create_monitoring_dir">"Не може да създаде директорията за данните. Проверете имате ли достатъчно място."</string>
     <string name="toast_cancel_monitoring">"Отмяна на мониторинг"</string>
     <string name="marker_default_title">"Отчитане"</string>
@@ -194,7 +193,7 @@
                 Юрий Корнилев
             </p>
 
-            <p>Изказваме сърдечни благодарности на Боряна Михова, Димитър Плачийски, Йорданка Горанова - Луканова, Йордан Христов, Стойчо Стойчев, Теодора Петрова и на всички колеги от БДЗП, които допринесоха за реализирането на проекта.</p>
+            <p>Изказваме сърдечни благодарности на Боряна Михова, Димитър Плачийски, Йорданка Горанова-Луканова, Йордан Христов, Стойчо Стойчев, Теодора Петрова и на всички колеги от БДЗП, които допринесоха за реализирането на проекта.</p>
 
             <p>
                 <b>Дизайн и програмиране</b>
@@ -242,7 +241,7 @@
     <string name="combined">"Комбинирано"</string>
     <string name="select_all">"Избиране на всичко"</string>
     <string name="delete">"Изтриване"</string>
-    <string name="confirm_delete_n">"Изтриване на %1$d записа?"</string>
+    <string name="confirm_delete_n">"Изтриване на %1$d запис(а)?"</string>
     <string name="permissions_required">"Достъп до местоположението и паметта са задължителни"</string>
     <string name="emptyList">"Няма записи в списъка"</string>
     <string name="monitoring_herptiles_private">"Поверително"</string>
@@ -253,7 +252,7 @@
     <string name="monitoring_plants_name">"Целеви вид"</string>
     <string name="monitoring_plants_private">"Поверително"</string>
     <string name="monitoring_plants_reporting_unit">"Отчетна единица"</string>
-    <string name="monitoring_plants_phenological_phase">"Фенологича фаза"</string>
+    <string name="monitoring_plants_phenological_phase">"Фенологична фаза"</string>
     <string name="monitoring_plants_count">"Численост"</string>
     <string name="monitoring_plants_density">"Плътност (кв. м)"</string>
     <string name="monitoring_plants_cover">"Проективно покритие"</string>
@@ -305,4 +304,8 @@
     <string name="monitoring_mammal_danger_observation">"Констатации"</string>
     <string name="monitoring_herptiles_danger_observation">"Констатации"</string>
     <string name="monitoring_invertebrates_danger_observation">"Констатации"</string>
+    <string name="menu_monitoring_show_local_projects">"Щъркели в Белозем"</string>
+    <string name="monitoring_common_weather">"Климатични данни:"</string>
+    <string name="btn_delete">"премахни"</string>
+    <string name="wetland_zones_info_text">"Всички записи са с едни и същи географски координати."</string>
 </resources>

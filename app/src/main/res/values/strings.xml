@@ -42,7 +42,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="menu_monitoring_map_provider_google">"Google"</string>
     <string name="menu_monitoring_map_provider_osm">"OSM"</string>
     <string name="menu_monitoring_stay_awake">"Always on"</string>
-    <string name="menu_monitoring_show_local_projects">"Storks in Belozem"</string>
     <string name="menu_monitoring_show_zone_background">"Zones background"</string>
     <string name="menu_monitoring_start">"Start"</string>
     <string name="menu_monitoring_save">"Save"</string>
@@ -56,7 +55,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_common_place">"Place"</string>
     <string name="monitoring_common_end_date">"End:"</string>
     <string name="monitoring_common_observers">"Other observers"</string>
-    <string name="monitoring_common_weather">"Weather:"</string>
     <string name="monitoring_common_rain">"Rain"</string>
     <string name="monitoring_common_temperature">"Temp °C"</string>
     <string name="monitoring_common_wind_strength">"Wind strength"</string>
@@ -133,10 +131,10 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_herp_marking">"Marking"</string>
     <string name="monitoring_herp_axis_distance">"Distance from axis"</string>
     <string name="monitoring_herp_weight">"Weight (g)"</string>
-    <string name="monitoring_herp_scl">"SCL/L (mm)"</string>
-    <string name="monitoring_herp_mpl">"MPL/Lcd/C (mm)"</string>
-    <string name="monitoring_herp_mcw">"MCW/A (mm)"</string>
-    <string name="monitoring_herp_h">"H/Lcap/Pl (mm)"</string>
+    <string name="monitoring_herp_scl">"SCL / L (mm)"</string>
+    <string name="monitoring_herp_mpl">"MPL / Lcd (mm)"</string>
+    <string name="monitoring_herp_mcw">"MCW (mm)"</string>
+    <string name="monitoring_herp_h">"H / Lcap (mm)"</string>
     <string name="monitoring_herp_t_substrate">"Т, substrate"</string>
     <string name="monitoring_herp_t_vha">"Т, air"</string>
     <string name="monitoring_herp_t_kloaka">"Т, cloaca"</string>
@@ -144,10 +142,10 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_herp_sq_caud">"Sq caud"</string>
     <string name="monitoring_herp_sq_dors">"Sq dors"</string>
     <string name="monitoring_herp_notes">"Notes"</string>
-    <string name="monitoring_mammal_L">"L"</string>
-    <string name="monitoring_mammal_C">"C"</string>
-    <string name="monitoring_mammal_A">"A"</string>
-    <string name="monitoring_mammal_Pl">"Pl"</string>
+    <string name="monitoring_mammal_L">"L (mm)"</string>
+    <string name="monitoring_mammal_C">"C (mm)"</string>
+    <string name="monitoring_mammal_A">"A (mm)"</string>
+    <string name="monitoring_mammal_Pl">"Pl (mm)"</string>
     <string name="error_message_create_monitoring_dir">"Cannot create data folder. Please, check available space."</string>
     <string name="toast_cancel_monitoring">"Cancel monitoring"</string>
     <string name="marker_default_title">"Entry"</string>
@@ -244,7 +242,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="combined">"Combined"</string>
     <string name="select_all">"Select all"</string>
     <string name="delete">"Delete"</string>
-    <string name="confirm_delete_n">"Delete %1$d entries?"</string>
+    <string name="confirm_delete_n">"Delete %1$d entry(ies)?"</string>
     <string name="permissions_required">"Storage and location permissions are required"</string>
     <string name="emptyList">"No items in the list"</string>
     <string name="monitoring_herptiles_private">"Confidential"</string>
@@ -307,6 +305,8 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_mammal_danger_observation">"Findings"</string>
     <string name="monitoring_herptiles_danger_observation">"Findings"</string>
     <string name="monitoring_invertebrates_danger_observation">"Findings"</string>
-    <string name="btn_delete">remove</string>
-    <string name="wetland_zones_info_text">All records enter with the same geographical coordinates.</string>
+    <string name="menu_monitoring_show_local_projects">"Storks in Belozem"</string>
+    <string name="monitoring_common_weather">"Weather:"</string>
+    <string name="btn_delete">"remove"</string>
+    <string name="wetland_zones_info_text">"All records enter with the same geographical coordinates."</string>
 </resources>
