@@ -7,10 +7,13 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
@@ -19,7 +22,7 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 /**
  * Created by groupsky on 26.11.14.
  */
-public class TextViewFormInput extends AppCompatEditText implements SupportRequiredView {
+public class TextViewFormInput extends TextInputEditText implements SupportRequiredView {
 
     protected final String TAG = SmartBirdsApplication.TAG + '.' + getClass().getSimpleName();
 

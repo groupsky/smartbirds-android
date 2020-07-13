@@ -12,10 +12,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import org.androidannotations.annotations.AfterInject;
@@ -87,7 +92,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         try {
             key = a.getText(R.styleable.SingleChoiceFormInput_entries);
             SmartArrayAdapter<NomenclatureItem> adapter = new SmartArrayAdapter<>(context,
-                    android.R.layout.select_dialog_singlechoice, new ArrayList<NomenclatureItem>());
+                    R.layout.item_dialog_single_choice, new ArrayList<NomenclatureItem>());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             setAdapter(adapter);
         } finally {
@@ -283,7 +288,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
             needFilter = mAdapter.getCount() >= ITEM_COUNT_FOR_FILTER;
 
-            EditText view = null;
+            View searchView = null;
             if (needFilter) {
                 final List<Nomenclature> recentItems = nomenclatures.isLoading() ?
                         new ArrayList<Nomenclature>() :
@@ -302,12 +307,11 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                     });
                 }
 
-                view = new EditText(getContext());
-                view.setImeOptions(view.getImeOptions() | IME_FLAG_NO_EXTRACT_UI | IME_ACTION_DONE);
-                view.setInputType(TYPE_TEXT_VARIATION_FILTER);
-                view.setHint(getHint());
-                view.setSingleLine();
-                view.addTextChangedListener(this);
+                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                searchView = inflater.inflate(R.layout.nomenclature_dialog_filter, null);
+                EditText searchEdit = searchView.findViewById(R.id.dialog_search_edit);
+                searchEdit.setHint(getHint());
+                searchEdit.addTextChangedListener(this);
             }
 
             mAdapter.getFilter().filter(null);
@@ -324,7 +328,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                     .setNegativeButton(android.R.string.cancel, this)
                     .setNeutralButton(R.string.clear, this);
             if (needFilter) {
-                builder.setCustomTitle(view);
+                builder.setCustomTitle(searchView);
             }
             mPopup = builder.create();
             mPopup.setOnDismissListener(this);
@@ -338,7 +342,6 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
             mPopup.getButton(BUTTON_POSITIVE).setEnabled(mSelectedItem != null);
             if (needFilter) {
                 mPopup.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                view.requestFocus();
             }
         }
 
