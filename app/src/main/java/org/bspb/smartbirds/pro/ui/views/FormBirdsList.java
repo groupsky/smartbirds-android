@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EView;
+import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 import org.bspb.smartbirds.pro.ui.utils.ViewUtils;
@@ -58,6 +59,9 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
     private FormBirdsRow addRow() {
         try {
             final FormBirdsRow row = FormBirdsRow_.build(getContext());
+            if (getChildCount() % 2 != 0) {
+                row.setBackgroundColor(getResources().getColor(R.color.black_transparent_20));
+            }
             addView(row);
             return row;
         } catch (Throwable t) {
@@ -135,12 +139,12 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
         Parcelable parentState = super.onSaveInstanceState();
         Bundle childrenStates = new Bundle();
         childrenStates.putInt("count", getChildCount());
-        for (int i=0; i<getChildCount(); i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             if (child instanceof FormBirdsRow) {
                 SparseArray<Parcelable> state = new SparseArray<>();
                 child.saveHierarchyState(state);
-                childrenStates.putSparseParcelableArray("r"+i, state);
+                childrenStates.putSparseParcelableArray("r" + i, state);
             }
         }
         return new InstanceState(parentState, childrenStates);
@@ -162,7 +166,7 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
             Bundle childrenStates = ss.childrenStates;
             for (int i = 0; i < childrenStates.getInt("count", 0); i++) {
                 if (childrenStates.containsKey("r" + i)) {
-                    Log.d(TAG, "restoring "+i);
+                    Log.d(TAG, "restoring " + i);
                     FormBirdsRow row = addRow();
                     row.restoreHierarchyState(childrenStates.getSparseParcelableArray("r" + i));
                 }
@@ -177,7 +181,7 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
         isUpdating = true;
         try {
             clearRows();
-            for (HashMap<String, String> model: models) {
+            for (HashMap<String, String> model : models) {
                 FormBirdsRow row = addRow();
                 row.getModel().deserialize(model);
             }
@@ -187,7 +191,7 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
     }
 
     private void clearRows() {
-        for (int i=getChildCount(); i-- > 0; ) {
+        for (int i = getChildCount(); i-- > 0; ) {
             View child = getChildAt(i);
             if (child instanceof FormBirdsRow) {
                 removeViewAt(i);
@@ -216,7 +220,7 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
 
     public ArrayList<FormUtils.FormModel> getModels() {
         ArrayList<FormUtils.FormModel> models = new ArrayList<>(getChildCount());
-        for (int idx=0; idx<getChildCount(); idx++) {
+        for (int idx = 0; idx < getChildCount(); idx++) {
             View child = getChildAt(idx);
             if (child instanceof FormBirdsRow) {
                 FormBirdsRow row = (FormBirdsRow) child;
