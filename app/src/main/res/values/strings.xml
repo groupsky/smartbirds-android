@@ -239,7 +239,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="view">"View"</string>
     <string name="map">"Map"</string>
     <string name="list">"List"</string>
-    <string name="combined">"Combined"</string>
+    <string name="combined">"Combined (Landscape)"</string>
     <string name="select_all">"Select all"</string>
     <string name="delete">"Delete"</string>
     <string name="confirm_delete_n">"Delete %1$d entry(ies)?"</string>

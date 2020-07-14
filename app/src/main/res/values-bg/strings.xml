@@ -238,7 +238,7 @@
     <string name="view">"Изглед"</string>
     <string name="map">"Карта"</string>
     <string name="list">"Списък"</string>
-    <string name="combined">"Комбинирано"</string>
+    <string name="combined">"Комбинирано (Пейзаж)"</string>
     <string name="select_all">"Избиране на всичко"</string>
     <string name="delete">"Изтриване"</string>
     <string name="confirm_delete_n">"Изтриване на %1$d запис(а)?"</string>
