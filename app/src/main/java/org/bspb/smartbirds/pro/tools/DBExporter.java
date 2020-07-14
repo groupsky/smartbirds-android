@@ -27,7 +27,7 @@ public class DBExporter {
                 File[] dbFiles = dbDir.listFiles();
                 if (dbFiles != null) {
                     File baseOutputDir = new File(Environment.getExternalStorageDirectory(), "smartbirdspro");
-                    if (!baseOutputDir.exists() && baseOutputDir.isDirectory()) {
+                    if (!baseOutputDir.exists()) {
                         baseOutputDir.mkdir();
                     }
 
