@@ -6,6 +6,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.novoda.build-properties'
 apply plugin: 'io.fabric'
 
 buildProperties {
@@ -16,9 +17,6 @@ buildProperties {
         using rootProject.file('keystore.properties')
     }
 }
-def keystorePropertiesFile = rootProject.file('keystore.properties')
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 29
@@ -34,10 +32,10 @@ android {
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
     }
     signingConfigs {
-        signing {
+        release {
             keyAlias((buildProperties.secrets['keyAlias'] | buildProperties.notThere['keyAlias']).string)
             keyPassword((buildProperties.secrets['keyPassword'] | buildProperties.notThere['keyPassword']).string)
-            storeFile file((keystoreProperties.secrets['storeFile'] | buildProperties.notThere['storeFile']).string)
+            storeFile file((buildProperties.secrets['storeFile'] | buildProperties.notThere['storeFile']).string)
             storePassword((buildProperties.secrets['storePassword'] | buildProperties.notThere['storePassword']).string)
         }
     }

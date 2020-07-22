@@ -13,6 +13,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.novoda:gradle-build-properties-plugin:0.4.1'
 
         // The Fabric Gradle plugin uses an open ended version to react
         // quickly to Android tooling updates
