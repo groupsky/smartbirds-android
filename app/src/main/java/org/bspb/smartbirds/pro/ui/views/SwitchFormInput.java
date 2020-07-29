@@ -6,12 +6,14 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.CheckBox;
 
+import androidx.appcompat.widget.AppCompatCheckBox;
+
 import org.bspb.smartbirds.pro.R;
 
 /**
  * Created by groupsky on 14-10-17.
  */
-public class SwitchFormInput extends CheckBox {
+public class SwitchFormInput extends AppCompatCheckBox {
     public SwitchFormInput(Context context) {
         this(context, null);
     }

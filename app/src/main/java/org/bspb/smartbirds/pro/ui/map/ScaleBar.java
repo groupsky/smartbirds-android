@@ -9,6 +9,8 @@ import android.graphics.Rect;
 import android.location.Location;
 import android.widget.ImageView;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -19,7 +21,7 @@ import java.text.NumberFormat;
 /**
  * Created by dani on 04.08.16.
  */
-public class ScaleBar extends ImageView {
+public class ScaleBar extends AppCompatImageView {
     float mXOffset = 10;
     float mYOffset = 10;
     float mLineWidth = 3;
@@ -61,7 +63,7 @@ public class ScaleBar extends ImageView {
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
-                if(mCanvas != null) {
+                if (mCanvas != null) {
                     invalidate();
                 }
             }
@@ -115,21 +117,21 @@ public class ScaleBar extends ImageView {
 
                 int textSpacing = (int) (xTextRect.height() / 5.0);
 
-                float left = getWidth() /2 - mXdpi/2;
-                float right = getWidth() /2 + mXdpi/2;
+                float left = getWidth() / 2 - mXdpi / 2;
+                float right = getWidth() / 2 + mXdpi / 2;
 
                 canvas.drawRect(left, mYOffset, right, mYOffset + mLineWidth, barPaint);
                 canvas.drawRect(right, mYOffset, right + mLineWidth, mYOffset +
                         xTextRect.height() + mLineWidth + textSpacing, barPaint);
                 canvas.drawRect(left - mLineWidth, mYOffset, left, mYOffset +
-                        xTextRect.height() + mLineWidth +   textSpacing, barPaint);
+                        xTextRect.height() + mLineWidth + textSpacing, barPaint);
 
                 if (!mIsLongitudeBar) {
                     canvas.drawRect(left, mYOffset, left + mLineWidth, mYOffset +
                             xTextRect.height() + mLineWidth + textSpacing, barPaint);
                 }
                 canvas.drawText(xMsg, (left + mXdpi / 2 - xTextRect.width() / 2),
-                        (mYOffset + xTextRect.height() + mLineWidth     + textSpacing), textPaint);
+                        (mYOffset + xTextRect.height() + mLineWidth + textSpacing), textPaint);
             }
         }
     }
@@ -224,6 +226,6 @@ public class ScaleBar extends ImageView {
         Rect xTextRect = new Rect();
         textPaint.getTextBounds(testMsg, 0, testMsg.length(), xTextRect);
         int textSpacing = (int) (xTextRect.height() / 5.0);
-        return xTextRect.height() + mLineWidth + textSpacing + 2*mYOffset;
+        return xTextRect.height() + mLineWidth + textSpacing + 2 * mYOffset;
     }
 }
