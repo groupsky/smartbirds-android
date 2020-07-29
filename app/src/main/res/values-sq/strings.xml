@@ -149,7 +149,8 @@ Jeni i sigurt që doni të ndaloni monitorimin?"</string>
     <string name="error_message_create_monitoring_dir">"Nuk mund të krijohet dosje të dhënash. Ju lutem, kontrolloni hapësirën e disponueshme."</string>
     <string name="toast_cancel_monitoring">"Ndalo monitorimin"</string>
     <string name="marker_default_title">"Regjistrimi"</string>
-    <string name="undo_last_entry">"Anulo regjistrimin e fundit"</string>
+    <string name="undo_last_entry">"Anulo regjistrimin e fundit
+"</string>
     <string name="not_synced_count">"Për tu ngarkuar: %d"</string>
     <string name="main_footer_text">"Aplikacioni u krijua me mbështetjen e Mtel"</string>
     <string name="main_screen_btn_export">"Eksporto"</string>
@@ -261,7 +262,9 @@ Jeni i sigurt që doni të ndaloni monitorimin?"</string>
     <string name="monitoring_plants_notes">"Shënime"</string>
     <string name="monitoring_plants_accompanying_species">"Llojet shoqëruese"</string>
     <string name="title_activity_finish">"Kontroll i zakonshëm i formatit përpara se të ruhet"</string>
-    <string name="monitoring_plants_elevation_units">"Lartësia në metra mbi nivelin e detit"</string>
+
+    <!-- Can this text be abbreviated "Lartësia në metra mbi nivelin e detit" similarly "m a.s.l.". -->
+    <string name="monitoring_plants_elevation_units">"Lartësia në m"</string>
     <string name="gdpr_agree_checkbox">"Bie dakord me kushtet e Rregullores së Përgjithshme për Mbrojtjen e të Dhënave (GDPR)"</string>
     <string name="error_missing_gdpr_consent">"Duhet të bini dakord me kushtet e Rregullores së Përgjithshme për Mbrojtjen e të Dhënave (GDPR)"</string>
     <string name="view_gdpr">"shiko/pamje"</string>
@@ -303,4 +306,8 @@ Jeni i sigurt që doni të ndaloni monitorimin?"</string>
     <string name="monitoring_mammal_danger_observation">"Zbulime"</string>
     <string name="monitoring_herptiles_danger_observation">"Zbulime"</string>
     <string name="monitoring_invertebrates_danger_observation">"Zbulime"</string>
+    <string name="menu_monitoring_show_local_projects">"Lejlekët në Belozem"</string>
+    <string name="monitoring_common_weather">"Moti:"</string>
+    <string name="btn_delete">"largo"</string>
+    <string name="wetland_zones_info_text">"Të gjithë të dhënat e regjistruara futen me koordinata gjeografike të njëjta"</string>
 </resources>
