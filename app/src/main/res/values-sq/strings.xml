@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">"SmartBirds Pro"</string>
     <string name="title_activity_start_monitoring">"Fillo monitorimin"</string>
     <string name="title_activity_monitoring">"Monitorimi"</string>
@@ -60,7 +60,7 @@ Jeni i sigurt që doni të ndaloni monitorimin?"</string>
     <string name="monitoring_common_wind_strength">"Forca e erës"</string>
     <string name="monitoring_common_wind_direction">"Drejtimi i erës"</string>
     <string name="monitoring_common_clouds">"Tipi i reve"</string>
-    <string name="monitoring_common_cloudiness">"% e vranësirës"</string>
+    <string name="monitoring_common_cloudiness" tools:ignore="StringFormatInvalid">"% e vranësirës"</string>
     <string name="monitoring_common_mto">"Moti (Tjetër)"</string>
     <string name="monitoring_common_visibility">"Shikueshmëria km"</string>
     <string name="monitoring_common_threats">"Kërcënimet"</string>
