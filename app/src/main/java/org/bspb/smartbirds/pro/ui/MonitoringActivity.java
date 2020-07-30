@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.InstanceState;
@@ -180,7 +181,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @InstanceState
     String monitoringCode;
 
-    @ViewById(R.id.map_container)
+    @ViewById(R.id.root_map_container)
     View mapContainer;
     @ViewById(R.id.list_container)
     View listContainer;
@@ -442,6 +443,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     }
 
     @OptionsItem(R.id.action_new_entry)
+    @Click(R.id.fab)
     void onNewEntry() {
         LatLng position = null;
         if (currentMap.getMyLocation() != null) {
