@@ -26,8 +26,8 @@
     <string name="monitoring_notification_content">"Стартиран мониторинг"</string>
     <string name="menu_entry_save">"Запис"</string>
     <string name="menu_entry_add_photo">"+ Снимка"</string>
-    <string name="menu_monitoring_finish">"Завършване"</string>
-    <string name="menu_monitoring_new_entry">"Ново отчитане"</string>
+    <string name="menu_monitoring_finish">"Край"</string>
+    <string name="menu_monitoring_new_entry">"Нов запис"</string>
     <string name="menu_monitoring_new_specific_entry">"Ново отчитане %s"</string>
     <string name="menu_monitoring_common">"Общи"</string>
     <string name="menu_monitoring_zoom_500">"500 m"</string>
