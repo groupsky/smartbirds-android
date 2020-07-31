@@ -70,51 +70,19 @@
 
             <TableRow>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/TextInputLayout"
-                        android:layout_width="0dp"
+                    <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                            android:id="@+id/location"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/monitoring_common_place"
-                            android:inputType="text|textCapWords|textPostalAddress"
-                            android:tag="@string/tag_location"
-                            app:required="true" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageButton
-                            android:id="@+id/button_refresh_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:src="@drawable/ic_my_location"
-                            android:visibility="invisible"
-                            tools:visibility="visible" />
-
-                        <ProgressBar
-                            android:id="@+id/progress_location_refreshing"
-                            style="@android:style/Widget.ProgressBar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:visibility="visible"
-                            tools:visibility="visible" />
-                    </FrameLayout>
-                </LinearLayout>
+                        android:hint="@string/monitoring_common_place"
+                        android:inputType="text|textCapWords|textPostalAddress"
+                        android:tag="@string/tag_location" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     style="@style/FieldLabel"
