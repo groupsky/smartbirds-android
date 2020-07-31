@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NewMonitoringEntryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing"
+            android:text="@string/wetland_zones_info_text" />
+
+        <org.bspb.smartbirds.pro.ui.views.FormBirdsList_
+            android:id="@+id/form_birds_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>

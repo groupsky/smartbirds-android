@@ -13,17 +13,20 @@ import androidx.loader.content.Loader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
+import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
@@ -84,6 +87,12 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
 
     @OptionsMenuItem(R.id.action_crash)
     MenuItem menuCrash;
+
+    @OptionsMenuItem(R.id.action_submit)
+    MenuItem menuSubmit;
+
+    @ViewById(R.id.btn_submit)
+    View btnSubmit;
 
     /**
      * Available only when loaded from storage
@@ -220,9 +229,20 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     }
 
     @OptionsItem(R.id.action_submit)
-    void onSubmitClicked(MenuItem item) {
+    void onMenuSubmitClicked(MenuItem item) {
+        onSubmitClicked();
+    }
+
+    @Click(R.id.btn_submit)
+    void onSubmitClicked() {
         if (isValid()) {
-            item.setEnabled(false);
+            if (menuSubmit != null) {
+                menuSubmit.setEnabled(false);
+            }
+            if (btnSubmit != null) {
+                btnSubmit.setEnabled(false);
+            }
+
             submitData();
         }
     }
