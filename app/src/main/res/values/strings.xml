@@ -309,4 +309,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_common_weather">"Weather:"</string>
     <string name="btn_delete">"remove"</string>
     <string name="wetland_zones_info_text">"All records enter with the same geographical coordinates."</string>
+    <string name="monitoring_moderator_review">"Moderator review"</string>
+    <string name="warning_moderator_review">"If you want a moderator to review your record. Requires a picture attachment!</string>
 </resources>

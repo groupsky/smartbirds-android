@@ -17,6 +17,7 @@ public class BirdsConverter extends Converter {
         addSingle(R.string.tag_source, "source");
         addSpecies(R.string.tag_species_scientific_name, "species");
         addBool(R.string.tag_confidential, "confidential");
+        addBool(R.string.tag_moderator_review, "moderatorReview");
         addSingle(R.string.tag_count_unit, "countUnit");
         addSingle(R.string.tag_count_type, "typeUnit");
         addSingle(R.string.tag_nest_type, "typeNesting");

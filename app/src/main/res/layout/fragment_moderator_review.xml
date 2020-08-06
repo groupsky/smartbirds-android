@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+        android:id="@+id/form_moderator_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="@string/tag_moderator_review"
+        android:text="@string/monitoring_moderator_review" />
+
+    <TextView
+        android:id="@+id/warning_moderator_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4sp"
+        android:layout_marginRight="4sp"
+        android:gravity="top"
+        android:text="@string/warning_moderator_review"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

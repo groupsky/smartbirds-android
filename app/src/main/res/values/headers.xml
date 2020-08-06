@@ -132,5 +132,6 @@
     <string name="tag_sample_code_3" translatable="false">Sample_Code_3</string>
     <string name="tag_threats_notes" translatable="false">Notes_Threats</string>
     <string name="tag_primary_type" translatable="false">Primary_Type</string>
+    <string name="tag_moderator_review" translatable="false">Moderator_Review</string>
 
 </resources>

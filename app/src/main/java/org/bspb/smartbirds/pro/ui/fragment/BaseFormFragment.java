@@ -1,13 +1,16 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
 import java.io.Serializable;
@@ -35,6 +38,7 @@ public class BaseFormFragment extends Fragment {
 
 
     private boolean newEntry;
+    private ModeratorReviewFragment moderatorReviewFragment;
 
     public boolean isNewEntry() {
         return newEntry;
@@ -47,7 +51,11 @@ public class BaseFormFragment extends Fragment {
 
     protected boolean isValid() {
         ensureForm();
-        return form.validateFields();
+        boolean valid = true;
+        if (moderatorReviewFragment != null) {
+            valid = moderatorReviewFragment.isValid();
+        }
+        return valid && form.validateFields();
     }
 
     protected boolean ensureForm() {
@@ -106,6 +114,17 @@ public class BaseFormFragment extends Fragment {
             if (data instanceof HashMap) {
                 //noinspection unchecked
                 doDeserialize(monitoringCode, (HashMap<String, String>) data);
+            }
+        }
+    }
+
+    @AfterViews
+    public void initModeratorReviewFragment() {
+        moderatorReviewFragment = (ModeratorReviewFragment) getChildFragmentManager().findFragmentById(R.id.moderator_review_fragment);
+        NewEntryPicturesFragment picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
+        if (moderatorReviewFragment != null) {
+            if (picturesFragment != null) {
+                moderatorReviewFragment.setPicturesFragment(picturesFragment);
             }
         }
     }
