@@ -20,13 +20,29 @@
             android:paddingRight="@dimen/form_horizontal_spacing"
             android:paddingBottom="@dimen/form_vertical_spacing">
 
-            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                android:id="@+id/form_invertebrates_confidential"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:tag="@string/tag_confidential"
-                android:text="@string/monitoring_invertebrates_private" />
+                android:orientation="horizontal">
+
+                <fragment
+                    android:id="@+id/moderator_review_fragment"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:layout="@layout/fragment_moderator_review" />
+
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_invertebrates_confidential"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:tag="@string/tag_confidential"
+                    android:text="@string/monitoring_birds_private" />
+
+            </LinearLayout>
 
             <View style="@style/FieldSeparator" />
 

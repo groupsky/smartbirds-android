@@ -19,11 +19,28 @@
 
             <TableRow>
 
+                <fragment
+                    android:id="@+id/moderator_review_fragment"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="7"
+                    tools:layout="@layout/fragment_moderator_review" />
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_mammals_confidential"
+                    android:layout_span="3"
+                    android:tag="@string/tag_confidential"
+                    android:text="@string/monitoring_birds_private" />
+            </TableRow>
+
+            <TableRow>
+
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="7">
+                    android:layout_span="10">
 
                     <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                         android:id="@+id/form_mammals_species"
@@ -34,12 +51,6 @@
                         app:entries="species_mammals"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:id="@+id/form_mammals_confidential"
-                    android:layout_span="3"
-                    android:tag="@string/tag_confidential"
-                    android:text="@string/monitoring_mammal_private" />
 
             </TableRow>
 

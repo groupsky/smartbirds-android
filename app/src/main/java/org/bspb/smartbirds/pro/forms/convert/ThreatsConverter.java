@@ -26,5 +26,6 @@ public class ThreatsConverter extends Converter {
         add(R.string.tag_threats_notes, "threatsNotes");
         add(R.string.tag_primary_type, "primaryType");
         addBool(R.string.tag_confidential, "confidential");
+        addBool(R.string.tag_moderator_review, "moderatorReview");
     }
 }

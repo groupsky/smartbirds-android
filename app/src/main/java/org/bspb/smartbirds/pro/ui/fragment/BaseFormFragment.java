@@ -51,11 +51,13 @@ public class BaseFormFragment extends Fragment {
 
     protected boolean isValid() {
         ensureForm();
+
         boolean valid = true;
         if (moderatorReviewFragment != null) {
             valid = moderatorReviewFragment.isValid();
         }
-        return valid && form.validateFields();
+
+        return form.validateFields() && valid;
     }
 
     protected boolean ensureForm() {

@@ -17,7 +17,6 @@ public class BirdsConverter extends Converter {
         addSingle(R.string.tag_source, "source");
         addSpecies(R.string.tag_species_scientific_name, "species");
         addBool(R.string.tag_confidential, "confidential");
-        addBool(R.string.tag_moderator_review, "moderatorReview");
         addSingle(R.string.tag_count_unit, "countUnit");
         addSingle(R.string.tag_count_type, "typeUnit");
         addSingle(R.string.tag_nest_type, "typeNesting");
@@ -49,6 +48,7 @@ public class BirdsConverter extends Converter {
         add(R.string.tag_land_uses_300m, "landuse300mRadius");
         add(R.string.tag_remarks_type, "speciesNotes");
         addMulti(R.string.tag_threats, "threats");
+        addBool(R.string.tag_moderator_review, "moderatorReview");
     }
 
 }

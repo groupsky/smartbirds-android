@@ -32,7 +32,7 @@
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_span="9">
+            android:layout_span="12">
 
             <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                 android:id="@+id/form_birds_species"
