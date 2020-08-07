@@ -3,8 +3,6 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.partial_monitoring_entry_list_row.*
-import org.androidannotations.annotations.CheckedChange
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.ViewById
 import org.bspb.smartbirds.pro.R
@@ -34,19 +32,12 @@ open class ModeratorReviewFragment : Fragment() {
             moderatorReview.error = null
         }
 
-        showModeratorReviewWarningIfNeeded()
-        return res
-    }
-
-    open fun showModeratorReviewWarningIfNeeded() {
-        if (picturesFragment != null && picturesFragment!!.picturesCount > 0) {
+        if (res) {
             warningModeratorReview.visibility = View.GONE
         } else {
-            if (moderatorReview.isChecked) {
-                warningModeratorReview.visibility = View.VISIBLE
-            } else {
-                warningModeratorReview.visibility = View.GONE
-            }
+            warningModeratorReview.visibility = View.VISIBLE
         }
+
+        return res
     }
 }
