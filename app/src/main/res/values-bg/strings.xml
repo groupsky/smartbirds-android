@@ -308,5 +308,6 @@
     <string name="monitoring_common_weather">"Климатични данни:"</string>
     <string name="btn_delete">"премахни"</string>
     <string name="wetland_zones_info_text">"Всички записи са с едни и същи географски координати."</string>
+    <string name="monitoring_moderator_review">"За проверка от модератор"</string>
     <string name="warning_moderator_review">"Необходима е снимка!"</string>
 </resources>
