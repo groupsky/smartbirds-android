@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +42,9 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
     @ViewById(R.id.status)
     TextView statusView;
 
+    @ViewById(R.id.moderator_review)
+    View moderatorReview;
+
     private boolean isChecked;
 
     private MonitoringEntry entry;
@@ -69,6 +73,13 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
         if (entry == null) return;
         if (speciesView == null) return;
         Context context = getContext();
+
+        if ("1".equals(entry.data.get(context.getString(R.string.tag_moderator_review)))) {
+            moderatorReview.setVisibility(VISIBLE);
+        } else {
+            moderatorReview.setVisibility(GONE);
+        }
+
 
         switch (entry.type) {
             case BIRDS:
