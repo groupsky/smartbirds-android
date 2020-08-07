@@ -38,7 +38,6 @@ open class ModeratorReviewFragment : Fragment() {
         return res
     }
 
-    @CheckedChange(R.id.form_moderator_review)
     open fun showModeratorReviewWarningIfNeeded() {
         if (picturesFragment != null && picturesFragment!!.picturesCount > 0) {
             warningModeratorReview.visibility = View.GONE
