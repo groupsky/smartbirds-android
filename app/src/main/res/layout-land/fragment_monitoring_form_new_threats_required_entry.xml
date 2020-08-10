@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin">
@@ -18,19 +19,31 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
-                    android:id="@+id/form_threats_primary_type"
+                <fragment
+                    android:id="@+id/moderator_review_fragment"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_span="9"
-                    android:tag="@string/tag_primary_type"
-                    app:config_entries="threatsPrimaryType"
-                    app:hint="@string/monitoring_threats_primary_type"
-                    app:required="true" />
+                    tools:layout="@layout/fragment_moderator_review" />
 
                 <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
                     android:id="@+id/form_threats_confidential"
                     android:layout_span="3"
                     android:tag="@string/tag_confidential"
-                    android:text="@string/monitoring_plants_private" />
+                    android:text="@string/monitoring_birds_private" />
+            </TableRow>
+
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
+                    android:id="@+id/form_threats_primary_type"
+                    android:layout_span="12"
+                    android:tag="@string/tag_primary_type"
+                    app:config_entries="threatsPrimaryType"
+                    app:hint="@string/monitoring_threats_primary_type"
+                    app:required="true" />
+
             </TableRow>
 
             <TableRow>

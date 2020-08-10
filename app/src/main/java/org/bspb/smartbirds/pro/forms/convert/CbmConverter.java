@@ -23,6 +23,7 @@ public class CbmConverter extends Converter {
         add(R.string.tag_location, "location");
         add(R.string.tag_zone, "zone");
         addMulti(R.string.tag_threats, "threats");
+        addBool(R.string.tag_moderator_review, "moderatorReview");
     }
 
 }

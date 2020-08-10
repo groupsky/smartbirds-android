@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">"SmartBirds Pro"</string>
     <string name="title_activity_start_monitoring">"Begin monitoring"</string>
     <string name="title_activity_monitoring">"Monitoring"</string>
@@ -309,4 +309,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_common_weather">"Weather:"</string>
     <string name="btn_delete">"remove"</string>
     <string name="wetland_zones_info_text">"All records enter with the same geographical coordinates."</string>
+    <string name="monitoring_moderator_review">"Moderator review"</string>
+    <string name="warning_moderator_review">"Requires a picture attachment!"</string>
 </resources>

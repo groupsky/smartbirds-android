@@ -27,6 +27,7 @@ public class PlantsConverter extends Converter {
         addMulti(R.string.tag_threats, "threats");
         add(R.string.tag_remarks_type, "speciesNotes");
         addBool(R.string.tag_confidential, "confidential");
+        addBool(R.string.tag_moderator_review, "moderatorReview");
     }
 
 }
