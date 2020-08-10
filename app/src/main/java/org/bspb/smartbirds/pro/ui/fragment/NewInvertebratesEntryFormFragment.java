@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import androidx.fragment.app.Fragment;
+
 import android.os.Build;
 
 import org.androidannotations.annotations.AfterViews;
@@ -23,7 +24,6 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
 
     @FragmentById(R.id.pictures_fragment)
     NewEntryPicturesFragment picturesFragment;
-    private HashMap<String, String> pendingDeserialize;
 
 
     @ViewById(R.id.form_invertebrates_confidential)
@@ -61,9 +61,7 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
-        if (picturesFragment == null) {
-            pendingDeserialize = data;
-        } else {
+        if (picturesFragment != null) {
             picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
@@ -72,10 +70,6 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
     protected void flushDeserialize() {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
-        }
-        if (pendingDeserialize != null) {
-            picturesFragment.doDeserialize(monitoringCode, pendingDeserialize);
-            pendingDeserialize = null;
         }
     }
 

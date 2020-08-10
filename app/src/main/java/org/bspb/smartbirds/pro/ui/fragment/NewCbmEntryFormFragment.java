@@ -64,7 +64,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
 
     @FragmentById(R.id.pictures_fragment)
     NewEntryPicturesFragment picturesFragment;
-    private HashMap<String, String> pendingDeserialize;
 
     @Override
     protected EntryType getEntryType() {
@@ -95,9 +94,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
-        if (picturesFragment == null) {
-            pendingDeserialize = data;
-        } else {
+        if (picturesFragment != null) {
             picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
@@ -106,10 +103,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     protected void flushDeserialize() {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
-        }
-        if (pendingDeserialize != null) {
-            picturesFragment.doDeserialize(monitoringCode, pendingDeserialize);
-            pendingDeserialize = null;
         }
     }
 

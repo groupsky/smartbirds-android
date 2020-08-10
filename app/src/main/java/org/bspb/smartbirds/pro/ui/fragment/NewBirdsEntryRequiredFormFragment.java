@@ -59,7 +59,6 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
 
     @FragmentById(R.id.pictures_fragment)
     NewEntryPicturesFragment picturesFragment;
-    private HashMap<String, String> pendingDeserialize;
 
     @Override
     public void onResume() {
@@ -83,9 +82,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
-        if (picturesFragment == null) {
-            pendingDeserialize = data;
-        } else {
+        if (picturesFragment != null) {
             picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
@@ -94,10 +91,6 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     protected void flushDeserialize() {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
-        }
-        if (pendingDeserialize != null) {
-            picturesFragment.doDeserialize(monitoringCode, pendingDeserialize);
-            pendingDeserialize = null;
         }
     }
 
