@@ -1,5 +1,5 @@
-def versionNameBase = "2.0.0"
-def versionCodeBase = 70
+def versionNameBase = "2.0.3"
+def versionCodeBase = 73
 
 
 apply plugin: 'com.android.application'
