@@ -15,9 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 
 import com.crashlytics.android.Crashlytics;
@@ -43,6 +40,7 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
@@ -333,7 +331,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         if (mMap == null) return null;
 
         PolygonOptions polygonOptions = new PolygonOptions();
-        for (Zone.Coordinate coord : zone.coordinates) {
+        for (Coordinate coord : zone.coordinates) {
             polygonOptions.add(new LatLng(coord.latitude, coord.longitude));
         }
 

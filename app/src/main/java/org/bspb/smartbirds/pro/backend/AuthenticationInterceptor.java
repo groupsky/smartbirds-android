@@ -13,6 +13,8 @@ import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.UserDataEvent;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.AuthenticationService_;
 
@@ -40,6 +42,9 @@ public class AuthenticationInterceptor implements Interceptor {
 
     @Bean
     Backend backend;
+
+    @Bean
+    EEventBus bus;
 
     private String authorization;
 
@@ -74,6 +79,7 @@ public class AuthenticationInterceptor implements Interceptor {
             if (loginResponse.isSuccessful()) {
                 this.authorization = loginResponse.body().token;
                 prefs.authToken().put(this.authorization);
+                bus.postSticky(new UserDataEvent(loginResponse.body().user));
                 return true;
             } else {
                 this.authorization = null;

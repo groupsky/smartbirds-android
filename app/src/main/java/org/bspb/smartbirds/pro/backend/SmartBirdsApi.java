@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.backend;
 
 import com.google.gson.JsonObject;
 
+import org.bspb.smartbirds.pro.backend.dto.CheckSessionRequest;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
 import org.bspb.smartbirds.pro.backend.dto.Location;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
@@ -18,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 
@@ -28,6 +30,9 @@ public interface SmartBirdsApi {
 
     @POST("session")
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
+
+    @PUT("session")
+    Call<LoginResponse> checkSession(@Body CheckSessionRequest checkSessionRequest);
 
     @GET("nomenclature")
     Call<ResponseListEnvelope<Nomenclature>> nomenclatures(@Query("limit") int limit, @Query("offset") int offset);

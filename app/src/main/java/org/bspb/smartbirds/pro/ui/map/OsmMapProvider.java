@@ -27,6 +27,7 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EEventBus_;
@@ -363,7 +364,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         } else {
             zoneOverlay.getFillPaint().setStyle(Paint.Style.STROKE);
         }
-        for (Zone.Coordinate point : zone.coordinates) {
+        for (Coordinate point : zone.coordinates) {
             zoneOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
         }
         zoneOverlay.addPoint(new GeoPoint(zone.coordinates.get(0).latitude, zone.coordinates.get(0).longitude));

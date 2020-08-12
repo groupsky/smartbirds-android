@@ -31,4 +31,5 @@ public interface UserPrefs {
 
     String email();
 
+    String bgAtlasCells();
 }

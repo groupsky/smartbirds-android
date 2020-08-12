@@ -44,6 +44,7 @@ import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.LoginResultEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LoginStateEvent;
+import org.bspb.smartbirds.pro.events.UserDataEvent;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.AuthenticationService_;
 
@@ -363,10 +364,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         missingGdpr = false;
         switch (loginResult.status) {
             case SUCCESS:
-                prefs.userId().put(loginResult.user.id);
-                prefs.firstName().put(loginResult.user.firstName);
-                prefs.lastName().put(loginResult.user.lastName);
-                prefs.email().put(loginResult.user.email);
+                bus.postSticky(new UserDataEvent(loginResult.user));
                 MainActivity_.intent(this).start();
                 finish();
                 break;
