@@ -42,7 +42,7 @@
     <string name="menu_monitoring_map_provider_google">"Google"</string>
     <string name="menu_monitoring_map_provider_osm">"OSM"</string>
     <string name="menu_monitoring_stay_awake">"Постоянно включен"</string>
-    <string name="menu_monitoring_show_zone_background">"Фон на площадките"</string>
+    <string name="menu_monitoring_show_zone_background">"Фон на полигоните"</string>
     <string name="menu_monitoring_start">"Начало"</string>
     <string name="menu_monitoring_save">"Запис"</string>
     <string name="main_screen_btn_start">"Начало"</string>
@@ -310,4 +310,5 @@
     <string name="wetland_zones_info_text">"Всички записи са с едни и същи географски координати."</string>
     <string name="monitoring_moderator_review">"За проверка от модератор"</string>
     <string name="warning_moderator_review">"Необходима е снимка!"</string>
+    <string name="menu_monitoring_show_bg_atlas_cells">"Квадрати BG Атлас"</string>
 </resources>

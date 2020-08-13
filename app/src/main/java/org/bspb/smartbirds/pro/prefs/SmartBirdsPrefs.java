@@ -38,4 +38,7 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean showLocalProjects();
+
+    @DefaultBoolean(true)
+    boolean showBgAtlasCells();
 }
