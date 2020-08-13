@@ -374,9 +374,6 @@ public class DataService extends Service {
         userPrefs.firstName().put(event.getUser().firstName);
         userPrefs.lastName().put(event.getUser().lastName);
         userPrefs.email().put(event.getUser().email);
-//        Type listType = new TypeToken<List<BGAtlasCell>>() {
-//        }.getType();
-//        List<BGAtlasCell> cells = parser.fromJson(json, listType);
         userPrefs.bgAtlasCells().put(SBGsonParser.createParser().toJson(event.getUser().bgAtlasCells));
 
         bus.removeStickyEvent(event);
