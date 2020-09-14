@@ -5,11 +5,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
-
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +38,8 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
+import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
@@ -101,6 +98,9 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private MarkerClickListener markerClickListener;
     private List<Marker> localProjectsMarkers = new ArrayList<>();
     private boolean showLocalProjects;
+    private boolean showBgAtlasCells;
+    private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
+    private List<Polygon> atlasCellsPolygons = new ArrayList<>();
 
     @Override
     /**
@@ -170,6 +170,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         }
 
         drawLocalProjects(showLocalProjects);
+        drawBgAtlasCells();
 
         drawArea();
         fragment.getView().post(new Runnable() {
@@ -190,12 +191,19 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     public void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
         drawZones();
+        drawBgAtlasCells();
     }
 
     @Override
     public void setShowLocalProjects(boolean showKml) {
         this.showLocalProjects = showKml;
         drawLocalProjects(showKml);
+    }
+
+    @Override
+    public void setShowBgAtlasCells(boolean showBgAtlasCells) {
+        this.showBgAtlasCells = showBgAtlasCells;
+        drawBgAtlasCells();
     }
 
     private void drawZones() {
@@ -242,6 +250,60 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             }
             localProjectsMarkers.clear();
         }
+    }
+
+    private void drawBgAtlasCells() {
+        if (fragment == null || fragment.getContext() == null) {
+            return;
+        }
+
+        for (Polygon p : atlasCellsPolygons) {
+            if (p.isVisible()) {
+                p.remove();
+            }
+        }
+        atlasCellsPolygons.clear();
+
+        if (!showBgAtlasCells) {
+            return;
+        }
+
+        for (BGAtlasCell cell : atlasCells) {
+            Polygon p = addAtlasCell(cell);
+            if (p != null) {
+                atlasCellsPolygons.add(p);
+            }
+        }
+    }
+
+    private Polygon addAtlasCell(BGAtlasCell cell) {
+        if (mMap == null) return null;
+
+        PolygonOptions polygonOptions = new PolygonOptions();
+        for (Coordinate coordinate : cell.getCoordinates()) {
+            polygonOptions.add(new LatLng(coordinate.latitude, coordinate.longitude));
+        }
+
+
+        int color = getAtlasCellColor(cell);
+        polygonOptions.strokeColor(color);
+        if (showZoneBackground) {
+            polygonOptions.fillColor(color);
+        }
+        polygonOptions.strokeWidth(6f);
+        return mMap.addPolygon(polygonOptions);
+    }
+
+    private int getAtlasCellColor(BGAtlasCell cell) {
+        float percent = cell.getSpecOld() > 0 ? (float) (100.0 * cell.getSpecKnown() / cell.getSpecOld()) : 0;
+        if (percent < 30) {
+            return fragment.getContext().getResources().getColor(R.color.atlas_cell_color_low);
+        }
+        if (percent < 65) {
+            return fragment.getContext().getResources().getColor(R.color.atlas_cell_color_med);
+        }
+
+        return fragment.getContext().getResources().getColor(R.color.atlas_cell_color_high);
     }
 
     @Override
@@ -333,7 +395,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         if (mMap == null) return null;
 
         PolygonOptions polygonOptions = new PolygonOptions();
-        for (Zone.Coordinate coord : zone.coordinates) {
+        for (Coordinate coord : zone.coordinates) {
             polygonOptions.add(new LatLng(coord.latitude, coord.longitude));
         }
 
@@ -395,6 +457,17 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             this.zones.add(zone);
         }
         drawZones();
+    }
+
+    @Override
+    public void setBgAtlasCells(List<BGAtlasCell> cells) {
+        this.atlasCells.clear();
+        if (cells != null) {
+            for (BGAtlasCell cell : cells) {
+                this.atlasCells.add(cell);
+            }
+        }
+        drawBgAtlasCells();
     }
 
     @Override

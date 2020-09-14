@@ -10,10 +10,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -21,8 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.reflect.TypeToken;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -40,6 +40,7 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.beans.EntriesToMapMarkersConverter;
 import org.bspb.smartbirds.pro.beans.MonitoringModelEntries;
@@ -59,17 +60,21 @@ import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
-import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
+import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
 import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
 import org.osmdroid.config.Configuration;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
@@ -153,6 +158,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MenuItem menuShowZoneBackground;
     @OptionsMenuItem(R.id.action_show_local_projects)
     MenuItem menuShowLocalProjects;
+    @OptionsMenuItem(R.id.action_show_bg_atlas_cells)
+    MenuItem menuShowBgAtlasCells;
     @OptionsMenuItem(R.id.view_type_map)
     MenuItem menuViewTypeMap;
     @OptionsMenuItem(R.id.view_type_list)
@@ -167,6 +174,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MonitoringPrefs_ monitoringPrefs;
     @Pref
     SmartBirdsPrefs_ prefs;
+    @Pref
+    UserPrefs_ userPrefs;
+
     private boolean canceled = false;
     @InstanceState
     boolean stayAwake;
@@ -174,6 +184,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     boolean showZoneBackground;
     @InstanceState
     boolean showLocalProjects;
+    @InstanceState
+    boolean showBgAtlasCells;
 
     @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
@@ -360,6 +372,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         menuStayAwake.setChecked(stayAwake);
         menuShowZoneBackground.setChecked(showZoneBackground);
         menuShowLocalProjects.setChecked(showLocalProjects);
+        menuShowBgAtlasCells.setChecked(showBgAtlasCells);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -401,6 +414,14 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         currentMap.setShowLocalProjects(showLocalProjects);
         currentMap.setOnMarkerClickListener(this);
         currentMap.showMap();
+        currentMap.setBgAtlasCells(readAtlasCells());
+        currentMap.setShowBgAtlasCells(showBgAtlasCells);
+    }
+
+    private List<BGAtlasCell> readAtlasCells() {
+        Type listType = new TypeToken<List<BGAtlasCell>>() {
+        }.getType();
+        return SBGsonParser.createParser().fromJson(userPrefs.bgAtlasCells().get(), listType);
     }
 
     @OptionsItem(R.id.action_map_google)
@@ -576,6 +597,12 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setShowLocalProjects(sender.isChecked());
     }
 
+    @OptionsItem(R.id.action_show_bg_atlas_cells)
+    void setShowBgAtlasCells(MenuItem sender) {
+        sender.setChecked(!sender.isChecked());
+        setShowBgAtlasCells(sender.isChecked());
+    }
+
     private void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
         if (currentMap != null) {
@@ -592,6 +619,15 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             currentMap.updateCamera();
         }
         prefs.showLocalProjects().put(showLocalProjects);
+    }
+
+    private void setShowBgAtlasCells(boolean showBgAtlasCells) {
+        this.showBgAtlasCells = showBgAtlasCells;
+        if (currentMap != null) {
+            currentMap.setShowBgAtlasCells(showBgAtlasCells);
+            currentMap.updateCamera();
+        }
+        prefs.showBgAtlasCells().put(showBgAtlasCells);
     }
 
     @OptionsItem(R.id.action_stay_awake)
@@ -735,6 +771,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             prefs.stayAwake().put(stayAwake);
             prefs.showZoneBackground().put(showZoneBackground);
             prefs.showLocalProjects().put(showLocalProjects);
+            prefs.showBgAtlasCells().put(showBgAtlasCells);
             if (lastPosition != null) {
                 editor.lastPositionLat().put((float) lastPosition.latitude);
                 editor.lastPositionLon().put((float) lastPosition.longitude);
@@ -809,6 +846,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setStayAwake(prefs.stayAwake().get());
         setShowZoneBackground(prefs.showZoneBackground().get());
         setShowLocalProjects(prefs.showLocalProjects().get());
+        setShowBgAtlasCells(prefs.showBgAtlasCells().get());
         restorePoints();
     }
 

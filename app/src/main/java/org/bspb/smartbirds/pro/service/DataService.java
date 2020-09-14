@@ -6,10 +6,11 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
-import androidx.core.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -46,9 +47,12 @@ import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
+import org.bspb.smartbirds.pro.events.UserDataEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.tools.GpxWriter;
 import org.bspb.smartbirds.pro.tools.Reporting;
+import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 
@@ -92,6 +96,9 @@ public class DataService extends Service {
 
     @Pref
     SmartBirdsPrefs_ globalPrefs;
+
+    @Pref
+    UserPrefs_ userPrefs;
 
     Monitoring monitoring = null;
 
@@ -360,5 +367,15 @@ public class DataService extends Service {
         }
 
         bus.postSticky(new MonitoringResumedEvent());
+    }
+
+    public void onEvent(UserDataEvent event) {
+        userPrefs.userId().put(event.getUser().id);
+        userPrefs.firstName().put(event.getUser().firstName);
+        userPrefs.lastName().put(event.getUser().lastName);
+        userPrefs.email().put(event.getUser().email);
+        userPrefs.bgAtlasCells().put(SBGsonParser.createParser().toJson(event.getUser().bgAtlasCells));
+
+        bus.removeStickyEvent(event);
     }
 }

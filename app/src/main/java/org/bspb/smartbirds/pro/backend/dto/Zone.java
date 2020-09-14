@@ -3,7 +3,6 @@ package org.bspb.smartbirds.pro.backend.dto;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -74,22 +73,4 @@ public class Zone {
         return center;
     }
 
-    public static class Coordinate {
-
-        @Expose
-        @SerializedName("latitude")
-        public double latitude;
-
-        @Expose
-        @SerializedName("longitude")
-        public double longitude;
-
-        @Override
-        public String toString() {
-            return "Coordinate{" +
-                    "latitude=" + latitude +
-                    ", longitude=" + longitude +
-                    '}';
-        }
-    }
 }

@@ -14,6 +14,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.prefs.CbmPrefs_;
@@ -110,7 +111,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     protected void onZoneChange() {
         Zone zone = zoneInput.getSelectedItem();
         if (zone != null) {
-            Zone.Coordinate center = zone.getCenter();
+            Coordinate center = zone.getCenter();
             float[] res = new float[1];
             Location.distanceBetween(lat, lon, center.latitude, center.longitude, res);
             Log.d(TAG, String.format(Locale.ENGLISH, "distance (m): %f", res[0]));

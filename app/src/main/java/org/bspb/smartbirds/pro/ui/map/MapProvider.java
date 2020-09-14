@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.enums.EntryType;
 
@@ -66,4 +67,8 @@ public interface MapProvider {
     void setShowLocalProjects(boolean showLocalProjects);
 
     void setLifeCycle(Lifecycle lifecycle);
+
+    void setShowBgAtlasCells(boolean showBgAtlasCells);
+
+    void setBgAtlasCells(List<BGAtlasCell> cells);
 }

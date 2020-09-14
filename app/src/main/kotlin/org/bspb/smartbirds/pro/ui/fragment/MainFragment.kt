@@ -281,7 +281,7 @@ open class MainFragment : Fragment() {
 
     @UiThread
     open fun onEvent(event: DownloadCompleted?) {
-        if (!(UploadService.isUploading || ZoneService.isDownloading || NomenclatureService.isDownloading.isNotEmpty())) {
+        if (!(UploadService.isUploading || ZoneService.isDownloading || AuthenticationService.isDownloading || NomenclatureService.isDownloading.isNotEmpty())) {
             hideProgressDialog()
         }
         showNotSyncedCount()

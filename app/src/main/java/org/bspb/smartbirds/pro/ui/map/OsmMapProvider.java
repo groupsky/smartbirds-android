@@ -27,6 +27,8 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
+import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EEventBus_;
@@ -96,6 +98,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private MarkerClickListener markerClickListener;
     private boolean showLocalProjects;
     private FolderOverlay localProjectsOverlay;
+    private boolean showBgAtlasCells;
+    private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
+    private List<Polygon> atlasCellsPolygons = new ArrayList<>();
 
     @Override
     public void setUpMapIfNeeded() {
@@ -152,6 +157,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         loadKmlFile();
         drawLocalProjects(showLocalProjects);
+        drawBgAtlasCells();
 
         for (MarkerHolder markerHolder : markers) {
             if (markerHolder.marker == null || !mMap.getOverlayManager().contains(markerHolder.marker)) {
@@ -203,6 +209,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     public void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
         drawZones();
+        drawBgAtlasCells();
     }
 
     @Override
@@ -237,6 +244,63 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             localProjectsOverlay = null;
             mMap.invalidate();
         }
+    }
+
+    private void drawBgAtlasCells() {
+        if (fragment == null || fragment.getContext() == null) {
+            return;
+        }
+
+        if (mMap != null) {
+            mMap.getOverlayManager().removeAll(atlasCellsPolygons);
+        }
+        zoneOverlays.clear();
+
+        if (!showBgAtlasCells) {
+            return;
+        }
+
+        for (BGAtlasCell cell : atlasCells) {
+            Polygon overlay = addAtlasCell(cell);
+            if (overlay != null) {
+                atlasCellsPolygons.add(overlay);
+            }
+        }
+        if (mMap != null) mMap.invalidate();
+    }
+
+    private Polygon addAtlasCell(BGAtlasCell cell) {
+        if (mMap == null) return null;
+
+        int color = getAtlasCellColor(cell);
+        Polygon cellOverlay = new Polygon();
+        cellOverlay.getOutlinePaint().setStrokeWidth(6f);
+        cellOverlay.getOutlinePaint().setColor(color);
+        cellOverlay.getFillPaint().setColor(color);
+        if (showZoneBackground) {
+            cellOverlay.getFillPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+        } else {
+            cellOverlay.getFillPaint().setStyle(Paint.Style.STROKE);
+        }
+        for (Coordinate point : cell.getCoordinates()) {
+            cellOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
+        }
+        cellOverlay.addPoint(new GeoPoint(cell.getCoordinates().get(0).latitude, cell.getCoordinates().get(0).longitude));
+
+        mMap.getOverlayManager().add(0, cellOverlay);
+        return cellOverlay;
+    }
+
+    private int getAtlasCellColor(BGAtlasCell cell) {
+        float percent = cell.getSpecOld() > 0 ? (float) (100.0 * cell.getSpecKnown() / cell.getSpecOld()) : 0;
+        if (percent < 30) {
+            return fragment.getContext().getResources().getColor(R.color.atlas_cell_color_low);
+        }
+        if (percent < 65) {
+            return fragment.getContext().getResources().getColor(R.color.atlas_cell_color_med);
+        }
+
+        return fragment.getContext().getResources().getColor(R.color.atlas_cell_color_high);
     }
 
     @Override
@@ -363,7 +427,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         } else {
             zoneOverlay.getFillPaint().setStyle(Paint.Style.STROKE);
         }
-        for (Zone.Coordinate point : zone.coordinates) {
+        for (Coordinate point : zone.coordinates) {
             zoneOverlay.addPoint(new GeoPoint(point.latitude, point.longitude));
         }
         zoneOverlay.addPoint(new GeoPoint(zone.coordinates.get(0).latitude, zone.coordinates.get(0).longitude));
@@ -473,6 +537,23 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
                 mMap.onPause();
             }
         });
+    }
+
+    @Override
+    public void setShowBgAtlasCells(boolean showBgAtlasCells) {
+        this.showBgAtlasCells = showBgAtlasCells;
+        drawBgAtlasCells();
+    }
+
+    @Override
+    public void setBgAtlasCells(List<BGAtlasCell> cells) {
+        this.atlasCells.clear();
+        if (cells != null) {
+            for (BGAtlasCell cell : cells) {
+                this.atlasCells.add(cell);
+            }
+        }
+        drawBgAtlasCells();
     }
 
     private static class EventsOverlay extends Overlay {

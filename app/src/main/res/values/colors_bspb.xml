@@ -15,4 +15,8 @@
     <color name="error_color">#c0ff0000</color>
     <color name="link_color">#00F</color>
     <color name="black_transparent_20">#20000000</color>
+
+    <color name="atlas_cell_color_low">#553333aa</color>
+    <color name="atlas_cell_color_med">#55883388</color>
+    <color name="atlas_cell_color_high">#55aa3333</color>
 </resources>
