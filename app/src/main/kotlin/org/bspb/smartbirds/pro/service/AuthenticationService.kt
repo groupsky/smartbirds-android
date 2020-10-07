@@ -69,6 +69,11 @@ open class AuthenticationService : AbstractIntentService("AuthenticationService"
             Reporting.logException(e)
             return LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY)
         }
+
+        if (response == null) {
+            return LoginResultEvent(LoginResultEvent.Status.ERROR)
+        }
+
         if (!response.isSuccessful) {
             var errorResponse = ""
             try {

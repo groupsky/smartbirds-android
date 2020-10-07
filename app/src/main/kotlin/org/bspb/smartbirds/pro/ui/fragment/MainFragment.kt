@@ -36,6 +36,7 @@ import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.*
 import org.bspb.smartbirds.pro.tools.Reporting
+import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
 import org.bspb.smartbirds.pro.ui.StatsActivity_
 import java.util.*
@@ -206,6 +207,11 @@ open class MainFragment : Fragment() {
 
         builder.setView(dialogView)
         builder.create().show()
+    }
+
+    @OptionsItem(R.id.menu_downloads)
+    open fun openDownloads() {
+        startActivity(Intent(activity, DownloadsActivity::class.java))
     }
 
     @OptionsItem(R.id.menu_statistics)

@@ -165,6 +165,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="export_app_chooser">"Export monitoring: "</string>
     <string name="monitoring_type">"Type of observation"</string>
     <string name="main_screen_btn_info">"Information"</string>
+    <string name="main_screen_btn_downloads">"Downloads"</string>
     <string name="main_screen_btn_help">"Help"</string>
     <string name="info_dialog_title">"Information"</string>
     <string name="info_text"><![CDATA[
