@@ -14,7 +14,6 @@ import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.adapter.DownloadsAdapter
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell
 import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse
 import org.bspb.smartbirds.pro.prefs.DownloadsPrefs_
@@ -33,42 +32,84 @@ open class DownloadsFragment : Fragment() {
     @Pref
     protected lateinit var prefs: DownloadsPrefs_
 
+    private lateinit var adapter: DownloadsAdapter
+    private lateinit var locale: String
+
     @AfterViews
     fun initViews() {
+        locale = context?.getString(R.string.locale).toString()
+
         val layoutManager = LinearLayoutManager(context)
         emptyView.visibility = View.GONE
         downloadsListView.layoutManager = layoutManager
+
+        adapter = DownloadsAdapter(locale)
+        downloadsListView.adapter = adapter
 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         downloadsListView.addItemDecoration(dividerItemDecoration)
 
         val cachedDownloads = prefs.downloads().get()
+        var downloads: List<DownloadsItem>? = null
         if (!TextUtils.isEmpty(cachedDownloads)) {
             val listType = object : TypeToken<List<DownloadsItem?>?>() {}.type
-            val downloads = SBGsonParser.createParser().fromJson<List<DownloadsItem>>(cachedDownloads, listType)
-            downloads?.apply { downloadsListView.adapter = DownloadsAdapter(this) }
+            downloads = SBGsonParser.createParser().fromJson<List<DownloadsItem>>(cachedDownloads, listType)
         }
 
         fetchDownloads()
+
+        listDownloads(downloads)
+    }
+
+    private fun listDownloads(downloads: List<DownloadsItem>?) {
+        val availableDownloads = ArrayList<DownloadsItem>()
+
+
+        downloads?.forEach {
+            it.title?.apply {
+                if (this.hasValue(locale)) {
+                    availableDownloads.add(it)
+                }
+            }
+        }
+
+        if (availableDownloads.size > 0) {
+            downloadsListView.visibility = View.VISIBLE
+            emptyView.visibility = View.GONE
+        } else {
+            downloadsListView.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+        }
+
+        adapter.downloads = availableDownloads
     }
 
     private fun fetchDownloads() {
+        progressBar.visibility = View.VISIBLE
+
         var call = backend.api().getDownloads("https://dl.dropbox.com/s/zbarvlxrybwwv0w/downloads.json?dl=0")
         call.enqueue(object : Callback<DownloadsResponse> {
             override fun onResponse(call: Call<DownloadsResponse>, response: Response<DownloadsResponse>) {
+                if (context == null) {
+                    return
+                }
+                progressBar.visibility = View.GONE
                 response.apply {
                     if (isSuccessful) {
                         body()?.downloads?.apply {
-                            downloadsListView.adapter = DownloadsAdapter(this)
                             prefs.downloads().put(SBGsonParser.createParser().toJson(this))
+                            listDownloads(this)
                         }
                     }
                 }
             }
 
             override fun onFailure(call: Call<DownloadsResponse>, t: Throwable) {
+                if (context == null) {
+                    return
+                }
+                progressBar.visibility = View.GONE
                 t.printStackTrace()
-                debugLog(t.message)
             }
         })
     }

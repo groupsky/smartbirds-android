@@ -11,9 +11,15 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.utils.inflate
 
-class DownloadsAdapter(private val downloads: List<DownloadsItem>) : RecyclerView.Adapter<DownloadsAdapter.DownloadsViewHolder>() {
+class DownloadsAdapter(val locale: String) : RecyclerView.Adapter<DownloadsAdapter.DownloadsViewHolder>() {
 
-    class DownloadsViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer, View.OnClickListener {
+    var downloads: List<DownloadsItem>? = null
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    class DownloadsViewHolder(override val containerView: View, val locale: String) : RecyclerView.ViewHolder(containerView), LayoutContainer, View.OnClickListener {
         private var downloadItem: DownloadsItem? = null
 
         // TODO Replace with LayoutContainer auto binding when become stable
@@ -24,9 +30,9 @@ class DownloadsAdapter(private val downloads: List<DownloadsItem>) : RecyclerVie
         }
 
 
-        fun bindItem(downloadItem: DownloadsItem) {
+        fun bindItem(downloadItem: DownloadsItem?) {
             this.downloadItem = downloadItem
-            labelView.text = downloadItem.title?.get("en")
+            labelView.text = downloadItem?.title?.get(locale)
         }
 
         override fun onClick(v: View?) {
@@ -38,12 +44,16 @@ class DownloadsAdapter(private val downloads: List<DownloadsItem>) : RecyclerVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DownloadsViewHolder {
         val inflatedView = parent.inflate(R.layout.item_download, false)
-        return DownloadsViewHolder(inflatedView)
+        return DownloadsViewHolder(inflatedView, locale)
     }
 
-    override fun getItemCount() = downloads.size
+    override fun getItemCount() = if (downloads != null) {
+        downloads!!.size
+    } else {
+        0
+    }
 
     override fun onBindViewHolder(holder: DownloadsViewHolder, position: Int) {
-        holder.bindItem(downloads[position])
+        holder.bindItem(downloads?.get(position))
     }
 }
