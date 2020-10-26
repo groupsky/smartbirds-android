@@ -4,14 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
     android:padding="16dp">
 
     <TextView
         android:id="@+id/itemLabel"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
         android:textAppearance="?android:textAppearanceLarge"
         tools:text="Link 1" />
 
+    <TextView
+        android:id="@+id/contentLocale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="15dp"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="BG" />
 
 </LinearLayout>

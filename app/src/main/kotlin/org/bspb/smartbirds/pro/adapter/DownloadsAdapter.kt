@@ -24,15 +24,18 @@ class DownloadsAdapter(val locale: String) : RecyclerView.Adapter<DownloadsAdapt
 
         // TODO Replace with LayoutContainer auto binding when become stable
         private var labelView: TextView = containerView.findViewById(R.id.itemLabel)
+        private var localeView: TextView = containerView.findViewById(R.id.contentLocale)
 
         init {
             containerView.setOnClickListener(this)
+            localeView.setOnClickListener(this)
         }
 
 
         fun bindItem(downloadItem: DownloadsItem?) {
             this.downloadItem = downloadItem
-            labelView.text = downloadItem?.title?.get(locale)
+            labelView.text = downloadItem?.title?.get(locale) ?: ""
+            localeView.text = downloadItem?.contentLocale?.toUpperCase() ?: ""
         }
 
         override fun onClick(v: View?) {
