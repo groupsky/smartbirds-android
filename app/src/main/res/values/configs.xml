@@ -5,4 +5,5 @@
     <string name="register_url" translatable="false">https://smartbirds.org/register</string>
     <string name="gdpr_info_url" translatable="false">https://smartbirds.org/gdpr</string>
     <string name="stats_url" translatable="false">https://smartbirds.org/mobile-stats</string>
+    <string name="downloads_url" translatable="false">https://raw.githubusercontent.com/BspbOrg/files/master/org.bspb.smartbirds.pro/downloads.json</string>
 </resources>

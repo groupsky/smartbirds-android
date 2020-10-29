@@ -87,7 +87,7 @@ open class DownloadsFragment : Fragment() {
     private fun fetchDownloads() {
         progressBar.visibility = View.VISIBLE
 
-        var call = backend.api().getDownloads("https://dl.dropbox.com/s/zbarvlxrybwwv0w/downloads.json?dl=0")
+        var call = backend.api().getDownloads(getString(R.string.downloads_url))
         call.enqueue(object : Callback<DownloadsResponse> {
             override fun onResponse(call: Call<DownloadsResponse>, response: Response<DownloadsResponse>) {
                 if (context == null) {
