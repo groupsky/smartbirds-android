@@ -249,8 +249,8 @@ open class MainFragment : Fragment() {
 
     private fun checkBatteryOptimization() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val pm = context!!.getSystemService(Context.POWER_SERVICE) as PowerManager
-            if (pm.isIgnoringBatteryOptimizations(context!!.packageName)) {
+            val pm = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
+            if (pm.isIgnoringBatteryOptimizations(requireContext().packageName)) {
                 btnBatteryOptimization.visibility = View.GONE
             } else {
                 if (!prefs.isBatteryOptimizationDialogShown.get()) {
@@ -346,8 +346,8 @@ open class MainFragment : Fragment() {
     }
 
     private fun locationPermissionsGranted(): Boolean {
-        if (ContextCompat.checkSelfPermission(activity!!, permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(activity!!, permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -369,8 +369,8 @@ open class MainFragment : Fragment() {
     }
 
     private fun storagePermissionsGranted(): Boolean {
-        if (ContextCompat.checkSelfPermission(activity!!, permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(activity!!, permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireActivity(), permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(requireActivity(), permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             return true
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -404,14 +404,14 @@ open class MainFragment : Fragment() {
 
     private fun doCancel() {
         monitoringPrefs.edit().clear().apply()
-        activity!!.getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply()
+        requireActivity().getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply()
         bus.postSticky(CancelMonitoringEvent())
     }
 
     private fun showProgressDialog(title: String, message: String) {
 
         if (loading == null) {
-            loading = fragmentManager!!.findFragmentByTag("progress") as LoadingDialog?
+            loading = parentFragmentManager.findFragmentByTag("progress") as LoadingDialog?
         }
 
         if (loading != null) {
@@ -421,7 +421,7 @@ open class MainFragment : Fragment() {
 
 
         val loadingDialog: LoadingDialog = LoadingDialog.newInstance(message)
-        loadingDialog.show(fragmentManager!!, "progress")
+        loadingDialog.show(parentFragmentManager, "progress")
         loading = loadingDialog
     }
 
