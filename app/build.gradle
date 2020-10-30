@@ -111,6 +111,8 @@ dependencies {
     // Crashlytics Kit
     implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
 
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
     implementation 'com.googlecode.jcsv:jcsv:1.4.0'
     implementation 'commons-net:commons-net:3.7'
