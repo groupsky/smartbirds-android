@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources>
     <string name="app_name">"SmartBirds Pro"</string>
     <string name="title_activity_start_monitoring">"Begin monitoring"</string>
     <string name="title_activity_monitoring">"Monitoring"</string>
@@ -165,7 +165,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="export_app_chooser">"Export monitoring: "</string>
     <string name="monitoring_type">"Type of observation"</string>
     <string name="main_screen_btn_info">"Information"</string>
-    <string name="main_screen_btn_downloads">"Downloads"</string>
     <string name="main_screen_btn_help">"Help"</string>
     <string name="info_dialog_title">"Information"</string>
     <string name="info_text"><![CDATA[
@@ -313,6 +312,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_moderator_review">"Moderator review"</string>
     <string name="warning_moderator_review">"Requires a picture attachment!"</string>
     <string name="menu_monitoring_show_bg_atlas_cells">"Squares of BG Atlas"</string>
-    <string name="no_downloads">No downloads available at the moment</string>
-    <string name="title_downloads">Downloads</string>
+    <string name="main_screen_btn_downloads">"Downloads"</string>
+    <string name="no_downloads">"No downloads available at the moment"</string>
+    <string name="title_downloads">"Downloads"</string>
 </resources>

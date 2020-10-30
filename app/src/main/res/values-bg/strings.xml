@@ -311,4 +311,7 @@
     <string name="monitoring_moderator_review">"За проверка от модератор"</string>
     <string name="warning_moderator_review">"Необходима е снимка!"</string>
     <string name="menu_monitoring_show_bg_atlas_cells">"Квадрати BG Атлас"</string>
+    <string name="main_screen_btn_downloads">"Документи за изтегляния"</string>
+    <string name="no_downloads">"Липсват файлове за изтегляне в момента"</string>
+    <string name="title_downloads">"Документи за изтегляния"</string>
 </resources>
