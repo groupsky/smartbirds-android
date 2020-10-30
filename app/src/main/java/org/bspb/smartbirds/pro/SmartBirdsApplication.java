@@ -2,9 +2,7 @@ package org.bspb.smartbirds.pro;
 
 import android.app.Application;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EApplication;
@@ -20,8 +18,6 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
-
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by groupsky on 14-9-25.
@@ -48,15 +44,10 @@ public class SmartBirdsApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-
-        // Initialize Fabric with the debug-disabled crashlytics.
-        Fabric.with(this, crashlyticsKit, new Answers());
-
-        Crashlytics.setString("git_sha", BuildConfig.GIT_SHA);
-        Crashlytics.setString("build_time", BuildConfig.BUILD_TIME);
+        FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+        crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
+        crashlytics.setCustomKey("git_sha", BuildConfig.GIT_SHA);
+        crashlytics.setCustomKey("build_time", BuildConfig.BUILD_TIME);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));

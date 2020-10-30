@@ -63,8 +63,7 @@ open class AuthenticationService : AbstractIntentService("AuthenticationService"
     }
 
     private fun doLogin(email: String?, password: String?, gdprConsent: Boolean?): LoginResultEvent {
-        var response: Response<LoginResponse>? = null
-        response = try {
+        var response = try {
             backend.api().login(LoginRequest(email, password, gdprConsent)).execute()
         } catch (e: IOException) {
             Reporting.logException(e)
@@ -96,7 +95,8 @@ open class AuthenticationService : AbstractIntentService("AuthenticationService"
                 else -> LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY)
             }
         }
-        authenticationInterceptor.setAuthorization(response.body()!!.token, email, password)
+
+        authenticationInterceptor.setAuthorization(response?.body()!!.token, email, password)
 
         SyncService_.intent(this).initialSync().start()
 

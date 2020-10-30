@@ -3,11 +3,13 @@ def versionCodeBase = 73
 
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.novoda.build-properties'
-apply plugin: 'io.fabric'
+
 
 buildProperties {
     notThere {
@@ -46,8 +48,9 @@ android {
             versionNameSuffix "-DEBUG"
             buildConfigField "String", "GIT_SHA", "\"DEBUG\""
             buildConfigField "String", "BACKEND_BASE_URL", "\"https://staging.smartbirds.org/api/staging/\""
-            // Disable fabric build ID generation for debug builds
-            ext.enableCrashlytics = false
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
 
         release {
@@ -64,7 +67,6 @@ android {
                     output.outputFileName = "smartbirdspro-${variant.versionName}-${versionCodeBase}.apk"
                 }
             }
-
         }
     }
     lintOptions {
@@ -104,9 +106,8 @@ dependencies {
     implementation 'de.greenrobot:eventbus:2.4.1'
 
     // Crashlytics Kit
-    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
-        transitive = true
-    }
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
     implementation 'com.googlecode.jcsv:jcsv:1.4.0'
     implementation 'commons-net:commons-net:3.7'

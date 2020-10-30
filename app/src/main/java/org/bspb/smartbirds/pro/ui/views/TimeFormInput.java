@@ -9,13 +9,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TimePicker;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -77,7 +75,7 @@ public class TimeFormInput extends TextViewFormInput implements SupportStorage {
             calendar.setTime(mStorageFormat.parse(value));
             setValue(calendar);
         } catch (ParseException e) {
-            Crashlytics.logException(e);
+            Reporting.logException(e);
             Log.e(TAG, "Invalid storage format", e);
         }
     }

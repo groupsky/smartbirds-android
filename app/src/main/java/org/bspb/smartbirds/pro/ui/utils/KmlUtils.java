@@ -5,8 +5,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-import com.crashlytics.android.Crashlytics;
-
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.map.SimpleMapMarker;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
@@ -36,7 +35,7 @@ public class KmlUtils {
                 }
             }
         } catch (Throwable t) {
-            Crashlytics.logException(t);
+            Reporting.logException(t);
         }
 
         return points;
@@ -52,7 +51,7 @@ public class KmlUtils {
         try {
             kml.parseKMLStream(context.getAssets().open(Configuration.LOCAL_PROJECTS_KML_FILE), null);
         } catch (Throwable t) {
-            Crashlytics.logException(t);
+            Reporting.logException(t);
         }
         return kml;
     }

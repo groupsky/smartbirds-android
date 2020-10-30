@@ -17,7 +17,6 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
@@ -36,6 +35,7 @@ import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
@@ -189,7 +189,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
                     displayKml(kmlOverlay);
                 }
             } catch (Throwable t) {
-                Crashlytics.logException(t);
+                Reporting.logException(t);
             }
         }
 
@@ -237,7 +237,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
                 mMap.getOverlayManager().add(localProjectsOverlay);
                 mMap.invalidate();
             } catch (Throwable t) {
-                Crashlytics.logException(t);
+                Reporting.logException(t);
             }
         } else {
             mMap.getOverlayManager().overlays().remove(localProjectsOverlay);

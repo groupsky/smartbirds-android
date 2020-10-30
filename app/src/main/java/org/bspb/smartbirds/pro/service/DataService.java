@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.internal.report.model.Report;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -194,7 +194,7 @@ public class DataService extends Service {
                 osw.close();
             }
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            Reporting.logException(e);
             return false;
         }
         return true;
@@ -270,7 +270,7 @@ public class DataService extends Service {
                     osw.close();
                 }
             } catch (IOException e) {
-                Crashlytics.logException(e);
+                Reporting.logException(e);
                 Toast.makeText(this, "Could not write to track.gpx!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -289,7 +289,7 @@ public class DataService extends Service {
                     osw.close();
                 }
             } catch (IOException e) {
-                Crashlytics.logException(e);
+                Reporting.logException(e);
                 Toast.makeText(this, "Could not write to track.gpx!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -315,7 +315,7 @@ public class DataService extends Service {
                 }
             } catch (IOException e) {
                 Log.d(TAG, "Image file create error", e);
-                Crashlytics.logException(e);
+                Reporting.logException(e);
             }
         }
         bus.post(new ImageFileCreatedFailed(isMonitoring() ? monitoring.code : null));

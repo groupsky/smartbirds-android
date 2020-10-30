@@ -20,7 +20,6 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.reflect.TypeToken;
 
@@ -752,7 +751,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @OptionsItem(R.id.action_crash)
     void crash() {
-        Crashlytics.getInstance().crash();
+        throw new RuntimeException("Test Crash");
     }
 
     @Override
