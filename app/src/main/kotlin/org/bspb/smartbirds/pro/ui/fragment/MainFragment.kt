@@ -347,23 +347,35 @@ open class MainFragment : Fragment() {
 
     private fun locationPermissionsGranted(): Boolean {
         if (ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             return true
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return false
         }
-        if (shouldShowRequestPermissionRationale(permission.ACCESS_FINE_LOCATION)) {
+        if (shouldShowRequestPermissionRationale(permission.ACCESS_FINE_LOCATION) ||
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && shouldShowRequestPermissionRationale(permission.ACCESS_BACKGROUND_LOCATION))) {
             try {
                 Snackbar.make(btnStartBirds, R.string.monitoring_permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(android.R.string.ok) { requestPermissions(arrayOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION), REQUEST_LOCATION) }.show()
+                        .setAction(android.R.string.ok) {
+                            val permissions = mutableListOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                permissions += permission.ACCESS_BACKGROUND_LOCATION
+                            }
+                            requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
+                        }.show()
                 return false
             } catch (t: Throwable) {
                 // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
                 Reporting.logException(t)
             }
         }
-        requestPermissions(arrayOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION), REQUEST_LOCATION)
+        val permissions = mutableListOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            permissions += permission.ACCESS_BACKGROUND_LOCATION
+        }
+        requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
         Toast.makeText(activity, R.string.monitoring_permission_rationale, Toast.LENGTH_SHORT).show()
         return false
     }
