@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.backend;
 import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.backend.dto.CheckSessionRequest;
+import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
 import org.bspb.smartbirds.pro.backend.dto.Location;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
@@ -22,6 +23,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by dani on 08.08.16.
@@ -77,4 +79,6 @@ public interface SmartBirdsApi {
     @GET("locations?limit=-1")
     Call<ResponseListEnvelope<Location>> listLocations();
 
+    @GET
+    Call<DownloadsResponse> getDownloads(@Url String url);
 }

@@ -148,6 +148,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
         </activity>
+        <activity
+            android:name=".ui.DownloadsActivity"
+            android:parentActivityName=".ui.MainActivity_">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
+        </activity>
 
         <service
             android:name=".service.DataService_"

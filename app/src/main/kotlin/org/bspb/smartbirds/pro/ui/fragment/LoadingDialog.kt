@@ -22,7 +22,7 @@ class LoadingDialog : DialogFragment() {
         val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null)
         loadingMessage = view.findViewById<TextView>(R.id.text_loading_message)
         loadingMessage?.text = message
-        return AlertDialog.Builder(context!!)
+        return AlertDialog.Builder(requireContext())
                 .setView(view)
                 .create()
     }

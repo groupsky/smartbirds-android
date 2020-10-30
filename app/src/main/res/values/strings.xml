@@ -312,4 +312,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_moderator_review">"Moderator review"</string>
     <string name="warning_moderator_review">"Requires a picture attachment!"</string>
     <string name="menu_monitoring_show_bg_atlas_cells">"Squares of BG Atlas"</string>
+    <string name="main_screen_btn_downloads">"Downloads"</string>
+    <string name="no_downloads">"No downloads available at the moment"</string>
+    <string name="title_downloads">"Downloads"</string>
 </resources>
