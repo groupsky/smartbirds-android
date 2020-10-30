@@ -9,8 +9,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -25,6 +23,7 @@ import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.io.BufferedInputStream;
@@ -144,7 +143,7 @@ public class NomenclaturesBean {
 
             Log.d(TAG, "data loaded");
         } catch (Throwable t) {
-            Crashlytics.logException(t);
+            Reporting.logException(t);
         }
     }
 
@@ -219,7 +218,7 @@ public class NomenclaturesBean {
                 is.close();
             }
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            Reporting.logException(e);
             throw new IllegalStateException("Missing bundled file " + filename, e);
         }
     }

@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -257,7 +257,7 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
 
     @OptionsItem(R.id.action_crash)
     void crash() {
-        Crashlytics.getInstance().crash();
+        throw new RuntimeException("Test Crash");
     }
 
     @Override

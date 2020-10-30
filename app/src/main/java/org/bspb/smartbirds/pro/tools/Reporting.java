@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.tools;
 
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 
@@ -15,7 +15,7 @@ public class Reporting {
 
     public static void logException(Throwable t) {
         Log.d(TAG, t.getMessage(), t);
-        Crashlytics.logException(t);
+        FirebaseCrashlytics.getInstance().recordException(t);
     }
 
 }

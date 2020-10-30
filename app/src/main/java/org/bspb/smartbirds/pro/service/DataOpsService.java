@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.googlecode.jcsv.CSVStrategy;
 import com.googlecode.jcsv.writer.CSVWriter;
 import com.googlecode.jcsv.writer.internal.CSVWriterBuilder;
@@ -21,6 +20,7 @@ import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.tools.CsvPreparer;
+import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryConverter;
 
 import java.io.BufferedWriter;
@@ -157,7 +157,7 @@ public class DataOpsService extends AbstractIntentService {
                 }
             }
         } catch (Throwable t) {
-            Crashlytics.logException(t);
+            Reporting.logException(t);
         }
     }
 
