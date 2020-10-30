@@ -140,6 +140,7 @@ open class MainFragment : Fragment() {
 
     @Click(R.id.btn_resume_birds)
     open fun resumeBirdsClicked() {
+        if (!permissionsGranted()) return
         bus.postSticky(ResumeMonitoringEvent())
     }
 
