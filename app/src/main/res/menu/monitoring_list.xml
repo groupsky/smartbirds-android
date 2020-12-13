@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AppCompatResource">
+
+    <item
+        android:id="@+id/menu_status"
+        android:icon="@drawable/ic_filter"
+        android:title="Status"
+        app:showAsAction="always">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_filter_status_finished"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/filter_monitoring_status_finished" />
+                <item
+                    android:id="@+id/menu_filter_status_uploaded"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/filter_monitoring_status_uploaded" />
+
+                <item
+                    android:id="@+id/menu_filter_status_paused"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/filter_monitoring_status_paused" />
+
+                <item
+                    android:id="@+id/menu_filter_status_canceled"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/filter_monitoring_status_canceled" />
+            </group>
+
+        </menu>
+    </item>
+
+</menu>
