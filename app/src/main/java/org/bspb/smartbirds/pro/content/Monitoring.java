@@ -16,7 +16,7 @@ import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 public class Monitoring {
 
     public enum Status {
-        wip ("wip"), finished("up"), uploaded(null), canceled("cancel"), paused("paused");
+        wip("wip"), finished("up"), uploaded(null), canceled("cancel"), paused("paused");
 
         public final String legacySuffix;
 
@@ -40,6 +40,8 @@ public class Monitoring {
     @SerializedName("pictureCounter")
     public int pictureCounter = 0;
 
+    public int entriesCount = 0;
+
     Monitoring(@NonNull String code) {
         this.code = code;
     }
@@ -52,6 +54,7 @@ public class Monitoring {
                 ", status=" + status +
                 ", commonForm=" + commonForm +
                 ", pictureCounter=" + pictureCounter +
+                ", entriesCount=" + entriesCount +
                 '}';
     }
 }

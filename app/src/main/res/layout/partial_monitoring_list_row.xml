@@ -7,7 +7,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="4dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -29,16 +31,34 @@
 
     </LinearLayout>
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/status"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:gravity="top"
-        android:textAppearance="?android:textAppearanceSmall"
-        tools:text="uploaded" />
+        android:layout_marginBottom="4dp"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/entries"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:visibility="visible"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="top"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:visibility="visible"
+            tools:text="uploaded" />
+    </LinearLayout>
 </merge>

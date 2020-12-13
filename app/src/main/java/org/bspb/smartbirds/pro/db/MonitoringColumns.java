@@ -39,4 +39,6 @@ public interface MonitoringColumns {
     @NotNull
     String DATA = "data";
 
+    String ENTRIES_COUNT = "entries_count";
+
 }

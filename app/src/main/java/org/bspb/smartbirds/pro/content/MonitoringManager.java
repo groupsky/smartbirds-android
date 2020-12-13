@@ -145,6 +145,12 @@ public class MonitoringManager {
         if (statusIdx != -1) {
             monitoring.status = Monitoring.Status.valueOf(cursor.getString(statusIdx));
         }
+
+        final int entriesIdx = cursor.getColumnIndex(MonitoringColumns.ENTRIES_COUNT);
+        if (entriesIdx != -1) {
+            monitoring.entriesCount = cursor.getInt(entriesIdx);
+        }
+
         return monitoring;
     }
 

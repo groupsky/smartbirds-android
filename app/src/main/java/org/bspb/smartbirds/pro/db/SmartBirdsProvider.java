@@ -8,14 +8,17 @@ import android.net.Uri;
 import net.simonvt.schematic.annotation.ContentProvider;
 import net.simonvt.schematic.annotation.ContentUri;
 import net.simonvt.schematic.annotation.InexactContentUri;
+import net.simonvt.schematic.annotation.MapColumns;
 import net.simonvt.schematic.annotation.NotifyDelete;
 import net.simonvt.schematic.annotation.NotifyInsert;
 import net.simonvt.schematic.annotation.NotifyUpdate;
 import net.simonvt.schematic.annotation.TableEndpoint;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 import static org.bspb.smartbirds.pro.ui.utils.Configuration.MAX_RECENT_USED_VALUES;
@@ -147,8 +150,28 @@ public class SmartBirdsProvider {
         public static final Uri CONTENT_URI = buildUri(Path.ZONES);
     }
 
+    static final String ENTRIES_COUNT = "(SELECT COUNT(*) FROM "
+            + SmartBirdsDatabase.FORMS
+            + " WHERE "
+            + SmartBirdsDatabase.FORMS
+            + "."
+            + FormColumns.CODE
+            + "="
+            + SmartBirdsDatabase.MONITORINGS
+            + "."
+            + MonitoringColumns.CODE
+            + ")";
+
     @TableEndpoint(table = SmartBirdsDatabase.MONITORINGS)
     public static class Monitorings {
+
+        @MapColumns
+        public static Map<String, String> mapColumns() {
+            Map<String, String> map = new HashMap<>();
+            map.put(MonitoringColumns.ENTRIES_COUNT, ENTRIES_COUNT);
+            return map;
+        }
+
         @ContentUri(
                 path = Path.MONITORINGS,
                 type = TYPE_LIST + Path.MONITORINGS,

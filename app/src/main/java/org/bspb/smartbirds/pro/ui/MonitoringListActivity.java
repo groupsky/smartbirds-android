@@ -2,7 +2,9 @@ package org.bspb.smartbirds.pro.ui;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+
 import androidx.core.app.NavUtils;
+
 import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
@@ -60,7 +62,7 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
     protected void setupListFragment() {
         if (listFragment == null) {
             listFragment = MonitoringListFragment_.builder().build();
-            getFragmentManager().beginTransaction().replace(R.id.monitoring_list_container, listFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_list_container, listFragment).commit();
         }
     }
 
