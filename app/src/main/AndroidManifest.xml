@@ -97,7 +97,7 @@
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
         </activity>
         <activity
-            android:name=".ui.EditCommonFormActivity_"
+            android:name=".ui.EditCurrentCommonFormActivity_"
             android:label="@string/title_activity_edit"
             android:parentActivityName=".ui.MonitoringActivity_"
             android:windowSoftInputMode="stateHidden"
@@ -155,6 +155,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity_" />
+        </activity>
+        <activity
+            android:name=".ui.BrowseMonitoringCommonFormActivity_"
+            android:label="@string/title_activity_edit"
+            android:parentActivityName=".ui.MonitoringActivity_"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
         </activity>
 
         <service
