@@ -55,6 +55,7 @@ import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
+import org.bspb.smartbirds.pro.utils.MonitoringUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
@@ -169,35 +170,12 @@ public class DataService extends Service {
         Log.d(TAG, "onStartMonitoringEvent...");
         Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show();
         setMonitoring(monitoringManager.createNew());
-        if (createMonitoringDir(monitoring) != null && initGpxFile()) {
+        if (MonitoringUtils.createMonitoringDir(this, monitoring) != null && MonitoringUtils.initGpxFile(this, monitoring)) {
             bus.postSticky(new MonitoringStartedEvent());
         } else {
             Toast.makeText(this, getString(R.string.error_message_create_monitoring_dir), Toast.LENGTH_SHORT).show();
             bus.post(new MonitoringFailedEvent());
         }
-    }
-
-    private File createMonitoringDir(Monitoring monitoring) {
-        return DataOpsService.createMonitoringDir(this, monitoring);
-    }
-
-    private boolean initGpxFile() {
-        File file = new File(createMonitoringDir(monitoring), "track.gpx");
-        try {
-            OutputStreamWriter osw = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file, false)));
-            //noinspection TryFinallyCanBeTryWithResources
-            try {
-                GpxWriter writer = new GpxWriter(osw);
-                writer.writeHeader();
-            } finally {
-                //noinspection ThrowFromFinallyBlock
-                osw.close();
-            }
-        } catch (IOException e) {
-            Reporting.logException(e);
-            return false;
-        }
-        return true;
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") CancelMonitoringEvent event) {
@@ -236,7 +214,9 @@ public class DataService extends Service {
 
         monitoringManager.updateStatus(monitoring, finished);
 
-        closeGpxFile();
+        if (isMonitoring()) {
+            MonitoringUtils.closeGpxFile(this, monitoring);
+        }
         DataOpsService_.intent(this).generateMonitoringFiles(monitoring.code).start();
         setMonitoring(null);
         bus.postSticky(new MonitoringFinishedEvent());
@@ -259,31 +239,12 @@ public class DataService extends Service {
         if (isMonitoring() && location != null) {
             TrackingLocation trackingLocation = monitoringManager.newTracking(monitoring, location);
 
-            File file = new File(createMonitoringDir(monitoring), "track.gpx");
+            File file = new File(MonitoringUtils.createMonitoringDir(this, monitoring), "track.gpx");
             try {
                 Writer osw = new BufferedWriter(new FileWriter(file, true));
                 //noinspection TryFinallyCanBeTryWithResources
                 try {
                     new GpxWriter(osw).writePosition(trackingLocation);
-                } finally {
-                    //noinspection ThrowFromFinallyBlock
-                    osw.close();
-                }
-            } catch (IOException e) {
-                Reporting.logException(e);
-                Toast.makeText(this, "Could not write to track.gpx!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void closeGpxFile() {
-        if (isMonitoring()) {
-            File file = new File(createMonitoringDir(monitoring), "track.gpx");
-            try {
-                Writer osw = new BufferedWriter(new FileWriter(file, true));
-                //noinspection TryFinallyCanBeTryWithResources
-                try {
-                    new GpxWriter(osw).writeFooter();
                 } finally {
                     //noinspection ThrowFromFinallyBlock
                     osw.close();
@@ -306,7 +267,7 @@ public class DataService extends Service {
             monitoringManager.update(monitoring);
             while (index.length() < 4) index = '0' + index;
             String imageFileName = "Pic" + index + ".jpg";
-            File image = new File(createMonitoringDir(monitoring), imageFileName);
+            File image = new File(MonitoringUtils.createMonitoringDir(this, monitoring), imageFileName);
             try {
                 if (image.createNewFile()) {
                     Uri uri = FileProvider.getUriForFile(getApplicationContext(), SmartBirdsApplication.FILES_AUTHORITY, image);

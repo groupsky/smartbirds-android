@@ -320,4 +320,5 @@ Do you really want to cancel the monitoring?"</string>
     <string name="filter_monitoring_status_uploaded">Uploaded</string>
     <string name="filter_monitoring_status_paused">Paused</string>
     <string name="filter_monitoring_status_canceled">Canceled</string>
+    <string name="menu_monitoring_delete">Delete</string>
 </resources>

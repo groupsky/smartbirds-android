@@ -10,4 +10,14 @@
         android:title="@string/menu_monitoring_common"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/menu_finish_monitoring"
+        android:title="@string/menu_monitoring_finish"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_delete_monitoring"
+        android:title="@string/menu_monitoring_delete"
+        app:showAsAction="never" />
+
 </menu>

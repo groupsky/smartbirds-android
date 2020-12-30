@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.widget.AbsListView
@@ -12,18 +13,26 @@ import android.widget.CursorAdapter
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
 import org.androidannotations.annotations.*
+import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.adapter.ModelCursorAdapter
 import org.bspb.smartbirds.pro.adapter.ModelCursorFactory
 import org.bspb.smartbirds.pro.beans.MonitoringCursorEntries
+import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.enums.EntryType
+import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity_
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_
+import org.bspb.smartbirds.pro.ui.utils.Configuration
+import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.closeGpxFile
+import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
 @EFragment
@@ -37,7 +46,22 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
     @Bean
     protected lateinit var monitoringManager: MonitoringManager
 
+    @Bean
+    protected lateinit var bus: EEventBus
+
+    @OptionsMenuItem(R.id.menu_finish_monitoring)
+    protected lateinit var menuFinishMonitoring: MenuItem
+
+    @OptionsMenuItem(R.id.menu_delete_monitoring)
+    protected lateinit var menuDeleteMonitoring: MenuItem
+
+
+    @Pref
+    protected lateinit var globalPrefs: SmartBirdsPrefs_
+
     private var monitoringCode: String? = null
+    private var monitoring: Monitoring? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
@@ -57,6 +81,9 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
 
     @AfterInject
     protected fun setupLoader() {
+        monitoringCode?.let {
+            monitoring = monitoringManager.getMonitoring(it)
+        }
         entries.setMonitoringCode(monitoringCode)
         entries.setListener(this)
         if (adapter != null) adapter!!.swapCursor(entries.cursor)
@@ -128,8 +155,21 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
     @FragmentArg
     open fun setMonitoringCode(monitoringCode: String?) {
         this.monitoringCode = monitoringCode
-        if (this::entries.isInitialized) {
-            entries.setMonitoringCode(monitoringCode)
+        this.monitoringCode?.let {
+            if (this::entries.isInitialized) {
+                entries.setMonitoringCode(it)
+            }
+            if (this::monitoringManager.isInitialized) {
+                monitoring = monitoringManager.getMonitoring(it)
+            }
+        }
+
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        monitoring?.apply {
+            menuFinishMonitoring.isVisible = status == Monitoring.Status.paused
         }
     }
 
@@ -142,6 +182,38 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
     @OptionsItem(R.id.menu_common_form)
     open fun onCommonForm() {
         BrowseMonitoringCommonFormActivity_.intent(this).monitoringCode(monitoringCode).start()
+    }
+
+    @OptionsItem(R.id.menu_finish_monitoring)
+    open fun onFinishMonitoring() {
+        context?.showAlert("Finish monitoring", "Are you sure you want to finish monitoring", { _, _ ->
+            finishMonitoring()
+        }, null)
+
+    }
+
+    private fun finishMonitoring() {
+        monitoring?.apply {
+            val pausedMonitoring = monitoringManager.pausedMonitoring
+
+            if (commonForm.containsKey(resources.getString(R.string.end_time_key))) {
+                if (TextUtils.isEmpty(commonForm[resources.getString(R.string.end_time_key)])) {
+                    commonForm[resources.getString(R.string.end_time_key)] = Configuration.STORAGE_TIME_FORMAT.format(Date())
+                    monitoringManager.update(this)
+                }
+            }
+
+            monitoringManager.updateStatus(this, Monitoring.Status.finished)
+
+            if (code == pausedMonitoring?.code) {
+                context?.let { closeGpxFile(it, this) }
+                globalPrefs.runningMonitoring().put(false)
+                globalPrefs.pausedMonitoring().put(false)
+            }
+            DataOpsService_.intent(context).generateMonitoringFiles(code).start()
+            bus.postSticky(MonitoringFinishedEvent())
+        }
+
     }
 
     interface Listener {

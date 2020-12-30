@@ -10,6 +10,7 @@ import android.location.Location;
 import android.os.RemoteException;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 
@@ -324,6 +325,7 @@ public class MonitoringManager {
         }
     }
 
+    @Nullable
     public Monitoring getPausedMonitoring() {
         Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI, MONITORING_PROJECTION, MonitoringColumns.STATUS + "=?", new String[]{paused.name()}, MonitoringColumns._ID + " desc");
         if (cursor == null) return null;
