@@ -94,11 +94,11 @@ open class MonitoringListFragment : ListFragment(), LoaderManager.LoaderCallback
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         Log.d(TAG, "onCreateLoader")
-        var selection: String? = null
+        var selection: String? = "(" + MonitoringColumns.ENTRIES_COUNT + "> 0 OR " + MonitoringColumns.STATUS + "<> 'canceled') "
         var selectionArgs: Array<String>? = null
 
         filterStatus?.apply {
-            selection = MonitoringColumns.STATUS + "=?"
+            selection += " AND " + MonitoringColumns.STATUS + "=?"
             selectionArgs = arrayOf(this.name)
         }
         return CursorLoader(requireContext(),
