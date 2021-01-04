@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.bspb.smartbirds.pro.R;
+
 import java.util.HashMap;
 
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
@@ -16,12 +18,19 @@ import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 public class Monitoring {
 
     public enum Status {
-        wip("wip"), finished("up"), uploaded(null), canceled("cancel"), paused("paused");
+        wip("wip", R.string.filter_monitoring_status_wip),
+        finished("up", R.string.filter_monitoring_status_finished),
+        uploaded(null, R.string.filter_monitoring_status_uploaded),
+        canceled("cancel", R.string.filter_monitoring_status_canceled),
+        paused("paused", R.string.filter_monitoring_status_paused);
 
         public final String legacySuffix;
 
-        Status(String legacySuffix) {
+        public final int label;
+
+        Status(String legacySuffix, int labelId) {
             this.legacySuffix = legacySuffix;
+            label = labelId;
         }
     }
 

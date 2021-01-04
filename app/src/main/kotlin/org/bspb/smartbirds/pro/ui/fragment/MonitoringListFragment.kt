@@ -163,8 +163,13 @@ open class MonitoringListFragment : ListFragment(), LoaderManager.LoaderCallback
         }
 
         updateMenuItems(filterStatus)
-
         LoaderManager.getInstance(this).restartLoader(0, null, this)
+        activity?.title = if (filterStatus != null) {
+            getString(R.string.title_monitoring_list) + " [" + getString(filterStatus!!.label) + "]"
+        } else {
+            getString(R.string.title_monitoring_list)
+        }
+
     }
 
     private fun updateMenuItems(status: Monitoring.Status?) {
