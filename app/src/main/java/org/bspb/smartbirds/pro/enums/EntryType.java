@@ -99,7 +99,11 @@ public enum EntryType {
     }
 
     public Fragment loadFragment(long id) {
-        return builder.load(id);
+        return loadFragment(id, false);
+    }
+
+    public Fragment loadFragment(long id, boolean readOnly) {
+        return builder.load(id, readOnly);
     }
 
     public static String[] getTitles(Resources resources) {

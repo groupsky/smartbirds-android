@@ -81,8 +81,8 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewInvertebratesEntryFormFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewInvertebratesEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
     }
 

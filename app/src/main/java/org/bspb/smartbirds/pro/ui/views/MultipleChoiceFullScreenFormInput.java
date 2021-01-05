@@ -2,7 +2,6 @@ package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -16,7 +15,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
-import org.bspb.smartbirds.pro.ui.utils.ViewUtils;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -87,6 +86,7 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
     private MultipleChoiceFullScreenRow addRow() {
         try {
             final MultipleChoiceFullScreenRow row = MultipleChoiceFullScreenRow_.build(getContext(), key, hint);
+            row.setEnabled(isEnabled());
             addView(row);
             return row;
         } catch (Throwable t) {

@@ -93,6 +93,10 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
     protected fun setupListview() {
         val lv = listView
         setEmptyText(getText(R.string.emptyList))
+        if (monitoring?.status == Monitoring.Status.uploaded) {
+            return
+        }
+
         lv.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE_MODAL
         lv.setMultiChoiceModeListener(object : MultiChoiceModeListener {
             override fun onItemCheckedStateChanged(mode: ActionMode, position: Int, id: Long, checked: Boolean) {

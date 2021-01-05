@@ -73,7 +73,7 @@ public class FormUtils {
     }
 
     public static final class FormModel {
-        HashMap<String, FormField> fields = new HashMap<String, FormField>();
+        public HashMap<String, FormField> fields = new HashMap<String, FormField>();
 
         @Override
         public String toString() {

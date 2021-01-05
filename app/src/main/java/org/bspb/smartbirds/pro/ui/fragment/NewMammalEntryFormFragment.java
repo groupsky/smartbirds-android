@@ -20,9 +20,12 @@ public class NewMammalEntryFormFragment extends BaseTabEntryFragment {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
-                    case 0: return NewMammalEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    case 1: return NewMammalEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    default: throw new IllegalArgumentException("Unhandled position"+position);
+                    case 0:
+                        return NewMammalEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                    case 1:
+                        return NewMammalEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                    default:
+                        throw new IllegalArgumentException("Unhandled position" + position);
                 }
             }
 
@@ -51,8 +54,8 @@ public class NewMammalEntryFormFragment extends BaseTabEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewMammalEntryFormFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewMammalEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
     }
 

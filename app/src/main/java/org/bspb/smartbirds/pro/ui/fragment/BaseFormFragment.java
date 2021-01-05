@@ -1,8 +1,12 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -26,6 +30,7 @@ public class BaseFormFragment extends Fragment {
     private static final String KEY_MONITORING_CODE = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.MONITORING_FORM";
 
     protected static final String ARG_IS_NEW_ENTRY = "isNewEntry";
+    protected static final String ARG_READ_ONLY = "readOnly";
 
     protected FormUtils.FormModel form;
     private HashMap<String, String> pendingDeserializeData;
@@ -38,6 +43,9 @@ public class BaseFormFragment extends Fragment {
 
     private boolean newEntry;
     private ModeratorReviewFragment moderatorReviewFragment;
+
+    @FragmentArg(ARG_READ_ONLY)
+    protected boolean readOnly;
 
     public boolean isNewEntry() {
         return newEntry;
@@ -64,6 +72,11 @@ public class BaseFormFragment extends Fragment {
         View view = getView();
         if (view == null) return false;
         form = FormUtils.traverseForm(view);
+        if (form != null && form.fields != null) {
+            for (FormUtils.FormField field : form.fields.values()) {
+                field.view.setEnabled(!readOnly);
+            }
+        }
         return true;
     }
 
@@ -105,6 +118,14 @@ public class BaseFormFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (readOnly) {
+            menu.clear();
+        }
+    }
+
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         String monitoringCode = null;
         if (savedInstanceState.containsKey(KEY_MONITORING_CODE)) {
@@ -123,6 +144,9 @@ public class BaseFormFragment extends Fragment {
     public void initModeratorReviewFragment() {
         moderatorReviewFragment = (ModeratorReviewFragment) getChildFragmentManager().findFragmentById(R.id.moderator_review_fragment);
         NewEntryPicturesFragment picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
+        if (picturesFragment != null) {
+            picturesFragment.setReadOnly(readOnly);
+        }
         if (moderatorReviewFragment != null) {
             if (picturesFragment != null) {
                 moderatorReviewFragment.setPicturesFragment(picturesFragment);

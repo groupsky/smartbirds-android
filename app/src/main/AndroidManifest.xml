@@ -166,6 +166,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
         </activity>
+        <activity
+            android:name=".ui.ViewMonitoringEntryActivity_"
+            android:label="@string/title_activity_form"
+            android:parentActivityName=".ui.MonitoringListActivity_"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
+        </activity>
 
         <service
             android:name=".service.DataService_"

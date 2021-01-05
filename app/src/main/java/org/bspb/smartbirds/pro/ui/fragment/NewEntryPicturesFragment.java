@@ -80,6 +80,8 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     @InstanceState
     protected int picturesCount;
 
+    protected boolean readOnly = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,6 +199,10 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
 
     private void updateTakePicture() {
         if (takePicture != null) {
+            if (readOnly) {
+                takePicture.setVisible(false);
+                return;
+            }
             // sometimes pictures is null
             takePicture.setVisible(pictures != null && !pictures.isEmpty());
             takePicture.setEnabled(pictures != null && picturesCount < pictures.size());
@@ -276,6 +282,11 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
     @Override
     public boolean isNewEntry() {
         throw new UnsupportedOperationException("not implemented");
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+        updateTakePicture();
     }
 
     static class ImageStruct implements Parcelable {

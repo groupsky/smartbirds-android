@@ -19,9 +19,9 @@ public class NewPlantsEntryFormFragment extends BaseTabEntryFragment {
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return NewPlantsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        return NewPlantsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
                     case 1:
-                        return NewPlantsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        return NewPlantsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
                     default:
                         throw new IllegalArgumentException("Unhandled position" + position);
                 }
@@ -52,8 +52,8 @@ public class NewPlantsEntryFormFragment extends BaseTabEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewPlantsEntryFormFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewPlantsEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
     }
 

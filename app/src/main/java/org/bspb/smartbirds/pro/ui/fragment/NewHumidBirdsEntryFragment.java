@@ -132,8 +132,8 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewHumidBirdsEntryFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewHumidBirdsEntryFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
     }
 }

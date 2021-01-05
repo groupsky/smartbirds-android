@@ -20,9 +20,12 @@ public class NewHerptileEntryFormFragment extends BaseTabEntryFragment {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
-                    case 0: return NewHerptileEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    case 1: return NewHerptileEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    default: throw new IllegalArgumentException("Unhandled position"+position);
+                    case 0:
+                        return NewHerptileEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                    case 1:
+                        return NewHerptileEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                    default:
+                        throw new IllegalArgumentException("Unhandled position" + position);
                 }
             }
 
@@ -51,8 +54,8 @@ public class NewHerptileEntryFormFragment extends BaseTabEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewHerptileEntryFormFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewHerptileEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
     }
 
