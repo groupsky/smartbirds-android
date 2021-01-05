@@ -336,4 +336,15 @@ public class MonitoringManager {
             cursor.close();
         }
     }
+
+    public void deleteMonitoring(String monitoringCode) {
+        ArrayList<ContentProviderOperation> ops = new ArrayList<>();
+        ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Forms.withMonitoringCode(monitoringCode)).build());
+        ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Monitorings.withCode(monitoringCode)).build());
+        try {
+            contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, ops);
+        } catch (RemoteException | OperationApplicationException e) {
+            logException(e);
+        }
+    }
 }

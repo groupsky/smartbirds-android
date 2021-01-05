@@ -18,8 +18,9 @@ fun debugLog(message: String?) {
 }
 
 fun Context.showAlert(
-        title: String,
-        message: String, positiveButtonClickListener: DialogInterface.OnClickListener?,
+        title: Int,
+        message: Int,
+        positiveButtonClickListener: DialogInterface.OnClickListener?,
         negativeButtonClickListener: DialogInterface.OnClickListener?,
 ) {
     val builder = AlertDialog.Builder(this)

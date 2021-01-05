@@ -26,13 +26,16 @@ import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.service.DataOpsService
 import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity_
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.closeGpxFile
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
+import java.io.File
 import java.util.*
 
 @EFragment
@@ -190,8 +193,16 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
 
     @OptionsItem(R.id.menu_finish_monitoring)
     open fun onFinishMonitoring() {
-        context?.showAlert("Finish monitoring", "Are you sure you want to finish monitoring", { _, _ ->
+        context?.showAlert(R.string.finish_monitoring_confirm_title, R.string.finish_monitoring_confirm_message, { _, _ ->
             finishMonitoring()
+        }, null)
+
+    }
+
+    @OptionsItem(R.id.menu_delete_monitoring)
+    open fun onDeleteMonitoring() {
+        context?.showAlert(R.string.delete_monitoring_confirm_title, R.string.delete_monitoring_confirm_message, { _, _ ->
+            deleteMonitoring()
         }, null)
 
     }
@@ -218,6 +229,17 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
             bus.postSticky(MonitoringFinishedEvent())
         }
 
+    }
+
+    private fun deleteMonitoring() {
+        monitoring?.apply {
+            monitoringManager.deleteMonitoring(code)
+            var dir = DataOpsService.getMonitoringDir(context, code);
+            debugLog("Exists: " + dir.exists())
+            dir.deleteRecursively();
+            debugLog("Exists after delete: " + dir.exists())
+            activity?.finish();
+        }
     }
 
     interface Listener {
