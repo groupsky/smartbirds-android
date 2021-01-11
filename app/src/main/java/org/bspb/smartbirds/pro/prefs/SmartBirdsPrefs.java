@@ -41,4 +41,7 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(true)
     boolean showBgAtlasCells();
+
+    @DefaultBoolean(false)
+    boolean showSPA();
 }

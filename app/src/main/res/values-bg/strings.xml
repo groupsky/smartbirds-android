@@ -314,4 +314,5 @@
     <string name="main_screen_btn_downloads">"Документи за изтегляния"</string>
     <string name="no_downloads">"Липсват файлове за изтегляне в момента"</string>
     <string name="title_downloads">"Документи за изтегляния"</string>
+    <string name="menu_monitoring_show_spa">"ЗЗ \"Птици\""</string>
 </resources>

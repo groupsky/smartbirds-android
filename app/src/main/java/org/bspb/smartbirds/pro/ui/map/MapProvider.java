@@ -24,7 +24,7 @@ public interface MapProvider {
         void onMarkerClicked(long entryId, EntryType type);
     }
 
-    public static final String AREA_FILE_PATH = Environment.getExternalStorageDirectory() + "/smartbirdspro/area.kml";
+    String AREA_FILE_PATH = Environment.getExternalStorageDirectory() + "/smartbirdspro/area.kml";
 
     public enum ProviderType {
         GOOGLE, OSM;
@@ -71,4 +71,6 @@ public interface MapProvider {
     void setShowBgAtlasCells(boolean showBgAtlasCells);
 
     void setBgAtlasCells(List<BGAtlasCell> cells);
+
+    void setShowSPA(boolean showSPA);
 }

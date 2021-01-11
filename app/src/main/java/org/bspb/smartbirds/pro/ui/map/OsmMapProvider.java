@@ -556,6 +556,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         drawBgAtlasCells();
     }
 
+    @Override
+    public void setShowSPA(boolean showSPA) {
+        // TODO to be implemented
+    }
+
     private static class EventsOverlay extends Overlay {
 
         @Nullable
