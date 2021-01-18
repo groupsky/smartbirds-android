@@ -115,7 +115,7 @@ open class AuthenticationService : AbstractIntentService("AuthenticationService"
             bus.post(StartingDownload())
             val response = backend.api().checkSession(CheckSessionRequest()).execute()
             if (response.isSuccessful) {
-                bus.postSticky(UserDataEvent(response.body()!!.user))
+                bus.postSticky(UserDataEvent(response.body()?.user))
             }
         } catch (t: Throwable) {
             Reporting.logException(t)
