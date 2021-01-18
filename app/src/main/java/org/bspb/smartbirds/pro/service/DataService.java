@@ -370,12 +370,13 @@ public class DataService extends Service {
     }
 
     public void onEvent(UserDataEvent event) {
-        userPrefs.userId().put(event.getUser().id);
-        userPrefs.firstName().put(event.getUser().firstName);
-        userPrefs.lastName().put(event.getUser().lastName);
-        userPrefs.email().put(event.getUser().email);
-        userPrefs.bgAtlasCells().put(SBGsonParser.createParser().toJson(event.getUser().bgAtlasCells));
-
+        if (event != null && event.getUser() != null) {
+            userPrefs.userId().put(event.getUser().id);
+            userPrefs.firstName().put(event.getUser().firstName);
+            userPrefs.lastName().put(event.getUser().lastName);
+            userPrefs.email().put(event.getUser().email);
+            userPrefs.bgAtlasCells().put(SBGsonParser.createParser().toJson(event.getUser().bgAtlasCells));
+        }
         bus.removeStickyEvent(event);
     }
 }
