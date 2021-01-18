@@ -166,10 +166,12 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        if (radioGroup != null) {
-            for (int i = 0; i < radioGroup.getChildCount(); i++) {
-                radioGroup.getChildAt(i).setEnabled(enabled);
-            }
+        if (radioGroup == null) {
+            return;
+        }
+
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+            radioGroup.getChildAt(i).setEnabled(enabled);
         }
         radioGroup.setEnabled(enabled);
     }
