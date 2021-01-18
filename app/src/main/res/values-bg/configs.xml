@@ -2,4 +2,5 @@
 <resources>
     <string name="locale">bg</string>
     <string name="help_url">https://bspborg.github.io/files/org.bspb.smartbirds.pro/smartbirds-help-2.5.6-2015-bg.pdf</string>
+    <string name="spa_url">https://gis.bspb.org/geoserver/gwc/service/tms/1.0.0/geonode%%3AspaSmart/%d/%d/%d.png</string>
 </resources>

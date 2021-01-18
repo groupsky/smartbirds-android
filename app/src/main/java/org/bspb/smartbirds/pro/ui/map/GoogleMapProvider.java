@@ -29,6 +29,10 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.maps.model.TileProvider;
+import com.google.android.gms.maps.model.UrlTileProvider;
 import com.google.maps.android.SphericalUtil;
 
 import org.androidannotations.annotations.Background;
@@ -48,6 +52,7 @@ import org.bspb.smartbirds.pro.events.MapDetachedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlFolder;
@@ -61,10 +66,13 @@ import org.osmdroid.bonuspack.kml.Style;
 import org.osmdroid.util.GeoPoint;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -99,8 +107,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private List<Marker> localProjectsMarkers = new ArrayList<>();
     private boolean showLocalProjects;
     private boolean showBgAtlasCells;
+    private boolean showSPA;
     private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
     private List<Polygon> atlasCellsPolygons = new ArrayList<>();
+    private TileOverlay tiles;
 
     @Override
     /**
@@ -171,8 +181,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         drawLocalProjects(showLocalProjects);
         drawBgAtlasCells();
-
         drawArea();
+        showSPA();
         fragment.getView().post(new Runnable() {
             @Override
             public void run() {
@@ -468,6 +478,49 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             }
         }
         drawBgAtlasCells();
+    }
+
+    @Override
+    public void setShowSPA(boolean showSPA) {
+        this.showSPA = showSPA;
+        showSPA();
+    }
+
+    private void showSPA() {
+        if (mMap == null) {
+            return;
+        }
+        if (showSPA) {
+            if (tiles == null) {
+                ExtensionsKt.debugLog("Showing SPA");
+                TileProvider tileProvider = new UrlTileProvider(256, 256) {
+                    @Override
+                    public synchronized URL getTileUrl(int x, int y, int zoom) {
+                        // The moon tile coordinate system is reversed.  This is not normal.
+                        int reversedY = (1 << zoom) - y - 1;
+                        String s = fragment.getString(R.string.spa_url, zoom, x, reversedY);
+
+                        ExtensionsKt.debugLog(s);
+                        URL url = null;
+                        try {
+                            url = new URL(s);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                            throw new AssertionError(e);
+                        }
+                        return url;
+                    }
+
+                };
+                tiles = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
+            }
+        } else {
+            if (tiles != null) {
+                ExtensionsKt.debugLog("Removing SPA");
+                tiles.remove();
+                tiles = null;
+            }
+        }
     }
 
     @Override

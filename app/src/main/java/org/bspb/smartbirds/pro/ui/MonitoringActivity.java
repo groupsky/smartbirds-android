@@ -165,6 +165,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MenuItem menuViewTypeList;
     @OptionsMenuItem(R.id.view_type_combined)
     MenuItem menuViewTypeCombined;
+    @OptionsMenuItem(R.id.action_show_spa)
+    MenuItem menuShowSPA;
     @InstanceState
     @Nullable
     EntryType entryType = null;
@@ -185,6 +187,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     boolean showLocalProjects;
     @InstanceState
     boolean showBgAtlasCells;
+    @InstanceState
+    boolean showSPA;
 
     @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
@@ -372,6 +376,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         menuShowZoneBackground.setChecked(showZoneBackground);
         menuShowLocalProjects.setChecked(showLocalProjects);
         menuShowBgAtlasCells.setChecked(showBgAtlasCells);
+        menuShowSPA.setChecked(showSPA);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -415,6 +420,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         currentMap.showMap();
         currentMap.setBgAtlasCells(readAtlasCells());
         currentMap.setShowBgAtlasCells(showBgAtlasCells);
+        currentMap.setShowSPA(showSPA);
     }
 
     private List<BGAtlasCell> readAtlasCells() {
@@ -602,6 +608,12 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setShowBgAtlasCells(sender.isChecked());
     }
 
+    @OptionsItem(R.id.action_show_spa)
+    void setShowSPA(MenuItem sender) {
+        sender.setChecked(!sender.isChecked());
+        setShowSPA(sender.isChecked());
+    }
+
     private void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
         if (currentMap != null) {
@@ -627,6 +639,15 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             currentMap.updateCamera();
         }
         prefs.showBgAtlasCells().put(showBgAtlasCells);
+    }
+
+    private void setShowSPA(boolean showSPA) {
+        this.showSPA = showSPA;
+        if (currentMap != null) {
+            currentMap.setShowSPA(showSPA);
+            currentMap.updateCamera();
+        }
+        prefs.showSPA().put(showSPA);
     }
 
     @OptionsItem(R.id.action_stay_awake)
@@ -771,6 +792,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             prefs.showZoneBackground().put(showZoneBackground);
             prefs.showLocalProjects().put(showLocalProjects);
             prefs.showBgAtlasCells().put(showBgAtlasCells);
+            prefs.showSPA().put(showSPA);
             if (lastPosition != null) {
                 editor.lastPositionLat().put((float) lastPosition.latitude);
                 editor.lastPositionLon().put((float) lastPosition.longitude);
@@ -846,6 +868,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setShowZoneBackground(prefs.showZoneBackground().get());
         setShowLocalProjects(prefs.showLocalProjects().get());
         setShowBgAtlasCells(prefs.showBgAtlasCells().get());
+        setShowSPA(prefs.showSPA().get());
         restorePoints();
     }
 
