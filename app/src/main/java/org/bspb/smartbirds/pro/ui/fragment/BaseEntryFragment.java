@@ -208,8 +208,8 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
 
     @AfterViews
     public void initViews() {
-        if (btnSubmit != null) {
-            btnSubmit.setEnabled(!readOnly);
+        if (btnSubmit != null && readOnly) {
+            btnSubmit.setEnabled(false);
         }
     }
 

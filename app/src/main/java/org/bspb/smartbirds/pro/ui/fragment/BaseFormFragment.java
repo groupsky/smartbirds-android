@@ -74,7 +74,9 @@ public class BaseFormFragment extends Fragment {
         form = FormUtils.traverseForm(view);
         if (form != null && form.fields != null) {
             for (FormUtils.FormField field : form.fields.values()) {
-                field.view.setEnabled(!readOnly);
+                if (readOnly) {
+                    field.view.setEnabled(false);
+                }
             }
         }
         return true;
