@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_herp_name"
                 android:tag="@string/tag_species_scientific_name"
-                app:entries="species_mammals"
+                app:entriesType="species_mammals"
                 app:required="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_herp_gender"
                 android:tag="@string/tag_sex"
-                app:entries="form_mammals_gender" />
+                app:entriesType="form_mammals_gender" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_herp_age"
                 android:tag="@string/tag_age"
-                app:entries="form_mammals_age" />
+                app:entriesType="form_mammals_age" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_herp_habitat"
                 android:tag="@string/tag_habitat"
-                app:entries="form_mammals_habitat" />
+                app:entriesType="form_mammals_habitat" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_mammal_danger_observation"
                 android:tag="@string/tag_findings"
-                app:entries="form_mammals_findings" />
+                app:entriesType="form_mammals_findings" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_common_threats"
                 android:tag="@string/tag_threats"
-                app:entries="form_main_threats" />
+                app:entriesType="form_main_threats" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />

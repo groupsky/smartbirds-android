@@ -22,7 +22,7 @@
         <attr name="required" format="boolean" />
     </declare-styleable>
 
-    <attr name="entries" format="string" />
+    <attr name="entriesType" format="string" />
     <attr name="hint" format="string" />
     <!-- Value of the enum represent configs index in FormsConfig -->
     <attr name="config_entries" format="enum">
@@ -33,17 +33,17 @@
 
     <!-- Stylable attributes for SingleChoiceFormInput -->
     <declare-styleable name="SingleChoiceFormInput">
-        <attr name="entries" />
+        <attr name="entriesType" />
     </declare-styleable>
 
     <!-- Stylable attributes for MultipleChoiceFormInput -->
     <declare-styleable name="MultipleChoiceFormInput">
-        <attr name="entries" />
+        <attr name="entriesType" />
     </declare-styleable>
 
     <!-- Stylable attributes for MultipleChoiceFullScreenFormInput -->
     <declare-styleable name="MultipleChoiceFullScreenFormInput">
-        <attr name="entries" />
+        <attr name="entriesType" />
         <attr name="hint" />
     </declare-styleable>
 

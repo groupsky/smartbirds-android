@@ -90,7 +90,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceFormInput, defStyle, 0);
         try {
-            key = a.getText(R.styleable.SingleChoiceFormInput_entries);
+            key = a.getText(R.styleable.SingleChoiceFormInput_entriesType);
             SmartArrayAdapter<NomenclatureItem> adapter = new SmartArrayAdapter<>(context,
                     R.layout.item_dialog_single_choice, new ArrayList<NomenclatureItem>());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

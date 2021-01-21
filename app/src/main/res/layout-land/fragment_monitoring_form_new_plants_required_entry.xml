@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_plants_name"
                         android:tag="@string/tag_species_scientific_name"
-                        app:entries="species_plants"
+                        app:entriesType="species_plants"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_plants_reporting_unit"
                         android:tag="@string/tag_reportingUnit"
-                        app:entries="form_plants_reporting_unit" />
+                        app:entriesType="form_plants_reporting_unit" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_plants_phenological_phase"
                         android:tag="@string/tag_phenologicalPhase"
-                        app:entries="form_plants_phenological_phase" />
+                        app:entriesType="form_plants_phenological_phase" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_plants_habitat"
                         android:tag="@string/tag_habitat"
-                        app:entries="form_plants_habitat" />
+                        app:entriesType="form_plants_habitat" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -193,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_plants_threats"
                         android:tag="@string/tag_threats_other"
-                        app:entries="form_plants_threats" />
+                        app:entriesType="form_plants_threats" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_threats"
                         android:tag="@string/tag_threats"
-                        app:entries="form_main_threats" />
+                        app:entriesType="form_main_threats" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 

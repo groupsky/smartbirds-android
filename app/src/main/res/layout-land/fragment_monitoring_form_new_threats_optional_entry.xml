@@ -30,7 +30,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_threats_sample_taken_1"
                         android:tag="@string/tag_sample_taken_1"
-                        app:entries="threats_sample"
+                        app:entriesType="threats_sample"
                         app:required="false" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_threats_sample_taken_2"
                         android:tag="@string/tag_sample_taken_2"
-                        app:entries="threats_sample"
+                        app:entriesType="threats_sample"
                         app:required="false" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_threats_sample_taken_3"
                         android:tag="@string/tag_sample_taken_3"
-                        app:entries="threats_sample"
+                        app:entriesType="threats_sample"
                         app:required="false" />
                 </com.google.android.material.textfield.TextInputLayout>
 

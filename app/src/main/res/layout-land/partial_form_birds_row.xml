@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/monitoring_birds_name"
             android:tag="@string/tag_species_scientific_name"
-            app:entries="species_birds"
+            app:entriesType="species_birds"
             app:required="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,7 +34,7 @@
             android:hint="@string/monitoring_birds_count_unit"
             android:tag="@string/tag_count_unit"
             android:visibility="gone"
-            app:entries="form_humid_birds_count_units"
+            app:entriesType="form_humid_birds_count_units"
             app:required="true"
             tools:visibility="visible" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -53,7 +53,7 @@
             android:hint="@string/monitoring_birds_count_type"
             android:tag="@string/tag_count_type"
             android:visibility="gone"
-            app:entries="form_humid_birds_count_type"
+            app:entriesType="form_humid_birds_count_type"
             app:required="true"
             tools:visibility="visible" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/monitoring_birds_gender"
             android:tag="@string/tag_sex"
-            app:entries="form_birds_sex" />
+            app:entriesType="form_birds_sex" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/monitoring_birds_age"
             android:tag="@string/tag_age"
-            app:entries="form_birds_age" />
+            app:entriesType="form_birds_age" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

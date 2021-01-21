@@ -61,7 +61,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MultipleChoiceFormInput, defStyle, 0);
         try {
 
-            key = a.getText(R.styleable.MultipleChoiceFormInput_entries);
+            key = a.getText(R.styleable.MultipleChoiceFormInput_entriesType);
         } finally {
             a.recycle();
 
@@ -123,7 +123,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
 
                 String[] selected = getText().toString().split(MULTIPLE_CHOICE_SPLITTER);
                 Arrays.sort(selected);
-                for (int idx=0; idx < entries.length; idx++) {
+                for (int idx = 0; idx < entries.length; idx++) {
                     mSelected[idx] = Arrays.binarySearch(selected, entries[idx]) >= 0;
                 }
             }
@@ -135,12 +135,12 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
         storage.put(fieldName, getText().toString());
         prepareSelected();
         List<Nomenclature> selectedItems = new LinkedList<>();
-        for (int idx=0; idx<mSelected.length; idx++) {
+        for (int idx = 0; idx < mSelected.length; idx++) {
             if (mSelected[idx]) {
                 selectedItems.add(items[idx]);
             }
         }
-        storage.put(fieldName+".json", SBGsonParser.createParser().toJson(selectedItems));
+        storage.put(fieldName + ".json", SBGsonParser.createParser().toJson(selectedItems));
     }
 
     @Override
