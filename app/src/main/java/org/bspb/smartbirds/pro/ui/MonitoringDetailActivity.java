@@ -3,10 +3,9 @@ package org.bspb.smartbirds.pro.ui;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.core.app.NavUtils;
-
-import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -18,6 +17,8 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.content.Monitoring;
 import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment;
+import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
 
@@ -55,7 +56,7 @@ public class MonitoringDetailActivity extends BaseActivity implements Monitoring
     @AfterViews
     protected void setupFragment() {
         if (fragment == null) {
-            MonitoringEntryListFragment fragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.monitoring_detail_container, fragment)
                     .commit();

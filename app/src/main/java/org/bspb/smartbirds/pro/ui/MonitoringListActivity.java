@@ -2,18 +2,18 @@ package org.bspb.smartbirds.pro.ui;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.core.app.NavUtils;
-
-import android.view.MenuItem;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment;
+import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_;
 
@@ -86,7 +86,7 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
     @Override
     public void onMonitoringSelected(String monitoringCode) {
         if (mTwoPane) {
-            MonitoringEntryListFragment fragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
             getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_detail_container, fragment).commit();
         } else {
             MonitoringDetailActivity_.intent(this).monitoringCode(monitoringCode).start();
