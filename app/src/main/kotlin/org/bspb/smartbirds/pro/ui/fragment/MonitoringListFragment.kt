@@ -22,7 +22,6 @@ import org.bspb.smartbirds.pro.db.MonitoringColumns
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Monitorings
 import org.bspb.smartbirds.pro.ui.partial.MonitoringListRowPartialView
 import org.bspb.smartbirds.pro.ui.partial.MonitoringListRowPartialView_
-import org.bspb.smartbirds.pro.utils.debugLog
 
 @EFragment
 @OptionsMenu(R.menu.monitoring_list)

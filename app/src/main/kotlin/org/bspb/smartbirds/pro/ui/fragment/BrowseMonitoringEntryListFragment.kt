@@ -15,7 +15,6 @@ import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity_
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.MonitoringUtils
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
@@ -35,13 +34,7 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     @Bean
     protected lateinit var bus: EEventBus
 
-    @AfterViews
-    open fun test() {
-        debugLog("After inject")
-    }
-
     override fun onPrepareOptionsMenu(menu: Menu) {
-        debugLog("In prepare menu")
         super.onPrepareOptionsMenu(menu)
         monitoring?.apply {
             menuFinishMonitoring.isVisible = status == Monitoring.Status.paused
@@ -97,9 +90,7 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
         monitoring?.apply {
             monitoringManager.deleteMonitoring(code)
             var dir = DataOpsService.getMonitoringDir(context, code);
-            debugLog("Exists: " + dir.exists())
             dir.deleteRecursively();
-            debugLog("Exists after delete: " + dir.exists())
             activity?.finish();
         }
     }
