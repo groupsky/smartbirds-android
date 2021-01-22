@@ -176,6 +176,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
         </activity>
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/title_activity_settings" />
 
         <service
             android:name=".service.DataService_"

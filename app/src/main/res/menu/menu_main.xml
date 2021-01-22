@@ -23,6 +23,12 @@
         tools:ignore="AppCompatResource" />
 
     <item
+        android:id="@+id/menu_settings"
+        android:showAsAction="never"
+        android:title="@string/menu_settings"
+        tools:ignore="AppCompatResource" />
+
+    <item
         android:id="@+id/menu_information"
         android:showAsAction="never"
         android:title="@string/main_screen_btn_info"
