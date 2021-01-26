@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="General"
+        android:title="@string/settings_category_general"
         app:iconSpaceReserved="false">
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="forms"
-            app:summary="Select which forms you want to see when creating new record."
-            app:title="Monitoring forms" />
+            app:summary="@string/settings_monitoring_forms_summary"
+            app:title="@string/settings_monitoring_forms" />
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Monitoring"
+        android:title="@string/settings_category_monitoring"
         app:iconSpaceReserved="false">
 
         <ListPreference
@@ -23,7 +23,7 @@
             app:entryValues="@array/map_provider_values"
             app:iconSpaceReserved="false"
             app:key="providerType"
-            app:title="Map provider"
+            app:title="@string/settings_map_provider"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
@@ -32,7 +32,7 @@
             app:entryValues="@array/map_type_values"
             app:iconSpaceReserved="false"
             app:key="mapType"
-            app:title="Map type"
+            app:title="@string/settings_map_type"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
@@ -41,56 +41,56 @@
             app:entryValues="@array/monitoring_view_values"
             app:iconSpaceReserved="false"
             app:key="viewType"
-            app:title="View"
+            app:title="@string/settings_view"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             app:key="stayAwake"
-            app:summary="Enable if want to keep screen on"
-            app:title="Always on" />
+            app:summary="@string/settings_always_on_summary"
+            app:title="@string/settings_always_on" />
 
         <SwitchPreferenceCompat
             app:allowDividerAbove="true"
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="showZoneBackground"
-            app:summary="Draw polygons background"
-            app:title="Polygons background" />
+            app:summary="@string/settings_polygons_bg_summary"
+            app:title="@string/settings_polygons_bg" />
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             app:key="showLocalProjects"
-            app:summary="Show storks in Belozem"
-            app:title="Storks in Belozem" />
+            app:summary="@string/settings_local_projects_summary"
+            app:title="@string/settings_local_projects" />
 
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="showBgAtlasCells"
-            app:summary="Show BG atlas cells"
-            app:title="Squares of BG Atlas" />
+            app:summary="@string/settings_bg_atlas_summary"
+            app:title="@string/settings_bg_atlas" />
 
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             app:key="showSPA"
-            app:summary="Show SPA"
-            app:title="SPA" />
+            app:summary="@string/settings_spa_summary"
+            app:title="@string/settings_spa" />
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Advanced"
+        android:title="@string/settings_category_advanced"
         app:iconSpaceReserved="false">
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="forms"
-            app:summary="Export the DB in case of issue with the data."
-            app:title="Export DB" />
+            app:summary="@string/settings_export_db_summary"
+            app:title="@string/settings_export_db" />
     </PreferenceCategory>
 
 </PreferenceScreen>
