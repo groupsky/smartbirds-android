@@ -325,4 +325,24 @@
     <string name="finish_monitoring_confirm_message">Сигурни ли сте, че искате да завършите мониторинга?</string>
     <string name="delete_monitoring_confirm_title">Изтриване на мониторинг</string>
     <string name="delete_monitoring_confirm_message">Сигурни ли сте, че искате да изтриете мониторинга?</string>
+    <string name="settings_monitoring_forms">Форми за наблюдения</string>
+    <string name="settings_monitoring_forms_summary">Видове форми, който са достъпни при избор на ново наблюдение</string>
+    <string name="settings_category_general">Общи</string>
+    <string name="settings_category_monitoring">Наблюдения</string>
+    <string name="settings_map_provider">Доставчик на карт</string>
+    <string name="settings_map_type">Тип на карт</string>
+    <string name="settings_view">Изглед</string>
+    <string name="settings_always_on">Постоянно включен</string>
+    <string name="settings_always_on_summary">Поддържа екрана винаго включен по време на наблюдение</string>
+    <string name="settings_polygons_bg">Фон на полигоните</string>
+    <string name="settings_polygons_bg_summary">Добавяне фон на полигоните</string>
+    <string name="settings_local_projects">Щъркели в Белозем</string>
+    <string name="settings_local_projects_summary">Показване гнезда на щъркели в Белозем</string>
+    <string name="settings_bg_atlas">Квадрати BG Атлас</string>
+    <string name="settings_bg_atlas_summary">Показване на избрани квадрати от BG атлас</string>
+    <string name="settings_spa">ЗЗ \"Птици\"</string>
+    <string name="settings_spa_summary">Показване на Защитени Зони</string>
+    <string name="settings_category_advanced">Допълнителни</string>
+    <string name="settings_export_db">Експорт на БД</string>
+    <string name="settings_export_db_summary">Експорт на Базата Данни в случай на проблем с данните.</string>
 </resources>
