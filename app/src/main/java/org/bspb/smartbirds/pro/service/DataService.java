@@ -185,7 +185,7 @@ public class DataService extends Service {
             monitoringManager.updateStatus(monitoring, canceled);
         } else {
             Monitoring pausedMonitoring = monitoringManager.getPausedMonitoring();
-            if (isMonitoring()) {
+            if (pausedMonitoring != null) {
                 monitoringManager.updateStatus(pausedMonitoring, canceled);
             }
         }
