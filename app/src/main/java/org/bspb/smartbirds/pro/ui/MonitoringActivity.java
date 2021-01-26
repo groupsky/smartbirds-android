@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +18,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.reflect.TypeToken;
@@ -78,7 +78,6 @@ import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
-import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_COMBINED;
 import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_LIST;
 import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
 
@@ -95,10 +94,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     private static final int REQUEST_FINISH_MONITORING = 1002;
 
-    @InstanceState
     @NonNull
     MapProvider.ProviderType providerType = MapProvider.ProviderType.GOOGLE;
-    @InstanceState
     @NonNull
     MapProvider.MapType mapType = MapProvider.MapType.NORMAL;
 
@@ -122,14 +119,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     int zoomFactor = 500;
     @InstanceState
     LatLng lastPosition;
-    @OptionsMenuItem(R.id.menu_map)
-    MenuItem menuMap;
-    @OptionsMenuItem(R.id.action_map_google_normal)
-    MenuItem menuMapNormal;
-    @OptionsMenuItem(R.id.action_map_google_hybrid)
-    MenuItem menuMapHybrid;
-    @OptionsMenuItem(R.id.action_map_google_satellite)
-    MenuItem menuMapSatellite;
+
+
     @OptionsMenuItem(R.id.menu_zoom)
     MenuItem menuZoom;
     @OptionsMenuItem(R.id.action_zoom_free)
@@ -142,31 +133,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     MenuItem menuZoom250m;
     @OptionsMenuItem(R.id.action_zoom_100m)
     MenuItem menuZoom100m;
-
-    @OptionsMenuItem(R.id.menu_map_provider)
-    MenuItem menuMapProvider;
-    @OptionsMenuItem(R.id.action_map_google)
-    MenuItem menuMapGoogle;
-    @OptionsMenuItem(R.id.action_map_osm)
-    MenuItem menuMapOSM;
     @OptionsMenuItem(R.id.action_crash)
     MenuItem menuCrash;
-    @OptionsMenuItem(R.id.action_stay_awake)
-    MenuItem menuStayAwake;
-    @OptionsMenuItem(R.id.action_show_zone_background)
-    MenuItem menuShowZoneBackground;
-    @OptionsMenuItem(R.id.action_show_local_projects)
-    MenuItem menuShowLocalProjects;
-    @OptionsMenuItem(R.id.action_show_bg_atlas_cells)
-    MenuItem menuShowBgAtlasCells;
-    @OptionsMenuItem(R.id.view_type_map)
-    MenuItem menuViewTypeMap;
-    @OptionsMenuItem(R.id.view_type_list)
-    MenuItem menuViewTypeList;
-    @OptionsMenuItem(R.id.view_type_combined)
-    MenuItem menuViewTypeCombined;
-    @OptionsMenuItem(R.id.action_show_spa)
-    MenuItem menuShowSPA;
+
     @InstanceState
     @Nullable
     EntryType entryType = null;
@@ -179,15 +148,10 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     UserPrefs_ userPrefs;
 
     private boolean canceled = false;
-    @InstanceState
     boolean stayAwake;
-    @InstanceState
     boolean showZoneBackground;
-    @InstanceState
     boolean showLocalProjects;
-    @InstanceState
     boolean showBgAtlasCells;
-    @InstanceState
     boolean showSPA;
 
     @FragmentById(R.id.list_container)
@@ -207,6 +171,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     EntriesToMapMarkersConverter mapMarkerConverter;
     @Bean
     ZonesModelEntries zones;
+
 
     @AfterInject
     protected void initProviders() {
@@ -229,10 +194,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @AfterViews
     void init() {
-        restoreState();
-        showCurrentMap();
         setupList();
-        updateViewType();
     }
 
     private void setupList() {
@@ -273,6 +235,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @Override
     protected void onResume() {
         super.onResume();
+        restoreState();
+        showCurrentMap();
+        updateViewType();
         currentMap.setUpMapIfNeeded();
     }
 
@@ -327,56 +292,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
                 menuZoomFree.setChecked(true);
                 break;
         }
-        switch (providerType) {
-            case GOOGLE:
-                menuMapGoogle.setChecked(true);
-                menuMapProvider.setTitle(menuMapGoogle.getTitle());
-                menuMap.setEnabled(true);
-                switch (mapType) {
-                    case HYBRID:
-                        menuMapHybrid.setChecked(true);
-                        menuMap.setTitle(menuMapHybrid.getTitle());
-                        break;
-                    case SATELLITE:
-                        menuMapSatellite.setChecked(true);
-                        menuMap.setTitle(menuMapSatellite.getTitle());
-                        break;
-                    case NORMAL:
-                        menuMapNormal.setChecked(true);
-                        menuMap.setTitle(menuMapNormal.getTitle());
-                        break;
-                    default:
-                        throw new IllegalStateException("Unhandled map type: " + mapType);
-                }
-                break;
-            case OSM:
-                menuMapOSM.setChecked(true);
-                menuMapProvider.setTitle(menuMapOSM.getTitle());
-                menuMap.setEnabled(false);
-                menuMap.setTitle(menuMapNormal.getTitle());
-                break;
-            default:
-                throw new IllegalStateException("Unhandled provider type: " + providerType);
-        }
-        int viewType = prefs.viewType().get();
-        switch (viewType) {
-            case VIEWTYPE_MAP:
-                menuViewTypeMap.setChecked(true);
-                break;
-            case VIEWTYPE_LIST:
-                menuViewTypeList.setChecked(true);
-                break;
-            case VIEWTYPE_COMBINED:
-                menuViewTypeCombined.setChecked(true);
-                break;
-        }
 
         updateCheckedEntryType(menu);
-        menuStayAwake.setChecked(stayAwake);
-        menuShowZoneBackground.setChecked(showZoneBackground);
-        menuShowLocalProjects.setChecked(showLocalProjects);
-        menuShowBgAtlasCells.setChecked(showBgAtlasCells);
-        menuShowSPA.setChecked(showSPA);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -395,17 +312,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             case GOOGLE:
             default:
                 currentMap = googleMap;
-                if (menuMap != null) {
-                    menuMap.setEnabled(true);
-                }
                 break;
             case OSM:
                 currentMap = osmMap;
-                if (menuMap != null) {
-                    menuMap.setEnabled(false);
-                    menuMap.setTitle(R.string.menu_monitoring_map_normal);
-                    menuMapNormal.setChecked(true);
-                }
                 break;
         }
         currentMap.setPosition(lastPosition);
@@ -429,49 +338,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         return SBGsonParser.createParser().fromJson(userPrefs.bgAtlasCells().get(), listType);
     }
 
-    @OptionsItem(R.id.action_map_google)
-    void onGoogleMapProvider() {
-        setProviderType(MapProvider.ProviderType.GOOGLE);
-    }
-
-    @OptionsItem(R.id.action_map_osm)
-    void onOSMMapProvider() {
-        setProviderType(MapProvider.ProviderType.OSM);
-    }
-
-    @OptionsItem(R.id.view_type_map)
-    void onViewTypeMap(MenuItem item) {
-        item.setChecked(true);
-        setViewType(VIEWTYPE_MAP);
-    }
-
-    @OptionsItem(R.id.view_type_list)
-    void onViewTypeList(MenuItem item) {
-        item.setChecked(true);
-        setViewType(VIEWTYPE_LIST);
-    }
-
-    @OptionsItem(R.id.view_type_combined)
-    void onViewTypeCombined(MenuItem item) {
-        item.setChecked(true);
-        setViewType(VIEWTYPE_COMBINED);
-    }
-
-    public void setProviderType(@NonNull MapProvider.ProviderType providerType) {
-        this.providerType = providerType;
-        showCurrentMap();
-        prefs.providerType().put(providerType.toString());
-    }
-
-    public void setViewType(int viewType) {
-        prefs.viewType().put(viewType);
-        updateViewType();
-    }
-
     @OptionsItem(R.id.action_new_entry)
     @Click(R.id.fab)
     void onNewEntry() {
-        LatLng position = null;
         if (currentMap.getMyLocation() != null) {
             startNewEntryWithoutAsking(new LatLng(currentMap.getMyLocation().getLatitude(), currentMap.getMyLocation().getLongitude()));
         }
@@ -480,6 +349,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @OptionsItem(R.id.action_common_form)
     void onCommonForm() {
         EditCurrentCommonFormActivity_.intent(this).start();
+    }
+
+    @OptionsItem(R.id.menu_settings)
+    void openSettings() {
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 
     @OnActivityResult(REQUEST_NEW_ENTRY)
@@ -563,64 +437,12 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         prefs.zoomFactor().put(zoomFactor);
     }
 
-    @OptionsItem(R.id.action_map_google_normal)
-    void setGoogleMapsNormal(MenuItem sender) {
-        setMapType(MapProvider.MapType.NORMAL);
-        sender.setChecked(true);
-        menuMap.setTitle(sender.getTitle());
-    }
-
-    @OptionsItem(R.id.action_map_google_satellite)
-    void setGoogleMapsSatellite(MenuItem sender) {
-        setMapType(MapProvider.MapType.SATELLITE);
-        sender.setChecked(true);
-        menuMap.setTitle(sender.getTitle());
-    }
-
-    @OptionsItem(R.id.action_map_google_hybrid)
-    void setGoogleMapsHybrid(MenuItem sender) {
-        setMapType(MapProvider.MapType.HYBRID);
-        sender.setChecked(true);
-        menuMap.setTitle(sender.getTitle());
-    }
-
-    public void setMapType(@NonNull MapProvider.MapType mapType) {
-        this.mapType = mapType;
-        currentMap.setMapType(mapType);
-        prefs.mapType().put(mapType.toString());
-    }
-
-    @OptionsItem(R.id.action_show_zone_background)
-    void setShowZoneBackground(MenuItem sender) {
-        sender.setChecked(!sender.isChecked());
-        setShowZoneBackground(sender.isChecked());
-    }
-
-    @OptionsItem(R.id.action_show_local_projects)
-    void setShowLocalProjects(MenuItem sender) {
-        sender.setChecked(!sender.isChecked());
-        setShowLocalProjects(sender.isChecked());
-    }
-
-    @OptionsItem(R.id.action_show_bg_atlas_cells)
-    void setShowBgAtlasCells(MenuItem sender) {
-        sender.setChecked(!sender.isChecked());
-        setShowBgAtlasCells(sender.isChecked());
-    }
-
-    @OptionsItem(R.id.action_show_spa)
-    void setShowSPA(MenuItem sender) {
-        sender.setChecked(!sender.isChecked());
-        setShowSPA(sender.isChecked());
-    }
-
     private void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
         if (currentMap != null) {
             currentMap.setShowZoneBackground(showBackground);
             currentMap.updateCamera();
         }
-        prefs.showZoneBackground().put(showBackground);
     }
 
     private void setShowLocalProjects(boolean showLocalProjects) {
@@ -629,7 +451,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             currentMap.setShowLocalProjects(showLocalProjects);
             currentMap.updateCamera();
         }
-        prefs.showLocalProjects().put(showLocalProjects);
     }
 
     private void setShowBgAtlasCells(boolean showBgAtlasCells) {
@@ -638,7 +459,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             currentMap.setShowBgAtlasCells(showBgAtlasCells);
             currentMap.updateCamera();
         }
-        prefs.showBgAtlasCells().put(showBgAtlasCells);
     }
 
     private void setShowSPA(boolean showSPA) {
@@ -647,13 +467,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             currentMap.setShowSPA(showSPA);
             currentMap.updateCamera();
         }
-        prefs.showSPA().put(showSPA);
-    }
-
-    @OptionsItem(R.id.action_stay_awake)
-    void setStayAwake(MenuItem sender) {
-        sender.setChecked(!sender.isChecked());
-        setStayAwake(sender.isChecked());
     }
 
     private void setStayAwake(boolean stayAwake) {
@@ -663,7 +476,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-        prefs.stayAwake().put(stayAwake);
     }
 
     @OptionsItem({
@@ -786,13 +598,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         if (!canceled) {
 
             MonitoringPrefs_.MonitoringPrefsEditor_ editor = monitoringPrefs.edit();
-            prefs.providerType().put(providerType.toString());
-            prefs.mapType().put(mapType.toString());
-            prefs.stayAwake().put(stayAwake);
-            prefs.showZoneBackground().put(showZoneBackground);
-            prefs.showLocalProjects().put(showLocalProjects);
-            prefs.showBgAtlasCells().put(showBgAtlasCells);
-            prefs.showSPA().put(showSPA);
             if (lastPosition != null) {
                 editor.lastPositionLat().put((float) lastPosition.latitude);
                 editor.lastPositionLon().put((float) lastPosition.longitude);

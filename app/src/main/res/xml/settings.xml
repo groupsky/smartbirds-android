@@ -1,13 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="notifications"
-        app:title="Enable message notifications" />
+    <PreferenceCategory
+        android:title="General"
+        app:iconSpaceReserved="false">
 
-    <Preference
-        app:key="feedback"
-        app:summary="Report technical issues or suggest new features"
-        app:title="Send feedback" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="forms"
+            app:summary="Select which forms you want to see when creating new record."
+            app:title="Monitoring forms" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Monitoring"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            app:defaultValue="GOOGLE"
+            app:entries="@array/map_providers"
+            app:entryValues="@array/map_provider_values"
+            app:iconSpaceReserved="false"
+            app:key="providerType"
+            app:title="Map provider"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="NORMAL"
+            app:entries="@array/map_types"
+            app:entryValues="@array/map_type_values"
+            app:iconSpaceReserved="false"
+            app:key="mapType"
+            app:title="Map type"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="1"
+            app:entries="@array/monitoring_views"
+            app:entryValues="@array/monitoring_view_values"
+            app:iconSpaceReserved="false"
+            app:key="viewType"
+            app:title="View"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="stayAwake"
+            app:summary="Enable if want to keep screen on"
+            app:title="Always on" />
+
+        <SwitchPreferenceCompat
+            app:allowDividerAbove="true"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showZoneBackground"
+            app:summary="Draw polygons background"
+            app:title="Polygons background" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showLocalProjects"
+            app:summary="Show storks in Belozem"
+            app:title="Storks in Belozem" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showBgAtlasCells"
+            app:summary="Show BG atlas cells"
+            app:title="Squares of BG Atlas" />
+
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showSPA"
+            app:summary="Show SPA"
+            app:title="SPA" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Advanced"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="forms"
+            app:summary="Export the DB in case of issue with the data."
+            app:title="Export DB" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
