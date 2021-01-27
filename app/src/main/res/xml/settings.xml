@@ -6,11 +6,27 @@
         android:title="@string/settings_category_general"
         app:iconSpaceReserved="false">
 
-        <Preference
+        <MultiSelectListPreference
             app:iconSpaceReserved="false"
-            app:key="forms"
+            app:key="enabledForms"
             app:summary="@string/settings_monitoring_forms_summary"
             app:title="@string/settings_monitoring_forms" />
+
+        <ListPreference
+            app:defaultValue="1"
+            app:entries="@array/monitoring_views"
+            app:entryValues="@array/monitoring_view_values"
+            app:iconSpaceReserved="false"
+            app:key="viewType"
+            app:title="@string/settings_view"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="stayAwake"
+            app:summary="@string/settings_always_on_summary"
+            app:title="@string/settings_always_on" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -34,25 +50,13 @@
             app:key="mapType"
             app:title="@string/settings_map_type"
             app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
 
-        <ListPreference
-            app:defaultValue="1"
-            app:entries="@array/monitoring_views"
-            app:entryValues="@array/monitoring_view_values"
-            app:iconSpaceReserved="false"
-            app:key="viewType"
-            app:title="@string/settings_view"
-            app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory
+        android:title="@string/settings_category_layers"
+        app:iconSpaceReserved="false">
 
         <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:iconSpaceReserved="false"
-            app:key="stayAwake"
-            app:summary="@string/settings_always_on_summary"
-            app:title="@string/settings_always_on" />
-
-        <SwitchPreferenceCompat
-            app:allowDividerAbove="true"
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="showZoneBackground"
