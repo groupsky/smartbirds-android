@@ -348,4 +348,6 @@
     <string name="settings_category_advanced">Допълнителни</string>
     <string name="settings_export_db">Експорт на Базата данни</string>
     <string name="settings_export_db_summary">Експортиране на Базата данни в Downloads.</string>
+    <string name="settings_enabled_forms_alert_title">Внимание</string>
+    <string name="settings_enabled_forms_alert_message">Трябва да изберете поне една активна форма за наблюдение.</string>
 </resources>

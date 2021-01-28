@@ -349,4 +349,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="settings_category_advanced">Advanced</string>
     <string name="settings_export_db">Export DB</string>
     <string name="settings_export_db_summary">Export the DB in Downloads.</string>
+    <string name="settings_enabled_forms_alert_title">Warning</string>
+    <string name="settings_enabled_forms_alert_message">You have to select at least one active monitoring form.</string>
 </resources>
