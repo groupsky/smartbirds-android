@@ -2,7 +2,10 @@ package org.bspb.smartbirds.pro.prefs;
 
 import org.androidannotations.annotations.sharedpreferences.DefaultBoolean;
 import org.androidannotations.annotations.sharedpreferences.DefaultInt;
+import org.androidannotations.annotations.sharedpreferences.DefaultStringSet;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;
+
+import java.util.Set;
 
 import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
 
@@ -44,4 +47,6 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean showSPA();
+
+    Set<String> formsEnabled();
 }

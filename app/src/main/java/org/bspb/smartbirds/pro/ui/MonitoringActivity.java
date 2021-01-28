@@ -73,8 +73,11 @@ import org.osmdroid.config.Configuration;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
@@ -171,6 +174,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     EntriesToMapMarkersConverter mapMarkerConverter;
     @Bean
     ZonesModelEntries zones;
+
+    private Set<String> formsEnabled;
+    private Menu menu;
 
 
     @AfterInject
@@ -269,6 +275,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        this.menu = menu;
         menuCrash.setVisible(BuildConfig.DEBUG);
         switch (zoomFactor) {
             case 1000:
@@ -293,12 +300,39 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
                 break;
         }
 
-        updateCheckedEntryType(menu);
+        updateTypeOfObservationMenus(menu);
 
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void updateCheckedEntryType(Menu menu) {
+    private void updateTypeOfObservationMenus(Menu menu) {
+        if (menu == null) {
+            return;
+        }
+
+        // hide all types
+        for (EntryType form : EntryType.values()) {
+            MenuItem menuItem = menu.findItem(form.menuActionId);
+            if (menuItem != null) {
+                menuItem.setVisible(false);
+            }
+        }
+
+        // show enabled types
+        if (formsEnabled != null) {
+            for (String formName : formsEnabled) {
+                try {
+                    EntryType form = EntryType.valueOf(formName);
+                    MenuItem item = menu.findItem(form.menuActionId);
+                    if (item != null) {
+                        item.setVisible(true);
+                    }
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+            }
+        }
+
         if (entryType == null) return;
         MenuItem item = menu.findItem(entryType.menuActionId);
         if (item == null) {
@@ -559,13 +593,28 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     }
 
     protected void startNewEntryAsking(final LatLng position) {
-        final String[] types = EntryType.getTitles(getResources());
+        final List<EntryType> enabledEntryTypes = new ArrayList();
+        final List<String> typeTitles = new ArrayList<>();
+
+        if (formsEnabled != null) {
+            EntryType[] allEntries = EntryType.values();
+            for (EntryType form : allEntries) {
+                if (formsEnabled.contains(form.name())) {
+                    enabledEntryTypes.add(form);
+                }
+            }
+        }
+
+        for (EntryType form : enabledEntryTypes) {
+            typeTitles.add(getString(form.titleId));
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.menu_monitoring_new_entry)
-                .setSingleChoiceItems(types, entryType != null ? entryType.ordinal() : -1, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(typeTitles.toArray(new String[]{}), entryType != null ? entryType.ordinal() : -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        setEntryType(EntryType.values()[i]);
+                        setEntryType(enabledEntryTypes.get(i));
                         startNewEntryWithoutAsking(position);
                         dialogInterface.cancel();
                     }
@@ -639,6 +688,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     private void restoreState() {
         Log.d(TAG, "restoring state");
+
+        formsEnabled = prefs.formsEnabled().getOr(new HashSet(Arrays.asList(getResources().getStringArray(R.array.monitoring_form_values))));
+
         providerType = MapProvider.ProviderType.GOOGLE;
         try {
             final String providerTypeName = prefs.providerType().get();
@@ -664,7 +716,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         entryType = null;
         try {
             final String entryTypeName = monitoringPrefs.entryType().get();
-            if (!isEmpty(entryTypeName))
+            if (!isEmpty(entryTypeName) && formsEnabled.contains(entryTypeName))
                 entryType = EntryType.valueOf(entryTypeName);
         } catch (IllegalArgumentException ignored) {
         }
@@ -675,6 +727,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setShowBgAtlasCells(prefs.showBgAtlasCells().get());
         setShowSPA(prefs.showSPA().get());
         restorePoints();
+
+        updateTypeOfObservationMenus(menu);
     }
 
     private void restorePoints() {

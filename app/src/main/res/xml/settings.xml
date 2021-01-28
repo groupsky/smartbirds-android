@@ -7,8 +7,11 @@
         app:iconSpaceReserved="false">
 
         <MultiSelectListPreference
+            app:defaultValue="@array/monitoring_form_values"
+            app:entries="@array/monitoring_forms"
+            app:entryValues="@array/monitoring_form_values"
             app:iconSpaceReserved="false"
-            app:key="enabledForms"
+            app:key="formsEnabled"
             app:summary="@string/settings_monitoring_forms_summary"
             app:title="@string/settings_monitoring_forms" />
 

@@ -77,19 +77,23 @@
                 android:menuCategory="alternative">
                 <item
                     android:id="@+id/action_form_type_birds"
-                    android:title="@string/entry_type_birds" />
+                    android:title="@string/entry_type_birds"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_humid"
-                    android:title="@string/entry_type_humid" />
+                    android:title="@string/entry_type_humid"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_cbm"
-                    android:title="@string/entry_type_cbm" />
+                    android:title="@string/entry_type_cbm"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_ciconia"
-                    android:title="@string/entry_type_ciconia" />
+                    android:title="@string/entry_type_ciconia"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_herp"
@@ -98,23 +102,28 @@
 
                 <item
                     android:id="@+id/action_form_type_herptile"
-                    android:title="@string/entry_type_herptile" />
+                    android:title="@string/entry_type_herptile"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_mammal"
-                    android:title="@string/entry_type_mammal" />
+                    android:title="@string/entry_type_mammal"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_invertebrates"
-                    android:title="@string/entry_type_invertebrates" />
+                    android:title="@string/entry_type_invertebrates"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_plants"
-                    android:title="@string/entry_type_plants" />
+                    android:title="@string/entry_type_plants"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_threats"
-                    android:title="@string/entry_type_threats" />
+                    android:title="@string/entry_type_threats"
+                    android:visible="false" />
 
             </group>
         </menu>

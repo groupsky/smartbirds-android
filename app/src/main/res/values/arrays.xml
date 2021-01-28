@@ -34,4 +34,28 @@
         <item>"3"</item>
     </array>
 
+    <array name="monitoring_forms">
+        <item>@string/entry_type_birds</item>
+        <item>@string/entry_type_humid</item>
+        <item>@string/entry_type_cbm</item>
+        <item>@string/entry_type_ciconia</item>
+        <item>@string/entry_type_herptile</item>
+        <item>@string/entry_type_mammal</item>
+        <item>@string/entry_type_invertebrates</item>
+        <item>@string/entry_type_plants</item>
+        <item>@string/entry_type_threats</item>
+    </array>
+
+    <array name="monitoring_form_values">
+        <item>BIRDS</item>
+        <item>HUMID</item>
+        <item>CBM</item>
+        <item>CICONIA</item>
+        <item>HERPTILE</item>
+        <item>MAMMAL</item>
+        <item>INVERTEBRATES</item>
+        <item>PLANTS</item>
+        <item>THREATS</item>
+    </array>
+
 </resources>
