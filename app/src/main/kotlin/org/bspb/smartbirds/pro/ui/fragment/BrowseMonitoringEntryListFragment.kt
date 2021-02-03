@@ -37,7 +37,7 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         monitoring?.apply {
-            menuFinishMonitoring.isVisible = status == Monitoring.Status.paused
+            menuFinishMonitoring.isVisible = status == Monitoring.Status.paused || status == Monitoring.Status.canceled
         }
     }
 
@@ -82,6 +82,7 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
             }
             DataOpsService_.intent(context).generateMonitoringFiles(code).start()
             bus.postSticky(MonitoringFinishedEvent())
+            activity?.finish()
         }
 
     }
