@@ -58,7 +58,7 @@ open class MonitoringListRowPartialView @JvmOverloads constructor(
         monitoring.commonForm
         placeView.text = monitoring.commonForm[tagLocation]
         startView.text = monitoring.commonForm[tagBeginDate].toString() + ", " + monitoring.commonForm[tagBeginTime]
-        statusView.text = monitoring.status.name
+        statusView.text = resources.getString(monitoring.status.label)
         entriesView.text = "" + monitoring.entriesCount
 
     }
