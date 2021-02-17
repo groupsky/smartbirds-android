@@ -95,7 +95,7 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="forms"
+            app:key="exportDB"
             app:summary="@string/settings_export_db_summary"
             app:title="@string/settings_export_db" />
     </PreferenceCategory>

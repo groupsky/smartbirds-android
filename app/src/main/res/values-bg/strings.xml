@@ -350,4 +350,8 @@
     <string name="settings_export_db_summary">Експортиране на Базата данни в Downloads.</string>
     <string name="settings_enabled_forms_alert_title">Внимание</string>
     <string name="settings_enabled_forms_alert_message">Трябва да изберете поне една активна форма за наблюдение.</string>
+    <string name="export_db_dialog_title_success">Успех</string>
+    <string name="export_db_dialog_title_fail">Внимание</string>
+    <string name="export_db_dialog_message_success">Вие успешно експортирахте Базата данни.</string>
+    <string name="export_db_dialog_message_fail">Възникна проблем при експортирането на Базата данни.</string>
 </resources>

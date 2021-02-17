@@ -6,6 +6,7 @@ import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.tools.DBExporter
 import org.bspb.smartbirds.pro.ui.map.MapProvider
 import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
@@ -14,13 +15,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var mapTypePreference: ListPreference? = null
     private var providerPreference: ListPreference? = null
     private var enabledFormsPreference: MultiSelectListPreference? = null
+    private var exportPreference: Preference? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
         providerPreference = findPreference("providerType")
         mapTypePreference = findPreference("mapType")
-        enabledFormsPreference = findPreference("formsEnabled")
+        enabledFormsPreference = findPreference("fgetExternalStoragePublicDirectoryormsEnabled")
+        exportPreference = findPreference("exportDB")
 
         providerPreference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener() { _: Preference, newValue: Any ->
             updateMapType(MapProvider.ProviderType.valueOf(newValue as String))
@@ -32,6 +35,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 return@OnPreferenceChangeListener false
             }
             true
+        }
+        exportPreference?.onPreferenceClickListener = Preference.OnPreferenceClickListener { _: Preference ->
+            context?.let { DBExporter.exportDB(it) }
+            return@OnPreferenceClickListener true
         }
 
 
