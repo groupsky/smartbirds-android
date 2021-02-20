@@ -119,7 +119,7 @@ dependencies {
     implementation 'commons-net:commons-net:3.7.2'
     implementation 'com.google.maps.android:android-maps-utils:2.2.0'
 
-    implementation 'org.osmdroid:osmdroid-android:6.1.8'
+    implementation 'org.osmdroid:osmdroid-android:6.1.10'
     implementation 'com.github.MKergall:osmbonuspack:6.6.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
