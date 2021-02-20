@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import com.google.firebase.crashlytics.internal.report.model.Report;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
@@ -57,13 +55,10 @@ import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
 import org.bspb.smartbirds.pro.utils.MonitoringUtils;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
