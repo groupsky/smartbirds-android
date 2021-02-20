@@ -18,7 +18,6 @@ import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse
 import org.bspb.smartbirds.pro.prefs.DownloadsPrefs_
 import org.bspb.smartbirds.pro.tools.SBGsonParser
-import org.bspb.smartbirds.pro.utils.debugLog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

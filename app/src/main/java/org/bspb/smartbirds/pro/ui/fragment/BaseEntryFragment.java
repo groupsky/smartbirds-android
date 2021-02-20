@@ -3,21 +3,21 @@ package org.bspb.smartbirds.pro.ui.fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -39,6 +39,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
+import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -205,6 +206,13 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
         }
     }
 
+    @AfterViews
+    public void initViews() {
+        if (btnSubmit != null && readOnly) {
+            btnSubmit.setEnabled(false);
+        }
+    }
+
     protected void checkCoordinates() {
         if (lat == 0 || lon == 0) {
             logException(new IllegalStateException("Creating entry fragment with zero coordinates"));
@@ -271,7 +279,12 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     public interface Builder {
         Fragment build(double lat, double lon);
 
-        Fragment load(long id);
+        default Fragment load(long id) {
+            return load(id, false);
+        }
+
+        Fragment load(long id, boolean readOnly);
+
     }
 
     @Override

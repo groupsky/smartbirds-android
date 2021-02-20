@@ -31,13 +31,13 @@ public class NewThreatsEntryFormFragment extends BaseTabEntryFragment {
             public androidx.fragment.app.Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        requiredFormFragment = NewThreatsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        requiredFormFragment = NewThreatsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
                         if (optionalFormFragment != null) {
                             requiredFormFragment.setOnPrimaryTypeChangedListener(optionalFormFragment);
                         }
                         return requiredFormFragment;
                     case 1:
-                        optionalFormFragment = NewThreatsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
+                        optionalFormFragment = NewThreatsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
                         if (requiredFormFragment != null) {
                             requiredFormFragment.setOnPrimaryTypeChangedListener(optionalFormFragment);
                         }
@@ -90,8 +90,8 @@ public class NewThreatsEntryFormFragment extends BaseTabEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewThreatsEntryFormFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewThreatsEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
     }
 

@@ -11,6 +11,7 @@ import org.bspb.smartbirds.pro.enums.EntryType;
 /**
  * Created by dani on 14-11-11.
  */
+@Deprecated
 @EFragment
 public class NewHerpEntryFormFragment extends BaseTabEntryFragment {
 
@@ -20,9 +21,12 @@ public class NewHerpEntryFormFragment extends BaseTabEntryFragment {
             @Override
             public androidx.fragment.app.Fragment getItem(int position) {
                 switch (position) {
-                    case 0: return NewHerpEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    case 1: return NewHerpEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).build();
-                    default: throw new IllegalArgumentException("Unhandled position"+position);
+                    case 0:
+                        return NewHerpEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                    case 1:
+                        return NewHerpEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                    default:
+                        throw new IllegalArgumentException("Unhandled position" + position);
                 }
             }
 
@@ -51,9 +55,11 @@ public class NewHerpEntryFormFragment extends BaseTabEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewHerpEntryFormFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewHerpEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
+
+
     }
 
 }

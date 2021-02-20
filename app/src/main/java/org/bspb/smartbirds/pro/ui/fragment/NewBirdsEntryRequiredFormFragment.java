@@ -128,6 +128,12 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
 
     @TextChange(R.id.form_birds_count_type)
     void handleCountsLogic() {
+        if (readOnly) {
+            count.setEnabled(false);
+            countMin.setEnabled(false);
+            countMax.setEnabled(false);
+            return;
+        }
         Nomenclature item = countType.getSelectedItem();
         String countsType = item != null ? item.label.get("en") : null;
         switch (countsType != null ? countsType.toLowerCase(Locale.ENGLISH) : "") {

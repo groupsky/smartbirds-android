@@ -3,15 +3,22 @@ package org.bspb.smartbirds.pro.ui;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.core.app.NavUtils;
 import android.view.MenuItem;
 
+import androidx.core.app.NavUtils;
+
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentById;
 import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.content.Monitoring;
+import org.bspb.smartbirds.pro.content.MonitoringManager;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment;
+import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
 
@@ -30,6 +37,11 @@ public class MonitoringDetailActivity extends BaseActivity implements Monitoring
     @FragmentById(R.id.monitoring_detail_container)
     MonitoringEntryListFragment fragment;
 
+    @Bean
+    MonitoringManager monitoringManager;
+
+    private Monitoring monitoring;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +56,16 @@ public class MonitoringDetailActivity extends BaseActivity implements Monitoring
     @AfterViews
     protected void setupFragment() {
         if (fragment == null) {
-            MonitoringEntryListFragment fragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
-            getFragmentManager().beginTransaction()
+            BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.monitoring_detail_container, fragment)
                     .commit();
         }
+    }
+
+    @AfterInject
+    protected void loadMonitoring() {
+        monitoring = monitoringManager.getMonitoring(monitoringCode);
     }
 
     @Override
@@ -70,6 +87,10 @@ public class MonitoringDetailActivity extends BaseActivity implements Monitoring
 
     @Override
     public void onMonitoringEntrySelected(long id, EntryType entryType) {
-        EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
+        if (monitoring != null && Monitoring.Status.uploaded.equals(monitoring.status)) {
+            ViewMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
+        } else {
+            EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
+        }
     }
 }

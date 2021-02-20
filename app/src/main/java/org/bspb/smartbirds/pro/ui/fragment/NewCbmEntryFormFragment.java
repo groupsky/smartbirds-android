@@ -143,8 +143,8 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         }
 
         @Override
-        public Fragment load(long id) {
-            return NewCbmEntryFormFragment_.builder().entryId(id).build();
+        public Fragment load(long id, boolean readOnly) {
+            return NewCbmEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
         }
     }
 

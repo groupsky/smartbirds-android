@@ -315,4 +315,14 @@
     <string name="no_downloads">"Липсват файлове за изтегляне в момента"</string>
     <string name="title_downloads">"Документи за изтегляния"</string>
     <string name="menu_monitoring_show_spa">"ЗЗ \"Птици\""</string>
+    <string name="filter_monitoring_status_wip">Активен</string>
+    <string name="filter_monitoring_status_finished">Завършен</string>
+    <string name="filter_monitoring_status_uploaded">Качен</string>
+    <string name="filter_monitoring_status_paused">Паузиран</string>
+    <string name="filter_monitoring_status_canceled">Отменен</string>
+    <string name="menu_monitoring_delete">Изтриване</string>
+    <string name="finish_monitoring_confirm_title">Завършване на мониторинг</string>
+    <string name="finish_monitoring_confirm_message">Сигурни ли сте, че искате да завършите мониторинга?</string>
+    <string name="delete_monitoring_confirm_title">Изтриване на мониторинг</string>
+    <string name="delete_monitoring_confirm_message">Сигурни ли сте, че искате да изтриете мониторинга?</string>
 </resources>

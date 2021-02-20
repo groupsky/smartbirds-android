@@ -10,6 +10,7 @@ import android.location.Location;
 import android.os.RemoteException;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 
@@ -145,6 +146,12 @@ public class MonitoringManager {
         if (statusIdx != -1) {
             monitoring.status = Monitoring.Status.valueOf(cursor.getString(statusIdx));
         }
+
+        final int entriesIdx = cursor.getColumnIndex(MonitoringColumns.ENTRIES_COUNT);
+        if (entriesIdx != -1) {
+            monitoring.entriesCount = cursor.getInt(entriesIdx);
+        }
+
         return monitoring;
     }
 
@@ -318,6 +325,7 @@ public class MonitoringManager {
         }
     }
 
+    @Nullable
     public Monitoring getPausedMonitoring() {
         Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI, MONITORING_PROJECTION, MonitoringColumns.STATUS + "=?", new String[]{paused.name()}, MonitoringColumns._ID + " desc");
         if (cursor == null) return null;
@@ -326,6 +334,17 @@ public class MonitoringManager {
             return monitoringFromCursor(cursor);
         } finally {
             cursor.close();
+        }
+    }
+
+    public void deleteMonitoring(String monitoringCode) {
+        ArrayList<ContentProviderOperation> ops = new ArrayList<>();
+        ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Forms.withMonitoringCode(monitoringCode)).build());
+        ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Monitorings.withCode(monitoringCode)).build());
+        try {
+            contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, ops);
+        } catch (RemoteException | OperationApplicationException e) {
+            logException(e);
         }
     }
 }

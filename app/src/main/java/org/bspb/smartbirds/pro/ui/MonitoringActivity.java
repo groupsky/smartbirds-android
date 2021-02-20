@@ -239,7 +239,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         if (isEmpty(monitoringCode)) return;
         if (listFragment == null) {
             listFragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
-            getFragmentManager().beginTransaction().replace(R.id.list_container, listFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.list_container, listFragment).commit();
         } else {
             listFragment.setMonitoringCode(monitoringCode);
         }
@@ -479,7 +479,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @OptionsItem(R.id.action_common_form)
     void onCommonForm() {
-        EditCommonFormActivity_.intent(this).start();
+        EditCurrentCommonFormActivity_.intent(this).start();
     }
 
     @OnActivityResult(REQUEST_NEW_ENTRY)
@@ -503,7 +503,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
 
     @OptionsItem(R.id.action_finish)
     void onFinish() {
-        EditCommonFormActivity_.intent(this).isFinishing(true).startForResult(REQUEST_FINISH_MONITORING);
+        EditCurrentCommonFormActivity_.intent(this).isFinishing(true).startForResult(REQUEST_FINISH_MONITORING);
     }
 
     @OptionsItem(android.R.id.home)

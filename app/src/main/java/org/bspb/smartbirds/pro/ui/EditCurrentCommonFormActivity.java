@@ -12,18 +12,18 @@ import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.service.DataService_;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
+import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment;
+import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment_;
 
 /**
  * Created by groupsky on 14-10-21.
  */
 @EActivity(R.layout.activity_start_monitoring)
 @OptionsMenu(R.menu.monitoring_edit_common_form)
-public class EditCommonFormActivity extends BaseActivity {
+public class EditCurrentCommonFormActivity extends BaseActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
-    MonitoringCommonFormFragment formFragment;
+    CurrentMonitoringCommonFormFragment formFragment;
 
     @Extra
     boolean isFinishing = false;
@@ -45,9 +45,9 @@ public class EditCommonFormActivity extends BaseActivity {
 
     @AfterViews
     void createFragment() {
-        formFragment = (MonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+        formFragment = (CurrentMonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
-            formFragment = MonitoringCommonFormFragment_.builder().build();
+            formFragment = CurrentMonitoringCommonFormFragment_.builder().build();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, formFragment)
                     .commit();

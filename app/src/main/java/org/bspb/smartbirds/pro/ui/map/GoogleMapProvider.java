@@ -492,7 +492,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         }
         if (showSPA) {
             if (tiles == null) {
-                ExtensionsKt.debugLog("Showing SPA");
                 TileProvider tileProvider = new UrlTileProvider(256, 256) {
                     @Override
                     public synchronized URL getTileUrl(int x, int y, int zoom) {
@@ -500,7 +499,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                         int reversedY = (1 << zoom) - y - 1;
                         String s = fragment.getString(R.string.spa_url, zoom, x, reversedY);
 
-                        ExtensionsKt.debugLog(s);
                         URL url = null;
                         try {
                             url = new URL(s);
@@ -516,7 +514,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             }
         } else {
             if (tiles != null) {
-                ExtensionsKt.debugLog("Removing SPA");
                 tiles.remove();
                 tiles = null;
             }

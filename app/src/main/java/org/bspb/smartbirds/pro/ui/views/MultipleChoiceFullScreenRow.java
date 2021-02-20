@@ -2,8 +2,8 @@ package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -14,7 +14,7 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 /**
  * Created by dani on 26.02.18.
@@ -31,6 +31,9 @@ public class MultipleChoiceFullScreenRow extends LinearLayout {
 
     @ViewById(R.id.field_hint)
     protected TextInputLayout hintView;
+
+    @ViewById(R.id.btn_delete)
+    protected Button btnDelete;
 
 
     CharSequence key;
@@ -110,5 +113,13 @@ public class MultipleChoiceFullScreenRow extends LinearLayout {
 
     public interface OnPopulatedListener {
         void onPopulate(MultipleChoiceFullScreenRow row);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        hintView.setEnabled(enabled);
+        input.setEnabled(enabled);
+        btnDelete.setEnabled(enabled);
     }
 }

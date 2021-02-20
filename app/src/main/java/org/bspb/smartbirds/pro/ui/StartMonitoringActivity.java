@@ -15,8 +15,8 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.service.DataService_;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringCommonFormFragment_;
+import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment;
+import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment_;
 
 @EActivity(R.layout.activity_start_monitoring)
 @OptionsMenu(R.menu.monitoring_common_form)
@@ -26,7 +26,7 @@ public class StartMonitoringActivity extends BaseActivity {
 
     @Bean
     EEventBus bus;
-    MonitoringCommonFormFragment formFragment;
+    CurrentMonitoringCommonFormFragment formFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,9 @@ public class StartMonitoringActivity extends BaseActivity {
 
     @AfterViews
     void createFragment() {
-        formFragment = (MonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+        formFragment = (CurrentMonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
-            formFragment = MonitoringCommonFormFragment_.builder().build();
+            formFragment = CurrentMonitoringCommonFormFragment_.builder().build();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, formFragment)
                     .commit();

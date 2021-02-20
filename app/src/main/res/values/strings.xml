@@ -316,4 +316,14 @@ Do you really want to cancel the monitoring?"</string>
     <string name="no_downloads">"No downloads available at the moment"</string>
     <string name="title_downloads">"Downloads"</string>
     <string name="menu_monitoring_show_spa">"SPA"</string>
+    <string name="filter_monitoring_status_wip">Wip</string>
+    <string name="filter_monitoring_status_finished">Finished</string>
+    <string name="filter_monitoring_status_uploaded">Uploaded</string>
+    <string name="filter_monitoring_status_paused">Paused</string>
+    <string name="filter_monitoring_status_canceled">Canceled</string>
+    <string name="menu_monitoring_delete">Delete</string>
+    <string name="finish_monitoring_confirm_title">Finish monitoring</string>
+    <string name="finish_monitoring_confirm_message">Are you sure you want to finish this monitoring?</string>
+    <string name="delete_monitoring_confirm_title">Delete monitoring</string>
+    <string name="delete_monitoring_confirm_message">Are you sure you want to delete this monitoring?</string>
 </resources>
