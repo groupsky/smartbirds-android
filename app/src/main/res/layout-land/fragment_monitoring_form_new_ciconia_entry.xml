@@ -35,7 +35,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_substratum"
                         android:tag="@string/tag_substrate_type"
-                        app:entries="form_ciconia_substratum" />
+                        app:entriesType="form_ciconia_substratum" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_column"
                         android:tag="@string/tag_pylon"
-                        app:entries="form_ciconia_column" />
+                        app:entriesType="form_ciconia_column" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_column_type"
                         android:tag="@string/tag_pylon_type"
-                        app:entries="form_ciconia_column_type" />
+                        app:entriesType="form_ciconia_column_type" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_tree"
                         android:tag="@string/tag_ciconia_tree"
-                        app:entries="form_ciconia_tree" />
+                        app:entriesType="form_ciconia_tree" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_building"
                         android:tag="@string/tag_building"
-                        app:entries="form_ciconia_building" />
+                        app:entriesType="form_ciconia_building" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_not_occupied"
                         android:tag="@string/tag_nest_not_occupied_this_year"
-                        app:entries="form_ciconia_not_occupied" />
+                        app:entriesType="form_ciconia_not_occupied" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -160,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_new_birds"
                         android:tag="@string/tag_birds_come_to_nest_this_year"
-                        app:entries="form_ciconia_new_birds" />
+                        app:entriesType="form_ciconia_new_birds" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_ciconia_this_year"
                         android:tag="@string/tag_this_year_in_the_nest_appeared"
-                        app:entries="form_ciconia_new_birds" />
+                        app:entriesType="form_ciconia_new_birds" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -332,7 +332,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_threats"
                         android:tag="@string/tag_threats"
-                        app:entries="form_main_threats" />
+                        app:entriesType="form_main_threats" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

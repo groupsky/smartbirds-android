@@ -30,7 +30,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_source"
                         android:tag="@string/tag_source"
-                        app:entries="form_main_source"
+                        app:entriesType="form_main_source"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_rain"
                         android:tag="@string/tag_rain"
-                        app:entries="form_main_rain" />
+                        app:entriesType="form_main_rain" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -184,7 +184,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_wind_strength"
                         android:tag="@string/tag_wind_strength"
-                        app:entries="form_main_wind_force" />
+                        app:entriesType="form_main_wind_force" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -198,7 +198,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_wind_direction"
                         android:tag="@string/tag_wind_direction"
-                        app:entries="form_main_wind_direction" />
+                        app:entriesType="form_main_wind_direction" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
@@ -228,7 +228,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_cloudiness"
                         android:tag="@string/tag_cloudiness"
-                        app:entries="form_main_cloud_level" />
+                        app:entriesType="form_main_cloud_level" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

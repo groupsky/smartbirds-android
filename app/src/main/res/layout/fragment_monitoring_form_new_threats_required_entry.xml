@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_threats_category"
                 android:tag="@string/tag_category"
-                app:entries="threats_category" />
+                app:entriesType="threats_category" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_threats_estimate"
                 android:tag="@string/tag_estimate"
-                app:entries="threats_estimate" />
+                app:entriesType="threats_estimate" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
@@ -158,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_threats_state_carcass"
                 android:tag="@string/tag_state_carcass"
-                app:entries="threats_state_carcass" />
+                app:entriesType="threats_state_carcass" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/GroupSeparator" />

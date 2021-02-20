@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/settings_category_general"
+        app:iconSpaceReserved="false">
+
+        <MultiSelectListPreference
+            app:defaultValue="@array/monitoring_form_values"
+            app:entries="@array/monitoring_forms"
+            app:entryValues="@array/monitoring_form_values"
+            app:iconSpaceReserved="false"
+            app:key="formsEnabled"
+            app:summary="@string/settings_monitoring_forms_summary"
+            app:title="@string/settings_monitoring_forms" />
+
+        <ListPreference
+            app:defaultValue="1"
+            app:entries="@array/monitoring_views"
+            app:entryValues="@array/monitoring_view_values"
+            app:iconSpaceReserved="false"
+            app:key="viewType"
+            app:title="@string/settings_view"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="stayAwake"
+            app:summary="@string/settings_always_on_summary"
+            app:title="@string/settings_always_on" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_category_monitoring"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            app:defaultValue="GOOGLE"
+            app:entries="@array/map_providers"
+            app:entryValues="@array/map_provider_values"
+            app:iconSpaceReserved="false"
+            app:key="providerType"
+            app:title="@string/settings_map_provider"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="NORMAL"
+            app:entries="@array/map_types"
+            app:entryValues="@array/map_type_values"
+            app:iconSpaceReserved="false"
+            app:key="mapType"
+            app:title="@string/settings_map_type"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_category_layers"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="showZoneBackground"
+            app:summary="@string/settings_polygons_bg_summary"
+            app:title="@string/settings_polygons_bg" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showLocalProjects"
+            app:summary="@string/settings_local_projects_summary"
+            app:title="@string/settings_local_projects" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="showBgAtlasCells"
+            app:summary="@string/settings_bg_atlas_summary"
+            app:title="@string/settings_bg_atlas" />
+
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showSPA"
+            app:summary="@string/settings_spa_summary"
+            app:title="@string/settings_spa" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_category_advanced"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="exportDB"
+            app:summary="@string/settings_export_db_summary"
+            app:title="@string/settings_export_db" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

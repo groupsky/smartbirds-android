@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_cbm_name"
                         android:tag="@string/tag_observed_bird"
-                        app:entries="species_birds"
+                        app:entriesType="species_birds"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_cbm_distance"
                         android:tag="@string/tag_distance"
-                        app:entries="form_cbm_distance"
+                        app:entriesType="form_cbm_distance"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_cbm_primary_habitat"
                         android:tag="@string/tag_primary_habitat"
-                        app:entries="form_cbm_habitat"
+                        app:entriesType="form_cbm_habitat"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_cbm_secondary_habitat"
                         android:tag="@string/tag_secondary_habitat"
-                        app:entries="form_cbm_habitat" />
+                        app:entriesType="form_cbm_habitat" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </TableRow>
@@ -172,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_cbm_visit_number"
                         android:tag="@string/tag_visit_number"
-                        app:entries="form_cbm_visit_number"
+                        app:entriesType="form_cbm_visit_number"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_cbm_sector"
                         android:tag="@string/tag_transect_number"
-                        app:entries="form_cbm_sector"
+                        app:entriesType="form_cbm_sector"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_common_threats"
                         android:tag="@string/tag_threats"
-                        app:entries="form_main_threats" />
+                        app:entriesType="form_main_threats" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 

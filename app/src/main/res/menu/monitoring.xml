@@ -29,6 +29,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/menu_settings"
+        android:menuCategory="container"
+        android:title="@string/menu_settings"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_zoom"
         android:menuCategory="alternative"
         android:title="@string/menu_monitoring_zoom_500"
@@ -60,113 +66,6 @@
     </item>
 
     <item
-        android:id="@+id/menu_map"
-        android:menuCategory="alternative"
-        android:title="@string/menu_monitoring_map_normal"
-        app:showAsAction="never">
-        <menu>
-
-            <group
-                android:checkableBehavior="single"
-                android:menuCategory="alternative">
-                <item
-                    android:id="@+id/action_map_google_normal"
-                    android:checked="true"
-                    android:title="@string/menu_monitoring_map_normal" />
-
-                <item
-                    android:id="@+id/action_map_google_satellite"
-                    android:title="@string/menu_monitoring_map_satellite" />
-
-                <item
-                    android:id="@+id/action_map_google_hybrid"
-                    android:title="@string/menu_monitoring_map_hybrid" />
-            </group>
-        </menu>
-    </item>
-    <item
-        android:id="@+id/menu_map_provider"
-        android:menuCategory="alternative"
-        android:title="@string/menu_monitoring_map_provider"
-        app:showAsAction="never">
-        <menu>
-
-            <group
-                android:checkableBehavior="none"
-                android:menuCategory="alternative">
-                <item
-                    android:id="@+id/action_map_google"
-                    android:title="@string/menu_monitoring_map_provider_google" />
-
-                <item
-                    android:id="@+id/action_map_osm"
-                    android:title="@string/menu_monitoring_map_provider_osm" />
-
-            </group>
-        </menu>
-    </item>
-    <item
-        android:id="@+id/menu_view_type"
-        android:menuCategory="alternative"
-        android:title="@string/view"
-        app:showAsAction="never">
-        <menu>
-            <group
-                android:checkableBehavior="single"
-                android:menuCategory="alternative">
-                <item
-                    android:id="@+id/view_type_map"
-                    android:title="@string/map" />
-                <item
-                    android:id="@+id/view_type_list"
-                    android:title="@string/list" />
-                <item
-                    android:id="@+id/view_type_combined"
-                    android:title="@string/combined" />
-            </group>
-        </menu>
-    </item>
-    <item
-        android:id="@+id/action_stay_awake"
-        android:checkable="true"
-        android:checked="false"
-        android:enabled="true"
-        android:menuCategory="system"
-        android:title="@string/menu_monitoring_stay_awake" />
-
-    <item
-        android:id="@+id/action_show_zone_background"
-        android:checkable="true"
-        android:checked="true"
-        android:enabled="true"
-        android:menuCategory="system"
-        android:title="@string/menu_monitoring_show_zone_background" />
-
-    <item
-        android:id="@+id/action_show_local_projects"
-        android:checkable="true"
-        android:checked="false"
-        android:enabled="true"
-        android:menuCategory="system"
-        android:title="@string/menu_monitoring_show_local_projects" />
-
-    <item
-        android:id="@+id/action_show_bg_atlas_cells"
-        android:checkable="true"
-        android:checked="false"
-        android:enabled="true"
-        android:menuCategory="system"
-        android:title="@string/menu_monitoring_show_bg_atlas_cells" />
-
-    <item
-        android:id="@+id/action_show_spa"
-        android:checkable="true"
-        android:checked="false"
-        android:enabled="true"
-        android:menuCategory="system"
-        android:title="@string/menu_monitoring_show_spa" />
-
-    <item
         android:id="@+id/menu_form_type"
         android:menuCategory="alternative"
         android:title="@string/monitoring_type"
@@ -178,19 +77,23 @@
                 android:menuCategory="alternative">
                 <item
                     android:id="@+id/action_form_type_birds"
-                    android:title="@string/entry_type_birds" />
+                    android:title="@string/entry_type_birds"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_humid"
-                    android:title="@string/entry_type_humid" />
+                    android:title="@string/entry_type_humid"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_cbm"
-                    android:title="@string/entry_type_cbm" />
+                    android:title="@string/entry_type_cbm"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_ciconia"
-                    android:title="@string/entry_type_ciconia" />
+                    android:title="@string/entry_type_ciconia"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_herp"
@@ -199,23 +102,28 @@
 
                 <item
                     android:id="@+id/action_form_type_herptile"
-                    android:title="@string/entry_type_herptile" />
+                    android:title="@string/entry_type_herptile"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_mammal"
-                    android:title="@string/entry_type_mammal" />
+                    android:title="@string/entry_type_mammal"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_invertebrates"
-                    android:title="@string/entry_type_invertebrates" />
+                    android:title="@string/entry_type_invertebrates"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_plants"
-                    android:title="@string/entry_type_plants" />
+                    android:title="@string/entry_type_plants"
+                    android:visible="false" />
 
                 <item
                     android:id="@+id/action_form_type_threats"
-                    android:title="@string/entry_type_threats" />
+                    android:title="@string/entry_type_threats"
+                    android:visible="false" />
 
             </group>
         </menu>

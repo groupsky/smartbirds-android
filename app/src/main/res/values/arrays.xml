@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="map_types">
+        <item>@string/menu_monitoring_map_normal</item>
+        <item>@string/menu_monitoring_map_satellite</item>
+        <item>@string/menu_monitoring_map_hybrid</item>
+    </array>
+
+    <array name="map_type_values">
+        <item>NORMAL</item>
+        <item>SATELLITE</item>
+        <item>HYBRID</item>
+    </array>
+
+    <array name="map_providers">
+        <item>@string/menu_monitoring_map_provider_google</item>
+        <item>@string/menu_monitoring_map_provider_osm</item>
+    </array>
+
+    <array name="map_provider_values">
+        <item>GOOGLE</item>
+        <item>OSM</item>
+    </array>
+
+    <array name="monitoring_views">
+        <item>@string/map</item>
+        <item>@string/list</item>
+        <item>@string/combined</item>
+    </array>
+
+    <array name="monitoring_view_values">
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+    </array>
+
+    <array name="monitoring_forms">
+        <item>@string/entry_type_birds</item>
+        <item>@string/entry_type_humid</item>
+        <item>@string/entry_type_cbm</item>
+        <item>@string/entry_type_ciconia</item>
+        <item>@string/entry_type_herptile</item>
+        <item>@string/entry_type_mammal</item>
+        <item>@string/entry_type_invertebrates</item>
+        <item>@string/entry_type_plants</item>
+        <item>@string/entry_type_threats</item>
+    </array>
+
+    <array name="monitoring_form_values">
+        <item>BIRDS</item>
+        <item>HUMID</item>
+        <item>CBM</item>
+        <item>CICONIA</item>
+        <item>HERPTILE</item>
+        <item>MAMMAL</item>
+        <item>INVERTEBRATES</item>
+        <item>PLANTS</item>
+        <item>THREATS</item>
+    </array>
+
+</resources>

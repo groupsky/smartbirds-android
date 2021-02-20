@@ -38,6 +38,7 @@ import org.bspb.smartbirds.pro.service.*
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
+import org.bspb.smartbirds.pro.ui.SettingsActivity
 import org.bspb.smartbirds.pro.ui.StatsActivity_
 import java.util.*
 
@@ -218,6 +219,11 @@ open class MainFragment : Fragment() {
     @OptionsItem(R.id.menu_statistics)
     open fun showStats() {
         StatsActivity_.intent(activity).start()
+    }
+
+    @OptionsItem(R.id.menu_settings)
+    open fun showSettings() {
+        startActivity(Intent(activity, SettingsActivity::class.java))
     }
 
     //    @LongClick(R.id.btn_export)

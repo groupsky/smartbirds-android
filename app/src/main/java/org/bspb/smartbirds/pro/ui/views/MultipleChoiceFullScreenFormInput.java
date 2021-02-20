@@ -48,7 +48,7 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MultipleChoiceFullScreenFormInput, defStyle, 0);
         try {
             hint = a.getText(R.styleable.MultipleChoiceFullScreenFormInput_hint);
-            key = a.getText(R.styleable.MultipleChoiceFullScreenFormInput_entries);
+            key = a.getText(R.styleable.MultipleChoiceFullScreenFormInput_entriesType);
         } finally {
             a.recycle();
 

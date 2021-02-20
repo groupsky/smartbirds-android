@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_death"
                 android:tag="@string/tag_dead_specimen_reason"
-                app:entries="form_birds_death" />
+                app:entriesType="form_birds_death" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_marking"
                 android:tag="@string/tag_mark_presence"
-                app:entries="form_birds_marking" />
+                app:entriesType="form_birds_marking" />
         </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_substrate"
                 android:tag="@string/tag_substrate"
-                app:entries="form_birds_nest_substrate" />
+                app:entriesType="form_birds_nest_substrate" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_tree_location"
                 android:tag="@string/tag_tree_location"
-                app:entries="form_birds_nest_location" />
+                app:entriesType="form_birds_nest_location" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_nest_height"
                 android:tag="@string/tag_nest_height"
-                app:entries="form_birds_nest_height" />
+                app:entriesType="form_birds_nest_height" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_nest_location"
                 android:tag="@string/tag_nest_location"
-                app:entries="form_birds_nest_position" />
+                app:entriesType="form_birds_nest_position" />
         </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
@@ -215,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_female_age"
                 android:tag="@string/tag_age_female"
-                app:entries="form_birds_age_individual" />
+                app:entriesType="form_birds_age_individual" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -229,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_male_age"
                 android:tag="@string/tag_age_male"
-                app:entries="form_birds_age_individual" />
+                app:entriesType="form_birds_age_individual" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -243,7 +243,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_birds_nest_success"
                 android:tag="@string/tag_breeding_success"
-                app:entries="form_birds_nest_success" />
+                app:entriesType="form_birds_nest_success" />
         </com.google.android.material.textfield.TextInputLayout>
     </TableRow>
 
@@ -278,7 +278,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_common_threats"
                 android:tag="@string/tag_threats"
-                app:entries="form_main_threats" />
+                app:entriesType="form_main_threats" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </TableRow>
