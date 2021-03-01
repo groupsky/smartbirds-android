@@ -6,9 +6,8 @@ package org.bspb.smartbirds.pro.ui.utils;
 
 public interface Constants {
 
-    @SuppressWarnings("PointlessBitwiseExpression")
-    public static final int VIEWTYPE_MAP = 1 << 0;
-    public static final int VIEWTYPE_LIST = 1 << 1;
-    public static final int VIEWTYPE_COMBINED = VIEWTYPE_MAP | VIEWTYPE_LIST;
+    String VIEWTYPE_MAP = "MAP";
+    String VIEWTYPE_LIST = "LIST";
+    String VIEWTYPE_COMBINED = "COMBINED";
 
 }

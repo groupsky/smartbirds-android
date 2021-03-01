@@ -29,9 +29,9 @@
     </array>
 
     <array name="monitoring_view_values">
-        <item>"1"</item>
-        <item>"2"</item>
-        <item>"3"</item>
+        <item>MAP</item>
+        <item>LIST</item>
+        <item>COMBINED</item>
     </array>
 
     <array name="monitoring_forms">

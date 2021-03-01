@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.prefs;
 
 import org.androidannotations.annotations.sharedpreferences.DefaultBoolean;
 import org.androidannotations.annotations.sharedpreferences.DefaultInt;
+import org.androidannotations.annotations.sharedpreferences.DefaultString;
 import org.androidannotations.annotations.sharedpreferences.DefaultStringSet;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;
 
@@ -27,8 +28,8 @@ public interface SmartBirdsPrefs {
     @DefaultBoolean(false)
     boolean stayAwake();
 
-    @DefaultInt(VIEWTYPE_MAP)
-    int viewType();
+    @DefaultString(VIEWTYPE_MAP)
+    String monitoringViewType();
 
     @DefaultBoolean(true)
     boolean showZoneBackground();

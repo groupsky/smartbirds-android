@@ -215,12 +215,12 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     }
 
     private void updateViewType() {
-        int viewType = prefs.viewType().get();
-        mapContainer.setVisibility((viewType & VIEWTYPE_MAP) != 0 ? View.VISIBLE : View.GONE);
-        if (getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT && (viewType & VIEWTYPE_MAP) != 0) {
+        String viewType = prefs.monitoringViewType().get();
+        mapContainer.setVisibility(!VIEWTYPE_LIST.equals(viewType) ? View.VISIBLE : View.GONE);
+        if (getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT && !VIEWTYPE_LIST.equals(viewType)) {
             listContainer.setVisibility(View.GONE);
         } else {
-            listContainer.setVisibility((viewType & VIEWTYPE_LIST) != 0 ? View.VISIBLE : View.GONE);
+            listContainer.setVisibility(!VIEWTYPE_MAP.equals(viewType) ? View.VISIBLE : View.GONE);
         }
 
     }

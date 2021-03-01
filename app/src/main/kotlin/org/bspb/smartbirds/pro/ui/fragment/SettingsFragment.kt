@@ -22,7 +22,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         providerPreference = findPreference("providerType")
         mapTypePreference = findPreference("mapType")
-        enabledFormsPreference = findPreference("fgetExternalStoragePublicDirectoryormsEnabled")
+        enabledFormsPreference = findPreference("formsEnabled")
         exportPreference = findPreference("exportDB")
 
         providerPreference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener() { _: Preference, newValue: Any ->

@@ -20,7 +20,7 @@
             app:entries="@array/monitoring_views"
             app:entryValues="@array/monitoring_view_values"
             app:iconSpaceReserved="false"
-            app:key="viewType"
+            app:key="monitoringViewType"
             app:title="@string/settings_view"
             app:useSimpleSummaryProvider="true" />
 
