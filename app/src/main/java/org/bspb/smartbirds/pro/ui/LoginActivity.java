@@ -169,8 +169,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (requestCode == REQUEST_READ_CONTACTS) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateAutoComplete();
+                return;
             }
         }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Click(R.id.register_button)
