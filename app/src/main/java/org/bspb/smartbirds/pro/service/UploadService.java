@@ -16,7 +16,6 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EIntentService;
 import org.androidannotations.annotations.ServiceAction;
 import org.androidannotations.annotations.res.StringRes;
-import org.apache.commons.net.ftp.FTPClient;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
@@ -31,7 +30,6 @@ import org.bspb.smartbirds.pro.events.UploadCompleted;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
 import org.bspb.smartbirds.pro.forms.upload.Uploader;
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser;
-import org.bspb.smartbirds.pro.ui.utils.FTPClientUtils;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 
 import java.io.BufferedInputStream;
@@ -52,7 +50,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static java.lang.Double.parseDouble;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.finished;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.uploaded;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
@@ -109,15 +106,7 @@ public class UploadService extends IntentService {
                     logException(new Exception(msg));
                     continue;
                 }
-                upload(monitoringDir.getAbsolutePath(), false);
-            }
-
-            // upload legacy monitorings
-            for (String monitoring : baseDir.list()) {
-                if (!monitoring.endsWith("-up")) continue;
-                File monitoringDir = new File(baseDir, monitoring);
-                if (!monitoringDir.isDirectory()) continue;
-                upload(monitoringDir.getAbsolutePath(), true);
+                upload(monitoringDir.getAbsolutePath());
             }
         } finally {
             isUploading = false;
@@ -126,20 +115,15 @@ public class UploadService extends IntentService {
     }
 
     @ServiceAction()
-    void upload(String monitoringPath, boolean legacy) {
+    void upload(String monitoringPath) {
         Log.d(TAG, String.format("uploading %s", monitoringPath));
         File file = new File(monitoringPath);
         String monitoringName = file.getName();
-        if (legacy) monitoringName = monitoringName.replace("-up", "");
         Log.d(TAG, String.format("uploading %s", monitoringName));
 
         try {
             uploadOnServer(monitoringPath, monitoringName);
-            if (legacy) {
-                file.renameTo(new File(monitoringPath.replace("-up", "")));
-            } else {
-                monitoringManager.updateStatus(monitoringName, uploaded);
-            }
+            monitoringManager.updateStatus(monitoringName, uploaded);
         } catch (Throwable e) {
             logException(e);
             Toast.makeText(
@@ -147,15 +131,6 @@ public class UploadService extends IntentService {
                     String.format("Could not upload %s to server!\n" +
                             "You will need to manually export.", monitoringName),
                     Toast.LENGTH_SHORT).show();
-            try {
-                uploadOnFtp(monitoringPath, monitoringName);
-            } catch (Throwable t) {
-                logException(t);
-                Toast.makeText(
-                        this,
-                        String.format("Could not upload %s to ftp!", monitoringName),
-                        Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
@@ -300,31 +275,4 @@ public class UploadService extends IntentService {
             fis.close();
         }
     }
-
-    private void uploadOnFtp(String monitoringPath, String monitoringName) throws IOException {
-        FTPClient ftpClient = FTPClientUtils.connect();
-        Log.d(TAG, String.format("mkdir %s", monitoringName));
-        ftpClient.makeDirectory(monitoringName);
-        File file = new File(monitoringPath);
-        for (String subfile : file.list()) {
-            doUpload(ftpClient, new File(file, subfile), monitoringName + '/');
-        }
-    }
-
-    private void doUpload(FTPClient ftp, File localFile, String remotePrefix) throws IOException {
-        if (localFile.isDirectory()) {
-            Log.d(TAG, String.format("mkdir %s", remotePrefix + localFile.getName()));
-            ftp.makeDirectory(remotePrefix + localFile.getName());
-            for (String subfile : localFile.list())
-                doUpload(ftp, new File(localFile, subfile), remotePrefix + localFile.getName() + '/');
-        } else {
-            FileInputStream localStream = new FileInputStream(localFile);
-            Log.d(TAG, String.format("store %s (%d)", remotePrefix + localFile.getName() + ".tmp", localStream.available()));
-            ftp.storeFile(remotePrefix + localFile.getName() + ".tmp", localStream);
-            localStream.close();
-            Log.d(TAG, String.format("rename %s -> %s", remotePrefix + localFile.getName() + ".tmp", remotePrefix + localFile.getName()));
-            ftp.rename(remotePrefix + localFile.getName() + ".tmp", remotePrefix + localFile.getName());
-        }
-    }
-
 }

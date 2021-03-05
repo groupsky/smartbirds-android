@@ -268,34 +268,6 @@ public class MonitoringManager {
 
     public int countMonitoringsForStatus(Monitoring.Status status) {
         int count = 0;
-
-        // count legacy monitorings
-        try {
-            File baseDir = rootContext.getExternalFilesDir(null);
-            for (String monitoring : baseDir.list()) {
-                if (!isEmpty(status.legacySuffix)) {
-                    if (monitoring.endsWith('-' + status.legacySuffix)) {
-                        count++;
-                    }
-                } else {
-                    boolean match = true;
-                    for (Monitoring.Status s : Monitoring.Status.values()) {
-                        if (s.equals(status)) continue;
-                        if (isEmpty(s.legacySuffix)) continue;
-                        if (monitoring.endsWith('-' + s.legacySuffix)) {
-                            match = false;
-                            break;
-                        }
-                    }
-                    if (match) count++;
-                }
-            }
-        } catch (Throwable t) {
-            logException(t);
-        }
-
-
-        // count db monitorings
         try {
             Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.CONTENT_URI,
                     new String[]{MonitoringColumns.CODE},
