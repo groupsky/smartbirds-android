@@ -11,6 +11,7 @@ import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
+import org.bspb.smartbirds.pro.backend.dto.UploadFormResponse;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 
 import okhttp3.MultipartBody;
@@ -43,31 +44,31 @@ public interface SmartBirdsApi {
     Call<ResponseListEnvelope<Nomenclature>> species(@Query("limit") int limit, @Query("offset") int offset);
 
     @POST("birds")
-    Call<ResponseBody> createBirds(@Body JsonObject request);
+    Call<UploadFormResponse> createBirds(@Body JsonObject request);
 
     @POST("herp")
-    Call<ResponseBody> createHerp(@Body JsonObject request);
+    Call<UploadFormResponse> createHerp(@Body JsonObject request);
 
     @POST("herptiles")
-    Call<ResponseBody> createHerptile(@Body JsonObject request);
+    Call<UploadFormResponse> createHerptile(@Body JsonObject request);
 
     @POST("mammals")
-    Call<ResponseBody> createMammal(@Body JsonObject request);
+    Call<UploadFormResponse> createMammal(@Body JsonObject request);
 
     @POST("invertebrates")
-    Call<ResponseBody> createInvertebrates(@Body JsonObject request);
+    Call<UploadFormResponse> createInvertebrates(@Body JsonObject request);
 
     @POST("ciconia")
-    Call<ResponseBody> createCiconia(@Body JsonObject request);
+    Call<UploadFormResponse> createCiconia(@Body JsonObject request);
 
     @POST("cbm")
-    Call<ResponseBody> createCbm(@Body JsonObject request);
+    Call<UploadFormResponse> createCbm(@Body JsonObject request);
 
     @POST("plants")
-    Call<ResponseBody> createPlants(@Body JsonObject request);
+    Call<UploadFormResponse> createPlants(@Body JsonObject request);
 
     @POST("threats")
-    Call<ResponseBody> createThreats(@Body JsonObject request);
+    Call<UploadFormResponse> createThreats(@Body JsonObject request);
 
     @Multipart
     @POST("storage")
