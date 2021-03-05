@@ -18,18 +18,15 @@ import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 public class Monitoring {
 
     public enum Status {
-        wip("wip", R.string.filter_monitoring_status_wip),
-        finished("up", R.string.filter_monitoring_status_finished),
-        uploaded(null, R.string.filter_monitoring_status_uploaded),
-        canceled("cancel", R.string.filter_monitoring_status_canceled),
-        paused("paused", R.string.filter_monitoring_status_paused);
-
-        public final String legacySuffix;
+        wip(R.string.filter_monitoring_status_wip),
+        finished(R.string.filter_monitoring_status_finished),
+        uploaded(R.string.filter_monitoring_status_uploaded),
+        canceled(R.string.filter_monitoring_status_canceled),
+        paused(R.string.filter_monitoring_status_paused);
 
         public final int label;
 
-        Status(String legacySuffix, int labelId) {
-            this.legacySuffix = legacySuffix;
+        Status(int labelId) {
             label = labelId;
         }
     }
