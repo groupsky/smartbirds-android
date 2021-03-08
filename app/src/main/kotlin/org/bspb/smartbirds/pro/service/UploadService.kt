@@ -137,10 +137,10 @@ open class UploadService : IntentService {
                         Toast.LENGTH_SHORT).show()
             }
         }
-//        if (!fileObjs.containsKey("track.gpx") && File(file, "track.gpx").exists()) {
-//            // try again
-//            fileObjs["track.gpx"] = uploadFile(File(file, "track.gpx"))
-//        }
+        if (!fileObjs.containsKey("track.gpx") && File(file, "track.gpx").exists()) {
+            // try again
+            fileObjs["track.gpx"] = uploadFile(File(file, "track.gpx"))
+        }
 
 
         // then upload forms
