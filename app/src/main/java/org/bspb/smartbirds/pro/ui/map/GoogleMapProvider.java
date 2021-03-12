@@ -106,9 +106,15 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private boolean showLocalProjects;
     private boolean showBgAtlasCells;
     private boolean showSPA;
+    private boolean showRandomCells;
+    private boolean showGrid1km;
+    private boolean showGrid10km;
     private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
     private List<Polygon> atlasCellsPolygons = new ArrayList<>();
-    private TileOverlay tiles;
+    private TileOverlay spaTiles;
+    private TileOverlay randomCellsTiles;
+    private TileOverlay grid1kmTiles;
+    private TileOverlay grid10kmTiles;
 
     @Override
     /**
@@ -181,6 +187,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         drawBgAtlasCells();
         drawArea();
         showSPA();
+        showRandomCells();
+        showGrid1km();
+        showGrid10km();
+
         fragment.getView().post(new Runnable() {
             @Override
             public void run() {
@@ -484,18 +494,52 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         showSPA();
     }
 
+    @Override
+    public void setShowRandomCells(boolean showRandomCells) {
+        this.showRandomCells = showRandomCells;
+        showRandomCells();
+    }
+
+    @Override
+    public void setShowGrid1km(boolean showGrid1km) {
+        this.showGrid1km = showGrid1km;
+        showGrid1km();
+    }
+
+    @Override
+    public void setShowGrid10km(boolean showGrid10km) {
+        this.showGrid10km = showGrid10km;
+        showGrid10km();
+    }
+
     private void showSPA() {
+        spaTiles = showTilesOverlay(spaTiles, R.string.spa_url, showSPA);
+    }
+
+    private void showRandomCells() {
+        randomCellsTiles = showTilesOverlay(randomCellsTiles, R.string.random_cells_url, showRandomCells);
+    }
+
+    private void showGrid1km() {
+        grid1kmTiles = showTilesOverlay(grid1kmTiles, R.string.grid_1km_url, showGrid1km);
+    }
+
+    private void showGrid10km() {
+        grid10kmTiles = showTilesOverlay(grid10kmTiles, R.string.grid_10km_url, showGrid10km);
+    }
+
+    private TileOverlay showTilesOverlay(TileOverlay overlay, int urlResourceId, boolean enabled) {
         if (mMap == null) {
-            return;
+            return null;
         }
-        if (showSPA) {
-            if (tiles == null) {
+        if (enabled) {
+            if (overlay == null) {
                 TileProvider tileProvider = new UrlTileProvider(256, 256) {
                     @Override
                     public synchronized URL getTileUrl(int x, int y, int zoom) {
                         // The moon tile coordinate system is reversed.  This is not normal.
                         int reversedY = (1 << zoom) - y - 1;
-                        String s = fragment.getString(R.string.spa_url, zoom, x, reversedY);
+                        String s = fragment.getString(urlResourceId, zoom, x, reversedY);
 
                         URL url = null;
                         try {
@@ -508,14 +552,16 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                     }
 
                 };
-                tiles = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
+                return mMap.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
             }
         } else {
-            if (tiles != null) {
-                tiles.remove();
-                tiles = null;
+            if (overlay != null) {
+                overlay.remove();
+                return null;
             }
         }
+        
+        return overlay;
     }
 
     @Override

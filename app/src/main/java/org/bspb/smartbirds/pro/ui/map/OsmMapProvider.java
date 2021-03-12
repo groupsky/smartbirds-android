@@ -561,6 +561,21 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         // TODO to be implemented
     }
 
+    @Override
+    public void setShowRandomCells(boolean showRandomCells) {
+        // TODO to be implemented
+    }
+
+    @Override
+    public void setShowGrid1km(boolean showGrid1km) {
+        // TODO to be implemented
+    }
+
+    @Override
+    public void setShowGrid10km(boolean showGrid10km) {
+        // TODO to be implemented
+    }
+
     private static class EventsOverlay extends Overlay {
 
         @Nullable

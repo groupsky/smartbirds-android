@@ -75,4 +75,10 @@ public interface MapProvider {
     void setShowSPA(boolean showSPA);
 
     void clearPositioned();
+
+    void setShowRandomCells(boolean showRandomCells);
+
+    void setShowGrid1km(boolean showGrid1km);
+
+    void setShowGrid10km(boolean showGrid10km);
 }

@@ -354,4 +354,10 @@
     <string name="export_db_dialog_title_fail">Внимание</string>
     <string name="export_db_dialog_message_success">Вие успешно експортирахте Базата данни.</string>
     <string name="export_db_dialog_message_fail">Възникна проблем при експортирането на Базата данни.</string>
+    <string name="settings_random_cells">Случайно избрани квадрати</string>
+    <string name="settings_random_cells_summary">Показване на случайно избрани квадрати</string>
+    <string name="settings_grid_1km">Грид 1 км</string>
+    <string name="settings_grid_1km_summary">Показване на грид 1 км</string>
+    <string name="settings_grid_10km">Грид 10 км</string>
+    <string name="settings_grid_10km_summary">Показване на грид 10 км</string>
 </resources>

@@ -87,6 +87,27 @@
             app:key="showSPA"
             app:summary="@string/settings_spa_summary"
             app:title="@string/settings_spa" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showRandomCells"
+            app:summary="@string/settings_random_cells_summary"
+            app:title="@string/settings_random_cells" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showGrid1km"
+            app:summary="@string/settings_grid_1km_summary"
+            app:title="@string/settings_grid_1km" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showGrid10km"
+            app:summary="@string/settings_grid_10km_summary"
+            app:title="@string/settings_grid_10km" />
     </PreferenceCategory>
 
     <PreferenceCategory

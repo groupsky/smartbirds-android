@@ -49,5 +49,14 @@ public interface SmartBirdsPrefs {
     @DefaultBoolean(false)
     boolean showSPA();
 
+    @DefaultBoolean(false)
+    boolean showRandomCells();
+
+    @DefaultBoolean(false)
+    boolean showGrid1km();
+
+    @DefaultBoolean(false)
+    boolean showGrid10km();
+
     Set<String> formsEnabled();
 }

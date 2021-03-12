@@ -7,4 +7,7 @@
     <string name="stats_url" translatable="false">https://smartbirds.org/mobile-stats</string>
     <string name="downloads_url" translatable="false">https://raw.githubusercontent.com/BspbOrg/files/master/org.bspb.smartbirds.pro/downloads.json</string>
     <string name="spa_url" tools:ignore="MissingTranslation">https://gis.bspb.org/geoserver/gwc/service/tms/1.0.0/geonode%%3AspaSmartEn/%d/%d/%d.png</string>
+    <string name="random_cells_url" tools:ignore="MissingTranslation">https://gis.bspb.org/geoserver/gwc/service/tms/1.0.0/geonode%%3Agrid1kmRandom/%d/%d/%d.png</string>
+    <string name="grid_1km_url" tools:ignore="MissingTranslation">https://gis.bspb.org/geoserver/gwc/service/tms/1.0.0/geonode%%3Agrid1km/%d/%d/%d.png</string>
+    <string name="grid_10km_url" tools:ignore="MissingTranslation">https://gis.bspb.org/geoserver/gwc/service/tms/1.0.0/geonode%%3AUTMgrid_do_granica/%d/%d/%d.png</string>
 </resources>
