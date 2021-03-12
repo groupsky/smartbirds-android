@@ -326,6 +326,10 @@ open class MainFragment : Fragment() {
     open fun onEvent(event: UploadCompleted?) {
         if (!(!NomenclatureService.isDownloading.isEmpty() || ZoneService.isDownloading)) {
             hideProgressDialog()
+            if (UploadService.errors.isNotEmpty()) {
+                context?.showAlert("Warning", UploadService.errors.joinToString(",\n"), null, null)
+                bus.removeStickyEvent(UploadCompleted::class.java)
+            }
         }
         showNotSyncedCount()
     }

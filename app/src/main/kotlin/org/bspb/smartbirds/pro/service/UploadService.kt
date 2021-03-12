@@ -20,7 +20,6 @@ import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.Monitoring.Status.finished
 import org.bspb.smartbirds.pro.content.Monitoring.Status.uploaded
 import org.bspb.smartbirds.pro.content.MonitoringManager
@@ -33,7 +32,7 @@ import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting.logException
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.utils.debugLog
+import org.json.JSONObject
 import java.io.*
 import java.util.*
 
@@ -44,6 +43,7 @@ open class UploadService : IntentService {
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".UploadService"
         var isUploading = false
+        var errors: ArrayList<String> = arrayListOf()
     }
 
     @Bean
@@ -73,6 +73,7 @@ open class UploadService : IntentService {
     @ServiceAction
     open fun uploadAll() {
         Log.d(TAG, "uploading all finished monitorings")
+        errors.clear()
         isUploading = true
         eventBus.post(StartingUpload())
         try {
@@ -137,6 +138,7 @@ open class UploadService : IntentService {
                         Toast.LENGTH_SHORT).show()
             }
         }
+
         if (!fileObjs.containsKey("track.gpx") && File(file, "track.gpx").exists()) {
             // try again
             fileObjs["track.gpx"] = uploadFile(File(file, "track.gpx"))
@@ -177,9 +179,9 @@ open class UploadService : IntentService {
     @Throws(Exception::class)
     private fun uploadForm(monitoringName: String, file: File, converter: Converter, uploader: Uploader, fileObjs: Map<String, JsonObject>) {
         val fis = FileInputStream(file)
-        try {
+        fis.use { fis ->
             val csvReader = CSVReaderBuilder<Array<String>>(InputStreamReader(BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(SmartBirdsCSVEntryParser()).build()
-            try {
+            csvReader.use { csvReader ->
                 val header = csvReader.readHeader()
                 for (row in csvReader) {
                     val csv = HashMap<String, String>()
@@ -235,22 +237,25 @@ open class UploadService : IntentService {
                     if (!response.isSuccessful) {
                         var error = ""
                         try {
+                            val errorBodyString = response.errorBody()!!.string()
+
                             error += response.code().toString() + ": " + response.message()
                             error += """
-                            
-                            ${response.errorBody()!!.string()}
-                            """.trimIndent()
+                                
+                                $errorBodyString
+                                """.trimIndent()
+
+                            var errorJson = JSONObject(errorBodyString)
+                            errors.add(errorJson.getString("error"))
                         } catch (t: Throwable) {
                             logException(t)
                         }
-                        throw IOException("Couldn't upload form: $error")
+                        if (response.code() != 400) {
+                            throw IOException("Couldn't upload form: $error")
+                        }
                     }
                 }
-            } finally {
-                csvReader.close()
             }
-        } finally {
-            fis.close()
         }
     }
 }

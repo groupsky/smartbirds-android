@@ -23,6 +23,16 @@ fun Context.showAlert(
         positiveButtonClickListener: DialogInterface.OnClickListener?,
         negativeButtonClickListener: DialogInterface.OnClickListener?,
 ) {
+    showAlert(getString(title), getString(message), positiveButtonClickListener, negativeButtonClickListener)
+}
+
+
+fun Context.showAlert(
+        title: CharSequence,
+        message: CharSequence,
+        positiveButtonClickListener: DialogInterface.OnClickListener?,
+        negativeButtonClickListener: DialogInterface.OnClickListener?,
+) {
     val builder = AlertDialog.Builder(this)
     builder.setTitle(title)
     builder.setMessage(message)

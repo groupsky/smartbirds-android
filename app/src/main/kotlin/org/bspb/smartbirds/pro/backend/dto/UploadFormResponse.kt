@@ -13,4 +13,9 @@ class UploadFormResponse {
     @SerializedName("error")
     var error: String? = null
 
+
+    override fun toString(): String {
+        return "UploadFormResponse(data=$data, error=$error)"
+    }
+
 }
