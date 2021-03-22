@@ -52,7 +52,6 @@ import org.bspb.smartbirds.pro.events.MapDetachedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlFolder;
@@ -72,7 +71,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -318,9 +316,9 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void showMap() {
-        positioned = false;
         if (fragment == null) {
             fragment = BspbMapFragment_.builder().build();
+            positioned = false;
         }
 
         FragmentTransaction fragTransaction = fragmentManager.beginTransaction();
@@ -707,5 +705,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
             }
             return mapMarker.equals((obj));
         }
+    }
+
+    @Override
+    public void clearPositioned() {
+        positioned = false;
     }
 }

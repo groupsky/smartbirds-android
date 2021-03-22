@@ -329,9 +329,9 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void showMap() {
-        positioned = false;
         if (fragment == null) {
             fragment = new OsmMapFragment_();
+            positioned = false;
         }
 
         FragmentTransaction fragTransaction = fragmentManager.beginTransaction();
@@ -707,5 +707,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             }
             return mapMarker.equals((obj));
         }
+    }
+
+    @Override
+    public void clearPositioned() {
+        positioned = false;
     }
 }
