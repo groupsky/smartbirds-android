@@ -81,13 +81,15 @@ open class MainFragment : Fragment() {
     @Bean
     protected lateinit var bus: EEventBus
 
+    protected var syncTag: Long = 0
+
     override fun onStart() {
         super.onStart()
         bus.registerSticky(this)
         if (UploadService.isUploading) {
             onEvent(StartingUpload())
         } else {
-            onEvent(UploadCompleted())
+            onEvent(UploadCompleted(-1))
         }
         if (NomenclatureService.isDownloading.isNotEmpty() || ZoneService.isDownloading) {
             onEvent(StartingDownload())
@@ -154,7 +156,8 @@ open class MainFragment : Fragment() {
 
     @Click(R.id.btn_upload)
     open fun uploadBtnClicked() {
-        SyncService_.intent(activity).sync().start()
+        syncTag = System.currentTimeMillis()
+        SyncService_.intent(activity).sync(syncTag).start()
     }
 
     @Click(R.id.btn_battery_optimization)
@@ -311,8 +314,13 @@ open class MainFragment : Fragment() {
 
     @UiThread
     open fun onEvent(event: DownloadCompleted?) {
+        debugLog("OnEvent: DownloadCompleted")
         if (!(UploadService.isUploading || ZoneService.isDownloading || AuthenticationService.isDownloading || NomenclatureService.isDownloading.isNotEmpty())) {
             hideProgressDialog()
+//            if (UploadService.errors.isNotEmpty()) {
+//                context?.showAlert("Warning", UploadService.errors.joinToString(",\n"), null, null)
+//                bus.removeStickyEvent(DownloadCompleted::class.java)
+//            }
         }
         showNotSyncedCount()
     }
@@ -324,9 +332,11 @@ open class MainFragment : Fragment() {
 
     @UiThread
     open fun onEvent(event: UploadCompleted?) {
+        debugLog("OnEvent: UploadCompleted" + event?.tag + ' ' + syncTag)
         if (!(!NomenclatureService.isDownloading.isEmpty() || ZoneService.isDownloading)) {
             hideProgressDialog()
-            if (UploadService.errors.isNotEmpty()) {
+            if (event?.tag === syncTag && UploadService.errors.isNotEmpty()) {
+                syncTag = 0
                 context?.showAlert("Warning", UploadService.errors.joinToString(",\n"), null, null)
                 bus.removeStickyEvent(UploadCompleted::class.java)
             }

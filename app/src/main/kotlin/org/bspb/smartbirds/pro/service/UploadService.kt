@@ -71,7 +71,7 @@ open class UploadService : IntentService {
     }
 
     @ServiceAction
-    open fun uploadAll() {
+    open fun uploadAll(tag: Long) {
         Log.d(TAG, "uploading all finished monitorings")
         errors.clear()
         isUploading = true
@@ -96,7 +96,7 @@ open class UploadService : IntentService {
             }
         } finally {
             isUploading = false
-            eventBus.post(UploadCompleted())
+            eventBus.post(UploadCompleted(tag))
         }
     }
 
@@ -144,10 +144,17 @@ open class UploadService : IntentService {
             fileObjs["track.gpx"] = uploadFile(File(file, "track.gpx"))
         }
 
-
+        var hasErrors = false
         // then upload forms
         for (subfile in file.list { dir, name -> name.matches(".*\\.csv".toRegex()) }) {
-            uploadForm(monitoringName, file, subfile, fileObjs)
+            try {
+                uploadForm(monitoringName, file, subfile, fileObjs)
+            } catch (t: Throwable) {
+                hasErrors = true
+            }
+        }
+        if (hasErrors) {
+            throw IOException("Could not upload forms")
         }
     }
 
@@ -250,9 +257,8 @@ open class UploadService : IntentService {
                         } catch (t: Throwable) {
                             logException(t)
                         }
-                        if (response.code() != 400) {
-                            throw IOException("Couldn't upload form: $error")
-                        }
+
+                        throw IOException("Couldn't upload form: $error")
                     }
                 }
             }
