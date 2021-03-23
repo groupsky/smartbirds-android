@@ -345,9 +345,15 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         switch (providerType) {
             case GOOGLE:
             default:
+                if (currentMap != null && currentMap != googleMap) {
+                    currentMap.clearPositioned();
+                }
                 currentMap = googleMap;
                 break;
             case OSM:
+                if (currentMap != null && currentMap != osmMap) {
+                    currentMap.clearPositioned();
+                }
                 currentMap = osmMap;
                 break;
         }

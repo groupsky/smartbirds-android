@@ -73,4 +73,6 @@ public interface MapProvider {
     void setBgAtlasCells(List<BGAtlasCell> cells);
 
     void setShowSPA(boolean showSPA);
+
+    void clearPositioned();
 }
