@@ -156,6 +156,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     boolean showLocalProjects;
     boolean showBgAtlasCells;
     boolean showSPA;
+    boolean showRandomCells;
+    boolean showGrid1km;
+    boolean showGrid10km;
 
     @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
@@ -370,6 +373,9 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         currentMap.setBgAtlasCells(readAtlasCells());
         currentMap.setShowBgAtlasCells(showBgAtlasCells);
         currentMap.setShowSPA(showSPA);
+        currentMap.setShowRandomCells(showRandomCells);
+        currentMap.setShowGrid1km(showGrid1km);
+        currentMap.setShowGrid10km(showGrid10km);
     }
 
     private List<BGAtlasCell> readAtlasCells() {
@@ -505,6 +511,30 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         this.showSPA = showSPA;
         if (currentMap != null) {
             currentMap.setShowSPA(showSPA);
+            currentMap.updateCamera();
+        }
+    }
+
+    private void setShowRandomCells(boolean showRandomCells) {
+        this.showRandomCells = showRandomCells;
+        if (currentMap != null) {
+            currentMap.setShowRandomCells(showRandomCells);
+            currentMap.updateCamera();
+        }
+    }
+
+    private void setShowGrid1km(boolean showGrid1km) {
+        this.showGrid1km = showGrid1km;
+        if (currentMap != null) {
+            currentMap.setShowGrid1km(showGrid1km);
+            currentMap.updateCamera();
+        }
+    }
+
+    private void setShowGrid10km(boolean showGrid10km) {
+        this.showGrid10km = showGrid10km;
+        if (currentMap != null) {
+            currentMap.setShowGrid10km(showGrid10km);
             currentMap.updateCamera();
         }
     }
@@ -732,6 +762,10 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         setShowLocalProjects(prefs.showLocalProjects().get());
         setShowBgAtlasCells(prefs.showBgAtlasCells().get());
         setShowSPA(prefs.showSPA().get());
+        setShowRandomCells(prefs.showRandomCells().get());
+        setShowGrid1km(prefs.showGrid1km().get());
+        setShowGrid10km(prefs.showGrid10km().get());
+
         restorePoints();
 
         updateTypeOfObservationMenus(menu);

@@ -354,4 +354,10 @@
     <string name="export_db_dialog_title_fail">Внимание</string>
     <string name="export_db_dialog_message_success">Вие успешно експортирахте Базата данни.</string>
     <string name="export_db_dialog_message_fail">Възникна проблем при експортирането на Базата данни.</string>
+    <string name="settings_random_cells">Квадрати \"Атлас - 1 km\"</string>
+    <string name="settings_random_cells_summary">Показване на случайно избрани квадрати за методиката \"Атлас - 1 km\";  червено - задължителни, синьо - допълнителни</string>
+    <string name="settings_grid_1km">UTM грид 1 km</string>
+    <string name="settings_grid_1km_summary">Показване на грид 1 km на територията на България</string>
+    <string name="settings_grid_10km">UTM грид 10 km</string>
+    <string name="settings_grid_10km_summary">Показване на UTM грид 10 km на територията на България</string>
 </resources>
