@@ -72,8 +72,10 @@ public abstract class BaseEntryFragment extends BaseFormFragment implements Load
     protected String TAG = SmartBirdsApplication.TAG + "." + getClass().getSimpleName();
 
     @FragmentArg(ARG_LAT)
+    @InstanceState
     protected double lat;
     @FragmentArg(ARG_LON)
+    @InstanceState
     protected double lon;
 
     /**
