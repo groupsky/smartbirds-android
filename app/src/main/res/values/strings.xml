@@ -355,10 +355,10 @@ Do you really want to cancel the monitoring?"</string>
     <string name="export_db_dialog_title_fail">Warning</string>
     <string name="export_db_dialog_message_success">You have successfully exported the DB.</string>
     <string name="export_db_dialog_message_fail">There is a problem with exporting the DB.</string>
-    <string name="settings_random_cells">Random cells</string>
-    <string name="settings_random_cells_summary">Show random cells</string>
-    <string name="settings_grid_1km">Grid 1 km</string>
-    <string name="settings_grid_1km_summary">Show 1 km grids</string>
-    <string name="settings_grid_10km">Grid 10 km</string>
-    <string name="settings_grid_10km_summary">Show 10 km grids</string>
+    <string name="settings_random_cells">Squares \"Atlas - 1 km\"</string>
+    <string name="settings_random_cells_summary">Show of randomly selected squares for the methodology \"Atlas - 1 km\"; red - required, blue -  replacement</string>
+    <string name="settings_grid_1km">UTM grid 1 km</string>
+    <string name="settings_grid_1km_summary">Show  entire UTM grid 1 km on the territory of Bulgaria</string>
+    <string name="settings_grid_10km">UTM grid 10 km</string>
+    <string name="settings_grid_10km_summary">Show  entire UTM grid 10 km on the territory of Bulgaria</string>
 </resources>
