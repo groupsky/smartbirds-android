@@ -181,7 +181,11 @@ open class MainFragment : Fragment() {
     open fun helpBtnClicked() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(getString(R.string.help_url))
-        startActivity(intent)
+        context?.packageManager?.let {
+            if (intent.resolveActivity(it) != null) {
+                startActivity(intent)
+            }
+        }
     }
 
     @OptionsItem(R.id.menu_information)
@@ -226,6 +230,17 @@ open class MainFragment : Fragment() {
     @OptionsItem(R.id.menu_settings)
     open fun showSettings() {
         startActivity(Intent(activity, SettingsActivity::class.java))
+    }
+
+    @OptionsItem(R.id.menu_privacy_policy)
+    open fun openPrivacyPolicy() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(getString(R.string.privacy_policy_url))
+        context?.packageManager?.let {
+            if (intent.resolveActivity(it) != null) {
+                startActivity(intent)
+            }
+        }
     }
 
     //    @LongClick(R.id.btn_export)

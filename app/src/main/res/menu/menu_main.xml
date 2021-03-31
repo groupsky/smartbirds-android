@@ -35,6 +35,12 @@
         tools:ignore="AppCompatResource" />
 
     <item
+        android:id="@+id/menu_privacy_policy"
+        android:showAsAction="never"
+        android:title="@string/main_screen_menu_privacy_policy"
+        tools:ignore="AppCompatResource" />
+
+    <item
         android:id="@+id/menu_help"
         android:showAsAction="never"
         android:title="@string/main_screen_btn_help"
