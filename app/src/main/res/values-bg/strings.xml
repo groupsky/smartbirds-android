@@ -360,4 +360,6 @@
     <string name="settings_grid_1km_summary">Показване на грид 1 km на територията на България</string>
     <string name="settings_grid_10km">UTM грид 10 km</string>
     <string name="settings_grid_10km_summary">Показване на UTM грид 10 km на територията на България</string>
+    <string name="location_permission_alert_title">Разрешение за местоположение</string>
+    <string name="location_permission_alert_message">Приложението събира данни за местонахождението за да позволи записването на следа (трак) в режим на наблюдение и локализиране на наблюдаваните видове дори когато приложението е във фонов режим.</string>
 </resources>
