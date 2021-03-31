@@ -4,6 +4,7 @@ import android.Manifest.permission
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
@@ -40,6 +41,7 @@ import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
 import org.bspb.smartbirds.pro.ui.SettingsActivity
 import org.bspb.smartbirds.pro.ui.StatsActivity_
+import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
 @EFragment(R.layout.fragment_main)
@@ -361,29 +363,15 @@ open class MainFragment : Fragment() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return false
         }
-        if (shouldShowRequestPermissionRationale(permission.ACCESS_FINE_LOCATION) ||
-                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && shouldShowRequestPermissionRationale(permission.ACCESS_BACKGROUND_LOCATION))) {
-            try {
-                Snackbar.make(btnStartBirds, R.string.monitoring_permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(android.R.string.ok) {
-                            val permissions = mutableListOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                permissions += permission.ACCESS_BACKGROUND_LOCATION
-                            }
-                            requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
-                        }.show()
-                return false
-            } catch (t: Throwable) {
-                // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
-                Reporting.logException(t)
-            }
-        }
         val permissions = mutableListOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             permissions += permission.ACCESS_BACKGROUND_LOCATION
         }
-        requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
-        Toast.makeText(activity, R.string.monitoring_permission_rationale, Toast.LENGTH_SHORT).show()
+
+        context?.showAlert(R.string.location_permission_alert_title, R.string.location_permission_alert_message, DialogInterface.OnClickListener { _, _ ->
+            requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
+        }, null)
+
         return false
     }
 

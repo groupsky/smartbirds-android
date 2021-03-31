@@ -361,4 +361,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="settings_grid_1km_summary">Show  entire UTM grid 1 km on the territory of Bulgaria</string>
     <string name="settings_grid_10km">UTM grid 10 km</string>
     <string name="settings_grid_10km_summary">Show  entire UTM grid 10 km on the territory of Bulgaria</string>
+    <string name="location_permission_alert_title">Location permission required</string>
+    <string name="location_permission_alert_message">This app collects location data to enable recording track while in monitoring and location of entries even when the app is closed or not in use.</string>
 </resources>
