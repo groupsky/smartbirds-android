@@ -20,8 +20,8 @@ public class SyncService extends AbstractIntentService {
     UserPrefs_ prefs;
 
     @ServiceAction
-    public void sync() {
-        UploadService_.intent(this).uploadAll().start();
+    public void sync(Long tag) {
+        UploadService_.intent(this).uploadAll(tag).start();
         initialSync();
     }
 

@@ -1,11 +1,11 @@
-package org.bspb.smartbirds.pro.service
+package org.bspb.smartbirds.pro.sync
 
+import android.content.Context
 import android.util.Log
+import androidx.annotation.WorkerThread
 import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EIntentService
-import org.androidannotations.annotations.ServiceAction
+import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.sharedpreferences.Pref
-import org.androidannotations.api.support.app.AbstractIntentService
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor
 import org.bspb.smartbirds.pro.backend.Backend
@@ -15,19 +15,19 @@ import org.bspb.smartbirds.pro.backend.dto.LoginRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse
 import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.service.SyncServiceNew_
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
-import retrofit2.Response
 import java.io.IOException
 
-@EIntentService
-open class AuthenticationService : AbstractIntentService("AuthenticationService") {
+
+@EBean(scope = EBean.Scope.Singleton)
+open class AuthenticationManager {
 
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".AuthenticationSvc"
         var isDownloading = false
     }
-
 
     @Pref
     protected lateinit var prefs: SmartBirdsPrefs_
@@ -41,19 +41,17 @@ open class AuthenticationService : AbstractIntentService("AuthenticationService"
     @Bean
     protected lateinit var bus: EEventBus
 
-    @ServiceAction
     fun logout() {
         authenticationInterceptor.clearAuthorization()
         bus.removeStickyEvent(LoginResultEvent::class.java)
         bus.postSticky(LogoutEvent())
     }
 
-    @ServiceAction
-    fun login(email: String?, password: String?, gdprConsent: Boolean?) {
+    fun login(context: Context?, email: String?, password: String?, gdprConsent: Boolean?) {
         Log.d(TAG, String.format("login: %s %s", email, password))
         bus.postSticky(LoginStateEvent(true))
         try {
-            val result = doLogin(email, password, gdprConsent)
+            val result = doLogin(context, email, password, gdprConsent)
             Log.d(TAG, String.format("login: %s %s => %s", email, password, result))
             bus.postSticky(result)
             bus.postSticky(UserDataEvent(result.user))
@@ -62,8 +60,8 @@ open class AuthenticationService : AbstractIntentService("AuthenticationService"
         }
     }
 
-    private fun doLogin(email: String?, password: String?, gdprConsent: Boolean?): LoginResultEvent {
-        var response = try {
+    private fun doLogin(context: Context?, email: String?, password: String?, gdprConsent: Boolean?): LoginResultEvent {
+        val response = try {
             backend.api().login(LoginRequest(email, password, gdprConsent)).execute()
         } catch (e: IOException) {
             Reporting.logException(e)
@@ -101,14 +99,14 @@ open class AuthenticationService : AbstractIntentService("AuthenticationService"
             }
         }
 
-        authenticationInterceptor.setAuthorization(response?.body()!!.token, email, password)
+        authenticationInterceptor.setAuthorization(response.body()!!.token, email, password)
 
-        SyncServiceNew_.intent(this).initialSync().start()
+        SyncServiceNew_.intent(context).initialSync().start()
 
         return LoginResultEvent(response.body()!!.user)
     }
 
-    @ServiceAction
+    @WorkerThread
     fun checkSession() {
         try {
             isDownloading = true

@@ -234,6 +234,9 @@
         <service
             android:name=".service.SyncService_"
             android:exported="false" />
+        <service
+            android:name=".service.SyncServiceNew_"
+            android:exported="false" />
 
         <service
             android:name=".service.DataOpsService_"

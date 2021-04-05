@@ -41,6 +41,7 @@ import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
 import org.bspb.smartbirds.pro.ui.SettingsActivity
 import org.bspb.smartbirds.pro.ui.StatsActivity_
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
@@ -157,7 +158,7 @@ open class MainFragment : Fragment() {
     @Click(R.id.btn_upload)
     open fun uploadBtnClicked() {
         syncTag = System.currentTimeMillis()
-        SyncService_.intent(activity).sync(syncTag).start()
+        SyncServiceNew_.intent(activity).sync(syncTag).start()
     }
 
     @Click(R.id.btn_battery_optimization)
@@ -317,12 +318,17 @@ open class MainFragment : Fragment() {
         debugLog("OnEvent: DownloadCompleted")
         if (!(UploadService.isUploading || ZoneService.isDownloading || AuthenticationService.isDownloading || NomenclatureService.isDownloading.isNotEmpty())) {
             hideProgressDialog()
+            showErrorsIfAny()
 //            if (UploadService.errors.isNotEmpty()) {
 //                context?.showAlert("Warning", UploadService.errors.joinToString(",\n"), null, null)
 //                bus.removeStickyEvent(DownloadCompleted::class.java)
 //            }
         }
         showNotSyncedCount()
+    }
+
+    private fun showErrorsIfAny() {
+
     }
 
     @UiThread
