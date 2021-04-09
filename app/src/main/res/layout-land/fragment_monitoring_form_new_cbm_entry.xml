@@ -90,7 +90,7 @@
 
             </TableRow>
 
-            <TableRow>
+            <TableRow android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"
@@ -104,8 +104,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_cbm_primary_habitat"
                         android:tag="@string/tag_primary_habitat"
-                        app:entriesType="form_cbm_habitat"
-                        app:required="true" />
+                        app:entriesType="form_cbm_habitat" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -127,71 +126,67 @@
 
             <TableRow>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="3"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
-                            android:id="@+id/form_cbm_zone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/monitoring_cbm_zone"
-                            android:tag="@string/tag_zone"
-                            app:required="true" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/error_cbm_too_far"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4sp"
-                        android:layout_marginRight="4sp"
-                        android:text="@string/error_cbm_zone_too_far"
-                        android:textAppearance="?errorTextAppearance"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-                </LinearLayout>
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="3">
+                    android:layout_height="wrap_content">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                        android:id="@+id/form_cbm_visit_number"
+                    <org.bspb.smartbirds.pro.ui.views.ZoneFormInput_
+                        android:id="@+id/form_cbm_zone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_cbm_visit_number"
-                        android:tag="@string/tag_visit_number"
-                        app:entriesType="form_cbm_visit_number"
+                        android:hint="@string/monitoring_cbm_zone"
+                        android:tag="@string/tag_zone"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/TextInputLayout"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/error_cbm_too_far"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_span="4">
+                    android:layout_marginLeft="4sp"
+                    android:layout_marginRight="4sp"
+                    android:text="@string/error_cbm_zone_too_far"
+                    android:textAppearance="?errorTextAppearance"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                        android:id="@+id/form_cbm_sector"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_cbm_sector"
-                        android:tag="@string/tag_transect_number"
-                        app:entriesType="form_cbm_sector"
-                        app:required="true" />
-                </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_cbm_visit_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_cbm_visit_number"
+                    android:tag="@string/tag_visit_number"
+                    app:entriesType="form_cbm_visit_number"
+                    android:visibility="gone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_cbm_sector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_cbm_sector"
+                    android:tag="@string/tag_transect_number"
+                    app:entriesType="form_cbm_sector"
+                    android:visibility="gone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TableRow>
 
