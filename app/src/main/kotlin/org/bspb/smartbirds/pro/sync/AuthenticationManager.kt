@@ -3,8 +3,10 @@ package org.bspb.smartbirds.pro.sync
 import android.content.Context
 import android.util.Log
 import androidx.annotation.WorkerThread
+import org.androidannotations.annotations.Background
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
+import org.androidannotations.annotations.RootContext
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor
@@ -21,7 +23,7 @@ import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.io.IOException
 
 
-@EBean(scope = EBean.Scope.Singleton)
+@EBean(scope = EBean.Scope.Default)
 open class AuthenticationManager {
 
     companion object {
@@ -41,17 +43,22 @@ open class AuthenticationManager {
     @Bean
     protected lateinit var bus: EEventBus
 
-    fun logout() {
+    @RootContext
+    protected lateinit var context: Context
+
+    @Background
+    open fun logout() {
         authenticationInterceptor.clearAuthorization()
         bus.removeStickyEvent(LoginResultEvent::class.java)
         bus.postSticky(LogoutEvent())
     }
 
-    fun login(context: Context?, email: String?, password: String?, gdprConsent: Boolean?) {
+    @Background
+    open fun login(email: String?, password: String?, gdprConsent: Boolean?) {
         Log.d(TAG, String.format("login: %s %s", email, password))
         bus.postSticky(LoginStateEvent(true))
         try {
-            val result = doLogin(context, email, password, gdprConsent)
+            val result = doLogin(email, password, gdprConsent)
             Log.d(TAG, String.format("login: %s %s => %s", email, password, result))
             bus.postSticky(result)
             bus.postSticky(UserDataEvent(result.user))
@@ -60,7 +67,7 @@ open class AuthenticationManager {
         }
     }
 
-    private fun doLogin(context: Context?, email: String?, password: String?, gdprConsent: Boolean?): LoginResultEvent {
+    private fun doLogin(email: String?, password: String?, gdprConsent: Boolean?): LoginResultEvent {
         val response = try {
             backend.api().login(LoginRequest(email, password, gdprConsent)).execute()
         } catch (e: IOException) {
@@ -110,7 +117,6 @@ open class AuthenticationManager {
     fun checkSession() {
         try {
             isDownloading = true
-            bus.post(StartingDownload())
             val response = backend.api().checkSession(CheckSessionRequest()).execute()
             if (response.isSuccessful) {
                 bus.postSticky(UserDataEvent(response.body()?.user))
@@ -119,7 +125,6 @@ open class AuthenticationManager {
             Reporting.logException(t)
         } finally {
             isDownloading = false
-            bus.post(DownloadCompleted())
         }
     }
 }

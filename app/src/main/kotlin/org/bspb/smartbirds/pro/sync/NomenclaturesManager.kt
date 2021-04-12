@@ -7,19 +7,17 @@ import android.os.Looper
 import android.widget.Toast
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
+import org.androidannotations.annotations.RootContext
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Locations
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures
-import org.bspb.smartbirds.pro.events.DownloadCompleted
-import org.bspb.smartbirds.pro.events.EEventBus
-import org.bspb.smartbirds.pro.events.StartingDownload
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
 import java.io.IOException
 import java.util.*
 
-@EBean(scope = EBean.Scope.Singleton)
+@EBean(scope = EBean.Scope.Default)
 open class NomenclaturesManager {
 
     enum class Downloading {
@@ -30,20 +28,19 @@ open class NomenclaturesManager {
         var isDownloading: MutableSet<Downloading> = HashSet()
     }
 
-    @Bean
-    protected lateinit var backend: Backend
+    @RootContext
+    protected lateinit var context: Context
 
     @Bean
-    protected lateinit var bus: EEventBus
+    protected lateinit var backend: Backend
 
     @Bean
     protected lateinit var nomenclaturesBean: NomenclaturesBean
 
 
-    fun downloadLocations(context: Context) {
+    fun downloadLocations() {
         isDownloading.add(Downloading.LOCATIONS)
         try {
-            bus.post(StartingDownload())
             try {
                 val buffer = ArrayList<ContentProviderOperation>()
                 buffer.add(ContentProviderOperation.newDelete(Locations.CONTENT_URI).build())
@@ -58,20 +55,16 @@ open class NomenclaturesManager {
                 context.contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, buffer)
             } catch (t: Throwable) {
                 Reporting.logException(t)
-                showToast(context, "Could not download locations. Try again.")
+                showToast("Could not download locations. Try again.")
             }
         } finally {
             isDownloading.remove(Downloading.LOCATIONS)
-            if (isDownloading.isEmpty()) {
-                bus.post(DownloadCompleted())
-            }
         }
     }
 
-    fun updateNomenclatures(context: Context) {
+    fun updateNomenclatures() {
         isDownloading.add(Downloading.NOMENCLATURES)
         try {
-            bus.post(StartingDownload())
             try {
                 var limit = 500
                 var offset = 0
@@ -105,17 +98,14 @@ open class NomenclaturesManager {
                 }
             } catch (t: Throwable) {
                 Reporting.logException(t)
-                showToast(context, "Could not download nomenclatures. Try again.")
+                showToast("Could not download nomenclatures. Try again.")
             }
         } finally {
             isDownloading.remove(Downloading.NOMENCLATURES)
-            if (isDownloading.isEmpty()) {
-                bus.post(DownloadCompleted())
-            }
         }
     }
 
-    protected open fun showToast(context: Context, message: String?) {
+    protected open fun showToast(message: String?) {
         Handler(Looper.getMainLooper()).post { Toast.makeText(context.applicationContext, message, Toast.LENGTH_SHORT).show() }
     }
 }

@@ -1,7 +1,6 @@
-package org.bspb.smartbirds.pro.service
+package org.bspb.smartbirds.pro.sync
 
-import android.app.IntentService
-import android.content.Intent
+import android.content.Context
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
@@ -13,41 +12,35 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EIntentService
-import org.androidannotations.annotations.ServiceAction
+import org.androidannotations.annotations.EBean
+import org.androidannotations.annotations.RootContext
 import org.androidannotations.annotations.res.StringRes
 import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.content.Monitoring.Status.finished
-import org.bspb.smartbirds.pro.content.Monitoring.Status.uploaded
+import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.events.EEventBus
-import org.bspb.smartbirds.pro.events.StartingUpload
-import org.bspb.smartbirds.pro.events.UploadCompleted
 import org.bspb.smartbirds.pro.forms.convert.Converter
 import org.bspb.smartbirds.pro.forms.upload.Uploader
-import org.bspb.smartbirds.pro.tools.Reporting.logException
+import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
 import org.json.JSONObject
 import java.io.*
 import java.util.*
 
-
-@EIntentService
-open class UploadService : IntentService {
-
+@EBean(scope = EBean.Scope.Default)
+open class UploadManager {
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".UploadService"
         var isUploading = false
         var errors: ArrayList<String> = arrayListOf()
     }
 
-    @Bean
-    protected lateinit var eventBus: EEventBus
+    @RootContext
+    protected lateinit var context: Context
 
     @Bean
     protected lateinit var backend: Backend
@@ -64,44 +57,34 @@ open class UploadService : IntentService {
     @StringRes(R.string.tag_lon)
     protected lateinit var tagLongitude: String
 
-    protected constructor() : super("Upload service") {
-    }
-
-    override fun onHandleIntent(intent: Intent?) {
-    }
-
-    @ServiceAction
-    open fun uploadAll(tag: Long) {
+    fun uploadAll() {
         Log.d(TAG, "uploading all finished monitorings")
         errors.clear()
         isUploading = true
-        eventBus.post(StartingUpload())
         try {
-            val baseDir = getExternalFilesDir(null)
-            for (monitoringCode in monitoringManager.monitoringCodesForStatus(finished)) {
+            val baseDir = context.getExternalFilesDir(null)
+            for (monitoringCode in monitoringManager.monitoringCodesForStatus(Monitoring.Status.finished)) {
                 val monitoringDir = File(baseDir, monitoringCode)
                 if (!monitoringDir.exists()) {
                     val msg = "Missing folder " + monitoringDir.path
-                    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-                    logException(Exception(msg))
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    Reporting.logException(Exception(msg))
                     continue
                 }
                 if (!monitoringDir.isDirectory) {
                     val msg = monitoringDir.path + " is not a folder"
-                    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-                    logException(Exception(msg))
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    Reporting.logException(Exception(msg))
                     continue
                 }
                 upload(monitoringDir.absolutePath)
             }
         } finally {
             isUploading = false
-            eventBus.post(UploadCompleted(tag))
         }
     }
 
-    @ServiceAction
-    open fun upload(monitoringPath: String) {
+    fun upload(monitoringPath: String) {
         Log.d(TAG, String.format("uploading %s", monitoringPath))
         val file = File(monitoringPath)
         val monitoringName = file.name
@@ -109,11 +92,10 @@ open class UploadService : IntentService {
 
         try {
             uploadOnServer(monitoringPath, monitoringName)
-            monitoringManager.updateStatus(monitoringName, uploaded)
+            monitoringManager.updateStatus(monitoringName, Monitoring.Status.uploaded)
         } catch (e: Throwable) {
-            logException(e)
-            Toast.makeText(
-                    this, String.format("""
+            Reporting.logException(e)
+            Toast.makeText(context, String.format("""
     Could not upload %s to server!
     You will need to manually export.
     """.trimIndent(), monitoringName),
@@ -133,8 +115,8 @@ open class UploadService : IntentService {
             try {
                 fileObjs[subfile] = uploadFile(File(file, subfile))
             } catch (t: Throwable) {
-                logException(t)
-                Toast.makeText(this, String.format("Could not upload %s of %s to smartbirds.org!", subfile, monitoringName),
+                Reporting.logException(t)
+                Toast.makeText(context, String.format("Could not upload %s of %s to smartbirds.org!", subfile, monitoringName),
                         Toast.LENGTH_SHORT).show()
             }
         }
@@ -162,7 +144,7 @@ open class UploadService : IntentService {
     private fun uploadForm(monitoringName: String, base: File, filename: String, fileObjs: Map<String, JsonObject>) {
         for (entryType in EntryType.values()) {
             if (entryType.filename.equals(filename, ignoreCase = true)) {
-                uploadForm(monitoringName, File(base, filename), entryType.getConverter(this), entryType.uploader, fileObjs)
+                uploadForm(monitoringName, File(base, filename), entryType.getConverter(context), entryType.uploader, fileObjs)
                 return
             }
         }
@@ -190,6 +172,7 @@ open class UploadService : IntentService {
             val csvReader = CSVReaderBuilder<Array<String>>(InputStreamReader(BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(SmartBirdsCSVEntryParser()).build()
             csvReader.use { csvReader ->
                 val header = csvReader.readHeader()
+                var hasErrors = false
                 for (row in csvReader) {
                     val csv = HashMap<String, String>()
                     val it: Iterator<String> = header.iterator()
@@ -206,7 +189,7 @@ open class UploadService : IntentService {
                     try {
                         check(!(data[tagLatitude].asDouble == 0.0 || data[tagLongitude].asDouble == 0.0))
                     } catch (e: Exception) {
-                        logException(IllegalStateException("Uploading entry with zero coordinates. $data"))
+                        Reporting.logException(IllegalStateException("Uploading entry with zero coordinates. $data"))
                     }
 
                     // convert pictures
@@ -221,8 +204,8 @@ open class UploadService : IntentService {
                         val fileObj = fileObjs[filename]
                         if (fileObj == null) {
                             val error = String.format("Missing image %s for %s", filename, monitoringName)
-                            logException(IllegalStateException(error))
-                            Toast.makeText(this,
+                            Reporting.logException(IllegalStateException(error))
+                            Toast.makeText(context,
                                     error,
                                     Toast.LENGTH_SHORT).show()
                             continue
@@ -234,14 +217,15 @@ open class UploadService : IntentService {
                     // convert gpx
                     if (!fileObjs.containsKey("track.gpx")) {
                         val msg = "Missing track.gpx file for $monitoringName"
-                        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-                        logException(IllegalStateException(msg))
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        Reporting.logException(IllegalStateException(msg))
                     } else {
                         data.add("track", fileObjs["track.gpx"]!!["url"])
                     }
                     val call = uploader.upload(backend.api(), data)
                     val response = call.execute()
                     if (!response.isSuccessful) {
+                        hasErrors = true
                         var error = ""
                         try {
                             val errorBodyString = response.errorBody()!!.string()
@@ -255,11 +239,12 @@ open class UploadService : IntentService {
                             var errorJson = JSONObject(errorBodyString)
                             errors.add(errorJson.getString("error"))
                         } catch (t: Throwable) {
-                            logException(t)
+                            Reporting.logException(t)
                         }
-
-                        throw IOException("Couldn't upload form: $error")
                     }
+                }
+                if (hasErrors) {
+                    throw IOException("Couldn't upload form")
                 }
             }
         }

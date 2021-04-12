@@ -7,33 +7,30 @@ import android.os.Looper
 import android.widget.Toast
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
+import org.androidannotations.annotations.RootContext
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Zones
-import org.bspb.smartbirds.pro.events.DownloadCompleted
-import org.bspb.smartbirds.pro.events.EEventBus
-import org.bspb.smartbirds.pro.events.StartingDownload
 import org.bspb.smartbirds.pro.tools.Reporting
 import java.io.IOException
 import java.util.*
 
-@EBean(scope = EBean.Scope.Singleton)
+@EBean(scope = EBean.Scope.Default)
 open class ZonesManager {
 
     companion object {
         var isDownloading = false
     }
 
+    @RootContext
+    protected lateinit var context: Context
+
     @Bean
     protected lateinit var backend: Backend
 
-    @Bean
-    protected lateinit var bus: EEventBus
-
-    open fun downloadZones(context: Context) {
+    open fun downloadZones() {
         isDownloading = true
         try {
-            bus.post(StartingDownload())
             try {
                 val buffer = ArrayList<ContentProviderOperation>()
                 buffer.add(ContentProviderOperation.newDelete(Zones.CONTENT_URI).build())
@@ -48,15 +45,14 @@ open class ZonesManager {
                 context.contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, buffer)
             } catch (t: Throwable) {
                 Reporting.logException(t)
-                showToast(context, "Could not download zones. Try again.")
+                showToast("Could not download zones. Try again.")
             }
-            bus.post(DownloadCompleted())
         } finally {
             isDownloading = false
         }
     }
 
-    protected open fun showToast(context: Context, message: String?) {
+    protected open fun showToast(message: String?) {
         Handler(Looper.getMainLooper()).post { Toast.makeText(context.applicationContext, message, Toast.LENGTH_SHORT).show() }
     }
 
