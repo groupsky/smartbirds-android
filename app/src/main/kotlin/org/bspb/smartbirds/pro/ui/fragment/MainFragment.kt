@@ -35,8 +35,8 @@ import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.ExportService_
-import org.bspb.smartbirds.pro.service.SyncServiceNew
-import org.bspb.smartbirds.pro.service.SyncServiceNew_
+import org.bspb.smartbirds.pro.service.SyncService
+import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.DownloadsActivity
@@ -86,9 +86,9 @@ open class MainFragment : Fragment() {
     private val syncBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
-            if (action == SyncServiceNew.ACTION_SYNC_PROGRESS) {
-                updateSyncProgress(intent.getStringExtra(SyncServiceNew.EXTRA_SYNC_MESSAGE))
-            } else if (action == SyncServiceNew.ACTION_SYNC_COMPLETED) {
+            if (action == SyncService.ACTION_SYNC_PROGRESS) {
+                updateSyncProgress(intent.getStringExtra(SyncService.EXTRA_SYNC_MESSAGE))
+            } else if (action == SyncService.ACTION_SYNC_COMPLETED) {
                 onSyncComplete()
             }
         }
@@ -98,13 +98,13 @@ open class MainFragment : Fragment() {
         super.onStart()
 
         val intentFilter = IntentFilter()
-        intentFilter.addAction(SyncServiceNew.ACTION_SYNC_COMPLETED)
-        intentFilter.addAction(SyncServiceNew.ACTION_SYNC_PROGRESS)
+        intentFilter.addAction(SyncService.ACTION_SYNC_COMPLETED)
+        intentFilter.addAction(SyncService.ACTION_SYNC_PROGRESS)
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(syncBroadcastReceiver, intentFilter)
 
         bus.registerSticky(this)
-        if (SyncServiceNew.isWorking) {
-            updateSyncProgress(SyncServiceNew.syncMessage)
+        if (SyncService.isWorking) {
+            updateSyncProgress(SyncService.syncMessage)
         }
     }
 
@@ -167,7 +167,7 @@ open class MainFragment : Fragment() {
 
     @Click(R.id.btn_upload)
     open fun uploadBtnClicked() {
-        SyncServiceNew_.intent(activity).sync().start()
+        SyncService_.intent(activity).sync().start()
     }
 
     @Click(R.id.btn_battery_optimization)

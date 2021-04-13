@@ -16,7 +16,7 @@ import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.sync.ZonesManager
 
 @EIntentService
-open class SyncServiceNew : AbstractIntentService("SyncService") {
+open class SyncService : AbstractIntentService("SyncService") {
 
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".SyncService"

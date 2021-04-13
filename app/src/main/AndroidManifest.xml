@@ -216,7 +216,7 @@
         </provider>
 
         <service
-            android:name=".service.SyncServiceNew_"
+            android:name=".service.SyncService_"
             android:exported="false" />
 
         <service

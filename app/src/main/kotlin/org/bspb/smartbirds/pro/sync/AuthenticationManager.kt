@@ -17,7 +17,7 @@ import org.bspb.smartbirds.pro.backend.dto.LoginRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse
 import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.service.SyncServiceNew_
+import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.io.IOException
@@ -108,7 +108,7 @@ open class AuthenticationManager {
 
         authenticationInterceptor.setAuthorization(response.body()!!.token, email, password)
 
-        SyncServiceNew_.intent(context).initialSync().start()
+        SyncService_.intent(context).initialSync().start()
 
         return LoginResultEvent(response.body()!!.user)
     }
