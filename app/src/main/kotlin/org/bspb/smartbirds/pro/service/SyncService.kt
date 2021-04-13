@@ -73,7 +73,7 @@ open class SyncService : AbstractIntentService("SyncService") {
     }
 
     private fun fetchNewData() {
-        updateSyncProgress(R.string.download_dialog_text)
+        updateSyncProgress(R.string.sync_dialog_downloading_user_data)
         authenticationManager.checkSession();
         updateSyncProgress(R.string.sync_dialog_downloading_nomenclatures)
         nomenclaturesManager.updateNomenclatures()

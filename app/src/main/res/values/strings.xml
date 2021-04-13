@@ -365,4 +365,5 @@ Do you really want to cancel the monitoring?"</string>
     <string name="sync_dialog_downloading_nomenclatures">"Downloading nomenclatures…"</string>
     <string name="sync_dialog_downloading_locations">"Downloading locations…"</string>
     <string name="sync_dialog_downloading_zones">"Downloading zones…"</string>
+    <string name="sync_dialog_downloading_user_data">"Downloading user data…"</string>
 </resources>

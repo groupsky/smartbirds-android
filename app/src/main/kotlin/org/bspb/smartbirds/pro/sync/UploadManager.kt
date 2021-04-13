@@ -27,8 +27,10 @@ import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.json.JSONObject
 import java.io.*
+import java.lang.IllegalArgumentException
 import java.util.*
 
 @EBean(scope = EBean.Scope.Default)
@@ -111,22 +113,30 @@ open class UploadManager {
         val fileObjs: MutableMap<String, JsonObject> = HashMap()
 
         // first upload images
+        var hasErrors = false
+
         for (subfile in file.list { dir, name -> name.matches("Pic\\d+\\.jpg".toRegex()) || "track.gpx" == name }) {
             try {
                 fileObjs[subfile] = uploadFile(File(file, subfile))
             } catch (t: Throwable) {
+                hasErrors = true
+                errors.add("Error uploading file: $subfile")
                 Reporting.logException(t)
                 Toast.makeText(context, String.format("Could not upload %s of %s to smartbirds.org!", subfile, monitoringName),
                         Toast.LENGTH_SHORT).show()
             }
         }
 
-        if (!fileObjs.containsKey("track.gpx") && File(file, "track.gpx").exists()) {
-            // try again
-            fileObjs["track.gpx"] = uploadFile(File(file, "track.gpx"))
+        try {
+            if (!fileObjs.containsKey("track.gpx") && File(file, "track.gpx").exists()) {
+                // try again
+                fileObjs["track.gpx"] = uploadFile(File(file, "track.gpx"))
+            }
+        } catch (t: Throwable) {
+            hasErrors = true
+            errors.add("Error uploading file: track.gpx")
         }
 
-        var hasErrors = false
         // then upload forms
         for (subfile in file.list { dir, name -> name.matches(".*\\.csv".toRegex()) }) {
             try {
