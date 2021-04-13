@@ -360,10 +360,9 @@ Do you really want to cancel the monitoring?"</string>
     <string name="location_permission_alert_title">Location permission required</string>
     <string name="location_permission_alert_message">This app collects location data to enable recording track while in monitoring and location of entries even when the app is closed or not in use.</string>
     <string name="main_screen_menu_privacy_policy">"Privacy policy"</string>
-    <string name="sync_dialog_title">"Sync"</string>
-    <string name="sync_dialog_text">"Syncing data…"</string>
     <string name="sync_dialog_downloading_nomenclatures">"Downloading nomenclatures…"</string>
     <string name="sync_dialog_downloading_locations">"Downloading locations…"</string>
     <string name="sync_dialog_downloading_zones">"Downloading zones…"</string>
     <string name="sync_dialog_downloading_user_data">"Downloading user data…"</string>
+    <string name="sync_dialog_error_title">"Error"</string>
 </resources>

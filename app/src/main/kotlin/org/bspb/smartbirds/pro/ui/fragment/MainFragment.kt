@@ -319,7 +319,7 @@ open class MainFragment : Fragment() {
 
     @UiThread
     open fun updateSyncProgress(message: String?) {
-        showProgressDialog(getString(R.string.sync_dialog_title), message ?: "")
+        showProgressDialog(message ?: "")
     }
 
     @UiThread
@@ -331,7 +331,7 @@ open class MainFragment : Fragment() {
 
     private fun showErrorsIfAny() {
         if (UploadManager.errors.isNotEmpty()) {
-            context?.showAlert("Warning", UploadManager.errors.joinToString(",\n"), null, null)
+            context?.showAlert(getString(R.string.sync_dialog_error_title), UploadManager.errors.joinToString(",\n"), null, null)
         }
     }
 
@@ -435,7 +435,7 @@ open class MainFragment : Fragment() {
         bus.postSticky(CancelMonitoringEvent())
     }
 
-    private fun showProgressDialog(title: String, message: String) {
+    private fun showProgressDialog(message: String) {
 
         if (loading == null) {
             loading = parentFragmentManager.findFragmentByTag("progress") as LoadingDialog?
