@@ -96,63 +96,6 @@
 
             <View style="@style/FieldSeparator" />
 
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                style="@style/TextInputLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:visibility="gone">-->
-
-<!--                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_-->
-<!--                    android:id="@+id/form_cbm_sector"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="@string/monitoring_cbm_sector"-->
-<!--                    android:tag="@string/tag_transect_number"-->
-<!--                    app:entriesType="form_cbm_sector" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--            <View-->
-<!--                style="@style/FieldSeparator"-->
-<!--                android:visibility="gone"/>-->
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                style="@style/TextInputLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:visibility="gone">-->
-
-<!--                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_-->
-<!--                    android:id="@+id/form_cbm_primary_habitat"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="@string/monitoring_cbm_primary_habitat"-->
-<!--                    android:tag="@string/tag_primary_habitat"-->
-<!--                    app:entriesType="form_cbm_habitat" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--            <View-->
-<!--                style="@style/FieldSeparator"-->
-<!--                android:visibility="gone"/>-->
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                style="@style/TextInputLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:visibility="gone">-->
-
-<!--                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_-->
-<!--                    android:id="@+id/form_cbm_secondary_habitat"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="@string/monitoring_cbm_secondary_habitat"-->
-<!--                    android:tag="@string/tag_secondary_habitat"-->
-<!--                    app:entriesType="form_cbm_habitat" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--            <View-->
-<!--                style="@style/FieldSeparator"-->
-<!--                android:visibility="gone"/>-->
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
@@ -180,25 +123,6 @@
                 tools:visibility="visible" />
 
             <View style="@style/FieldSeparator" />
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                style="@style/TextInputLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:visibility="gone">-->
-
-<!--                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_-->
-<!--                    android:id="@+id/form_cbm_visit_number"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="@string/monitoring_cbm_visit_number"-->
-<!--                    android:tag="@string/tag_visit_number"-->
-<!--                    app:entriesType="form_cbm_visit_number" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--            <View-->
-<!--                style="@style/FieldSeparator"-->
-<!--                android:visibility="gone"/>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextInputLayout"
