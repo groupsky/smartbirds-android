@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"SmartBirds Pro"</string>
+    <string name="title_activity_start_monitoring">"Започни со мониторингот"</string>
+    <string name="title_activity_monitoring">"Мониторинг"</string>
+    <string name="title_activity_form">"Активен формулар"</string>
+    <string name="title_activity_edit">"Надополни го обичниот формулар"</string>
+    <string name="cancel_monitoring">"Запри со мониторингот"</string>
+    <string name="really_cancel_monitoring">"Со ова ќе се избришат податоците од мониторингот! Дали сте сигурни дека сакате да го запрете мониторингот?"</string>
+    <string name="clear">"Избриши"</string>
+    <string name="cancel_entry">"Сопри го внесот"</string>
+    <string name="really_cancel_entry">"Дали сте сигурни дека сакате да го сопрете внесот?"</string>
+    <string name="cancel_edit_entry">"Сопри го надополнувањето на внесот"</string>
+    <string name="really_cancel_edit_entry">"Дали сте сигурни дека сакате да ги избришете промените во внесот?"</string>
+    <string name="entry_type_cbm">"Мониторинг на чести видови птици (МЧП)"</string>
+    <string name="entry_type_birds">"Птици"</string>
+    <string name="entry_type_ciconia">"Бел штрк"</string>
+    <string name="entry_type_herp">"Водоземци и влекачи / цицачи"</string>
+    <string name="entry_type_herptile">"Водоземци и влекачи"</string>
+    <string name="entry_type_mammal">"Цицачи"</string>
+    <string name="entry_type_humid">"Зони со влажни станишта"</string>
+    <string name="entry_type_invertebrates">"Заштитени без'рбетници "</string>
+    <string name="required_field">"Потребно поле"</string>
+    <string name="monitoring_notification_title">"Мониторинг"</string>
+    <string name="monitoring_notification_content">"Започнат мониторинг"</string>
+    <string name="menu_entry_save">"Зачувај"</string>
+    <string name="menu_entry_add_photo">"+ фото"</string>
+    <string name="menu_monitoring_finish">"Заврши"</string>
+    <string name="menu_monitoring_new_entry">"Нов внес"</string>
+    <string name="menu_monitoring_new_specific_entry">"Нов %s внез"</string>
+    <string name="menu_monitoring_common">"Чест"</string>
+    <string name="menu_monitoring_zoom_500">"500 м"</string>
+    <string name="menu_monitoring_zoom_free">"Слободно"</string>
+    <string name="menu_monitoring_zoom_1000">"1 км"</string>
+    <string name="menu_monitoring_zoom_250">"250 м"</string>
+    <string name="menu_monitoring_zoom_100">"100 м"</string>
+    <string name="menu_monitoring_map_normal">"Нормално"</string>
+    <string name="menu_monitoring_map_satellite">"Сателит"</string>
+    <string name="menu_monitoring_map_hybrid">"Хибрид"</string>
+    <string name="menu_monitoring_map_provider">"Карта од:"</string>
+    <string name="menu_monitoring_map_provider_google">"Google "</string>
+    <string name="menu_monitoring_map_provider_osm"></string>
+    <string name="menu_monitoring_stay_awake">"Сакогаш вклучено"</string>
+    <string name="menu_monitoring_show_zone_background">"Позадински зони"</string>
+    <string name="menu_monitoring_start">"Почеток"</string>
+    <string name="menu_monitoring_save">"Зачувај"</string>
+    <string name="main_screen_btn_start">"Почеток"</string>
+    <string name="main_screen_btn_upload">"Прикачи на smartbirds.org"</string>
+    <string name="monitoring_birds_notes">"Забелешки"</string>
+    <string name="monitoring_common_source">"Извор"</string>
+    <string name="monitoring_common_start_date">"Почеток:"</string>
+    <string name="monitoring_common_date">"Датум"</string>
+    <string name="monitoring_common_time">"Време"</string>
+    <string name="monitoring_common_place">"Место"</string>
+    <string name="monitoring_common_end_date">"Крај:"</string>
+    <string name="monitoring_common_observers">"Други набљудувачи"</string>
+    <string name="monitoring_common_rain">"Дожд"</string>
+    <string name="monitoring_common_temperature">"Температура °C"</string>
+    <string name="monitoring_common_wind_strength">"Брзина на ветрот"</string>
+    <string name="monitoring_common_wind_direction">"Насока на ветрот"</string>
+    <string name="monitoring_common_clouds">"Типови на облаци"</string>
+    <string name="monitoring_common_cloudiness">"Облачност %"</string>
+    <string name="monitoring_common_mto">"Време (Друго)"</string>
+    <string name="monitoring_common_visibility">"Видливост км"</string>
+    <string name="monitoring_common_threats">"Закани"</string>
+    <string name="monitoring_common_notes">"Забелешки"</string>
+    <string name="monitoring_birds_name">"Воочена птица"</string>
+    <string name="monitoring_birds_private">"Доверливо"</string>
+    <string name="monitoring_birds_count_unit">"Единици за броење"</string>
+    <string name="monitoring_birds_count_type">"Тип на броење"</string>
+    <string name="monitoring_birds_nesting">"Вид на гнездо"</string>
+    <string name="monitoring_birds_count">"Број"</string>
+    <string name="monitoring_birds_min">"Мин."</string>
+    <string name="monitoring_birds_max">"Макс."</string>
+    <string name="monitoring_birds_gender">"Пол"</string>
+    <string name="monitoring_birds_age">"Возраст"</string>
+    <string name="monitoring_birds_marking">"Присуство на обележување"</string>
+    <string name="monitoring_birds_status">"Статус на птицата"</string>
+    <string name="monitoring_birds_behaviour">"Однесување"</string>
+    <string name="monitoring_birds_death">"Мртов примерок (причини)"</string>
+    <string name="monitoring_birds_substrate">"Подлога"</string>
+    <string name="monitoring_birds_tree">"Дрво"</string>
+    <string name="monitoring_birds_tree_height">"Висина на дрвото"</string>
+    <string name="monitoring_birds_tree_location">"Локација на дрвото"</string>
+    <string name="monitoring_birds_nest_height">"Висина на гнездото"</string>
+    <string name="monitoring_birds_nest_location">"Локација на гнездото"</string>
+    <string name="monitoring_birds_incubation">"Инкубација"</string>
+    <string name="monitoring_birds_eggs_count">"Број на јајца"</string>
+
+    <!-- пулл?? -->
+    <string name="monitoring_birds_small_downy_count"></string>
+    <string name="monitoring_birds_small_feathered_count">"Број на испилени млади"</string>
+    <string name="monitoring_birds_takeoff_count">"Број на успешно пролетани млади"</string>
+    <string name="monitoring_birds_nest_guard">"Чување на гнездото"</string>
+    <string name="monitoring_birds_female_age">"Возраст на женката"</string>
+    <string name="monitoring_birds_male_age">"Возраст на мажјакот"</string>
+    <string name="monitoring_birds_nest_success">"Гнездов успех"</string>
+    <string name="monitoring_birds_land_use">"Употребливост на земјиштето, радиус од 300 м"</string>
+    <string name="monitoring_cbm_name">"Воочена птица"</string>
+    <string name="monitoring_cbm_distance">"Растојание"</string>
+    <string name="monitoring_cbm_count">"Број"</string>
+    <string name="monitoring_cbm_primary_habitat">"Примарен хабитат"</string>
+    <string name="monitoring_cbm_secondary_habitat">"Секундарен хабитат"</string>
+    <string name="monitoring_cbm_visit_number">"Број на посета"</string>
+    <string name="monitoring_cbm_sector">"Број на трансект"</string>
+    <string name="monitoring_ciconia_substratum">"Подлога"</string>
+    <string name="monitoring_ciconia_column">"Електричен вод"</string>
+    <string name="monitoring_ciconia_nest_artificial">"Гнездо на вештачка платформа"</string>
+    <string name="monitoring_ciconia_column_type">"Тип на вод"</string>
+    <string name="monitoring_ciconia_tree">"Дрво"</string>
+    <string name="monitoring_ciconia_building">"Зграда"</string>
+    <string name="monitoring_ciconia_nest_artificial_human">"Гнездо на човечка вештачка платформа"</string>
+    <string name="monitoring_ciconia_nest_other">"Гнездо на друг субстрат"</string>
+    <string name="monitoring_ciconia_not_occupied">"Оваа година гнездото НЕ е зафатено од бели штркови"</string>
+    <string name="monitoring_ciconia_new_birds">"Оваа година една/две птици го посетија гнездото"</string>
+    <string name="monitoring_ciconia_date_appear">"Апроксимативен датум на доаѓање на штрковите"</string>
+    <string name="monitoring_ciconia_disappear">"Апроксимативен датум на заминување на штрковите"</string>
+    <string name="monitoring_ciconia_this_year">"Оваа година во гнездото се појави"</string>
+    <string name="monitoring_ciconia_small_count">"Број на млади во гнездото"</string>
+    <string name="monitoring_ciconia_not_occupied_more_than_year">"Гнездото НЕ е зафатено ПОВЕЌЕ ОД ЕДНА година"</string>
+    <string name="monitoring_ciconia_small_death_electricity">"Податоци за електрокуција на млади птици"</string>
+    <string name="monitoring_ciconia_small_death_from_parent">"Податоци за млади птици отфрлени од родителите"</string>
+    <string name="monitoring_ciconia_small_death_other">"Млади кои умреле од други причини"</string>
+    <string name="monitoring_ciconia_cause">"Причина"</string>
+    <string name="monitoring_ciconia_notes">"Забелешки"</string>
+    <string name="monitoring_herp_name">"Вид"</string>
+    <string name="monitoring_herp_gender">"Пол"</string>
+    <string name="monitoring_herp_age">"Возраст"</string>
+    <string name="monitoring_herp_habitat">"Живеалиште"</string>
+    <string name="monitoring_herp_danger_observation">"Наоди"</string>
+    <string name="monitoring_herp_count">"Број"</string>
+    <string name="monitoring_herp_marking">"Маркација"</string>
+    <string name="monitoring_herp_axis_distance">"Оддалеченост од оската"</string>
+    <string name="monitoring_herp_weight">"Тежина (g)"</string>
+
+    <!-- ??? -->
+    <string name="monitoring_herp_scl"></string>
+    <string name="monitoring_herp_mpl"></string>
+    <string name="monitoring_herp_mcw"></string>
+    <string name="monitoring_herp_h"></string>
+    <string name="monitoring_herp_t_substrate">"Т, субстрат"</string>
+    <string name="monitoring_herp_t_vha">"Т, воздух"</string>
+    <string name="monitoring_herp_t_kloaka">"Т, клоака"</string>
+    <string name="monitoring_herp_sq_ventr">"Плочки вентално"</string>
+    <string name="monitoring_herp_sq_caud">"Плочки каудално"</string>
+    <string name="monitoring_herp_sq_dors">"Плочки дорзално"</string>
+    <string name="monitoring_herp_notes">"Белешки"</string>
+    <string name="monitoring_mammal_L"></string>
+    <string name="monitoring_mammal_C"></string>
+    <string name="monitoring_mammal_A"></string>
+    <string name="monitoring_mammal_Pl"></string>
+    <string name="error_message_create_monitoring_dir">"Не може да се креира нова папка. Ве молиме "</string>
+    <string name="toast_cancel_monitoring">"Одкажи го мониторингот"</string>
+    <string name="marker_default_title">"Внес"</string>
+    <string name="undo_last_entry">"Одкажи го последниот внес"</string>
+    <string name="not_synced_count">"За прикачување %d"</string>
+    <string name="main_footer_text">"Оваа апликација е создадена со поддршката на Mtel. "</string>
+    <string name="main_screen_btn_export">"Превземање"</string>
+    <string name="export_failed_error">"Не може да се креира архива за превземање"</string>
+    <string name="export_dialog_title">"Превземање"</string>
+    <string name="export_dialog_text">"Прирпемање за превземање"</string>
+    <string name="upload_dialog_title">"Прикачи"</string>
+    <string name="upload_dialog_text">"Прикачување на податоци"</string>
+    <string name="download_dialog_title">"Симнување"</string>
+    <string name="download_dialog_text">"Симнување податоци..."</string>
+    <string name="export_subject">"SmartBirds Pro превземање"</string>
+    <string name="export_text">"Превземање мониторинг %s"</string>
+    <string name="export_app_chooser">"Превземање мониторинг: "</string>
+    <string name="monitoring_type">"Вид на набљудување"</string>
+    <string name="main_screen_btn_info">"Информации"</string>
+    <string name="main_screen_btn_help">"Помош"</string>
+    <string name="info_dialog_title">"Информации"</string>
+    <string name="info_text"><![CDATA[
+            <p><b>SmartBirds Pro е мобилна апликација за вршење мониторинг на птици, водоземци, влекачи, цицачи, заштитени без\'рбетници и растенија</b></p>
+            <p>Овој производ е изработен од страна на Бугарското друштво за заштита на птиците / BirdLife Bulgaria,</p>
+            <img src="logo_bspb" width="120" height="120"/>
+            <br />
+            <br />
+            <a href="http://www.bspb.org">www.bspb.org</a>
+            <p>Со поддршка на Програмата „Mtel eco grant”</p>
+            <img src="logo_mtel" width="120" height="120"/>
+			<br />
+            <p>and the Programme LIFE of the EU<p>
+            <img src="life_NEW" width="120" height="120"/>
+            <img src="natura2000_NEW" width="120" height="120"/>            
+            <br />
+            <br />
+                 <p>
+                <b>Концепт:</b>
+                <br />
+                Georgi Popgeorgiev
+                <br />
+                Svetoslav Spasov
+                <br />
+                Yurii Kornilev
+            </p>
+
+            <p>Благодарни сме им на Boryana Mihova, Dimitar Plachiyski, Yordanka Goranova-Lukanova, Yordan Hristov, Stoycho Stoychev, Teodora Petrova и колегите од БДЗП, кои помогнаа со реализација на проектот</p>
+
+            <p>
+                <b>Дизајн и програмирање</b>
+                <br />
+                <a href="https://github.com/groupsky">Geno Roupsky</a>
+            </p>
+
+            <p>За Google Play исто така можете да ја симнете апликацијата  <a href="https://play.google.com/store/apps/details?id=zz.android.smartbirds&hl=bg">SmartBirds</a>, кој содржи електронски бележник, и водич за птиците гнездилки во Бугарија, како и информации за специјалните заштитени подрачја во Бугарија / NATURA 2000.</p>
+        ]]></string>
+    <string name="monitoring_ciconia_sep_1">"Гнездото на белиот штрк е на:"</string>
+    <string name="monitoring_ciconia_sep_2">"2."</string>
+    <string name="monitoring_ciconia_sep_3">"3. Внатре во гнездото нема млади"</string>
+    <string name="monitoring_ciconia_sep_4">"4. Внатре во гнездото има:"</string>
+    <string name="monitoring_ciconia_sep_5">"5."</string>
+    <string name="monitoring_ciconia_sep_6">"6. Податоци за мртви млади"</string>
+    <string name="export_description">"Експорт на сите податоци кои не се прикачени на сервер (сите податоци се зачувани на овој уред)"</string>
+    <string name="image_file_create_error">"Не може да се креира фотографија"</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">"Најави се"</string>
+    <string name="prompt_email">"Електронска пошта"</string>
+    <string name="prompt_password">"Лозинка"</string>
+    <string name="action_sign_in">"Најави се"</string>
+    <string name="action_sign_in_short">"Најави се"</string>
+    <string name="action_register">"Регистрирај се"</string>
+    <string name="error_invalid_email">"Електронската пошта не постои"</string>
+    <string name="error_invalid_password">"Лозинката е прекратка"</string>
+    <string name="error_incorrect_password">"Лозинката не е точна"</string>
+    <string name="error_field_required">"Ова поле е неопходно"</string>
+    <string name="login_permission_rationale">"Дозвола за контактите е потребна за завршување на процедутата"</string>
+    <string name="monitoring_permission_rationale">"Дозвола за локацијата е потребна за внес на локацијата"</string>
+    <string name="monitoring_cbm_zone">"Зона"</string>
+    <string name="storage_permission_rationale">"Дозвола за меморијата е потребна за покажување на картата"</string>
+    <string name="sum_decimal_number_form_input_plus">"Сума | Следно"</string>
+    <string name="tab_required">"Главно"</string>
+    <string name="tab_optional">"Дополнително"</string>
+    <string name="no_place_nearby">"Нема познати места во близина"</string>
+    <string name="error_cbm_zone_too_far">"Зоната е повеќе од 5км од локацијата"</string>
+    <string name="main_screen_btn_browse">"Пребарувај"</string>
+    <string name="title_monitoring_list">"Мониторинзи"</string>
+    <string name="title_monitoring_detail">"Детали за мониторингот"</string>
+    <string name="view">"Погледни"</string>
+    <string name="map">"Карта"</string>
+    <string name="list">"Список"</string>
+    <string name="combined">"Комбинирани"</string>
+    <string name="select_all">"Избери ги сите"</string>
+    <string name="delete">"Избриши"</string>
+    <string name="confirm_delete_n">"Извриши  %1$d внесови?"</string>
+    <string name="permissions_required">"Дозвола за меморијата и локацијата е потребна"</string>
+    <string name="emptyList">"Нема предмети во списокот"</string>
+    <string name="monitoring_herptiles_private">"Доверливо"</string>
+    <string name="monitoring_mammal_private">"Доверливо"</string>
+    <string name="monitoring_invertebrates_private">"Доверливо"</string>
+    <string name="warning_confidential_nest">"Ве молиме одберете „Доверливо“ за да стане видлива локацијата на гнездото за вас."</string>
+    <string name="entry_type_plants">"Растенија"</string>
+    <string name="monitoring_plants_name">"Целни видови"</string>
+    <string name="monitoring_plants_private">"Доверливо"</string>
+    <string name="monitoring_plants_reporting_unit">"Единица"</string>
+    <string name="monitoring_plants_phenological_phase">"Фенолошка фаза"</string>
+    <string name="monitoring_plants_count">"Број"</string>
+    <string name="monitoring_plants_density">"Густина (sq. m)"</string>
+    <string name="monitoring_plants_cover">"Покривка"</string>
+    <string name="monitoring_plants_elevation">"Надморска висина"</string>
+    <string name="monitoring_plants_habitat">"Хабитат"</string>
+    <string name="monitoring_plants_threats">"Закани и влијанија"</string>
+    <string name="monitoring_plants_notes">"Белешки"</string>
+    <string name="monitoring_plants_accompanying_species">"Пропратни видови"</string>
+    <string name="title_activity_finish">"Обичен формулар проверете пред да го зачувате"</string>
+    <string name="monitoring_plants_elevation_units">"м н.в"</string>
+    <string name="gdpr_agree_checkbox">"Се согласувам со условите за регулативата за заштита на личните податоци"</string>
+    <string name="error_missing_gdpr_consent">"Мора да се согласите со условите за заштита на лични податоци"</string>
+    <string name="view_gdpr">"погледни"</string>
+    <string name="title_activity_stats">"Статистики"</string>
+    <string name="main_screen_btn_resume">"Продолжи"</string>
+    <string name="main_screen_btn_cancel">"Откажи"</string>
+    <string name="main_screen_btn_stats">"Статистики"</string>
+    <string name="notifications_channel_name">"Мониторинг"</string>
+    <string name="notifications_channel_description">"Известувања за мониторингот"</string>
+    <string name="battery_optimization_title">"Оптимизација на батеријата"</string>
+    <string name="battery_optimization_message">"SmartBirds Pro не е одбрана во нагодивањата за оптимизација на батеријата. Ова може да влијае на тоа како функционира апликацијата. За подобро функционирање одберете да апликацијата ја игнорира оптимизацијата на батеријата во Нагодувања  &gt; Батерија &gt; Оптимизирање на батеријата."</string>
+    <string name="class_birds">"Птици"</string>
+    <string name="class_herptiles">"Херптили"</string>
+    <string name="class_mammals">"Цицачи"</string>
+    <string name="class_invertebrates">"Без'рбетници"</string>
+    <string name="class_plants">"Растенија"</string>
+    <string name="primary_type_threat">"Закани"</string>
+    <string name="primary_type_poison">"Отров"</string>
+    <string name="poisoned_type_dead">"Мртви инд."</string>
+    <string name="poisoned_type_alive">"Живи инд."</string>
+    <string name="poisoned_type_bait">"Мамка"</string>
+    <string name="monitoring_threats_primary_type">"Тип"</string>
+    <string name="entry_type_threats">"Закани"</string>
+    <string name="monitoring_threats_notes">"Белешки"</string>
+    <string name="monitoring_threats_category">"Категорија"</string>
+    <string name="monitoring_threats_species">"Видови"</string>
+    <string name="monitoring_threats_class">"Класа"</string>
+    <string name="monitoring_threats_count">"Број"</string>
+    <string name="monitoring_threats_estimate">"Проценка"</string>
+    <string name="monitoring_threats_poisoned_type">"Труење"</string>
+    <string name="monitoring_threats_state_carcass">"Состојба на мршата"</string>
+    <string name="monitoring_threats_sample_taken_1">"Примерок 1"</string>
+    <string name="monitoring_threats_sample_code_1">"Код на примерокот 1"</string>
+    <string name="monitoring_threats_sample_taken_2">"Примерок 2"</string>
+    <string name="monitoring_threats_sample_code_2">"Код на примерокот 2"</string>
+    <string name="monitoring_threats_sample_taken_3">"Примерок 3"</string>
+    <string name="monitoring_threats_sample_code_3">"Код на примерокот 3"</string>
+    <string name="monitoring_threats_poisoned">"Отруено"</string>
+    <string name="monitoring_mammal_danger_observation">"Наоди"</string>
+    <string name="monitoring_herptiles_danger_observation">"Наоди"</string>
+    <string name="monitoring_invertebrates_danger_observation">"Наоди"</string>
+    <string name="menu_monitoring_show_local_projects"></string>
+    <string name="monitoring_common_weather">"Време:"</string>
+    <string name="btn_delete">"отстрани"</string>
+    <string name="wetland_zones_info_text">"Сите записи да се внесат со исти координати"</string>
+    <string name="monitoring_moderator_review">"Преглед на модераторот"</string>
+    <string name="warning_moderator_review">"Потребно е да се прикачи фотографија"</string>
+    <string name="menu_monitoring_show_bg_atlas_cells"></string>
+    <string name="main_screen_btn_downloads">"Симнати документи"</string>
+    <string name="no_downloads">"Симнатите документи не се достапни во моментов"</string>
+    <string name="title_downloads">"Симнати документи"</string>
+    <string name="menu_monitoring_show_spa">"ПЗЗ"</string>
+    <string name="filter_monitoring_status_wip"></string>
+    <string name="filter_monitoring_status_finished">"Заврши"</string>
+    <string name="filter_monitoring_status_uploaded">"Прикачено"</string>
+    <string name="filter_monitoring_status_paused">"Пауза"</string>
+    <string name="filter_monitoring_status_canceled">"Откажано"</string>
+    <string name="menu_monitoring_delete">"Избриши"</string>
+    <string name="finish_monitoring_confirm_title">"Заврши со мониторингот"</string>
+    <string name="finish_monitoring_confirm_message">"Дали сте сигурни дека сакате за завршите со моиторингот"</string>
+    <string name="delete_monitoring_confirm_title">"Избриши го мониторингот"</string>
+    <string name="delete_monitoring_confirm_message">"Дали сте сигурни дека сакате да го избришете мониторингот?"</string>
+    <string name="menu_settings">"Нагодувања"</string>
+    <string name="title_activity_settings">"Нагодувања"</string>
+    <string name="settings_monitoring_forms">"Форулар за мониторинг"</string>
+    <string name="settings_monitoring_forms_summary">"Одбери активни формулари за мониторинг"</string>
+    <string name="settings_category_general">"Генерално"</string>
+    <string name="settings_category_monitoring">"Карта"</string>
+    <string name="settings_category_layers">"Слоеви"</string>
+    <string name="settings_map_provider">"Провајдер на карти"</string>
+    <string name="settings_map_type">"Тип на карта"</string>
+    <string name="settings_view">"Поглед"</string>
+    <string name="settings_always_on">"Секогаш вклучен"</string>
+    <string name="settings_always_on_summary">"Екранот е секогаш вклучен за време на набљудувањето"</string>
+    <string name="settings_polygons_bg">"Полигони во позадина"</string>
+    <string name="settings_polygons_bg_summary">"Полигони во позадина"</string>
+    <string name="settings_local_projects">"Штркови во Белозем"</string>
+    <string name="settings_local_projects_summary">"Прикажи ги штрковите во Белозем"</string>
+    <string name="settings_bg_atlas">"Квадранти во БГ Атлас"</string>
+    <string name="settings_bg_atlas_summary">"Прикажи ги селектрианите БГ Атлас клетки (10х10 km)"</string>
+    <string name="settings_spa">"ПЗЗ"</string>
+    <string name="settings_spa_summary">"Прикажи ги посебните заштитени зони од Natura 2000 во Бугарија"</string>
+    <string name="settings_category_advanced">"Напредно"</string>
+    <string name="settings_export_db">"Преземи ДБ"</string>
+    <string name="settings_export_db_summary">"Преземи ДБ "</string>
+    <string name="settings_enabled_forms_alert_title">"Предупредување"</string>
+    <string name="settings_enabled_forms_alert_message">"Мора да одберете барем еден активен формулар за мониторинг"</string>
+    <string name="export_db_dialog_title_success">"Успешно"</string>
+    <string name="export_db_dialog_title_fail">"Предупредување"</string>
+    <string name="export_db_dialog_message_success">"Успешно ја преземавте ДБ"</string>
+    <string name="export_db_dialog_message_fail">"Проблем при преземање на ДБ"</string>
+    <string name="settings_random_cells"></string>
+    <string name="settings_random_cells_summary"></string>
+    <string name="settings_grid_1km"></string>
+    <string name="settings_grid_1km_summary"></string>
+    <string name="settings_grid_10km"></string>
+    <string name="settings_grid_10km_summary"></string>
+    <string name="location_permission_alert_title"></string>
+    <string name="location_permission_alert_message"></string>
+    <string name="main_screen_menu_privacy_policy"></string>
+</resources>
