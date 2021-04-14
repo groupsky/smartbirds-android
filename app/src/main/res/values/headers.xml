@@ -65,10 +65,6 @@
     <string name="tag_observed_bird" translatable="false">Species scientific name</string>
     <string name="tag_distance" translatable="false">Distance</string>
     <string name="tag_count_subject" translatable="false">Count individuals</string>
-    <string name="tag_primary_habitat" translatable="false">Primary habitat</string>
-    <string name="tag_secondary_habitat" translatable="false">Secondary habitat</string>
-    <string name="tag_visit_number" translatable="false">Visit number</string>
-    <string name="tag_transect_number" translatable="false">Number plot</string>
     <string name="tag_substrate_type" translatable="false">Primary substrate type</string>
     <string name="tag_pylon" translatable="false">Electricity pole</string>
     <string name="tag_nest_artificial_platform" translatable="false">Nest is on artificial platform</string>
