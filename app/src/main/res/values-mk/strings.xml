@@ -99,10 +99,6 @@
     <string name="monitoring_cbm_name">"Воочена птица"</string>
     <string name="monitoring_cbm_distance">"Растојание"</string>
     <string name="monitoring_cbm_count">"Број"</string>
-    <string name="monitoring_cbm_primary_habitat">"Примарен хабитат"</string>
-    <string name="monitoring_cbm_secondary_habitat">"Секундарен хабитат"</string>
-    <string name="monitoring_cbm_visit_number">"Број на посета"</string>
-    <string name="monitoring_cbm_sector">"Број на трансект"</string>
     <string name="monitoring_ciconia_substratum">"Подлога"</string>
     <string name="monitoring_ciconia_column">"Електричен вод"</string>
     <string name="monitoring_ciconia_nest_artificial">"Гнездо на вештачка платформа"</string>

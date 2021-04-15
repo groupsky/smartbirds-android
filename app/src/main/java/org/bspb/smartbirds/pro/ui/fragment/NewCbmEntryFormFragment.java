@@ -36,18 +36,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".fCBM";
 
-    @ViewById(R.id.form_cbm_primary_habitat)
-    SingleChoiceFormInput primaryHabitatInput;
-
-    @ViewById(R.id.form_cbm_secondary_habitat)
-    SingleChoiceFormInput secondaryHabitatInput;
-
-    @ViewById(R.id.form_cbm_visit_number)
-    SingleChoiceFormInput visitInput;
-
-    @ViewById(R.id.form_cbm_sector)
-    SingleChoiceFormInput sectorInput;
-
     @ViewById(R.id.form_cbm_zone)
     ZoneFormInput zoneInput;
 
@@ -75,10 +63,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            primaryHabitatInput.setText(prefs.cbmPrimaryHabitat().get());
-            secondaryHabitatInput.setText(prefs.cbmSecondaryHabitat().get());
-            visitInput.setText(prefs.cbmVisit().get());
-            sectorInput.setText(prefs.cbmSector().get());
             zoneInput.setText(prefs.cbmZone().get());
             confidential.setChecked(commonPrefs.confidentialRecord().get());
         }
@@ -127,10 +111,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Override
     public void onPause() {
         super.onPause();
-        prefs.cbmPrimaryHabitat().put(primaryHabitatInput.getText().toString());
-        prefs.cbmSecondaryHabitat().put(secondaryHabitatInput.getText().toString());
-        prefs.cbmVisit().put(visitInput.getText().toString());
-        prefs.cbmSector().put(sectorInput.getText().toString());
         prefs.cbmZone().put(zoneInput.getText().toString());
         commonPrefs.confidentialRecord().put(confidential.isChecked());
     }

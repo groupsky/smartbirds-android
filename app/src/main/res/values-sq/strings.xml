@@ -98,10 +98,6 @@ Jeni i sigurt që doni të ndaloni monitorimin?"</string>
     <string name="monitoring_cbm_name">"Shpendi i vrojtuar"</string>
     <string name="monitoring_cbm_distance">"Distanca"</string>
     <string name="monitoring_cbm_count">"Numri"</string>
-    <string name="monitoring_cbm_primary_habitat">"Habitat parësor"</string>
-    <string name="monitoring_cbm_secondary_habitat">"Habitat dytësor"</string>
-    <string name="monitoring_cbm_visit_number">"Numri i vizitave"</string>
-    <string name="monitoring_cbm_sector">"Numri i transekteve"</string>
     <string name="monitoring_ciconia_substratum">"Substrati"</string>
     <string name="monitoring_ciconia_column">"Shtylla"</string>
     <string name="monitoring_ciconia_nest_artificial">"Fole mbi platformë artificiale"</string>

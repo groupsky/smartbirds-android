@@ -98,10 +98,6 @@
     <string name="monitoring_cbm_name">"Вид научно име"</string>
     <string name="monitoring_cbm_distance">"Разстояние"</string>
     <string name="monitoring_cbm_count">"Брой индивиди"</string>
-    <string name="monitoring_cbm_primary_habitat">"Първостепенно местообитание"</string>
-    <string name="monitoring_cbm_secondary_habitat">"Второстепенно местообитание"</string>
-    <string name="monitoring_cbm_visit_number">"Посещение номер"</string>
-    <string name="monitoring_cbm_sector">"Номер на участък"</string>
     <string name="monitoring_ciconia_substratum">"Основен тип на субстрата"</string>
     <string name="monitoring_ciconia_column">"Стълб"</string>
     <string name="monitoring_ciconia_nest_artificial">"Гнездо на изкуствена платформа"</string>

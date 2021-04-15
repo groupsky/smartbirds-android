@@ -8,14 +8,6 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 @SharedPref
 public interface CbmPrefs {
 
-    String cbmPrimaryHabitat();
-
-    String cbmSecondaryHabitat();
-
-    String cbmVisit();
-
-    String cbmSector();
-
     String cbmZone();
 
 }
