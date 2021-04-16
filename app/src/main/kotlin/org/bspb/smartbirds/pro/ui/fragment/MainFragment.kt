@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.text.Html
+import android.text.Html.FROM_HTML_MODE_COMPACT
 import android.text.Html.ImageGetter
 import android.text.TextUtils
 import android.view.Gravity
@@ -20,6 +21,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -331,7 +333,14 @@ open class MainFragment : Fragment() {
 
     private fun showErrorsIfAny() {
         if (UploadManager.errors.isNotEmpty()) {
-            context?.showAlert(getString(R.string.sync_dialog_error_title), UploadManager.errors.joinToString(",\n"), null, null)
+            val sb = StringBuilder()
+            sb.append(getString(R.string.sync_error_general_message))
+            sb.append("<br /><br />")
+            sb.append("<strong>${getString(R.string.sync_error_details)}</strong><br />")
+            sb.append("<ul>")
+            sb.append(UploadManager.errors.joinToString("") { "<li>$it</li>" })
+            sb.append("</ul>")
+            context?.showAlert(getString(R.string.sync_dialog_error_title), HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_COMPACT), null, null)
         }
     }
 

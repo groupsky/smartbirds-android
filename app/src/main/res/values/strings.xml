@@ -365,4 +365,8 @@ Do you really want to cancel the monitoring?"</string>
     <string name="sync_dialog_downloading_zones">"Downloading zones…"</string>
     <string name="sync_dialog_downloading_user_data">"Downloading user data…"</string>
     <string name="sync_dialog_error_title">"Error"</string>
+    <string name="sync_error_upload_file">Could not upload file %s</string>
+    <string name="sync_error_upload_form">Unable to upload form record. Check your internet connection.</string>
+    <string name="sync_error_general_message">There was an error uploading the data. Please try again.</string>
+    <string name="sync_error_details">Details:</string>
 </resources>
