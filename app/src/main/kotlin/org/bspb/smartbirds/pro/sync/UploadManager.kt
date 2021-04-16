@@ -19,6 +19,7 @@ import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.Backend
+import org.bspb.smartbirds.pro.backend.dto.UploadFormResponse
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.enums.EntryType
@@ -27,10 +28,9 @@ import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.json.JSONObject
+import retrofit2.Response
 import java.io.*
-import java.lang.IllegalArgumentException
 import java.util.*
 
 @EBean(scope = EBean.Scope.Default)
@@ -120,21 +120,11 @@ open class UploadManager {
                 fileObjs[subfile] = uploadFile(File(file, subfile))
             } catch (t: Throwable) {
                 hasErrors = true
-                errors.add("Error uploading file: $subfile")
+                errors.add(context.getString(R.string.sync_error_upload_file, subfile))
                 Reporting.logException(t)
                 Toast.makeText(context, String.format("Could not upload %s of %s to smartbirds.org!", subfile, monitoringName),
                         Toast.LENGTH_SHORT).show()
             }
-        }
-
-        try {
-            if (!fileObjs.containsKey("track.gpx") && File(file, "track.gpx").exists()) {
-                // try again
-                fileObjs["track.gpx"] = uploadFile(File(file, "track.gpx"))
-            }
-        } catch (t: Throwable) {
-            hasErrors = true
-            errors.add("Error uploading file: track.gpx")
         }
 
         // then upload forms
@@ -233,24 +223,40 @@ open class UploadManager {
                         data.add("track", fileObjs["track.gpx"]!!["url"])
                     }
                     val call = uploader.upload(backend.api(), data)
-                    val response = call.execute()
-                    if (!response.isSuccessful) {
+
+                    var response: Response<UploadFormResponse>? = null
+                    var failed = false
+                    try {
+                        response = call.execute()
+                        failed = !response.isSuccessful
+                    } catch (t: Throwable) {
+                        failed = true
+                    }
+
+
+                    if (failed) {
                         hasErrors = true
                         var error = ""
-                        try {
-                            val errorBodyString = response.errorBody()!!.string()
+                        if (response != null) {
+                            try {
+                                val errorBodyString = response.errorBody()!!.string()
 
-                            error += response.code().toString() + ": " + response.message()
-                            error += """
+                                error += response.code().toString() + ": " + response.message()
+                                error += """
                                 
                                 $errorBodyString
                                 """.trimIndent()
 
-                            var errorJson = JSONObject(errorBodyString)
-                            errors.add(errorJson.getString("error"))
-                        } catch (t: Throwable) {
-                            Reporting.logException(t)
+                                var errorJson = JSONObject(errorBodyString)
+
+                                errors.add(errorJson.getString("error"))
+                            } catch (t: Throwable) {
+                                Reporting.logException(t)
+                            }
+                        } else {
+                            errors.add(context.getString(R.string.sync_error_upload_form))
                         }
+
                     }
                 }
                 if (hasErrors) {
