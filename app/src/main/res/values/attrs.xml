@@ -9,6 +9,7 @@
         <attr name="timeFormInputStyle" format="reference" />
         <attr name="textFormInputStyle" format="reference" />
         <attr name="floatNumberFormInputStyle" format="reference" />
+        <attr name="positiveFloatNumberFormInputStyle" format="reference" />
         <attr name="decimalNumberFormInputStyle" format="reference" />
         <attr name="sumDecimalNumberFormInputStyle" format="reference" />
         <attr name="multipleTextFormInputStyle" format="reference" />
