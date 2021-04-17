@@ -19,6 +19,8 @@
         <item name="positiveFloatNumberFormInputStyle">@style/FieldInput.FloatNumber.Positive</item>
         <item name="decimalNumberFormInputStyle">@style/FieldInput.DecimalNumber</item>
         <item name="sumDecimalNumberFormInputStyle">@style/FieldInput.DecimalNumber.Sum</item>
+        <item name="positiveDecimalNumberFormInputStyle">@style/FieldInput.DecimalNumber.Positive
+        </item>
         <item name="multipleTextFormInputStyle">@style/FieldInput.MultipleText</item>
         <item name="memoFormInputStyle">@style/FieldInput.Memo</item>
         <item name="switchFormInputStyle">@style/FieldInput.Switch</item>
@@ -69,6 +71,10 @@
 
     <style name="FieldInput.DecimalNumber" parent="FieldInput.Text">
         <item name="android:inputType">number|numberSigned</item>
+    </style>
+
+    <style name="FieldInput.DecimalNumber.Positive" parent="FieldInput.Text">
+        <item name="android:inputType">number</item>
     </style>
 
     <style name="FieldInput.DecimalNumber.Sum" parent="FieldInput.Text">
