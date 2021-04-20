@@ -16,7 +16,8 @@ import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.UserDataEvent;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
-import org.bspb.smartbirds.pro.service.AuthenticationService_;
+import org.bspb.smartbirds.pro.sync.AuthenticationManager;
+import org.bspb.smartbirds.pro.sync.AuthenticationManager_;
 
 import java.io.IOException;
 
@@ -45,6 +46,9 @@ public class AuthenticationInterceptor implements Interceptor {
 
     @Bean
     EEventBus bus;
+
+    @Bean
+    AuthenticationManager authenticationManager;
 
     private String authorization;
 
@@ -117,7 +121,7 @@ public class AuthenticationInterceptor implements Interceptor {
                 Log.w(TAG, "Invalid authorization!");
                 if (retries++ > 3 || !tryRelogin(auth)) {
                     clearAuthorization();
-                    AuthenticationService_.intent(context).logout().start();
+                    authenticationManager.logout();
                     return response;
                 }
             } else {

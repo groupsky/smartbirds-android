@@ -13,14 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +22,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -46,7 +45,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LoginStateEvent;
 import org.bspb.smartbirds.pro.events.UserDataEvent;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
-import org.bspb.smartbirds.pro.service.AuthenticationService_;
+import org.bspb.smartbirds.pro.sync.AuthenticationManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +90,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     EEventBus bus;
     @Pref
     UserPrefs_ prefs;
+    @Bean
+    AuthenticationManager authenticationManager;
 
     private boolean isLoginRunning;
     private boolean missingGdpr = false;
@@ -258,9 +259,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            AuthenticationService_.intent(this).login(email, password, gdprConsent).start();
+            authenticationManager.login(email, password, gdprConsent);
         }
     }
+
 
     private boolean isEmailValid(String email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();

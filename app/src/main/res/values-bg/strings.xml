@@ -359,4 +359,13 @@
     <string name="location_permission_alert_title">Разрешение за местоположение</string>
     <string name="location_permission_alert_message">Приложението събира данни за местонахождението за да позволи записването на следа (трак) в режим на наблюдение и локализиране на наблюдаваните видове дори когато приложението е във фонов режим.</string>
     <string name="main_screen_menu_privacy_policy">"Декларация за поверителност"</string>
+    <string name="sync_dialog_downloading_nomenclatures">"Обновяване на номенклатури…"</string>
+    <string name="sync_dialog_downloading_locations">"Обновяване на локации…"</string>
+    <string name="sync_dialog_downloading_zones">"Обновяване на площадки…"</string>
+    <string name="sync_dialog_downloading_user_data">"Обновяване на потребителски настройки…"</string>
+    <string name="sync_dialog_error_title">"Грешка"</string>
+    <string name="sync_error_upload_file">Неуспешно качване на файл %s</string>
+    <string name="sync_error_upload_form">Неуспешно качване на наблюдение. Проверете вашата интернет връзка.</string>
+    <string name="sync_error_general_message">Възникна грешка при качването на данните. Моля, опитайте отново.</string>
+    <string name="sync_error_details">Детайли:</string>
 </resources>

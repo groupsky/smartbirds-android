@@ -3,9 +3,7 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.Manifest.permission
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -13,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.text.Html
+import android.text.Html.FROM_HTML_MODE_COMPACT
 import android.text.Html.ImageGetter
 import android.text.TextUtils
 import android.view.Gravity
@@ -22,9 +21,11 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
 import org.androidannotations.annotations.*
 import org.androidannotations.annotations.sharedpreferences.Pref
@@ -35,7 +36,10 @@ import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.service.*
+import org.bspb.smartbirds.pro.service.ExportService_
+import org.bspb.smartbirds.pro.service.SyncService
+import org.bspb.smartbirds.pro.service.SyncService_
+import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
@@ -81,18 +85,28 @@ open class MainFragment : Fragment() {
     @Bean
     protected lateinit var bus: EEventBus
 
+    private val syncBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action == SyncService.ACTION_SYNC_PROGRESS) {
+                updateSyncProgress(intent.getStringExtra(SyncService.EXTRA_SYNC_MESSAGE))
+            } else if (action == SyncService.ACTION_SYNC_COMPLETED) {
+                onSyncComplete()
+            }
+        }
+    }
+
     override fun onStart() {
         super.onStart()
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(SyncService.ACTION_SYNC_COMPLETED)
+        intentFilter.addAction(SyncService.ACTION_SYNC_PROGRESS)
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(syncBroadcastReceiver, intentFilter)
+
         bus.registerSticky(this)
-        if (UploadService.isUploading) {
-            onEvent(StartingUpload())
-        } else {
-            onEvent(UploadCompleted())
-        }
-        if (NomenclatureService.isDownloading.isNotEmpty() || ZoneService.isDownloading) {
-            onEvent(StartingDownload())
-        } else {
-            onEvent(DownloadCompleted())
+        if (SyncService.isWorking) {
+            updateSyncProgress(SyncService.syncMessage)
         }
     }
 
@@ -104,6 +118,7 @@ open class MainFragment : Fragment() {
 
     override fun onStop() {
         bus.unregister(this)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(syncBroadcastReceiver)
         super.onStop()
     }
 
@@ -305,29 +320,28 @@ open class MainFragment : Fragment() {
     }
 
     @UiThread
-    open fun onEvent(event: StartingUpload?) {
-        showProgressDialog(getString(R.string.upload_dialog_title), getString(R.string.upload_dialog_text))
+    open fun updateSyncProgress(message: String?) {
+        showProgressDialog(message ?: "")
     }
 
     @UiThread
-    open fun onEvent(event: DownloadCompleted?) {
-        if (!(UploadService.isUploading || ZoneService.isDownloading || AuthenticationService.isDownloading || NomenclatureService.isDownloading.isNotEmpty())) {
-            hideProgressDialog()
-        }
+    open fun onSyncComplete() {
+        hideProgressDialog()
+        showErrorsIfAny()
         showNotSyncedCount()
     }
 
-    @UiThread
-    open fun onEvent(event: StartingDownload?) {
-        showProgressDialog(getString(R.string.download_dialog_title), getString(R.string.download_dialog_text))
-    }
-
-    @UiThread
-    open fun onEvent(event: UploadCompleted?) {
-        if (!(!NomenclatureService.isDownloading.isEmpty() || ZoneService.isDownloading)) {
-            hideProgressDialog()
+    private fun showErrorsIfAny() {
+        if (UploadManager.errors.isNotEmpty()) {
+            val sb = StringBuilder()
+            sb.append(getString(R.string.sync_error_general_message))
+            sb.append("<br /><br />")
+            sb.append("<strong>${getString(R.string.sync_error_details)}</strong><br />")
+            sb.append("<ul>")
+            sb.append(UploadManager.errors.joinToString("") { "<li>$it</li>" })
+            sb.append("</ul>")
+            context?.showAlert(getString(R.string.sync_dialog_error_title), HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_COMPACT), null, null)
         }
-        showNotSyncedCount()
     }
 
     @UiThread
@@ -430,7 +444,7 @@ open class MainFragment : Fragment() {
         bus.postSticky(CancelMonitoringEvent())
     }
 
-    private fun showProgressDialog(title: String, message: String) {
+    private fun showProgressDialog(message: String) {
 
         if (loading == null) {
             loading = parentFragmentManager.findFragmentByTag("progress") as LoadingDialog?

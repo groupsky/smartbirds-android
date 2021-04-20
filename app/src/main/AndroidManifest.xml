@@ -191,20 +191,12 @@
             android:value="77d73d871322caaa0ef4f96a467325bcc3b2dfb5" />
 
         <service
-            android:name=".service.UploadService_"
-            android:enabled="true"
-            android:exported="false" />
-        <service
             android:name=".service.TrackingService_"
             android:enabled="true"
             android:exported="false" />
         <service
             android:name=".service.ExportService_"
             android:enabled="true"
-            android:exported="false" />
-
-        <service
-            android:name=".service.AuthenticationService_"
             android:exported="false" />
 
         <provider
@@ -222,14 +214,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        <service
-            android:name=".service.NomenclatureService_"
-            android:exported="false" />
-
-        <service
-            android:name=".service.ZoneService_"
-            android:exported="false" />
 
         <service
             android:name=".service.SyncService_"
