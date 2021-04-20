@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.text.Html
-import android.text.Html.FROM_HTML_MODE_COMPACT
 import android.text.Html.ImageGetter
 import android.text.TextUtils
 import android.view.Gravity
@@ -25,6 +24,7 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
 import org.androidannotations.annotations.*
@@ -88,10 +88,12 @@ open class MainFragment : Fragment() {
     private val syncBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
-            if (action == SyncService.ACTION_SYNC_PROGRESS) {
-                updateSyncProgress(intent.getStringExtra(SyncService.EXTRA_SYNC_MESSAGE))
-            } else if (action == SyncService.ACTION_SYNC_COMPLETED) {
-                onSyncComplete()
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                if (action == SyncService.ACTION_SYNC_PROGRESS) {
+                    updateSyncProgress(intent.getStringExtra(SyncService.EXTRA_SYNC_MESSAGE))
+                } else if (action == SyncService.ACTION_SYNC_COMPLETED) {
+                    onSyncComplete()
+                }
             }
         }
     }
@@ -332,6 +334,9 @@ open class MainFragment : Fragment() {
     }
 
     private fun showErrorsIfAny() {
+        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            return
+        }
         if (UploadManager.errors.isNotEmpty()) {
             val sb = StringBuilder()
             sb.append(getString(R.string.sync_error_general_message))
@@ -444,6 +449,9 @@ open class MainFragment : Fragment() {
     }
 
     private fun showProgressDialog(message: String) {
+        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            return
+        }
 
         if (loading == null) {
             loading = parentFragmentManager.findFragmentByTag("progress") as LoadingDialog?
