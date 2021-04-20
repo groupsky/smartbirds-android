@@ -385,8 +385,7 @@ open class MainFragment : Fragment() {
 
     private fun locationPermissionsGranted(): Boolean {
         if (ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+                ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
