@@ -368,4 +368,5 @@
     <string name="sync_error_upload_form">Неуспешно качване на наблюдение. Проверете вашата интернет връзка.</string>
     <string name="sync_error_general_message">Възникна грешка при качването на данните. Моля, опитайте отново.</string>
     <string name="sync_error_details">Детайли:</string>
+    <string name="sync_error_missing_image">Липсващо изображение %s за %s</string>
 </resources>

@@ -119,8 +119,12 @@ open class UploadManager {
             try {
                 fileObjs[subfile] = uploadFile(File(file, subfile))
             } catch (t: Throwable) {
-                hasErrors = true
-                errors.add(context.getString(R.string.sync_error_upload_file, subfile))
+                // Do not mark as error if the exception is related to image file. Sometimes we try to upload
+                // invalid image files which are not related to any form record.
+                if (subfile.endsWith("track.gpx")) {
+                    hasErrors = true
+                    errors.add(context.getString(R.string.sync_error_upload_file, subfile))
+                }
                 Reporting.logException(t)
                 Toast.makeText(context, String.format("Could not upload %s of %s to smartbirds.org!", subfile, monitoringName),
                         Toast.LENGTH_SHORT).show()
@@ -203,7 +207,9 @@ open class UploadManager {
                         if (TextUtils.isEmpty(filename)) continue
                         val fileObj = fileObjs[filename]
                         if (fileObj == null) {
-                            val error = String.format("Missing image %s for %s", filename, monitoringName)
+                            hasErrors = true
+                            val error = context.getString(R.string.sync_error_missing_image, filename, monitoringName)
+                            errors.add(error)
                             Reporting.logException(IllegalStateException(error))
                             Toast.makeText(context,
                                     error,
