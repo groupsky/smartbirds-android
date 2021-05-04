@@ -9,9 +9,8 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.events.EEventBus
-import org.bspb.smartbirds.pro.events.GetMonitoringCommonData
-import org.bspb.smartbirds.pro.events.MonitoringCommonData
-import org.bspb.smartbirds.pro.events.SetMonitoringCommonData
+import org.bspb.smartbirds.pro.service.DataOpsService_
+import org.bspb.smartbirds.pro.ui.utils.Configuration
 import java.util.*
 
 
@@ -41,9 +40,12 @@ open class BrowseMonitoringCommonFormFragment : BaseCommonFormFragment() {
 
     override fun persistForm(data: HashMap<String, String>) {
         monitoring?.run {
+            data[resources.getString(R.string.monitoring_id)] = code
+            data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
             commonForm.clear()
             commonForm.putAll(data)
             monitoringManager.update(this)
+            DataOpsService_.intent(context).generateMonitoringFiles(code).start()
         }
     }
 }
