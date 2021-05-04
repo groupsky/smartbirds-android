@@ -37,7 +37,8 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         monitoring?.apply {
-            menuFinishMonitoring.isVisible = status == Monitoring.Status.paused || status == Monitoring.Status.canceled
+            menuFinishMonitoring.isVisible =
+                status == Monitoring.Status.paused || status == Monitoring.Status.canceled
         }
     }
 
@@ -48,17 +49,27 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
 
     @OptionsItem(R.id.menu_finish_monitoring)
     open fun onFinishMonitoring() {
-        context?.showAlert(R.string.finish_monitoring_confirm_title, R.string.finish_monitoring_confirm_message, { _, _ ->
-            finishMonitoring()
-        }, null)
+        context?.showAlert(
+            R.string.finish_monitoring_confirm_title,
+            R.string.finish_monitoring_confirm_message,
+            { _, _ ->
+                finishMonitoring()
+            },
+            null
+        )
 
     }
 
     @OptionsItem(R.id.menu_delete_monitoring)
     open fun onDeleteMonitoring() {
-        context?.showAlert(R.string.delete_monitoring_confirm_title, R.string.delete_monitoring_confirm_message, { _, _ ->
-            deleteMonitoring()
-        }, null)
+        context?.showAlert(
+            R.string.delete_monitoring_confirm_title,
+            R.string.delete_monitoring_confirm_message,
+            { _, _ ->
+                deleteMonitoring()
+            },
+            null
+        )
 
     }
 
@@ -66,9 +77,16 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
         monitoring?.apply {
             val pausedMonitoring = monitoringManager.pausedMonitoring
 
+            // Apply monitoring code if missing in common form
+            if (!commonForm.containsKey(resources.getString(R.string.monitoring_id))) {
+                commonForm[resources.getString(R.string.monitoring_id)] = code
+                monitoringManager.update(this)
+            }
+
             if (commonForm.containsKey(resources.getString(R.string.end_time_key))) {
                 if (TextUtils.isEmpty(commonForm[resources.getString(R.string.end_time_key)])) {
-                    commonForm[resources.getString(R.string.end_time_key)] = Configuration.STORAGE_TIME_FORMAT.format(Date())
+                    commonForm[resources.getString(R.string.end_time_key)] =
+                        Configuration.STORAGE_TIME_FORMAT.format(Date())
                     monitoringManager.update(this)
                 }
             }
