@@ -9,6 +9,7 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import java.util.*
 
@@ -44,6 +45,7 @@ open class BrowseMonitoringCommonFormFragment : BaseCommonFormFragment() {
             commonForm.clear()
             commonForm.putAll(data)
             monitoringManager.update(this)
+            DataOpsService_.intent(context).generateMonitoringFiles(code).start()
         }
     }
 }
