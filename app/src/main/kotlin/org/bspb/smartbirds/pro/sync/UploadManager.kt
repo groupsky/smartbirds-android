@@ -15,7 +15,6 @@ import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.RootContext
 import org.androidannotations.annotations.res.StringRes
-import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.Backend
@@ -165,7 +164,8 @@ open class UploadManager {
             throw IOException("Server error: " + response.code() + " - " + response.message())
         }
         val fileObj = JsonObject()
-        fileObj.addProperty("url", String.format("%sstorage/%s", BuildConfig.BACKEND_BASE_URL, response.body()!!.data.id))
+        fileObj.addProperty("url", String.format("%sstorage/%s",
+            Backend.backendBaseUrl, response.body()!!.data.id))
         return fileObj
     }
 

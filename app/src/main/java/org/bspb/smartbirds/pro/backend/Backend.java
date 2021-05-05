@@ -2,6 +2,8 @@ package org.bspb.smartbirds.pro.backend;
 
 import android.util.Log;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.EBean;
@@ -39,8 +41,9 @@ public class Backend {
     private List<Interceptor> networkInterceptors = new LinkedList<>();
     private OkHttpClient client;
     private Retrofit retrofit;
-    SmartBirdsApi api;
+    private SmartBirdsApi api;
     private Gson gson;
+    public static String backendBaseUrl = BuildConfig.BACKEND_BASE_URL;
 
     public Backend() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -76,9 +79,9 @@ public class Backend {
         gson = SBGsonParser.createParser();
 
         if (retrofit == null) {
-            Log.d(TAG, String.format("Backend base url: %s", BuildConfig.BACKEND_BASE_URL));
+            Log.d(TAG, String.format("Backend base url: %s", backendBaseUrl));
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.BACKEND_BASE_URL)
+                    .baseUrl(backendBaseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getClient())
                     .build();

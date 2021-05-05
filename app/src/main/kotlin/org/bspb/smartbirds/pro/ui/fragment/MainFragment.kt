@@ -154,23 +154,28 @@ open class MainFragment : Fragment() {
 
     @Click(R.id.btn_start_birds)
     open fun startBirdsClicked() {
+        println("Start btn clicked")
         if (!permissionsGranted()) return
+        println("Posting StartMonitoringEvent")
         bus.postSticky(StartMonitoringEvent())
     }
 
     @Click(R.id.btn_resume_birds)
     open fun resumeBirdsClicked() {
+        println("Resume clicked")
         if (!permissionsGranted()) return
         bus.postSticky(ResumeMonitoringEvent())
     }
 
     @Click(R.id.btn_cancel_birds)
     open fun cancelBirdsClicked() {
+        println("Cancel clicked")
         confirmCancel()
     }
 
     @Click(R.id.btn_upload)
     open fun uploadBtnClicked() {
+        println("Upload clicked")
         SyncService_.intent(activity).sync().start()
     }
 
@@ -191,6 +196,7 @@ open class MainFragment : Fragment() {
 
     @OptionsItem(R.id.menu_browse)
     open fun browseBtnClicked() {
+        println("Menu browse clicked")
         MonitoringListActivity_.intent(this).start()
     }
 
@@ -385,7 +391,12 @@ open class MainFragment : Fragment() {
     }
 
     private fun permissionsGranted(): Boolean {
-        return locationPermissionsGranted() && storagePermissionsGranted()
+        println("Checking granted permissions")
+        val location = locationPermissionsGranted()
+        val storage = location && storagePermissionsGranted()
+        println("location = $location")
+        println("storage = $storage")
+        return location && storage
     }
 
     private fun locationPermissionsGranted(): Boolean {

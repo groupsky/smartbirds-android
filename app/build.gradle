@@ -29,6 +29,12 @@ android {
         targetSdkVersion 29
         versionCode versionCodeBase
         versionName "${versionNameBase}"
+        // default runner for instrumentation tests (androidTest)
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: 'true'
 
         def buildTime = new GregorianCalendar().format("MM-dd-yyyy' 'HH:mm:ss Z")
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
@@ -89,6 +95,15 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
+    testOptions {
+        // enable android orchestrator for isolated tests
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        // allows usage of android resources in rebolectric tests
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -134,4 +149,35 @@ dependencies {
     implementation 'net.simonvt.schematic:schematic:0.7.0'
 
     implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
+
+    // Testing with robolectric, androidx test and espresso
+    testImplementation 'androidx.test:core:' + rootProject.coreVersion;
+    testImplementation 'androidx.test.ext:junit:' + rootProject.extJUnitVersion
+    testImplementation 'androidx.test.espresso:espresso-core:' + rootProject.espressoVersion
+    testImplementation 'androidx.test.espresso:espresso-intents:' + rootProject.espressoVersion
+    testImplementation 'androidx.test.ext:truth:' + rootProject.extTruthVersion
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:' + rootProject.robolectricVersion
+
+    // Instrumentation testing
+    androidTestImplementation 'androidx.test:core:1.3.0';
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    // Optional -- Hamcrest library
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    androidTestImplementation 'org.hamcrest:hamcrest-integration:1.3'
+    // Optional -- UI testing with Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // Optional -- UI testing with UI Automator
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestUtil 'androidx.test:orchestrator:1.3.0'
+    // Mockito mocking
+    androidTestImplementation 'org.mockito:mockito-core:3.3.3'
+    // needed to mock kotlin finals - only works on api 28+, otherwise use all-open
+    // ref: https://github.com/mockito/mockito/issues/1919#issuecomment-723678563
+    // ref: https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin
+    androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito-inline:2.28.0'
+    // mock server for backend
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.3.0'
 }

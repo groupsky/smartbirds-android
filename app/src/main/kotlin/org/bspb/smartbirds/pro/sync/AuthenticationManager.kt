@@ -75,6 +75,8 @@ open class AuthenticationManager {
             return LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY)
         }
 
+        Log.d(TAG, "Response = "+response)
+
         if (response == null) {
             return LoginResultEvent(LoginResultEvent.Status.ERROR)
         }

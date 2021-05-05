@@ -97,7 +97,7 @@ public class AuthenticationInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        if (!BuildConfig.BACKEND_BASE_URL.contains(chain.request().url().host()) || chain.request().url().encodedPath().contains("session")) {
+        if (!Backend.backendBaseUrl.contains(chain.request().url().host()) || chain.request().url().encodedPath().contains("session")) {
             Log.d(TAG, "no auth required");
             return chain.proceed(chain.request());
         }

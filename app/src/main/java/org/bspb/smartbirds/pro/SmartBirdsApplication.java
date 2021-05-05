@@ -33,8 +33,8 @@ public class SmartBirdsApplication extends Application {
 
     @Bean
     EEventBus bus;
-    @Bean
-    NomenclaturesBean nomenclaturesBean;
+//    @Bean
+//    NomenclaturesBean nomenclaturesBean;
     @Bean
     AuthenticationInterceptor authenticationInterceptor;
     @Bean
@@ -44,10 +44,10 @@ public class SmartBirdsApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
-        crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
-        crashlytics.setCustomKey("git_sha", BuildConfig.GIT_SHA);
-        crashlytics.setCustomKey("build_time", BuildConfig.BUILD_TIME);
+//        FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+//        crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
+//        crashlytics.setCustomKey("git_sha", BuildConfig.GIT_SHA);
+//        crashlytics.setCustomKey("build_time", BuildConfig.BUILD_TIME);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));
@@ -60,6 +60,7 @@ public class SmartBirdsApplication extends Application {
     }
 
     public void onEvent(StartMonitoringEvent event) {
+        System.out.println("Starting data service");
         DataService_.intent(this).start();
     }
 

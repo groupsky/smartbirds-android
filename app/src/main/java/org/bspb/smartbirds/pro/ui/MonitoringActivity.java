@@ -225,7 +225,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         } else {
             listContainer.setVisibility(!VIEWTYPE_MAP.equals(viewType) ? View.VISIBLE : View.GONE);
         }
-
     }
 
     @Override
