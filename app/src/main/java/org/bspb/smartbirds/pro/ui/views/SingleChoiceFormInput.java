@@ -23,6 +23,8 @@ import android.widget.Filterable;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
@@ -409,7 +411,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         }
     }
 
-    static class NomenclatureItem {
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static class NomenclatureItem {
         final Nomenclature nomenclature;
         final String label;
 

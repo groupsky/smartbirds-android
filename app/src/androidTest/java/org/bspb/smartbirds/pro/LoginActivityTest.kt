@@ -25,7 +25,7 @@ class LoginActivityTest {
 
     @Rule
     @JvmField
-    val activityRule = ActivityScenarioRule<LoginActivity_>(LoginActivity_::class.java)
+    val activityRule = ActivityScenarioRule(LoginActivity_::class.java)
 
     @Rule
     @JvmField
@@ -33,12 +33,12 @@ class LoginActivityTest {
 
     @Rule
     @JvmField
-    val permissionsRule = GrantPermissionRule.grant(
+    val permissionsRule: GrantPermissionRule = GrantPermissionRule.grant(
         READ_CONTACTS
     )
 
     @Test
-    fun testloginSuccessFlow() {
+    fun testLoginSuccessFlow() {
         var parser = SBGsonParser.createParser()
         var loginResponse = LoginResponse()
         loginResponse.success = true
