@@ -38,7 +38,7 @@ class LoginActivityTest {
     )
 
     @Test
-    fun shouldContainUsernameInput() {
+    fun testloginSuccessFlow() {
         var parser = SBGsonParser.createParser()
         var loginResponse = LoginResponse()
         loginResponse.success = true
