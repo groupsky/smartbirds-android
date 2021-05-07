@@ -188,7 +188,7 @@ public class DataService extends Service {
         setMonitoring(null);
         bus.postSticky(new MonitoringCanceledEvent());
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
-        
+
         bus.removeStickyEvent(event);
         stopSelf();
     }
@@ -222,12 +222,15 @@ public class DataService extends Service {
 
     public void onEvent(EntrySubmitted event) {
         Log.d(TAG, "onEntrySubmitted");
-
-        if (event.entryId > 0) {
-            monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
-            DataOpsService_.intent(this).generateMonitoringFiles(event.monitoringCode).start();
-        } else {
-            monitoringManager.newEntry(monitoring, event.entryType, event.data);
+        try {
+            if (event.entryId > 0) {
+                monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
+                DataOpsService_.intent(this).generateMonitoringFiles(event.monitoringCode).start();
+            } else {
+                monitoringManager.newEntry(monitoring, event.entryType, event.data);
+            }
+        } catch (Throwable t) {
+            Reporting.logException("Unable to persist entry", t);
         }
     }
 
