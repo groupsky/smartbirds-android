@@ -203,6 +203,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         public void onServiceDisconnected(ComponentName name) {
             if (!MonitoringActivity.this.isFinishing()) {
                 logException(new IllegalStateException("Disconnected from the service when activity is not finishing"));
+                finish();
             }
             Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
         }
