@@ -443,8 +443,6 @@ open class MainFragment : Fragment() {
     }
 
     private fun doCancel() {
-        monitoringPrefs.edit().clear().apply()
-        requireActivity().getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply()
         bus.postSticky(CancelMonitoringEvent())
     }
 

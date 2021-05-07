@@ -46,6 +46,7 @@ import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.events.UserDataEvent;
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.tools.GpxWriter;
@@ -95,6 +96,9 @@ public class DataService extends Service {
 
     @Pref
     UserPrefs_ userPrefs;
+
+    @Pref
+    MonitoringPrefs_ monitoringPrefs;
 
     Monitoring monitoring = null;
 
@@ -186,6 +190,8 @@ public class DataService extends Service {
         }
         globalPrefs.pausedMonitoring().put(false);
         setMonitoring(null);
+        monitoringPrefs.edit().clear().apply();
+        getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit().clear().apply()
         bus.postSticky(new MonitoringCanceledEvent());
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
 
