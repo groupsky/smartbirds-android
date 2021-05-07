@@ -233,8 +233,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         super.onCreate(savedInstanceState);
-        DataService_.intent(this).start();
         try {
+            bindService(DataService_.intent(this).get(), this, BIND_AUTO_CREATE);
             bindService(new TrackingServiceBuilder(this).getIntent(), this, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {
             logException(t);
