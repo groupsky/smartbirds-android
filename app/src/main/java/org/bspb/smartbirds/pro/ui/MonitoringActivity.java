@@ -607,6 +607,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     }
 
     public void onEventMainThread(ActiveMonitoringEvent event) {
+        if (event.monitoring == null) {
+            logException(new IllegalStateException("Receive null monitoring as active monitoring."));
+            finish();
+            return;
+        }
         this.monitoringCode = event.monitoring != null ? event.monitoring.code : null;
         setupList();
     }
