@@ -66,9 +66,4 @@ public class SmartBirdsApplication extends Application {
     public void onEvent(ResumeMonitoringEvent event) {
         DataService_.intent(this).start();
     }
-
-    public void onEvent(CancelMonitoringEvent event) {
-        DataService_.intent(this).stop();
-    }
-
 }
