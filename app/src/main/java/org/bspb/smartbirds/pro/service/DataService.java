@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.text.TextUtils;
@@ -84,6 +85,8 @@ public class DataService extends Service {
         GPX_DATE_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
+    private IBinder binder = new Binder();
+
     @Bean
     EEventBus bus;
 
@@ -117,7 +120,7 @@ public class DataService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return binder;
     }
 
     @AfterInject
