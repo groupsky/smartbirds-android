@@ -175,7 +175,6 @@ public class DataService extends Service {
 
     public void onEvent(@SuppressWarnings("UnusedParameters") CancelMonitoringEvent event) {
         Log.d(TAG, "onCancelMonitoringEvent...");
-        bus.removeStickyEvent(event);
 
         if (isMonitoring()) {
             monitoringManager.updateStatus(monitoring, canceled);
@@ -189,7 +188,8 @@ public class DataService extends Service {
         setMonitoring(null);
         bus.postSticky(new MonitoringCanceledEvent());
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
-
+        
+        bus.removeStickyEvent(event);
         stopSelf();
     }
 

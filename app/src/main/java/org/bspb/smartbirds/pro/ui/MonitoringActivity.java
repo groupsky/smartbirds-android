@@ -47,6 +47,7 @@ import org.bspb.smartbirds.pro.beans.ZonesModelEntries;
 import org.bspb.smartbirds.pro.collections.IterableConverter;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
+import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.FinishMonitoringEvent;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
@@ -613,6 +614,11 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     public void onEvent(MonitoringResumedEvent event) {
         eventBus.removeStickyEvent(ResumeMonitoringEvent.class);
         eventBus.removeStickyEvent(MonitoringResumedEvent.class);
+    }
+
+    public void onEvent(CancelMonitoringEvent event) {
+        logException(new IllegalStateException("Receive cancelMonitoring event while in monitoring"));
+        finish();
     }
 
     void startNewEntryWithoutAsking(final LatLng position) {
