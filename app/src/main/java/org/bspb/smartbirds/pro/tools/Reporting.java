@@ -18,4 +18,9 @@ public class Reporting {
         FirebaseCrashlytics.getInstance().recordException(t);
     }
 
+    public static void logException(String message, Throwable t) {
+        Log.d(TAG, message, t);
+        FirebaseCrashlytics.getInstance().recordException(t);
+    }
+
 }

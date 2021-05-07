@@ -47,6 +47,7 @@ import org.bspb.smartbirds.pro.events.SetMonitoringCommonData;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.events.UserDataEvent;
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.tools.GpxWriter;
@@ -98,6 +99,9 @@ public class DataService extends Service {
 
     @Pref
     UserPrefs_ userPrefs;
+
+    @Pref
+    MonitoringPrefs_ monitoringPrefs;
 
     Monitoring monitoring = null;
 
@@ -189,8 +193,13 @@ public class DataService extends Service {
         }
         globalPrefs.pausedMonitoring().put(false);
         setMonitoring(null);
+        monitoringPrefs.edit().clear().apply();
+        getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit().clear().apply();
         bus.postSticky(new MonitoringCanceledEvent());
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
+
+        bus.removeStickyEvent(event);
+        stopSelf();
     }
 
     public void onEvent(SetMonitoringCommonData event) {
@@ -222,12 +231,16 @@ public class DataService extends Service {
 
     public void onEvent(EntrySubmitted event) {
         Log.d(TAG, "onEntrySubmitted");
-
-        if (event.entryId > 0) {
-            monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
-            DataOpsService_.intent(this).generateMonitoringFiles(event.monitoringCode).start();
-        } else {
-            monitoringManager.newEntry(monitoring, event.entryType, event.data);
+        try {
+            if (event.entryId > 0) {
+                monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
+                DataOpsService_.intent(this).generateMonitoringFiles(event.monitoringCode).start();
+            } else {
+                monitoringManager.newEntry(monitoring, event.entryType, event.data);
+            }
+        } catch (Throwable t) {
+            Reporting.logException("Unable to persist entry", t);
+            Toast.makeText(this, "Could not persist monitoring entry!", Toast.LENGTH_SHORT).show();
         }
     }
 

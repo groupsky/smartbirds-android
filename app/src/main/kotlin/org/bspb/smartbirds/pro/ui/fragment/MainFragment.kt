@@ -30,12 +30,12 @@ import com.google.android.material.snackbar.Snackbar
 import org.androidannotations.annotations.*
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.service.DataService_
 import org.bspb.smartbirds.pro.service.ExportService_
 import org.bspb.smartbirds.pro.service.SyncService
 import org.bspb.smartbirds.pro.service.SyncService_
@@ -104,7 +104,8 @@ open class MainFragment : Fragment() {
         val intentFilter = IntentFilter()
         intentFilter.addAction(SyncService.ACTION_SYNC_COMPLETED)
         intentFilter.addAction(SyncService.ACTION_SYNC_PROGRESS)
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(syncBroadcastReceiver, intentFilter)
+        LocalBroadcastManager.getInstance(requireContext())
+            .registerReceiver(syncBroadcastReceiver, intentFilter)
 
         bus.registerSticky(this)
         if (SyncService.isWorking) {
@@ -120,11 +121,16 @@ open class MainFragment : Fragment() {
 
     override fun onStop() {
         bus.unregister(this)
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(syncBroadcastReceiver)
+        LocalBroadcastManager.getInstance(requireContext())
+            .unregisterReceiver(syncBroadcastReceiver)
         super.onStop()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             REQUEST_LOCATION, REQUEST_STORAGE -> {
                 var granted = true
@@ -133,7 +139,8 @@ open class MainFragment : Fragment() {
                     break
                 }
                 if (!granted) {
-                    Toast.makeText(activity, R.string.permissions_required, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.permissions_required, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -177,15 +184,20 @@ open class MainFragment : Fragment() {
     @Click(R.id.btn_battery_optimization)
     open fun showBatteryOptimizationDialog() {
         AlertDialog.Builder(activity)
-                .setTitle(getString(R.string.battery_optimization_title))
-                .setMessage(getString(R.string.battery_optimization_message))
-                .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
-                .show()
+            .setTitle(getString(R.string.battery_optimization_title))
+            .setMessage(getString(R.string.battery_optimization_message))
+            .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     @OptionsItem(R.id.menu_export)
     open fun exportBtnClicked() {
-        exportDialog = ProgressDialog.show(activity, getString(R.string.export_dialog_title), getString(R.string.export_dialog_text), true)
+        exportDialog = ProgressDialog.show(
+            activity,
+            getString(R.string.export_dialog_title),
+            getString(R.string.export_dialog_text),
+            true
+        )
         ExportService_.intent(activity).prepareForExport().start()
     }
 
@@ -224,8 +236,10 @@ open class MainFragment : Fragment() {
             if (drawable == null) {
                 Reporting.logException(IllegalArgumentException("Unknown image: $s"))
             } else {
-                drawable.setBounds(0, 0, (drawable.intrinsicWidth * density).toInt(),
-                        (drawable.intrinsicHeight * density).toInt())
+                drawable.setBounds(
+                    0, 0, (drawable.intrinsicWidth * density).toInt(),
+                    (drawable.intrinsicHeight * density).toInt()
+                )
             }
             drawable!!
         }, null)
@@ -307,7 +321,8 @@ open class MainFragment : Fragment() {
 
     @Background
     open fun showNotSyncedCount() {
-        val notSyncedCount: Int = monitoringManager.countMonitoringsForStatus(Monitoring.Status.finished)
+        val notSyncedCount: Int =
+            monitoringManager.countMonitoringsForStatus(Monitoring.Status.finished)
         displayNotSyncedCount(notSyncedCount)
     }
 
@@ -345,7 +360,12 @@ open class MainFragment : Fragment() {
             sb.append("<ul>")
             sb.append(UploadManager.errors.joinToString("") { "<li>$it</li>" })
             sb.append("</ul>")
-            context?.showAlert(getString(R.string.sync_dialog_error_title), HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_COMPACT), null, null)
+            context?.showAlert(
+                getString(R.string.sync_dialog_error_title),
+                HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_COMPACT),
+                null,
+                null
+            )
         }
     }
 
@@ -389,28 +409,48 @@ open class MainFragment : Fragment() {
     }
 
     private fun locationPermissionsGranted(): Boolean {
-        if (ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(requireActivity(), permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             return true
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return false
         }
-        val permissions = mutableListOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
+        val permissions =
+            mutableListOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             permissions += permission.ACCESS_BACKGROUND_LOCATION
         }
 
-        context?.showAlert(R.string.location_permission_alert_title, R.string.location_permission_alert_message, DialogInterface.OnClickListener { _, _ ->
-            requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
-        }, null)
+        context?.showAlert(
+            R.string.location_permission_alert_title,
+            R.string.location_permission_alert_message,
+            DialogInterface.OnClickListener { _, _ ->
+                requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
+            },
+            null
+        )
 
         return false
     }
 
     private fun storagePermissionsGranted(): Boolean {
-        if (ContextCompat.checkSelfPermission(requireActivity(), permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(requireActivity(), permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             return true
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -418,15 +458,31 @@ open class MainFragment : Fragment() {
         }
         if (shouldShowRequestPermissionRationale(permission.WRITE_EXTERNAL_STORAGE)) {
             try {
-                Snackbar.make(btnStartBirds, R.string.storage_permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(android.R.string.ok) { requestPermissions(arrayOf(permission.WRITE_EXTERNAL_STORAGE, permission.READ_EXTERNAL_STORAGE), REQUEST_STORAGE) }.show()
+                Snackbar.make(
+                    btnStartBirds,
+                    R.string.storage_permission_rationale,
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                    .setAction(android.R.string.ok) {
+                        requestPermissions(
+                            arrayOf(
+                                permission.WRITE_EXTERNAL_STORAGE,
+                                permission.READ_EXTERNAL_STORAGE
+                            ), REQUEST_STORAGE
+                        )
+                    }.show()
                 return false
             } catch (t: Throwable) {
                 // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
                 Reporting.logException(t)
             }
         }
-        requestPermissions(arrayOf(permission.WRITE_EXTERNAL_STORAGE, permission.READ_EXTERNAL_STORAGE), REQUEST_STORAGE)
+        requestPermissions(
+            arrayOf(
+                permission.WRITE_EXTERNAL_STORAGE,
+                permission.READ_EXTERNAL_STORAGE
+            ), REQUEST_STORAGE
+        )
         Toast.makeText(activity, R.string.storage_permission_rationale, Toast.LENGTH_SHORT).show()
         return false
     }
@@ -434,17 +490,16 @@ open class MainFragment : Fragment() {
     private fun confirmCancel() {
         //Ask the user if they want to quit
         AlertDialog.Builder(activity)
-                .setIcon(R.drawable.ic_alert)
-                .setTitle(R.string.cancel_monitoring)
-                .setMessage(R.string.really_cancel_monitoring)
-                .setPositiveButton(android.R.string.yes) { _, _ -> doCancel() }
-                .setNegativeButton(android.R.string.no, null)
-                .show()
+            .setIcon(R.drawable.ic_alert)
+            .setTitle(R.string.cancel_monitoring)
+            .setMessage(R.string.really_cancel_monitoring)
+            .setPositiveButton(android.R.string.yes) { _, _ -> doCancel() }
+            .setNegativeButton(android.R.string.no, null)
+            .show()
     }
 
     private fun doCancel() {
-        monitoringPrefs.edit().clear().apply()
-        requireActivity().getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply()
+        DataService_.intent(context).start()
         bus.postSticky(CancelMonitoringEvent())
     }
 

@@ -70,5 +70,4 @@ public class SmartBirdsApplication extends Application {
     public void onEvent(CancelMonitoringEvent event) {
         DataService_.intent(this).stop();
     }
-
 }
