@@ -89,7 +89,7 @@ import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity implements ServiceConnection, MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, ZonesModelEntries.Listener, MapProvider.MarkerClickListener {
+public class MonitoringActivity extends BaseActivity implements MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, ZonesModelEntries.Listener, MapProvider.MarkerClickListener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -181,6 +181,29 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     private Set<String> formsEnabled;
     private Menu menu;
 
+    private ServiceConnection trackingServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "service %s connected", name));
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
+        }
+    };
+
+    private ServiceConnection dataServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "service %s connected", name));
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
+        }
+    };
 
     @AfterInject
     protected void initProviders() {
@@ -234,8 +257,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         super.onCreate(savedInstanceState);
         try {
-            bindService(DataService_.intent(this).get(), this, BIND_AUTO_CREATE);
-            bindService(new TrackingServiceBuilder(this).getIntent(), this, BIND_ABOVE_CLIENT);
+            bindService(DataService_.intent(this).get(), trackingServiceConnection, BIND_AUTO_CREATE);
+            bindService(new TrackingServiceBuilder(this).getIntent(), dataServiceConnection, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {
             logException(t);
         }
@@ -269,7 +292,8 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
     @Override
     protected void onDestroy() {
         try {
-            unbindService(this);
+            unbindService(trackingServiceConnection);
+            unbindService(dataServiceConnection);
         } catch (Throwable t) {
             logException(t);
         }
@@ -792,16 +816,6 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
         canceled = true;
         monitoringPrefs.edit().clear().apply();
         getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, Context.MODE_PRIVATE).edit().clear().apply();
-    }
-
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-        Log.d(TAG, String.format(Locale.ENGLISH, "service %s connected", name));
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-        Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
     }
 
     @Override
