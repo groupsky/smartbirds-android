@@ -191,7 +191,7 @@ public class DataService extends Service {
         globalPrefs.pausedMonitoring().put(false);
         setMonitoring(null);
         monitoringPrefs.edit().clear().apply();
-        getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit().clear().apply()
+        getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit().clear().apply();
         bus.postSticky(new MonitoringCanceledEvent());
         Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show();
 
@@ -237,6 +237,7 @@ public class DataService extends Service {
             }
         } catch (Throwable t) {
             Reporting.logException("Unable to persist entry", t);
+            Toast.makeText(this, "Could not persist monitoring entry!", Toast.LENGTH_SHORT).show();
         }
     }
 
