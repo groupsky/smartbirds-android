@@ -612,7 +612,7 @@ public class MonitoringActivity extends BaseActivity implements ServiceConnectio
             finish();
             return;
         }
-        this.monitoringCode = event.monitoring != null ? event.monitoring.code : null;
+        this.monitoringCode = event.monitoring.code;
         setupList();
     }
 
