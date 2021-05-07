@@ -201,6 +201,9 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            if (!MonitoringActivity.this.isFinishing()) {
+                logException(new IllegalStateException("Disconnected from the service when activity is not finishing"));
+            }
             Log.d(TAG, String.format(Locale.ENGLISH, "service %s disconnected", name));
         }
     };
