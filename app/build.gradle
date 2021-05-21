@@ -32,6 +32,13 @@ android {
 
         def buildTime = new GregorianCalendar().format("MM-dd-yyyy' 'HH:mm:ss Z")
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+
+        // default runner for instrumentation tests (androidTest)
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
     signingConfigs {
         release {
@@ -89,6 +96,15 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
+    testOptions {
+        // enable android orchestrator for isolated tests
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        // allows usage of android resources in rebolectric tests
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -134,4 +150,15 @@ dependencies {
     implementation 'net.simonvt.schematic:schematic:0.7.0'
 
     implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
+
+
+    // Instrumentation testing
+    androidTestUtil 'androidx.test:orchestrator:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    // Optional -- UI testing with Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // mock server for backend
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.3.0'
 }
