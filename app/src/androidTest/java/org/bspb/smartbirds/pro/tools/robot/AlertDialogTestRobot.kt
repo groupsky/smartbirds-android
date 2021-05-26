@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.tools
 
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -20,10 +21,10 @@ class AlertDialogTestRobot : AlertDialogRobot {
         }
     }
 
-    fun isDisplayed(@StringRes resource: Int) =
+    fun isDisplayed(@StringRes resource: Int): ViewInteraction =
         onView(withText(resource)).check(matches(ViewMatchers.isDisplayed()))
 
-    fun button1() = onView(withId(android.R.id.button1))
-    fun button2() = onView(withId(android.R.id.button2))
-    fun button3() = onView(withId(android.R.id.button3))
+    fun button1(): ViewInteraction = onView(withId(android.R.id.button1))
+    fun button(): ViewInteraction = onView(withId(android.R.id.button2))
+    fun button3(): ViewInteraction = onView(withId(android.R.id.button3))
 }

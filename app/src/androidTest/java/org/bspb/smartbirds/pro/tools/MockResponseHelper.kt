@@ -1,10 +1,7 @@
 package org.bspb.smartbirds.pro.tools
 
 import okhttp3.mockwebserver.MockResponse
-import org.bspb.smartbirds.pro.backend.dto.LoginResponse
-import org.bspb.smartbirds.pro.backend.dto.Nomenclature
-import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope
-import org.bspb.smartbirds.pro.backend.dto.User
+import org.bspb.smartbirds.pro.backend.dto.*
 
 class MockResponseHelper {
 
@@ -24,6 +21,13 @@ class MockResponseHelper {
             nomenclaturesResponse.count = 0
             nomenclaturesResponse.data = ArrayList()
             return MockResponse().setBody(parser.toJson(nomenclaturesResponse))
+        }
+
+        fun prepareUploadFileResponse(): MockResponse {
+            var parser = SBGsonParser.createParser()
+            var uploadResponse = ResponseEnvelope<FileId>()
+            uploadResponse.data = FileId()
+            return MockResponse().setBody(parser.toJson(uploadResponse))
         }
     }
 }

@@ -49,9 +49,9 @@ class LoginActivityTest {
 
         loginScreen {
             isDisplayed()
-            usernameInput().perform(typeText("user@smartbirds.org"))
-            passwordInput().perform(typeText("Secret1!"))
-            loginButton().perform(scrollTo(), click())
+            fieldUsername().perform(typeText("user@smartbirds.org"))
+            fieldPassword().perform(typeText("Secret1!"))
+            buttonLogin().perform(scrollTo(), click())
         }
 
         alertDialog {

@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.tools
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -18,11 +19,11 @@ class LoginTestRobot : LoginRobot {
         }
     }
 
-    fun isDisplayed() =
+    fun isDisplayed(): ViewInteraction =
         toolbarWithTitle(R.string.title_activity_login).check(matches(ViewMatchers.isDisplayed()))
 
-    fun usernameInput() = onView(withHint(R.string.prompt_email))
-    fun passwordInput() = onView(withHint(R.string.prompt_password))
-    fun gdprCheck() = onView(withText(R.string.gdpr_agree_checkbox))
-    fun loginButton() = onView(withId(R.id.email_sign_in_button))
+    fun fieldUsername(): ViewInteraction = onView(withHint(R.string.prompt_email))
+    fun fieldPassword(): ViewInteraction = onView(withHint(R.string.prompt_password))
+    fun gdprCheck(): ViewInteraction = onView(withText(R.string.gdpr_agree_checkbox))
+    fun buttonLogin(): ViewInteraction = onView(withId(R.id.email_sign_in_button))
 }
