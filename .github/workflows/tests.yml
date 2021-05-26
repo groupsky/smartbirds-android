@@ -19,4 +19,4 @@ jobs:
           api-level: 29
           target: google_apis
           profile: pixel_3a
-          script: ./gradlew connectedCheck
+          script: ./runTests.sh
