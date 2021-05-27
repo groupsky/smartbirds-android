@@ -43,14 +43,18 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                        android:id="@+id/form_cbm_name"
+<!--                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_-->
+<!--                        android:id="@+id/form_cbm_name"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="@string/monitoring_cbm_name"-->
+<!--                        android:tag="@string/tag_observed_bird"-->
+<!--                        app:entriesType="species_birds"-->
+<!--                        app:required="true" />-->
+
+                    <org.bspb.smartbirds.pro.ui.views.FormCbmExtendedContainer
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_cbm_name"
-                        android:tag="@string/tag_observed_bird"
-                        app:entriesType="species_birds"
-                        app:required="true" />
+                        android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </TableRow>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/shortcut_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/monitoring_cbm_shortcuts_default_label"/>
+
+        <Button
+            android:id="@+id/shortcut_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/monitoring_cbm_shortcuts_default_label"/>
+    </LinearLayout>
+
+    <org.bspb.smartbirds.pro.ui.views.SingleChoiceExtendedFormInput_
+        android:id="@+id/form_cbm_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/monitoring_cbm_name"
+        android:tag="@string/tag_observed_bird"
+        app:entriesType="species_birds"
+        app:required="true" />
+
+</LinearLayout>

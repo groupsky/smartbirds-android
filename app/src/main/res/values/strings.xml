@@ -98,6 +98,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_cbm_name">"Observed bird"</string>
     <string name="monitoring_cbm_distance">"Distance"</string>
     <string name="monitoring_cbm_count">"Count"</string>
+    <string name="monitoring_cbm_shortcuts_default_label">"Unassigned"</string>
     <string name="monitoring_ciconia_substratum">"Substrate"</string>
     <string name="monitoring_ciconia_column">"Pylon"</string>
     <string name="monitoring_ciconia_nest_artificial">"Nest on artificial platform"</string>
