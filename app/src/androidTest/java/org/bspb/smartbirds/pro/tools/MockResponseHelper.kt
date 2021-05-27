@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.tools
 
+import com.google.gson.JsonObject
 import okhttp3.mockwebserver.MockResponse
 import org.bspb.smartbirds.pro.backend.dto.*
 
@@ -27,6 +28,13 @@ class MockResponseHelper {
             var parser = SBGsonParser.createParser()
             var uploadResponse = ResponseEnvelope<FileId>()
             uploadResponse.data = FileId()
+            return MockResponse().setBody(parser.toJson(uploadResponse))
+        }
+
+        fun prepareUploadFormRespons(): MockResponse {
+            var parser = SBGsonParser.createParser()
+            var uploadResponse = UploadFormResponse()
+            uploadResponse.data = JsonObject()
             return MockResponse().setBody(parser.toJson(uploadResponse))
         }
     }

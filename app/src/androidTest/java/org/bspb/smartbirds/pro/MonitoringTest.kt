@@ -56,7 +56,7 @@ class MonitoringTest {
     val locationRule = MockLocationRule()
 
     @Before
-    fun prepareTests() {
+    fun setUp() {
         var activity: Activity? = null
         activityRule.scenario.onActivity {
             activity = it
@@ -143,13 +143,19 @@ class MonitoringTest {
         }
 
         // Upload record
-        // mock gpx upload response
+        // mock sync responses. We need to enqueue all the response, so the sync dialog can disappear.
+        // Otherwise the test freezes.
+        val nomenclaturesResponse = MockResponseHelper.prepareNomenclatureResponse()
         mockApiRule.server.enqueue(MockResponseHelper.prepareUploadFileResponse())
+        mockApiRule.server.enqueue(MockResponseHelper.prepareUploadFormRespons())
+        mockApiRule.server.enqueue(MockResponseHelper.prepareSuccessLoginResponse())
+        mockApiRule.server.enqueue(nomenclaturesResponse)
+        mockApiRule.server.enqueue(nomenclaturesResponse)
+
         mainScreen {
             buttonSync().perform(click())
         }
         mockApiRule.server.takeRequest()
-
         // Assert request
         val uploadBirdsRequest = mockApiRule.server.takeRequest().requestUrl.toString()
         assertThat(uploadBirdsRequest, endsWith("/birds"))
