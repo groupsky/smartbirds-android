@@ -121,6 +121,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     // TODO: migrate to v3.x
     implementation 'de.greenrobot:eventbus:2.4.1'

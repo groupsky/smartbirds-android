@@ -1,11 +1,14 @@
 package org.bspb.smartbirds.pro.tools.rule
 
+import android.app.Activity
 import android.content.Context
 import android.location.Criteria
 import android.location.Location
 import android.location.LocationManager
 import android.os.SystemClock
 import androidx.test.core.app.ApplicationProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -16,6 +19,7 @@ class MockLocationRule : TestRule {
         private val providers = arrayListOf("gps", "network", "fused")
     }
 
+    private var fusedProvider: FusedLocationProviderClient? = null
     private lateinit var locationManager: LocationManager
 
     constructor() {
@@ -33,7 +37,11 @@ class MockLocationRule : TestRule {
 
 
                 providers.forEach {
-                    locationManager.removeTestProvider(it)
+                    try {
+                        locationManager.removeTestProvider(it)
+                    } catch (t: Throwable) {
+                    }
+
                     locationManager.addTestProvider(
                         it,
                         false,
@@ -48,7 +56,7 @@ class MockLocationRule : TestRule {
                     )
                     locationManager.setTestProviderEnabled(it, true)
                 }
-
+                updateLocation()
                 base?.evaluate()
 
                 providers.forEach {
@@ -70,8 +78,14 @@ class MockLocationRule : TestRule {
             location.accuracy = 0f
             location.elapsedRealtimeNanos = SystemClock.elapsedRealtimeNanos()
             locationManager.setTestProviderLocation(it, location)
+            fusedProvider?.setMockLocation(location)
         }
 
+    }
+
+    fun initFusedProvider(activity: Activity?) {
+        fusedProvider = LocationServices.getFusedLocationProviderClient(activity!!)
+        fusedProvider?.setMockMode(true)
     }
 
 }

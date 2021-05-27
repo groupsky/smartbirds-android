@@ -8,8 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.tools.toolbarWithTitle
-import org.bspb.smartbirds.pro.tools.withHint
-import org.hamcrest.Matchers
+import org.bspb.smartbirds.pro.tools.withHintParentOrOwn
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.instanceOf
 
@@ -27,10 +26,10 @@ class BirdsFormTestRobot : BirdsFormRobot {
     fun isDisplayed(): ViewInteraction =
         toolbarWithTitle(R.string.entry_type_birds).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 
-    fun fieldSpecies(): ViewInteraction = onView(withHint(R.string.monitoring_birds_name))
-    fun fieldCountUnit(): ViewInteraction = onView(withHint(R.string.monitoring_birds_count_unit))
-    fun fieldCountType(): ViewInteraction = onView(withHint(R.string.monitoring_birds_count_type))
-    fun fieldCount(): ViewInteraction = onView(withHint(R.string.monitoring_birds_count))
+    fun fieldSpecies(): ViewInteraction = onView(withHintParentOrOwn(R.string.monitoring_birds_name))
+    fun fieldCountUnit(): ViewInteraction = onView(withHintParentOrOwn(R.string.monitoring_birds_count_unit))
+    fun fieldCountType(): ViewInteraction = onView(withHintParentOrOwn(R.string.monitoring_birds_count_type))
+    fun fieldCount(): ViewInteraction = onView(withHintParentOrOwn(R.string.monitoring_birds_count))
     fun buttonSave(): ViewInteraction =
         onView(allOf(instanceOf(Button::class.java), withText(R.string.menu_entry_save)))
 

@@ -5,11 +5,11 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
-import org.bspb.smartbirds.pro.tools.AlertDialogTestRobot.Companion.alertDialog
-import org.bspb.smartbirds.pro.tools.LoginTestRobot.Companion.loginScreen
-import org.bspb.smartbirds.pro.tools.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareNomenclatureResponse
 import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareSuccessLoginResponse
+import org.bspb.smartbirds.pro.tools.robot.AlertDialogTestRobot.Companion.alertDialog
+import org.bspb.smartbirds.pro.tools.robot.LoginTestRobot.Companion.loginScreen
+import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
 import org.bspb.smartbirds.pro.ui.LoginActivity_
 import org.junit.Rule
@@ -50,13 +50,13 @@ class LoginActivityTest {
         loginScreen {
             isDisplayed()
             fieldUsername().perform(typeText("user@smartbirds.org"))
-            fieldPassword().perform(typeText("Secret1!"))
+            fieldPassword().perform(typeText("Secret1!"), closeSoftKeyboard())
             buttonLogin().perform(scrollTo(), click())
         }
 
         alertDialog {
             isDisplayed(R.string.battery_optimization_title)
-            button1().perform(scrollTo(), click())
+            button1().perform(click())
         }
 
         mainScreen {

@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro
 
+import android.app.Activity
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onData
@@ -7,11 +8,11 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.bspb.smartbirds.pro.tools.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.MockResponseHelper
 import org.bspb.smartbirds.pro.tools.nomenclatureWithLabel
 import org.bspb.smartbirds.pro.tools.robot.BirdsFormTestRobot.Companion.birdsScreen
 import org.bspb.smartbirds.pro.tools.robot.CommonFormTestRobot.Companion.commonFormScreen
+import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
@@ -21,6 +22,7 @@ import org.bspb.smartbirds.pro.ui.MainActivity_
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.endsWith
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -53,6 +55,15 @@ class MonitoringTest {
     @JvmField
     val locationRule = MockLocationRule()
 
+    @Before
+    fun prepareTests() {
+        var activity: Activity? = null
+        activityRule.scenario.onActivity {
+            activity = it
+        }
+        locationRule.initFusedProvider(activity)
+    }
+
 
     @Test
     fun testSuccessMonitoring() {
@@ -66,7 +77,7 @@ class MonitoringTest {
         commonFormScreen {
             isDisplayed()
             // Wait a bit for the view to load the data
-            Thread.sleep(250)
+            Thread.sleep(500)
             fieldSource().perform(click())
         }
         singleChoiceDialog {
@@ -82,6 +93,7 @@ class MonitoringTest {
             isDisplayed()
             Thread.sleep(250)
             locationRule.updateLocation()
+
             // Wait
             Thread.sleep(1000)
             buttonFabAddEntry().perform(click())
@@ -131,7 +143,6 @@ class MonitoringTest {
         }
 
         // Upload record
-
         // mock gpx upload response
         mockApiRule.server.enqueue(MockResponseHelper.prepareUploadFileResponse())
         mainScreen {
