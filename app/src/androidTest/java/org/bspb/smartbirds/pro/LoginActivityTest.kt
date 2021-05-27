@@ -11,6 +11,7 @@ import org.bspb.smartbirds.pro.tools.robot.AlertDialogTestRobot.Companion.alertD
 import org.bspb.smartbirds.pro.tools.robot.LoginTestRobot.Companion.loginScreen
 import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
+import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
 import org.bspb.smartbirds.pro.ui.LoginActivity_
 import org.junit.Rule
 import org.junit.Test
@@ -33,6 +34,10 @@ class LoginActivityTest {
     val permissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(READ_CONTACTS)
 
+    @Rule
+    @JvmField
+    val batteryNotificationRule = SmartbirdsStateRule.setBatteryNotification(true)
+
     @Test
     fun testLoginSuccess() {
         val loginResponse = prepareSuccessLoginResponse()
@@ -52,11 +57,6 @@ class LoginActivityTest {
             fieldUsername().perform(typeText("user@smartbirds.org"))
             fieldPassword().perform(typeText("Secret1!"), closeSoftKeyboard())
             buttonLogin().perform(scrollTo(), click())
-        }
-
-        alertDialog {
-            isDisplayed(R.string.battery_optimization_title)
-            button1().perform(click())
         }
 
         mainScreen {
