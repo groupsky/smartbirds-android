@@ -16,6 +16,6 @@ jobs:
       - name: run tests
         uses: ReactiveCircus/android-emulator-runner@v2.17.0
         with:
-          api-level: 29
+          api-level: 23
           target: google_apis
           script: ./ciRunTests.sh
