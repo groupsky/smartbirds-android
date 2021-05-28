@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro
 
+import android.Manifest.permission
 import android.Manifest.permission.READ_CONTACTS
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -7,15 +8,17 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareNomenclatureResponse
 import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareSuccessLoginResponse
-import org.bspb.smartbirds.pro.tools.robot.AlertDialogTestRobot.Companion.alertDialog
 import org.bspb.smartbirds.pro.tools.robot.LoginTestRobot.Companion.loginScreen
 import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
+import org.bspb.smartbirds.pro.tools.rule.ScreenshotTestRule
 import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
 import org.bspb.smartbirds.pro.ui.LoginActivity_
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest {
@@ -37,6 +40,12 @@ class LoginActivityTest {
     @Rule
     @JvmField
     val batteryNotificationRule = SmartbirdsStateRule.setBatteryNotification(true)
+
+    @Rule
+    @JvmField
+    var screenshotRule = RuleChain
+            .outerRule(GrantPermissionRule.grant(permission.WRITE_EXTERNAL_STORAGE))
+            .around(ScreenshotTestRule())
 
     @Test
     fun testLoginSuccess() {

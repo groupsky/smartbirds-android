@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -8,6 +9,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import org.bspb.smartbirds.pro.tools.MockResponseHelper
 import org.bspb.smartbirds.pro.tools.nomenclatureWithLabel
 import org.bspb.smartbirds.pro.tools.robot.BirdsFormTestRobot.Companion.birdsScreen
@@ -17,6 +19,7 @@ import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitor
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
 import org.bspb.smartbirds.pro.tools.rule.MockLocationRule
+import org.bspb.smartbirds.pro.tools.rule.ScreenshotTestRule
 import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
 import org.bspb.smartbirds.pro.ui.MainActivity_
 import org.hamcrest.MatcherAssert.assertThat
@@ -25,6 +28,7 @@ import org.hamcrest.Matchers.endsWith
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -54,6 +58,12 @@ class MonitoringTest {
     @Rule
     @JvmField
     val locationRule = MockLocationRule()
+
+    @Rule
+    @JvmField
+    var screenshotRule = RuleChain
+            .outerRule(GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            .around(ScreenshotTestRule())
 
     @Before
     fun setUp() {
