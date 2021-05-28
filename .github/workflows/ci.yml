@@ -27,15 +27,3 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
-
-    - name: Get screenshots
-      run: |
-        mkdir screenshots
-        cd screenshots
-        adb pull storage/emulated/0/Android/data/org.bspb.smartbirds.pro/files/Pictures/espresso_screenshots
-
-    - name: publish screenshots
-      uses: actions/upload-artifact@v2
-      with:
-        name: screenshots
-        path: screenshots
