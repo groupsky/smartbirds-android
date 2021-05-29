@@ -25,4 +25,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: espresso_screenshots
-          path: espresso_screenshots
+          path: espresso_screenshots/*
