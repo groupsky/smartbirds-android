@@ -10,7 +10,7 @@ adb shell settings put global animator_duration_scale 0
 adb shell appops set org.bspb.smartbirds.pro android:mock_location allow
 
 # run the tests
-./gradlew connectedCheck --info --stacktrace
+./gradlew connectedCheck --stacktrace
 
 # need root to access the screenshots
 adb root
