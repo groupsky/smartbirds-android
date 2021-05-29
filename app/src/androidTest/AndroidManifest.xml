@@ -4,4 +4,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--  requestLegacyExternalStorage:true for writing screenshots to public storage on sdk 29+ (Q) -->
+    <application android:requestLegacyExternalStorage="true" />
 </manifest>

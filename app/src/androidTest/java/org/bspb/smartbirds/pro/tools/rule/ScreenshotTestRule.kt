@@ -27,6 +27,7 @@ class ScreenshotTestRule : TestWatcher() {
         processors.add(CustomScreenCaptureProcessor())
         try {
             capture.process(processors)
+            println("Screenshot saved in "+capture.name)
         } catch (e: IOException) {
             e.printStackTrace()
         }
