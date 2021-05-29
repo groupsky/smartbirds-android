@@ -1,4 +1,6 @@
-#!/usr/bin/env sh
+#!/bin/bash
+
+set -x +e
 
 # configure the emulator
 adb shell settings put global window_animation_scale 0
@@ -12,6 +14,5 @@ adb shell appops set org.bspb.smartbirds.pro android:mock_location allow
 # run the tests
 ./gradlew connectedCheck --stacktrace
 
-# need root to access the screenshots
-adb root
+# get the screenshots if any from the emulator so they can be inspected
 adb pull /storage/emulated/0/Pictures/org.bspb.smartbirds.pro/espresso_screenshots
