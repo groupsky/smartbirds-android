@@ -66,6 +66,7 @@ class LoginActivityTest {
             fieldUsername().perform(typeText("user@smartbirds.org"))
             fieldPassword().perform(typeText("Secret1!"), closeSoftKeyboard())
             buttonLogin().perform(scrollTo(), click())
+            isDisplayed()
         }
 
         mainScreen {
