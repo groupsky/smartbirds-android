@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.tools.rule
 
 import android.graphics.Bitmap
-import androidx.test.runner.screenshot.CustomScreenCaptureProcessor
+import org.bspb.smartbirds.pro.tools.screenshot.CustomScreenCaptureProcessor
 import androidx.test.runner.screenshot.ScreenCapture
 import androidx.test.runner.screenshot.ScreenCaptureProcessor
 import androidx.test.runner.screenshot.Screenshot
