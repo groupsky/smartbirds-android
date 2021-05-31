@@ -8,6 +8,8 @@ on:
 
 jobs:
   test:
+    # android emulator runs faster on macos
+    # ref: https://github.com/ReactiveCircus/android-emulator-runner#usage
     runs-on: macos-latest
     steps:
       - name: checkout
