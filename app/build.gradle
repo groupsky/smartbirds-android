@@ -101,10 +101,6 @@ android {
         animationsDisabled = true
         // enable android orchestrator for isolated tests
         execution 'ANDROIDX_TEST_ORCHESTRATOR'
-        // allows usage of android resources in rebolectric tests
-        unitTests {
-            includeAndroidResources = true
-        }
     }
 }
 
