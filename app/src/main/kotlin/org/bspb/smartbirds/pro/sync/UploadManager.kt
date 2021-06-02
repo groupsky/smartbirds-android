@@ -54,9 +54,11 @@ open class UploadManager {
     @Bean
     protected lateinit var monitoringManager: MonitoringManager
 
-    protected var tagLatitude: String = "latitude"
+    @StringRes(R.string.tag_lat)
+    protected lateinit var tagLatitude: String
 
-    protected var tagLongitude: String = "longitude"
+    @StringRes(R.string.tag_lon)
+    protected lateinit var tagLongitude: String
 
     fun uploadAll() {
         Log.d(TAG, "uploading all finished monitorings")
