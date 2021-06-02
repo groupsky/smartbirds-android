@@ -96,11 +96,8 @@ class MonitoringTest {
         // Open birds form
         monitoringScreen {
             isDisplayed()
-            Thread.sleep(250)
             locationRule.updateLocation()
-
-            // Wait
-            Thread.sleep(1000)
+            
             buttonFabAddEntry().perform(click())
 
             onData(
