@@ -82,7 +82,7 @@ class MonitoringTest {
         commonFormScreen {
             isDisplayed()
             // Wait a bit for the view to load the data
-            Thread.sleep(500)
+            Thread.sleep(1000)
             fieldSource().perform(click())
         }
         singleChoiceDialog {
@@ -97,7 +97,7 @@ class MonitoringTest {
         monitoringScreen {
             isDisplayed()
             locationRule.updateLocation()
-            
+
             buttonFabAddEntry().perform(click())
 
             onData(
