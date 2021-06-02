@@ -41,3 +41,10 @@ jobs:
         with:
           name: espresso_screenshots_${{ matrix.api-level }}
           path: espresso_screenshots
+
+      - name: upload results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: instrumentation-test-results ${{ matrix.api-level }}
+          path: ./**/build/reports/androidTests/connected/**
