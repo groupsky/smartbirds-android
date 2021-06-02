@@ -22,4 +22,4 @@ set -e
 adb pull /storage/emulated/0/Android/data/org.bspb.smartbirds.pro/files/Pictures/espresso_screenshots || echo "No screenshots"
 
 # exit with the exit code from tests
-exit ret
+exit $ret
