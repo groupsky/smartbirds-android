@@ -19,7 +19,7 @@ ret=$?
 set -e
 
 # get the screenshots if any from the emulator so they can be inspected
-adb pull /storage/emulated/0/Android/data/org.bspb.smartbirds.pro/files/Pictures/espresso_screenshots || echo "No screenshots"
+adb pull /sdcard/Pictures/screenshots/org.bspb.smartbirds.pro/espresso_screenshots || echo "No screenshots"
 
 # exit with the exit code from tests
 exit $ret
