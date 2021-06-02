@@ -11,6 +11,9 @@ jobs:
     # android emulator runs faster on macos
     # ref: https://github.com/ReactiveCircus/android-emulator-runner#usage
     runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [ 23, 29, 30 ]
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -18,13 +21,14 @@ jobs:
       - name: run tests
         uses: ReactiveCircus/android-emulator-runner@v2.17.0
         with:
-          api-level: 23
+          api-level: ${{ matrix.api-level }}
           target: google_apis
+          arch: x86_64
           script: ./ciRunTests.sh
 
       - name: publish screenshots
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: espresso_screenshots
+          name: espresso_screenshots_${{ matrix.api-level }}
           path: espresso_screenshots
