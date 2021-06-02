@@ -25,11 +25,6 @@ class MockBackendRule : TestRule {
                 // replace retrofit proxy with our mock
                 Backend.backendBaseUrl =
                     "http://" + server.hostName + ":" + server.port
-//                                api = Mockito.mock(SmartBirdsApi.class);
-//                when(api.login(any())).then(invocation -> {
-//                    return new Call<LoginResponse>() {}
-//                })
-//                        .spy(Backend_.getInstance_(getApplicationContext()).api());
                 base?.evaluate()
             }
         }
