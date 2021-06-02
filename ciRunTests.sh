@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # stop on command error and print commands
-set -xe
+set -x
 
 # disable animations
 adb shell settings put global window_animation_scale 0
