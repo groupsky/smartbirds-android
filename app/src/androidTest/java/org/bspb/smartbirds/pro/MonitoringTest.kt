@@ -21,8 +21,7 @@ import org.bspb.smartbirds.pro.tools.rule.MockLocationRule
 import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
 import org.bspb.smartbirds.pro.ui.MainActivity_
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.endsWith
+import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -97,6 +96,9 @@ class MonitoringTest {
         monitoringScreen {
             isDisplayed()
             locationRule.updateLocation()
+
+            // Wait before pressing the button otherwise the test is failing sometimes on the CI
+            Thread.sleep(500)
 
             buttonFabAddEntry().perform(click())
 

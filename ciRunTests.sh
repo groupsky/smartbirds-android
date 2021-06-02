@@ -16,4 +16,4 @@ adb shell appops set org.bspb.smartbirds.pro android:mock_location allow
 ./gradlew connectedCheck --stacktrace
 
 # get the screenshots if any from the emulator so they can be inspected
-adb pull /sdcard/Pictures/screenshots/org.bspb.smartbirds.pro/espresso_screenshots || echo "No screenshots"
+adb pull /storage/emulated/0/Android/data/org.bspb.smartbirds.pro/files/Pictures/espresso_screenshots || echo "No screenshots"
