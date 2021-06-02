@@ -18,6 +18,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: generate cache key
+        run: ./checksum.sh checksum.txt
+
+      - name: restore cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ hashFiles('checksum.txt') }}
+
       - name: run tests
         uses: ReactiveCircus/android-emulator-runner@v2.17.0
         with:
