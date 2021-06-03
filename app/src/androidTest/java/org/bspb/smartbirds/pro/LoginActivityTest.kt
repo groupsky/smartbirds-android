@@ -65,6 +65,9 @@ class LoginActivityTest {
         }
 
         mainScreen {
+            // Wait for main screen to be shown
+            Thread.sleep(1000)
+            
             isDisplayed()
         }
     }
