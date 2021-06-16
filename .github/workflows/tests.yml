@@ -1,0 +1,51 @@
+name: Android CI Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    # android emulator runs faster on macos
+    # ref: https://github.com/ReactiveCircus/android-emulator-runner#usage
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [ 28 ]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: generate cache key
+        run: ./checksum.sh checksum.txt
+
+      - name: restore cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ hashFiles('checksum.txt') }}
+
+      - name: run tests
+        uses: ReactiveCircus/android-emulator-runner@v2.17.0
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: google_apis
+          arch: x86_64
+          cores: 4
+          script: ./ciRunTests.sh
+
+      - name: publish screenshots
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: espresso_screenshots_${{ matrix.api-level }}
+          path: espresso_screenshots
+
+      - name: upload results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: instrumentation-test-results ${{ matrix.api-level }}
+          path: ./**/build/reports/androidTests/connected/**

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.bspb.smartbirds.pro">
+
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <!-- Used for writing screenshots in /sdcard/Pictures -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- requestLegacyExternalStorage:true for writing screenshots to public storage on sdk 29 (Q) -->
+    <application android:requestLegacyExternalStorage="true" />
+</manifest>

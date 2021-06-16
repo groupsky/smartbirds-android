@@ -28,6 +28,7 @@ import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.*
@@ -97,11 +98,15 @@ open class UploadManager {
             monitoringManager.updateStatus(monitoringName, Monitoring.Status.uploaded)
         } catch (e: Throwable) {
             Reporting.logException(e)
-            Toast.makeText(context, String.format("""
+            Toast.makeText(
+                context, String.format(
+                    """
     Could not upload %s to server!
     You will need to manually export.
-    """.trimIndent(), monitoringName),
-                    Toast.LENGTH_SHORT).show()
+    """.trimIndent(), monitoringName
+                ),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -126,8 +131,15 @@ open class UploadManager {
                     errors.add(context.getString(R.string.sync_error_upload_file, subfile))
                 }
                 Reporting.logException(t)
-                Toast.makeText(context, String.format("Could not upload %s of %s to smartbirds.org!", subfile, monitoringName),
-                        Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    String.format(
+                        "Could not upload %s of %s to smartbirds.org!",
+                        subfile,
+                        monitoringName
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -145,10 +157,21 @@ open class UploadManager {
     }
 
     @Throws(Exception::class)
-    private fun uploadForm(monitoringName: String, base: File, filename: String, fileObjs: Map<String, JsonObject>) {
+    private fun uploadForm(
+        monitoringName: String,
+        base: File,
+        filename: String,
+        fileObjs: Map<String, JsonObject>
+    ) {
         for (entryType in EntryType.values()) {
             if (entryType.filename.equals(filename, ignoreCase = true)) {
-                uploadForm(monitoringName, File(base, filename), entryType.getConverter(context), entryType.uploader, fileObjs)
+                uploadForm(
+                    monitoringName,
+                    File(base, filename),
+                    entryType.getConverter(context),
+                    entryType.uploader,
+                    fileObjs
+                )
                 return
             }
         }
@@ -158,22 +181,35 @@ open class UploadManager {
     @Throws(IOException::class)
     private fun uploadFile(file: File): JsonObject {
         val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-        val body: MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        val body: MultipartBody.Part =
+            MultipartBody.Part.createFormData("file", file.name, requestFile)
         val call = backend.api().upload(body)
         val response = call.execute()
         if (!response.isSuccessful) {
             throw IOException("Server error: " + response.code() + " - " + response.message())
         }
         val fileObj = JsonObject()
-        fileObj.addProperty("url", String.format("%sstorage/%s", BuildConfig.BACKEND_BASE_URL, response.body()!!.data.id))
+        fileObj.addProperty(
+            "url",
+            String.format("%sstorage/%s", BuildConfig.BACKEND_BASE_URL, response.body()!!.data.id)
+        )
         return fileObj
     }
 
     @Throws(Exception::class)
-    private fun uploadForm(monitoringName: String, file: File, converter: Converter, uploader: Uploader, fileObjs: Map<String, JsonObject>) {
+    private fun uploadForm(
+        monitoringName: String,
+        file: File,
+        converter: Converter,
+        uploader: Uploader,
+        fileObjs: Map<String, JsonObject>
+    ) {
         val fis = FileInputStream(file)
         fis.use { fis ->
-            val csvReader = CSVReaderBuilder<Array<String>>(InputStreamReader(BufferedInputStream(fis))).strategy(CSVStrategy.DEFAULT).entryParser(SmartBirdsCSVEntryParser()).build()
+            val csvReader =
+                CSVReaderBuilder<Array<String>>(InputStreamReader(BufferedInputStream(fis))).strategy(
+                    CSVStrategy.DEFAULT
+                ).entryParser(SmartBirdsCSVEntryParser()).build()
             csvReader.use { csvReader ->
                 val header = csvReader.readHeader()
                 var hasErrors = false
@@ -193,6 +229,7 @@ open class UploadManager {
                     try {
                         check(!(data[tagLatitude].asDouble == 0.0 || data[tagLongitude].asDouble == 0.0))
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         Reporting.logException(IllegalStateException("Uploading entry with zero coordinates. $data"))
                     }
 
@@ -208,12 +245,18 @@ open class UploadManager {
                         val fileObj = fileObjs[filename]
                         if (fileObj == null) {
                             hasErrors = true
-                            val error = context.getString(R.string.sync_error_missing_image, filename, monitoringName)
+                            val error = context.getString(
+                                R.string.sync_error_missing_image,
+                                filename,
+                                monitoringName
+                            )
                             errors.add(error)
                             Reporting.logException(IllegalStateException(error))
-                            Toast.makeText(context,
-                                    error,
-                                    Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                error,
+                                Toast.LENGTH_SHORT
+                            ).show()
                             continue
                         }
                         pictures.add(fileObj)

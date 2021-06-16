@@ -35,11 +35,13 @@ public class Backend {
     public static final int HTTP_STATUS_FORBIDDEN = 403;
     public static final int HTTP_STATUS_NOT_FOUND = 404;
 
+    public static String backendBaseUrl = BuildConfig.BACKEND_BASE_URL;
+
     private List<Interceptor> interceptors = new LinkedList<>();
     private List<Interceptor> networkInterceptors = new LinkedList<>();
     private OkHttpClient client;
     private Retrofit retrofit;
-    SmartBirdsApi api;
+    private SmartBirdsApi api;
     private Gson gson;
 
     public Backend() {
@@ -76,9 +78,9 @@ public class Backend {
         gson = SBGsonParser.createParser();
 
         if (retrofit == null) {
-            Log.d(TAG, String.format("Backend base url: %s", BuildConfig.BACKEND_BASE_URL));
+            Log.d(TAG, String.format("Backend base url: %s", backendBaseUrl));
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.BACKEND_BASE_URL)
+                    .baseUrl(backendBaseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getClient())
                     .build();
