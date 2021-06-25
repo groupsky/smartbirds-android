@@ -20,4 +20,8 @@ public interface CbmPrefs {
 
     String speciesQuick4();
 
+    String speciesQuick5();
+
+    String speciesQuick6();
+
 }

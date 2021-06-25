@@ -24,6 +24,8 @@ class CbmQuickChoiceFormInput : FrameLayout {
     private lateinit var btnQuick2: Button
     private lateinit var btnQuick3: Button
     private lateinit var btnQuick4: Button
+    private lateinit var btnQuick5: Button
+    private lateinit var btnQuick6: Button
 
     private lateinit var nomenclatures: NomenclaturesBean
     private lateinit var prefs: CbmPrefs_
@@ -101,16 +103,22 @@ class CbmQuickChoiceFormInput : FrameLayout {
         btnQuick2 = findViewById(R.id.quick_2)
         btnQuick3 = findViewById(R.id.quick_3)
         btnQuick4 = findViewById(R.id.quick_4)
+        btnQuick5 = findViewById(R.id.quick_5)
+        btnQuick6 = findViewById(R.id.quick_6)
 
         btnQuick1.setOnClickListener(quickButtonsClickListener)
         btnQuick2.setOnClickListener(quickButtonsClickListener)
         btnQuick3.setOnClickListener(quickButtonsClickListener)
         btnQuick4.setOnClickListener(quickButtonsClickListener)
+        btnQuick5.setOnClickListener(quickButtonsClickListener)
+        btnQuick6.setOnClickListener(quickButtonsClickListener)
 
         btnQuick1.setOnLongClickListener(quickButtonsLongClickListener)
         btnQuick2.setOnLongClickListener(quickButtonsLongClickListener)
         btnQuick3.setOnLongClickListener(quickButtonsLongClickListener)
         btnQuick4.setOnLongClickListener(quickButtonsLongClickListener)
+        btnQuick5.setOnLongClickListener(quickButtonsLongClickListener)
+        btnQuick6.setOnLongClickListener(quickButtonsLongClickListener)
 
         hintView.hint = hint
 
@@ -131,6 +139,8 @@ class CbmQuickChoiceFormInput : FrameLayout {
         val quick2Pref = prefs.speciesQuick2().get()
         val quick3Pref = prefs.speciesQuick3().get()
         val quick4Pref = prefs.speciesQuick4().get()
+        val quick5Pref = prefs.speciesQuick5().get()
+        val quick6Pref = prefs.speciesQuick6().get()
 
         for (item in items) {
             if (item.label.labelId.equals(quick1Pref)) {
@@ -148,6 +158,14 @@ class CbmQuickChoiceFormInput : FrameLayout {
             if (item.label.labelId.equals(quick4Pref)) {
                 currentValues[R.id.quick_4] = NomenclatureItem(item)
             }
+
+            if (item.label.labelId.equals(quick5Pref)) {
+                currentValues[R.id.quick_5] = NomenclatureItem(item)
+            }
+
+            if (item.label.labelId.equals(quick6Pref)) {
+                currentValues[R.id.quick_6] = NomenclatureItem(item)
+            }
         }
     }
 
@@ -162,6 +180,10 @@ class CbmQuickChoiceFormInput : FrameLayout {
                 .put(nomenclatureItem?.nomenclature?.label?.labelId)
             R.id.quick_4 -> prefs.speciesQuick4()
                 .put(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_5 -> prefs.speciesQuick5()
+                .put(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_6 -> prefs.speciesQuick6()
+                .put(nomenclatureItem?.nomenclature?.label?.labelId)
         }
         updateButtons()
     }
@@ -171,6 +193,8 @@ class CbmQuickChoiceFormInput : FrameLayout {
         btnQuick2.text = prepareLabel(currentValues[R.id.quick_2])
         btnQuick3.text = prepareLabel(currentValues[R.id.quick_3])
         btnQuick4.text = prepareLabel(currentValues[R.id.quick_4])
+        btnQuick5.text = prepareLabel(currentValues[R.id.quick_5])
+        btnQuick6.text = prepareLabel(currentValues[R.id.quick_6])
     }
 
     private fun prepareLabel(item: NomenclatureItem?): String {

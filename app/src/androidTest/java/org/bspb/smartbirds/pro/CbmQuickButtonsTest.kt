@@ -36,14 +36,14 @@ class CbmQuickButtonsTest {
     @Before
     fun setUp() {
         monitoringScreen {
-            buttonFabAddEntry().perform(ViewActions.click())
+            buttonFabAddEntry().perform(click())
 
             Espresso.onData(
                 Matchers.`is`(
                     ApplicationProvider.getApplicationContext<Context>()
                         .getString(R.string.entry_type_cbm)
                 )
-            ).perform(ViewActions.click())
+            ).perform(click())
         }
 
         cbmScreen {

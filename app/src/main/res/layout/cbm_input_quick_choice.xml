@@ -66,5 +66,31 @@
             android:textAllCaps="false" />
     </LinearLayout>
 
+    <View style="@style/FieldSeparator" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/quick_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:layout_weight="1"
+            android:text="@string/quick_choice_button_empty"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/quick_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="1"
+            android:text="@string/quick_choice_button_empty"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
 
 </LinearLayout>
