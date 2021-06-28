@@ -112,13 +112,12 @@
 
             <TextView
                 android:id="@+id/error_cbm_too_far"
+                style="@style/TextWarning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4sp"
                 android:layout_marginRight="4sp"
                 android:text="@string/error_cbm_zone_too_far"
-                android:textAppearance="?errorTextAppearance"
-                android:textColor="@android:color/holo_red_dark"
                 android:visibility="gone"
                 tools:visibility="visible" />
 

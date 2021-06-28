@@ -19,7 +19,8 @@
         <item name="positiveFloatNumberFormInputStyle">@style/FieldInput.FloatNumber.Positive</item>
         <item name="decimalNumberFormInputStyle">@style/FieldInput.DecimalNumber</item>
         <item name="sumDecimalNumberFormInputStyle">@style/FieldInput.DecimalNumber.Sum</item>
-        <item name="positiveDecimalNumberFormInputStyle">@style/FieldInput.DecimalNumber.Positive</item>
+        <item name="positiveDecimalNumberFormInputStyle">@style/FieldInput.DecimalNumber.Positive
+        </item>
         <item name="multipleTextFormInputStyle">@style/FieldInput.MultipleText</item>
         <item name="memoFormInputStyle">@style/FieldInput.Memo</item>
         <item name="switchFormInputStyle">@style/FieldInput.Switch</item>
@@ -115,6 +116,12 @@
     <style name="SBDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextWarning">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textSize">14sp</item>
+
     </style>
 
 </resources>
