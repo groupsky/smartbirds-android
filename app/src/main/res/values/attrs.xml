@@ -17,6 +17,7 @@
         <attr name="memoFormInputStyle" format="reference" />
         <attr name="switchFormInputStyle" format="reference" />
         <attr name="zoneFormInputStyle" format="reference" />
+        <attr name="singleChoiceConfigRadioFormInputStyle" format="reference" />
         <attr name="singleChoiceRadioFormInputStyle" format="reference" />
         <attr name="quickChoiceInputStyle" format="reference" />
     </declare-styleable>
@@ -32,6 +33,10 @@
         <enum name="speciesClass" value="0" />
         <enum name="threatsPrimaryType" value="1" />
         <enum name="threatsPoisonedType" value="2" />
+    </attr>
+    <attr name="orientation" format="enum">
+        <enum name="horizontal" value="0" />
+        <enum name="vertical" value="1" />
     </attr>
 
     <!-- Stylable attributes for SingleChoiceFormInput -->
@@ -50,20 +55,25 @@
         <attr name="hint" />
     </declare-styleable>
 
-    <!-- Stylable attributes for SingleChoiceRadioFormInput-->
-    <declare-styleable name="SingleChoiceRadioFormInput">
+    <!-- Stylable attributes for SingleChoiceConfigRadioFormInput-->
+    <declare-styleable name="SingleChoiceConfigRadioFormInput">
         <attr name="config_entries" />
         <attr name="hint" />
         <attr name="required" />
-        <attr name="orientation" format="enum">
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-        </attr>
+        <attr name="orientation" />
     </declare-styleable>
 
     <!-- Stylable attributes for SingleChoiceConfigFormInput-->
     <declare-styleable name="SingleChoiceConfigFormInput">
         <attr name="config_entries" />
+    </declare-styleable>
+
+    <!-- Stylable attributes for SingleChoiceRadioFormInput-->
+    <declare-styleable name="SingleChoiceRadioFormInput">
+        <attr name="entriesType" />
+        <attr name="hint" />
+        <attr name="required" />
+        <attr name="orientation" />
     </declare-styleable>
 
     <declare-styleable name="QuickChoiceFormInput">

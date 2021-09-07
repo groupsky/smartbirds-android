@@ -73,9 +73,9 @@
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="5">
+                    android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput
                         android:id="@+id/form_cbm_distance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,11 +85,14 @@
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+            </TableRow>
+
+            <TableRow>
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="5">
+                    android:layout_span="10">
 
                     <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
                         android:id="@+id/form_cbm_count"
@@ -99,7 +102,6 @@
                         android:tag="@string/tag_count_subject"
                         app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
-
             </TableRow>
 
             <TableRow>
