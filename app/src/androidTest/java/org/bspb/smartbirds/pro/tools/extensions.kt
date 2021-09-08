@@ -34,6 +34,21 @@ fun nomenclatureWithLabel(label: String): Matcher<NomenclatureItem> {
     }
 }
 
+fun speciesWithLabel(label: String): Matcher<NomenclatureItem> {
+    return object :
+        BaseMatcher<NomenclatureItem>() {
+        override fun matches(item: Any?): Boolean {
+            checkNotNull(item)
+            if (item !is NomenclatureItem) return false
+            return equalTo(label).matches(item.nomenclature?.label?.labelId)
+        }
+
+        override fun describeTo(description: Description) {
+            description.appendText("species with label: ")
+        }
+    }
+}
+
 fun withHintParentOrOwn(resourceId: Int): Matcher<View> =
     object : BoundedMatcher<View, EditText>(EditText::class.java) {
         override fun describeTo(description: Description) {

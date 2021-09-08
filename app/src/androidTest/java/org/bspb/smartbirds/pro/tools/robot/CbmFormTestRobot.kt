@@ -29,6 +29,8 @@ class CbmFormTestRobot : CbmFormRobot {
         Espresso.onView(withId(R.id.quick_1)),
         Espresso.onView(withId(R.id.quick_2)),
         Espresso.onView(withId(R.id.quick_3)),
-        Espresso.onView(withId(R.id.quick_4))
+        Espresso.onView(withId(R.id.quick_4)),
+        Espresso.onView(withId(R.id.quick_5)),
+        Espresso.onView(withId(R.id.quick_6))
     )
 }

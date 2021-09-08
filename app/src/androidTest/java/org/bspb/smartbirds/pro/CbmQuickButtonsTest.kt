@@ -1,9 +1,5 @@
 package org.bspb.smartbirds.pro
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.longClick
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -14,10 +10,7 @@ import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitor
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.tools.rule.ActiveMonitoringRule
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules
-import org.hamcrest.Matchers
-import org.hamcrest.Matchers.startsWith
 import org.hamcrest.Matchers.startsWithIgnoringCase
-import org.hamcrest.core.StringStartsWith
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -38,12 +31,7 @@ class CbmQuickButtonsTest {
         monitoringScreen {
             buttonFabAddEntry().perform(click())
 
-            Espresso.onData(
-                Matchers.`is`(
-                    ApplicationProvider.getApplicationContext<Context>()
-                        .getString(R.string.entry_type_cbm)
-                )
-            ).perform(click())
+            monitoringType(R.string.entry_type_cbm).perform(click())
         }
 
         cbmScreen {
@@ -53,51 +41,65 @@ class CbmQuickButtonsTest {
 
     @Test
     fun testQuickButtonValueIsAssigned() {
+        // Click on species quick button to set a value
         cbmScreen {
             quickChoiceButtons()[1].perform(click())
         }
 
+        // Choose a value from the list
         singleChoiceDialog {
-            listItem(1).perform(click())
+            onSpeciesRow("Accipiter gentilis").perform(click())
         }
 
         cbmScreen {
+            // Check that the quick button value is properly assigned
+            // "acc gen" stands for "Accipiter gentilis" which was the selected species in previous step
             quickChoiceButtons()[1].check(matches(withText(startsWithIgnoringCase("acc gen"))))
         }
     }
 
     @Test
     fun testQuickButtonValueIsReassigned() {
+        // Click on species quick button to set a value
         cbmScreen {
             quickChoiceButtons()[1].perform(click())
         }
 
+        // Choose a value from the list
         singleChoiceDialog {
-            listItem(1).perform(click())
+            onSpeciesRow("Accipiter gentilis").perform(click())
         }
 
         cbmScreen {
+            // Check that the quick button value is properly assigned
+            // "acc gen" stands for "Accipiter gentilis" which was the selected species in previous step
             quickChoiceButtons()[1].check(matches(withText(startsWithIgnoringCase("acc gen"))))
+            // Long click on species quick button to reassign the value
             quickChoiceButtons()[1].perform(longClick())
         }
 
+        // Choose a value from the list
         singleChoiceDialog {
-            listItem(2).perform(click())
+            onSpeciesRow("Accipiter nisus").perform(click())
         }
 
         cbmScreen {
+            // Check that the quick button value is properly assigned
             quickChoiceButtons()[1].check(matches(withText(startsWithIgnoringCase("acc nis"))))
         }
     }
 
     @Test
     fun testSpeciesValueIsAssigned() {
+        // Click on species quick button to set a value
         cbmScreen {
             quickChoiceButtons()[1].perform(click())
         }
 
+        // Choose a value from the list
         singleChoiceDialog {
-            listItem(1).perform(click())
+            // select "Accipiter gentilis" from the list
+            onSpeciesRow("Accipiter gentilis").perform(click())
         }
 
         cbmScreen {
