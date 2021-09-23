@@ -1,15 +1,30 @@
 package org.bspb.smartbirds.pro
 
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.longClick
+import android.content.Context
+import android.widget.HorizontalScrollView
+import android.widget.ListView
+import android.widget.ScrollView
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.tools.robot.CbmFormTestRobot.Companion.cbmScreen
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
+import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.tools.rule.ActiveMonitoringRule
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules
+import org.bspb.smartbirds.pro.tools.viewactions.CustomScrollAction
+import org.bspb.smartbirds.pro.tools.viewactions.ScrollActions
+import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers
+import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.startsWithIgnoringCase
 import org.junit.Before
 import org.junit.Rule
@@ -111,4 +126,31 @@ class CbmQuickButtonsTest {
         }
 
     }
+
+    @Test
+    fun testDistanceValuesAreVisible() {
+        cbmScreen {
+            Espresso.onView(withText("3 - (over 100 m)"))
+                .check(matches(ViewMatchers.isDisplayed()))
+        }
+    }
+
+    @Test
+    fun testDistanceIsProperlyStored() {
+        cbmScreen {
+            fillRequiredFields()
+
+            // set distance field
+            Espresso.onView(withText("3 - (over 100 m)")).perform(click())
+
+            buttonSave().perform(click())
+
+            var db = SmartBirdsDatabase.getInstance(ApplicationProvider.getApplicationContext())
+            assertThat(
+                db.readableDatabase.rawQuery("SELECT * FROM forms", null).count,
+                Matchers.`is`(1)
+            )
+        }
+    }
+
 }

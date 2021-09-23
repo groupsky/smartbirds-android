@@ -10,7 +10,6 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput.NomenclatureItem
 import org.bspb.smartbirds.pro.utils.inflate
 
 class SingleChoiceRadioFormInput : FrameLayout, SupportRequiredView, SupportStorage {
@@ -125,10 +124,10 @@ class SingleChoiceRadioFormInput : FrameLayout, SupportRequiredView, SupportStor
             mSelectedItem?.label.toString().replace("\n", Configuration.MULTIPLE_CHOICE_DELIMITER)
         val locale = context.getString(R.string.locale)
         if (mSelectedItem != null) {
-            if (mSelectedItem!!.nomenclature.label.hasValue(locale)) {
-                storage["$fieldName.$locale"] = mSelectedItem!!.nomenclature.label[locale]
+            if (mSelectedItem!!.nomenclature?.label?.hasValue(locale) == true) {
+                storage["$fieldName.$locale"] = mSelectedItem!!.nomenclature!!.label!!.get(locale)
             }
-            storage["$fieldName.en"] = mSelectedItem!!.nomenclature.label["en"]
+            storage["$fieldName.en"] = mSelectedItem!!.nomenclature?.label?.get("en") ?: ""
         } else {
             storage["$fieldName.$locale"] = ""
             storage["$fieldName.en"] = ""
