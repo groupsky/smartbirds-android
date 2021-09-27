@@ -36,7 +36,11 @@ class BirdsFormTestRobot : BirdsFormRobot {
         onView(withHintParentOrOwn(R.string.monitoring_birds_count_type))
 
     fun fieldCount(): ViewInteraction = onView(withHintParentOrOwn(R.string.monitoring_birds_count))
+
     fun buttonSave(): ViewInteraction =
         onView(allOf(instanceOf(Button::class.java), withText(R.string.menu_entry_save)))
+
+    fun fieldNestType(): ViewInteraction =
+        onView(withHintParentOrOwn(R.string.monitoring_birds_nesting))
 
 }

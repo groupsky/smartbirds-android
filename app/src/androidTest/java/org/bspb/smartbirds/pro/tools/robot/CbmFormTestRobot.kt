@@ -33,4 +33,7 @@ class CbmFormTestRobot : CbmFormRobot {
         Espresso.onView(withId(R.id.quick_5)),
         Espresso.onView(withId(R.id.quick_6))
     )
+
+    fun fieldThreats(): ViewInteraction =
+        Espresso.onView(withHintParentOrOwn(R.string.monitoring_common_threats))
 }
