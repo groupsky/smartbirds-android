@@ -1,10 +1,8 @@
 package org.bspb.smartbirds.pro.tools.rule
 
-import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
