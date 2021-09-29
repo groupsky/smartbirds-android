@@ -17,6 +17,25 @@
             android:shrinkColumns="*"
             android:stretchColumns="*">
 
+            <TableRow android:id="@+id/form_common_methodology_container">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="4">
+
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                        android:id="@+id/form_common_methodology"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_common_observation_methodology"
+                        android:tag="@string/tag_observation_methodology"
+                        app:entriesType="main_observation_methodology"
+                        app:required="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
             <TableRow>
 
                 <com.google.android.material.textfield.TextInputLayout

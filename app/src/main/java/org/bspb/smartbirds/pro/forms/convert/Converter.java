@@ -1,7 +1,9 @@
 package org.bspb.smartbirds.pro.forms.convert;
 
 import android.content.Context;
+
 import androidx.annotation.StringRes;
+
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -58,6 +60,7 @@ public abstract class Converter {
         add(R.string.tag_weather_other, "mto");
         add(R.string.tag_notes, "notes");
         addMulti(R.string.tag_threats, "threats");
+        addSingle(R.string.tag_observation_methodology, "observationMethodology");
     }
 
     protected void add(FieldConverter fieldConverter) {

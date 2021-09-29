@@ -29,4 +29,7 @@ class CommonFormTestRobot : CommonFormRobot {
 
     fun buttonFinish(): ViewInteraction =
         onView(ViewMatchers.withText(R.string.menu_monitoring_finish))
+
+    fun fieldObservationMethodology(): ViewInteraction =
+        onView(withHint(R.string.monitoring_common_observation_methodology))
 }

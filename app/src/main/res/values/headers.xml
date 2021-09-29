@@ -129,5 +129,6 @@
     <string name="tag_threats_notes" translatable="false">Notes_Threats</string>
     <string name="tag_primary_type" translatable="false">Primary_Type</string>
     <string name="tag_moderator_review" translatable="false">Moderator_Review</string>
+    <string name="tag_observation_methodology" translatable="false">Observation_Methodology</string>
 
 </resources>

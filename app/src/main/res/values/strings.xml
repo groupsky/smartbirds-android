@@ -65,6 +65,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_common_visibility">"Visibility km"</string>
     <string name="monitoring_common_threats">"Threats"</string>
     <string name="monitoring_common_notes">"Remarks"</string>
+    <string name="monitoring_common_observation_methodology">"Observation methodology"</string>
     <string name="monitoring_birds_name">"Observed bird"</string>
     <string name="monitoring_birds_private">"Confidential"</string>
     <string name="monitoring_birds_count_unit">"Count unit"</string>
