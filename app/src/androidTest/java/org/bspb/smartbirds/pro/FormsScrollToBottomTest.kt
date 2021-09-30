@@ -22,8 +22,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/*
+* Test that all forms can be scrolled to bottom and last ordered fields are visible
+* */
 @RunWith(AndroidJUnit4::class)
-class FormsScrollContentTest {
+class FormsScrollToBottomTest {
 
     @Rule
     @JvmField
