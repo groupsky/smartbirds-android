@@ -36,7 +36,7 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput_
                     android:id="@+id/form_threats_primary_type"
                     android:layout_span="12"
                     android:tag="@string/tag_primary_type"
@@ -48,7 +48,7 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput_
                     android:id="@+id/form_threats_poisoned_type"
                     android:layout_span="9"
                     android:tag="@string/tag_poisoned_type"

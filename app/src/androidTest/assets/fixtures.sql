@@ -1,0 +1,1 @@
+INSERT INTO zones VALUES('TEST123', 1, '{"coordinates":[{"latitude":42.27038021,"longitude":22.57638592},{"latitude":42.26137738,"longitude":22.57616159},{"latitude":42.26154334,"longitude":22.56404167},{"latitude":42.27054622,"longitude":22.56426427}],"id":"TEST123","locationId":1}')

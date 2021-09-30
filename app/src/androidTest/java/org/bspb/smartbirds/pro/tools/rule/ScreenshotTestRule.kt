@@ -1,15 +1,14 @@
 package org.bspb.smartbirds.pro.tools.rule
 
 import android.graphics.Bitmap
-import org.bspb.smartbirds.pro.tools.screenshot.CustomScreenCaptureProcessor
 import androidx.test.runner.screenshot.ScreenCapture
 import androidx.test.runner.screenshot.ScreenCaptureProcessor
 import androidx.test.runner.screenshot.Screenshot
+import org.bspb.smartbirds.pro.tools.screenshot.CustomScreenCaptureProcessor
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import java.io.IOException
-
-import java.util.HashSet
+import java.util.*
 
 
 class ScreenshotTestRule : TestWatcher() {

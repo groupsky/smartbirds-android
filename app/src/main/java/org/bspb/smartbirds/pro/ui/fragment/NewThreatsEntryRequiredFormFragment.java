@@ -1,6 +1,5 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
@@ -16,8 +15,8 @@ import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput;
+import org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 
 import java.util.HashMap;
@@ -33,7 +32,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     SwitchFormInput confidential;
 
     @ViewById(R.id.form_threats_primary_type)
-    SingleChoiceRadioFormInput primaryType;
+    SingleChoiceConfigRadioFormInput primaryType;
 
     @ViewById(R.id.form_threats_category)
     SingleChoiceFormInput category;
@@ -51,7 +50,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     SingleChoiceFormInput estimate;
 
     @ViewById(R.id.form_threats_poisoned_type)
-    SingleChoiceRadioFormInput poisonedType;
+    SingleChoiceConfigRadioFormInput poisonedType;
 
     @ViewById(R.id.form_threats_state_carcass)
     SingleChoiceFormInput stateCarcass;
@@ -121,14 +120,14 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     }
 
     private void initViews() {
-        primaryType.setOnValueChangeListener(new SingleChoiceRadioFormInput.OnValueChangeListener() {
+        primaryType.setOnValueChangeListener(new SingleChoiceConfigRadioFormInput.OnValueChangeListener() {
             @Override
             public void onValueChanged(String value) {
                 handlePrimaryType(value);
             }
         });
 
-        poisonedType.setOnValueChangeListener(new SingleChoiceRadioFormInput.OnValueChangeListener() {
+        poisonedType.setOnValueChangeListener(new SingleChoiceConfigRadioFormInput.OnValueChangeListener() {
             @Override
             public void onValueChanged(String value) {
                 handlePoisonedType(value);

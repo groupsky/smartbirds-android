@@ -1,8 +1,10 @@
 package org.bspb.smartbirds.pro
 
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.longClick
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.bspb.smartbirds.pro.tools.robot.CbmFormTestRobot.Companion.cbmScreen
@@ -10,7 +12,9 @@ import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitor
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.tools.rule.ActiveMonitoringRule
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules
-import org.hamcrest.Matchers.startsWithIgnoringCase
+import org.bspb.smartbirds.pro.tools.rule.DbRule
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,6 +29,10 @@ class CbmQuickButtonsTest {
     @Rule
     @JvmField
     var screenshotRule = CompositeRules.screenshotTestRule()
+
+    @Rule
+    @JvmField
+    var dbRule = DbRule()
 
     @Before
     fun setUp() {
@@ -111,4 +119,30 @@ class CbmQuickButtonsTest {
         }
 
     }
+
+    @Test
+    fun testDistanceValuesAreVisible() {
+        cbmScreen {
+            Espresso.onView(withText("3 - (over 100 m)"))
+                .check(matches(ViewMatchers.isDisplayed()))
+        }
+    }
+
+    @Test
+    fun testDistanceIsProperlyStored() {
+        cbmScreen {
+            fillRequiredFields()
+
+            // set distance field
+            Espresso.onView(withText("3 - (over 100 m)")).perform(click())
+
+            buttonSave().perform(click())
+
+            assertThat(
+                dbRule.getForms(),
+                hasItem(hasEntry("Distance", "3 - (over 100 m)"))
+            )
+        }
+    }
+
 }

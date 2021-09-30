@@ -19,6 +19,7 @@ class ActiveMonitoringRule : TestRule {
     private val loggedInRule = SmartbirdsStateRule.setLoggedIn(true)
     private val batteryNotificationRule = SmartbirdsStateRule.setBatteryNotification(true)
     private val locationRule = MockLocationRule()
+    private val fixturesRule = FixturesRule()
 
     override fun apply(base: Statement?, description: Description?): Statement {
         var result = statement(base)
@@ -28,7 +29,8 @@ class ActiveMonitoringRule : TestRule {
         result = permissionsRule.apply(result, description)
         result = batteryNotificationRule.apply(result, description)
         result = locationRule.apply(result, description)
-        return loggedInRule.apply(result, description)
+        result = loggedInRule.apply(result, description)
+        return fixturesRule.apply(result, description)
     }
 
     private fun statement(base: Statement?): Statement {

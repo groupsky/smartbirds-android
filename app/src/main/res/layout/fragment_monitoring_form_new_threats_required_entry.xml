@@ -41,7 +41,7 @@
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput_
             android:id="@+id/form_threats_primary_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 
         <View style="@style/FieldSeparator" />
 
-        <org.bspb.smartbirds.pro.ui.views.SingleChoiceRadioFormInput_
+        <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput_
             android:id="@+id/form_threats_poisoned_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

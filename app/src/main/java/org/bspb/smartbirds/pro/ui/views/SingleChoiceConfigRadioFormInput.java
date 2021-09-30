@@ -21,7 +21,7 @@ import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 import java.util.Map;
 
 @EViewGroup(R.layout.single_choice_radio)
-public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRequiredView, SupportStorage {
+public class SingleChoiceConfigRadioFormInput extends FrameLayout implements SupportRequiredView, SupportStorage {
 
     public interface OnValueChangeListener {
         void onValueChanged(String value);
@@ -41,23 +41,23 @@ public class SingleChoiceRadioFormInput extends FrameLayout implements SupportRe
     private OnValueChangeListener mOnValueChangeListener;
     private String mSelectedItem;
 
-    public SingleChoiceRadioFormInput(Context context) {
+    public SingleChoiceConfigRadioFormInput(Context context) {
         this(context, null);
     }
 
-    public SingleChoiceRadioFormInput(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.singleChoiceRadioFormInputStyle);
+    public SingleChoiceConfigRadioFormInput(Context context, AttributeSet attrs) {
+        this(context, attrs, R.attr.singleChoiceConfigRadioFormInputStyle);
     }
 
-    public SingleChoiceRadioFormInput(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SingleChoiceConfigRadioFormInput(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceRadioFormInput, defStyleAttr, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SingleChoiceConfigRadioFormInput, defStyleAttr, 0);
         try {
-            mHint = a.getText(R.styleable.SingleChoiceRadioFormInput_hint);
-            mEntriesKey = a.getInteger(R.styleable.SingleChoiceRadioFormInput_config_entries, -1);
-            mRequired = a.getBoolean(R.styleable.SingleChoiceRadioFormInput_required, false);
-            mIsVertical = a.getInteger(R.styleable.SingleChoiceRadioFormInput_orientation, 0) == 1;
+            mHint = a.getText(R.styleable.SingleChoiceConfigRadioFormInput_hint);
+            mEntriesKey = a.getInteger(R.styleable.SingleChoiceConfigRadioFormInput_config_entries, -1);
+            mRequired = a.getBoolean(R.styleable.SingleChoiceConfigRadioFormInput_required, false);
+            mIsVertical = a.getInteger(R.styleable.SingleChoiceConfigRadioFormInput_orientation, 0) == 1;
         } finally {
             a.recycle();
         }
