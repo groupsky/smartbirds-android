@@ -47,7 +47,7 @@ public class EditCurrentCommonFormActivity extends BaseActivity {
     void createFragment() {
         formFragment = (CurrentMonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
-            formFragment = CurrentMonitoringCommonFormFragment_.builder().build();
+            formFragment = CurrentMonitoringCommonFormFragment_.builder().isFinishing(isFinishing).build();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, formFragment)
                     .commit();

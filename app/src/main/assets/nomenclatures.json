@@ -5766,5 +5766,19 @@
       "bg": "Опасен път",
       "en": "Dangerous road"
     }
+  },
+  {
+    "type": "main_observation_methodology",
+    "label": {
+      "bg": "Интересни",
+      "en": "Interesting"
+    }
+  },
+  {
+    "type": "main_observation_methodology",
+    "label": {
+      "bg": "Всички",
+      "en": "Complete"
+    }
   }
 ]

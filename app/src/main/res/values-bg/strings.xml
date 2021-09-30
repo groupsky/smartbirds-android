@@ -65,6 +65,7 @@
     <string name="monitoring_common_visibility">"Видимост km"</string>
     <string name="monitoring_common_threats">"Заплахи"</string>
     <string name="monitoring_common_notes">"Бележки"</string>
+    <string name="monitoring_common_observation_methodology">"Методика на наблюдение"</string>
     <string name="monitoring_birds_name">"Вид научно име"</string>
     <string name="monitoring_birds_private">"Поверително"</string>
     <string name="monitoring_birds_count_unit">"Единица на броя"</string>
