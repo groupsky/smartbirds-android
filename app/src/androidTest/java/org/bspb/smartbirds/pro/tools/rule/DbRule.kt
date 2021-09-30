@@ -4,7 +4,6 @@ import androidx.test.core.app.ApplicationProvider
 import com.google.gson.reflect.TypeToken
 import org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.tools.SBGsonParser
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.json.JSONObject
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -32,7 +31,6 @@ class DbRule : TestRule {
             var rowValues = mutableMapOf<String, String>()
             it.columnNames?.forEach { columnName ->
                 if ("data" == columnName) {
-                    debugLog("Data: ${it.getString(it.getColumnIndex(columnName))}")
                     val typeToken = object : TypeToken<HashMap<String, String>>() {}.type
                     var json = JSONObject(it.getString(it.getColumnIndex(columnName)))
                     rowValues.putAll(
