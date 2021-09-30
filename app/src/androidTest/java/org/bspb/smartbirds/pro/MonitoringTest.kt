@@ -143,6 +143,12 @@ class MonitoringTest {
             buttonFinish().perform(click())
         }
         commonFormScreen {
+            // Fill observation methodology
+            fieldObservationMethodology().perform(click())
+            singleChoiceDialog {
+                listItem(0).perform(click())
+            }
+
             buttonFinish().perform(click())
         }
 
