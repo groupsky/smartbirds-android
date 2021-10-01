@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.extensions.LayoutContainer
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.utils.inflate
@@ -19,7 +18,7 @@ class DownloadsAdapter(val locale: String) : RecyclerView.Adapter<DownloadsAdapt
             notifyDataSetChanged()
         }
 
-    class DownloadsViewHolder(override val containerView: View, val locale: String) : RecyclerView.ViewHolder(containerView), LayoutContainer, View.OnClickListener {
+    class DownloadsViewHolder(private val containerView: View, val locale: String) : RecyclerView.ViewHolder(containerView), View.OnClickListener {
         private var downloadItem: DownloadsItem? = null
 
         // TODO Replace with LayoutContainer auto binding when become stable

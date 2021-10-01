@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.fragment_downloads.*
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EFragment
@@ -16,6 +15,7 @@ import org.bspb.smartbirds.pro.adapter.DownloadsAdapter
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse
+import org.bspb.smartbirds.pro.databinding.FragmentDownloadsBinding
 import org.bspb.smartbirds.pro.prefs.DownloadsPrefs_
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import retrofit2.Call
@@ -34,25 +34,29 @@ open class DownloadsFragment : Fragment() {
     private lateinit var adapter: DownloadsAdapter
     private lateinit var locale: String
 
+    protected lateinit var binding: FragmentDownloadsBinding
+
     @AfterViews
     fun initViews() {
         locale = context?.getString(R.string.locale).toString()
+        binding = FragmentDownloadsBinding.bind(requireView())
 
         val layoutManager = LinearLayoutManager(context)
-        emptyView.visibility = View.GONE
-        downloadsListView.layoutManager = layoutManager
+        binding.emptyView.visibility = View.GONE
+        binding.downloadsListView.layoutManager = layoutManager
 
         adapter = DownloadsAdapter(locale)
-        downloadsListView.adapter = adapter
+        binding.downloadsListView.adapter = adapter
 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
-        downloadsListView.addItemDecoration(dividerItemDecoration)
+        binding.downloadsListView.addItemDecoration(dividerItemDecoration)
 
         val cachedDownloads = prefs.downloads().get()
         var downloads: List<DownloadsItem>? = null
         if (!TextUtils.isEmpty(cachedDownloads)) {
             val listType = object : TypeToken<List<DownloadsItem?>?>() {}.type
-            downloads = SBGsonParser.createParser().fromJson<List<DownloadsItem>>(cachedDownloads, listType)
+            downloads =
+                SBGsonParser.createParser().fromJson<List<DownloadsItem>>(cachedDownloads, listType)
         }
 
         fetchDownloads()
@@ -73,26 +77,29 @@ open class DownloadsFragment : Fragment() {
         }
 
         if (availableDownloads.size > 0) {
-            downloadsListView.visibility = View.VISIBLE
-            emptyView.visibility = View.GONE
+            binding.downloadsListView.visibility = View.VISIBLE
+            binding.emptyView.visibility = View.GONE
         } else {
-            downloadsListView.visibility = View.GONE
-            emptyView.visibility = View.VISIBLE
+            binding.downloadsListView.visibility = View.GONE
+            binding.emptyView.visibility = View.VISIBLE
         }
 
         adapter.downloads = availableDownloads
     }
 
     private fun fetchDownloads() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
 
         var call = backend.api().getDownloads(getString(R.string.downloads_url))
         call.enqueue(object : Callback<DownloadsResponse> {
-            override fun onResponse(call: Call<DownloadsResponse>, response: Response<DownloadsResponse>) {
+            override fun onResponse(
+                call: Call<DownloadsResponse>,
+                response: Response<DownloadsResponse>
+            ) {
                 if (context == null) {
                     return
                 }
-                progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
                 response.apply {
                     if (isSuccessful) {
                         body()?.downloads?.apply {
@@ -107,7 +114,7 @@ open class DownloadsFragment : Fragment() {
                 if (context == null) {
                     return
                 }
-                progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
                 t.printStackTrace()
             }
         })
