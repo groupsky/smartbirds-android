@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.service;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,8 +12,9 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
-import androidx.core.app.ActivityCompat;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
@@ -67,6 +69,7 @@ public class TrackingService extends Service implements LocationListener {
     }
 
     @Override
+    @SuppressLint("MissingPermission")
     public void onDestroy() {
         Log.v(TAG, "Tracking destroying");
         if (isTracking()) {
@@ -94,6 +97,7 @@ public class TrackingService extends Service implements LocationListener {
         tracking = true;
     }
 
+    @SuppressLint("MissingPermission")
     private void stopTracking() {
         Log.v(TAG, "Stopping location updates");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
