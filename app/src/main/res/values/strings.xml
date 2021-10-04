@@ -16,7 +16,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="entry_type_cbm">"Common Bird Monitoring (CBM)"</string>
     <string name="entry_type_birds">"Birds"</string>
     <string name="entry_type_ciconia">"White stork"</string>
-    <string name="entry_type_herp">"Amphibians and reptiles / mammals"</string>
     <string name="entry_type_herptile">"Amphibians and reptiles"</string>
     <string name="entry_type_mammal">"Mammals"</string>
     <string name="entry_type_humid">"Wetlands zones"</string>

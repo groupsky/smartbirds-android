@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.enums;
 
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+
 import android.content.Context;
 import android.content.res.Resources;
 
@@ -12,7 +14,6 @@ import org.bspb.smartbirds.pro.forms.convert.BirdsConverter;
 import org.bspb.smartbirds.pro.forms.convert.CbmConverter;
 import org.bspb.smartbirds.pro.forms.convert.CiconiaConverter;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
-import org.bspb.smartbirds.pro.forms.convert.HerpConverter;
 import org.bspb.smartbirds.pro.forms.convert.HerptileConverter;
 import org.bspb.smartbirds.pro.forms.convert.InvertebratesConverter;
 import org.bspb.smartbirds.pro.forms.convert.MammalConverter;
@@ -21,7 +22,6 @@ import org.bspb.smartbirds.pro.forms.convert.ThreatsConverter;
 import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
 import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
 import org.bspb.smartbirds.pro.forms.upload.CiconiaUploader;
-import org.bspb.smartbirds.pro.forms.upload.HerpUploader;
 import org.bspb.smartbirds.pro.forms.upload.HerptileUploader;
 import org.bspb.smartbirds.pro.forms.upload.InvertebratesUploader;
 import org.bspb.smartbirds.pro.forms.upload.MammalUploader;
@@ -32,7 +32,6 @@ import org.bspb.smartbirds.pro.ui.fragment.BaseEntryFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewCbmEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewCiconiaEntryFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.NewHerpEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHerptileEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHumidBirdsEntryFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewInvertebratesEntryFormFragment;
@@ -41,8 +40,6 @@ import org.bspb.smartbirds.pro.ui.fragment.NewPlantsEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewThreatsEntryFormFragment;
 
 import java.util.ArrayList;
-
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by dani on 14-11-11.
@@ -56,8 +53,7 @@ public enum EntryType {
     MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class, true),
     INVERTEBRATES(new NewInvertebratesEntryFormFragment.Builder(), R.string.entry_type_invertebrates, R.id.action_form_type_invertebrates, "form_invertebrates.csv", InvertebratesConverter.class, InvertebratesUploader.class, true),
     PLANTS(new NewPlantsEntryFormFragment.Builder(), R.string.entry_type_plants, R.id.action_form_type_plants, "form_plants.csv", PlantsConverter.class, PlantsUploader.class, true),
-    THREATS(new NewThreatsEntryFormFragment.Builder(), R.string.entry_type_threats, R.id.action_form_type_threats, "form_threats.csv", ThreatsConverter.class, ThreatsUploader.class, true),
-    HERP(new NewHerpEntryFormFragment.Builder(), R.string.entry_type_herp, R.id.action_form_type_herp, "form_herp.csv", HerpConverter.class, HerpUploader.class, false)
+    THREATS(new NewThreatsEntryFormFragment.Builder(), R.string.entry_type_threats, R.id.action_form_type_threats, "form_threats.csv", ThreatsConverter.class, ThreatsUploader.class, true)
     // prevent auto-formatting
     ;
 
@@ -65,7 +61,6 @@ public enum EntryType {
             R.id.action_form_type_birds,
             R.id.action_form_type_cbm,
             R.id.action_form_type_ciconia,
-            R.id.action_form_type_herp,
             R.id.action_form_type_humid,
             R.id.action_form_type_herptile,
             R.id.action_form_type_mammal,
