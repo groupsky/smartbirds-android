@@ -44,4 +44,10 @@ class MonitoringTestRobot : MonitoringRobot {
                     .getString(resId)
             )
         )
+
+    fun openNewEntryForm(@StringRes resId: Int) {
+        buttonFabAddEntry().perform(ViewActions.click())
+
+        monitoringType(resId).perform(ViewActions.click())
+    }
 }

@@ -6,9 +6,14 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.android.material.textfield.TextInputLayout
+import org.bspb.smartbirds.pro.tools.robot.MultipleChoiceDialogTestRobot.Companion.multipleChoiceDialog
+import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -64,3 +69,41 @@ fun withHintParentOrOwn(resourceId: Int): Matcher<View> =
         }
 
     }
+
+fun checkCheckbox(viewInteraction: ViewInteraction, checked: Boolean) {
+    if (checked) {
+        viewInteraction.check(ViewAssertions.matches(isNotChecked()))
+            .perform(scrollTo(), click())
+    } else {
+        viewInteraction.check(ViewAssertions.matches(isChecked()))
+            .perform(scrollTo(), click())
+    }
+}
+
+fun selectSingleChoice(viewInteraction: ViewInteraction, text: String) {
+    viewInteraction.perform(scrollTo(), click())
+    singleChoiceDialog {
+        onRow(text).perform(scrollTo(), click())
+    }
+}
+
+fun selectMultipleChoice(viewInteraction: ViewInteraction, values: Array<String>) {
+    viewInteraction.perform(scrollTo(), click())
+    multipleChoiceDialog {
+        values.forEach {
+            onRow(it).perform(scrollTo(), click())
+        }
+        buttonOk().perform(click())
+    }
+}
+
+fun selectSpecies(viewInteraction: ViewInteraction, text: String) {
+    viewInteraction.perform(scrollTo(), click())
+    singleChoiceDialog {
+        onSpeciesRow(text).perform(scrollTo(), click())
+    }
+}
+
+fun fillTextField(viewInteraction: ViewInteraction, text: String) {
+    viewInteraction.perform(scrollTo(), typeText(text))
+}
