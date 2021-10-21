@@ -577,7 +577,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             R.id.action_form_type_birds,
             R.id.action_form_type_cbm,
             R.id.action_form_type_ciconia,
-            R.id.action_form_type_herp,
             R.id.action_form_type_humid,
             R.id.action_form_type_herptile,
             R.id.action_form_type_mammal,
