@@ -3,9 +3,13 @@ package org.bspb.smartbirds.pro.tools.form
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.tools.*
+import org.bspb.smartbirds.pro.tools.action.SBViewActions.setChecked
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.typeTextAndEnable
+import org.bspb.smartbirds.pro.tools.fillTextField
 import org.bspb.smartbirds.pro.tools.robot.BirdsFormTestRobot.Companion.birdsScreen
+import org.bspb.smartbirds.pro.tools.selectMultipleChoice
+import org.bspb.smartbirds.pro.tools.selectSingleChoice
+import org.bspb.smartbirds.pro.tools.selectSpecies
 
 class BirdsFormHelper {
     companion object {
@@ -20,11 +24,11 @@ class BirdsFormHelper {
                 when (key) {
                     R.string.monitoring_moderator_review -> {
                         tabMain().perform(click())
-                        checkCheckbox(fieldModeratorReview(), value as Boolean)
+                        fieldModeratorReview().perform(scrollTo(), setChecked(value as Boolean))
                     }
                     R.string.monitoring_birds_private -> {
                         tabMain().perform(click())
-                        checkCheckbox(fieldConfidential(), value as Boolean)
+                        fieldConfidential().perform(scrollTo(), setChecked(value as Boolean))
                     }
                     R.string.monitoring_birds_name -> {
                         tabMain().perform(click())
@@ -104,7 +108,7 @@ class BirdsFormHelper {
                     }
                     R.string.monitoring_birds_incubation -> {
                         tabOptional().perform(click())
-                        checkCheckbox(fieldIncubation(), value as Boolean)
+                        fieldIncubation().perform(scrollTo(), setChecked(value as Boolean))
                     }
                     R.string.monitoring_birds_eggs_count -> {
                         tabOptional().perform(click())
@@ -124,7 +128,7 @@ class BirdsFormHelper {
                     }
                     R.string.monitoring_birds_nest_guard -> {
                         tabOptional().perform(click())
-                        checkCheckbox(fieldNestGuarding(), value as Boolean)
+                        fieldNestGuarding().perform(scrollTo(), setChecked(value as Boolean))
                     }
                     R.string.monitoring_birds_female_age -> {
                         tabOptional().perform(click())

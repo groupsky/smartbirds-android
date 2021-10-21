@@ -9,12 +9,14 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.android.material.textfield.TextInputLayout
 import org.bspb.smartbirds.pro.tools.robot.MultipleChoiceDialogTestRobot.Companion.multipleChoiceDialog
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -69,16 +71,6 @@ fun withHintParentOrOwn(resourceId: Int): Matcher<View> =
         }
 
     }
-
-fun checkCheckbox(viewInteraction: ViewInteraction, checked: Boolean) {
-    if (checked) {
-        viewInteraction.check(ViewAssertions.matches(isNotChecked()))
-            .perform(scrollTo(), click())
-    } else {
-        viewInteraction.check(ViewAssertions.matches(isChecked()))
-            .perform(scrollTo(), click())
-    }
-}
 
 fun selectSingleChoice(viewInteraction: ViewInteraction, text: String) {
     viewInteraction.perform(scrollTo(), click())
