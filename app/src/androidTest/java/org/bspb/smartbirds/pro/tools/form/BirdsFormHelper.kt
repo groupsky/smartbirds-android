@@ -6,6 +6,7 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.setChecked
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.typeTextAndEnable
 import org.bspb.smartbirds.pro.tools.fillTextField
+import org.bspb.smartbirds.pro.tools.form.entry.FormEntry
 import org.bspb.smartbirds.pro.tools.robot.BirdsFormTestRobot.Companion.birdsScreen
 import org.bspb.smartbirds.pro.tools.selectMultipleChoice
 import org.bspb.smartbirds.pro.tools.selectSingleChoice
@@ -13,7 +14,8 @@ import org.bspb.smartbirds.pro.tools.selectSpecies
 
 class BirdsFormHelper {
     companion object {
-        fun fillFormFields(fields: Map<Int, Any>) {
+        fun fillFormFields(entry: FormEntry) {
+            var fields: Map<Int, Any> = entry.toUiMap()
             fields.forEach { (key, value) ->
                 fillFormField(key, value)
             }

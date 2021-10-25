@@ -28,6 +28,11 @@ import org.junit.runner.RunWith
 import com.google.gson.reflect.TypeToken
 
 import com.google.gson.Gson
+import org.bspb.smartbirds.pro.tools.MonitoringHelper.Companion.uploadData
+import org.bspb.smartbirds.pro.tools.form.entry.builder.BirdEntryBuilder
+import org.bspb.smartbirds.pro.tools.hasFormEntry
+import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
+import org.hamcrest.MatcherAssert.assertThat
 
 
 @RunWith(AndroidJUnit4::class)
@@ -44,15 +49,23 @@ class BirdsFormTest {
     @JvmField
     var dbRule = DbRule()
 
-    var birdsEntry: Map<Int, Any> = mapOf(
-        R.string.monitoring_moderator_review to false,
-        R.string.monitoring_birds_private to true,
-        R.string.monitoring_birds_name to "Accipiter gentilis",
-        R.string.monitoring_birds_count_unit to "Individuals",
-        R.string.monitoring_birds_count_type to "Exact number",
-        R.string.monitoring_birds_count to "1",
-        R.string.monitoring_birds_min to "2",
-        R.string.monitoring_birds_max to "3",
+    var birdsEntry = BirdEntryBuilder()
+        .setModeratorReview(false)
+        .setConfidential(true)
+        .setSpecies("Accipiter gentilis")
+        .setCountUnit("Individuals")
+        .setCountType("Exact number")
+        .setCount("1")
+        .build()
+//    var birdsEntry: Map<Int, Any> = mapOf(
+//        R.string.monitoring_moderator_review to false,
+//        R.string.monitoring_birds_private to true,
+//        R.string.monitoring_birds_name to "Accipiter gentilis",
+//        R.string.monitoring_birds_count_unit to "Individuals",
+//        R.string.monitoring_birds_count_type to "Exact number",
+//        R.string.monitoring_birds_count to "1",
+//        R.string.monitoring_birds_min to "2",
+//        R.string.monitoring_birds_max to "3",
 //        R.string.monitoring_birds_status to "Singing male",
 //        R.string.monitoring_birds_behaviour to arrayOf("Feeding"),
 //        R.string.monitoring_birds_gender to "Male",
@@ -78,7 +91,7 @@ class BirdsFormTest {
 //        R.string.monitoring_birds_land_use to "garden",
 //        R.string.monitoring_common_threats to arrayOf("Solar park"),
 //        R.string.monitoring_birds_notes to "some notes",
-    )
+//    )
 
     @Test
     fun submitEntryToServer() {
@@ -94,31 +107,11 @@ class BirdsFormTest {
 
         finishMonitoring()
 
-        // Upload record
-        // mock sync responses. We need to enqueue all the response, so the sync dialog can disappear.
-        // Otherwise the test freezes.
-        val nomenclaturesResponse = MockResponseHelper.prepareNomenclatureResponse()
-        activeMonitoringRule.mockApiRule.server.enqueue(MockResponseHelper.prepareUploadFileResponse())
-        activeMonitoringRule.mockApiRule.server.enqueue(MockResponseHelper.prepareUploadFormRespons())
-        activeMonitoringRule.mockApiRule.server.enqueue(MockResponseHelper.prepareSuccessLoginResponse())
-        activeMonitoringRule.mockApiRule.server.enqueue(nomenclaturesResponse)
-        activeMonitoringRule.mockApiRule.server.enqueue(nomenclaturesResponse)
+        uploadData(activeMonitoringRule.mockApiRule.server)
 
-        MainTestRobot.mainScreen {
-            buttonSync().perform(click())
-        }
-        activeMonitoringRule.mockApiRule.server.takeRequest()
-        // Assert request
-
-        val uploadBirdsRequest = activeMonitoringRule.mockApiRule.server.takeRequest()
-        val retMap: Map<String, Any> = Gson().fromJson(
-            uploadBirdsRequest.body.readUtf8(),
-            object : TypeToken<HashMap<String?, Any?>?>() {}.type
-        )
-        debugLog("Body: $retMap")
-        MatcherAssert.assertThat(
-            uploadBirdsRequest.requestUrl.toString(),
-            Matchers.endsWith("/birds")
-        )
+        val uploadRequestJson =
+            activeMonitoringRule.mockApiRule.server.takeRequest().body.readUtf8()
+        debugLog("JSON: $uploadRequestJson")
+        assertThat(uploadRequestJson, hasFormEntry(birdsEntry))
     }
 }
