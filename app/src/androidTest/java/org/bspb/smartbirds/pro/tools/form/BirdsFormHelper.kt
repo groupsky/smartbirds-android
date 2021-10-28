@@ -62,7 +62,10 @@ class BirdsFormHelper {
                     }
                     R.string.monitoring_birds_behaviour -> {
                         tabMain().perform(click())
-                        selectMultipleChoice(fieldBehavior(), value as Array<String>)
+                        selectMultipleChoice(
+                            fieldBehavior(),
+                            (value as List<String>).toTypedArray()
+                        )
                     }
                     R.string.monitoring_birds_gender -> {
                         tabMain().perform(click())
@@ -150,7 +153,7 @@ class BirdsFormHelper {
                     }
                     R.string.monitoring_common_threats -> {
                         tabOptional().perform(click())
-                        selectMultipleChoice(fieldThreats(), value as Array<String>)
+                        selectMultipleChoice(fieldThreats(), (value as List<String>).toTypedArray())
                     }
                     R.string.monitoring_birds_notes -> {
                         tabOptional().perform(click())

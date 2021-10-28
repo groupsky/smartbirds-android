@@ -10,16 +10,16 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.android.material.textfield.TextInputLayout
-import com.google.gson.reflect.TypeToken
 import org.bspb.smartbirds.pro.tools.form.entry.FormEntry
+import org.bspb.smartbirds.pro.tools.matcher.FormEntryMatcher
 import org.bspb.smartbirds.pro.tools.robot.MultipleChoiceDialogTestRobot.Companion.multipleChoiceDialog
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.*
-import org.json.JSONObject
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.equalTo
 
 fun toolbarWithTitle(@StringRes title: Int): ViewInteraction =
     onView(allOf(withText(title), withParent(isAssignableFrom(Toolbar::class.java))))
@@ -72,34 +72,7 @@ fun withHintParentOrOwn(resourceId: Int): Matcher<View> =
 
     }
 
-fun hasFormEntry(entry: FormEntry): Matcher<String> {
-    return object :
-        BaseMatcher<String>() {
-        override fun matches(item: Any?): Boolean {
-            checkNotNull(item)
-
-            if (item !is String) return false
-            val typeToken = object : TypeToken<HashMap<String, String>>() {}.type
-            val jsonMap: Map<String, String> = SBGsonParser.createParser().fromJson(
-                item,
-                typeToken
-            )
-            val expectedMap = entry.toUploadMap()
-            var res = false
-            expectedMap.forEach { (key, value) ->
-                res = hasEntry(key, value).matches(jsonMap)
-                if (!res) {
-                    return false
-                }
-            }
-            return res
-        }
-
-        override fun describeTo(description: Description) {
-            description.appendText("species with label: ")
-        }
-    }
-}
+fun hasFormEntry(entry: FormEntry): Matcher<String> = FormEntryMatcher(entry)
 // End matchers
 
 fun selectSingleChoice(viewInteraction: ViewInteraction, text: String) {

@@ -4,7 +4,7 @@ import org.bspb.smartbirds.pro.tools.form.entry.FormEntry
 import org.bspb.smartbirds.pro.tools.form.entry.FormEntryField
 
 open class FormEntryBuilder {
-    val fields = mutableListOf<FormEntryField>()
+    private val fields = mutableListOf<FormEntryField>()
 
     fun add(item: FormEntryField) {
         fields.add(item)

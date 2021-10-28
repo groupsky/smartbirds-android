@@ -35,67 +35,150 @@ class BirdEntryBuilder : FormEntryBuilder() {
         return this
     }
 
-//    var birdsEntry: Map<Int, Any> = mapOf(
-//        R.string.monitoring_birds_min to "2",
-//        R.string.monitoring_birds_max to "3",
-//        R.string.monitoring_birds_status to "Singing male",
-//        R.string.monitoring_birds_behaviour to arrayOf("Feeding"),
-//        R.string.monitoring_birds_gender to "Male",
-//        R.string.monitoring_birds_age to "Pull",
-//        R.string.monitoring_birds_nesting to "Nests",
-//        R.string.monitoring_birds_death to "Poison",
-//        R.string.monitoring_birds_marking to "Color ring",
-//        R.string.monitoring_birds_substrate to "On bushes",
-//        R.string.monitoring_birds_tree to "Tree",
-//        R.string.monitoring_birds_tree_height to "50",
-//        R.string.monitoring_birds_tree_location to "Single tree",
-//        R.string.monitoring_birds_nest_height to "1-3 m.",
-//        R.string.monitoring_birds_nest_location to "Next to trunk",
-//        R.string.monitoring_birds_incubation to true,
-//        R.string.monitoring_birds_eggs_count to "3",
-//        R.string.monitoring_birds_small_downy_count to "1",
-//        R.string.monitoring_birds_small_feathered_count to "5",
-//        R.string.monitoring_birds_takeoff_count to "7",
-//        R.string.monitoring_birds_nest_guard to true,
-//        R.string.monitoring_birds_female_age to "6 years",
-//        R.string.monitoring_birds_male_age to "5 years",
-//        R.string.monitoring_birds_nest_success to "Occupied nest",
-//        R.string.monitoring_birds_land_use to "garden",
-//        R.string.monitoring_common_threats to arrayOf("Solar park"),
-//        R.string.monitoring_birds_notes to "some notes",
-//    )
+    fun setCountMin(value: String): BirdEntryBuilder {
+        add(FormEntryField("countMin", R.string.monitoring_birds_min, value))
+        return this
+    }
 
+    fun setCountMax(value: String): BirdEntryBuilder {
+        add(FormEntryField("countMax", R.string.monitoring_birds_max, value))
+        return this
+    }
 
-//    addSingle(R.string.tag_source, "source");
-//    addSingle(R.string.tag_nest_type, "typeNesting");
-//    add(R.string.tag_min, "countMin", "0");
-//    add(R.string.tag_max, "countMax", "0");
-//    addSingle(R.string.tag_sex, "sex");
-//    addSingle(R.string.tag_age, "age");
-//    addSingle(R.string.tag_marking, "marking");
-//    addSingle(R.string.tag_bird_status, "speciesStatus");
-//    addMulti(R.string.tag_behavior, "behaviour");
-//    addSingle(R.string.tag_dead_specimen_reason, "deadIndividualCauses");
-//    addSingle(R.string.tag_substrate, "substrate");
-//    add(R.string.tag_tree, "tree");
-//    add(R.string.tag_tree_height, "treeHeight");
-//    addSingle(R.string.tag_tree_location, "treeLocation");
-//    addSingle(R.string.tag_nest_height, "nestHeight");
-//    addSingle(R.string.tag_nest_location, "nestLocation");
-//    addSingle(R.string.tag_tree_location, "treeLocation");
-//    addBool(R.string.tag_incubation, "brooding");
-//    add(R.string.tag_number_of_eggs, "eggsCount");
-//    add(R.string.tag_number_of_pull, "countNestling");
-//    add(R.string.tag_number_of_fledglings, "countFledgling");
-//    add(R.string.tag_number_fledged_juveniles, "countSuccessfullyLeftNest");
-//    addBool(R.string.tag_nest_guarding, "nestProtected");
-//    addSingle(R.string.tag_age_female, "ageFemale");
-//    addSingle(R.string.tag_age_male, "ageMale");
-//    addSingle(R.string.tag_breeding_success, "nestingSuccess");
-//    add(R.string.tag_land_uses_300m, "landuse300mRadius");
-//    add(R.string.tag_remarks_type, "speciesNotes");
-//    addMulti(R.string.tag_threats, "threats");
-//
+    fun setBirdsStatus(value: String): BirdEntryBuilder {
+        add(FormEntryField("speciesStatus", R.string.monitoring_birds_status, value))
+        return this
+    }
 
+    fun setBehaviour(value: List<String>): BirdEntryBuilder {
+        add(FormEntryField("behaviour", R.string.monitoring_birds_behaviour, value))
+        return this
+    }
 
+    fun setGender(value: String): BirdEntryBuilder {
+        add(FormEntryField("sex", R.string.monitoring_birds_gender, value))
+        return this
+    }
+
+    fun setAge(value: String): BirdEntryBuilder {
+        add(FormEntryField("age", R.string.monitoring_birds_age, value))
+        return this
+    }
+
+    fun setNesting(value: String): BirdEntryBuilder {
+        add(FormEntryField("typeNesting", R.string.monitoring_birds_nesting, value))
+        return this
+    }
+
+    fun setDeath(value: String): BirdEntryBuilder {
+        add(FormEntryField("deadIndividualCauses", R.string.monitoring_birds_death, value))
+        return this
+    }
+
+    fun setMarking(value: String): BirdEntryBuilder {
+        add(FormEntryField("marking", R.string.monitoring_birds_marking, value))
+        return this
+    }
+
+    fun setSubstrate(value: String): BirdEntryBuilder {
+        add(FormEntryField("substrate", R.string.monitoring_birds_substrate, value))
+        return this
+    }
+
+    fun setTree(value: String): BirdEntryBuilder {
+        add(FormEntryField("tree", R.string.monitoring_birds_tree, value))
+        return this
+    }
+
+    fun setTreeHeight(value: String): BirdEntryBuilder {
+        add(FormEntryField("treeHeight", R.string.monitoring_birds_tree_height, value))
+        return this
+    }
+
+    fun setTreeLocation(value: String): BirdEntryBuilder {
+        add(FormEntryField("treeLocation", R.string.monitoring_birds_tree_location, value))
+        return this
+    }
+
+    fun setNestHeight(value: String): BirdEntryBuilder {
+        add(FormEntryField("nestHeight", R.string.monitoring_birds_nest_height, value))
+        return this
+    }
+
+    fun setNestLocation(value: String): BirdEntryBuilder {
+        add(FormEntryField("nestLocation", R.string.monitoring_birds_nest_location, value))
+        return this
+    }
+
+    fun setIncubation(value: Boolean): BirdEntryBuilder {
+        add(FormEntryField("brooding", R.string.monitoring_birds_incubation, value))
+        return this
+    }
+
+    fun setEggsCount(value: String): BirdEntryBuilder {
+        add(FormEntryField("eggsCount", R.string.monitoring_birds_eggs_count, value))
+        return this
+    }
+
+    fun setSmallDownyCount(value: String): BirdEntryBuilder {
+        add(FormEntryField("countNestling", R.string.monitoring_birds_small_downy_count, value))
+        return this
+    }
+
+    fun setSmallFeatheredCount(value: String): BirdEntryBuilder {
+        add(
+            FormEntryField(
+                "countFledgling",
+                R.string.monitoring_birds_small_feathered_count,
+                value
+            )
+        )
+        return this
+    }
+
+    fun setTakeoffCount(value: String): BirdEntryBuilder {
+        add(
+            FormEntryField(
+                "countSuccessfullyLeftNest",
+                R.string.monitoring_birds_takeoff_count,
+                value
+            )
+        )
+        return this
+    }
+
+    fun setNestGuard(value: Boolean): BirdEntryBuilder {
+        add(FormEntryField("nestProtected", R.string.monitoring_birds_nest_guard, value))
+        return this
+    }
+
+    fun setFemaleAge(value: String): BirdEntryBuilder {
+        add(FormEntryField("ageFemale", R.string.monitoring_birds_female_age, value))
+        return this
+    }
+
+    fun setMaleAge(value: String): BirdEntryBuilder {
+        add(FormEntryField("ageMale", R.string.monitoring_birds_male_age, value))
+        return this
+    }
+
+    fun setNestingSuccess(value: String): BirdEntryBuilder {
+        add(FormEntryField("nestingSuccess", R.string.monitoring_birds_nest_success, value))
+        return this
+    }
+
+    fun setLandUse(value: String): BirdEntryBuilder {
+        add(FormEntryField("landuse300mRadius", R.string.monitoring_birds_land_use, value))
+        return this
+    }
+
+    fun setThreats(value: List<String>): BirdEntryBuilder {
+        add(FormEntryField("threats", R.string.monitoring_common_threats, value))
+        return this
+    }
+
+    fun setNotes(value: String): BirdEntryBuilder {
+        add(FormEntryField("speciesNotes", R.string.monitoring_birds_notes, value))
+        return this
+    }
 }
