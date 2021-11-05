@@ -274,9 +274,9 @@ public class ZoneFormInput extends TextViewFormInput implements SupportStorage {
         }
     }
 
-    static class ZoneHolder {
-        final Zone zone;
-        final String label;
+    public static class ZoneHolder {
+        public final Zone zone;
+        public final String label;
 
         ZoneHolder(String label) {
             this.label = label;

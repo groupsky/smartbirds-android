@@ -16,7 +16,7 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.anything
 
 @TestRobotMarker
-public interface CbmFormRobot
+interface CbmFormRobot
 
 class CbmFormTestRobot : CbmFormRobot {
     companion object {
@@ -56,6 +56,12 @@ class CbmFormTestRobot : CbmFormRobot {
 
     fun fieldZone(): ViewInteraction =
         Espresso.onView(withHintParentOrOwn(R.string.monitoring_cbm_zone))
+
+    fun fieldModeratorReview(): ViewInteraction =
+        Espresso.onView(ViewMatchers.withText(R.string.monitoring_moderator_review))
+
+    fun fieldConfidential(): ViewInteraction =
+        Espresso.onView(ViewMatchers.withText(R.string.monitoring_birds_private))
 
     fun fillRequiredFields() {
         // select species
