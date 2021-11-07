@@ -1,12 +1,14 @@
 package org.bspb.smartbirds.pro.tools
 
 import android.view.View
+import android.widget.DatePicker
 import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.android.material.textfield.TextInputLayout
@@ -19,8 +21,11 @@ import org.bspb.smartbirds.pro.ui.views.ZoneFormInput
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.equalTo
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 fun toolbarWithTitle(@StringRes title: Int): ViewInteraction =
     onView(allOf(withText(title), withParent(isAssignableFrom(Toolbar::class.java))))
@@ -74,13 +79,15 @@ fun zoneWithLabel(label: String): Matcher<ZoneFormInput.ZoneHolder> {
 
 fun withHintParentOrOwn(resourceId: Int): Matcher<View> =
     object : BoundedMatcher<View, EditText>(EditText::class.java) {
+        var expectedHint: String? = null
+
         override fun describeTo(description: Description) {
-            description.appendText("with hint: ")
+            description.appendText("with hint: $expectedHint")
         }
 
         override fun matchesSafely(item: EditText): Boolean {
             val parent = item.parent.parent
-            val expectedHint = item.resources.getString(resourceId)
+            expectedHint = item.resources.getString(resourceId)
             return if (parent is TextInputLayout) equalTo(expectedHint).matches(parent.hint) else equalTo(
                 expectedHint
             ).matches(item.hint)
@@ -124,4 +131,12 @@ fun selectZone(viewInteraction: ViewInteraction, text: String) {
     singleChoiceDialog {
         onZoneRow(text).perform(scrollTo(), click())
     }
+}
+
+fun fillDate(viewInteraction: ViewInteraction, dateString: String) {
+    val date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    viewInteraction.perform(scrollTo(), click())
+    onView(Matchers.instanceOf(DatePicker::class.java))
+        .perform(PickerActions.setDate(date.year, date.monthValue, date.dayOfMonth))
+    onView(withText("OK")).perform(click())
 }

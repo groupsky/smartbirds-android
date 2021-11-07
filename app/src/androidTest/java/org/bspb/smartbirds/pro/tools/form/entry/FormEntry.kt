@@ -15,7 +15,7 @@ class FormEntry {
     fun toUploadMap(): Map<String, Any> {
         val uploadMap = mutableMapOf<String, Any>()
         fields.forEach { field ->
-            uploadMap[field.jsonKey] = field.value
+            uploadMap[field.jsonKey] = field.uploadValue()
         }
         return uploadMap
     }
@@ -23,7 +23,7 @@ class FormEntry {
     fun toUiMap(): Map<Int, Any> {
         val uiMap = mutableMapOf<Int, Any>()
         fields.forEach { field ->
-            uiMap[field.uiTextId] = field.value
+            uiMap[field.uiTextId] = field.uiValue()
         }
         return uiMap
     }

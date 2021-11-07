@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro
 
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.bspb.smartbirds.pro.tools.MonitoringHelper.Companion.finishMonitoring
 import org.bspb.smartbirds.pro.tools.MonitoringHelper.Companion.uploadData
