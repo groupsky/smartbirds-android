@@ -123,7 +123,7 @@ fun selectSpecies(viewInteraction: ViewInteraction, text: String) {
 }
 
 fun fillTextField(viewInteraction: ViewInteraction, text: String) {
-    viewInteraction.perform(scrollTo(), typeText(text))
+    viewInteraction.perform(scrollTo(), clearText(), typeText(text))
 }
 
 fun selectZone(viewInteraction: ViewInteraction, text: String) {
