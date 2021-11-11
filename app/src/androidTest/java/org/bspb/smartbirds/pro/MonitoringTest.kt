@@ -82,7 +82,7 @@ class MonitoringTest {
             isDisplayed()
             // Wait a bit for the view to load the data
             Thread.sleep(1000)
-            fieldSource().perform(click())
+            fieldObservationMethodology().perform(click())
         }
         singleChoiceDialog {
             listItem(0).perform(click())
