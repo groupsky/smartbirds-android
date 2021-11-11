@@ -5,9 +5,11 @@ import androidx.test.espresso.DataInteraction
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.tools.nomenclatureWithLabel
 import org.bspb.smartbirds.pro.tools.speciesWithLabel
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
@@ -52,4 +54,6 @@ class SingleChoiceDialogTestRobot : SingleChoiceDialogRobot {
             `is`(speciesWithLabel(str))
         )
     )
+
+    fun clearSelection() = onView(withText(R.string.clear)).perform(click())
 }

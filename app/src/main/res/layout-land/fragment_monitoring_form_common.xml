@@ -41,20 +41,24 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                        android:id="@+id/form_common_source"
+                    <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                        android:id="@+id/location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_common_source"
-                        android:tag="@string/tag_source"
-                        app:entriesType="form_main_source"
-                        app:required="true" />
+                        android:hint="@string/monitoring_common_place"
+                        android:inputType="text|textCapWords|textPostalAddress"
+                        android:tag="@string/tag_location" />
                 </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
+            <TableRow>
 
                 <TextView
                     style="@style/FieldLabel"
+                    android:layout_span="2"
                     android:text="@string/monitoring_common_start_date" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -89,22 +93,9 @@
 
             <TableRow>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/TextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <org.bspb.smartbirds.pro.ui.views.TextFormInput
-                        android:id="@+id/location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_common_place"
-                        android:inputType="text|textCapWords|textPostalAddress"
-                        android:tag="@string/tag_location" />
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <TextView
                     style="@style/FieldLabel"
+                    android:layout_span="2"
                     android:text="@string/monitoring_common_end_date" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -277,6 +268,23 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
         </TableLayout>
+
+        <View style="@style/GroupSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_common_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_common_source"
+                android:tag="@string/tag_source"
+                app:entriesType="form_main_source"
+                app:required="false" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/GroupSeparator" />
 
