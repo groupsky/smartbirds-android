@@ -14,7 +14,7 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false):
 }
 
 fun debugLog(message: String?) {
-    Log.d("++++++", message)
+    Log.d("++++++", message ?: "null")
 }
 
 fun Context.showAlert(

@@ -20,12 +20,12 @@ buildProperties {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode versionCodeBase
         versionName "${versionNameBase}"
 
