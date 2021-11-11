@@ -276,12 +276,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.MemoFormInput
-                android:id="@+id/form_common_notes"
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_common_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/monitoring_common_notes"
-                android:tag="@string/tag_remarks" />
+                android:hint="@string/monitoring_common_source"
+                android:tag="@string/tag_source"
+                app:entriesType="form_main_source"
+                app:required="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/GroupSeparator" />
@@ -291,14 +293,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                android:id="@+id/form_common_source"
+            <org.bspb.smartbirds.pro.ui.views.MemoFormInput
+                android:id="@+id/form_common_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/monitoring_common_source"
-                android:tag="@string/tag_source"
-                app:entriesType="form_main_source"
-                app:required="false" />
+                android:hint="@string/monitoring_common_notes"
+                android:tag="@string/tag_remarks" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </ScrollView>
