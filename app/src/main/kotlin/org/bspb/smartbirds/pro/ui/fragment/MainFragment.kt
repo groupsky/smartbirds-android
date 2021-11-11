@@ -45,6 +45,7 @@ import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
 import org.bspb.smartbirds.pro.ui.SettingsActivity
 import org.bspb.smartbirds.pro.ui.StatsActivity_
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
@@ -141,6 +142,13 @@ open class MainFragment : Fragment() {
                 if (!granted) {
                     Toast.makeText(activity, R.string.permissions_required, Toast.LENGTH_SHORT)
                         .show()
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && REQUEST_LOCATION == requestCode && granted) {
+                    requestPermissions(
+                        arrayOf(permission.ACCESS_BACKGROUND_LOCATION),
+                        REQUEST_LOCATION
+                    )
                 }
             }
         }
@@ -425,14 +433,11 @@ open class MainFragment : Fragment() {
         }
         val permissions =
             mutableListOf(permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            permissions += permission.ACCESS_BACKGROUND_LOCATION
-        }
 
         context?.showAlert(
             R.string.location_permission_alert_title,
             R.string.location_permission_alert_message,
-            DialogInterface.OnClickListener { _, _ ->
+            { _, _ ->
                 requestPermissions(permissions.toTypedArray(), REQUEST_LOCATION)
             },
             null
