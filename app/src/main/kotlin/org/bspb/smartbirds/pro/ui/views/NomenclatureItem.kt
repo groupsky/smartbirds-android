@@ -11,9 +11,10 @@ class NomenclatureItem {
     var nomenclature: Nomenclature? = null
     var label: String? = null
 
-    constructor(label: String) {
+    constructor(label: String?) {
         nomenclature = null
-        this.label = prepare(label)
+        label?.let { this.label = prepare(it) }
+
     }
 
     constructor(nomenclature: Nomenclature) {
