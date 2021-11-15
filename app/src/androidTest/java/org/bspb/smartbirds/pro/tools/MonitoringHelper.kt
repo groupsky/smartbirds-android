@@ -14,10 +14,6 @@ class MonitoringHelper {
                 buttonFinish().perform(click())
             }
             commonFormScreen {
-                fieldObservationMethodology().perform(click())
-                SingleChoiceDialogTestRobot.singleChoiceDialog {
-                    listItem(0).perform(click())
-                }
                 buttonFinish().perform(click())
             }
         }

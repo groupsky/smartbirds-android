@@ -16,12 +16,14 @@ import org.bspb.smartbirds.pro.tools.form.entry.FormEntry
 import org.bspb.smartbirds.pro.tools.matcher.FormEntryMatcher
 import org.bspb.smartbirds.pro.tools.robot.MultipleChoiceDialogTestRobot.Companion.multipleChoiceDialog
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
+import org.bspb.smartbirds.pro.ui.utils.FormsConfig
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.ZoneFormInput
 import org.bspb.smartbirds.pro.utils.debugLog
 import org.hamcrest.*
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.equalTo
+import org.junit.Assert
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -41,6 +43,21 @@ fun nomenclatureWithLabel(label: String): Matcher<NomenclatureItem> {
 
         override fun describeTo(description: Description) {
             description.appendText("nomenclature with label: ")
+        }
+    }
+}
+
+fun nomenclatureConfigWithValue(value: String): Matcher<FormsConfig.NomenclatureConfig> {
+    return object :
+        BaseMatcher<FormsConfig.NomenclatureConfig>() {
+        override fun matches(item: Any?): Boolean {
+            checkNotNull(item)
+            if (item !is FormsConfig.NomenclatureConfig) return false
+            return item.isSame(value)
+        }
+
+        override fun describeTo(description: Description) {
+            description.appendText("nomenclature config with value: ")
         }
     }
 }
@@ -165,5 +182,12 @@ fun selectMultipleSpeciesFullScreen(resourceId: Int, values: Array<String>) {
             onSpeciesRow(it).perform(scrollTo(), click())
         }
         i++
+    }
+}
+
+fun selectSingleChoiceConfig(viewInteraction: ViewInteraction, text: String) {
+    viewInteraction.perform(scrollTo(), click())
+    singleChoiceDialog {
+        onConfigRow(text).perform(scrollTo(), click())
     }
 }

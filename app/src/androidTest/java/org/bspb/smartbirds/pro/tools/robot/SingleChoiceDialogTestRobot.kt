@@ -10,9 +10,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.tools.nomenclatureConfigWithValue
 import org.bspb.smartbirds.pro.tools.nomenclatureWithLabel
 import org.bspb.smartbirds.pro.tools.speciesWithLabel
 import org.bspb.smartbirds.pro.tools.zoneWithLabel
+import org.bspb.smartbirds.pro.ui.utils.FormsConfig
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.ZoneFormInput
@@ -56,6 +58,15 @@ class SingleChoiceDialogTestRobot : SingleChoiceDialogRobot {
             allOf(
                 instanceOf(NomenclatureItem::class.java),
                 `is`(nomenclatureWithLabel(str))
+            )
+        )
+    }
+
+    fun onConfigRow(str: String): DataInteraction {
+        return onData(
+            allOf(
+                instanceOf(FormsConfig.NomenclatureConfig::class.java),
+                `is`(nomenclatureConfigWithValue(str))
             )
         )
     }
