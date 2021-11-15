@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.tools.robot
 
 import android.widget.Button
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
@@ -28,7 +28,7 @@ class InvertebratesFormTestRobot : InvertebratesFormRobot {
         )
 
     fun buttonSave(): ViewInteraction =
-        Espresso.onView(
+        onView(
             Matchers.allOf(
                 Matchers.instanceOf(Button::class.java),
                 ViewMatchers.withText(R.string.menu_entry_save)
@@ -36,35 +36,35 @@ class InvertebratesFormTestRobot : InvertebratesFormRobot {
         )
 
     fun fieldModeratorReview(): ViewInteraction =
-        Espresso.onView(ViewMatchers.withText(R.string.monitoring_moderator_review))
+        onView(ViewMatchers.withText(R.string.monitoring_moderator_review))
 
     fun fieldConfidential(): ViewInteraction =
-        Espresso.onView(ViewMatchers.withText(R.string.monitoring_invertebrates_private))
+        onView(ViewMatchers.withText(R.string.monitoring_invertebrates_private))
 
     fun fieldSpecies(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_herp_name))
+        onView(withHintParentOrOwn(R.string.monitoring_herp_name))
 
     fun fieldGender(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_herp_gender))
+        onView(withHintParentOrOwn(R.string.monitoring_herp_gender))
 
     fun fieldAge(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_herp_age))
+        onView(withHintParentOrOwn(R.string.monitoring_herp_age))
 
     fun fieldCount(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_herp_count))
+        onView(withHintParentOrOwn(R.string.monitoring_herp_count))
 
     fun fieldHabitat(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_herp_habitat))
+        onView(withHintParentOrOwn(R.string.monitoring_herp_habitat))
 
     fun fieldFindings(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_invertebrates_danger_observation))
+        onView(withHintParentOrOwn(R.string.monitoring_invertebrates_danger_observation))
 
     fun fieldMarking(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_herp_marking))
+        onView(withHintParentOrOwn(R.string.monitoring_herp_marking))
 
     fun fieldThreats(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_common_threats))
+        onView(withHintParentOrOwn(R.string.monitoring_common_threats))
 
     fun fieldNotes(): ViewInteraction =
-        Espresso.onView(withHintParentOrOwn(R.string.monitoring_herp_notes))
+        onView(withHintParentOrOwn(R.string.monitoring_herp_notes))
 }

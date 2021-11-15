@@ -1,6 +1,5 @@
 package org.bspb.smartbirds.pro.tools.form
 
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.setChecked

@@ -18,10 +18,8 @@ import org.bspb.smartbirds.pro.tools.robot.MultipleChoiceDialogTestRobot.Compani
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.ZoneFormInput
-import org.hamcrest.BaseMatcher
-import org.hamcrest.Description
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers
+import org.bspb.smartbirds.pro.utils.debugLog
+import org.hamcrest.*
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.equalTo
 import java.time.LocalDate
@@ -139,4 +137,34 @@ fun fillDate(viewInteraction: ViewInteraction, dateString: String) {
     onView(Matchers.instanceOf(DatePicker::class.java))
         .perform(PickerActions.setDate(date.year, date.monthValue, date.dayOfMonth))
     onView(withText("OK")).perform(click())
+}
+
+fun withIndex(matcher: Matcher<View>, index: Int): Matcher<View?> {
+    return object : TypeSafeMatcher<View?>() {
+        var currentIndex = 0
+
+        override fun describeTo(description: Description?) {
+            description?.appendText("with index: ")
+            description?.appendValue(index)
+            matcher.describeTo(description)
+        }
+
+        override fun matchesSafely(item: View?): Boolean {
+            debugLog("Matches: " + matcher.matches(item) + ", index: " + currentIndex)
+            return matcher.matches(item) && currentIndex++ == index
+        }
+    }
+}
+
+fun selectMultipleSpeciesFullScreen(resourceId: Int, values: Array<String>) {
+    var i = 0
+    values.forEach {
+        onView(
+            withIndex(withHintParentOrOwn(resourceId), i)
+        ).perform(click())
+        singleChoiceDialog {
+            onSpeciesRow(it).perform(scrollTo(), click())
+        }
+        i++
+    }
 }
