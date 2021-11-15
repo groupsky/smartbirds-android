@@ -19,11 +19,9 @@ import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.ZoneFormInput
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.hamcrest.*
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

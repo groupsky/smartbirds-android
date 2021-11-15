@@ -8,11 +8,9 @@ import org.bspb.smartbirds.pro.tools.form.ThreatsFormHelper.Companion.fillFormFi
 import org.bspb.smartbirds.pro.tools.form.entry.builder.ThreatsEntryBuilder
 import org.bspb.smartbirds.pro.tools.hasFormEntry
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
-import org.bspb.smartbirds.pro.tools.robot.ThreatsFormTestRobot
 import org.bspb.smartbirds.pro.tools.robot.ThreatsFormTestRobot.Companion.threatsScreen
 import org.bspb.smartbirds.pro.tools.rule.ActiveMonitoringRule
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules
-import org.bspb.smartbirds.pro.ui.utils.FormsConfig
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig.ThreatsPoisonedType.dead
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig.ThreatsPrimaryType.poison
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig.ThreatsPrimaryType.threat

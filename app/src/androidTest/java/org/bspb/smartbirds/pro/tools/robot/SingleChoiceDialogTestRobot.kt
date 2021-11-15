@@ -16,15 +16,10 @@ import org.bspb.smartbirds.pro.tools.speciesWithLabel
 import org.bspb.smartbirds.pro.tools.zoneWithLabel
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.ZoneFormInput
-import org.bspb.smartbirds.pro.utils.debugLog
-import org.hamcrest.CoreMatchers
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.equalTo
 
 @TestRobotMarker
 private interface SingleChoiceDialogRobot

@@ -1,17 +1,17 @@
 package org.bspb.smartbirds.pro.tools.form
 
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.matcher.ViewMatchers
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.tools.*
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.setChecked
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.typeTextAndEnable
 import org.bspb.smartbirds.pro.tools.form.entry.FormEntry
 import org.bspb.smartbirds.pro.tools.robot.CbmFormTestRobot.Companion.cbmScreen
+import org.bspb.smartbirds.pro.tools.selectMultipleChoice
+import org.bspb.smartbirds.pro.tools.selectSpecies
+import org.bspb.smartbirds.pro.tools.selectZone
 
 class CbmFormHelper {
     companion object {

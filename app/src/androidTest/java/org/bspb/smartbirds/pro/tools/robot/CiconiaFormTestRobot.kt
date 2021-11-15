@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.tools.robot
 
 import android.widget.Button
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions

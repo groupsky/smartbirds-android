@@ -6,7 +6,6 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.actionWithAssertions
 import org.hamcrest.BaseMatcher
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.isA
 import org.hamcrest.Description
 

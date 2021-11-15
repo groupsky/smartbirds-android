@@ -3,12 +3,13 @@ package org.bspb.smartbirds.pro.tools.form
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.tools.*
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.setChecked
+import org.bspb.smartbirds.pro.tools.fillTextField
 import org.bspb.smartbirds.pro.tools.form.entry.FormEntry
-import org.bspb.smartbirds.pro.tools.robot.PlantsFormTestRobot.Companion.plantsScreen
 import org.bspb.smartbirds.pro.tools.robot.ThreatsFormTestRobot.Companion.threatsScreen
-import org.bspb.smartbirds.pro.ui.utils.FormsConfig
+import org.bspb.smartbirds.pro.tools.selectSingleChoice
+import org.bspb.smartbirds.pro.tools.selectSingleChoiceConfig
+import org.bspb.smartbirds.pro.tools.selectSpecies
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig.NomenclatureConfig
 
 class ThreatsFormHelper {

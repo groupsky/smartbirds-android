@@ -1,6 +1,5 @@
 package org.bspb.smartbirds.pro.tools.form
 
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.tools.action.SBViewActions.typeTextAndEnable

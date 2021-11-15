@@ -9,7 +9,6 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.bspb.smartbirds.pro.tools.robot.CommonFormTestRobot.Companion.commonFormScreen
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
-import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
 import org.bspb.smartbirds.pro.tools.rule.ActiveMonitoringRule
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules

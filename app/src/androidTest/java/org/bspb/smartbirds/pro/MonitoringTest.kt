@@ -21,7 +21,8 @@ import org.bspb.smartbirds.pro.tools.rule.MockLocationRule
 import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
 import org.bspb.smartbirds.pro.ui.MainActivity_
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.endsWith
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

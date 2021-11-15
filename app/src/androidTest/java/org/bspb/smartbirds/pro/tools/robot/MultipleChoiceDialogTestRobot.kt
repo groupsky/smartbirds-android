@@ -8,16 +8,8 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.tools.nomenclatureWithLabel
-import org.bspb.smartbirds.pro.tools.speciesWithLabel
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
-import org.bspb.smartbirds.pro.utils.debugLog
-import org.hamcrest.CoreMatchers
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers
+import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.Matchers.`is`
 
 @TestRobotMarker

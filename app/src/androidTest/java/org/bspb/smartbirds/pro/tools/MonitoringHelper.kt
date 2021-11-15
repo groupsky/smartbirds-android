@@ -5,7 +5,6 @@ import okhttp3.mockwebserver.MockWebServer
 import org.bspb.smartbirds.pro.tools.robot.CommonFormTestRobot.Companion.commonFormScreen
 import org.bspb.smartbirds.pro.tools.robot.MainTestRobot
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
-import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot
 
 class MonitoringHelper {
     companion object {

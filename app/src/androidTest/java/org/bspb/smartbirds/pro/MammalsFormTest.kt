@@ -7,7 +7,6 @@ import org.bspb.smartbirds.pro.tools.MonitoringHelper.Companion.uploadData
 import org.bspb.smartbirds.pro.tools.form.MammalsFormHelper.Companion.fillFormFields
 import org.bspb.smartbirds.pro.tools.form.entry.builder.MammalEntryBuilder
 import org.bspb.smartbirds.pro.tools.hasFormEntry
-import org.bspb.smartbirds.pro.tools.robot.MammalsFormTestRobot
 import org.bspb.smartbirds.pro.tools.robot.MammalsFormTestRobot.Companion.mammalsScreen
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
 import org.bspb.smartbirds.pro.tools.rule.ActiveMonitoringRule
