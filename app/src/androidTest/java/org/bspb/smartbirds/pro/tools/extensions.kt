@@ -144,13 +144,12 @@ fun withIndex(matcher: Matcher<View>, index: Int): Matcher<View?> {
         var currentIndex = 0
 
         override fun describeTo(description: Description?) {
-            description?.appendText("with index: ")
+            description?.appendText(" with index: ")
             description?.appendValue(index)
             matcher.describeTo(description)
         }
 
         override fun matchesSafely(item: View?): Boolean {
-            debugLog("Matches: " + matcher.matches(item) + ", index: " + currentIndex)
             return matcher.matches(item) && currentIndex++ == index
         }
     }
