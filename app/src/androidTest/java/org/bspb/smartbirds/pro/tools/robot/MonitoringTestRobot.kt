@@ -10,7 +10,8 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.tools.toolbarWithTitle
 import org.hamcrest.Matchers
@@ -44,4 +45,10 @@ class MonitoringTestRobot : MonitoringRobot {
                     .getString(resId)
             )
         )
+
+    fun openNewEntryForm(@StringRes resId: Int) {
+        buttonFabAddEntry().perform(ViewActions.click())
+
+        monitoringType(resId).perform(ViewActions.click())
+    }
 }

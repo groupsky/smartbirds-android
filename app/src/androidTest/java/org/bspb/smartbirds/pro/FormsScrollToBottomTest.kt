@@ -5,7 +5,6 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.bspb.smartbirds.pro.tools.robot.BirdsFormTestRobot
 import org.bspb.smartbirds.pro.tools.robot.BirdsFormTestRobot.Companion.birdsScreen
 import org.bspb.smartbirds.pro.tools.robot.CbmFormTestRobot.Companion.cbmScreen
 import org.bspb.smartbirds.pro.tools.robot.CiconiaFormTestRobot.Companion.ciconiaScreen
@@ -17,7 +16,6 @@ import org.bspb.smartbirds.pro.tools.robot.PlantsFormTestRobot.Companion.plantsS
 import org.bspb.smartbirds.pro.tools.robot.ThreatsFormTestRobot.Companion.threatsScreen
 import org.bspb.smartbirds.pro.tools.rule.ActiveMonitoringRule
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

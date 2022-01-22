@@ -14,7 +14,7 @@ import org.junit.runners.model.Statement
 class ActiveMonitoringRule : TestRule {
 
     private val activityRule = ActivityScenarioRule(MainActivity_::class.java)
-    private val mockApiRule = MockBackendRule()
+    val mockApiRule = MockBackendRule()
     private val permissionsRule = SmartbirdsStateRule.grantMonitoringPermissions()
     private val loggedInRule = SmartbirdsStateRule.setLoggedIn(true)
     private val batteryNotificationRule = SmartbirdsStateRule.setBatteryNotification(true)
