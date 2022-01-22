@@ -6,11 +6,11 @@ import androidx.room.PrimaryKey
 import java.sql.Blob
 
 @Entity(tableName = "nomenclatures")
-data class Nomenclature(
+class Nomenclature(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    val id: Int,
+    var id: Int = 0,
     val type: String?,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    val data: ByteArray?
+    val data: ByteArray?,
 )

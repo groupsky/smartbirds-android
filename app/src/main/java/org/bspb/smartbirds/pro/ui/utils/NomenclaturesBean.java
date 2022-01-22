@@ -188,10 +188,12 @@ public class NomenclaturesBean {
         return count;
     }
 
+    @Deprecated
     public int prepareNomenclatureCPO(Iterable<Nomenclature> nomenclatureItems, Collection<ContentProviderOperation> buffer) {
         return prepareCPO(prepareNomenclatureCV(nomenclatureItems), buffer);
     }
 
+    @Deprecated
     public int prepareSpeciesCPO(Iterable<Nomenclature> speciesItems, Collection<ContentProviderOperation> buffer) {
         return prepareCPO(prepareSpeciesCV(speciesItems), buffer);
     }

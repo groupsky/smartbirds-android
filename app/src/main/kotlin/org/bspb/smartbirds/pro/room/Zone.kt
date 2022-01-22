@@ -7,9 +7,9 @@ import java.sql.Blob
 
 @Entity(tableName = "zones")
 data class Zone(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     @ColumnInfo(name = "_id")
-    val id: Int,
+    val id: String,
     @ColumnInfo(name = "location_id")
     val locationId: Int,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)

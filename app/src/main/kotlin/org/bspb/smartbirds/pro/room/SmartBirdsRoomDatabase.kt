@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import org.bspb.smartbirds.pro.room.dao.NomenclatureDao
+import org.bspb.smartbirds.pro.room.dao.ZoneDao
 import org.bspb.smartbirds.pro.utils.debugLog
 
 @Database(
@@ -13,6 +15,10 @@ import org.bspb.smartbirds.pro.utils.debugLog
     version = 6
 )
 abstract class SmartBirdsRoomDatabase : RoomDatabase() {
+
+    abstract fun nomenclatureDao(): NomenclatureDao
+
+    abstract fun zoneDao(): ZoneDao
 
     companion object {
         @Volatile
@@ -24,13 +30,15 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
         }
 
         fun init(context: Context) {
-            INSTANCE ?: return
+            if (INSTANCE != null) {
+                return
+            }
 
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     SmartBirdsRoomDatabase::class.java,
-                    "smartBirdsDatabaseRoom"
+                    "smartBirdsDatabaseRoom.db"
                 )
                     .addMigrations(
                         MIGRATION_1_6

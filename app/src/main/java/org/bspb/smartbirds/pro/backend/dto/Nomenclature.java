@@ -67,6 +67,7 @@ public class Nomenclature {
         return sb.toString();
     }
 
+    @Deprecated
     public static Nomenclature fromCursor(Cursor cursor, String locale) {
         String data = cursor.getString(cursor.getColumnIndexOrThrow(DATA));
         Nomenclature nomenclature;
@@ -95,6 +96,7 @@ public class Nomenclature {
         return nomenclature;
     }
 
+    @Deprecated
     public ContentValues toCV() {
         ContentValues cv = new ContentValues();
         cv.put(TYPE, type);
