@@ -20,7 +20,7 @@ buildProperties {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
@@ -108,6 +108,8 @@ android {
 }
 
 dependencies {
+    def room_version = "2.4.1"
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "org.androidannotations:androidannotations:4.8.0"
     implementation "org.androidannotations:androidannotations-api:4.8.0"
@@ -151,6 +153,11 @@ dependencies {
     implementation 'net.simonvt.schematic:schematic:0.7.0'
 
     implementation "androidx.lifecycle:lifecycle-common-java8:2.4.0"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
 
