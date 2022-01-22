@@ -35,6 +35,7 @@ public class Zone {
 
     private transient Coordinate center;
 
+    @Deprecated
     public static Zone fromCursor(Cursor cursor) {
         String data = cursor.getString(cursor.getColumnIndexOrThrow(ZoneColumns.DATA));
         return SBGsonParser.createParser().fromJson(data, Zone.class);
@@ -49,6 +50,7 @@ public class Zone {
                 '}';
     }
 
+    @Deprecated
     public ContentValues toCV() {
         ContentValues cv = new ContentValues();
         cv.put(ZoneColumns._ID, id);
