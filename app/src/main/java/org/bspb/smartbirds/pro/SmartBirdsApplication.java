@@ -15,6 +15,7 @@ import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
+import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
@@ -48,6 +49,8 @@ public class SmartBirdsApplication extends Application {
         crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
         crashlytics.setCustomKey("git_sha", BuildConfig.GIT_SHA);
         crashlytics.setCustomKey("build_time", BuildConfig.BUILD_TIME);
+
+        SmartBirdsRoomDatabase.Companion.init(this);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));
