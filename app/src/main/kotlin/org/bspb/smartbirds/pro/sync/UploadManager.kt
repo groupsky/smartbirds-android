@@ -27,8 +27,6 @@ import org.bspb.smartbirds.pro.forms.convert.Converter
 import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.*
@@ -47,9 +45,6 @@ open class UploadManager {
 
     @Bean
     protected lateinit var backend: Backend
-
-    @Bean
-    protected lateinit var nomenclaturesBean: NomenclaturesBean
 
     @Bean
     protected lateinit var monitoringManager: MonitoringManager

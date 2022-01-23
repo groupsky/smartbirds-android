@@ -89,58 +89,6 @@ public class SmartBirdsProvider {
         }
     }
 
-    @TableEndpoint(table = SmartBirdsDatabase.NOMENCLATURES)
-    public static class Nomenclatures {
-
-        @ContentUri(
-                path = Path.NOMENCLATURES,
-                type = TYPE_LIST + Path.NOMENCLATURES,
-                defaultSort = NomenclatureColumns._ID + " ASC")
-        public static final Uri CONTENT_URI = buildUri(Path.NOMENCLATURES);
-
-        @InexactContentUri(
-                path = Path.NOMENCLATURES + "/*",
-                name = Path.NOMENCLATURES + "_TYPE",
-                type = TYPE_LIST + Path.NOMENCLATURES,
-                whereColumn = NomenclatureColumns.TYPE,
-                pathSegment = 1,
-                defaultSort = NomenclatureColumns._ID + " ASC")
-        public static Uri withType(String type) {
-            return buildUri(Path.NOMENCLATURES, type);
-        }
-    }
-
-    @TableEndpoint(table = SmartBirdsDatabase.NOMENCLATURE_USES_COUNT)
-    public static class NomenclatureUsesCount {
-        @ContentUri(
-                path = Path.NOMENCLATURE_USES_COUNT,
-                type = TYPE_LIST + Path.NOMENCLATURE_USES_COUNT,
-                defaultSort = NomenclatureUsesCountColumns._ID + " ASC")
-        public static final Uri CONTENT_URI = buildUri(Path.NOMENCLATURE_USES_COUNT);
-
-        @InexactContentUri(
-                path = Path.NOMENCLATURE_USES_COUNT + "/" + Path.BY_ID + "/#",
-                name = Path.NOMENCLATURE_USES_COUNT + "_ID",
-                type = TYPE_ITEM + Path.NOMENCLATURE_USES_COUNT,
-                whereColumn = NomenclatureUsesCountColumns._ID,
-                pathSegment = 2)
-        public static Uri forId(long id) {
-            return buildUri(Path.NOMENCLATURE_USES_COUNT, Path.BY_ID, String.valueOf(id));
-        }
-
-        @InexactContentUri(
-                path = Path.NOMENCLATURE_USES_COUNT + "/" + Path.BY_TYPE + "/*",
-                name = Path.NOMENCLATURE_USES_COUNT + "_TYPE",
-                type = TYPE_LIST + Path.NOMENCLATURE_USES_COUNT,
-                whereColumn = NomenclatureUsesCountColumns.TYPE,
-                pathSegment = 2,
-                defaultSort = NomenclatureUsesCountColumns.COUNT + " DESC",
-                limit = "" + MAX_RECENT_USED_VALUES)
-        public static Uri forType(String type) {
-            return buildUri(Path.NOMENCLATURE_USES_COUNT, Path.BY_TYPE, type);
-        }
-    }
-
     @TableEndpoint(table = SmartBirdsDatabase.ZONES)
     public static class Zones {
         @ContentUri(
