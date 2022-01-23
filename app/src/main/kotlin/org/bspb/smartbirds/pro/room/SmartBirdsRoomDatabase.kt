@@ -37,6 +37,7 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
                 return
             }
 
+            // TODO load from bundled files on initial create
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

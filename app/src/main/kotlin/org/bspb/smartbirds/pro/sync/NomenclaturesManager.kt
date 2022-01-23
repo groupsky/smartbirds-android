@@ -11,12 +11,9 @@ import org.androidannotations.annotations.RootContext
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Locations
-import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures
 import org.bspb.smartbirds.pro.room.NomenclatureModel
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 import org.bspb.smartbirds.pro.tools.Reporting
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.utils.NomenclaturesHelper
 import java.io.IOException
 import java.util.*
 
@@ -36,10 +33,6 @@ open class NomenclaturesManager {
 
     @Bean
     protected lateinit var backend: Backend
-
-    @Bean
-    protected lateinit var nomenclaturesBean: NomenclaturesBean
-
 
     fun downloadLocations() {
         isDownloading.add(Downloading.LOCATIONS)
@@ -67,70 +60,39 @@ open class NomenclaturesManager {
         }
     }
 
-    // TODO remove old db insert when finish Room migration
     fun updateNomenclatures() {
         isDownloading.add(Downloading.NOMENCLATURES)
         try {
             try {
                 var limit = 500
                 var offset = 0
-                val buffer = ArrayList<ContentProviderOperation>()
-
-                val roomNomenclatures = mutableListOf<NomenclatureModel>()
+                val nomenclatures = mutableListOf<NomenclatureModel>()
 
                 while (true) {
                     val response = backend.api().nomenclatures(limit, offset).execute()
                     if (!response.isSuccessful) throw IOException("Server error: " + response.code() + " - " + response.message())
                     if (response.body()!!.data.isEmpty()) break
-                    offset += nomenclaturesBean.prepareNomenclatureCPO(
-                        response.body()!!.data,
-                        buffer
-                    )
+                    offset += response.body()!!.data.size
                     response.body()!!.data.forEach {
-                        roomNomenclatures.add(NomenclaturesHelper.convertDtoToEntity(it))
+                        nomenclatures.add(it.convertToEntity())
                     }
                 }
 
-                // if we received nomenclatures
-                if (buffer.isNotEmpty()) {
-                    buffer.add(
-                        0,
-                        ContentProviderOperation.newDelete(Nomenclatures.CONTENT_URI).build()
-                    )
-                    context.contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, buffer)
-
-                    buffer.clear()
+                if (nomenclatures.isNotEmpty()) {
                     limit = 500
                     offset = 0
-
                     while (true) {
                         val response = backend.api().species(limit, offset).execute()
                         if (!response.isSuccessful) throw IOException("Server error: " + response.code() + " - " + response.message())
                         if (response.body()!!.data.isEmpty()) break
-                        offset += nomenclaturesBean.prepareSpeciesCPO(
-                            response.body()!!.data,
-                            buffer
-                        )
+                        offset += response.body()!!.data.size
                         response.body()!!.data.forEach {
-                            roomNomenclatures.add(
-                                NomenclaturesHelper.convertSpeciesDtoToEntity(
-                                    it,
-                                    context
-                                )
-                            )
+                            nomenclatures.add(it.convertSpeciesToEntity(context))
                         }
                     }
 
-                    // if we received nomenclatures
-                    if (buffer.isNotEmpty()) {
-                        context.contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, buffer)
-                        buffer.clear()
-                    }
-
-                    if (roomNomenclatures.isNotEmpty()) {
-                        SmartBirdsRoomDatabase.getInstance().nomenclatureDao()
-                            .updateNomenclaturesAndClearOld(roomNomenclatures)
-                    }
+                    SmartBirdsRoomDatabase.getInstance().nomenclatureDao()
+                        .updateNomenclaturesAndClearOld(nomenclatures)
                 }
             } catch (t: Throwable) {
                 Reporting.logException(t)

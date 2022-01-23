@@ -18,7 +18,6 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew;
 
 /**
@@ -35,8 +34,7 @@ public class SmartBirdsApplication extends Application {
 
     @Bean
     EEventBus bus;
-    @Bean
-    NomenclaturesBean nomenclaturesBean;
+
     @Bean
     AuthenticationInterceptor authenticationInterceptor;
     @Bean

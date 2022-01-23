@@ -8,8 +8,6 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException
 import org.bspb.smartbirds.pro.ui.utils.Configuration
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_
 import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew
 import org.bspb.smartbirds.pro.utils.inflate
 

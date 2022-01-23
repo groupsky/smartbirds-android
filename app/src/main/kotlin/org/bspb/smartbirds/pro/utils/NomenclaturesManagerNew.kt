@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import de.greenrobot.event.EventBus
 import kotlinx.coroutines.*
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
+import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.events.EEventBus_
+import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent
 import org.bspb.smartbirds.pro.room.NomenclatureUsesCount
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 import org.bspb.smartbirds.pro.tools.AlphanumComparator
@@ -99,6 +103,7 @@ class NomenclaturesManagerNew private constructor(val context: Context) {
             }
 
             loading = false
+            EEventBus_.getInstance_(context).postSticky(NomenclaturesReadyEvent())
         }
     }
 

@@ -1,31 +1,5 @@
 package org.bspb.smartbirds.pro.ui.views;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.CursorLoader;
-import android.content.DialogInterface;
-import android.content.Loader;
-import android.database.Cursor;
-import android.os.Build;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.AttributeSet;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ListView;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EView;
-import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.backend.dto.Zone;
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
-import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
-
-import java.util.ArrayList;
-import java.util.Map;
-
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_NEUTRAL;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
@@ -35,15 +9,35 @@ import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.widget.AdapterView.INVALID_POSITION;
 import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Zones.CONTENT_URI;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.CursorLoader;
+import android.content.DialogInterface;
+import android.content.Loader;
+import android.database.Cursor;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.AttributeSet;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ListView;
+
+import org.androidannotations.annotations.EView;
+import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.backend.dto.Zone;
+import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 /**
  * Created by groupsky on 06.10.16.
  */
 
 @EView
 public class ZoneFormInput extends TextViewFormInput implements SupportStorage {
-
-    @Bean
-    NomenclaturesBean nomenclatures;
 
     private SmartArrayAdapter<ZoneHolder> mAdapter;
     /**
