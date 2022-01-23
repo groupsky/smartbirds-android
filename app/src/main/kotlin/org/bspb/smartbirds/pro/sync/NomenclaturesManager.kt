@@ -12,7 +12,7 @@ import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Locations
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Nomenclatures
-import org.bspb.smartbirds.pro.room.Nomenclature
+import org.bspb.smartbirds.pro.room.NomenclatureModel
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
@@ -76,7 +76,7 @@ open class NomenclaturesManager {
                 var offset = 0
                 val buffer = ArrayList<ContentProviderOperation>()
 
-                val roomNomenclatures = mutableListOf<Nomenclature>()
+                val roomNomenclatures = mutableListOf<NomenclatureModel>()
 
                 while (true) {
                     val response = backend.api().nomenclatures(limit, offset).execute()
