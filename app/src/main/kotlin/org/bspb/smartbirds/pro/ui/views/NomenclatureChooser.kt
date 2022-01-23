@@ -16,9 +16,8 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.ui.utils.Configuration
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter
+import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew
 import org.bspb.smartbirds.pro.utils.showAlert
 
 class NomenclatureChooser(
@@ -35,7 +34,7 @@ class NomenclatureChooser(
     private var needFilter: Boolean = false
     private var onItemSelected: ((item: NomenclatureItem?) -> Unit)? = null
 
-    private var nomenclatures: NomenclaturesBean = NomenclaturesBean_.getInstance_(context)
+    private var nomenclatures = NomenclaturesManagerNew.getInstance()
     private var adapter: SmartArrayAdapter<NomenclatureItem> =
         SmartArrayAdapter(context, R.layout.item_dialog_single_choice, ArrayList())
     private var lastSelectedItem: NomenclatureItem? = null
@@ -90,7 +89,7 @@ class NomenclatureChooser(
     }
 
     private fun loadData(): Boolean {
-        if (nomenclatures.isLoading) {
+        if (nomenclatures.isLoading()) {
             Log.d(TAG, "nomenclatures not loaded, waiting to load...")
             return false
         }

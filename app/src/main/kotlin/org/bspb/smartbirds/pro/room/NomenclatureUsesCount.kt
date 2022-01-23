@@ -9,11 +9,11 @@ import java.sql.Blob
 data class NomenclatureUsesCount(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    val id: Int,
-    val type: String?,
+    var id: Int = 0,
+    var type: String?,
     @ColumnInfo(name = "label_id")
-    val labelId: String?,
-    val count: Int?,
+    var labelId: String?,
+    var count: Int?,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    val data: ByteArray?
+    var data: ByteArray?
 )

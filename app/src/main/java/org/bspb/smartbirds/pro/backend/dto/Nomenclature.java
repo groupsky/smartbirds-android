@@ -8,6 +8,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -67,6 +69,7 @@ public class Nomenclature {
         return sb.toString();
     }
 
+    // TODO remove when finish with room integration
     @Deprecated
     public static Nomenclature fromCursor(Cursor cursor, String locale) {
         String data = cursor.getString(cursor.getColumnIndexOrThrow(DATA));
@@ -102,5 +105,15 @@ public class Nomenclature {
         cv.put(TYPE, type);
         cv.put(DATA, SBGsonParser.createParser().toJson(this));
         return cv;
+    }
+
+    @NotNull
+    public static Nomenclature fromData(@NotNull String data, String locale) {
+        Nomenclature nomenclature = SBGsonParser.createParser().fromJson(data, Nomenclature.class);
+        if (nomenclature.type.startsWith("species_")) {
+            nomenclature.label = new SpeciesLabel(nomenclature.label);
+        }
+        nomenclature.localeLabel = nomenclature.label.get(locale);
+        return nomenclature;
     }
 }

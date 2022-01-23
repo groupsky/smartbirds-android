@@ -9,6 +9,9 @@ import org.bspb.smartbirds.pro.room.Nomenclature
 @Dao
 abstract class NomenclatureDao {
 
+    @Query("SELECT * FROM nomenclatures ORDER BY _id ASC")
+    abstract suspend fun getAll(): List<Nomenclature>
+
     @Query("DELETE FROM nomenclatures")
     abstract fun clearTable()
 
