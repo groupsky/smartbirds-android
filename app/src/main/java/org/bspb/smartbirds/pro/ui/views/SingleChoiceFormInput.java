@@ -1,29 +1,35 @@
 package org.bspb.smartbirds.pro.ui.views;
 
+import static android.app.Dialog.BUTTON_NEGATIVE;
+import static android.app.Dialog.BUTTON_NEUTRAL;
+import static android.app.Dialog.BUTTON_POSITIVE;
+import static android.text.TextUtils.isEmpty;
+import static android.widget.AdapterView.INVALID_POSITION;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.ITEM_COUNT_FOR_FILTER;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewTreeLifecycleOwner;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -33,29 +39,13 @@ import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
-import org.bspb.smartbirds.pro.ui.utils.Configuration;
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
+import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-
-import static android.app.Dialog.BUTTON_NEGATIVE;
-import static android.app.Dialog.BUTTON_NEUTRAL;
-import static android.app.Dialog.BUTTON_POSITIVE;
-import static android.text.TextUtils.isEmpty;
-import static android.text.TextUtils.join;
-import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
-import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-import static android.view.inputmethod.EditorInfo.TYPE_TEXT_VARIATION_FILTER;
-import static android.widget.AdapterView.INVALID_POSITION;
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.ITEM_COUNT_FOR_FILTER;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_SPLITTER;
 
 /**
  * Created by groupsky on 14-10-10.
@@ -65,8 +55,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
     private CharSequence key;
 
-    @Bean
-    NomenclaturesBean nomenclatures;
+    NomenclaturesManagerNew nomenclatures = NomenclaturesManagerNew.Companion.getInstance();
+
     @Bean
     EEventBus bus;
 
@@ -130,12 +120,14 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                 }
                 return;
             }
+
             List<Nomenclature> values = nomenclatures.getNomenclature(key.toString());
             mAdapter.clear();
             for (Nomenclature value : values) {
                 if (isEmpty(value.localeLabel)) continue;
                 mAdapter.add(new NomenclatureItem(value));
             }
+
             mAdapter.notifyDataSetChanged();
             if (mAdapter.getCount() == 1) {
                 setSelection(mAdapter.getItem(0));
@@ -281,7 +273,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                 if (mPopup == null) return;
                 if (mLastSelected != null) return;
                 if (mSelectedItem == null) return;
-                mPopup.getListView().setSelection(mAdapter.getPosition(mSelectedItem));
+                mPopup.getListView().setItemChecked(mAdapter.getPosition(mSelectedItem), true);
             }
         };
 
@@ -292,19 +284,20 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
             View searchView = null;
             if (needFilter) {
-                final List<Nomenclature> recentItems = nomenclatures.isLoading() ?
-                        new ArrayList<Nomenclature>() :
-                        nomenclatures.getRecentNomenclatures(key.toString());
-                if (!recentItems.isEmpty()) {
-                    mAdapter.sort(new Comparator<NomenclatureItem>() {
-                        @Override
-                        public int compare(NomenclatureItem o1, NomenclatureItem o2) {
-                            int idx1 = recentItems.indexOf(o1.getNomenclature());
-                            int idx2 = recentItems.indexOf(o2.getNomenclature());
-                            if (idx1 >= 0 && idx2 >= 0) return idx1 - idx2;
-                            if (idx1 >= 0) return -1;
-                            if (idx2 >= 0) return 1;
-                            return AlphanumComparator.compareStrings(o1.getLabel(), o2.getLabel());
+                LifecycleOwner lifecycleOwner = ViewTreeLifecycleOwner.get(SingleChoiceFormInput.this);
+                if (lifecycleOwner != null) {
+                    nomenclatures.getRecentNomenclatures(key.toString()).observe(lifecycleOwner, nomenclatures -> {
+                        if (!nomenclatures.isEmpty()) {
+                            mAdapter.sort((o1, o2) -> {
+                                int idx1 = nomenclatures.indexOf(o1.getNomenclature());
+                                int idx2 = nomenclatures.indexOf(o2.getNomenclature());
+                                if (idx1 >= 0 && idx2 >= 0) return idx1 - idx2;
+                                if (idx1 >= 0) return -1;
+                                if (idx2 >= 0) return 1;
+                                return AlphanumComparator.compareStrings(o1.getLabel(), o2.getLabel());
+                            });
+
+                            mAdapter.getFilter().filter(null);
                         }
                     });
                 }
@@ -315,8 +308,6 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
                 searchEdit.setHint(getHint());
                 searchEdit.addTextChangedListener(this);
             }
-
-            mAdapter.getFilter().filter(null);
 
             setSelection(new NomenclatureItem(getText().toString()));
 

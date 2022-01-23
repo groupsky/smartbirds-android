@@ -19,6 +19,7 @@ import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
+import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew;
 
 /**
  * Created by groupsky on 14-9-25.
@@ -51,6 +52,7 @@ public class SmartBirdsApplication extends Application {
         crashlytics.setCustomKey("build_time", BuildConfig.BUILD_TIME);
 
         SmartBirdsRoomDatabase.Companion.init(this);
+        NomenclaturesManagerNew.Companion.init(this);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));

@@ -18,6 +18,7 @@ import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
+import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -37,8 +38,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
     Nomenclature[] items;
 
     private final CharSequence key;
-    @Bean
-    NomenclaturesBean nomenclatures;
+    NomenclaturesManagerNew nomenclatures = NomenclaturesManagerNew.Companion.getInstance();
     @Bean
     EEventBus bus;
 
