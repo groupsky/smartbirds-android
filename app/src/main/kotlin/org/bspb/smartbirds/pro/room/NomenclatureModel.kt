@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.sql.Blob
 
 @Entity(tableName = "nomenclatures")
-class Nomenclature(
+class NomenclatureModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     var id: Int = 0,
