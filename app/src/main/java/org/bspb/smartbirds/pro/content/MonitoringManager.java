@@ -186,8 +186,11 @@ public class MonitoringManager {
 
     public TrackingLocation newTracking(Monitoring monitoring, Location location) {
         TrackingLocation l = new TrackingLocation(monitoring.code, location);
-        final TrackingRepository repo = new TrackingRepository();
-        repo.insertNewTracking(toDbModel(l));
+         /* TODO Enable tracking db persistence if needed
+          Pause tracking db persistence since it is never read
+         */
+//        final TrackingRepository repo = new TrackingRepository();
+//        repo.insertNewTracking(toDbModel(l));
         return l;
     }
 
