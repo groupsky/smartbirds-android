@@ -10,7 +10,7 @@ data class Tracking(
     @ColumnInfo(name = "_id")
     val id: Int,
     val code: String,
-    val time: Int,
+    val time: Long,
     val latitude: Double,
     val longitude: Double,
     val altitude: Double?

@@ -8,6 +8,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import org.bspb.smartbirds.pro.room.dao.NomenclatureDao
 import org.bspb.smartbirds.pro.room.dao.NomenclatureUsesCountDao
+import org.bspb.smartbirds.pro.room.dao.TrackingDao
 import org.bspb.smartbirds.pro.room.dao.ZoneDao
 import org.bspb.smartbirds.pro.utils.debugLog
 
@@ -22,6 +23,8 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
     abstract fun nomenclatureUsesCountDao(): NomenclatureUsesCountDao
 
     abstract fun zoneDao(): ZoneDao
+
+    abstract fun trackingDao(): TrackingDao
 
     companion object {
         @Volatile
