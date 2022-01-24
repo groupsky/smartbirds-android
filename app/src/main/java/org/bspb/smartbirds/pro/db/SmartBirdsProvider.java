@@ -41,7 +41,6 @@ public class SmartBirdsProvider {
         String ZONES = "zones";
         String MONITORINGS = "monitorings";
         String FORMS = "forms";
-        String TRACKING = "tracking";
     }
 
     private static Uri buildUri(String... paths) {
@@ -199,37 +198,6 @@ public class SmartBirdsProvider {
             notifyUris.push(CONTENT_URI);
             getNotifyUris(context, uri, null, null, notifyUris);
             return notifyUris.toArray(new Uri[notifyUris.size()]);
-        }
-    }
-
-    @TableEndpoint(table = SmartBirdsDatabase.TRACKING)
-    public static class Tracking {
-        @ContentUri(
-                path = Path.TRACKING,
-                type = TYPE_LIST + Path.TRACKING,
-                defaultSort = TrackingColumns._ID + " ASC")
-        public static final Uri CONTENT_URI = buildUri(Path.TRACKING);
-
-        @InexactContentUri(
-                path = Path.TRACKING + "/#",
-                name = Path.TRACKING + "_ID",
-                type = TYPE_ITEM + Path.TRACKING,
-                whereColumn = TrackingColumns._ID,
-                pathSegment = 1,
-                defaultSort = TrackingColumns._ID + " ASC")
-        public static Uri withId(long id) {
-            return buildUri(Path.TRACKING, String.valueOf(id));
-        }
-
-        @InexactContentUri(
-                path = Path.TRACKING + "/monitoring/*",
-                name = Path.TRACKING + "_MONITORING_CODE",
-                type = TYPE_LIST + Path.TRACKING,
-                whereColumn = TrackingColumns.CODE,
-                pathSegment = 2,
-                defaultSort = TrackingColumns._ID + " ASC")
-        public static Uri withMonitoringCode(String monitoringCode) {
-            return buildUri(Path.TRACKING, "monitoring", monitoringCode);
         }
     }
 }

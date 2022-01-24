@@ -22,9 +22,6 @@ public class SmartBirdsDatabase {
     @Table(MonitoringColumns.class)
     public static final String MONITORINGS = "monitorings";
 
-    @Table(TrackingColumns.class)
-    public static final String TRACKING = "tracking";
-
     @Table(ZoneColumns.class)
     public static final String ZONES = "zones";
 
@@ -44,7 +41,7 @@ public class SmartBirdsDatabase {
                 case 4:
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.MONITORINGS);
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.FORMS);
-                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.TRACKING);
+//                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.TRACKING);
                     break;
                 case 5:
                     db.execSQL("ALTER TABLE nomenclatures ADD COLUMN data BLOB");

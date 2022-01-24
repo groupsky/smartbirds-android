@@ -1,5 +1,12 @@
 package org.bspb.smartbirds.pro.content;
 
+import static android.content.ContentUris.parseId;
+import static org.androidannotations.annotations.EBean.Scope.Singleton;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.paused;
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import static java.lang.Double.parseDouble;
+
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -20,11 +27,11 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.db.FormColumns;
 import org.bspb.smartbirds.pro.db.MonitoringColumns;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
-import org.bspb.smartbirds.pro.db.TrackingColumns;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.repository.TrackingRepository;
+import org.bspb.smartbirds.pro.room.Tracking;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,14 +41,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
-
-import static android.content.ContentUris.parseId;
-import static android.text.TextUtils.isEmpty;
-import static java.lang.Double.parseDouble;
-import static org.androidannotations.annotations.EBean.Scope.Singleton;
-import static org.bspb.smartbirds.pro.content.Monitoring.Status.paused;
-import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by groupsky on 05.12.16.
@@ -126,14 +125,14 @@ public class MonitoringManager {
         return cv;
     }
 
-    private static ContentValues toContentValues(@NonNull TrackingLocation location) {
-        ContentValues cv = new ContentValues();
-        cv.put(TrackingColumns.CODE, location.monitoringCode);
-        cv.put(TrackingColumns.TIME, location.time);
-        cv.put(TrackingColumns.LATITUDE, location.latitude);
-        cv.put(TrackingColumns.LONGITUDE, location.longitude);
-        cv.put(TrackingColumns.ALTITUDE, location.altitude);
-        return cv;
+    private static Tracking toDbModel(@NonNull TrackingLocation location) {
+        return new Tracking(
+                0,
+                location.monitoringCode,
+                location.time,
+                location.latitude,
+                location.longitude,
+                location.altitude);
     }
 
     public static Monitoring monitoringFromCursor(@NonNull Cursor cursor) {
@@ -164,25 +163,6 @@ public class MonitoringManager {
         return entry;
     }
 
-    public static TrackingLocation locationFromCursor(@NonNull Cursor cursor) {
-        String monitoringCode = cursor.getString(cursor.getColumnIndexOrThrow(TrackingColumns.CODE));
-        long time = cursor.getLong(cursor.getColumnIndexOrThrow(TrackingColumns.TIME));
-        double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(TrackingColumns.LATITUDE));
-        double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(TrackingColumns.LONGITUDE));
-        Double altitude = null;
-        final int altitudeIdx = cursor.getColumnIndex(TrackingColumns.ALTITUDE);
-        if (altitudeIdx != -1 && !cursor.isNull(altitudeIdx))
-            altitude = cursor.getDouble(altitudeIdx);
-
-        TrackingLocation location = new TrackingLocation(monitoringCode, time, latitude, longitude, altitude);
-
-        final int idIdx = cursor.getColumnIndex(TrackingColumns._ID);
-        if (idIdx != -1)
-            location.id = cursor.getLong(idIdx);
-
-        return location;
-    }
-
     public MonitoringEntry newEntry(@NonNull Monitoring monitoring, @NonNull EntryType entryType, @NonNull HashMap<String, String> data) {
         MonitoringEntry entry = new MonitoringEntry(monitoring.code, entryType);
         entry.data.putAll(data);
@@ -206,7 +186,8 @@ public class MonitoringManager {
 
     public TrackingLocation newTracking(Monitoring monitoring, Location location) {
         TrackingLocation l = new TrackingLocation(monitoring.code, location);
-        l.id = parseId(contentResolver.insert(SmartBirdsProvider.Tracking.CONTENT_URI, toContentValues(l)));
+        final TrackingRepository repo = new TrackingRepository();
+        repo.insertNewTracking(toDbModel(l));
         return l;
     }
 
