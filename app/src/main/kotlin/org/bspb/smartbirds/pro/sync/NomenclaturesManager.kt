@@ -1,6 +1,5 @@
 package org.bspb.smartbirds.pro.sync
 
-import android.content.ContentProviderOperation
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -9,8 +8,6 @@ import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.RootContext
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.db.SmartBirdsProvider
-import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Locations
 import org.bspb.smartbirds.pro.room.NomenclatureModel
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 import org.bspb.smartbirds.pro.tools.Reporting
@@ -33,32 +30,6 @@ open class NomenclaturesManager {
 
     @Bean
     protected lateinit var backend: Backend
-
-    fun downloadLocations() {
-        isDownloading.add(Downloading.LOCATIONS)
-        try {
-            try {
-                val buffer = ArrayList<ContentProviderOperation>()
-                buffer.add(ContentProviderOperation.newDelete(Locations.CONTENT_URI).build())
-                val response = backend.api().listLocations().execute()
-                if (!response.isSuccessful) throw IOException("Server error: " + response.code() + " - " + response.message())
-                for (location in response.body()!!.data) {
-                    buffer.add(
-                        ContentProviderOperation
-                            .newInsert(Locations.CONTENT_URI)
-                            .withValues(location.toCV())
-                            .build()
-                    )
-                }
-                context.contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, buffer)
-            } catch (t: Throwable) {
-                Reporting.logException(t)
-                showToast("Could not download locations. Try again.")
-            }
-        } finally {
-            isDownloading.remove(Downloading.LOCATIONS)
-        }
-    }
 
     fun updateNomenclatures() {
         isDownloading.add(Downloading.NOMENCLATURES)

@@ -19,9 +19,6 @@ public class SmartBirdsDatabase {
     @Table(FormColumns.class)
     public static final String FORMS = "forms";
 
-    @Table(LocationColumns.class)
-    public static final String LOCATIONS = "locations";
-
     @Table(MonitoringColumns.class)
     public static final String MONITORINGS = "monitorings";
 
@@ -42,7 +39,7 @@ public class SmartBirdsDatabase {
 //                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.NOMENCLATURE_USES_COUNT);
                     break;
                 case 3:
-                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.LOCATIONS);
+//                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.LOCATIONS);
                     break;
                 case 4:
                     db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.MONITORINGS);

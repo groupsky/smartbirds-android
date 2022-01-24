@@ -77,8 +77,6 @@ open class SyncService : AbstractIntentService("SyncService") {
         authenticationManager.checkSession();
         updateSyncProgress(R.string.sync_dialog_downloading_nomenclatures)
         nomenclaturesManager.updateNomenclatures()
-//        updateSyncProgress(R.string.sync_dialog_downloading_locations)
-//        nomenclaturesManager.downloadLocations()
         updateSyncProgress(R.string.sync_dialog_downloading_zones)
         zonesManager.downloadZones()
     }
