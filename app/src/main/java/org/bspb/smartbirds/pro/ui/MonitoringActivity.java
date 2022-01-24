@@ -18,6 +18,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -40,10 +41,8 @@ import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
-import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.beans.EntriesToMapMarkersConverter;
 import org.bspb.smartbirds.pro.beans.MonitoringModelEntries;
-import org.bspb.smartbirds.pro.beans.ZonesModelEntries;
 import org.bspb.smartbirds.pro.collections.IterableConverter;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
@@ -61,6 +60,7 @@ import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.repository.ZoneRepository;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
@@ -70,6 +70,7 @@ import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
 import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
+import org.bspb.smartbirds.pro.viewmodel.MonitoringViewModel;
 import org.osmdroid.config.Configuration;
 
 import java.lang.reflect.Type;
@@ -90,7 +91,7 @@ import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity implements MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, ZonesModelEntries.Listener, MapProvider.MarkerClickListener {
+public class MonitoringActivity extends BaseActivity implements MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, MapProvider.MarkerClickListener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -176,11 +177,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     MonitoringModelEntries entries;
     @Bean
     EntriesToMapMarkersConverter mapMarkerConverter;
-    @Bean
-    ZonesModelEntries zones;
 
     private Set<String> formsEnabled;
     private Menu menu;
+    private MonitoringViewModel viewModel;
 
     private ServiceConnection trackingServiceConnection = new ServiceConnection() {
         @Override
@@ -222,7 +222,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     protected void setupEntries() {
         entries.setListener(this);
         if (!isEmpty(monitoringCode)) entries.setMonitoringCode(monitoringCode);
-        zones.setListener(this);
     }
 
     @AfterViews
@@ -263,6 +262,18 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         } catch (Throwable t) {
             logException(t);
         }
+        initViewModel();
+    }
+
+    private void initViewModel() {
+        viewModel = new ViewModelProvider(this).get(MonitoringViewModel.class);
+        loadZones();
+    }
+
+    private void loadZones() {
+        viewModel.getZones().observe(this, (zones) -> {
+            if (currentMap != null) currentMap.setZones(zones);
+        });
     }
 
     @Override
@@ -390,7 +401,9 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         currentMap.setMarkers(getMarkers());
         currentMap.setPath(points);
         currentMap.setMapType(mapType);
-        currentMap.setZones(getZones());
+        if (viewModel.getZones().getValue() != null) {
+            currentMap.setZones(viewModel.getZones().getValue());
+        }
         currentMap.setShowZoneBackground(showZoneBackground);
         currentMap.setShowLocalProjects(showLocalProjects);
         currentMap.setOnMarkerClickListener(this);
@@ -837,18 +850,9 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         return new IterableConverter<>(entries.iterable(), mapMarkerConverter);
     }
 
-    private Iterable<Zone> getZones() {
-        return zones.iterable();
-    }
-
     @Override
     public void onMonitoringEntriesChanged(MonitoringModelEntries entries) {
         if (currentMap != null) currentMap.setMarkers(getMarkers());
-    }
-
-    @Override
-    public void onZoneEntriesChanged(ZonesModelEntries entries) {
-        if (currentMap != null) currentMap.setZones(getZones());
     }
 
     @Override

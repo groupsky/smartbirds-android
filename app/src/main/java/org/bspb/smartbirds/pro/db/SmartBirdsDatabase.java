@@ -22,15 +22,12 @@ public class SmartBirdsDatabase {
     @Table(MonitoringColumns.class)
     public static final String MONITORINGS = "monitorings";
 
-    @Table(ZoneColumns.class)
-    public static final String ZONES = "zones";
-
     @OnUpgrade
     public static void upgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         for (; oldVersion < newVersion; oldVersion++) {
             switch (oldVersion) {
                 case 1:
-                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.ZONES);
+//                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.ZONES);
                     break;
                 case 2:
 //                    db.execSQL(org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase.NOMENCLATURE_USES_COUNT);

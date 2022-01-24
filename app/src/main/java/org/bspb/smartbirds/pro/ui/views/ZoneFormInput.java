@@ -7,14 +7,10 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_FILTER;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static android.widget.AdapterView.INVALID_POSITION;
-import static org.bspb.smartbirds.pro.db.SmartBirdsProvider.Zones.CONTENT_URI;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
-import android.content.Loader;
-import android.database.Cursor;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -24,9 +20,13 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
 
+import androidx.lifecycle.ViewTreeLifecycleOwner;
+
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
+import org.bspb.smartbirds.pro.repository.ZoneRepository;
+import org.bspb.smartbirds.pro.room.ZoneModel;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;
@@ -44,20 +44,6 @@ public class ZoneFormInput extends TextViewFormInput implements SupportStorage {
      * The currently selected item.
      */
     ZoneHolder mSelectedItem = null;
-    private CursorLoader cursorLoader;
-    private final Loader.OnLoadCompleteListener<Cursor> listener = new Loader.OnLoadCompleteListener<Cursor>() {
-        @Override
-        public void onLoadComplete(Loader<Cursor> loader, Cursor data) {
-            if (mAdapter != null) {
-                mAdapter.clear();
-                for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
-                    mAdapter.add(new ZoneHolder(Zone.fromCursor(data)));
-                }
-                mAdapter.notifyDataSetChanged();
-                setSelection(new ZoneHolder(getText().toString()));
-            }
-        }
-    };
 
     public ZoneFormInput(Context context) {
         this(context, null);
@@ -80,20 +66,24 @@ public class ZoneFormInput extends TextViewFormInput implements SupportStorage {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (!isInEditMode()) {
-            cursorLoader = new CursorLoader(getContext(), CONTENT_URI, Zone.DEFAULT_PROJECTION, null, null, null);
-            cursorLoader.registerListener(0, listener);
-            cursorLoader.startLoading();
+            loadZones();
         }
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (cursorLoader != null) {
-            cursorLoader.stopLoading();
-            cursorLoader.unregisterListener(listener);
-            cursorLoader = null;
-        }
+    private void loadZones() {
+        final ZoneRepository repo = new ZoneRepository();
+        repo.getAllZones().observe(ViewTreeLifecycleOwner.get(this), (zones) -> {
+            if (mAdapter != null) {
+                mAdapter.clear();
+                if (zones != null && !zones.isEmpty()) {
+                    for (ZoneModel zone : zones) {
+                        mAdapter.add(new ZoneHolder(Zone.fromDbModel(zone)));
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+                setSelection(new ZoneHolder(getText().toString()));
+            }
+        });
     }
 
     /**

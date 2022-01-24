@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.sql.Blob
 
 @Entity(tableName = "zones")
-data class Zone(
+data class ZoneModel(
     @PrimaryKey()
     @ColumnInfo(name = "_id")
     val id: String,

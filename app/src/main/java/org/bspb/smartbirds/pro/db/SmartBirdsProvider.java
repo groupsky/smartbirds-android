@@ -38,7 +38,6 @@ public class SmartBirdsProvider {
         String BY_ID = "id";
         String BY_TYPE = "type";
         String LIMIT = "limit";
-        String ZONES = "zones";
         String MONITORINGS = "monitorings";
         String FORMS = "forms";
     }
@@ -49,15 +48,6 @@ public class SmartBirdsProvider {
             builder.appendPath(path);
         }
         return builder.build();
-    }
-
-    @TableEndpoint(table = SmartBirdsDatabase.ZONES)
-    public static class Zones {
-        @ContentUri(
-                path = Path.ZONES,
-                type = TYPE_LIST + Path.ZONES,
-                defaultSort = ZoneColumns._ID + " ASC")
-        public static final Uri CONTENT_URI = buildUri(Path.ZONES);
     }
 
     static final String ENTRIES_COUNT = "(SELECT COUNT(*) FROM "
