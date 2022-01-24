@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import org.bspb.smartbirds.pro.backend.dto.CheckSessionRequest;
 import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
-import org.bspb.smartbirds.pro.backend.dto.Location;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
@@ -15,7 +14,6 @@ import org.bspb.smartbirds.pro.backend.dto.UploadFormResponse;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -73,9 +71,6 @@ public interface SmartBirdsApi {
 
     @GET("zone?limit=-1&status=owned")
     Call<ResponseListEnvelope<Zone>> listZones();
-
-    @GET("locations?limit=-1")
-    Call<ResponseListEnvelope<Location>> listLocations();
 
     @GET
     Call<DownloadsResponse> getDownloads(@Url String url);

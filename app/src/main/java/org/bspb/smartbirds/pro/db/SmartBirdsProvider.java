@@ -21,8 +21,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MAX_RECENT_USED_VALUES;
-
 /**
  * Created by groupsky on 26.09.16.
  */
@@ -40,9 +38,6 @@ public class SmartBirdsProvider {
         String BY_ID = "id";
         String BY_TYPE = "type";
         String LIMIT = "limit";
-        String LOCATIONS = "locations";
-        String NOMENCLATURE_USES_COUNT = "nomenclature_uses_count";
-        String NOMENCLATURES = "nomenclatures";
         String ZONES = "zones";
         String MONITORINGS = "monitorings";
         String FORMS = "forms";
@@ -55,38 +50,6 @@ public class SmartBirdsProvider {
             builder.appendPath(path);
         }
         return builder.build();
-    }
-
-    @TableEndpoint(table = SmartBirdsDatabase.LOCATIONS)
-    public static class Locations {
-        @ContentUri(
-                path = Path.LOCATIONS,
-                type = TYPE_LIST + Path.LOCATIONS,
-                defaultSort = LocationColumns._ID + " ASC")
-        public static final Uri CONTENT_URI = buildUri(Path.LOCATIONS);
-
-        @ContentUri(
-                path = Path.LOCATIONS + "/" + Path.LIMIT + "/1",
-                type = TYPE_ITEM + Path.LOCATIONS,
-                defaultSort = LocationColumns._ID + " ASC",
-                limit = "1")
-        public static final Uri CONTENT_URI_LIMIT_1 = buildUri(Path.LOCATIONS);
-
-        @InexactContentUri(
-                path = Path.LOCATIONS + "/#",
-                name = Path.LOCATIONS + "_ID",
-                type = TYPE_ITEM + Path.LOCATIONS,
-                whereColumn = LocationColumns._ID,
-                pathSegment = 1)
-        public static Uri byId(long id) {
-            return buildUri(Path.LOCATIONS, String.valueOf(id));
-        }
-
-        public static String[] distance(double lat, double lon) {
-            return new String[]{
-                    "(lat - " + lat + ")*(lat- " + lat + ") + " +
-                            "(lon - " + lon + ")*(lon - " + lon + ") as " + LocationColumns.DISTANCE};
-        }
     }
 
     @TableEndpoint(table = SmartBirdsDatabase.ZONES)
