@@ -48,7 +48,7 @@ public class Monitoring {
 
     public int entriesCount = 0;
 
-    Monitoring(@NonNull String code) {
+    public Monitoring(@NonNull String code) {
         this.code = code;
     }
 

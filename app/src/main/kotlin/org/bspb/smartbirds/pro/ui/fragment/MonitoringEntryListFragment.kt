@@ -24,6 +24,7 @@ import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_
+import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
 import java.util.*
 
 @EFragment
@@ -35,6 +36,7 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
 
     @Bean
     protected lateinit var monitoringManager: MonitoringManager
+    protected val monitoringManagerNew = MonitoringManagerNew.getInstance()
 
     protected var code: String? = null
     protected var monitoring: Monitoring? = null
@@ -42,7 +44,11 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
-        adapter = object : ModelCursorAdapter<MonitoringEntry?>(activity, R.layout.partial_monitoring_entry_list_row, if (entries != null) entries!!.cursor else null, ModelCursorFactory { cursor -> MonitoringManager.entryFromCursor(cursor) }) {
+        adapter = object : ModelCursorAdapter<MonitoringEntry?>(
+            activity,
+            R.layout.partial_monitoring_entry_list_row,
+            if (entries != null) entries!!.cursor else null,
+            ModelCursorFactory { cursor -> MonitoringManager.entryFromCursor(cursor) }) {
             override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
                 return MonitoringEntryListRowPartialView_.build(context)
             }
@@ -104,9 +110,10 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
                         val selectedItems = lv.checkedItemIds
                         val builder = AlertDialog.Builder(activity)
                         builder.setMessage(getString(R.string.confirm_delete_n, selectedItems.size))
-                        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+                        builder.setPositiveButton(android.R.string.ok) { _, _ ->
                             mode.finish()
                             monitoringManager.deleteEntries(selectedItems)
+                            monitoringManagerNew.deleteEntries(selectedItems)
                             DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
                         }
                         builder.setNegativeButton(android.R.string.cancel, null)
