@@ -55,6 +55,7 @@ import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils;
+import org.bspb.smartbirds.pro.utils.MonitoringManagerNew;
 import org.bspb.smartbirds.pro.utils.MonitoringUtils;
 
 import java.io.BufferedWriter;
@@ -91,8 +92,10 @@ public class DataService extends Service {
     @Bean
     EEventBus bus;
 
+
     @Bean
     MonitoringManager monitoringManager;
+    MonitoringManagerNew monitoringManagerNew = MonitoringManagerNew.Companion.getInstance();
 
     @Pref
     SmartBirdsPrefs_ globalPrefs;
@@ -234,9 +237,11 @@ public class DataService extends Service {
         try {
             if (event.entryId > 0) {
                 monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
+                monitoringManagerNew.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
                 DataOpsService_.intent(this).generateMonitoringFiles(event.monitoringCode).start();
             } else {
                 monitoringManager.newEntry(monitoring, event.entryType, event.data);
+                monitoringManagerNew.newEntry(monitoring, event.entryType, event.data);
             }
         } catch (Throwable t) {
             Reporting.logException("Unable to persist entry", t);
@@ -248,7 +253,7 @@ public class DataService extends Service {
         Log.d(TAG, "onLocation");
 
         if (isMonitoring() && location != null) {
-            TrackingLocation trackingLocation = monitoringManager.newTracking(monitoring, location);
+            TrackingLocation trackingLocation = monitoringManagerNew.newTracking(monitoring, location);
 
             File file = new File(MonitoringUtils.createMonitoringDir(this, monitoring), "track.gpx");
             try {
@@ -303,8 +308,8 @@ public class DataService extends Service {
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") UndoLastEntry event) {
-        boolean success = monitoringManager.deleteLastEntry(monitoring);
-        if (!success) Log.e(TAG, "could not delete last monitoring entry");
+        monitoringManager.deleteLastEntry(monitoring);
+        monitoringManagerNew.deleteLastEntry(monitoring);
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") QueryActiveMonitoringEvent event) {

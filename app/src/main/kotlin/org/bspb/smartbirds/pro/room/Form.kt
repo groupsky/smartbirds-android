@@ -9,11 +9,37 @@ import java.sql.Blob
 data class Form(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    val id: Int,
+    var id: Int = 0,
     val code: String,
     val type: String,
     val latitude: Double,
     val longitude: Double,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     val data: ByteArray
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Form
+
+        if (id != other.id) return false
+        if (code != other.code) return false
+        if (type != other.type) return false
+        if (latitude != other.latitude) return false
+        if (longitude != other.longitude) return false
+        if (!data.contentEquals(other.data)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + code.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + latitude.hashCode()
+        result = 31 * result + longitude.hashCode()
+        result = 31 * result + data.contentHashCode()
+        return result
+    }
+}
