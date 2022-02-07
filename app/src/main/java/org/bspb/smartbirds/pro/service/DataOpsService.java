@@ -1,7 +1,10 @@
 package org.bspb.smartbirds.pro.service;
 
+import static org.bspb.smartbirds.pro.tools.CsvPreparer.prepareCsvLine;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import static java.lang.Double.parseDouble;
+
 import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
 
 import com.googlecode.jcsv.CSVStrategy;
@@ -36,10 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-
-import static java.lang.Double.parseDouble;
-import static org.bspb.smartbirds.pro.tools.CsvPreparer.prepareCsvLine;
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by groupsky on 24.03.17.
@@ -87,7 +86,6 @@ public class DataOpsService extends AbstractIntentService {
             Log.d(TAG, String.format(Locale.ENGLISH, "generateMonitoringFiles: %s", monitoringCode));
             Monitoring monitoring = monitoringManager.getMonitoring(monitoringCode);
             combineCommonWithEntries(monitoring);
-            combineCommonWithEntriesNew(monitoring);
         } catch (Throwable t) {
             logException(t);
         }
@@ -100,86 +98,7 @@ public class DataOpsService extends AbstractIntentService {
                 File entriesFile = getEntriesFile(monitoring, entryType);
                 String[] commonLines = convertToCsvLines(monitoring.commonForm);
 
-                Cursor cursor = monitoringManager.getEntries(monitoring, entryType);
-                if (cursor != null) try {
-                    if (cursor.getCount() == 0) {
-                        if (entriesFile.exists())
-                            entriesFile.delete();
-                        continue;
-                    }
-                    BufferedWriter outWriter = new BufferedWriter(new FileWriter(entriesFile));
-                    //noinspection TryFinallyCanBeTryWithResources
-                    try {
-                        boolean firstLine = true;
-                        List<MonitoringEntry> entries = new ArrayList<>();
-                        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                            entries.add(MonitoringManager.entryFromCursor(cursor));
-                        }
-
-                        // Retain only keys available in all entries
-                        Set<String> normalizedKeys = new HashSet<>();
-                        for (MonitoringEntry entry : entries) {
-                            if (normalizedKeys.size() == 0) {
-                                // fill with initial values
-                                normalizedKeys.addAll(entry.data.keySet());
-                            }
-                            normalizedKeys.retainAll(entry.data.keySet());
-                        }
-
-                        for (MonitoringEntry entry : entries) {
-
-                            // Remove keys missing in other entries
-                            entry.data.keySet().retainAll(normalizedKeys);
-
-                            try {
-                                if (parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
-                                    throw new IllegalStateException();
-                                }
-                            } catch (Exception e) {
-                                logException(new IllegalStateException("Saving in file entry " + entry.id + " with zero coordinates. Monitoring code is: " + entry.monitoringCode + " and type is " + entryType, e));
-                            }
-
-                            String[] lines = convertToCsvLines(entry.data);
-                            if (firstLine) {
-                                outWriter.write(commonLines[0]);
-                                outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
-                                outWriter.write(lines[0]);
-                                outWriter.newLine();
-                                firstLine = false;
-                            }
-                            outWriter.write(commonLines[1]);
-                            outWriter.write(CSVStrategy.DEFAULT.getDelimiter());
-                            outWriter.write(lines[1]);
-                            outWriter.newLine();
-                        }
-                    } finally {
-                        //noinspection ThrowFromFinallyBlock
-                        outWriter.close();
-                    }
-                } finally {
-                    cursor.close();
-                }
-            }
-        } catch (Throwable t) {
-            Reporting.logException(t);
-        }
-    }
-
-    private void combineCommonWithEntriesNew(Monitoring monitoring) {
-        try {
-            Monitoring newMonitoring = new Monitoring(monitoring.code + "_new");
-            newMonitoring.commonForm.putAll(monitoring.commonForm);
-            newMonitoring.entriesCount = monitoring.entriesCount;
-            newMonitoring.id = monitoring.id;
-            newMonitoring.status = monitoring.status;
-            newMonitoring.pictureCounter = monitoring.pictureCounter;
-
-            EntryType[] types = EntryType.values();
-            for (EntryType entryType : types) {
-                File entriesFile = getEntriesFile(newMonitoring, entryType);
-                String[] commonLines = convertToCsvLines(newMonitoring.commonForm);
-
-                List<Form> formEntries = monitoringManagerNew.getEntries(newMonitoring, entryType);
+                List<Form> formEntries = monitoringManagerNew.getEntries(monitoring, entryType);
                 if (formEntries == null || formEntries.isEmpty()) {
                     if (entriesFile.exists())
                         entriesFile.delete();

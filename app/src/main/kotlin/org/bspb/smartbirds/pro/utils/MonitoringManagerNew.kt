@@ -1,8 +1,8 @@
 package org.bspb.smartbirds.pro.utils
 
 import android.annotation.SuppressLint
+import android.content.ContentUris
 import android.content.Context
-import android.database.Cursor
 import android.location.Location
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
@@ -14,10 +14,12 @@ import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.content.TrackingLocation
+import org.bspb.smartbirds.pro.db.SmartBirdsProvider
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.repository.MonitoringRepository
 import org.bspb.smartbirds.pro.room.Form
+import org.bspb.smartbirds.pro.room.MonitoringModel
 import org.bspb.smartbirds.pro.room.Tracking
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.nio.charset.StandardCharsets
@@ -76,6 +78,13 @@ class MonitoringManagerNew private constructor(val context: Context) {
         monitoringRepository = MonitoringRepository()
     }
 
+    suspend fun createNew(): Monitoring {
+        val code = generateMonitoringCode()
+        val monitoring = MonitoringModel(code = code)
+        monitoring.id = monitoringRepository.deleteMonitoring()
+        return monitoring
+    }
+
     fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
         val entry = MonitoringEntry(monitoring.code, entryType)
         entry.data.putAll(data)
@@ -84,7 +93,12 @@ class MonitoringManagerNew private constructor(val context: Context) {
         }
     }
 
-    fun updateEntry(monitoringCode: String, entryId: Long, entryType: EntryType, data: HashMap<String?, String?>) {
+    fun updateEntry(
+        monitoringCode: String,
+        entryId: Long,
+        entryType: EntryType,
+        data: HashMap<String?, String?>
+    ) {
         val entry = MonitoringEntry(monitoringCode, entryType)
         entry.data.putAll(data)
         entry.id = entryId
@@ -147,6 +161,13 @@ class MonitoringManagerNew private constructor(val context: Context) {
             location.latitude,
             location.longitude,
             location.altitude
+        )
+    }
+
+    private fun generateMonitoringCode(): String {
+        val uuid = UUID.randomUUID().toString()
+        return String.format(
+            "%s-%s", DATE_FORMATTER.format(Date()), uuid.substring(uuid.length - 12)
         )
     }
 }

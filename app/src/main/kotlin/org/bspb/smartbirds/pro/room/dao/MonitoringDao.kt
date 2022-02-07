@@ -1,21 +1,22 @@
 package org.bspb.smartbirds.pro.room.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
+import org.bspb.smartbirds.pro.room.MonitoringModel
 
 @Dao
 abstract class MonitoringDao {
 
-    @Delete
+    @Insert
+    abstract suspend fun insertMonitoring(monitoring: MonitoringModel): Int
+
+    @Query("DELETE FROM monitorings WHERE code = :code")
     abstract suspend fun deleteMonitoring(code: String)
 
     @Query("DELETE FROM forms WHERE code = :code")
     abstract suspend fun deleteMonitoringEntries(code: String)
 
     @Transaction
-    suspend fun deleteMonitoringAndEntries(code: String) {
+    open suspend fun deleteMonitoringAndEntries(code: String) {
         deleteMonitoring(code)
         deleteMonitoringEntries(code)
     }

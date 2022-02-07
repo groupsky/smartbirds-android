@@ -15,7 +15,7 @@ interface FormDao {
     @Update
     suspend fun updateForm(form: Form)
 
-    @Query("DELETE FROM forms WHERE code = :monitoringCode ORDER BY _id DESC LIMIT 1")
+    @Query("DELETE FROM forms WHERE  _id = (SELECT _id from forms WHERE code = :monitoringCode ORDER BY _id DESC LIMIT 1)")
     suspend fun deleteLastEntry(monitoringCode: String): Int
 
     @Query("DELETE FROM forms WHERE _id in (:ids)")
