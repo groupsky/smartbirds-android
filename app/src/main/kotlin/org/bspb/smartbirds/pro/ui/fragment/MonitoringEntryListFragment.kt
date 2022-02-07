@@ -81,8 +81,21 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
 
         lv.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE_MODAL
         lv.setMultiChoiceModeListener(object : MultiChoiceModeListener {
-            override fun onItemCheckedStateChanged(mode: ActionMode, position: Int, id: Long, checked: Boolean) {
-                Log.d(TAG, String.format(Locale.ENGLISH, "onItemCheckedStateChanged: %d %s", position, checked))
+            override fun onItemCheckedStateChanged(
+                mode: ActionMode,
+                position: Int,
+                id: Long,
+                checked: Boolean
+            ) {
+                Log.d(
+                    TAG,
+                    String.format(
+                        Locale.ENGLISH,
+                        "onItemCheckedStateChanged: %d %s",
+                        position,
+                        checked
+                    )
+                )
             }
 
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -112,7 +125,6 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
                         builder.setMessage(getString(R.string.confirm_delete_n, selectedItems.size))
                         builder.setPositiveButton(android.R.string.ok) { _, _ ->
                             mode.finish()
-                            monitoringManager.deleteEntries(selectedItems)
                             monitoringManagerNew.deleteEntries(selectedItems)
                             DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
                         }

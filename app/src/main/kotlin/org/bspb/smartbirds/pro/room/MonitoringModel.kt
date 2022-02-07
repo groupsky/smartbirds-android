@@ -3,22 +3,23 @@ package org.bspb.smartbirds.pro.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.bspb.smartbirds.pro.content.Monitoring
 
 @Entity(tableName = "monitorings")
-data class Monitoring(
+data class MonitoringModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    val id: Int,
-    val code: String,
-    val status: String,
+    var id: Int = 0,
+    var code: String? = null,
+    var status: String = Monitoring.Status.wip.name,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    val data: ByteArray
+    var data: ByteArray? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Monitoring
+        other as MonitoringModel
 
         if (id != other.id) return false
         if (code != other.code) return false

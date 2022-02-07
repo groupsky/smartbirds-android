@@ -236,11 +236,9 @@ public class DataService extends Service {
         Log.d(TAG, "onEntrySubmitted");
         try {
             if (event.entryId > 0) {
-                monitoringManager.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
                 monitoringManagerNew.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data);
                 DataOpsService_.intent(this).generateMonitoringFiles(event.monitoringCode).start();
             } else {
-                monitoringManager.newEntry(monitoring, event.entryType, event.data);
                 monitoringManagerNew.newEntry(monitoring, event.entryType, event.data);
             }
         } catch (Throwable t) {
@@ -308,7 +306,6 @@ public class DataService extends Service {
     }
 
     public void onEvent(@SuppressWarnings("UnusedParameters") UndoLastEntry event) {
-        monitoringManager.deleteLastEntry(monitoring);
         monitoringManagerNew.deleteLastEntry(monitoring);
     }
 

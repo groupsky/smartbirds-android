@@ -79,12 +79,6 @@ public class MonitoringManager {
     }
 
     @NonNull
-    private String generateMonitoringCode() {
-        String uuid = UUID.randomUUID().toString();
-        return String.format("%s-%s", DATE_FORMATTER.format(new Date()), uuid.substring(uuid.length() - 12));
-    }
-
-    @NonNull
     public Monitoring createNew() {
         String code = generateMonitoringCode();
         Monitoring monitoring = new Monitoring(code);
@@ -115,26 +109,6 @@ public class MonitoringManager {
         return cv;
     }
 
-    private static ContentValues toContentValues(@NonNull MonitoringEntry entry) {
-        ContentValues cv = new ContentValues();
-        cv.put(FormColumns.CODE, entry.monitoringCode);
-        cv.put(FormColumns.TYPE, entry.type.name());
-        cv.put(FormColumns.LATITUDE, parseDouble(entry.data.get(tagLatitude)));
-        cv.put(FormColumns.LONGITUDE, parseDouble(entry.data.get(tagLongitude)));
-        cv.put(FormColumns.DATA, SERIALIZER.toJson(entry));
-        return cv;
-    }
-
-    private static Tracking toDbModel(@NonNull TrackingLocation location) {
-        return new Tracking(
-                0,
-                location.monitoringCode,
-                location.time,
-                location.latitude,
-                location.longitude,
-                location.altitude);
-    }
-
     public static Monitoring monitoringFromCursor(@NonNull Cursor cursor) {
         Monitoring monitoring = SERIALIZER.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(MonitoringColumns.DATA)), Monitoring.class);
         final int idIdx = cursor.getColumnIndex(MonitoringColumns._ID);
@@ -163,51 +137,6 @@ public class MonitoringManager {
         return entry;
     }
 
-    public MonitoringEntry newEntry(@NonNull Monitoring monitoring, @NonNull EntryType entryType, @NonNull HashMap<String, String> data) {
-        MonitoringEntry entry = new MonitoringEntry(monitoring.code, entryType);
-        entry.data.putAll(data);
-        if (parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
-            logException(new IllegalStateException("Inserting new entry with zero coordinates. Monitoring code is: " + monitoring.code + " and type is " + entryType));
-        }
-        entry.id = parseId(contentResolver.insert(SmartBirdsProvider.Forms.CONTENT_URI, toContentValues(entry)));
-        return entry;
-    }
-
-    public MonitoringEntry updateEntry(@NonNull String monitoringCode, long entryId, @NonNull EntryType entryType, @NonNull HashMap<String, String> data) {
-        MonitoringEntry entry = new MonitoringEntry(monitoringCode, entryType);
-        entry.data.putAll(data);
-        entry.id = entryId;
-        if (parseDouble(entry.data.get(tagLatitude)) == 0 || parseDouble(entry.data.get(tagLongitude)) == 0) {
-            logException(new IllegalStateException("Updating entry " + entryId + " with zero coordinates. Monitoring code is: " + monitoringCode + " and type is " + entryType));
-        }
-        contentResolver.update(SmartBirdsProvider.Forms.withId(entryId), toContentValues(entry), null, null);
-        return entry;
-    }
-
-    public TrackingLocation newTracking(Monitoring monitoring, Location location) {
-        TrackingLocation l = new TrackingLocation(monitoring.code, location);
-         /* TODO Enable tracking db persistence if needed
-          Pause tracking db persistence since it is never read
-         */
-//        final TrackingRepository repo = new TrackingRepository();
-//        repo.insertNewTracking(toDbModel(l));
-        return l;
-    }
-
-    public boolean deleteLastEntry(@NonNull Monitoring monitoring) {
-        long rowId;
-        Cursor cursor = contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), new String[]{FormColumns._ID}, null, null, FormColumns._ID + " desc");
-        if (cursor == null) return false;
-        try {
-            if (!cursor.moveToFirst()) return false;
-            if (cursor.isAfterLast()) return false;
-            rowId = cursor.getLong(cursor.getColumnIndexOrThrow(FormColumns._ID));
-        } finally {
-            cursor.close();
-        }
-        return contentResolver.delete(SmartBirdsProvider.Forms.withId(rowId), null, null) == 1;
-    }
-
     public Monitoring getMonitoring(@NonNull String monitoringCode) {
         Cursor cursor = contentResolver.query(SmartBirdsProvider.Monitorings.withCode(monitoringCode), MONITORING_PROJECTION, null, null, null);
         if (cursor != null) try {
@@ -216,10 +145,6 @@ public class MonitoringManager {
             cursor.close();
         }
         return null;
-    }
-
-    public Cursor getEntries(Monitoring monitoring, EntryType entryType) {
-        return contentResolver.query(SmartBirdsProvider.Forms.withMonitoringCode(monitoring.code), ENTRY_PROJECTION, FormColumns.TYPE + "=?", new String[]{entryType.name()}, FormColumns._ID);
     }
 
     public Monitoring getActiveMonitoring() {
@@ -268,17 +193,6 @@ public class MonitoringManager {
         }
 
         return count;
-    }
-
-    public void deleteEntries(long[] ids) {
-        ArrayList<ContentProviderOperation> ops = new ArrayList<>(ids.length);
-        for (long id : ids)
-            ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Forms.withId(id)).build());
-        try {
-            contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, ops);
-        } catch (RemoteException | OperationApplicationException e) {
-            logException(e);
-        }
     }
 
     @Nullable

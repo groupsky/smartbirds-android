@@ -10,7 +10,7 @@ import org.bspb.smartbirds.pro.room.dao.*
 import org.bspb.smartbirds.pro.utils.debugLog
 
 @Database(
-    entities = [Form::class, Monitoring::class, NomenclatureModel::class, NomenclatureUsesCount::class, Tracking::class, ZoneModel::class],
+    entities = [Form::class, MonitoringModel::class, NomenclatureModel::class, NomenclatureUsesCount::class, Tracking::class, ZoneModel::class],
     version = 6
 )
 abstract class SmartBirdsRoomDatabase : RoomDatabase() {
