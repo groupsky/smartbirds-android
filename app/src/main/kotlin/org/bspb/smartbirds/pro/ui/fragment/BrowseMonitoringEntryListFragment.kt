@@ -3,6 +3,9 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
@@ -74,35 +77,36 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     }
 
     private fun finishMonitoring() {
-        monitoring?.apply {
-            val pausedMonitoring = monitoringManager.pausedMonitoring
+        GlobalScope.launch(Dispatchers.IO) {
+            monitoring?.apply {
+                val pausedMonitoring = monitoringManager.pausedMonitoring
 
-            // Apply monitoring code if missing in common form
-            if (!commonForm.containsKey(resources.getString(R.string.monitoring_id))) {
-                commonForm[resources.getString(R.string.monitoring_id)] = code
-                monitoringManager.update(this)
-            }
-
-            if (commonForm.containsKey(resources.getString(R.string.end_time_key))) {
-                if (TextUtils.isEmpty(commonForm[resources.getString(R.string.end_time_key)])) {
-                    commonForm[resources.getString(R.string.end_time_key)] =
-                        Configuration.STORAGE_TIME_FORMAT.format(Date())
-                    monitoringManager.update(this)
+                // Apply monitoring code if missing in common form
+                if (!commonForm.containsKey(resources.getString(R.string.monitoring_id))) {
+                    commonForm[resources.getString(R.string.monitoring_id)] = code
+                    monitoringManagerNew.update(this)
                 }
-            }
 
-            monitoringManager.updateStatus(this, Monitoring.Status.finished)
+                if (commonForm.containsKey(resources.getString(R.string.end_time_key))) {
+                    if (TextUtils.isEmpty(commonForm[resources.getString(R.string.end_time_key)])) {
+                        commonForm[resources.getString(R.string.end_time_key)] =
+                            Configuration.STORAGE_TIME_FORMAT.format(Date())
+                        monitoringManagerNew.update(this)
+                    }
+                }
 
-            if (code == pausedMonitoring?.code) {
-                context?.let { MonitoringUtils.closeGpxFile(it, this) }
-                globalPrefs.runningMonitoring().put(false)
-                globalPrefs.pausedMonitoring().put(false)
+                monitoringManagerNew.updateStatus(this, Monitoring.Status.finished)
+
+                if (code == pausedMonitoring?.code) {
+                    context?.let { MonitoringUtils.closeGpxFile(it, this) }
+                    globalPrefs.runningMonitoring().put(false)
+                    globalPrefs.pausedMonitoring().put(false)
+                }
+                DataOpsService_.intent(context).generateMonitoringFiles(code).start()
+                bus.postSticky(MonitoringFinishedEvent())
+                activity?.finish()
             }
-            DataOpsService_.intent(context).generateMonitoringFiles(code).start()
-            bus.postSticky(MonitoringFinishedEvent())
-            activity?.finish()
         }
-
     }
 
     private fun deleteMonitoring() {

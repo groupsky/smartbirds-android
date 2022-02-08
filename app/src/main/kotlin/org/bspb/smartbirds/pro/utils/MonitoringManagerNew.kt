@@ -1,7 +1,9 @@
 package org.bspb.smartbirds.pro.utils
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.location.Location
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
@@ -10,10 +12,11 @@ import kotlinx.coroutines.launch
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
+import org.bspb.smartbirds.pro.content.Monitoring.Status
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.content.TrackingLocation
-import org.bspb.smartbirds.pro.db.SmartBirdsProvider
+import org.bspb.smartbirds.pro.db.MonitoringColumns
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.repository.MonitoringRepository
@@ -88,15 +91,29 @@ class MonitoringManagerNew private constructor(val context: Context) {
         monitoringRepository.updateMonitoring(toDbModel(monitoring))
     }
 
-    fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
-        val entry = MonitoringEntry(monitoring.code, entryType)
-        entry.data.putAll(data)
-        GlobalScope.launch(Dispatchers.IO) {
-            formsRepository.insertForm(toDbModel(entry))
-        }
+    suspend fun updateStatus(monitoringCode: String, status: Status) {
+        val cv = ContentValues()
+        cv.put(MonitoringColumns.STATUS, status.name)
+        monitoringRepository.updateStatus(monitoringCode, status)
     }
 
-    fun updateEntry(
+    suspend fun updateStatus(monitoring: Monitoring, status: Status) {
+        updateStatus(monitoring.code, status)
+        monitoring.status = status
+    }
+
+    suspend fun getMonitoring(monitoringCode: String): Monitoring? {
+        val dbModel = monitoringRepository.findMonitoringByCode(monitoringCode) ?: return null
+        return toDto(dbModel)
+    }
+
+    suspend fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
+        val entry = MonitoringEntry(monitoring.code, entryType)
+        entry.data.putAll(data)
+        formsRepository.insertForm(toDbModel(entry))
+    }
+
+    suspend fun updateEntry(
         monitoringCode: String,
         entryId: Long,
         entryType: EntryType,
@@ -106,9 +123,7 @@ class MonitoringManagerNew private constructor(val context: Context) {
         entry.data.putAll(data)
         entry.id = entryId
 
-        GlobalScope.launch(Dispatchers.IO) {
-            formsRepository.updateForm(toDbModel(entry))
-        }
+        formsRepository.updateForm(toDbModel(entry))
     }
 
     fun newTracking(monitoring: Monitoring, location: Location?): TrackingLocation? {
@@ -120,12 +135,10 @@ class MonitoringManagerNew private constructor(val context: Context) {
         return TrackingLocation(monitoring.code, location!!)
     }
 
-    fun deleteLastEntry(monitoring: Monitoring) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val deletedRows = formsRepository.deleteLastEntry(monitoring.code)
-            if (deletedRows.equals(0)) {
-                Log.e(TAG, "could not delete last monitoring entry")
-            }
+    suspend fun deleteLastEntry(monitoring: Monitoring) {
+        val deletedRows = formsRepository.deleteLastEntry(monitoring.code)
+        if (deletedRows.equals(0)) {
+            Log.e(TAG, "could not delete last monitoring entry")
         }
     }
 
@@ -143,6 +156,15 @@ class MonitoringManagerNew private constructor(val context: Context) {
 
     fun getEntries(monitoring: Monitoring, entryType: EntryType): List<Form> {
         return formsRepository.getEntries(monitoring.code, entryType.name)
+    }
+
+    private fun toDto(dbModel: MonitoringModel): Monitoring {
+        val monitoring = SERIALIZER.fromJson(dbModel.data?.let { String(it) }, Monitoring::class.java)
+        monitoring.id = dbModel.id
+        monitoring.status = Status.valueOf(dbModel.status)
+        // TODO include monitoring entries count
+        monitoring.entriesCount = 0
+        return monitoring
     }
 
     private fun toDbModel(entry: MonitoringEntry): Form {

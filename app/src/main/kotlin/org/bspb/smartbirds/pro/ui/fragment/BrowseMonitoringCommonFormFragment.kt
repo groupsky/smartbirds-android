@@ -1,5 +1,8 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EFragment
@@ -11,7 +14,7 @@ import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.ui.utils.Configuration
-import java.util.*
+import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
 
 
 @EFragment(R.layout.fragment_monitoring_form_common)
@@ -23,6 +26,7 @@ open class BrowseMonitoringCommonFormFragment : BaseCommonFormFragment() {
 
     @Bean
     protected lateinit var monitoringManager: MonitoringManager
+    protected val monitoringManagerNew = MonitoringManagerNew.getInstance()
 
     @Bean
     protected lateinit var bus: EEventBus
@@ -34,18 +38,22 @@ open class BrowseMonitoringCommonFormFragment : BaseCommonFormFragment() {
 
     @AfterViews
     open fun initMonitoring() {
-        monitoring = monitoringManager.getMonitoring(monitoringCode)
-        loadForm(monitoring?.commonForm)
+        GlobalScope.launch(Dispatchers.IO) {
+            monitoring = monitoringManagerNew.getMonitoring(monitoringCode)
+            loadForm(monitoring?.commonForm)
+        }
     }
 
     override fun persistForm(data: HashMap<String, String>) {
-        monitoring?.run {
-            data[resources.getString(R.string.monitoring_id)] = code
-            data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
-            commonForm.clear()
-            commonForm.putAll(data)
-            monitoringManager.update(this)
-            DataOpsService_.intent(context).generateMonitoringFiles(code).start()
+        GlobalScope.launch(Dispatchers.IO) {
+            monitoring?.run {
+                data[resources.getString(R.string.monitoring_id)] = code
+                data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
+                commonForm.clear()
+                commonForm.putAll(data)
+                monitoringManagerNew.update(this)
+                DataOpsService_.intent(context).generateMonitoringFiles(code).start()
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ import org.bspb.smartbirds.pro.content.Monitoring
 data class MonitoringModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    var id: Int = 0,
+    var id: Long = 0,
     var code: String? = null,
     var status: String = Monitoring.Status.wip.name,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)

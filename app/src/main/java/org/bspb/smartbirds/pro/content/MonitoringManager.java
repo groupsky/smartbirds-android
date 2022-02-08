@@ -70,50 +70,10 @@ public class MonitoringManager {
     @StringRes(R.string.tag_lon)
     static String tagLongitude;
 
-    ContentResolver contentResolver;
     Context rootContext;
 
     public MonitoringManager(Context context) {
         this.rootContext = context.getApplicationContext();
-        this.contentResolver = rootContext.getContentResolver();
-    }
-
-    public void updateStatus(@NonNull String monitoringCode, @NonNull Monitoring.Status status) {
-        ContentValues cv = new ContentValues();
-        cv.put(MonitoringColumns.STATUS, status.name());
-        contentResolver.update(SmartBirdsProvider.Monitorings.withCode(monitoringCode), cv, null, null);
-    }
-
-    public void updateStatus(@NonNull Monitoring monitoring, @NonNull Monitoring.Status status) {
-        updateStatus(monitoring.code, status);
-        monitoring.status = status;
-    }
-
-    private static ContentValues toContentValues(@NonNull Monitoring monitoring) {
-        ContentValues cv = new ContentValues();
-        cv.put(MonitoringColumns.CODE, monitoring.code);
-        cv.put(MonitoringColumns.STATUS, monitoring.status.name());
-        cv.put(MonitoringColumns.DATA, SERIALIZER.toJson(monitoring));
-        return cv;
-    }
-
-    public static Monitoring monitoringFromCursor(@NonNull Cursor cursor) {
-        Monitoring monitoring = SERIALIZER.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(MonitoringColumns.DATA)), Monitoring.class);
-        final int idIdx = cursor.getColumnIndex(MonitoringColumns._ID);
-        if (idIdx != -1) {
-            monitoring.id = cursor.getLong(idIdx);
-        }
-        final int statusIdx = cursor.getColumnIndex(MonitoringColumns.STATUS);
-        if (statusIdx != -1) {
-            monitoring.status = Monitoring.Status.valueOf(cursor.getString(statusIdx));
-        }
-
-        final int entriesIdx = cursor.getColumnIndex(MonitoringColumns.ENTRIES_COUNT);
-        if (entriesIdx != -1) {
-            monitoring.entriesCount = cursor.getInt(entriesIdx);
-        }
-
-        return monitoring;
     }
 
     public static MonitoringEntry entryFromCursor(@NonNull Cursor cursor) {

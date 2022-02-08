@@ -8,6 +8,9 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.googlecode.jcsv.CSVStrategy
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -27,6 +30,7 @@ import org.bspb.smartbirds.pro.forms.convert.Converter
 import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
+import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.*
@@ -48,6 +52,7 @@ open class UploadManager {
 
     @Bean
     protected lateinit var monitoringManager: MonitoringManager
+    protected val monitoringManagerNew = MonitoringManagerNew.getInstance()
 
     @StringRes(R.string.tag_lat)
     protected lateinit var tagLatitude: String
@@ -83,25 +88,27 @@ open class UploadManager {
     }
 
     fun upload(monitoringPath: String) {
-        Log.d(TAG, String.format("uploading %s", monitoringPath))
-        val file = File(monitoringPath)
-        val monitoringName = file.name
-        Log.d(TAG, String.format("uploading %s", monitoringName))
+        GlobalScope.launch(Dispatchers.IO) {
+            Log.d(TAG, String.format("uploading %s", monitoringPath))
+            val file = File(monitoringPath)
+            val monitoringName = file.name
+            Log.d(TAG, String.format("uploading %s", monitoringName))
 
-        try {
-            uploadOnServer(monitoringPath, monitoringName)
-            monitoringManager.updateStatus(monitoringName, Monitoring.Status.uploaded)
-        } catch (e: Throwable) {
-            Reporting.logException(e)
-            Toast.makeText(
-                context, String.format(
-                    """
+            try {
+                uploadOnServer(monitoringPath, monitoringName)
+                monitoringManagerNew.updateStatus(monitoringName, Monitoring.Status.uploaded)
+            } catch (e: Throwable) {
+                Reporting.logException(e)
+                Toast.makeText(
+                    context, String.format(
+                        """
     Could not upload %s to server!
     You will need to manually export.
     """.trimIndent(), monitoringName
-                ),
-                Toast.LENGTH_SHORT
-            ).show()
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

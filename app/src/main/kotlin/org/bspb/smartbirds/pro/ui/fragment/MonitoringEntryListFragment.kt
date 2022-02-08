@@ -11,6 +11,9 @@ import android.widget.AbsListView.MultiChoiceModeListener
 import android.widget.CursorAdapter
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -64,7 +67,11 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
     @AfterInject
     protected fun setupLoader() {
         code?.let {
-            monitoring = monitoringManager.getMonitoring(it)
+            if (this::monitoringManager.isInitialized) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    monitoring = monitoringManagerNew.getMonitoring(it)
+                }
+            }
         }
         entries.setMonitoringCode(code)
         entries.setListener(this)
@@ -159,7 +166,9 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
                 entries.setMonitoringCode(it)
             }
             if (this::monitoringManager.isInitialized) {
-                monitoring = monitoringManager.getMonitoring(it)
+                GlobalScope.launch(Dispatchers.IO) {
+                    monitoring = monitoringManagerNew.getMonitoring(it)
+                }
             }
         }
 

@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import kotlinx.coroutines.GlobalScope;
+
 /**
  * Created by groupsky on 24.03.17.
  */
@@ -84,7 +86,7 @@ public class DataOpsService extends AbstractIntentService {
     public void generateMonitoringFiles(String monitoringCode) {
         try {
             Log.d(TAG, String.format(Locale.ENGLISH, "generateMonitoringFiles: %s", monitoringCode));
-            Monitoring monitoring = monitoringManager.getMonitoring(monitoringCode);
+            Monitoring monitoring = monitoringManagerNew.getMonitoring(monitoringCode);
             combineCommonWithEntries(monitoring);
         } catch (Throwable t) {
             logException(t);

@@ -164,7 +164,6 @@ dependencies {
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0'
 
     testImplementation 'junit:junit:4.13.2'
 
