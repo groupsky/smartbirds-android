@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.content;
 
+import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
+
 import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
@@ -8,8 +10,6 @@ import com.google.gson.annotations.SerializedName;
 import org.bspb.smartbirds.pro.R;
 
 import java.util.HashMap;
-
-import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 
 /**
  * Created by groupsky on 05.12.16.

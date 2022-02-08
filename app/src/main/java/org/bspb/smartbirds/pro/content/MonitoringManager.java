@@ -78,18 +78,6 @@ public class MonitoringManager {
         this.contentResolver = rootContext.getContentResolver();
     }
 
-    @NonNull
-    public Monitoring createNew() {
-        String code = generateMonitoringCode();
-        Monitoring monitoring = new Monitoring(code);
-        monitoring.id = parseId(contentResolver.insert(SmartBirdsProvider.Monitorings.CONTENT_URI, toContentValues(monitoring)));
-        return monitoring;
-    }
-
-    public void update(@NonNull Monitoring monitoring) {
-        contentResolver.update(SmartBirdsProvider.Monitorings.withCode(monitoring.code), toContentValues(monitoring), null, null);
-    }
-
     public void updateStatus(@NonNull String monitoringCode, @NonNull Monitoring.Status status) {
         ContentValues cv = new ContentValues();
         cv.put(MonitoringColumns.STATUS, status.name());

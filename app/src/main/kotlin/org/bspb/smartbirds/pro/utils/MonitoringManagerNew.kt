@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.utils
 
 import android.annotation.SuppressLint
-import android.content.ContentUris
 import android.content.Context
 import android.location.Location
 import android.util.Log
@@ -80,9 +79,13 @@ class MonitoringManagerNew private constructor(val context: Context) {
 
     suspend fun createNew(): Monitoring {
         val code = generateMonitoringCode()
-        val monitoring = MonitoringModel(code = code)
-        monitoring.id = monitoringRepository.deleteMonitoring()
+        val monitoring = Monitoring(code)
+        monitoring.id = monitoringRepository.insertMonitoring(toDbModel(monitoring))
         return monitoring
+    }
+
+    suspend fun update(monitoring: Monitoring) {
+        monitoringRepository.updateMonitoring(toDbModel(monitoring))
     }
 
     fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
@@ -161,6 +164,14 @@ class MonitoringManagerNew private constructor(val context: Context) {
             location.latitude,
             location.longitude,
             location.altitude
+        )
+    }
+
+    private fun toDbModel(monitoring: Monitoring): MonitoringModel {
+        return MonitoringModel(
+            code = monitoring.code,
+            status = monitoring.status.name,
+            data = SERIALIZER.toJson(monitoring).toByteArray(StandardCharsets.UTF_8)
         )
     }
 
