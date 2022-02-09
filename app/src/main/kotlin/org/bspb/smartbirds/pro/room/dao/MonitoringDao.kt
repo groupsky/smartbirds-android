@@ -7,7 +7,7 @@ import org.bspb.smartbirds.pro.room.MonitoringModel
 abstract class MonitoringDao {
 
     @Insert
-    abstract suspend fun insertMonitoring(monitoring: MonitoringModel): Int
+    abstract suspend fun insertMonitoring(monitoring: MonitoringModel): Long
 
     @Query("DELETE FROM monitorings WHERE code = :code")
     abstract suspend fun deleteMonitoring(code: String)

@@ -108,7 +108,6 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     private fun deleteMonitoring() {
         monitoring?.apply {
             monitoringManager.deleteMonitoring(code)
-            monitoringManagerNew.deleteMonitoring(code)
             var dir = DataOpsService.getMonitoringDir(context, code);
             dir.deleteRecursively();
             activity?.finish();

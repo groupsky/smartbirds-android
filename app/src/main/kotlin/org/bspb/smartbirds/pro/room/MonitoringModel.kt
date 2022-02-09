@@ -9,7 +9,7 @@ import org.bspb.smartbirds.pro.content.Monitoring
 data class MonitoringModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    var id: Int = 0,
+    var id: Long = 0,
     var code: String? = null,
     var status: String = Monitoring.Status.wip.name,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
@@ -24,16 +24,19 @@ data class MonitoringModel(
         if (id != other.id) return false
         if (code != other.code) return false
         if (status != other.status) return false
-        if (!data.contentEquals(other.data)) return false
+        if (data != null) {
+            if (other.data == null) return false
+            if (!data.contentEquals(other.data)) return false
+        } else if (other.data != null) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + code.hashCode()
+        var result = id.hashCode()
+        result = 31 * result + (code?.hashCode() ?: 0)
         result = 31 * result + status.hashCode()
-        result = 31 * result + data.contentHashCode()
+        result = 31 * result + (data?.contentHashCode() ?: 0)
         return result
     }
 }

@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey
 data class Tracking(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    val id: Int,
-    val code: String,
-    val time: Long,
-    val latitude: Double,
-    val longitude: Double,
-    val altitude: Double?
+    var id: Long = 0,
+    var code: String?,
+    var time: Long?,
+    var latitude: Double?,
+    var longitude: Double?,
+    var altitude: Double?
 )

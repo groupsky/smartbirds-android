@@ -79,6 +79,12 @@ public class MonitoringManager {
     }
 
     @NonNull
+    private String generateMonitoringCode() {
+        String uuid = UUID.randomUUID().toString();
+        return String.format("%s-%s", DATE_FORMATTER.format(new Date()), uuid.substring(uuid.length() - 12));
+    }
+
+    @NonNull
     public Monitoring createNew() {
         String code = generateMonitoringCode();
         Monitoring monitoring = new Monitoring(code);
