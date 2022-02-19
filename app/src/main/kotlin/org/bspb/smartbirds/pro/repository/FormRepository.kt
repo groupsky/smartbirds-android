@@ -24,4 +24,9 @@ class FormRepository {
     fun getEntries(code: String, entryType: String): List<Form> {
         return SmartBirdsRoomDatabase.getInstance().formDao().getEntries(code, entryType)
     }
+
+    suspend fun findById(id: Long): Form? {
+        return SmartBirdsRoomDatabase.getInstance().formDao().findById(id)
+    }
+
 }

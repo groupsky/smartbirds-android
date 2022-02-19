@@ -24,4 +24,7 @@ interface FormDao {
     @Query("SELECT * FROM forms WHERE code = :code AND type = :type")
     fun getEntries(code: String, type: String): List<Form>
 
+    @Query("SELECT * FROM forms WHERE _id = :id")
+    suspend fun findById(id: Long): Form?
+
 }

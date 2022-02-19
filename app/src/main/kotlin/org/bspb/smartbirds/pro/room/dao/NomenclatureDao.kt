@@ -11,7 +11,7 @@ import org.bspb.smartbirds.pro.room.NomenclatureModel
 abstract class NomenclatureDao {
 
     @Query("SELECT * FROM nomenclatures ORDER BY _id ASC")
-    abstract fun getAll(): Flow<List<NomenclatureModel>>
+    abstract suspend fun getAll(): List<NomenclatureModel>
 
     @Query("DELETE FROM nomenclatures")
     abstract suspend fun clearTable()

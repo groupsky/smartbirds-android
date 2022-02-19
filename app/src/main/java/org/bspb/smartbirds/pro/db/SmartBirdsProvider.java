@@ -129,9 +129,6 @@ public class SmartBirdsProvider {
                 defaultSort = FormColumns._ID + " DESC",
                 limit = "1"
         )
-        public static Uri lastWithMonitoringCode(String monitoringCode) {
-            return buildUri(Path.FORMS, "last_monitoring", monitoringCode);
-        }
 
         private static void getNotifyUris(Context context, Uri uri, String where, String[] whereArgs, Collection<Uri> uris) {
             Set<String> monitoringCodes = new HashSet<>();
