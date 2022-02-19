@@ -19,7 +19,7 @@ import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.utils.MonitoringManagerNew;
-import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew;
+import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
 
 /**
  * Created by groupsky on 14-9-25.
@@ -52,7 +52,7 @@ public class SmartBirdsApplication extends Application {
 
         // Init singletons
         SmartBirdsRoomDatabase.Companion.init(this);
-        NomenclaturesManagerNew.Companion.init(this);
+        NomenclaturesManager.Companion.init(this);
         MonitoringManagerNew.Companion.init(this);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));

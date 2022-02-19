@@ -11,6 +11,8 @@ import android.widget.AbsListView.MultiChoiceModeListener
 import android.widget.CursorAdapter
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -124,9 +126,11 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
                         val builder = AlertDialog.Builder(activity)
                         builder.setMessage(getString(R.string.confirm_delete_n, selectedItems.size))
                         builder.setPositiveButton(android.R.string.ok) { _, _ ->
-                            mode.finish()
-                            monitoringManagerNew.deleteEntries(selectedItems)
-                            DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
+                            lifecycleScope.launch {
+                                mode.finish()
+                                monitoringManagerNew.deleteEntries(selectedItems)
+                                DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
+                            }
                         }
                         builder.setNegativeButton(android.R.string.cancel, null)
                         val dialog = builder.create()

@@ -17,7 +17,7 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter
-import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew
+import org.bspb.smartbirds.pro.utils.NomenclaturesManager
 import org.bspb.smartbirds.pro.utils.showAlert
 
 class NomenclatureChooser(
@@ -34,7 +34,7 @@ class NomenclatureChooser(
     private var needFilter: Boolean = false
     private var onItemSelected: ((item: NomenclatureItem?) -> Unit)? = null
 
-    private var nomenclatures = NomenclaturesManagerNew.getInstance()
+    private var nomenclatures = NomenclaturesManager.getInstance()
     private var adapter: SmartArrayAdapter<NomenclatureItem> =
         SmartArrayAdapter(context, R.layout.item_dialog_single_choice, ArrayList())
     private var lastSelectedItem: NomenclatureItem? = null

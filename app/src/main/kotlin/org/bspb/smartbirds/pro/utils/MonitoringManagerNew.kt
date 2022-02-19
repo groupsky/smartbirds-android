@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
@@ -74,15 +71,13 @@ class MonitoringManagerNew private constructor(val context: Context) {
         monitoringRepository = MonitoringRepository()
     }
 
-    fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
+    suspend fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
         val entry = MonitoringEntry(monitoring.code, entryType)
         entry.data.putAll(data)
-        GlobalScope.launch(Dispatchers.IO) {
-            formsRepository.insertForm(toDbModel(entry))
-        }
+        formsRepository.insertForm(toDbModel(entry))
     }
 
-    fun updateEntry(
+    suspend fun updateEntry(
         monitoringCode: String,
         entryId: Long,
         entryType: EntryType,
@@ -92,9 +87,7 @@ class MonitoringManagerNew private constructor(val context: Context) {
         entry.data.putAll(data)
         entry.id = entryId
 
-        GlobalScope.launch(Dispatchers.IO) {
-            formsRepository.updateForm(toDbModel(entry))
-        }
+        formsRepository.updateForm(toDbModel(entry))
     }
 
     fun newTracking(monitoring: Monitoring, location: Location?): TrackingLocation? {
@@ -106,19 +99,15 @@ class MonitoringManagerNew private constructor(val context: Context) {
         return TrackingLocation(monitoring.code, location!!)
     }
 
-    fun deleteLastEntry(monitoring: Monitoring) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val deletedRows = formsRepository.deleteLastEntry(monitoring.code)
-            if (deletedRows.equals(0)) {
-                Log.e(TAG, "could not delete last monitoring entry")
-            }
+    suspend fun deleteLastEntry(monitoring: Monitoring) {
+        val deletedRows = formsRepository.deleteLastEntry(monitoring.code)
+        if (deletedRows.equals(0)) {
+            Log.e(TAG, "could not delete last monitoring entry")
         }
     }
 
-    fun deleteEntries(ids: LongArray) {
-        GlobalScope.launch(Dispatchers.IO) {
-            formsRepository.deleteLastEntries(ids)
-        }
+    suspend fun deleteEntries(ids: LongArray) {
+        formsRepository.deleteLastEntries(ids)
     }
 
     fun getEntries(monitoring: Monitoring, entryType: EntryType): List<Form> {

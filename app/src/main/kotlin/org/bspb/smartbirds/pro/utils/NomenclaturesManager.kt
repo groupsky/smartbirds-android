@@ -2,15 +2,20 @@ package org.bspb.smartbirds.pro.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import de.greenrobot.event.EventBus
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.singleOrNull
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.backend.Backend
+import org.bspb.smartbirds.pro.backend.Backend_
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
-import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent
+import org.bspb.smartbirds.pro.room.NomenclatureModel
 import org.bspb.smartbirds.pro.room.NomenclatureUsesCount
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 import org.bspb.smartbirds.pro.tools.AlphanumComparator
@@ -21,16 +26,21 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*
-import kotlin.Comparator
 
-class NomenclaturesManagerNew private constructor(val context: Context) {
+class NomenclaturesManager private constructor(val context: Context) {
+
+    enum class Downloading {
+        LOCATIONS, NOMENCLATURES
+    }
 
     companion object {
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var INSTANCE: NomenclaturesManagerNew? = null
+        private var INSTANCE: NomenclaturesManager? = null
 
-        fun getInstance(): NomenclaturesManagerNew {
+        var isDownloading: MutableSet<Downloading> = HashSet()
+
+        fun getInstance(): NomenclaturesManager {
             checkNotNull(INSTANCE) { "NomenclaturesManager instance is null. init(Context context) must be called before getting the instance." }
             return INSTANCE!!
         }
@@ -41,7 +51,7 @@ class NomenclaturesManagerNew private constructor(val context: Context) {
             }
 
             synchronized(this) {
-                INSTANCE = NomenclaturesManagerNew(context)
+                INSTANCE = NomenclaturesManager(context)
                 INSTANCE!!.loadNomenclatures()
                 INSTANCE
             }
@@ -52,7 +62,7 @@ class NomenclaturesManagerNew private constructor(val context: Context) {
     private val locale = context.getString(R.string.locale)
     private var loading = false
     private val db = SmartBirdsRoomDatabase.getInstance()
-
+    private val backend: Backend = Backend_.getInstance_(context)
 
     private val comparator: Comparator<in Nomenclature> =
         Comparator { o1: Nomenclature, o2: Nomenclature ->
@@ -66,8 +76,8 @@ class NomenclaturesManagerNew private constructor(val context: Context) {
         GlobalScope.launch(Dispatchers.IO) {
             loading = true
             data.clear()
-            val dbNomenclatures = db.nomenclatureDao().getAll()
-            dbNomenclatures.forEach { nomenclature ->
+            val dbNomenclatures = db.nomenclatureDao().getAll().singleOrNull()
+            dbNomenclatures?.forEach { nomenclature ->
                 nomenclature.data?.let { nomenclatureData ->
                     val list: MutableList<Nomenclature>?
                     if (!data.containsKey(nomenclature.type)) {
@@ -208,6 +218,58 @@ class NomenclaturesManagerNew private constructor(val context: Context) {
             }
         }
 
+    }
+
+    suspend fun updateNomenclatures() {
+        isDownloading.add(Downloading.NOMENCLATURES)
+        try {
+            try {
+                var limit = 500
+                var offset = 0
+                val nomenclatures = mutableListOf<NomenclatureModel>()
+
+                while (true) {
+                    val response = backend.api().nomenclatures(limit, offset).execute()
+                    if (!response.isSuccessful) throw IOException("Server error: " + response.code() + " - " + response.message())
+                    if (response.body()!!.data.isEmpty()) break
+                    offset += response.body()!!.data.size
+                    response.body()!!.data.forEach {
+                        nomenclatures.add(it.convertToEntity())
+                    }
+                }
+
+                if (nomenclatures.isNotEmpty()) {
+                    limit = 500
+                    offset = 0
+                    while (true) {
+                        val response = backend.api().species(limit, offset).execute()
+                        if (!response.isSuccessful) throw IOException("Server error: " + response.code() + " - " + response.message())
+                        if (response.body()!!.data.isEmpty()) break
+                        offset += response.body()!!.data.size
+                        response.body()!!.data.forEach {
+                            nomenclatures.add(it.convertSpeciesToEntity(context))
+                        }
+                    }
+                    SmartBirdsRoomDatabase.getInstance().nomenclatureDao()
+                        .updateNomenclaturesAndClearOld(nomenclatures)
+                }
+            } catch (t: Throwable) {
+                Reporting.logException(t)
+                showToast("Could not download nomenclatures. Try again.")
+            }
+        } finally {
+            isDownloading.remove(Downloading.NOMENCLATURES)
+        }
+    }
+
+    private fun showToast(message: String?) {
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(
+                context.applicationContext,
+                message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 }

@@ -40,8 +40,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
-import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew;
+import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
     private CharSequence key;
 
-    NomenclaturesManagerNew nomenclatures = NomenclaturesManagerNew.Companion.getInstance();
+    NomenclaturesManager nomenclatures = NomenclaturesManager.Companion.getInstance();
 
     @Bean
     EEventBus bus;

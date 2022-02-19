@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.prefs.CbmPrefs_
-import org.bspb.smartbirds.pro.utils.NomenclaturesManagerNew
+import org.bspb.smartbirds.pro.utils.NomenclaturesManager
 import org.bspb.smartbirds.pro.utils.debugLog
 
 class CbmQuickChoiceFormInput : FrameLayout {
@@ -26,7 +26,7 @@ class CbmQuickChoiceFormInput : FrameLayout {
     private lateinit var btnQuick5: Button
     private lateinit var btnQuick6: Button
 
-    private lateinit var nomenclatures: NomenclaturesManagerNew
+    private lateinit var nomenclatures: NomenclaturesManager
     private lateinit var prefs: CbmPrefs_
     private val currentValues = mutableMapOf<Int, NomenclatureItem?>()
 
@@ -91,7 +91,7 @@ class CbmQuickChoiceFormInput : FrameLayout {
     private fun initView() {
         inflate(context, R.layout.cbm_input_quick_choice, this)
 
-        nomenclatures = NomenclaturesManagerNew.getInstance()
+        nomenclatures = NomenclaturesManager.getInstance()
         prefs = CbmPrefs_(context)
 
         loadValues()
