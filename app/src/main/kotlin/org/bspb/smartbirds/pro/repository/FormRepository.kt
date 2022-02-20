@@ -22,6 +22,10 @@ class FormRepository {
         SmartBirdsRoomDatabase.getInstance().formDao().deleteEntries(ids)
     }
 
+    suspend fun deleteMonitoringEntries(monitoringCode: String) {
+        SmartBirdsRoomDatabase.getInstance().formDao().deleteByMonitoringCode(monitoringCode)
+    }
+
     fun getEntries(code: String, entryType: String): List<Form> {
         return SmartBirdsRoomDatabase.getInstance().formDao().getEntries(code, entryType)
     }

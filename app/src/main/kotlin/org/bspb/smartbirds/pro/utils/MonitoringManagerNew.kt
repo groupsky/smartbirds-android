@@ -1,19 +1,27 @@
 package org.bspb.smartbirds.pro.utils
 
 import android.annotation.SuppressLint
+import android.content.ContentProviderOperation
+import android.content.ContentResolver
 import android.content.Context
+import android.content.OperationApplicationException
 import android.location.Location
+import android.os.RemoteException
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.content.TrackingLocation
+import org.bspb.smartbirds.pro.db.SmartBirdsProvider
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.repository.MonitoringRepository
 import org.bspb.smartbirds.pro.room.Form
 import org.bspb.smartbirds.pro.room.Tracking
+import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.nio.charset.StandardCharsets
 import java.text.DateFormat
@@ -62,6 +70,7 @@ class MonitoringManagerNew private constructor(val context: Context) {
     private var tagLongitude: String? = null
     private val formsRepository: FormRepository
     private val monitoringRepository: MonitoringRepository
+    private var contentResolver: ContentResolver
 
     init {
         DATE_FORMATTER.timeZone = TimeZone.getTimeZone("UTC")
@@ -69,6 +78,7 @@ class MonitoringManagerNew private constructor(val context: Context) {
         tagLongitude = context.getString(R.string.tag_lon)
         formsRepository = FormRepository()
         monitoringRepository = MonitoringRepository()
+        contentResolver = context.contentResolver
     }
 
     suspend fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
@@ -112,6 +122,22 @@ class MonitoringManagerNew private constructor(val context: Context) {
 
     fun getEntries(monitoring: Monitoring, entryType: EntryType): List<Form> {
         return formsRepository.getEntries(monitoring.code, entryType.name)
+    }
+
+    suspend fun deleteMonitoring(monitoringCode: String?) {
+        withContext(Dispatchers.IO) {
+            val ops = ArrayList<ContentProviderOperation>()
+            ops.add(ContentProviderOperation.newDelete(SmartBirdsProvider.Monitorings.withCode(monitoringCode)).build())
+            try {
+                contentResolver.applyBatch(SmartBirdsProvider.AUTHORITY, ops)
+            } catch (t: Throwable) {
+                Reporting.logException(t)
+            }
+
+            formsRepository.deleteMonitoringEntries(monitoringCode!!)
+        }
+
+
     }
 
     private fun toDbModel(entry: MonitoringEntry): Form {

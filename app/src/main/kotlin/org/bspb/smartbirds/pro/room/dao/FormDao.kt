@@ -22,6 +22,9 @@ interface FormDao {
     @Query("DELETE FROM forms WHERE _id in (:ids)")
     suspend fun deleteEntries(ids: LongArray)
 
+    @Query("DELETE FROM forms WHERE code = :monitoringCode")
+    suspend fun deleteByMonitoringCode(monitoringCode: String)
+
     @Query("SELECT * FROM forms WHERE code = :code AND type = :type")
     fun getEntries(code: String, type: String): List<Form>
 

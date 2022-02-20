@@ -3,6 +3,8 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
@@ -107,10 +109,13 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
 
     private fun deleteMonitoring() {
         monitoring?.apply {
-            monitoringManager.deleteMonitoring(code)
-            var dir = DataOpsService.getMonitoringDir(context, code);
-            dir.deleteRecursively();
-            activity?.finish();
+            lifecycleScope.launch {
+                monitoringManagerNew.deleteMonitoring(code)
+                var dir = DataOpsService.getMonitoringDir(context, code);
+                dir.deleteRecursively();
+                activity?.finish();
+            }
+
         }
     }
 }
