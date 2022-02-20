@@ -5,16 +5,11 @@ import static org.androidannotations.annotations.EBean.Scope.Singleton;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.paused;
 import static org.bspb.smartbirds.pro.content.Monitoring.Status.wip;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
-import static java.lang.Double.parseDouble;
 
-import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.location.Location;
-import android.os.RemoteException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,19 +19,14 @@ import com.google.gson.Gson;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.res.StringRes;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.db.FormColumns;
 import org.bspb.smartbirds.pro.db.MonitoringColumns;
 import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
-import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.repository.TrackingRepository;
-import org.bspb.smartbirds.pro.room.Tracking;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -55,10 +45,6 @@ public class MonitoringManager {
             MonitoringColumns._ID,
             MonitoringColumns.STATUS,
             MonitoringColumns.DATA
-    };
-    private static final String[] ENTRY_PROJECTION = {
-            FormColumns._ID,
-            FormColumns.DATA
     };
 
     static {
@@ -132,15 +118,6 @@ public class MonitoringManager {
         }
 
         return monitoring;
-    }
-
-    public static MonitoringEntry entryFromCursor(@NonNull Cursor cursor) {
-        MonitoringEntry entry = SERIALIZER.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(FormColumns.DATA)), MonitoringEntry.class);
-        final int idx = cursor.getColumnIndex(FormColumns._ID);
-        if (idx != -1) {
-            entry.id = cursor.getLong(idx);
-        }
-        return entry;
     }
 
     public Monitoring getMonitoring(@NonNull String monitoringCode) {
