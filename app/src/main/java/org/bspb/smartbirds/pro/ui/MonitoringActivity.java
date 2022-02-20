@@ -1,5 +1,10 @@
 package org.bspb.smartbirds.pro.ui;
 
+import static android.text.TextUtils.isEmpty;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_LIST;
+import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
+
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,6 +15,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,8 +48,8 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
 import org.bspb.smartbirds.pro.beans.EntriesToMapMarkersConverter;
-import org.bspb.smartbirds.pro.beans.MonitoringModelEntries;
 import org.bspb.smartbirds.pro.collections.IterableConverter;
+import org.bspb.smartbirds.pro.content.MonitoringEntry;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
@@ -60,7 +66,6 @@ import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
-import org.bspb.smartbirds.pro.repository.ZoneRepository;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
@@ -81,17 +86,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import static android.text.TextUtils.isEmpty;
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
-import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_LIST;
-import static org.bspb.smartbirds.pro.ui.utils.Constants.VIEWTYPE_MAP;
-
 /**
  * Created by dani on 14-11-4.
  */
 @EActivity(R.layout.activity_monitoring)
 @OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
-public class MonitoringActivity extends BaseActivity implements MonitoringEntryListFragment.Listener, MonitoringModelEntries.Listener, MapProvider.MarkerClickListener {
+public class MonitoringActivity extends BaseActivity implements MonitoringEntryListFragment.Listener, MapProvider.MarkerClickListener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -174,13 +174,12 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     View listContainer;
 
     @Bean
-    MonitoringModelEntries entries;
-    @Bean
     EntriesToMapMarkersConverter mapMarkerConverter;
 
     private Set<String> formsEnabled;
     private Menu menu;
     private MonitoringViewModel viewModel;
+    private List<MonitoringEntry> monitoringEntries = new ArrayList<>();
 
     private ServiceConnection trackingServiceConnection = new ServiceConnection() {
         @Override
@@ -218,12 +217,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         eventBus.postSticky(new QueryActiveMonitoringEvent());
     }
 
-    @AfterInject
-    protected void setupEntries() {
-        entries.setListener(this);
-        if (!isEmpty(monitoringCode)) entries.setMonitoringCode(monitoringCode);
-    }
-
     @AfterViews
     void init() {
         setupList();
@@ -237,7 +230,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         } else {
             listFragment.setMonitoringCode(monitoringCode);
         }
-        if (entries != null) entries.setMonitoringCode(monitoringCode);
+        initViewModel();
     }
 
     private void updateViewType() {
@@ -266,7 +259,16 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private void initViewModel() {
+        if (TextUtils.isEmpty(monitoringCode)) {
+            return;
+        }
         viewModel = new ViewModelProvider(this).get(MonitoringViewModel.class);
+        viewModel.init(monitoringCode);
+        viewModel.getEntries().observe(this, entries -> {
+            monitoringEntries.clear();
+            monitoringEntries.addAll(entries);
+            if (currentMap != null) currentMap.setMarkers(getMarkers());
+        });
         loadZones();
     }
 
@@ -847,12 +849,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private Iterable<EntryMapMarker> getMarkers() {
-        return new IterableConverter<>(entries.iterable(), mapMarkerConverter);
-    }
-
-    @Override
-    public void onMonitoringEntriesChanged(MonitoringModelEntries entries) {
-        if (currentMap != null) currentMap.setMarkers(getMarkers());
+        return new IterableConverter<>(monitoringEntries, mapMarkerConverter);
     }
 
     @Override

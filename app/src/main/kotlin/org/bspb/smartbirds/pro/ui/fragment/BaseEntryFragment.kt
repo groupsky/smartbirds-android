@@ -1,10 +1,8 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.content.Context
-import android.database.Cursor
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,8 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
 import de.greenrobot.event.EventBusException
 import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
@@ -21,9 +17,6 @@ import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.MonitoringEntry
-import org.bspb.smartbirds.pro.content.MonitoringManager
-import org.bspb.smartbirds.pro.db.FormColumns
-import org.bspb.smartbirds.pro.db.SmartBirdsProvider
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.enums.EntryType.EntryFragment
 import org.bspb.smartbirds.pro.events.EEventBus
@@ -69,8 +62,9 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
     @OptionsMenuItem(R.id.action_submit)
     protected lateinit var menuSubmit: MenuItem
 
+    @JvmField
     @ViewById(R.id.btn_submit)
-    protected lateinit var btnSubmit: View
+    protected var btnSubmit: View? = null
 
     /**
      * Available only when loaded from storage

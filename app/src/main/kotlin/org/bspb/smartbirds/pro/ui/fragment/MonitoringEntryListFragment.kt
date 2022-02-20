@@ -156,9 +156,6 @@ open class MonitoringEntryListFragment : ListFragment() {
     open fun setMonitoringCode(monitoringCode: String?) {
         this.code = monitoringCode
         this.code?.let {
-            if (viewModel.entries == null) {
-                initViewModel()
-            }
             if (this::monitoringManager.isInitialized) {
                 monitoring = monitoringManager.getMonitoring(it)
             }
