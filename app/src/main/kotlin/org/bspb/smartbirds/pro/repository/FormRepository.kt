@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.repository
 
+import androidx.lifecycle.LiveData
 import org.bspb.smartbirds.pro.room.Form
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 
@@ -27,6 +28,10 @@ class FormRepository {
 
     suspend fun findById(id: Long): Form? {
         return SmartBirdsRoomDatabase.getInstance().formDao().findById(id)
+    }
+
+    fun findAllByMonitoringCode(code: String): LiveData<List<Form>> {
+        return SmartBirdsRoomDatabase.getInstance().formDao().findAllByMonitoringCode(code)
     }
 
 }

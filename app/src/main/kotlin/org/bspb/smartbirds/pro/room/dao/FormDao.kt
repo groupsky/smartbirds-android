@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -26,5 +27,8 @@ interface FormDao {
 
     @Query("SELECT * FROM forms WHERE _id = :id")
     suspend fun findById(id: Long): Form?
+
+    @Query("SELECT * FROM forms WHERE code = :code")
+    fun findAllByMonitoringCode(code: String): LiveData<List<Form>>
 
 }
