@@ -69,7 +69,7 @@ class MonitoringManager private constructor(val context: Context) {
                 Monitoring::class.java
             )
             monitoring.id = dbModel.id
-            monitoring.status = monitoring.status
+            monitoring.status = Monitoring.Status.valueOf(dbModel.status)
 
             return monitoring
         }
