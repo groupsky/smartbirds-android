@@ -12,9 +12,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EService
@@ -22,7 +22,6 @@ import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
@@ -32,7 +31,7 @@ import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils
-import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
+import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.closeGpxFile
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.createMonitoringDir
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.initGpxFile
@@ -64,9 +63,7 @@ open class DataService : Service() {
     protected lateinit var bus: EEventBus
 
 
-    @Bean
-    protected lateinit var monitoringManager: MonitoringManager
-    var monitoringManagerNew = MonitoringManagerNew.getInstance()
+    private val monitoringManager = MonitoringManager.getInstance()
 
     @Pref
     protected lateinit var globalPrefs: SmartBirdsPrefs_
@@ -101,12 +98,14 @@ open class DataService : Service() {
 
     @AfterInject
     protected open fun initBus() {
-        // restore state
-        monitoring = monitoringManager.activeMonitoring
+        scope.launch {
+            // restore state
+            monitoring = monitoringManager.getActiveMonitoring()
 
-        Log.d(TAG, "bus registering...")
-        bus.registerSticky(this)
-        Log.d(TAG, "bus registered")
+            Log.d(TAG, "bus registering...")
+            bus.registerSticky(this@DataService)
+            Log.d(TAG, "bus registered")
+        }
     }
 
     override fun onDestroy() {
@@ -142,71 +141,83 @@ open class DataService : Service() {
     }
 
     open fun onEvent(event: StartMonitoringEvent?) {
-        if (isMonitoring()) {
-            bus.postSticky(MonitoringStartedEvent())
-            return
-        }
-        Log.d(TAG, "onStartMonitoringEvent...")
-        Toast.makeText(this, "Start monitoring", Toast.LENGTH_SHORT).show()
-        monitoring = monitoringManager.createNew()
-        if (createMonitoringDir(this, monitoring!!) != null && initGpxFile(
-                this,
-                monitoring!!
-            )
-        ) {
-            bus.postSticky(MonitoringStartedEvent())
-        } else {
-            Toast.makeText(this, getString(R.string.error_message_create_monitoring_dir), Toast.LENGTH_SHORT).show()
-            bus.post(MonitoringFailedEvent())
+        runBlocking {
+            if (isMonitoring()) {
+                bus.postSticky(MonitoringStartedEvent())
+                return@runBlocking
+            }
+            Log.d(TAG, "onStartMonitoringEvent...")
+            Toast.makeText(this@DataService, "Start monitoring", Toast.LENGTH_SHORT).show()
+            monitoring = monitoringManager.createNew()
+            if (createMonitoringDir(this@DataService, monitoring!!) != null && initGpxFile(
+                    this@DataService,
+                    monitoring!!
+                )
+            ) {
+                bus.postSticky(MonitoringStartedEvent())
+            } else {
+                Toast.makeText(
+                    this@DataService,
+                    getString(R.string.error_message_create_monitoring_dir),
+                    Toast.LENGTH_SHORT
+                ).show()
+                bus.post(MonitoringFailedEvent())
+            }
         }
     }
 
     fun onEvent(event: CancelMonitoringEvent) {
-        Log.d(TAG, "onCancelMonitoringEvent...")
-        if (isMonitoring()) {
-            monitoringManager.updateStatus(monitoring!!, Monitoring.Status.canceled)
-        } else {
-            val pausedMonitoring = monitoringManager.pausedMonitoring
-            if (pausedMonitoring != null) {
-                monitoringManager.updateStatus(pausedMonitoring, Monitoring.Status.canceled)
+        scope.launch {
+            Log.d(TAG, "onCancelMonitoringEvent...")
+            if (isMonitoring()) {
+                monitoringManager.updateStatus(monitoring!!, Monitoring.Status.canceled)
+            } else {
+                val pausedMonitoring = monitoringManager.getPausedMonitoring()
+                if (pausedMonitoring != null) {
+                    monitoringManager.updateStatus(pausedMonitoring, Monitoring.Status.canceled)
+                }
             }
+            globalPrefs.pausedMonitoring().put(false)
+            monitoring = null
+            monitoringPrefs.edit().clear().apply()
+            getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit().clear().apply()
+            bus.postSticky(MonitoringCanceledEvent())
+            Toast.makeText(this@DataService, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show()
+            bus.removeStickyEvent(event)
+            stopSelf()
         }
-        globalPrefs.pausedMonitoring().put(false)
-        monitoring = null
-        monitoringPrefs.edit().clear().apply()
-        getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit().clear().apply()
-        bus.postSticky(MonitoringCanceledEvent())
-        Toast.makeText(this, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show()
-        bus.removeStickyEvent(event)
-        stopSelf()
     }
 
     fun onEvent(event: SetMonitoringCommonData) {
-        Log.d(TAG, "onSetMonitoringCommonData")
-        event.data[resources.getString(R.string.monitoring_id)] = monitoring!!.code
-        event.data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
-        monitoring!!.commonForm.clear()
-        monitoring!!.commonForm.putAll(event.data)
-        monitoringManager.update(monitoring!!)
+        scope.launch {
+            Log.d(TAG, "onSetMonitoringCommonData")
+            event.data[resources.getString(R.string.monitoring_id)] = monitoring!!.code
+            event.data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
+            monitoring!!.commonForm.clear()
+            monitoring!!.commonForm.putAll(event.data)
+            monitoringManager.update(monitoring!!)
+        }
     }
 
     fun onEvent(event: FinishMonitoringEvent) {
-        if (monitoring!!.commonForm.containsKey(resources.getString(R.string.end_time_key))) {
-            if (TextUtils.isEmpty(monitoring!!.commonForm[resources.getString(R.string.end_time_key)])) {
-                monitoring!!.commonForm[resources.getString(R.string.end_time_key)] =
-                    Configuration.STORAGE_TIME_FORMAT.format(
-                        Date()
-                    )
-                monitoringManager.update(monitoring!!)
+        scope.launch {
+            if (monitoring!!.commonForm.containsKey(resources.getString(R.string.end_time_key))) {
+                if (TextUtils.isEmpty(monitoring!!.commonForm[resources.getString(R.string.end_time_key)])) {
+                    monitoring!!.commonForm[resources.getString(R.string.end_time_key)] =
+                        Configuration.STORAGE_TIME_FORMAT.format(
+                            Date()
+                        )
+                    monitoringManager.update(monitoring!!)
+                }
             }
+            monitoringManager.updateStatus(monitoring!!, Monitoring.Status.finished)
+            if (isMonitoring()) {
+                closeGpxFile(this@DataService, monitoring!!)
+            }
+            DataOpsService_.intent(this@DataService).generateMonitoringFiles(monitoring!!.code).start()
+            monitoring = null
+            bus.postSticky(MonitoringFinishedEvent())
         }
-        monitoringManager.updateStatus(monitoring!!, Monitoring.Status.finished)
-        if (isMonitoring()) {
-            closeGpxFile(this, monitoring!!)
-        }
-        DataOpsService_.intent(this).generateMonitoringFiles(monitoring!!.code).start()
-        monitoring = null
-        bus.postSticky(MonitoringFinishedEvent())
     }
 
     fun onEvent(event: EntrySubmitted) {
@@ -214,10 +225,15 @@ open class DataService : Service() {
             Log.d(TAG, "onEntrySubmitted")
             try {
                 if (event.entryId > 0) {
-                    monitoringManagerNew.updateEntry(event.monitoringCode, event.entryId, event.entryType, event.data)
+                    monitoringManager.updateEntry(
+                        event.monitoringCode,
+                        event.entryId,
+                        event.entryType,
+                        event.data
+                    )
                     DataOpsService_.intent(this@DataService).generateMonitoringFiles(event.monitoringCode).start()
                 } else {
-                    monitoringManagerNew.newEntry(monitoring!!, event.entryType, event.data)
+                    monitoringManager.newEntry(monitoring!!, event.entryType, event.data)
                 }
             } catch (t: Throwable) {
                 Reporting.logException("Unable to persist entry", t)
@@ -229,7 +245,7 @@ open class DataService : Service() {
     fun onEvent(location: Location?) {
         Log.d(TAG, "onLocation")
         if (isMonitoring() && location != null) {
-            val trackingLocation = monitoringManagerNew.newTracking(monitoring!!, location)
+            val trackingLocation = monitoringManager.newTracking(monitoring!!, location)
             val file = File(createMonitoringDir(this, monitoring!!), "track.gpx")
             try {
                 val osw: Writer = BufferedWriter(FileWriter(file, true))
@@ -244,38 +260,45 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: CreateImageFile) {
-        val monitoring = if (TextUtils.isEmpty(event.monitoringCode) || isMonitoring() && TextUtils.equals(
-                event.monitoringCode,
-                monitoring!!.code
-            )
-        ) monitoring else monitoringManager.getMonitoring(event.monitoringCode)
-        // Create an image file name
-        var cnt = 100
-        while (isMonitoring() && cnt-- > 0) {
-            monitoringManager.update(monitoring!!)
+        scope.launch {
 
-            var index = (monitoring.pictureCounter++).toString()
-            while (index.length < 4) index = "0$index"
-            val imageFileName = "Pic$index.jpg"
-            val image = File(createMonitoringDir(this, monitoring), imageFileName)
-            try {
-                if (image.createNewFile()) {
-                    val uri =
-                        FileProvider.getUriForFile(applicationContext, SmartBirdsApplication.FILES_AUTHORITY, image)
-                    bus.post(ImageFileCreated(monitoring.code, imageFileName, uri, image.absolutePath))
-                    return
+            val monitoring = if (TextUtils.isEmpty(event.monitoringCode) || isMonitoring() && TextUtils.equals(
+                    event.monitoringCode,
+                    monitoring!!.code
+                )
+            ) monitoring else monitoringManager.getMonitoring(event.monitoringCode)
+            // Create an image file name
+            var cnt = 100
+            while (isMonitoring() && cnt-- > 0) {
+                monitoringManager.update(monitoring!!)
+
+                var index = (monitoring.pictureCounter++).toString()
+                while (index.length < 4) index = "0$index"
+                val imageFileName = "Pic$index.jpg"
+                val image = File(createMonitoringDir(this@DataService, monitoring), imageFileName)
+                try {
+                    if (image.createNewFile()) {
+                        val uri =
+                            FileProvider.getUriForFile(
+                                applicationContext,
+                                SmartBirdsApplication.FILES_AUTHORITY,
+                                image
+                            )
+                        bus.post(ImageFileCreated(monitoring.code, imageFileName, uri, image.absolutePath))
+                        return@launch
+                    }
+                } catch (e: IOException) {
+                    Log.d(TAG, "Image file create error", e)
+                    Reporting.logException(e)
                 }
-            } catch (e: IOException) {
-                Log.d(TAG, "Image file create error", e)
-                Reporting.logException(e)
             }
+            bus.post(ImageFileCreatedFailed(if (isMonitoring()) monitoring!!.code else null))
         }
-        bus.post(ImageFileCreatedFailed(if (isMonitoring()) monitoring!!.code else null))
     }
 
     fun onEvent(event: GetImageFile) {
         val image = File(
-            DataOpsService_.getMonitoringDir(
+            DataOpsService.getMonitoringDir(
                 this,
                 if (TextUtils.isEmpty(event.monitoringCode)) monitoring!!.code else event.monitoringCode
             ), event.fileName
@@ -296,7 +319,7 @@ open class DataService : Service() {
 
     fun onEvent(event: UndoLastEntry) {
         scope.launch {
-            monitoringManagerNew.deleteLastEntry(monitoring!!)
+            monitoringManager.deleteLastEntry(monitoring!!)
         }
     }
 
@@ -305,31 +328,34 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: PauseMonitoringEvent?) {
-        if (isMonitoring()) {
-            monitoringManager.updateStatus(monitoring!!, Monitoring.Status.paused)
-            this.monitoring = null
+        scope.launch {
+            if (isMonitoring()) {
+                monitoringManager.updateStatus(monitoring!!, Monitoring.Status.paused)
+                this@DataService.monitoring = null
+            }
+            globalPrefs.pausedMonitoring().put(true)
+            bus.postSticky(MonitoringPausedEvent())
         }
-        globalPrefs.pausedMonitoring().put(true)
-        bus.postSticky(MonitoringPausedEvent())
     }
 
     fun onEvent(event: ResumeMonitoringEvent) {
-        if (isMonitoring()) {
+        scope.launch {
+            if (isMonitoring()) {
+                bus.postSticky(MonitoringResumedEvent())
+                return@launch
+            }
+            globalPrefs.pausedMonitoring().put(false)
+
+            val pausedMonitoring = monitoringManager.getPausedMonitoring()
+            if (pausedMonitoring != null) {
+                monitoring = pausedMonitoring
+                monitoringManager.updateStatus(monitoring!!, Monitoring.Status.wip)
+            } else {
+                Reporting.logException(IllegalStateException("Trying to resume missing monitoring"))
+                monitoring = monitoringManager.createNew()
+            }
             bus.postSticky(MonitoringResumedEvent())
-            return
         }
-        globalPrefs.pausedMonitoring().put(false)
-
-        val pausedMonitoring = monitoringManager.pausedMonitoring
-        if (pausedMonitoring != null) {
-            monitoring = pausedMonitoring
-            monitoringManager.updateStatus(monitoring!!, Monitoring.Status.wip)
-        } else {
-            Reporting.logException(IllegalStateException("Trying to resume missing monitoring"))
-            monitoring = monitoringManager.createNew()
-        }
-        bus.postSticky(MonitoringResumedEvent())
-
     }
 
     fun onEvent(event: UserDataEvent) {

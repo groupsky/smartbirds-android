@@ -1,11 +1,13 @@
 package org.bspb.smartbirds.pro.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import org.bspb.smartbirds.pro.content.MonitoringEntry
-import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.room.Form
-import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
+import org.bspb.smartbirds.pro.utils.MonitoringManager
 
 class MonitoringEntryListViewModel : ViewModel() {
 
@@ -27,7 +29,7 @@ class MonitoringEntryListViewModel : ViewModel() {
             var monitoringEntries = mutableListOf<MonitoringEntry>()
 
             items?.forEach {
-                monitoringEntries.add(MonitoringManagerNew.entryFromDb(it))
+                monitoringEntries.add(MonitoringManager.entryFromDb(it))
             }
 
             emit(monitoringEntries)

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.room.Form
-import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
+import org.bspb.smartbirds.pro.utils.MonitoringManager
 
 class BaseEntryViewModel : ViewModel() {
 
@@ -12,7 +12,7 @@ class BaseEntryViewModel : ViewModel() {
 
     suspend fun loadEntry(id: Long): MonitoringEntry? {
         var formEntry: Form? = formRepository.findById(id) ?: return null
-        return MonitoringManagerNew.entryFromDb(formEntry!!)
+        return MonitoringManager.entryFromDb(formEntry!!)
         return null
     }
 }

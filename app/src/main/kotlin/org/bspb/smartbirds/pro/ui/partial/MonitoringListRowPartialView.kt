@@ -15,7 +15,7 @@ import org.bspb.smartbirds.pro.content.Monitoring
 
 @EViewGroup(R.layout.partial_monitoring_list_row)
 open class MonitoringListRowPartialView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     companion object {

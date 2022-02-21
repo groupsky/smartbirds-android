@@ -77,32 +77,34 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
 
     private fun finishMonitoring() {
         monitoring?.apply {
-            val pausedMonitoring = monitoringManager.pausedMonitoring
+            lifecycleScope.launch {
+                val pausedMonitoring = monitoringManager.getPausedMonitoring()
 
-            // Apply monitoring code if missing in common form
-            if (!commonForm.containsKey(resources.getString(R.string.monitoring_id))) {
-                commonForm[resources.getString(R.string.monitoring_id)] = code
-                monitoringManager.update(this)
-            }
-
-            if (commonForm.containsKey(resources.getString(R.string.end_time_key))) {
-                if (TextUtils.isEmpty(commonForm[resources.getString(R.string.end_time_key)])) {
-                    commonForm[resources.getString(R.string.end_time_key)] =
-                        Configuration.STORAGE_TIME_FORMAT.format(Date())
-                    monitoringManager.update(this)
+                // Apply monitoring code if missing in common form
+                if (!commonForm.containsKey(resources.getString(R.string.monitoring_id))) {
+                    commonForm[resources.getString(R.string.monitoring_id)] = code
+                    monitoringManager.update(this@apply)
                 }
-            }
 
-            monitoringManager.updateStatus(this, Monitoring.Status.finished)
+                if (commonForm.containsKey(resources.getString(R.string.end_time_key))) {
+                    if (TextUtils.isEmpty(commonForm[resources.getString(R.string.end_time_key)])) {
+                        commonForm[resources.getString(R.string.end_time_key)] =
+                            Configuration.STORAGE_TIME_FORMAT.format(Date())
+                        monitoringManager.update(this@apply)
+                    }
+                }
 
-            if (code == pausedMonitoring?.code) {
-                context?.let { MonitoringUtils.closeGpxFile(it, this) }
-                globalPrefs.runningMonitoring().put(false)
-                globalPrefs.pausedMonitoring().put(false)
+                monitoringManager.updateStatus(this@apply, Monitoring.Status.finished)
+
+                if (code == pausedMonitoring?.code) {
+                    context?.let { MonitoringUtils.closeGpxFile(it, this@apply) }
+                    globalPrefs.runningMonitoring().put(false)
+                    globalPrefs.pausedMonitoring().put(false)
+                }
+                DataOpsService_.intent(context).generateMonitoringFiles(code).start()
+                bus.postSticky(MonitoringFinishedEvent())
+                activity?.finish()
             }
-            DataOpsService_.intent(context).generateMonitoringFiles(code).start()
-            bus.postSticky(MonitoringFinishedEvent())
-            activity?.finish()
         }
 
     }
@@ -110,8 +112,8 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     private fun deleteMonitoring() {
         monitoring?.apply {
             lifecycleScope.launch {
-                monitoringManagerNew.deleteMonitoring(code)
-                var dir = DataOpsService.getMonitoringDir(context, code);
+                monitoringManager.deleteMonitoring(code)
+                val dir = DataOpsService.getMonitoringDir(requireContext(), code);
                 dir.deleteRecursively();
                 activity?.finish();
             }

@@ -1,40 +1,26 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
-import android.content.Context
-import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.CursorAdapter
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
 import org.androidannotations.annotations.*
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
-import org.bspb.smartbirds.pro.adapter.ModelCursorAdapter
-import org.bspb.smartbirds.pro.adapter.ModelCursorFactory
+import org.bspb.smartbirds.pro.adapter.MonitoringListAdapter
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.content.MonitoringManager
-import org.bspb.smartbirds.pro.db.MonitoringColumns
-import org.bspb.smartbirds.pro.db.SmartBirdsProvider.Monitorings
-import org.bspb.smartbirds.pro.ui.partial.MonitoringListRowPartialView
-import org.bspb.smartbirds.pro.ui.partial.MonitoringListRowPartialView_
+import org.bspb.smartbirds.pro.viewmodel.MonitoringListViewModel
 
 @EFragment
 @OptionsMenu(R.menu.monitoring_list)
-open class MonitoringListFragment : ListFragment(), LoaderManager.LoaderCallbacks<Cursor> {
+open class MonitoringListFragment : ListFragment() {
 
     companion object {
-        private val PROJECTION = arrayOf(
-                MonitoringColumns._ID,
-                MonitoringColumns.CODE,
-                MonitoringColumns.STATUS,
-                MonitoringColumns.DATA,
-                MonitoringColumns.ENTRIES_COUNT)
-
         private const val TAG = SmartBirdsApplication.TAG + ".FMonLst"
         private const val KEY_STATUS = "status"
     }
@@ -53,7 +39,9 @@ open class MonitoringListFragment : ListFragment(), LoaderManager.LoaderCallback
     @OptionsMenuItem(R.id.menu_filter_status_paused)
     protected lateinit var menuStatusPaused: MenuItem
 
-    private var adapter: CursorAdapter? = null
+    private var adapter: MonitoringListAdapter? = null
+
+    private val viewModel: MonitoringListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
@@ -64,23 +52,25 @@ open class MonitoringListFragment : ListFragment(), LoaderManager.LoaderCallback
             }
         }
 
-        adapter = object : ModelCursorAdapter<Monitoring?>(activity, R.layout.partial_monitoring_list_row, null, ModelCursorFactory { cursor -> MonitoringManager.monitoringFromCursor(cursor) }) {
-            override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
-                return MonitoringListRowPartialView_.build(context)
-            }
+        adapter = MonitoringListAdapter(requireContext())
+        listAdapter = adapter
+    }
 
-            override fun bindView(view: View?, context: Context?, model: Monitoring?) {
-                require(view is MonitoringListRowPartialView) { "Must use " + MonitoringListRowPartialView::class.java.simpleName }
-                view.bind(model)
+    @AfterViews
+    protected open fun initViewModel() {
+        viewModel.init()
+        viewModel.entries?.observe(viewLifecycleOwner) { items ->
+            items?.apply {
+                adapter?.clear()
+                adapter?.addAll(items)
+                adapter?.notifyDataSetChanged()
             }
         }
-        listAdapter = adapter
     }
 
     override fun onResume() {
         Log.d(TAG, "onResume")
         super.onResume()
-        LoaderManager.getInstance(this).restartLoader(0, null, this)
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
@@ -89,33 +79,6 @@ open class MonitoringListFragment : ListFragment(), LoaderManager.LoaderCallback
         if (monitoring != null && activity is Listener) {
             (activity as Listener).onMonitoringSelected(monitoring.code)
         }
-    }
-
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        Log.d(TAG, "onCreateLoader")
-        var selection: String? = "(" + MonitoringColumns.ENTRIES_COUNT + "> 0 OR " + MonitoringColumns.STATUS + "<> 'canceled') "
-        var selectionArgs: Array<String>? = null
-
-        filterStatus?.apply {
-            selection += " AND " + MonitoringColumns.STATUS + "=?"
-            selectionArgs = arrayOf(this.name)
-        }
-        return CursorLoader(requireContext(),
-                Monitorings.CONTENT_URI,
-                PROJECTION,
-                selection,
-                selectionArgs,
-                MonitoringColumns._ID + " DESC")
-    }
-
-    override fun onLoadFinished(loader: Loader<Cursor>, cursor: Cursor?) {
-        Log.d(TAG, String.format("onLoadFinished: %d", cursor?.count))
-        adapter!!.swapCursor(cursor)
-    }
-
-    override fun onLoaderReset(loader: Loader<Cursor>) {
-        Log.d(TAG, "onLoaderReset")
-        adapter!!.swapCursor(null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -162,7 +125,7 @@ open class MonitoringListFragment : ListFragment(), LoaderManager.LoaderCallback
         }
 
         updateMenuItems(filterStatus)
-        LoaderManager.getInstance(this).restartLoader(0, null, this)
+        viewModel.setFilterStatus(filterStatus)
         activity?.title = if (filterStatus != null) {
             getString(R.string.title_monitoring_list) + " [" + getString(filterStatus!!.label) + "]"
         } else {

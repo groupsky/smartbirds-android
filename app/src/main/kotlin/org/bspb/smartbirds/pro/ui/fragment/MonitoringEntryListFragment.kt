@@ -14,16 +14,18 @@ import androidx.fragment.app.ListFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.AfterInject
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.EFragment
+import org.androidannotations.annotations.FragmentArg
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.adapter.MonitoringEntryListAdapter
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
-import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.service.DataOpsService_
-import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
+import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.viewmodel.MonitoringEntryListViewModel
 import java.util.*
@@ -32,9 +34,7 @@ import java.util.*
 open class MonitoringEntryListFragment : ListFragment() {
     private var adapter: MonitoringEntryListAdapter? = null
 
-    @Bean
-    protected lateinit var monitoringManager: MonitoringManager
-    protected val monitoringManagerNew = MonitoringManagerNew.getInstance()
+    protected val monitoringManager = MonitoringManager.getInstance()
 
     protected var code: String? = null
     protected var monitoring: Monitoring? = null
@@ -65,7 +65,9 @@ open class MonitoringEntryListFragment : ListFragment() {
     @AfterInject
     protected fun setupLoader() {
         code?.let {
-            monitoring = monitoringManager.getMonitoring(it)
+            lifecycleScope.launch {
+                monitoring = monitoringManager.getMonitoring(it)
+            }
         }
     }
 
@@ -125,7 +127,7 @@ open class MonitoringEntryListFragment : ListFragment() {
                         builder.setPositiveButton(android.R.string.ok) { _, _ ->
                             lifecycleScope.launch {
                                 mode.finish()
-                                monitoringManagerNew.deleteEntries(selectedItems)
+                                monitoringManager.deleteEntries(selectedItems)
                                 DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
                             }
                         }
@@ -156,7 +158,7 @@ open class MonitoringEntryListFragment : ListFragment() {
     open fun setMonitoringCode(monitoringCode: String?) {
         this.code = monitoringCode
         this.code?.let {
-            if (this::monitoringManager.isInitialized) {
+            lifecycleScope.launch {
                 monitoring = monitoringManager.getMonitoring(it)
             }
         }

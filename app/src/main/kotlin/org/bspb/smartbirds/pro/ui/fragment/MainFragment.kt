@@ -3,7 +3,10 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.Manifest.permission
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -25,13 +28,14 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
@@ -45,7 +49,7 @@ import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
 import org.bspb.smartbirds.pro.ui.SettingsActivity
 import org.bspb.smartbirds.pro.ui.StatsActivity_
-import org.bspb.smartbirds.pro.utils.debugLog
+import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
@@ -80,8 +84,7 @@ open class MainFragment : Fragment() {
     @Pref
     protected lateinit var monitoringPrefs: MonitoringPrefs_
 
-    @Bean
-    protected lateinit var monitoringManager: MonitoringManager
+    private val monitoringManager = MonitoringManager.getInstance()
 
     @Bean
     protected lateinit var bus: EEventBus
@@ -327,11 +330,12 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @Background
     open fun showNotSyncedCount() {
-        val notSyncedCount: Int =
-            monitoringManager.countMonitoringsForStatus(Monitoring.Status.finished)
-        displayNotSyncedCount(notSyncedCount)
+        lifecycleScope.launch {
+            val notSyncedCount: Int =
+                monitoringManager.countMonitoringsForStatus(Monitoring.Status.finished)
+            displayNotSyncedCount(notSyncedCount)
+        }
     }
 
     @UiThread

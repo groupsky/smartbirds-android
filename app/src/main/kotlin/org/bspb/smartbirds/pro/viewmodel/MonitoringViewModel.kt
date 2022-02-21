@@ -6,7 +6,7 @@ import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.repository.ZoneRepository
 import org.bspb.smartbirds.pro.room.Form
-import org.bspb.smartbirds.pro.utils.MonitoringManagerNew
+import org.bspb.smartbirds.pro.utils.MonitoringManager
 
 class MonitoringViewModel : ViewModel() {
 
@@ -29,7 +29,7 @@ class MonitoringViewModel : ViewModel() {
             var monitoringEntries = mutableListOf<MonitoringEntry>()
 
             items?.forEach {
-                monitoringEntries.add(MonitoringManagerNew.entryFromDb(it))
+                monitoringEntries.add(MonitoringManager.entryFromDb(it))
             }
 
             emit(monitoringEntries)
