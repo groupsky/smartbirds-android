@@ -27,8 +27,9 @@ open class MonitoringDetailActivity : BaseActivity(), MonitoringEntryListFragmen
     @Extra
     protected var monitoringCode: String? = null
 
+    @JvmField
     @FragmentById(R.id.monitoring_detail_container)
-    protected lateinit var fragment: MonitoringEntryListFragment
+    protected var fragment: MonitoringEntryListFragment? = null
 
     private var monitoring: Monitoring? = null
 

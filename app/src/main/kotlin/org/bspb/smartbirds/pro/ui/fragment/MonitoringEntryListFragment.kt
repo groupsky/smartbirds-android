@@ -26,7 +26,6 @@ import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.utils.MonitoringManager
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.viewmodel.MonitoringEntryListViewModel
 import java.util.*
 
@@ -50,10 +49,8 @@ open class MonitoringEntryListFragment : ListFragment() {
     }
 
     private fun initViewModel() {
-        debugLog("init viewModel: $code")
         viewModel.init(code)
         viewModel.entries?.observe(viewLifecycleOwner) {
-            debugLog("Entries found: $it")
             adapter?.apply {
                 clear()
                 addAll(it)

@@ -9,7 +9,7 @@ import java.sql.Blob
 data class Form(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    var id: Int = 0,
+    var id: Long = 0,
     val code: String,
     val type: String,
     val latitude: Double,
@@ -34,7 +34,7 @@ data class Form(
     }
 
     override fun hashCode(): Int {
-        var result = id
+        var result = id.hashCode()
         result = 31 * result + code.hashCode()
         result = 31 * result + type.hashCode()
         result = 31 * result + latitude.hashCode()

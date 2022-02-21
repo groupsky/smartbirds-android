@@ -9,7 +9,6 @@ import android.widget.TextView
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.prefs.CbmPrefs_
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager
-import org.bspb.smartbirds.pro.utils.debugLog
 
 class CbmQuickChoiceFormInput : FrameLayout {
 
@@ -127,7 +126,6 @@ class CbmQuickChoiceFormInput : FrameLayout {
     private fun openChooser(button: View) {
         val chooser = NomenclatureChooser(context, entriesKey as String, hint as String)
         chooser.showPopup { nomenclatureItem ->
-            debugLog(nomenclatureItem?.toString())
             setValue(button.id, nomenclatureItem)
         }
     }
