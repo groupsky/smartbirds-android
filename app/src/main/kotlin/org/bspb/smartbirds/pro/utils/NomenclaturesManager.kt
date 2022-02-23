@@ -7,7 +7,9 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.Backend_
@@ -20,10 +22,7 @@ import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 import org.bspb.smartbirds.pro.tools.AlphanumComparator
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
-import java.io.BufferedInputStream
 import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
 import java.util.*
 
 class NomenclaturesManager private constructor(val context: Context) {
@@ -89,23 +88,6 @@ class NomenclaturesManager private constructor(val context: Context) {
                 }
             }
 
-            // load any missing nomenclatures from bundled - this is useful when updating, before sync with server
-            val missingNomenclatures = mutableSetOf<String>()
-            for (species in loadBundledSpecies()) {
-                fillMissingNomenclature(
-                    missingNomenclatures,
-                    localizeNomenclature(Nomenclature.fromSpecies(species, locale), locale)
-                )
-            }
-
-            missingNomenclatures.clear()
-            for (nomenclature in loadBundledNomenclatures()) {
-                fillMissingNomenclature(
-                    missingNomenclatures,
-                    localizeNomenclature(nomenclature, locale)
-                )
-            }
-
             // sort nomenclatures
             for (nomenclatures in data.values) {
                 Collections.sort(nomenclatures, comparator)
@@ -114,51 +96,6 @@ class NomenclaturesManager private constructor(val context: Context) {
             loading = false
             EEventBus_.getInstance_(context).postSticky(NomenclaturesReadyEvent())
         }
-    }
-
-    private fun loadBundledNomenclatures(): Iterable<Nomenclature> {
-        return loadBundledFile("nomenclatures.json")
-    }
-
-    private fun loadBundledSpecies(): Iterable<Nomenclature> {
-        return loadBundledFile("species.json")
-    }
-
-    private fun loadBundledFile(filename: String): Iterable<Nomenclature> {
-        return try {
-            val inStream: InputStream = BufferedInputStream(context.assets.open(filename))
-            inStream.use {
-                listOf(
-                    *SBGsonParser.createParser().fromJson(
-                        InputStreamReader(it),
-                        Array<Nomenclature>::class.java
-                    )
-                )
-            }
-        } catch (e: IOException) {
-            Reporting.logException(e)
-            throw IllegalStateException("Missing bundled file $filename", e)
-        }
-    }
-
-    private fun fillMissingNomenclature(
-        missingNomenclatures: MutableSet<String>,
-        nomenclature: Nomenclature
-    ) {
-        val list: MutableList<Nomenclature>?
-        if (!data.containsKey(nomenclature.type)) {
-            missingNomenclatures.add(nomenclature.type)
-            list = LinkedList()
-            data[nomenclature.type] = list
-        } else if (missingNomenclatures.contains(nomenclature.type)) {
-            list = data[nomenclature.type]
-        } else return
-        list!!.add(nomenclature)
-    }
-
-    private fun localizeNomenclature(nomenclature: Nomenclature, locale: String): Nomenclature {
-        nomenclature.localeLabel = nomenclature.label[locale]
-        return nomenclature
     }
 
     fun getNomenclature(key: String): List<Nomenclature> {
