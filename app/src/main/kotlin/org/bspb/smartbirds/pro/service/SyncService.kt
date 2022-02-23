@@ -2,8 +2,7 @@ package org.bspb.smartbirds.pro.service
 
 import android.content.Intent
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EIntentService
 import org.androidannotations.annotations.ServiceAction
@@ -47,7 +46,7 @@ open class SyncService : AbstractIntentService("SyncService") {
 
     @ServiceAction
     fun sync() {
-        GlobalScope.launch {
+        runBlocking {
             try {
                 isWorking = true
                 updateSyncProgress(R.string.upload_dialog_text)
@@ -64,7 +63,7 @@ open class SyncService : AbstractIntentService("SyncService") {
 
     @ServiceAction
     fun initialSync() {
-        GlobalScope.launch {
+        runBlocking {
             try {
                 isWorking = true
                 fetchNewData()

@@ -8,8 +8,6 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.singleOrNull
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.Backend_
@@ -74,7 +72,7 @@ class NomenclaturesManager private constructor(val context: Context) {
         }
 
     private fun loadNomenclatures() {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             loading = true
             data.clear()
             val dbNomenclatures = db.nomenclatureDao().getAll()
@@ -201,7 +199,7 @@ class NomenclaturesManager private constructor(val context: Context) {
     }
 
     fun addRecentNomenclature(nomenclature: Nomenclature) {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             var recentNomenclature =
                 db.nomenclatureUsesCountDao().findByLabel(nomenclature.label.labelId)
             if (recentNomenclature == null) {

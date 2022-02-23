@@ -12,9 +12,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
 import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EService
@@ -35,6 +33,7 @@ import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.closeGpxFile
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.createMonitoringDir
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.initGpxFile
+import org.bspb.smartbirds.pro.utils.SBGlobalScope
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,7 +56,7 @@ open class DataService : Service() {
 
     // TODO replace with custom scope
     @OptIn(DelicateCoroutinesApi::class)
-    private val scope = GlobalScope
+    private val scope = SBGlobalScope()
 
     @Bean
     protected lateinit var bus: EEventBus
@@ -98,7 +97,7 @@ open class DataService : Service() {
 
     @AfterInject
     protected open fun initBus() {
-        scope.launch {
+        scope.sbLaunch {
             // restore state
             monitoring = monitoringManager.getActiveMonitoring()
 
@@ -125,7 +124,6 @@ open class DataService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand...")
-
         // Start sticky only if the device is with SDK lower than Oreo, otherwise there is a crash
         // when the service is killed and recreated. The reason is that in Oreo there are
         // limitations for starting services when the app is in background.
@@ -141,10 +139,10 @@ open class DataService : Service() {
     }
 
     open fun onEvent(event: StartMonitoringEvent?) {
-        runBlocking {
+        scope.sbLaunch {
             if (isMonitoring()) {
                 bus.postSticky(MonitoringStartedEvent())
-                return@runBlocking
+                return@sbLaunch
             }
             Log.d(TAG, "onStartMonitoringEvent...")
             Toast.makeText(this@DataService, "Start monitoring", Toast.LENGTH_SHORT).show()
@@ -167,7 +165,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: CancelMonitoringEvent) {
-        scope.launch {
+        scope.sbLaunch(Dispatchers.Main) {
             Log.d(TAG, "onCancelMonitoringEvent...")
             if (isMonitoring()) {
                 monitoringManager.updateStatus(monitoring!!, Monitoring.Status.canceled)
@@ -189,7 +187,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: SetMonitoringCommonData) {
-        scope.launch {
+        scope.sbLaunch {
             Log.d(TAG, "onSetMonitoringCommonData")
             event.data[resources.getString(R.string.monitoring_id)] = monitoring!!.code
             event.data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
@@ -200,7 +198,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: FinishMonitoringEvent) {
-        scope.launch {
+        scope.sbLaunch {
             if (monitoring!!.commonForm.containsKey(resources.getString(R.string.end_time_key))) {
                 if (TextUtils.isEmpty(monitoring!!.commonForm[resources.getString(R.string.end_time_key)])) {
                     monitoring!!.commonForm[resources.getString(R.string.end_time_key)] =
@@ -221,7 +219,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: EntrySubmitted) {
-        scope.launch {
+        scope.sbLaunch {
             Log.d(TAG, "onEntrySubmitted")
             try {
                 if (event.entryId > 0) {
@@ -260,7 +258,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: CreateImageFile) {
-        scope.launch {
+        scope.sbLaunch {
 
             val monitoring = if (TextUtils.isEmpty(event.monitoringCode) || isMonitoring() && TextUtils.equals(
                     event.monitoringCode,
@@ -285,7 +283,7 @@ open class DataService : Service() {
                                 image
                             )
                         bus.post(ImageFileCreated(monitoring.code, imageFileName, uri, image.absolutePath))
-                        return@launch
+                        return@sbLaunch
                     }
                 } catch (e: IOException) {
                     Log.d(TAG, "Image file create error", e)
@@ -318,7 +316,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: UndoLastEntry) {
-        scope.launch {
+        scope.sbLaunch {
             monitoringManager.deleteLastEntry(monitoring!!)
         }
     }
@@ -328,7 +326,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: PauseMonitoringEvent?) {
-        scope.launch {
+        scope.sbLaunch {
             if (isMonitoring()) {
                 monitoringManager.updateStatus(monitoring!!, Monitoring.Status.paused)
                 this@DataService.monitoring = null
@@ -339,10 +337,10 @@ open class DataService : Service() {
     }
 
     fun onEvent(event: ResumeMonitoringEvent) {
-        scope.launch {
+        scope.sbLaunch {
             if (isMonitoring()) {
                 bus.postSticky(MonitoringResumedEvent())
-                return@launch
+                return@sbLaunch
             }
             globalPrefs.pausedMonitoring().put(false)
 
