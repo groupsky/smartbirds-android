@@ -45,10 +45,11 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     SmartBirdsRoomDatabase::class.java,
-                    "smartBirdsDatabaseRoom.db"
+                    "smartBirdsDatabase.db"
                 )
                     .addMigrations(
-                        MIGRATION_1_6
+                        MIGRATION_1_5,
+                        MIGRATION_5_6
                     )
                     .build()
                 INSTANCE = instance
@@ -56,12 +57,22 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
             }
         }
 
-        private val MIGRATION_1_6 = object : Migration(1, 6) {
+        private val MIGRATION_1_5 = object : Migration(1, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 debugLog("In the migration")
                 // Empty implementation, because the schema isn't changing.
             }
-
         }
+
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE nomenclatures ADD COLUMN data BLOB")
+                database.execSQL("ALTER TABLE nomenclature_uses_count ADD COLUMN data BLOB")
+                database.execSQL("DELETE FROM nomenclature_uses_count")
+                database.execSQL("ALTER TABLE nomenclature_uses_count ADD COLUMN label_id TEXT")
+            }
+        }
+
+
     }
 }
