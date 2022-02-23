@@ -19,15 +19,12 @@ class SBGlobalScope : CoroutineScope {
         if (context is EmptyCoroutineContext) {
             val isMainThread = Looper.myLooper() == Looper.getMainLooper()
             return if (isMainThread) {
-                debugLog("Launch coroutine in main thread")
                 sbLaunchMain(start, block)
             } else {
-                debugLog("Launch coroutine in IO thread")
                 sbLaunchIO(start, block)
             }
         }
 
-        debugLog("Launch coroutine with argument context")
         return launch(context, start, block)
     }
 

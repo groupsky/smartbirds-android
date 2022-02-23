@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui.map;
 
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -69,12 +71,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by dani on 14-11-6.
@@ -438,28 +436,14 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Override
     public void setMarkers(Iterable<EntryMapMarker> newMapMarkers) {
-        Set<MarkerHolder> markerHoldersToDelete = new HashSet<>(this.markers.values());
-        Set<Long> idsToDelete = new HashSet<>(this.markers.keySet());
-
-        MarkerHolder testHolder = new MarkerHolder(null, null);
-        int cnt = 0;
-        for (EntryMapMarker mapMarker : newMapMarkers) {
-            cnt++;
-            testHolder.mapMarker = mapMarker;
-            markerHoldersToDelete.remove(testHolder);
-            idsToDelete.remove(mapMarker.getId());
-//            if (currentMarkers.contains(testHolder)) continue;
-            this.markers.put(mapMarker.getId(), new MarkerHolder(mapMarker, addMarker(mapMarker)));
-        }
-
-        for (Long id : idsToDelete) {
-            this.markers.remove(id);
-        }
-
-        for (MarkerHolder markerHolder : markerHoldersToDelete) {
+        for (MarkerHolder markerHolder : this.markers.values()) {
             if (markerHolder.marker != null) {
                 markerHolder.marker.remove();
             }
+        }
+
+        for (EntryMapMarker mapMarker : newMapMarkers) {
+            this.markers.put(mapMarker.getId(), new MarkerHolder(mapMarker, addMarker(mapMarker)));
         }
     }
 
@@ -560,7 +544,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                 return null;
             }
         }
-        
+
         return overlay;
     }
 
