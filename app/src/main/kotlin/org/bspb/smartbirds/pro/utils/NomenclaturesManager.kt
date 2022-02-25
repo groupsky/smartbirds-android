@@ -189,6 +189,8 @@ class NomenclaturesManager private constructor(val context: Context) {
                     SmartBirdsRoomDatabase.getInstance().nomenclatureDao()
                         .updateNomenclaturesAndClearOld(nomenclatures)
                 }
+
+                loadNomenclatures()
             } catch (t: Throwable) {
                 Reporting.logException(t)
                 showToast("Could not download nomenclatures. Try again.")
