@@ -26,7 +26,7 @@ import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.repository.ZoneRepository;
-import org.bspb.smartbirds.pro.room.ZoneModel;
+import org.bspb.smartbirds.pro.room.model.ZoneModel;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;

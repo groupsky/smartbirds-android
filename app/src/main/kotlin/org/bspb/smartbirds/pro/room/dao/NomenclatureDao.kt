@@ -4,8 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import kotlinx.coroutines.flow.Flow
-import org.bspb.smartbirds.pro.room.NomenclatureModel
+import org.bspb.smartbirds.pro.room.model.NomenclatureModel
 
 @Dao
 abstract class NomenclatureDao {

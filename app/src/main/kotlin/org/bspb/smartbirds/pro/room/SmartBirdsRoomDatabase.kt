@@ -8,8 +8,8 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import org.bspb.smartbirds.pro.room.dao.*
+import org.bspb.smartbirds.pro.room.model.*
 import org.bspb.smartbirds.pro.utils.debugLog
-import java.util.concurrent.Executor
 
 @Database(
     entities = [Form::class, MonitoringModel::class, NomenclatureModel::class, NomenclatureUsesCount::class, Tracking::class, ZoneModel::class],

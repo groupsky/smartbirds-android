@@ -3,7 +3,7 @@ package org.bspb.smartbirds.pro.viewmodel
 import androidx.lifecycle.*
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.repository.MonitoringRepository
-import org.bspb.smartbirds.pro.room.MonitoringWithEntriesCount
+import org.bspb.smartbirds.pro.room.model.MonitoringWithEntriesCount
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 
 class MonitoringListViewModel : ViewModel() {

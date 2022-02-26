@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.repository
 
 import androidx.lifecycle.LiveData
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
-import org.bspb.smartbirds.pro.room.ZoneModel
+import org.bspb.smartbirds.pro.room.model.ZoneModel
 
 class ZoneRepository {
 

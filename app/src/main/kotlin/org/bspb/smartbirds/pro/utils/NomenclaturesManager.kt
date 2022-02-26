@@ -16,8 +16,8 @@ import org.bspb.smartbirds.pro.backend.Backend_
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent
-import org.bspb.smartbirds.pro.room.NomenclatureModel
-import org.bspb.smartbirds.pro.room.NomenclatureUsesCount
+import org.bspb.smartbirds.pro.room.model.NomenclatureModel
+import org.bspb.smartbirds.pro.room.model.NomenclatureUsesCount
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 import org.bspb.smartbirds.pro.tools.AlphanumComparator
 import org.bspb.smartbirds.pro.tools.Reporting

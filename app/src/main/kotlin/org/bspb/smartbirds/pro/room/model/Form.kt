@@ -1,15 +1,18 @@
-package org.bspb.smartbirds.pro.room
+package org.bspb.smartbirds.pro.room.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "nomenclatures")
-data class NomenclatureModel(
+@Entity(tableName = "forms")
+data class Form(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     var id: Long = 0,
-    var type: String?,
+    val code: String,
+    val type: String,
+    val latitude: Double,
+    val longitude: Double,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    var data: String?,
+    val data: String
 )

@@ -1,4 +1,4 @@
-package org.bspb.smartbirds.pro.room
+package org.bspb.smartbirds.pro.room.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

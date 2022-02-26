@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.repository
 
 import androidx.lifecycle.LiveData
-import org.bspb.smartbirds.pro.room.Form
+import org.bspb.smartbirds.pro.room.model.Form
 import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
 
 class FormRepository {

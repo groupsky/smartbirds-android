@@ -15,11 +15,10 @@ import org.bspb.smartbirds.pro.content.TrackingLocation
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.repository.MonitoringRepository
-import org.bspb.smartbirds.pro.room.Form
-import org.bspb.smartbirds.pro.room.MonitoringModel
-import org.bspb.smartbirds.pro.room.Tracking
+import org.bspb.smartbirds.pro.room.model.Form
+import org.bspb.smartbirds.pro.room.model.MonitoringModel
+import org.bspb.smartbirds.pro.room.model.Tracking
 import org.bspb.smartbirds.pro.tools.SBGsonParser
-import java.nio.charset.StandardCharsets
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*

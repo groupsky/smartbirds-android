@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
-import org.bspb.smartbirds.pro.room.Tracking
+import org.bspb.smartbirds.pro.room.model.Tracking
 
 @Dao
 interface TrackingDao {

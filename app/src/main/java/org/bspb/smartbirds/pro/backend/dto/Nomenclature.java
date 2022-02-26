@@ -6,14 +6,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.room.NomenclatureModel;
+import org.bspb.smartbirds.pro.room.model.NomenclatureModel;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-
-import kotlin.text.Charsets;
 
 /**
  * Created by groupsky on 27.09.16.

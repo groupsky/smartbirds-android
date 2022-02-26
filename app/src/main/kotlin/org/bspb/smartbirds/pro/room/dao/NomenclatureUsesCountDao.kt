@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import org.bspb.smartbirds.pro.room.NomenclatureUsesCount
+import org.bspb.smartbirds.pro.room.model.NomenclatureUsesCount
 
 @Dao
 abstract class NomenclatureUsesCountDao {
