@@ -8,7 +8,7 @@ import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.RootContext
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
+import org.bspb.smartbirds.pro.room.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.room.model.ZoneModel
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
@@ -44,7 +44,7 @@ open class ZonesManager {
                     )
                 }
 
-                SmartBirdsRoomDatabase.getInstance().zoneDao().updateZonesAndClearOld(zones)
+                SmartBirdsDatabase.getInstance().zoneDao().updateZonesAndClearOld(zones)
             } catch (t: Throwable) {
                 Reporting.logException(t)
                 showToast("Could not download zones. Try again.")

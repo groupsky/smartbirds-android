@@ -16,7 +16,7 @@ import org.bspb.smartbirds.pro.utils.debugLog
     version = 7
 )
 @TypeConverters(Converters::class)
-abstract class SmartBirdsRoomDatabase : RoomDatabase() {
+abstract class SmartBirdsDatabase : RoomDatabase() {
 
     abstract fun nomenclatureDao(): NomenclatureDao
 
@@ -32,9 +32,9 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: SmartBirdsRoomDatabase? = null
+        private var INSTANCE: SmartBirdsDatabase? = null
 
-        fun getInstance(): SmartBirdsRoomDatabase {
+        fun getInstance(): SmartBirdsDatabase {
             checkNotNull(INSTANCE) { "Instance is null. init(Context context) must be called before getting the instace." }
             return INSTANCE!!
         }
@@ -47,7 +47,7 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    SmartBirdsRoomDatabase::class.java,
+                    SmartBirdsDatabase::class.java,
                     "smartBirdsDatabase.db"
                 )
                     .addMigrations(

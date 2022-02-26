@@ -15,7 +15,7 @@ import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase;
+import org.bspb.smartbirds.pro.room.SmartBirdsDatabase;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.utils.MonitoringManager;
@@ -51,7 +51,7 @@ public class SmartBirdsApplication extends Application {
         crashlytics.setCustomKey("build_time", BuildConfig.BUILD_TIME);
 
         // Init singletons
-        SmartBirdsRoomDatabase.Companion.init(this);
+        SmartBirdsDatabase.Companion.init(this);
         NomenclaturesManager.Companion.init(this);
         MonitoringManager.Companion.init(this);
 

@@ -18,7 +18,7 @@ import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent
 import org.bspb.smartbirds.pro.room.model.NomenclatureModel
 import org.bspb.smartbirds.pro.room.model.NomenclatureUsesCount
-import org.bspb.smartbirds.pro.room.SmartBirdsRoomDatabase
+import org.bspb.smartbirds.pro.room.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.tools.AlphanumComparator
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
@@ -59,7 +59,7 @@ class NomenclaturesManager private constructor(val context: Context) {
     private val data = mutableMapOf<String, MutableList<Nomenclature>>()
     private val locale = context.getString(R.string.locale)
     private var loading = false
-    private val db = SmartBirdsRoomDatabase.getInstance()
+    private val db = SmartBirdsDatabase.getInstance()
     private val backend: Backend = Backend_.getInstance_(context)
 
     private val comparator: Comparator<in Nomenclature> =
@@ -186,7 +186,7 @@ class NomenclaturesManager private constructor(val context: Context) {
                             nomenclatures.add(it.convertSpeciesToEntity(context))
                         }
                     }
-                    SmartBirdsRoomDatabase.getInstance().nomenclatureDao()
+                    SmartBirdsDatabase.getInstance().nomenclatureDao()
                         .updateNomenclaturesAndClearOld(nomenclatures)
                 }
 
