@@ -3,7 +3,7 @@ package org.bspb.smartbirds.pro.backend.dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.bspb.smartbirds.pro.room.model.ZoneModel;
+import org.bspb.smartbirds.pro.db.model.ZoneModel;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 
 import java.util.List;

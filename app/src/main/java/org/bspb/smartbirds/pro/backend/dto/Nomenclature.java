@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.room.model.NomenclatureModel;
+import org.bspb.smartbirds.pro.db.model.NomenclatureModel;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,7 +1,7 @@
 package org.bspb.smartbirds.pro.repository
 
-import org.bspb.smartbirds.pro.room.SmartBirdsDatabase
-import org.bspb.smartbirds.pro.room.model.Tracking
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
+import org.bspb.smartbirds.pro.db.model.Tracking
 
 class TrackingRepository {
 

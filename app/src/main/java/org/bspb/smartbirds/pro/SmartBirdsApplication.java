@@ -15,7 +15,7 @@ import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.room.SmartBirdsDatabase;
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase;
 import org.bspb.smartbirds.pro.service.DataService_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.utils.MonitoringManager;

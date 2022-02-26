@@ -1,8 +1,8 @@
 package org.bspb.smartbirds.pro.repository
 
 import androidx.lifecycle.LiveData
-import org.bspb.smartbirds.pro.room.SmartBirdsDatabase
-import org.bspb.smartbirds.pro.room.model.ZoneModel
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
+import org.bspb.smartbirds.pro.db.model.ZoneModel
 
 class ZoneRepository {
 

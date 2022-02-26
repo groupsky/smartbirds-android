@@ -2,9 +2,9 @@ package org.bspb.smartbirds.pro.repository
 
 import androidx.lifecycle.LiveData
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.room.model.MonitoringModel
-import org.bspb.smartbirds.pro.room.model.MonitoringWithEntriesCount
-import org.bspb.smartbirds.pro.room.SmartBirdsDatabase
+import org.bspb.smartbirds.pro.db.model.MonitoringModel
+import org.bspb.smartbirds.pro.db.model.MonitoringWithEntriesCount
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
 
 class MonitoringRepository {
 

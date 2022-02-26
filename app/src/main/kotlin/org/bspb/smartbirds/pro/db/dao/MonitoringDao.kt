@@ -1,10 +1,10 @@
-package org.bspb.smartbirds.pro.room.dao
+package org.bspb.smartbirds.pro.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.room.model.MonitoringModel
-import org.bspb.smartbirds.pro.room.model.MonitoringWithEntriesCount
+import org.bspb.smartbirds.pro.db.model.MonitoringModel
+import org.bspb.smartbirds.pro.db.model.MonitoringWithEntriesCount
 
 @Dao
 abstract class MonitoringDao {

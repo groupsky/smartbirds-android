@@ -1,4 +1,4 @@
-package org.bspb.smartbirds.pro.room
+package org.bspb.smartbirds.pro.db
 
 import android.content.Context
 import androidx.room.Database
@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import org.bspb.smartbirds.pro.room.dao.*
-import org.bspb.smartbirds.pro.room.model.*
+import org.bspb.smartbirds.pro.db.dao.*
+import org.bspb.smartbirds.pro.db.model.*
 import org.bspb.smartbirds.pro.utils.debugLog
 
 @Database(

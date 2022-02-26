@@ -1,4 +1,4 @@
-package org.bspb.smartbirds.pro.room.model
+package org.bspb.smartbirds.pro.db.model
 
 import androidx.room.Embedded
 

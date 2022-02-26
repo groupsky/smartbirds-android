@@ -1,11 +1,11 @@
-package org.bspb.smartbirds.pro.room.dao
+package org.bspb.smartbirds.pro.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import org.bspb.smartbirds.pro.room.model.Form
+import org.bspb.smartbirds.pro.db.model.Form
 
 @Dao
 interface FormDao {

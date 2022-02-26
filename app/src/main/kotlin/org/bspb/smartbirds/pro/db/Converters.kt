@@ -1,4 +1,4 @@
-package org.bspb.smartbirds.pro.room
+package org.bspb.smartbirds.pro.db
 
 import androidx.room.TypeConverter
 

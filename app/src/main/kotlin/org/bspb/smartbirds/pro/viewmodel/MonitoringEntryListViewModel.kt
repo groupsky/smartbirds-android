@@ -6,7 +6,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.repository.FormRepository
-import org.bspb.smartbirds.pro.room.model.Form
+import org.bspb.smartbirds.pro.db.model.Form
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 
 class MonitoringEntryListViewModel : ViewModel() {
