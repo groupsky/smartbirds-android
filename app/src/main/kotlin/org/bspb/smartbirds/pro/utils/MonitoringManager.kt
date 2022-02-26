@@ -54,7 +54,7 @@ class MonitoringManager private constructor(val context: Context) {
 
         fun entryFromDb(form: Form): MonitoringEntry {
             val entry = SERIALIZER.fromJson(
-                String(form.data),
+                form.data,
                 MonitoringEntry::class.java
             )
             entry.id = form.id.toLong()
@@ -65,7 +65,7 @@ class MonitoringManager private constructor(val context: Context) {
             dbModel ?: return null
 
             val monitoring = SERIALIZER.fromJson(
-                String(dbModel.data!!),
+                dbModel.data!!,
                 Monitoring::class.java
             )
             monitoring.id = dbModel.id
@@ -193,7 +193,7 @@ class MonitoringManager private constructor(val context: Context) {
             monitoring.id,
             monitoring.code,
             monitoring.status.name,
-            SERIALIZER.toJson(monitoring).toByteArray(StandardCharsets.UTF_8)
+            SERIALIZER.toJson(monitoring)
         )
     }
 
@@ -204,7 +204,7 @@ class MonitoringManager private constructor(val context: Context) {
             entry.type.name,
             entry.data[tagLatitude]!!.toDouble(),
             entry.data[tagLongitude]!!.toDouble(),
-            SERIALIZER.toJson(entry).toByteArray(StandardCharsets.UTF_8)
+            SERIALIZER.toJson(entry)
         )
     }
 

@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import org.bspb.smartbirds.pro.room.dao.*
 import org.bspb.smartbirds.pro.utils.debugLog
+import java.util.concurrent.Executor
 
 @Database(
     entities = [Form::class, MonitoringModel::class, NomenclatureModel::class, NomenclatureUsesCount::class, Tracking::class, ZoneModel::class],
     version = 7
 )
+@TypeConverters(Converters::class)
 abstract class SmartBirdsRoomDatabase : RoomDatabase() {
 
     abstract fun nomenclatureDao(): NomenclatureDao
@@ -77,18 +80,18 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
         private val MIGRATION_6_7 = object : Migration(6, 7) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // create backup tables
-                database.execSQL("CREATE TABLE forms_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT,code TEXT NOT NULL,type TEXT NOT NULL,latitude REAL NOT NULL,longitude REAL NOT NULL,data BLOB NOT NULL)")
-                database.execSQL("CREATE TABLE monitorings_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT,code TEXT NOT NULL UNIQUE,status TEXT NOT NULL,data BLOB NOT NULL)")
-                database.execSQL("CREATE TABLE nomenclature_uses_count_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,label_bg TEXT,label_en TEXT,label_id TEXT,data BLOB,count INTEGER)")
-                database.execSQL("CREATE TABLE nomenclatures_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,label_bg TEXT,label_en TEXT,data BLOB)")
-                database.execSQL("CREATE TABLE zones_backup (_id TEXT PRIMARY KEY,location_id INTEGER,data BLOB)")
+                database.execSQL("CREATE TABLE forms_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,code TEXT NOT NULL,type TEXT NOT NULL,latitude REAL NOT NULL,longitude REAL NOT NULL,data BLOB NOT NULL)")
+                database.execSQL("CREATE TABLE monitorings_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,code TEXT NOT NULL UNIQUE,status TEXT NOT NULL,data BLOB NOT NULL)")
+                database.execSQL("CREATE TABLE nomenclature_uses_count_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,type TEXT,label_id TEXT,data BLOB,count INTEGER)")
+                database.execSQL("CREATE TABLE nomenclatures_backup (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,type TEXT,data BLOB)")
+                database.execSQL("CREATE TABLE zones_backup (_id TEXT PRIMARY KEY NOT NULL,location_id INTEGER,data BLOB)")
 
                 // Move data to backup tables
-                database.execSQL("INSERT INTO forms_backup SELECT * FROM forms")
-                database.execSQL("INSERT INTO monitorings_backup SELECT * FROM monitorings")
-                database.execSQL("INSERT INTO nomenclature_uses_count_backup SELECT * FROM nomenclature_uses_count")
-                database.execSQL("INSERT INTO nomenclatures_backup SELECT * FROM nomenclatures")
-                database.execSQL("INSERT INTO zones_backup SELECT * FROM zones")
+                database.execSQL("INSERT INTO forms_backup (_id, code, type, latitude, longitude, data) SELECT _id, code, type, latitude, longitude, data FROM forms")
+                database.execSQL("INSERT INTO monitorings_backup (_id, code, status, data) SELECT _id, code, status, data FROM monitorings")
+                database.execSQL("INSERT INTO nomenclature_uses_count_backup (_id, type, label_id, data, count) SELECT _id, type, label_id, data, count FROM nomenclature_uses_count")
+                database.execSQL("INSERT INTO nomenclatures_backup (_id, type, data) SELECT _id,type,data FROM nomenclatures")
+                database.execSQL("INSERT INTO zones_backup (_id, location_id, data) SELECT _id, location_id, data FROM zones")
 
                 // DROP original tables
                 database.execSQL("DROP TABLE forms")
@@ -100,26 +103,14 @@ abstract class SmartBirdsRoomDatabase : RoomDatabase() {
                 database.execSQL("DROP TABLE zones")
 
                 // CREATE new tables to match the models
-                database.execSQL("CREATE TABLE forms (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,code TEXT NOT NULL,type TEXT NOT NULL,latitude REAL NOT NULL,longitude REAL NOT NULL,data BLOB NOT NULL)")
-                database.execSQL("CREATE TABLE monitorings (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,code TEXT NOT NULL UNIQUE,status TEXT NOT NULL,data BLOB NOT NULL)")
-                database.execSQL("CREATE TABLE nomenclature_uses_count (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,type TEXT,label_id TEXT,data BLOB,count INTEGER)")
-                database.execSQL("CREATE TABLE nomenclatures (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,type TEXT,data BLOB)")
                 database.execSQL("CREATE TABLE tracking (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,code TEXT,time INTEGER,latitude REAL,longitude REAL,altitude REAL)")
-                database.execSQL("CREATE TABLE zones (_id TEXT PRIMARY KEY NOT NULL,location_id INTEGER,data BLOB)")
 
-                // Move data back to original tables
-                database.execSQL("INSERT INTO forms SELECT * FROM forms_backup")
-                database.execSQL("INSERT INTO monitorings SELECT * FROM monitorings_backup")
-                database.execSQL("INSERT INTO nomenclature_uses_count SELECT _id,type,label_id,count,data FROM nomenclature_uses_count_backup")
-                database.execSQL("INSERT INTO nomenclatures SELECT _id,type,data FROM nomenclatures_backup")
-                database.execSQL("INSERT INTO zones SELECT * FROM zones_backup")
-
-                // Drop backup tables
-                database.execSQL("DROP TABLE forms_backup")
-                database.execSQL("DROP TABLE monitorings_backup")
-                database.execSQL("DROP TABLE nomenclature_uses_count_backup")
-                database.execSQL("DROP TABLE nomenclatures_backup")
-                database.execSQL("DROP TABLE zones_backup")
+                // Rename backup tables
+                database.execSQL("ALTER TABLE forms_backup RENAME TO forms")
+                database.execSQL("ALTER TABLE monitorings_backup RENAME TO monitorings")
+                database.execSQL("ALTER TABLE nomenclature_uses_count_backup RENAME TO nomenclature_uses_count")
+                database.execSQL("ALTER TABLE nomenclatures_backup RENAME TO nomenclatures")
+                database.execSQL("ALTER TABLE zones_backup RENAME TO zones")
             }
         }
 

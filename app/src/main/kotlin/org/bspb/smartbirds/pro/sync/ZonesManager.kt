@@ -39,7 +39,7 @@ open class ZonesManager {
                         ZoneModel(
                             zone.id,
                             zone.locationId.toInt(),
-                            SBGsonParser.createParser().toJson(zone).toByteArray(Charsets.UTF_8)
+                            SBGsonParser.createParser().toJson(zone)
                         )
                     )
                 }

@@ -85,11 +85,11 @@ public class Nomenclature {
     }
 
     public NomenclatureModel convertToEntity() {
-        return new NomenclatureModel(0, type, SBGsonParser.createParser().toJson(this).getBytes(StandardCharsets.UTF_8));
+        return new NomenclatureModel(0, type, SBGsonParser.createParser().toJson(this));
     }
 
     public NomenclatureModel convertSpeciesToEntity(Context context) {
         Nomenclature nomenclature = Nomenclature.fromSpecies(this, context.getString(R.string.locale));
-        return new NomenclatureModel(0, nomenclature.type, SBGsonParser.createParser().toJson(nomenclature).getBytes(StandardCharsets.UTF_8));
+        return new NomenclatureModel(0, nomenclature.type, SBGsonParser.createParser().toJson(nomenclature));
     }
 }

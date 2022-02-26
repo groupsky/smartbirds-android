@@ -84,7 +84,7 @@ class NomenclaturesManager private constructor(val context: Context) {
                     } else {
                         list = data[nomenclature.type]
                     }
-                    list!!.add(Nomenclature.fromData(String(nomenclatureData), locale))
+                    list!!.add(Nomenclature.fromData(nomenclatureData, locale))
                 }
             }
 
@@ -124,7 +124,7 @@ class NomenclaturesManager private constructor(val context: Context) {
             var idx: Int
             dbNomenclatures.forEach { nomenclature ->
                 nomenclature.data?.let { data ->
-                    val temp = Nomenclature.fromData(String(data), locale)
+                    val temp = Nomenclature.fromData(data, locale)
                     idx = Collections.binarySearch(nomenclatures, temp, comparator)
                     if (idx >= 0) {
                         recentItems.add(nomenclatures[idx])
@@ -145,7 +145,7 @@ class NomenclaturesManager private constructor(val context: Context) {
                     nomenclature.type,
                     nomenclature.label.labelId,
                     1,
-                    SBGsonParser.createParser().toJson(nomenclature).toByteArray(Charsets.UTF_8)
+                    SBGsonParser.createParser().toJson(nomenclature)
                 )
                 db.nomenclatureUsesCountDao().insert(recentNomenclature)
             } else {
