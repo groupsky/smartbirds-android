@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import org.bspb.smartbirds.pro.db.model.Form
+import org.jetbrains.annotations.TestOnly
 
 @Dao
 interface FormDao {
@@ -33,5 +34,9 @@ interface FormDao {
 
     @Query("SELECT * FROM forms WHERE code = :code")
     fun findAllByMonitoringCode(code: String): LiveData<List<Form>>
+
+    @TestOnly
+    @Query("SELECT * FROM forms")
+    fun findAll(): List<Form>
 
 }

@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.tools.rule
 
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
-import org.bspb.smartbirds.pro.db.generated.SmartBirdsDatabase
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -23,11 +23,10 @@ class FixturesRule : TestRule {
                 val fixturesSql: String = BufferedReader(InputStreamReader(inStream))
                     .lines().collect(Collectors.joining("\n"))
 
-                var db =
-                    SmartBirdsDatabase.getInstance(ApplicationProvider.getApplicationContext()).writableDatabase
-
-                fixturesSql?.split(";")?.forEach {
-                    db.execSQL(it)
+                SmartBirdsDatabase.init(ApplicationProvider.getApplicationContext())
+                var db = SmartBirdsDatabase.getInstance()
+                fixturesSql.split(";").forEach {
+                    db.openHelper.writableDatabase.execSQL(it)
                 }
                 base?.evaluate()
             }
