@@ -1,5 +1,8 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import static android.text.TextUtils.isEmpty;
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
@@ -11,9 +14,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-
-import androidx.core.content.FileProvider;
-
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
@@ -46,9 +48,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import static android.text.TextUtils.isEmpty;
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 /**
  * Created by groupsky on 27.01.17.
