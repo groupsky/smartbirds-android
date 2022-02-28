@@ -74,4 +74,7 @@ public interface SmartBirdsApi {
 
     @GET
     Call<DownloadsResponse> getDownloads(@Url String url);
+
+    @POST("pylons")
+    Call<UploadFormResponse> createPylons(@Body JsonObject request);
 }

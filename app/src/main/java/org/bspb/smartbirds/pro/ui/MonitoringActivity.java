@@ -597,7 +597,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             R.id.action_form_type_mammal,
             R.id.action_form_type_invertebrates,
             R.id.action_form_type_plants,
-            R.id.action_form_type_threats
+            R.id.action_form_type_threats,
+            R.id.action_form_type_pylons
     })
     void setFormType(MenuItem sender) {
         final int senderId = sender.getItemId();

@@ -20,6 +20,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="entry_type_mammal">"Mammals"</string>
     <string name="entry_type_humid">"Wetlands zones"</string>
     <string name="entry_type_invertebrates">"Protected invertebrates"</string>
+    <string name="entry_type_pylons">"Pylons"</string>
     <string name="required_field">"Required field"</string>
     <string name="monitoring_notification_title">"Monitoring"</string>
     <string name="monitoring_notification_content">"Monitoring started"</string>
@@ -373,4 +374,10 @@ Do you really want to cancel the monitoring?"</string>
     <string name="quick_choice_button_empty">"---"</string>
     <string name="nomenclatures_not_ready_title">"Warning"</string>
     <string name="nomenclatures_not_ready_message">"Nomenclatures are not loaded. Please try again later."</string>
+    <string name="monitoring_pylons_pylon_type">Pylon type</string>
+    <string name="monitoring_pylons_species_nest_on_pylon">Species nest on pylon</string>
+    <string name="monitoring_pylons_nest_type">Nest type</string>
+    <string name="monitoring_pylons_pylon_insulated">Pylon insulated</string>
+    <string name="monitoring_pylons_primary_habitat">Primary habitat 100m</string>
+    <string name="monitoring_pylons_secondary_habitat">Secondary habitat 100m</string>
 </resources>

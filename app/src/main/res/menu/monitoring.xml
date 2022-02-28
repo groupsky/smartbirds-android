@@ -120,6 +120,11 @@
                     android:title="@string/entry_type_threats"
                     android:visible="false" />
 
+                <item
+                    android:id="@+id/action_form_type_pylons"
+                    android:title="@string/entry_type_pylons"
+                    android:visible="false" />
+
             </group>
         </menu>
     </item>

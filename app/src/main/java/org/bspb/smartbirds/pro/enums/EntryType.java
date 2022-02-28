@@ -18,6 +18,7 @@ import org.bspb.smartbirds.pro.forms.convert.HerptileConverter;
 import org.bspb.smartbirds.pro.forms.convert.InvertebratesConverter;
 import org.bspb.smartbirds.pro.forms.convert.MammalConverter;
 import org.bspb.smartbirds.pro.forms.convert.PlantsConverter;
+import org.bspb.smartbirds.pro.forms.convert.PylonsConverter;
 import org.bspb.smartbirds.pro.forms.convert.ThreatsConverter;
 import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
 import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
@@ -26,6 +27,7 @@ import org.bspb.smartbirds.pro.forms.upload.HerptileUploader;
 import org.bspb.smartbirds.pro.forms.upload.InvertebratesUploader;
 import org.bspb.smartbirds.pro.forms.upload.MammalUploader;
 import org.bspb.smartbirds.pro.forms.upload.PlantsUploader;
+import org.bspb.smartbirds.pro.forms.upload.PylonsUploader;
 import org.bspb.smartbirds.pro.forms.upload.ThreatsUploader;
 import org.bspb.smartbirds.pro.forms.upload.Uploader;
 import org.bspb.smartbirds.pro.ui.fragment.BaseEntryFragment;
@@ -37,6 +39,7 @@ import org.bspb.smartbirds.pro.ui.fragment.NewHumidBirdsEntryFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewInvertebratesEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewMammalEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewPlantsEntryFormFragment;
+import org.bspb.smartbirds.pro.ui.fragment.NewPylonsEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewThreatsEntryFormFragment;
 
 import java.util.ArrayList;
@@ -53,7 +56,8 @@ public enum EntryType {
     MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class, true),
     INVERTEBRATES(new NewInvertebratesEntryFormFragment.Builder(), R.string.entry_type_invertebrates, R.id.action_form_type_invertebrates, "form_invertebrates.csv", InvertebratesConverter.class, InvertebratesUploader.class, true),
     PLANTS(new NewPlantsEntryFormFragment.Builder(), R.string.entry_type_plants, R.id.action_form_type_plants, "form_plants.csv", PlantsConverter.class, PlantsUploader.class, true),
-    THREATS(new NewThreatsEntryFormFragment.Builder(), R.string.entry_type_threats, R.id.action_form_type_threats, "form_threats.csv", ThreatsConverter.class, ThreatsUploader.class, true)
+    THREATS(new NewThreatsEntryFormFragment.Builder(), R.string.entry_type_threats, R.id.action_form_type_threats, "form_threats.csv", ThreatsConverter.class, ThreatsUploader.class, true),
+    PYLONS(new NewPylonsEntryFormFragment.Builder(), R.string.entry_type_pylons, R.id.action_form_type_pylons, "form_pylons.csv", PylonsConverter.class, PylonsUploader.class, true),
     // prevent auto-formatting
     ;
 
@@ -66,7 +70,8 @@ public enum EntryType {
             R.id.action_form_type_mammal,
             R.id.action_form_type_invertebrates,
             R.id.action_form_type_plants,
-            R.id.action_form_type_threats
+            R.id.action_form_type_threats,
+            R.id.action_form_type_pylons,
     };
 
     private final BaseEntryFragment.Builder builder;
