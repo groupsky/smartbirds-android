@@ -135,6 +135,17 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
+                    android:id="@+id/form_pylons_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="10"
+                    android:hint="@string/monitoring_pylons_notes"
+                    android:tag="@string/tag_remarks_type" />
+            </TableRow>
+
         </TableLayout>
 
         <fragment

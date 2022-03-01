@@ -380,4 +380,5 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_pylons_pylon_insulated">Pylon insulated</string>
     <string name="monitoring_pylons_primary_habitat">Primary habitat 100m</string>
     <string name="monitoring_pylons_secondary_habitat">Secondary habitat 100m</string>
+    <string name="monitoring_pylons_notes">Notes</string>
 </resources>

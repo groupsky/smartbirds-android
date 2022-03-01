@@ -7,7 +7,6 @@ class PylonsConverter(context: Context?) : Converter(context) {
 
     init {
 
-        // birds
         addSingle(R.string.tag_pylons_pylon_type, "pylonType")
         addSpecies(R.string.tag_pylons_species_nest_on_pylon, "speciesNestOnPylon")
         addSingle(R.string.tag_pylons_nest_type, "typeNest")
@@ -16,6 +15,7 @@ class PylonsConverter(context: Context?) : Converter(context) {
         addSingle(R.string.tag_pylons_secondary_habitat, "habitat100mSecond")
         addBool(R.string.tag_confidential, "confidential")
         addBool(R.string.tag_moderator_review, "moderatorReview")
+        add(R.string.tag_remarks_type, "speciesNotes")
 
     }
 }
