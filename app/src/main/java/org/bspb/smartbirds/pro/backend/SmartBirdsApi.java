@@ -77,4 +77,7 @@ public interface SmartBirdsApi {
 
     @POST("pylons")
     Call<UploadFormResponse> createPylons(@Body JsonObject request);
+
+    @POST("pylons-casualties")
+    Call<UploadFormResponse> createPylonsCasualties(@Body JsonObject request);
 }

@@ -45,6 +45,7 @@
         <item>@string/entry_type_plants</item>
         <item>@string/entry_type_threats</item>
         <item>@string/entry_type_pylons</item>
+        <item>@string/entry_type_pylons_casualties</item>
     </array>
 
     <array name="monitoring_form_values">
@@ -58,6 +59,7 @@
         <item>PLANTS</item>
         <item>THREATS</item>
         <item>PYLONS</item>
+        <item>PYLONS_CASUALTIES</item>
     </array>
 
 </resources>

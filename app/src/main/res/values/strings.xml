@@ -21,6 +21,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="entry_type_humid">"Wetlands zones"</string>
     <string name="entry_type_invertebrates">"Protected invertebrates"</string>
     <string name="entry_type_pylons">"Pylons"</string>
+    <string name="entry_type_pylons_casualties">"Pylons casualties"</string>
     <string name="required_field">"Required field"</string>
     <string name="monitoring_notification_title">"Monitoring"</string>
     <string name="monitoring_notification_content">"Monitoring started"</string>
@@ -381,4 +382,13 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_pylons_primary_habitat">Primary habitat 100m</string>
     <string name="monitoring_pylons_secondary_habitat">Secondary habitat 100m</string>
     <string name="monitoring_pylons_notes">Notes</string>
+    <string name="monitoring_pylons_casualties_name">Observed bird</string>
+    <string name="monitoring_pylons_casualties_age">Age</string>
+    <string name="monitoring_pylons_casualties_gender">Sex</string>
+    <string name="monitoring_pylons_casualties_cause_of_death">Cause of death</string>
+    <string name="monitoring_pylons_casualties_body_condition">Body condition</string>
+    <string name="monitoring_pylons_casualties_primary_habitat">Primary habitat 100m</string>
+    <string name="monitoring_pylons_casualties_secondary_habitat">Secondary habitat 100m</string>
+    <string name="monitoring_pylons_casualties_notes">Notes</string>
+    <string name="monitoring_pylons_casualties_private">Confidential</string>
 </resources>

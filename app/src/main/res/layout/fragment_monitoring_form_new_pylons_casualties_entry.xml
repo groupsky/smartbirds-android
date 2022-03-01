@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/form_horizontal_spacing"
+            android:paddingTop="@dimen/form_vertical_spacing"
+            android:paddingRight="@dimen/form_horizontal_spacing"
+            android:paddingBottom="@dimen/form_vertical_spacing">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <fragment
+                    android:id="@+id/moderator_review_fragment"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:layout="@layout/fragment_moderator_review" />
+
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_pylons_casualties_confidential"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:tag="@string/tag_confidential"
+                    android:text="@string/monitoring_pylons_casualties_private" />
+
+            </LinearLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_pylons_casualties_species"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_name"
+                    android:tag="@string/tag_species_scientific_name"
+                    app:entriesType="species_birds"
+                    app:required="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
+                    android:id="@+id/form_pylons_casualties_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_birds_count"
+                    android:tag="@string/tag_count"
+                    android:text="1"
+                    app:required="true"
+                    tools:ignore="HardcodedText" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_pylons_casualties_cause_of_death"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_cause_of_death"
+                    android:tag="@string/tag_casualties_cause_of_death"
+                    app:entriesType="form_pylons_cause_of_death" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_pylons_casualties_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_age"
+                    android:tag="@string/tag_age"
+                    app:entriesType="form_birds_age" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_pylons_casualties_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_gender"
+                    android:tag="@string/tag_sex"
+                    app:entriesType="form_birds_sex" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_pylons_casualties_body_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_body_condition"
+                    android:tag="@string/tag_casualties_body_condition"
+                    app:entriesType="form_pylons_body_condition" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_pylons_casualties_primary_habitat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_primary_habitat"
+                    android:tag="@string/tag_casualties_primary_habitat"
+                    app:entriesType="form_pylons_habitat" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    android:id="@+id/form_pylons_casualties_secondary_habitat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_secondary_habitat"
+                    android:tag="@string/tag_casualties_secondary_habitat"
+                    app:entriesType="form_pylons_habitat" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/FieldSeparator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
+                    android:id="@+id/form_pylons_casualties_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_pylons_casualties_notes"
+                    android:tag="@string/tag_remarks_type" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View style="@style/GroupSeparator" />
+
+            <fragment
+                android:id="@+id/pictures_fragment"
+                android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        layout="@layout/submit_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+</LinearLayout>
