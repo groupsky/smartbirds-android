@@ -42,7 +42,7 @@ open class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
     }
 
     override fun getEntryType(): EntryType? {
-        return EntryType.PYLONS
+        return EntryType.PYLONS_CASUALTIES
     }
 
     override fun serialize(entryTime: Date?): HashMap<String, String> {
