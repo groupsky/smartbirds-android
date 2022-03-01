@@ -447,8 +447,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     public void onEvent(MapAttachedEvent event) {
-        mMap = fragment.getMapView();
-        setUpMap();
+        if (fragment != null) {
+            mMap = fragment.getMapView();
+            setUpMap();
+        }
     }
 
     @Override

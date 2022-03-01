@@ -28,7 +28,7 @@
                     tools:layout="@layout/fragment_moderator_review" />
 
                 <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:id="@+id/form_pylons_confidential"
+                    android:id="@+id/form_pylons_casualties_confidential"
                     android:layout_span="3"
                     android:tag="@string/tag_confidential"
                     android:text="@string/monitoring_birds_private" />
@@ -60,7 +60,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="2">
+                    android:layout_span="4">
 
                     <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
                         android:id="@+id/form_pylons_casualties_count"
@@ -77,7 +77,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="4">
+                    android:layout_span="3">
 
                     <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                         android:id="@+id/form_pylons_casualties_age"
@@ -92,7 +92,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="4">
+                    android:layout_span="3">
 
                     <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                         android:id="@+id/form_pylons_casualties_sex"
