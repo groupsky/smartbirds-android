@@ -22,4 +22,12 @@ class MonitoringEntryListAdapter(context: Context) :
         return resultView;
     }
 
+    override fun getItemId(position: Int): Long {
+        return getItem(position)?.id ?: 0
+    }
+
+    override fun hasStableIds(): Boolean {
+        return true
+    }
+
 }
