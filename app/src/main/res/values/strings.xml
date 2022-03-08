@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources>
     <string name="app_name">"SmartBirds Pro"</string>
     <string name="title_activity_start_monitoring">"Begin monitoring"</string>
     <string name="title_activity_monitoring">"Monitoring"</string>
@@ -20,8 +20,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="entry_type_mammal">"Mammals"</string>
     <string name="entry_type_humid">"Wetlands zones"</string>
     <string name="entry_type_invertebrates">"Protected invertebrates"</string>
-    <string name="entry_type_pylons">"Pylons"</string>
-    <string name="entry_type_pylons_casualties">"Pylons casualties"</string>
     <string name="required_field">"Required field"</string>
     <string name="monitoring_notification_title">"Monitoring"</string>
     <string name="monitoring_notification_content">"Monitoring started"</string>
@@ -66,7 +64,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_common_visibility">"Visibility km"</string>
     <string name="monitoring_common_threats">"Threats"</string>
     <string name="monitoring_common_notes">"Remarks"</string>
-    <string name="monitoring_birds_name">"Observed bird"</string>
+    <string name="monitoring_birds_name">"Species"</string>
     <string name="monitoring_birds_private">"Confidential"</string>
     <string name="monitoring_birds_count_unit">"Count unit"</string>
     <string name="monitoring_birds_count_type">"Count type"</string>
@@ -96,7 +94,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_birds_male_age">"Age of the male"</string>
     <string name="monitoring_birds_nest_success">"Breeding success"</string>
     <string name="monitoring_birds_land_use">"Land uses, radius 300 m"</string>
-    <string name="monitoring_cbm_name">"Observed bird"</string>
+    <string name="monitoring_cbm_name">"Species"</string>
     <string name="monitoring_cbm_distance">"Distance"</string>
     <string name="monitoring_cbm_count">"Count"</string>
     <string name="monitoring_ciconia_substratum">"Substrate"</string>
@@ -375,20 +373,22 @@ Do you really want to cancel the monitoring?"</string>
     <string name="quick_choice_button_empty">"---"</string>
     <string name="nomenclatures_not_ready_title">"Warning"</string>
     <string name="nomenclatures_not_ready_message">"Nomenclatures are not loaded. Please try again later."</string>
-    <string name="monitoring_pylons_pylon_type">Pylon type</string>
-    <string name="monitoring_pylons_species_nest_on_pylon">Species nest on pylon</string>
-    <string name="monitoring_pylons_nest_type">Nest type</string>
-    <string name="monitoring_pylons_pylon_insulated">Pylon insulated</string>
-    <string name="monitoring_pylons_primary_habitat">Primary habitat 100m</string>
-    <string name="monitoring_pylons_secondary_habitat">Secondary habitat 100m</string>
-    <string name="monitoring_pylons_notes">Notes</string>
-    <string name="monitoring_pylons_casualties_name">Observed bird</string>
-    <string name="monitoring_pylons_casualties_age">Age</string>
-    <string name="monitoring_pylons_casualties_gender">Sex</string>
-    <string name="monitoring_pylons_casualties_cause_of_death">Cause of death</string>
-    <string name="monitoring_pylons_casualties_body_condition">Body condition</string>
-    <string name="monitoring_pylons_casualties_primary_habitat">Primary habitat 100m</string>
-    <string name="monitoring_pylons_casualties_secondary_habitat">Secondary habitat 100m</string>
-    <string name="monitoring_pylons_casualties_notes">Notes</string>
-    <string name="monitoring_pylons_casualties_private">Confidential</string>
+    <string name="entry_type_pylons">"Powerlines’ study"</string>
+    <string name="entry_type_pylons_casualties">"Powerlines’ casualties"</string>
+    <string name="monitoring_pylons_pylon_type">"Pylon type"</string>
+    <string name="monitoring_pylons_species_nest_on_pylon">"Species nest on pylon"</string>
+    <string name="monitoring_pylons_nest_type">"Nest type"</string>
+    <string name="monitoring_pylons_pylon_insulated">"Pylon is insulated"</string>
+    <string name="monitoring_pylons_primary_habitat">"Primary habitat 100m"</string>
+    <string name="monitoring_pylons_secondary_habitat">"Secondary habitat 100m"</string>
+    <string name="monitoring_pylons_notes">"Notes"</string>
+    <string name="monitoring_pylons_casualties_name">"Species"</string>
+    <string name="monitoring_pylons_casualties_age">"Age"</string>
+    <string name="monitoring_pylons_casualties_gender">"Sex"</string>
+    <string name="monitoring_pylons_casualties_cause_of_death">"Cause of death"</string>
+    <string name="monitoring_pylons_casualties_body_condition">"Body condition"</string>
+    <string name="monitoring_pylons_casualties_primary_habitat">"Primary habitat 100m"</string>
+    <string name="monitoring_pylons_casualties_secondary_habitat">"Secondary habitat 100m"</string>
+    <string name="monitoring_pylons_casualties_notes">"Notes"</string>
+    <string name="monitoring_pylons_casualties_private">"Confidential"</string>
 </resources>
