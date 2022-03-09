@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
@@ -14,11 +15,11 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.Backend_
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
-import org.bspb.smartbirds.pro.events.EEventBus_
-import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.db.model.NomenclatureModel
 import org.bspb.smartbirds.pro.db.model.NomenclatureUsesCount
-import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
+import org.bspb.smartbirds.pro.events.EEventBus_
+import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent
 import org.bspb.smartbirds.pro.tools.AlphanumComparator
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
@@ -70,7 +71,8 @@ class NomenclaturesManager private constructor(val context: Context) {
             AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel)
         }
 
-    private fun loadNomenclatures() {
+    @VisibleForTesting
+    fun loadNomenclatures() {
         GlobalScope.launch(Dispatchers.IO) {
             loading = true
             data.clear()

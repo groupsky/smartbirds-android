@@ -3,6 +3,8 @@ package org.bspb.smartbirds.pro.tools.rule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
+import org.bspb.smartbirds.pro.utils.NomenclaturesManager
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -24,10 +26,21 @@ class FixturesRule : TestRule {
                     .lines().collect(Collectors.joining("\n"))
 
                 SmartBirdsDatabase.init(ApplicationProvider.getApplicationContext())
-                var db = SmartBirdsDatabase.getInstance()
+                var db = SmartBirdsDatabase.getInstance().openHelper.writableDatabase
+                db.execSQL(fixturesSql)
                 fixturesSql.split(";").forEach {
-                    db.openHelper.writableDatabase.execSQL(it)
+                    if (it.isEmpty()) {
+                        return@forEach
+                    }
+                    try {
+                        db.execSQL(it)
+                    } catch (t: Throwable) {
+                        t.printStackTrace()
+                        debugLog("Error ${t.message}")
+                    }
+
                 }
+                NomenclaturesManager.getInstance().loadNomenclatures()
                 base?.evaluate()
             }
         }
