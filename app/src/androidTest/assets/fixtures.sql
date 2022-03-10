@@ -843,3 +843,4 @@ INSERT INTO "nomenclatures" VALUES (1056,'species_plants','{"label":{"la":"Belle
 INSERT INTO "nomenclatures" VALUES (1057,'species_plants','{"label":{"la":"Calystegia soldanella*","bg":"Дребно чадърче"},"type":"species_plants"}');
 INSERT INTO "nomenclatures" VALUES (1058,'species_plants','{"label":{"la":"Caragana frutex subsp. mollis*","bg":"Карагана"},"type":"species_plants"}');
 INSERT INTO "nomenclatures" VALUES (1059,'species_plants','{"label":{"la":"Cicerbita pancicii*","bg":"Панчичева цицербита"},"type":"species_plants"}');
+INSERT INTO "nomenclatures" VALUES (1060,'species_plants','{"label":{"la":"Achillea lingulata","bg":"Езичестолистен равнец"},"type":"species_plants"}');

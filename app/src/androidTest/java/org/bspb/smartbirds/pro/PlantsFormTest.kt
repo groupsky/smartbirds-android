@@ -41,7 +41,7 @@ class PlantsFormTest {
         .setThreats(listOf("Fires", "Hunting"))
         .setElevation("350")
         .setNotes("some notes")
-        .setAccompanyingSpecies(listOf("Aegilops comosa", "Agrostis canina"))
+        .setAccompanyingSpecies(listOf("Artemisia eriantha*", "Asplenium cuneifolium*"))
         .build()
 
     @Test
