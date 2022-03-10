@@ -821,10 +821,11 @@ INSERT INTO "nomenclatures" VALUES (819,'species_birds','{"label":{"la":"Clamato
 INSERT INTO "nomenclatures" VALUES (820,'species_birds','{"label":{"la":"Corvus corax","bg":"Гарван гробар","en":"Raven"},"type":"species_birds"}');
 INSERT INTO "nomenclatures" VALUES (821,'species_birds','{"label":{"la":"Accipiter gentilis","bg":"Голям ястреб","en":"Goshawk","sq":"Gjeraqina"},"type":"species_birds"}');
 INSERT INTO "nomenclatures" VALUES (822,'species_birds','{"label":{"la":"Accipiter nisus","bg":"Малък ястреб","en":"Eurasian Sparrowhawk","sq":"Gjeraqina e shkurtës"},"type":"species_birds"}');
-INSERT INTO "nomenclatures" VALUES (930,'species_herp','{"label":{"la":"Eryx jaculus","bg":"Пясъчна (турска) боа","en":"Sand Boa"},"type":"species_herp"}');
-INSERT INTO "nomenclatures" VALUES (950,'species_herp','{"label":{"la":"Ablepharus kitaibelii","bg":"Късокрак гущер","en":"European Copper Skink"},"type":"species_herp"}');
-INSERT INTO "nomenclatures" VALUES (951,'species_herp','{"label":{"la":"Pelobates syriacus","bg":"Сирийска (балканска) чесновница","en":"Eastern Spadefoot"},"type":"species_herp"}');
-INSERT INTO "nomenclatures" VALUES (952,'species_herp','{"label":{"la":"Lacerta agilis bosnica","bg":"Ливаден гущер","en":"Sand Lizard"},"type":"species_herp"}');
+INSERT INTO "nomenclatures" VALUES (930,'species_herptiles','{"label":{"la":"Salamandra salamandra","bg":"Дъждовник","en":"Fire Salamander"},"type":"species_herptiles"}');
+INSERT INTO "nomenclatures" VALUES (931,'species_herptiles','{"label":{"la":"Lacerta viridis","bg":"Зелен гущер","en":"Green Lizard"},"type":"species_herptiles"}');
+INSERT INTO "nomenclatures" VALUES (932,'species_herptiles','{"label":{"la":"Hyla arborea","bg":"Жаба дървесница","en":"European Tree Frog"},"type":"species_herptiles"}');
+INSERT INTO "nomenclatures" VALUES (933,'species_herptiles','{"label":{"la":"Vipera ursinii","bg":"Остромуцунеста усойница","en":"Meadow Viper"},"type":"species_herptiles"}');
+INSERT INTO "nomenclatures" VALUES (934,'species_herptiles','{"label":{"la":"Anguis colchica","bg":"Източен слепок","en":"Slow Worm"},"type":"species_herptiles"}');
 INSERT INTO "nomenclatures" VALUES (975,'species_mammals','{"label":{"la":"Cricetulus migratоrius","bg":"Сиво хомяче","en":"Grey Hamster"},"type":"species_mammals"}');
 INSERT INTO "nomenclatures" VALUES (977,'species_mammals','{"label":{"la":"Vulpes vulpes","bg":"Лисица","en":"Red Fox"},"type":"species_mammals"}');
 INSERT INTO "nomenclatures" VALUES (978,'species_mammals','{"label":{"la":"Microtus levis","bg":"Източноевропейска полевка","en":"Sibling Vole"},"type":"species_mammals"}');
