@@ -819,6 +819,8 @@ INSERT INTO "nomenclatures" VALUES (817,'species_birds','{"label":{"la":"Charadr
 INSERT INTO "nomenclatures" VALUES (818,'species_birds','{"label":{"la":"Chettusia leucura","bg":"Белоопашата калугерица","en":"White-tailed Lapwing"},"type":"species_birds"}');
 INSERT INTO "nomenclatures" VALUES (819,'species_birds','{"label":{"la":"Clamator glandarius","bg":"Качулата кукувица","en":"Spotted Cuckoo"},"type":"species_birds"}');
 INSERT INTO "nomenclatures" VALUES (820,'species_birds','{"label":{"la":"Corvus corax","bg":"Гарван гробар","en":"Raven"},"type":"species_birds"}');
+INSERT INTO "nomenclatures" VALUES (821,'species_birds','{"label":{"la":"Accipiter gentilis","bg":"Голям ястреб","en":"Goshawk","sq":"Gjeraqina"},"type":"species_birds"}');
+INSERT INTO "nomenclatures" VALUES (822,'species_birds','{"label":{"la":"Accipiter nisus","bg":"Малък ястреб","en":"Eurasian Sparrowhawk","sq":"Gjeraqina e shkurtës"},"type":"species_birds"}');
 INSERT INTO "nomenclatures" VALUES (930,'species_herp','{"label":{"la":"Eryx jaculus","bg":"Пясъчна (турска) боа","en":"Sand Boa"},"type":"species_herp"}');
 INSERT INTO "nomenclatures" VALUES (950,'species_herp','{"label":{"la":"Ablepharus kitaibelii","bg":"Късокрак гущер","en":"European Copper Skink"},"type":"species_herp"}');
 INSERT INTO "nomenclatures" VALUES (951,'species_herp','{"label":{"la":"Pelobates syriacus","bg":"Сирийска (балканска) чесновница","en":"Eastern Spadefoot"},"type":"species_herp"}');
