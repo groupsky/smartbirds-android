@@ -39,6 +39,9 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
     @StringRes(R.string.monitoring_threats_poisoned)
     protected String poisonedString;
 
+    @StringRes(R.string.tag_pylons_pylon_type)
+    protected String tagPylonType;
+
     @Override
     public EntryMapMarker convert(MonitoringEntry item) {
         double lat = Double.valueOf(item.data.get(tagLatitude));
@@ -55,6 +58,8 @@ public class EntriesToMapMarkersConverter implements Converter<MonitoringEntry, 
                 name = poisonedString;
             }
 
+        } else if (EntryType.PYLONS.equals(item.type)) {
+            name = item.data.get(tagPylonType);
         } else {
             if (item.data.containsKey(tagSpecies1)) {
                 name = item.data.get(tagSpecies1);
