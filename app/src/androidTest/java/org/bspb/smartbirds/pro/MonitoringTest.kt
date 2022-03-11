@@ -15,10 +15,7 @@ import org.bspb.smartbirds.pro.tools.robot.CommonFormTestRobot.Companion.commonF
 import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
-import org.bspb.smartbirds.pro.tools.rule.CompositeRules
-import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
-import org.bspb.smartbirds.pro.tools.rule.MockLocationRule
-import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
+import org.bspb.smartbirds.pro.tools.rule.*
 import org.bspb.smartbirds.pro.ui.MainActivity_
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
@@ -30,6 +27,12 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MonitoringTest {
+
+
+    // Must be applied before all other rules
+    @Rule(order = -2)
+    @JvmField
+    val fixturesRule = FixturesRule()
 
     // Must be applied after all other rules
     @Rule(order = 1)

@@ -8,8 +8,7 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException
 import org.bspb.smartbirds.pro.ui.utils.Configuration
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean_
+import org.bspb.smartbirds.pro.utils.NomenclaturesManager
 import org.bspb.smartbirds.pro.utils.inflate
 
 class SingleChoiceRadioFormInput : FrameLayout, SupportRequiredView, SupportStorage {
@@ -27,7 +26,7 @@ class SingleChoiceRadioFormInput : FrameLayout, SupportRequiredView, SupportStor
 
     private var mSelectedItem: NomenclatureItem? = null
 
-    private var nomenclatures: NomenclaturesBean = NomenclaturesBean_.getInstance_(context)
+    private var nomenclatures = NomenclaturesManager.getInstance()
 
     constructor(context: Context) : this(context, null)
 

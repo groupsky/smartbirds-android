@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
@@ -73,7 +74,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.form_threats_state_carcass_hint)
     TextInputLayout stateCarcassHint;
 
-    @FragmentById(R.id.pictures_fragment)
+    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
     @Pref
@@ -106,17 +107,27 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
+        // In some cases picturesFragment is still null. Try to find it by id
+        if (picturesFragment == null) {
+            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
+        }
         if (picturesFragment != null) {
             picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
 
-    @AfterViews
-    protected void flushDeserialize() {
-        initViews();
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+
+    @AfterViews
+    protected void flushDeserialize() {
+        initViews();
     }
 
     private void initViews() {

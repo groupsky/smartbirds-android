@@ -8,7 +8,6 @@ import androidx.preference.PreferenceFragmentCompat
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.tools.DBExporter
 import org.bspb.smartbirds.pro.ui.map.MapProvider
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -25,17 +24,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
         enabledFormsPreference = findPreference("formsEnabled")
         exportPreference = findPreference("exportDB")
 
-        providerPreference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener() { _: Preference, newValue: Any ->
-            updateMapType(MapProvider.ProviderType.valueOf(newValue as String))
-            true
-        }
-        enabledFormsPreference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener() { _: Preference, newValue: Any ->
-            if (newValue is Set<*> && newValue.isEmpty()) {
-                context?.showAlert(R.string.settings_enabled_forms_alert_title, R.string.settings_enabled_forms_alert_message, null, null)
-                return@OnPreferenceChangeListener false
+        providerPreference?.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener() { _: Preference, newValue: Any ->
+                updateMapType(MapProvider.ProviderType.valueOf(newValue as String))
+                true
             }
-            true
-        }
+        enabledFormsPreference?.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener() { _: Preference, newValue: Any ->
+                if (newValue is Set<*> && newValue.isEmpty()) {
+                    context?.showAlert(
+                        R.string.settings_enabled_forms_alert_title,
+                        R.string.settings_enabled_forms_alert_message,
+                        null,
+                        null
+                    )
+                    return@OnPreferenceChangeListener false
+                }
+                true
+            }
         exportPreference?.onPreferenceClickListener = Preference.OnPreferenceClickListener { _: Preference ->
             context?.let { DBExporter.exportDB(it) }
             return@OnPreferenceClickListener true

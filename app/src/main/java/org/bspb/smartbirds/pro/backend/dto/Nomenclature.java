@@ -1,20 +1,16 @@
 package org.bspb.smartbirds.pro.backend.dto;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.text.TextUtils;
+import android.content.Context;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.db.model.NomenclatureModel;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
-
-import static org.bspb.smartbirds.pro.db.NomenclatureColumns.DATA;
-import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_BG;
-import static org.bspb.smartbirds.pro.db.NomenclatureColumns.LABEL_EN;
-import static org.bspb.smartbirds.pro.db.NomenclatureColumns.TYPE;
+import java.util.Objects;
 
 /**
  * Created by groupsky on 27.09.16.
@@ -45,8 +41,8 @@ public class Nomenclature {
 
         Nomenclature that = (Nomenclature) o;
 
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
-        return label != null ? label.equals(that.label) : that.label == null;
+        if (!Objects.equals(type, that.type)) return false;
+        return Objects.equals(label, that.label);
 
     }
 
@@ -67,26 +63,6 @@ public class Nomenclature {
         return sb.toString();
     }
 
-    public static Nomenclature fromCursor(Cursor cursor, String locale) {
-        String data = cursor.getString(cursor.getColumnIndexOrThrow(DATA));
-        Nomenclature nomenclature;
-        if (TextUtils.isEmpty(data)) {
-            nomenclature = new Nomenclature();
-            nomenclature.type = cursor.getString(cursor.getColumnIndexOrThrow(TYPE));
-            Label label = new Label();
-            label.addValue("bg", cursor.getString(cursor.getColumnIndexOrThrow(LABEL_BG)));
-            label.addValue("en", cursor.getString(cursor.getColumnIndexOrThrow(LABEL_EN)));
-            nomenclature.label = label;
-        } else {
-            nomenclature = SBGsonParser.createParser().fromJson(data, Nomenclature.class);
-        }
-        if (nomenclature.type.startsWith("species_")) {
-            nomenclature.label = new SpeciesLabel(nomenclature.label);
-        }
-        nomenclature.localeLabel = nomenclature.label.get(locale);
-        return nomenclature;
-    }
-
     public static Nomenclature fromSpecies(Nomenclature species, String locale) {
         Nomenclature nomenclature = new Nomenclature();
         nomenclature.type = "species_" + species.type;
@@ -95,10 +71,22 @@ public class Nomenclature {
         return nomenclature;
     }
 
-    public ContentValues toCV() {
-        ContentValues cv = new ContentValues();
-        cv.put(TYPE, type);
-        cv.put(DATA, SBGsonParser.createParser().toJson(this));
-        return cv;
+    @NotNull
+    public static Nomenclature fromData(@NotNull String data, String locale) {
+        Nomenclature nomenclature = SBGsonParser.createParser().fromJson(data, Nomenclature.class);
+        if (nomenclature.type.startsWith("species_")) {
+            nomenclature.label = new SpeciesLabel(nomenclature.label);
+        }
+        nomenclature.localeLabel = nomenclature.label.get(locale);
+        return nomenclature;
+    }
+
+    public NomenclatureModel convertToEntity() {
+        return new NomenclatureModel(0, type, SBGsonParser.createParser().toJson(this));
+    }
+
+    public NomenclatureModel convertSpeciesToEntity(Context context) {
+        Nomenclature nomenclature = Nomenclature.fromSpecies(this, context.getString(R.string.locale));
+        return new NomenclatureModel(0, nomenclature.type, SBGsonParser.createParser().toJson(nomenclature));
     }
 }

@@ -3,6 +3,8 @@ package org.bspb.smartbirds.pro.ui.fragment;
 import androidx.fragment.app.Fragment;
 
 import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -22,7 +24,7 @@ import java.util.HashMap;
 
 public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
 
-    @FragmentById(R.id.pictures_fragment)
+    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
 
@@ -61,17 +63,23 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
+        // In some cases picturesFragment is still null. Try to find it by id
+        if (picturesFragment == null) {
+            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
+        }
         if (picturesFragment != null) {
             picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
 
-    @AfterViews
-    protected void flushDeserialize() {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        super.onViewCreated(view, savedInstanceState);
     }
+
 
     public static class Builder implements BaseEntryFragment.Builder {
 

@@ -1,9 +1,11 @@
 package org.bspb.smartbirds.pro.events;
 
+import android.os.Looper;
 import android.util.Log;
 
 import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import de.greenrobot.event.EventBus;
 
@@ -15,7 +17,7 @@ public class EEventBus extends EventBus {
 
     public EEventBus() {
         super();
-        TAG = SmartBirdsApplication.TAG+".Bus";
+        TAG = SmartBirdsApplication.TAG + ".Bus";
     }
 
     @Override

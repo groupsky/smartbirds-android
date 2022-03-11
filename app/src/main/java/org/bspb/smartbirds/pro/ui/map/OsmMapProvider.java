@@ -454,24 +454,20 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setMarkers(Iterable<EntryMapMarker> newMapMarkers) {
         boolean needInvalidate = false;
-        Set<MarkerHolder> toDelete = new HashSet<>(this.markers);
-        MarkerHolder testHolder = new MarkerHolder(null, null);
 
-        for (EntryMapMarker mapMarker : newMapMarkers) {
-            testHolder.mapMarker = mapMarker;
-            toDelete.remove(testHolder);
-//            if (this.markers.contains(testHolder)) continue;
-            this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker, true)));
-            needInvalidate = true;
-        }
-
-        for (MarkerHolder markerHolder : toDelete) {
-            this.markers.remove(markerHolder);
+        for (MarkerHolder markerHolder : this.markers) {
             if (mMap != null && markerHolder.marker != null) {
                 markerHolder.marker.remove(mMap);
                 needInvalidate = true;
             }
         }
+        this.markers.clear();
+
+        for (EntryMapMarker mapMarker : newMapMarkers) {
+            this.markers.add(new MarkerHolder(mapMarker, addMarker(mapMarker, true)));
+            needInvalidate = true;
+        }
+
         if (needInvalidate && mMap != null) mMap.invalidate();
     }
 

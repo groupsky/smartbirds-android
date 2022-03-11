@@ -30,7 +30,7 @@ class InvertebratesFormTest {
     private var invertebratesEntry = InvertebratesEntryBuilder()
         .setModeratorReview(false)
         .setConfidential(true)
-        .setSpecies("Astacus astacus")
+        .setSpecies("Arytrura musculus")
         .setGender("F (Female)")
         .setAge("Juv")
         .setCount("2")

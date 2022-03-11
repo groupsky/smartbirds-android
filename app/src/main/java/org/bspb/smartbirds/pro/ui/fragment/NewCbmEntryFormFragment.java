@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.location.Location;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
@@ -58,7 +59,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Pref
     CommonPrefs_ commonPrefs;
 
-    @FragmentById(R.id.pictures_fragment)
+    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
     @Override
@@ -86,16 +87,25 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
+        // In some cases picturesFragment is still null. Try to find it by id
+        if (picturesFragment == null) {
+            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
+        }
         if (picturesFragment != null) {
             picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
 
-    @AfterViews
-    protected void flushDeserialize() {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @AfterViews
+    protected void flushDeserialize() {
         speciesQuickChoice.setOnItemSelected(nomenclatureItem -> {
             speciesInput.setSelection(nomenclatureItem);
             return null;

@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 
 import org.androidannotations.annotations.EFragment;
@@ -97,8 +98,8 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
     protected void submitData() {
         ArrayList<FormUtils.FormModel> models = birdsList.getModels();
         Calendar entryTime = new GregorianCalendar();
-        if (entryTimestamp != null) {
-            entryTime.setTime(entryTimestamp);
+        if (getEntryTimestamp() != null) {
+            entryTime.setTime(getEntryTimestamp());
         }
         entryTime.add(Calendar.SECOND, -models.size());
         try {

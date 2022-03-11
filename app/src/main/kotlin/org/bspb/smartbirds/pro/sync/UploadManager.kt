@@ -21,18 +21,15 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.dto.UploadFormResponse
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.forms.convert.Converter
 import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean
-import org.bspb.smartbirds.pro.utils.debugLog
+import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.*
-import java.util.*
 
 @EBean(scope = EBean.Scope.Default)
 open class UploadManager {
@@ -48,11 +45,7 @@ open class UploadManager {
     @Bean
     protected lateinit var backend: Backend
 
-    @Bean
-    protected lateinit var nomenclaturesBean: NomenclaturesBean
-
-    @Bean
-    protected lateinit var monitoringManager: MonitoringManager
+    private val monitoringManager = MonitoringManager.getInstance()
 
     @StringRes(R.string.tag_lat)
     protected lateinit var tagLatitude: String
@@ -60,7 +53,7 @@ open class UploadManager {
     @StringRes(R.string.tag_lon)
     protected lateinit var tagLongitude: String
 
-    fun uploadAll() {
+    suspend fun uploadAll() {
         Log.d(TAG, "uploading all finished monitorings")
         errors.clear()
         isUploading = true
@@ -87,7 +80,7 @@ open class UploadManager {
         }
     }
 
-    fun upload(monitoringPath: String) {
+    suspend fun upload(monitoringPath: String) {
         Log.d(TAG, String.format("uploading %s", monitoringPath))
         val file = File(monitoringPath)
         val monitoringName = file.name

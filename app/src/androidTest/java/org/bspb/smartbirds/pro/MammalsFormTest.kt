@@ -30,7 +30,7 @@ class MammalsFormTest {
     private var mammalEntry = MammalEntryBuilder()
         .setModeratorReview(false)
         .setConfidential(true)
-        .setSpecies("Dama dama")
+        .setSpecies("Vulpes vulpes")
         .setGender("F (Female)")
         .setAge("Juv")
         .setCount("2")

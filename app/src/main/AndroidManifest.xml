@@ -205,12 +205,6 @@
             android:exported="false" />
 
         <provider
-            android:name="org.bspb.smartbirds.pro.db.generated.SmartBirdsProvider"
-            android:authorities="org.bspb.smartbirds.pro.SmartBirdsProvider"
-            android:enabled="true"
-            android:exported="false" />
-
-        <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.SmartBirdsFileProvider"
             android:exported="false"

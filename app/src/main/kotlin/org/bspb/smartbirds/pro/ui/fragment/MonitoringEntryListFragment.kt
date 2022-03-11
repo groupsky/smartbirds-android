@@ -1,72 +1,76 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.app.AlertDialog
-import android.content.Context
-import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.AbsListView
 import android.widget.AbsListView.MultiChoiceModeListener
-import android.widget.CursorAdapter
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
-import org.androidannotations.annotations.*
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import org.androidannotations.annotations.AfterInject
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.EFragment
+import org.androidannotations.annotations.FragmentArg
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
-import org.bspb.smartbirds.pro.adapter.ModelCursorAdapter
-import org.bspb.smartbirds.pro.adapter.ModelCursorFactory
-import org.bspb.smartbirds.pro.beans.MonitoringCursorEntries
+import org.bspb.smartbirds.pro.adapter.MonitoringEntryListAdapter
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
-import org.bspb.smartbirds.pro.content.MonitoringManager
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.service.DataOpsService_
-import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView
-import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_
+import org.bspb.smartbirds.pro.utils.MonitoringManager
+import org.bspb.smartbirds.pro.viewmodel.MonitoringEntryListViewModel
 import java.util.*
 
 @EFragment
-open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries.Listener {
-    protected var adapter: CursorAdapter? = null
+open class MonitoringEntryListFragment : ListFragment() {
+    private var adapter: MonitoringEntryListAdapter? = null
 
-    @Bean
-    protected lateinit var entries: MonitoringCursorEntries
-
-    @Bean
-    protected lateinit var monitoringManager: MonitoringManager
+    protected val monitoringManager = MonitoringManager.getInstance()
 
     protected var code: String? = null
     protected var monitoring: Monitoring? = null
 
+    private val viewModel: MonitoringEntryListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
-        adapter = object : ModelCursorAdapter<MonitoringEntry?>(activity, R.layout.partial_monitoring_entry_list_row, if (entries != null) entries!!.cursor else null, ModelCursorFactory { cursor -> MonitoringManager.entryFromCursor(cursor) }) {
-            override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
-                return MonitoringEntryListRowPartialView_.build(context)
-            }
 
-            override fun bindView(view: View?, context: Context?, model: MonitoringEntry?) {
-                require(view is MonitoringEntryListRowPartialView) { "Must use " + MonitoringEntryListRowPartialView::class.java.simpleName }
-                view.bind(model)
+        adapter = MonitoringEntryListAdapter(requireContext())
+        listAdapter = adapter
+    }
+
+    private fun initViewModel() {
+        viewModel.init(code)
+        viewModel.entries?.observe(viewLifecycleOwner) {
+            adapter?.apply {
+                clear()
+                addAll(it)
+                notifyDataSetChanged()
             }
         }
-        listAdapter = adapter
     }
 
     @AfterInject
     protected fun setupLoader() {
         code?.let {
-            monitoring = monitoringManager.getMonitoring(it)
+            lifecycleScope.launch {
+                monitoring = monitoringManager.getMonitoring(it)
+            }
         }
-        entries.setMonitoringCode(code)
-        entries.setListener(this)
-        if (adapter != null) adapter!!.swapCursor(entries.cursor)
     }
 
     @AfterViews
     protected fun setupListview() {
+        initViewModel()
         val lv = listView
         setEmptyText(getText(R.string.emptyList))
         if (monitoring?.status == Monitoring.Status.uploaded) {
@@ -75,8 +79,21 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
 
         lv.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE_MODAL
         lv.setMultiChoiceModeListener(object : MultiChoiceModeListener {
-            override fun onItemCheckedStateChanged(mode: ActionMode, position: Int, id: Long, checked: Boolean) {
-                Log.d(TAG, String.format(Locale.ENGLISH, "onItemCheckedStateChanged: %d %s", position, checked))
+            override fun onItemCheckedStateChanged(
+                mode: ActionMode,
+                position: Int,
+                id: Long,
+                checked: Boolean
+            ) {
+                Log.d(
+                    TAG,
+                    String.format(
+                        Locale.ENGLISH,
+                        "onItemCheckedStateChanged: %d %s",
+                        position,
+                        checked
+                    )
+                )
             }
 
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -104,10 +121,12 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
                         val selectedItems = lv.checkedItemIds
                         val builder = AlertDialog.Builder(activity)
                         builder.setMessage(getString(R.string.confirm_delete_n, selectedItems.size))
-                        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
-                            mode.finish()
-                            monitoringManager.deleteEntries(selectedItems)
-                            DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
+                        builder.setPositiveButton(android.R.string.ok) { _, _ ->
+                            lifecycleScope.launch {
+                                mode.finish()
+                                monitoringManager.deleteEntries(selectedItems)
+                                DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
+                            }
                         }
                         builder.setNegativeButton(android.R.string.cancel, null)
                         val dialog = builder.create()
@@ -136,20 +155,11 @@ open class MonitoringEntryListFragment : ListFragment(), MonitoringCursorEntries
     open fun setMonitoringCode(monitoringCode: String?) {
         this.code = monitoringCode
         this.code?.let {
-            if (this::entries.isInitialized) {
-                entries.setMonitoringCode(it)
-            }
-            if (this::monitoringManager.isInitialized) {
+            lifecycleScope.launch {
                 monitoring = monitoringManager.getMonitoring(it)
             }
         }
 
-    }
-
-    override fun onMonitoringEntriesChanged(entries: MonitoringCursorEntries) {
-        adapter?.run {
-            swapCursor(entries.cursor)
-        }
     }
 
     interface Listener {

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
@@ -17,7 +16,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
-import org.bspb.smartbirds.pro.ui.utils.NomenclaturesBean;
+import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -37,8 +36,7 @@ public class MultipleChoiceFormInput extends TextViewFormInput implements Suppor
     Nomenclature[] items;
 
     private final CharSequence key;
-    @Bean
-    NomenclaturesBean nomenclatures;
+    NomenclaturesManager nomenclatures = NomenclaturesManager.Companion.getInstance();
     @Bean
     EEventBus bus;
 

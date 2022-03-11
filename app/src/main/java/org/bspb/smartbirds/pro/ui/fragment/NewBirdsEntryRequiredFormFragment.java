@@ -1,12 +1,10 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.content.res.Configuration;
-import android.os.Build;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
@@ -20,6 +18,7 @@ import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -57,7 +56,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Pref
     CommonPrefs_ commonPrefs;
 
-    @FragmentById(R.id.pictures_fragment)
+    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
     @Override
@@ -82,16 +81,21 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
+        // In some cases picturesFragment is still null. Try to find it by id
+        if (picturesFragment == null) {
+            picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
+        }
         if (picturesFragment != null) {
             picturesFragment.doDeserialize(monitoringCode, data);
         }
     }
 
-    @AfterViews
-    protected void flushDeserialize() {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
