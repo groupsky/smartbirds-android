@@ -130,5 +130,15 @@
     <string name="tag_primary_type" translatable="false">Primary_Type</string>
     <string name="tag_moderator_review" translatable="false">Moderator_Review</string>
     <string name="tag_observation_methodology" translatable="false">Observation_Methodology</string>
+    <string name="tag_pylons_pylon_type" translatable="false">Pylon_type</string>
+    <string name="tag_pylons_species_nest_on_pylon" translatable="false">Species_nest_on_pylon</string>
+    <string name="tag_pylons_nest_type" translatable="false">Nest_type</string>
+    <string name="tag_pylons_pylon_insulated" translatable="false">Pylon_insulated</string>
+    <string name="tag_pylons_primary_habitat" translatable="false">Primary_habitat_100m</string>
+    <string name="tag_pylons_secondary_habitat" translatable="false">Secondary_habitat_100m</string>
+    <string name="tag_casualties_cause_of_death" translatable="false">Cause_of_death</string>
+    <string name="tag_casualties_body_condition" translatable="false">Body_condition</string>
+    <string name="tag_casualties_primary_habitat" translatable="false">Primary_habitat_100m</string>
+    <string name="tag_casualties_secondary_habitat" translatable="false">Secondary_habitat_100m</string>
 
 </resources>

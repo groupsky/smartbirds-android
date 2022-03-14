@@ -372,4 +372,22 @@
     <string name="quick_choice_button_empty">"---"</string>
     <string name="nomenclatures_not_ready_title">"Внимание"</string>
     <string name="nomenclatures_not_ready_message">"Номенлатурите на са заредени. Мола опитайте по-късно."</string>
+    <string name="entry_type_pylons">"Проучване електропроводи"</string>
+    <string name="entry_type_pylons_casualties">"Жертви електропроводи"</string>
+    <string name="monitoring_pylons_pylon_type">"Тип на стълба"</string>
+    <string name="monitoring_pylons_species_nest_on_pylon">"Наличие на гнездо"</string>
+    <string name="monitoring_pylons_nest_type">"Тип на гнездо"</string>
+    <string name="monitoring_pylons_pylon_insulated">"Стълбът е обезопасен"</string>
+    <string name="monitoring_pylons_primary_habitat">"Основно местообитание радиус 100 m"</string>
+    <string name="monitoring_pylons_secondary_habitat">"Второстепенно местообитание радиус 100 m"</string>
+    <string name="monitoring_pylons_notes">"Бележки"</string>
+    <string name="monitoring_pylons_casualties_name">"Вид"</string>
+    <string name="monitoring_pylons_casualties_age">"Възраст"</string>
+    <string name="monitoring_pylons_casualties_gender">"Пол"</string>
+    <string name="monitoring_pylons_casualties_cause_of_death">"Причина за смъртта"</string>
+    <string name="monitoring_pylons_casualties_body_condition">"Състояние на жертвата"</string>
+    <string name="monitoring_pylons_casualties_primary_habitat">"Основно местообитание радиус 100 m"</string>
+    <string name="monitoring_pylons_casualties_secondary_habitat">"Второстепенно местообитание радиус 100 m"</string>
+    <string name="monitoring_pylons_casualties_notes">"Бележки"</string>
+    <string name="monitoring_pylons_casualties_private">"Поверително"</string>
 </resources>

@@ -13,6 +13,5 @@ class BaseEntryViewModel : ViewModel() {
     suspend fun loadEntry(id: Long): MonitoringEntry? {
         var formEntry: Form? = formRepository.findById(id) ?: return null
         return MonitoringManager.entryFromDb(formEntry!!)
-        return null
     }
 }
