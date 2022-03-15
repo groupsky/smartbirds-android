@@ -18,6 +18,7 @@ class ActiveMonitoringRule : TestRule {
     private val permissionsRule = SmartbirdsStateRule.grantMonitoringPermissions()
     private val loggedInRule = SmartbirdsStateRule.setLoggedIn(true)
     private val batteryNotificationRule = SmartbirdsStateRule.setBatteryNotification(true)
+    private val versionCheckRule = SmartbirdsStateRule.setVersionCheck(false)
     private val locationRule = MockLocationRule()
     private val fixturesRule = FixturesRule()
 
@@ -28,6 +29,7 @@ class ActiveMonitoringRule : TestRule {
         result = mockApiRule.apply(result, description)
         result = permissionsRule.apply(result, description)
         result = batteryNotificationRule.apply(result, description)
+        result = versionCheckRule.apply(result, description)
         result = locationRule.apply(result, description)
         result = loggedInRule.apply(result, description)
         return fixturesRule.apply(result, description)
