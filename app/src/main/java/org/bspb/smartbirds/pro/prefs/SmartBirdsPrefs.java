@@ -59,4 +59,6 @@ public interface SmartBirdsPrefs {
     boolean showGrid10km();
 
     Set<String> formsEnabled();
+
+    int versionCode();
 }

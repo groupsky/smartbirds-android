@@ -10,6 +10,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.WindowFeature;
 import org.androidannotations.annotations.sharedpreferences.Pref;
+import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LogoutEvent;
@@ -17,6 +18,8 @@ import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.service.SyncService;
+import org.bspb.smartbirds.pro.service.SyncService_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
@@ -37,8 +40,16 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requireAuthentication();
-        if (!isFinishing() && globalPrefs.runningMonitoring().get()) {
-            MonitoringActivity_.intent(this).start();
+        if (!isFinishing()) {
+            if (globalPrefs.runningMonitoring().get()) {
+                MonitoringActivity_.intent(this).start();
+            } else if (globalPrefs.versionCode().getOr(0) != BuildConfig.VERSION_CODE) {
+                // Sync data if app is updated
+                if (!SyncService.Companion.isWorking()) {
+                    SyncService_.intent(this).initialSync().start();
+                }
+                globalPrefs.versionCode().put(BuildConfig.VERSION_CODE);
+            }
         }
     }
 
