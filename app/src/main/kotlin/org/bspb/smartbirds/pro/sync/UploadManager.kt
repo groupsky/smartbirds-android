@@ -53,6 +53,90 @@ open class UploadManager {
     @StringRes(R.string.tag_lon)
     protected lateinit var tagLongitude: String
 
+    suspend fun uploadAllNew() {
+        Log.d(TAG, "uploading all finished monitorings")
+        errors.clear()
+        isUploading = true
+        try {
+            monitoringManager.monitoringCodesForStatus(Monitoring.Status.finished)?.forEach { monitoringCode ->
+                uploadMonitoring(monitoringCode)
+            }
+        } finally {
+            isUploading = false
+        }
+    }
+
+    private suspend fun uploadMonitoring(monitoringCode: String) {
+        val baseDir = context.getExternalFilesDir(null)
+        val monitoringDir = File(baseDir, monitoringCode)
+        var hasErrors = false
+
+        if (monitoringDir.exists() && monitoringDir.isDirectory) {
+            if (!uploadMonitoringFiles(monitoringDir.absolutePath, monitoringCode)) {
+                hasErrors = true
+            }
+
+            if (!uploadMonitoringEntries(monitoringCode)) {
+                hasErrors = true
+            }
+        }
+        if (hasErrors) {
+            Toast.makeText(
+                context, String.format(
+                    """
+    Could not upload %s to server!
+    You will need to manually export.
+    """.trimIndent(), monitoringCode
+                ),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        monitoringManager.updateStatus(monitoringCode, Monitoring.Status.uploaded)
+    }
+
+    private fun uploadMonitoringFiles(monitoringPath: String, monitoringCode: String): Boolean {
+        val monitoringDir = File(monitoringPath)
+
+        // map between filenames and their ids
+        val fileObjs: MutableMap<String, JsonObject> = HashMap()
+
+        // first upload images
+        var success = true
+
+        monitoringDir.list { _, name ->
+            name.matches("Pic\\d+\\.jpg".toRegex()) || "track.gpx" == name
+        }?.forEach { monitoringFile ->
+            try {
+                fileObjs[monitoringFile] = uploadFile(File(monitoringDir, monitoringFile))
+            } catch (t: Throwable) {
+                // Do not mark as error if the exception is related to image file. Sometimes we try to upload
+                // invalid image files which are not related to any form record.
+                if (monitoringFile.endsWith("track.gpx")) {
+                    success = false
+                    errors.add(context.getString(R.string.sync_error_upload_file, monitoringFile))
+                }
+                Reporting.logException(t)
+                Toast.makeText(
+                    context,
+                    String.format(
+                        "Could not upload %s of %s to smartbirds.org!",
+                        monitoringFile,
+                        monitoringCode
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        return success
+    }
+
+    private fun uploadMonitoringEntries(monitoringCode: String): Boolean {
+
+    }
+
     suspend fun uploadAll() {
         Log.d(TAG, "uploading all finished monitorings")
         errors.clear()
