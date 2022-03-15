@@ -41,6 +41,10 @@ class LoginActivityTest {
 
     @Rule
     @JvmField
+    val versionCheckRule = SmartbirdsStateRule.setVersionCheck(false)
+
+    @Rule
+    @JvmField
     var screenshotRule = CompositeRules.screenshotTestRule()
 
     @Test
@@ -67,7 +71,7 @@ class LoginActivityTest {
         mainScreen {
             // Wait for main screen to be shown
             Thread.sleep(1000)
-            
+
             isDisplayed()
         }
     }

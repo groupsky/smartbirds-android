@@ -24,7 +24,6 @@
     <item
         android:id="@+id/action_undo_last_entry"
         android:enabled="false"
-        android:menuCategory="container"
         android:title="@string/undo_last_entry"
         app:showAsAction="never" />
 

@@ -57,6 +57,10 @@ class MonitoringTest {
 
     @Rule
     @JvmField
+    val versionCheckRule = SmartbirdsStateRule.setVersionCheck(false)
+
+    @Rule
+    @JvmField
     val locationRule = MockLocationRule()
 
     @Rule
