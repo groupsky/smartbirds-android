@@ -55,16 +55,16 @@ open class DataOpsService : AbstractIntentService("DataOpsService") {
 
     @ServiceAction
     open fun generateMonitoringFiles(monitoringCode: String?) {
-        try {
-            Log.d(TAG, String.format(Locale.ENGLISH, "generateMonitoringFiles: %s", monitoringCode))
-            runBlocking {
-                monitoringManager.getMonitoring(monitoringCode!!)?.also {
-                    combineCommonWithEntries(it)
-                }
-            }
-        } catch (t: Throwable) {
-            Reporting.logException(t)
-        }
+//        try {
+//            Log.d(TAG, String.format(Locale.ENGLISH, "generateMonitoringFiles: %s", monitoringCode))
+//            runBlocking {
+//                monitoringManager.getMonitoring(monitoringCode!!)?.also {
+//                    combineCommonWithEntries(it)
+//                }
+//            }
+//        } catch (t: Throwable) {
+//            Reporting.logException(t)
+//        }
     }
 
     private fun combineCommonWithEntries(monitoring: Monitoring) {

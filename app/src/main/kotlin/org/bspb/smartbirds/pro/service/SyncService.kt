@@ -50,7 +50,7 @@ open class SyncService : AbstractIntentService("SyncService") {
             try {
                 isWorking = true
                 updateSyncProgress(R.string.upload_dialog_text)
-                uploadManager.uploadAll()
+                uploadManager.uploadAllNew()
                 fetchNewData()
             } finally {
                 isWorking = false
