@@ -1,18 +1,35 @@
 package org.bspb.smartbirds.pro.utils
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
+import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.service.DataOpsService
+import org.bspb.smartbirds.pro.service.ExportService
 import org.bspb.smartbirds.pro.tools.GpxWriter
 import org.bspb.smartbirds.pro.tools.Reporting
 import java.io.*
 
 class MonitoringUtils {
     companion object {
+        private const val TAG = SmartBirdsApplication.TAG + ".MonitoringUtils"
+
+        @JvmStatic
+        fun getMonitoringDir(context: Context, monitoringCode: String?): File {
+            return File(context.getExternalFilesDir(null), monitoringCode)
+        }
+
         @JvmStatic
         fun createMonitoringDir(context: Context, monitoring: Monitoring): File? {
-            return DataOpsService.createMonitoringDir(context, monitoring)
+            var dir = getMonitoringDir(context, monitoring.code)
+            if (dir.exists()) return dir
+            if (dir.mkdirs()) return dir
+            Log.w(TAG, String.format("Cannot create %s", dir))
+            dir = getMonitoringDir(context, monitoring.code)
+            if (dir.exists()) return dir
+            if (dir.mkdirs()) return dir
+            Log.e(TAG, String.format("Cannot create %s", dir))
+            return null
         }
 
         @JvmStatic

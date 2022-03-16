@@ -30,6 +30,7 @@ import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils
 import org.bspb.smartbirds.pro.utils.MonitoringManager
+import org.bspb.smartbirds.pro.utils.MonitoringUtils
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.closeGpxFile
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.createMonitoringDir
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.initGpxFile
@@ -212,7 +213,6 @@ open class DataService : Service() {
             if (isMonitoring()) {
                 closeGpxFile(this@DataService, monitoring!!)
             }
-            DataOpsService_.intent(this@DataService).generateMonitoringFiles(monitoring!!.code).start()
             monitoring = null
             bus.postSticky(MonitoringFinishedEvent())
         }
@@ -229,7 +229,6 @@ open class DataService : Service() {
                         event.entryType,
                         event.data
                     )
-                    DataOpsService_.intent(this@DataService).generateMonitoringFiles(event.monitoringCode).start()
                 } else {
                     monitoringManager.newEntry(monitoring!!, event.entryType, event.data)
                 }
@@ -296,7 +295,7 @@ open class DataService : Service() {
 
     fun onEvent(event: GetImageFile) {
         val image = File(
-            DataOpsService.getMonitoringDir(
+            MonitoringUtils.getMonitoringDir(
                 this,
                 if (TextUtils.isEmpty(event.monitoringCode)) monitoring!!.code else event.monitoringCode
             ), event.fileName
