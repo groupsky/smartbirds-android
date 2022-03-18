@@ -6,8 +6,6 @@ import android.util.Log
 import android.widget.Toast
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.googlecode.jcsv.CSVStrategy
-import com.googlecode.jcsv.reader.internal.CSVReaderBuilder
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -21,15 +19,14 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.dto.UploadFormResponse
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.forms.convert.Converter
-import org.bspb.smartbirds.pro.forms.upload.Uploader
 import org.bspb.smartbirds.pro.tools.Reporting
-import org.bspb.smartbirds.pro.tools.SmartBirdsCSVEntryParser
+import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.json.JSONObject
 import retrofit2.Response
-import java.io.*
+import java.io.File
+import java.io.IOException
+import java.util.regex.Pattern
 
 @EBean(scope = EBean.Scope.Default)
 open class UploadManager {
@@ -47,128 +44,189 @@ open class UploadManager {
 
     private val monitoringManager = MonitoringManager.getInstance()
 
-    @StringRes(R.string.tag_lat)
-    protected lateinit var tagLatitude: String
-
-    @StringRes(R.string.tag_lon)
-    protected lateinit var tagLongitude: String
-
     suspend fun uploadAll() {
         Log.d(TAG, "uploading all finished monitorings")
         errors.clear()
         isUploading = true
         try {
-            val baseDir = context.getExternalFilesDir(null)
-            for (monitoringCode in monitoringManager.monitoringCodesForStatus(Monitoring.Status.finished)) {
-                val monitoringDir = File(baseDir, monitoringCode)
-                if (!monitoringDir.exists()) {
-                    val msg = "Missing folder " + monitoringDir.path
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Reporting.logException(Exception(msg))
-                    continue
-                }
-                if (!monitoringDir.isDirectory) {
-                    val msg = monitoringDir.path + " is not a folder"
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Reporting.logException(Exception(msg))
-                    continue
-                }
-                upload(monitoringDir.absolutePath)
+            monitoringManager.monitoringCodesForStatus(Monitoring.Status.finished)?.forEach { monitoringCode ->
+                uploadMonitoring(monitoringCode)
             }
         } finally {
             isUploading = false
         }
     }
 
-    suspend fun upload(monitoringPath: String) {
-        Log.d(TAG, String.format("uploading %s", monitoringPath))
-        val file = File(monitoringPath)
-        val monitoringName = file.name
-        Log.d(TAG, String.format("uploading %s", monitoringName))
+    private suspend fun uploadMonitoring(monitoringCode: String) {
+        val baseDir = context.getExternalFilesDir(null)
+        val monitoringDir = File(baseDir, monitoringCode)
+        var hasErrors = false
 
-        try {
-            uploadOnServer(monitoringPath, monitoringName)
-            monitoringManager.updateStatus(monitoringName, Monitoring.Status.uploaded)
-        } catch (e: Throwable) {
-            Reporting.logException(e)
+        if (monitoringDir.exists() && monitoringDir.isDirectory) {
+            var fileObjects: Map<String, JsonObject>? = null
+
+            try {
+                fileObjects = uploadMonitoringFiles(monitoringDir.absolutePath, monitoringCode)
+            } catch (t: Throwable) {
+                hasErrors = true
+            }
+
+            if (!uploadMonitoringEntries(monitoringCode, fileObjects)) {
+                hasErrors = true
+            }
+        }
+        if (hasErrors) {
             Toast.makeText(
                 context, String.format(
                     """
     Could not upload %s to server!
     You will need to manually export.
-    """.trimIndent(), monitoringName
+    """.trimIndent(), monitoringCode
                 ),
                 Toast.LENGTH_SHORT
             ).show()
+            return
         }
+
+        monitoringManager.updateStatus(monitoringCode, Monitoring.Status.uploaded)
     }
 
     @Throws(Exception::class)
-    private fun uploadOnServer(monitoringPath: String, monitoringName: String) {
-        val file = File(monitoringPath)
+    private fun uploadMonitoringFiles(monitoringPath: String, monitoringCode: String): Map<String, JsonObject> {
+        val monitoringDir = File(monitoringPath)
 
         // map between filenames and their ids
         val fileObjs: MutableMap<String, JsonObject> = HashMap()
 
         // first upload images
-        var hasErrors = false
+        var success = true
 
-        for (subfile in file.list { dir, name -> name.matches("Pic\\d+\\.jpg".toRegex()) || "track.gpx" == name }) {
+        monitoringDir.list { _, name ->
+            name.matches("Pic\\d+\\.jpg".toRegex()) || "track.gpx" == name
+        }?.forEach { monitoringFile ->
             try {
-                fileObjs[subfile] = uploadFile(File(file, subfile))
+                fileObjs[monitoringFile] = uploadFile(File(monitoringDir, monitoringFile))
             } catch (t: Throwable) {
                 // Do not mark as error if the exception is related to image file. Sometimes we try to upload
                 // invalid image files which are not related to any form record.
-                if (subfile.endsWith("track.gpx")) {
-                    hasErrors = true
-                    errors.add(context.getString(R.string.sync_error_upload_file, subfile))
+                if (monitoringFile.endsWith("track.gpx")) {
+                    success = false
+                    errors.add(context.getString(R.string.sync_error_upload_file, monitoringFile))
                 }
                 Reporting.logException(t)
                 Toast.makeText(
                     context,
                     String.format(
                         "Could not upload %s of %s to smartbirds.org!",
-                        subfile,
-                        monitoringName
+                        monitoringFile,
+                        monitoringCode
                     ),
                     Toast.LENGTH_SHORT
                 ).show()
             }
         }
 
-        // then upload forms
-        for (subfile in file.list { dir, name -> name.matches(".*\\.csv".toRegex()) }) {
-            try {
-                uploadForm(monitoringName, file, subfile, fileObjs)
-            } catch (t: Throwable) {
-                hasErrors = true
-            }
+        if (!success) {
+            throw IOException("Could not upload form files")
         }
-        if (hasErrors) {
-            throw IOException("Could not upload forms")
-        }
+
+        return fileObjs
     }
 
-    @Throws(Exception::class)
-    private fun uploadForm(
-        monitoringName: String,
-        base: File,
-        filename: String,
-        fileObjs: Map<String, JsonObject>
-    ) {
-        for (entryType in EntryType.values()) {
-            if (entryType.filename.equals(filename, ignoreCase = true)) {
-                uploadForm(
-                    monitoringName,
-                    File(base, filename),
-                    entryType.getConverter(context),
-                    entryType.uploader,
-                    fileObjs
-                )
-                return
+    private suspend fun uploadMonitoringEntries(
+        monitoringCode: String,
+        fileObjects: Map<String, JsonObject>?
+    ): Boolean {
+        val monitoring = monitoringManager.getMonitoring(monitoringCode)
+        monitoring ?: return false
+        var hasErrors = false
+
+        val monitoringEntries = monitoringManager.getEntries(monitoring)
+
+        monitoringEntries.forEach { dbEntry ->
+            val monitoringEntry = MonitoringManager.entryFromDb(dbEntry)
+            val dataValues = monitoringEntry.data.plus(monitoring.commonForm).mapValues {
+                it.value.replace(Pattern.quote(Configuration.MULTIPLE_CHOICE_DELIMITER).toRegex(), "\n")
+            }
+            val dataJson =
+                monitoringEntry.type.getConverter(context).convert(dataValues)
+
+            // convert pictures
+            val pictures = JsonArray()
+            var idx = 0
+            while (true) {
+                val fieldName = "Picture$idx"
+                idx++
+                if (!monitoringEntry.data.containsKey(fieldName)) break
+                val filename = monitoringEntry.data[fieldName]
+                if (TextUtils.isEmpty(filename)) continue
+                val fileObj = fileObjects?.get(filename)
+                if (fileObj == null) {
+                    hasErrors = true
+                    val error = context.getString(
+                        R.string.sync_error_missing_image,
+                        filename,
+                        monitoringCode
+                    )
+                    errors.add(error)
+                    Reporting.logException(IllegalStateException(error))
+                    Toast.makeText(
+                        context,
+                        error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    continue
+                }
+                pictures.add(fileObj)
+            }
+            dataJson.add("pictures", pictures)
+
+            // convert gpx
+            if (fileObjects != null && !fileObjects.containsKey("track.gpx")) {
+                val msg = "Missing track.gpx file for $monitoringCode"
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                Reporting.logException(IllegalStateException(msg))
+            } else {
+                dataJson.add("track", fileObjects?.get("track.gpx")!!["url"])
+            }
+
+            val call = monitoringEntry.type.uploader.upload(backend.api(), dataJson)
+
+            var response: Response<UploadFormResponse>? = null
+            var failed = false
+            try {
+                response = call.execute()
+                failed = !response.isSuccessful
+            } catch (t: Throwable) {
+                failed = true
+            }
+
+            if (failed) {
+                hasErrors = true
+                var error = ""
+                if (response != null) {
+                    try {
+                        val errorBodyString = response.errorBody()!!.string()
+
+                        error += response.code().toString() + ": " + response.message()
+                        error += """
+                                
+                                $errorBodyString
+                                """.trimIndent()
+
+                        var errorJson = JSONObject(errorBodyString)
+
+                        errors.add(errorJson.getString("error"))
+                    } catch (t: Throwable) {
+                        Reporting.logException(t)
+                    }
+                } else {
+                    errors.add(context.getString(R.string.sync_error_upload_form))
+                }
             }
         }
-        Log.w(TAG, "unhandled form file: $filename")
+
+        return !hasErrors
     }
 
     @Throws(IOException::class)
@@ -189,122 +247,4 @@ open class UploadManager {
         return fileObj
     }
 
-    @Throws(Exception::class)
-    private fun uploadForm(
-        monitoringName: String,
-        file: File,
-        converter: Converter,
-        uploader: Uploader,
-        fileObjs: Map<String, JsonObject>
-    ) {
-        val fis = FileInputStream(file)
-        fis.use { fis ->
-            val csvReader =
-                CSVReaderBuilder<Array<String>>(InputStreamReader(BufferedInputStream(fis))).strategy(
-                    CSVStrategy.DEFAULT
-                ).entryParser(SmartBirdsCSVEntryParser()).build()
-            csvReader.use { csvReader ->
-                val header = csvReader.readHeader()
-                var hasErrors = false
-                for (row in csvReader) {
-                    val csv = HashMap<String, String>()
-                    val it: Iterator<String> = header.iterator()
-                    var columnName: String
-                    run {
-                        var idx = 0
-                        while (it.hasNext() && idx < row.size) {
-                            columnName = it.next()
-                            csv[columnName] = row[idx]
-                            idx++
-                        }
-                    }
-                    val data = converter.convert(csv)
-                    try {
-                        check(!(data[tagLatitude].asDouble == 0.0 || data[tagLongitude].asDouble == 0.0))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Reporting.logException(IllegalStateException("Uploading entry with zero coordinates. $data"))
-                    }
-
-                    // convert pictures
-                    val pictures = JsonArray()
-                    var idx = 0
-                    while (true) {
-                        val fieldName = "Picture$idx"
-                        idx++
-                        if (!csv.containsKey(fieldName)) break
-                        val filename = csv[fieldName]
-                        if (TextUtils.isEmpty(filename)) continue
-                        val fileObj = fileObjs[filename]
-                        if (fileObj == null) {
-                            hasErrors = true
-                            val error = context.getString(
-                                R.string.sync_error_missing_image,
-                                filename,
-                                monitoringName
-                            )
-                            errors.add(error)
-                            Reporting.logException(IllegalStateException(error))
-                            Toast.makeText(
-                                context,
-                                error,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            continue
-                        }
-                        pictures.add(fileObj)
-                    }
-                    data.add("pictures", pictures)
-
-                    // convert gpx
-                    if (!fileObjs.containsKey("track.gpx")) {
-                        val msg = "Missing track.gpx file for $monitoringName"
-                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                        Reporting.logException(IllegalStateException(msg))
-                    } else {
-                        data.add("track", fileObjs["track.gpx"]!!["url"])
-                    }
-                    val call = uploader.upload(backend.api(), data)
-
-                    var response: Response<UploadFormResponse>? = null
-                    var failed = false
-                    try {
-                        response = call.execute()
-                        failed = !response.isSuccessful
-                    } catch (t: Throwable) {
-                        failed = true
-                    }
-
-
-                    if (failed) {
-                        hasErrors = true
-                        var error = ""
-                        if (response != null) {
-                            try {
-                                val errorBodyString = response.errorBody()!!.string()
-
-                                error += response.code().toString() + ": " + response.message()
-                                error += """
-                                
-                                $errorBodyString
-                                """.trimIndent()
-
-                                var errorJson = JSONObject(errorBodyString)
-
-                                errors.add(errorJson.getString("error"))
-                            } catch (t: Throwable) {
-                                Reporting.logException(t)
-                            }
-                        } else {
-                            errors.add(context.getString(R.string.sync_error_upload_form))
-                        }
-
-                    }
-                }
-                if (hasErrors) {
-                    throw IOException("Couldn't upload form")
-                }
-            }
-        }
-    }
 }

@@ -24,7 +24,6 @@ import org.bspb.smartbirds.pro.adapter.MonitoringEntryListAdapter
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.viewmodel.MonitoringEntryListViewModel
 import java.util.*
@@ -125,7 +124,6 @@ open class MonitoringEntryListFragment : ListFragment() {
                             lifecycleScope.launch {
                                 mode.finish()
                                 monitoringManager.deleteEntries(selectedItems)
-                                DataOpsService_.intent(activity).generateMonitoringFiles(code).start()
                             }
                         }
                         builder.setNegativeButton(android.R.string.cancel, null)

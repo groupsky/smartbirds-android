@@ -26,8 +26,8 @@ interface FormDao {
     @Query("DELETE FROM forms WHERE code = :monitoringCode")
     suspend fun deleteByMonitoringCode(monitoringCode: String)
 
-    @Query("SELECT * FROM forms WHERE code = :code AND type = :type")
-    fun getEntries(code: String, type: String): List<Form>
+    @Query("SELECT * FROM forms WHERE code = :code AND (type = :type OR :type IS NULL)")
+    fun getEntries(code: String, type: String?): List<Form>
 
     @Query("SELECT * FROM forms WHERE _id = :id")
     suspend fun findById(id: Long): Form?

@@ -12,8 +12,6 @@ import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.service.DataOpsService
-import org.bspb.smartbirds.pro.service.DataOpsService_
 import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity_
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.MonitoringUtils
@@ -101,7 +99,6 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
                     globalPrefs.runningMonitoring().put(false)
                     globalPrefs.pausedMonitoring().put(false)
                 }
-                DataOpsService_.intent(context).generateMonitoringFiles(code).start()
                 bus.postSticky(MonitoringFinishedEvent())
                 activity?.finish()
             }
@@ -113,7 +110,7 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
         monitoring?.apply {
             lifecycleScope.launch {
                 monitoringManager.deleteMonitoring(code)
-                val dir = DataOpsService.getMonitoringDir(requireContext(), code);
+                val dir = MonitoringUtils.getMonitoringDir(requireContext(), code);
                 dir.deleteRecursively();
                 activity?.finish();
             }

@@ -126,8 +126,8 @@ class MonitoringManager private constructor(val context: Context) {
         formsRepository.deleteLastEntries(ids)
     }
 
-    fun getEntries(monitoring: Monitoring, entryType: EntryType): List<Form> {
-        return formsRepository.getEntries(monitoring.code, entryType.name)
+    fun getEntries(monitoring: Monitoring, entryType: EntryType? = null): List<Form> {
+        return formsRepository.getEntries(monitoring.code, entryType?.name)
     }
 
     suspend fun createNew(): Monitoring {
