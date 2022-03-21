@@ -120,7 +120,7 @@
 
     <style name="TextWarning">
         <item name="android:textColor">@android:color/holo_red_dark</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
 
     </style>
 
