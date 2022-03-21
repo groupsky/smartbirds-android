@@ -403,7 +403,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         currentMap.setMarkers(getMarkers());
         currentMap.setPath(points);
         currentMap.setMapType(mapType);
-        if (viewModel.getZones().getValue() != null) {
+        if (viewModel != null && viewModel.getZones().getValue() != null) {
             currentMap.setZones(viewModel.getZones().getValue());
         }
         currentMap.setShowZoneBackground(showZoneBackground);

@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
@@ -13,8 +14,10 @@ import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity_
+import org.bspb.smartbirds.pro.ui.MonitoringReportActivity
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.MonitoringUtils
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
@@ -71,6 +74,15 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
             null
         )
 
+    }
+
+    @OptionsItem(R.id.menu_report)
+    protected open fun showMonitoringReport() {
+        if (code != null) {
+            startActivity(MonitoringReportActivity.newIntent(requireContext(), code!!))
+        } else {
+            Toast.makeText(requireContext(), "Invalid monitoring code", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun finishMonitoring() {

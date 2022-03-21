@@ -185,6 +185,10 @@
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".ui.MainActivity_" />
+        <activity
+            android:name=".ui.MonitoringReportActivity"
+            android:label="@string/title_activity_report"
+            android:parentActivityName=".ui.MonitoringDetailActivity_" />
 
         <service
             android:name=".service.DataService_"

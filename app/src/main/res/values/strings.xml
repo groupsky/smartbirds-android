@@ -391,4 +391,5 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_pylons_casualties_secondary_habitat">"Secondary habitat 100m"</string>
     <string name="monitoring_pylons_casualties_notes">"Notes"</string>
     <string name="monitoring_pylons_casualties_private">"Confidential"</string>
+    <string name="title_activity_report">"Report"</string>
 </resources>
