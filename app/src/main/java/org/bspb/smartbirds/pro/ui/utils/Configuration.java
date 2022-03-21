@@ -20,7 +20,7 @@ public class Configuration {
     // Max distance to location for auto population of common form location
     public static final float MAX_DISTANCE_LOCATION_METERS = 50000;
     // Max distance to zone beyond that will display a warning
-    public static final float MAX_DISTANCE_TO_ZONE_METERS = 5000;
+    public static final float MAX_DISTANCE_TO_ZONE_METERS = 1000;
     public static DateFormat STORAGE_DATE_TIME_FORMAT;
     public static DateFormat STORAGE_TIME_FORMAT;
     public static DateFormat STORAGE_DATE_FORMAT;

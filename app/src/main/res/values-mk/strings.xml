@@ -228,7 +228,7 @@
     <string name="tab_required">"Главно"</string>
     <string name="tab_optional">"Дополнително"</string>
     <string name="no_place_nearby">"Нема познати места во близина"</string>
-    <string name="error_cbm_zone_too_far">"Зоната е повеќе од 5км од локацијата"</string>
+    <string name="error_cbm_zone_too_far">"Зоната е повеќе од 1км од локацијата"</string>
     <string name="main_screen_btn_browse">"Пребарувај"</string>
     <string name="title_monitoring_list">"Мониторинзи"</string>
     <string name="title_monitoring_detail">"Детали за мониторингот"</string>
