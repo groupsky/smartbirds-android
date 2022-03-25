@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/menu_report"
-        android:title="Report"
+        android:title="@string/menu_report"
         app:showAsAction="ifRoom" />
 
     <item

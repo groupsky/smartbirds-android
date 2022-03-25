@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.adapter.ReportAdapter
+import org.bspb.smartbirds.pro.databinding.FragmentMonitoringReportBinding
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.viewmodel.MonitoringReportViewModel
 
 class MonitoringReportFragment : Fragment() {
@@ -24,8 +28,10 @@ class MonitoringReportFragment : Fragment() {
     }
 
     private lateinit var monitoringCode: String
-
     private val viewModel: MonitoringReportViewModel by viewModels()
+    private lateinit var recyclerView: RecyclerView
+    private var adapter = ReportAdapter()
+    private lateinit var binding: FragmentMonitoringReportBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,17 +44,25 @@ class MonitoringReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initViews()
+
         viewModel.init(monitoringCode)
         loadReport()
     }
 
+    private fun initViews() {
+        binding = FragmentMonitoringReportBinding.bind(requireView())
+        adapter = ReportAdapter()
+        val layoutManager = LinearLayoutManager(context)
+        binding.emptyView.visibility = View.GONE
+        binding.reportEntries.layoutManager = layoutManager
+        binding.reportEntries.adapter = adapter
+    }
+
     private fun loadReport() {
         viewModel.entries?.observe(viewLifecycleOwner) { entries ->
-            Toast.makeText(
-                requireContext(),
-                "Loading report for $monitoringCode with ${entries.size} entries",
-                Toast.LENGTH_LONG
-            ).show()
+            adapter.reportEntries = viewModel.prepareReportEntries(requireContext(), entries)
         }
     }
 }
