@@ -19,4 +19,6 @@
     <color name="atlas_cell_color_low">#553333aa</color>
     <color name="atlas_cell_color_med">#55883388</color>
     <color name="atlas_cell_color_high">#55aa3333</color>
+
+    <color name="grey">#ccc</color>
 </resources>

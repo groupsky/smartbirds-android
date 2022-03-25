@@ -390,4 +390,8 @@
     <string name="monitoring_pylons_casualties_secondary_habitat">"Второстепенно местообитание радиус 100 m"</string>
     <string name="monitoring_pylons_casualties_notes">"Бележки"</string>
     <string name="monitoring_pylons_casualties_private">"Поверително"</string>
+    <string name="title_activity_report">"Отчет за наблюдение"</string>
+    <string name="record">"запис"</string>
+    <string name="records">"записи"</string>
+    <string name="menu_report">"Отчет"</string>
 </resources>
