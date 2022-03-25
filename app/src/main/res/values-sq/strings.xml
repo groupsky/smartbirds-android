@@ -226,7 +226,7 @@ Jeni i sigurt që doni të ndaloni monitorimin?"</string>
     <string name="tab_required">"Kryesore"</string>
     <string name="tab_optional">"Shtesë"</string>
     <string name="no_place_nearby">"Nuk ka vende të njohura afër"</string>
-    <string name="error_cbm_zone_too_far">"Zona është më shumë se 5 km larg vendodhjes"</string>
+    <string name="error_cbm_zone_too_far">"Zona është më shumë se 1 km larg vendodhjes"</string>
     <string name="main_screen_btn_browse">"Shfleto"</string>
     <string name="title_monitoring_list">"Monitorimet"</string>
     <string name="title_monitoring_detail">"Detaje të monitorimit"</string>

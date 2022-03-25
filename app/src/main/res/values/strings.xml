@@ -227,7 +227,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="tab_required">"Main"</string>
     <string name="tab_optional">"Additional"</string>
     <string name="no_place_nearby">"There are no known places nearby"</string>
-    <string name="error_cbm_zone_too_far">"The zone is more than 5 km from the location"</string>
+    <string name="error_cbm_zone_too_far">"The zone is more than 1 km from the location"</string>
     <string name="main_screen_btn_browse">"Browse"</string>
     <string name="title_monitoring_list">"Monitorings"</string>
     <string name="title_monitoring_detail">"Monitoring Details"</string>
