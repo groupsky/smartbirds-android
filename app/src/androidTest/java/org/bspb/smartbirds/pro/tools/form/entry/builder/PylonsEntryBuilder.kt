@@ -41,6 +41,11 @@ class PylonsEntryBuilder : FormEntryBuilder() {
         return this
     }
 
+    fun setDamagedInsulation(value: Boolean): PylonsEntryBuilder {
+        add(FormEntryField("damagedInsulation", R.string.monitoring_pylons_damaged_insulation, value))
+        return this
+    }
+
     fun setPrimaryHabitat(value: String): PylonsEntryBuilder {
         add(FormEntryField("habitat100mPrime", R.string.monitoring_pylons_primary_habitat, value))
         return this

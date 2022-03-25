@@ -36,6 +36,7 @@ class PylonsFormTest {
         .setSpeciesNestOnPylon("Accipiter gentilis")
         .setNestType("Natural nest")
         .setPylonInsulated(true)
+        .setDamagedInsulation(true)
         .setPrimaryHabitat("Grassland")
         .setSecondaryHabitat("Arable land")
         .setNotes("some notes")

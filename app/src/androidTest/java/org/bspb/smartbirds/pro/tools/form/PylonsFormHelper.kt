@@ -39,6 +39,9 @@ class PylonsFormHelper {
                     R.string.monitoring_pylons_pylon_insulated -> {
                         fieldPylonInsulated().perform(scrollTo(), setChecked(value as Boolean))
                     }
+                    R.string.monitoring_pylons_damaged_insulation -> {
+                        fieldDamagedInsulation().perform(scrollTo(), setChecked(value as Boolean))
+                    }
                     R.string.monitoring_pylons_primary_habitat -> {
                         selectSingleChoice(fieldPrimaryHabitat(), value as String)
                     }

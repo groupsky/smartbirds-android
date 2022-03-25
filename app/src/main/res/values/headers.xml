@@ -134,6 +134,7 @@
     <string name="tag_pylons_species_nest_on_pylon" translatable="false">Species_nest_on_pylon</string>
     <string name="tag_pylons_nest_type" translatable="false">Nest_type</string>
     <string name="tag_pylons_pylon_insulated" translatable="false">Pylon_insulated</string>
+    <string name="tag_pylons_damaged_insulation" translatable="false">Damaged_insulation</string>
     <string name="tag_pylons_primary_habitat" translatable="false">Primary_habitat_100m</string>
     <string name="tag_pylons_secondary_habitat" translatable="false">Secondary_habitat_100m</string>
     <string name="tag_casualties_cause_of_death" translatable="false">Cause_of_death</string>

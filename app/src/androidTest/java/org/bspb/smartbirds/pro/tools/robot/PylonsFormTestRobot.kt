@@ -49,6 +49,9 @@ class PylonsFormTestRobot : PylonsFormRobot {
     fun fieldPylonInsulated(): ViewInteraction =
         onView(ViewMatchers.withText(R.string.monitoring_pylons_pylon_insulated))
 
+    fun fieldDamagedInsulation(): ViewInteraction =
+        onView(ViewMatchers.withText(R.string.monitoring_pylons_damaged_insulation))
+
     fun fieldPrimaryHabitat(): ViewInteraction =
         onView(withHintParentOrOwn(R.string.monitoring_pylons_primary_habitat))
 

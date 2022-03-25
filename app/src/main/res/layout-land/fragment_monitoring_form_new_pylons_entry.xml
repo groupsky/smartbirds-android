@@ -79,7 +79,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="8">
+                    android:layout_span="6">
 
                     <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                         android:id="@+id/form_pylons_nest_type"
@@ -94,9 +94,18 @@
                     android:id="@+id/form_pylons_pylon_insulated"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="2"
+                    android:layout_span="3"
                     android:tag="@string/tag_pylons_pylon_insulated"
                     android:text="@string/monitoring_pylons_pylon_insulated" />
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_pylons_damaged_insulation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:enabled="false"
+                    android:tag="@string/tag_pylons_damaged_insulation"
+                    android:text="@string/monitoring_pylons_damaged_insulation" />
             </TableRow>
 
             <TableRow>
