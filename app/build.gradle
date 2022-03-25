@@ -108,7 +108,7 @@ android {
 }
 
 dependencies {
-    def room_version = "2.4.1"
+    def room_version = "2.4.2"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "org.androidannotations:androidannotations:4.8.0"
