@@ -26,6 +26,14 @@ open class NewPylonsEntryFormFragment : BaseEntryFragment() {
     protected var confidential: SwitchFormInput? = null
 
     @JvmField
+    @ViewById(R.id.form_pylons_pylon_insulated)
+    protected var pylonInsulated: SwitchFormInput? = null
+
+    @JvmField
+    @ViewById(R.id.form_pylons_damaged_insulation)
+    protected var damagedInsulation: SwitchFormInput? = null
+
+    @JvmField
     @Pref
     protected var commonPrefs: CommonPrefs_? = null
 
@@ -69,6 +77,20 @@ open class NewPylonsEntryFormFragment : BaseEntryFragment() {
                 childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
         }
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun initViews() {
+        super.initViews()
+        pylonInsulated?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                damagedInsulation?.isEnabled = true
+            } else {
+                damagedInsulation?.apply {
+                    setChecked(false)
+                    isEnabled = false
+                }
+            }
+        }
     }
 
     class Builder : BaseEntryFragment.Builder {

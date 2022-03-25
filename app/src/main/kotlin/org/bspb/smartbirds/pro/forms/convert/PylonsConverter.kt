@@ -11,6 +11,7 @@ class PylonsConverter(context: Context?) : Converter(context) {
         addSpecies(R.string.tag_pylons_species_nest_on_pylon, "speciesNestOnPylon")
         addSingle(R.string.tag_pylons_nest_type, "typeNest")
         addBool(R.string.tag_pylons_pylon_insulated, "pylonInsulated")
+        addBool(R.string.tag_pylons_damaged_insulation, "damagedInsulation")
         addSingle(R.string.tag_pylons_primary_habitat, "habitat100mPrime")
         addSingle(R.string.tag_pylons_secondary_habitat, "habitat100mSecond")
         addBool(R.string.tag_confidential, "confidential")

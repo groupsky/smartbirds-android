@@ -105,6 +105,16 @@
 
             <View style="@style/FieldSeparator" />
 
+            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                android:id="@+id/form_pylons_damaged_insulation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:tag="@string/tag_pylons_damaged_insulation"
+                android:text="@string/monitoring_pylons_damaged_insulation" />
+
+            <View style="@style/FieldSeparator" />
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
