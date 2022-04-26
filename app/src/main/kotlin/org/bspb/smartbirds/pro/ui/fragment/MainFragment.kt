@@ -17,6 +17,8 @@ import android.text.Html
 import android.text.Html.ImageGetter
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -45,10 +47,7 @@ import org.bspb.smartbirds.pro.service.SyncService
 import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
-import org.bspb.smartbirds.pro.ui.DownloadsActivity
-import org.bspb.smartbirds.pro.ui.MonitoringListActivity_
-import org.bspb.smartbirds.pro.ui.SettingsActivity
-import org.bspb.smartbirds.pro.ui.StatsActivity_
+import org.bspb.smartbirds.pro.ui.*
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
@@ -88,6 +87,8 @@ open class MainFragment : Fragment() {
 
     @Bean
     protected lateinit var bus: EEventBus
+
+    private var lastMonitoring: Monitoring? = null
 
     private val syncBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -170,6 +171,15 @@ open class MainFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        var menuBrowseLastMonitorig = menu.findItem(R.id.menu_report_last)
+        lifecycleScope.launch {
+            lastMonitoring = monitoringManager.getLastMonitoring()
+            menuBrowseLastMonitorig.isEnabled = lastMonitoring != null
+        }
+    }
+
     @Click(R.id.btn_start_birds)
     open fun startBirdsClicked() {
         if (!permissionsGranted()) return
@@ -215,6 +225,18 @@ open class MainFragment : Fragment() {
     @OptionsItem(R.id.menu_browse)
     open fun browseBtnClicked() {
         MonitoringListActivity_.intent(this).start()
+    }
+
+    @OptionsItem(R.id.menu_report_last)
+    open fun reportBtnClicked() {
+        if (lastMonitoring == null) {
+            requireContext().showAlert(
+                R.string.report_last_monitoring_warning_title,
+                R.string.report_last_monitoring_warning_message
+            )
+        } else {
+            startActivity(MonitoringReportActivity.newIntent(requireContext(), lastMonitoring!!.code))
+        }
     }
 
     @OptionsItem(R.id.menu_help)

@@ -33,6 +33,9 @@ abstract class MonitoringDao {
     @Query("SELECT * FROM monitorings WHERE status = 'wip' ORDER BY _id DESC")
     abstract suspend fun getActiveMonitoring(): MonitoringModel?
 
+    @Query("SELECT * FROM monitorings WHERE status IN ('finished', 'paused', 'uploaded') ORDER BY _id DESC")
+    abstract suspend fun getLastMonitoring(): MonitoringModel?
+
     @Query("SELECT * FROM monitorings WHERE status = 'paused' ORDER BY _id DESC")
     abstract suspend fun getPausedMonitoring(): MonitoringModel?
 
