@@ -16,10 +16,7 @@ import android.os.PowerManager
 import android.text.Html
 import android.text.Html.ImageGetter
 import android.text.TextUtils
-import android.view.Gravity
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
+import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -89,6 +86,7 @@ open class MainFragment : Fragment() {
     protected lateinit var bus: EEventBus
 
     private var lastMonitoring: Monitoring? = null
+    private var menuBrowseLastMonitorig: MenuItem? = null
 
     private val syncBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -122,6 +120,7 @@ open class MainFragment : Fragment() {
         super.onResume()
         checkBatteryOptimization()
         showNotSyncedCount()
+        checkForLastMonitoring()
     }
 
     override fun onStop() {
@@ -173,10 +172,14 @@ open class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        var menuBrowseLastMonitorig = menu.findItem(R.id.menu_report_last)
+        menuBrowseLastMonitorig = menu.findItem(R.id.menu_report_last)
+        checkForLastMonitoring()
+    }
+
+    private fun checkForLastMonitoring() {
         lifecycleScope.launch {
             lastMonitoring = monitoringManager.getLastMonitoring()
-            menuBrowseLastMonitorig.isEnabled = lastMonitoring != null
+            menuBrowseLastMonitorig?.isEnabled = lastMonitoring != null
         }
     }
 
@@ -429,6 +432,7 @@ open class MainFragment : Fragment() {
     @UiThread
     open fun onEvent(event: MonitoringCanceledEvent?) {
         setupMonitoringButtons()
+        checkForLastMonitoring()
         bus.removeStickyEvent(MonitoringCanceledEvent::class.java)
     }
 
