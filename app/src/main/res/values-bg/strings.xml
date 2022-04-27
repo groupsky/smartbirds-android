@@ -395,4 +395,7 @@
     <string name="records">"записи"</string>
     <string name="menu_report">"Отчет"</string>
     <string name="monitoring_pylons_damaged_insulation">"Увредена изолация"</string>
+    <string name="main_screen_btn_report">"Отчет за последен мониторинг"</string>
+    <string name="report_last_monitoring_warning_title">"Внимание"</string>
+    <string name="report_last_monitoring_warning_message">"Няма мониторинг, за който да се покаже отчет."</string>
 </resources>

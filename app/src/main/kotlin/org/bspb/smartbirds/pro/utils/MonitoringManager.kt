@@ -182,6 +182,10 @@ class MonitoringManager private constructor(val context: Context) {
         return monitoringRepository.countMonitoringsForStatus(status)
     }
 
+    suspend fun getLastMonitoring(): Monitoring? {
+        return monitoringFromDb(monitoringRepository.getLastMonitoring())
+    }
+
     private fun generateMonitoringCode(): String {
         val uuid = UUID.randomUUID().toString()
         return String.format("%s-%s", DATE_FORMATTER.format(Date()), uuid.substring(uuid.length - 12))

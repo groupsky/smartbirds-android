@@ -36,6 +36,10 @@ class MonitoringRepository {
         return SmartBirdsDatabase.getInstance().monitoringDao().getActiveMonitoring()
     }
 
+    suspend fun getLastMonitoring(): MonitoringModel? {
+        return SmartBirdsDatabase.getInstance().monitoringDao().getLastMonitoring()
+    }
+
     suspend fun getPausedMonitoring(): MonitoringModel? {
         return SmartBirdsDatabase.getInstance().monitoringDao().getPausedMonitoring()
     }
