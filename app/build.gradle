@@ -133,7 +133,7 @@ dependencies {
     // Crashlytics Kit
     implementation 'com.google.firebase:firebase-crashlytics:18.2.9'
 
-    implementation 'com.google.firebase:firebase-analytics:20.0.2'
+    implementation 'com.google.firebase:firebase-analytics:20.1.2'
 
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
     implementation 'com.googlecode.jcsv:jcsv:1.4.0'
@@ -158,7 +158,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
     testImplementation 'junit:junit:4.13.2'
 
