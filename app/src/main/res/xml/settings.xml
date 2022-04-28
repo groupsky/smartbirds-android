@@ -103,15 +103,33 @@
             app:title="@string/settings_grid_1km" />
 
         <SwitchPreferenceCompat
+            app:allowDividerBelow="true"
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             app:key="showGrid10km"
             app:summary="@string/settings_grid_10km_summary"
             app:title="@string/settings_grid_10km" />
+
+        <SwitchPreferenceCompat
+            app:allowDividerAbove="true"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showUserKml"
+            app:summary="Show user imported KML file"
+            app:title="User KML" />
+
+        <Preference
+            app:allowDividerBelow="true"
+            app:dependency="showUserKml"
+            app:iconSpaceReserved="false"
+            app:key="importKml"
+            app:summary="Import custom kml file."
+            app:title="No file imported" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/settings_category_advanced"
+        app:allowDividerAbove="true"
         app:iconSpaceReserved="false">
 
         <Preference
