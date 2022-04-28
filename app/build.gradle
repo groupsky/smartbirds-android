@@ -75,9 +75,6 @@ android {
             }
         }
     }
-    lintOptions {
-        abortOnError true
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -104,6 +101,9 @@ android {
         animationsDisabled = true
         // enable android orchestrator for isolated tests
         execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+    lint {
+        abortOnError true
     }
 }
 
