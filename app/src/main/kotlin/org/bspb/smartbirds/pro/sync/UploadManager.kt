@@ -12,7 +12,6 @@ import okhttp3.RequestBody
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.RootContext
-import org.androidannotations.annotations.res.StringRes
 import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -114,15 +113,15 @@ open class UploadManager {
                     errors.add(context.getString(R.string.sync_error_upload_file, monitoringFile))
                 }
                 Reporting.logException(t)
-                Toast.makeText(
-                    context,
-                    String.format(
-                        "Could not upload %s of %s to smartbirds.org!",
-                        monitoringFile,
-                        monitoringCode
-                    ),
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    context,
+//                    String.format(
+//                        "Could not upload %s of %s to smartbirds.org!",
+//                        monitoringFile,
+//                        monitoringCode
+//                    ),
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
         }
 
@@ -170,11 +169,11 @@ open class UploadManager {
                     )
                     errors.add(error)
                     Reporting.logException(IllegalStateException(error))
-                    Toast.makeText(
-                        context,
-                        error,
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        context,
+//                        error,
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                     continue
                 }
                 pictures.add(fileObj)
@@ -182,9 +181,9 @@ open class UploadManager {
             dataJson.add("pictures", pictures)
 
             // convert gpx
-            if (fileObjects != null && !fileObjects.containsKey("track.gpx")) {
+            if (fileObjects == null || !fileObjects.containsKey("track.gpx")) {
                 val msg = "Missing track.gpx file for $monitoringCode"
-                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 Reporting.logException(IllegalStateException(msg))
             } else {
                 dataJson.add("track", fileObjects?.get("track.gpx")!!["url"])
