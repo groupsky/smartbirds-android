@@ -81,4 +81,6 @@ public interface MapProvider {
     void setShowGrid1km(boolean showGrid1km);
 
     void setShowGrid10km(boolean showGrid10km);
+
+    void setShowKml(boolean showKml);
 }

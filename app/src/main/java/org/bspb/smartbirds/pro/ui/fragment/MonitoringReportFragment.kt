@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.adapter.ReportAdapter
 import org.bspb.smartbirds.pro.databinding.FragmentMonitoringReportBinding
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.viewmodel.MonitoringReportViewModel
 
 class MonitoringReportFragment : Fragment() {

@@ -399,4 +399,8 @@ Do you really want to cancel the monitoring?"</string>
     <string name="main_screen_btn_report">"Last monitoring report"</string>
     <string name="report_last_monitoring_warning_title">"Warning"</string>
     <string name="report_last_monitoring_warning_message">"There is no monitoring to show a report for."</string>
+    <string name="settings_kml_file">No file imported</string>
+    <string name="settings_kml_file_summary">User kml file to show on the map.</string>
+    <string name="settings_show_kml">User KML</string>
+    <string name="settings_show_kml_summary">Show user imported KML file</string>
 </resources>

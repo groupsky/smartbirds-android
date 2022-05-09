@@ -53,7 +53,9 @@ import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapDetachedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.tools.Reporting;
+import org.bspb.smartbirds.pro.ui.utils.Constants;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlFolder;
@@ -107,12 +109,16 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private boolean showRandomCells;
     private boolean showGrid1km;
     private boolean showGrid10km;
+    private boolean showKml;
     private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
     private List<Polygon> atlasCellsPolygons = new ArrayList<>();
     private TileOverlay spaTiles;
     private TileOverlay randomCellsTiles;
     private TileOverlay grid1kmTiles;
     private TileOverlay grid10kmTiles;
+
+    private List<Polygon> kmlPolygons = new ArrayList();
+    private List<Marker> kmlMarkers = new ArrayList();
 
     @Override
     /**
@@ -183,11 +189,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         drawLocalProjects(showLocalProjects);
         drawBgAtlasCells();
-        drawArea();
         showSPA();
         showRandomCells();
         showGrid1km();
         showGrid10km();
+        showKml();
 
         fragment.getView().post(new Runnable() {
             @Override
@@ -496,6 +502,12 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         showGrid10km();
     }
 
+    @Override
+    public void setShowKml(boolean showKml) {
+        this.showKml = showKml;
+        showKml();
+    }
+
     private void showSPA() {
         spaTiles = showTilesOverlay(spaTiles, R.string.spa_url, showSPA);
     }
@@ -559,10 +571,25 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         this.markerClickListener = listener;
     }
 
+    private void showKml() {
+        for (Polygon polygon : kmlPolygons) {
+            polygon.remove();
+        }
+        for (Marker marker : kmlMarkers) {
+            marker.remove();
+        }
+        kmlPolygons.clear();
+        kmlMarkers.clear();
+
+        if (showKml) {
+            drawArea();
+        }
+    }
+
     @Background
     void drawArea() {
         KmlDocument kml = new KmlDocument();
-        File file = new File(AREA_FILE_PATH);
+        File file = new File(fragment.getContext().getExternalFilesDir(null), Constants.AREA_FILE_NAME);
         if (!file.exists()) {
             return;
         }
@@ -621,7 +648,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                 }
             }
 
-            mMap.addPolygon(polygonOptions);
+            kmlPolygons.add(mMap.addPolygon(polygonOptions));
 
         } else if (geometry instanceof KmlMultiGeometry) {
             KmlMultiGeometry multiGeometry = (KmlMultiGeometry) geometry;
@@ -636,7 +663,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                         .position(new LatLng(point.getLatitude(), point.getLongitude()))
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                         .title(name);
-                mMap.addMarker(markerOptions);
+                kmlMarkers.add(mMap.addMarker(markerOptions));
             }
         }
     }

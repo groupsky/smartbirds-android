@@ -51,6 +51,7 @@
             app:entryValues="@array/map_type_values"
             app:iconSpaceReserved="false"
             app:key="mapType"
+            app:positiveButtonText="hello"
             app:title="@string/settings_map_type"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
@@ -115,16 +116,16 @@
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             app:key="showUserKml"
-            app:summary="Show user imported KML file"
-            app:title="User KML" />
+            app:summary="@string/settings_show_kml_summary"
+            app:title="@string/settings_show_kml" />
 
         <Preference
             app:allowDividerBelow="true"
             app:dependency="showUserKml"
             app:iconSpaceReserved="false"
             app:key="importKml"
-            app:summary="Import custom kml file."
-            app:title="No file imported" />
+            app:summary="@string/settings_kml_file_summary"
+            app:title="@string/settings_kml_file" />
     </PreferenceCategory>
 
     <PreferenceCategory

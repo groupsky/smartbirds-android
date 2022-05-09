@@ -1,29 +1,38 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.*
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.tools.DBExporter
 import org.bspb.smartbirds.pro.ui.map.MapProvider
-import org.bspb.smartbirds.pro.utils.debugLog
-import org.bspb.smartbirds.pro.utils.popToast
+import org.bspb.smartbirds.pro.utils.KmlUtils
 import org.bspb.smartbirds.pro.utils.showAlert
-import java.io.File
+
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private var mapTypePreference: ListPreference? = null
     private var providerPreference: ListPreference? = null
     private var enabledFormsPreference: MultiSelectListPreference? = null
     private var exportPreference: Preference? = null
+    private var showKmlPreference: SwitchPreferenceCompat? = null
+    private var importedKmlPreference: Preference? = null
+    private var prefs: SmartBirdsPrefs_? = null
 
     private val pickKml = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        copyFileToExternalStorage(it)
+        it ?: return@registerForActivityResult
+
+        prefs?.kmlFileName()?.put(KmlUtils.getFileName(requireContext(), it))
+        KmlUtils.copyFileToExternalStorage(requireContext(), it)
+        updateImportedKmlPreference()
+        showKmlPreference?.isChecked = true
+
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
+        prefs = SmartBirdsPrefs_(requireContext())
         initPreferences()
         updateMapType(MapProvider.ProviderType.valueOf(providerPreference?.value as String))
     }
@@ -57,12 +66,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             return@OnPreferenceClickListener true
         }
 
-        val showKmlPreference: SwitchPreferenceCompat? = findPreference("showUserKml")
-        showKmlPreference?.setOnPreferenceChangeListener { preference, newValue ->
-            debugLog("current: ${(preference as SwitchPreferenceCompat).isChecked}, newValue: $newValue")
+        showKmlPreference = findPreference("showUserKml")
+        showKmlPreference?.setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
-                if (!checkExistingUserKml()) {
-                    requireContext().popToast("Missing file. Should open picker")
+                if (!KmlUtils.checkExistingUserKml(requireContext())) {
                     pickKml()
                     return@setOnPreferenceChangeListener false
                 }
@@ -70,30 +77,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             return@setOnPreferenceChangeListener true
         }
+
+        importedKmlPreference = findPreference("importKml")
+        importedKmlPreference?.setOnPreferenceClickListener {
+            pickKml()
+            return@setOnPreferenceClickListener true
+        }
+
+        updateImportedKmlPreference()
+    }
+
+    private fun updateImportedKmlPreference() {
+        if (KmlUtils.checkExistingUserKml(requireContext())) {
+            importedKmlPreference?.title = prefs?.kmlFileName()?.get() ?: "user.kml"
+        }
     }
 
     private fun pickKml() {
         pickKml.launch("application/vnd.google-earth.kml+xml")
-    }
-
-    private fun checkExistingUserKml(): Boolean {
-        return getKmlFile().exists()
-    }
-
-    private fun copyFileToExternalStorage(uri: Uri) {
-        requireContext().contentResolver.openInputStream(uri)?.use {
-            val kmlFile = getKmlFile()
-            if (kmlFile.exists()) {
-                kmlFile.delete()
-            }
-            it.copyTo(getKmlFile().outputStream())
-        }
-    }
-
-    private fun getKmlFile(): File {
-        val kmlFile = File(requireContext().getExternalFilesDir(null), "user.kml")
-        debugLog("PAth: ${kmlFile.absolutePath}")
-        return kmlFile
     }
 
     private fun updateMapType(provider: MapProvider.ProviderType) {
