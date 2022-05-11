@@ -67,7 +67,7 @@ import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.DataService_;
-import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
+import org.bspb.smartbirds.pro.service.TrackingService;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
@@ -251,7 +251,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         super.onCreate(savedInstanceState);
         try {
             bindService(DataService_.intent(this).get(), trackingServiceConnection, BIND_AUTO_CREATE);
-            bindService(new TrackingServiceBuilder(this).getIntent(), dataServiceConnection, BIND_ABOVE_CLIENT);
+            bindService(new Intent(this, TrackingService.class), dataServiceConnection, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {
             logException(t);
         }

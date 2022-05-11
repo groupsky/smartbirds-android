@@ -20,7 +20,7 @@ import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
 import org.bspb.smartbirds.pro.service.DataService_;
-import org.bspb.smartbirds.pro.service.TrackingServiceBuilder;
+import org.bspb.smartbirds.pro.service.TrackingService;
 
 import java.util.Locale;
 
@@ -51,7 +51,7 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
         setResult(RESULT_CANCELED);
         DataService_.intent(this).start();
         try {
-            bindService(new TrackingServiceBuilder(this).getIntent(), this, BIND_ABOVE_CLIENT);
+            bindService(new Intent(this, TrackingService.class), this, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {
             logException(t);
         }

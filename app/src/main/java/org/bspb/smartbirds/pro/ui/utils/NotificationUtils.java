@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+
 import androidx.core.app.NotificationCompat;
 
 import org.bspb.smartbirds.pro.BuildConfig;
@@ -23,8 +24,9 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 public class NotificationUtils {
 
     public static final String CHANNEL_ID = BuildConfig.APPLICATION_ID + ".notifications_channel";
+    public static final int MONITORING_NOTIFICATION_ID = 1001;
 
-    public static void showMonitoringNotification(Context context) {
+    public static Notification buildMonitoringNotification(Context context) {
         Intent intent = SplashScreenActivity_.intent(context).get();
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -49,6 +51,7 @@ public class NotificationUtils {
                 .setSmallIcon(R.drawable.ic_stat_running)
                 .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
                 .setContentIntent(resultPendingIntent);
 
         try {
@@ -60,14 +63,20 @@ public class NotificationUtils {
             logException(t);
         }
 
-        Notification notification = builder.build();
-        notificationManager.notify(1, notification);
+        return builder.build();
+    }
+
+    public static void showMonitoringNotification(Context context) {
+        Notification notification = buildMonitoringNotification(context);
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(MONITORING_NOTIFICATION_ID, notification);
     }
 
     public static void hideMonitoringNotification(Context context) {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(1);
+        notificationManager.cancel(MONITORING_NOTIFICATION_ID);
         notificationManager.cancelAll();
     }
 }

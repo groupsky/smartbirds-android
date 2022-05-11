@@ -26,6 +26,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <!-- Without gps, we are doomed! -->
     <uses-feature
         android:name="android.hardware.location"
@@ -200,10 +202,6 @@
             android:value="77d73d871322caaa0ef4f96a467325bcc3b2dfb5" />
 
         <service
-            android:name=".service.TrackingService_"
-            android:enabled="true"
-            android:exported="false" />
-        <service
             android:name=".service.ExportService_"
             android:enabled="true"
             android:exported="false" />
@@ -221,6 +219,12 @@
         <service
             android:name=".service.SyncService_"
             android:exported="false" />
+
+        <service
+            android:name=".service.TrackingService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>
