@@ -114,12 +114,16 @@ open class MainFragment : Fragment() {
         if (SyncService.isWorking) {
             updateSyncProgress(SyncService.syncMessage)
         }
+
+        // Observe Not synced monitorings count
+        monitoringManager.countMonitoringsForStatusLive(Monitoring.Status.finished).observe(this) {
+            displayNotSyncedCount(it)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         checkBatteryOptimization()
-        showNotSyncedCount()
         checkForLastMonitoring()
     }
 
@@ -355,14 +359,6 @@ open class MainFragment : Fragment() {
         }
     }
 
-    open fun showNotSyncedCount() {
-        lifecycleScope.launch {
-            val notSyncedCount: Int =
-                monitoringManager.countMonitoringsForStatus(Monitoring.Status.finished)
-            displayNotSyncedCount(notSyncedCount)
-        }
-    }
-
     @UiThread
     open fun displayNotSyncedCount(notSyncedCount: Int) {
         try {
@@ -382,7 +378,6 @@ open class MainFragment : Fragment() {
     open fun onSyncComplete() {
         hideProgressDialog()
         showErrorsIfAny()
-        showNotSyncedCount()
     }
 
     private fun showErrorsIfAny() {

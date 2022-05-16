@@ -52,6 +52,10 @@ class MonitoringRepository {
         return SmartBirdsDatabase.getInstance().monitoringDao().countMonitoringsForStatus(status)
     }
 
+    fun countMonitoringsForStatusLive(status: Monitoring.Status): LiveData<Int> {
+        return SmartBirdsDatabase.getInstance().monitoringDao().countMonitoringsForStatusLive(status)
+    }
+
     fun getMonitoringsWithEntriesCount(status: Monitoring.Status?): LiveData<List<MonitoringWithEntriesCount>> {
         return SmartBirdsDatabase.getInstance().monitoringDao().getMonitoringsWithEntriesCount(status)
     }

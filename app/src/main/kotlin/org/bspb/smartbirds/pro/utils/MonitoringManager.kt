@@ -182,6 +182,10 @@ class MonitoringManager private constructor(val context: Context) {
         return monitoringRepository.countMonitoringsForStatus(status)
     }
 
+    fun countMonitoringsForStatusLive(status: Monitoring.Status): LiveData<Int> {
+        return monitoringRepository.countMonitoringsForStatusLive(status)
+    }
+
     suspend fun getLastMonitoring(): Monitoring? {
         return monitoringFromDb(monitoringRepository.getLastMonitoring())
     }

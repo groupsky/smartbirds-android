@@ -45,6 +45,9 @@ abstract class MonitoringDao {
     @Query("SELECT COUNT(code) FROM monitorings WHERE status = :status")
     abstract suspend fun countMonitoringsForStatus(status: Monitoring.Status): Int
 
+    @Query("SELECT COUNT(code) FROM monitorings WHERE status = :status")
+    abstract fun countMonitoringsForStatusLive(status: Monitoring.Status): LiveData<Int>
+
     @Query(
         """
             SELECT 
