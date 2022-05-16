@@ -588,6 +588,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     @Background
     void drawArea() {
+        if (fragment == null || fragment.getContext() == null) {
+            return;
+        }
+
         KmlDocument kml = new KmlDocument();
         File file = new File(fragment.getContext().getExternalFilesDir(null), Constants.AREA_FILE_NAME);
         if (!file.exists()) {
