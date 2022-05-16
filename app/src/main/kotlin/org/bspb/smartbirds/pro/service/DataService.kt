@@ -78,12 +78,18 @@ open class DataService : Service() {
         set(value) {
             field = value
             if (value != null) {
-                NotificationUtils.showMonitoringNotification(applicationContext)
-                TrackingService_.intent(this).start()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(Intent(this, TrackingService::class.java))
+                } else {
+                    startService(Intent(this, TrackingService::class.java))
+                    NotificationUtils.showMonitoringNotification(applicationContext)
+                }
                 globalPrefs.runningMonitoring().put(true)
             } else {
-                NotificationUtils.hideMonitoringNotification(applicationContext)
-                TrackingService_.intent(this).stop()
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    NotificationUtils.hideMonitoringNotification(applicationContext)
+                }
+                stopService(Intent(this, TrackingService::class.java))
                 globalPrefs.runningMonitoring().put(false)
             }
         }
