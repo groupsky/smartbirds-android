@@ -51,6 +51,7 @@
             app:entryValues="@array/map_type_values"
             app:iconSpaceReserved="false"
             app:key="mapType"
+            app:positiveButtonText="hello"
             app:title="@string/settings_map_type"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
@@ -103,15 +104,33 @@
             app:title="@string/settings_grid_1km" />
 
         <SwitchPreferenceCompat
+            app:allowDividerBelow="true"
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             app:key="showGrid10km"
             app:summary="@string/settings_grid_10km_summary"
             app:title="@string/settings_grid_10km" />
+
+        <SwitchPreferenceCompat
+            app:allowDividerAbove="true"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="showUserKml"
+            app:summary="@string/settings_show_kml_summary"
+            app:title="@string/settings_show_kml" />
+
+        <Preference
+            app:allowDividerBelow="true"
+            app:dependency="showUserKml"
+            app:iconSpaceReserved="false"
+            app:key="importKml"
+            app:summary="@string/settings_kml_file_summary"
+            app:title="@string/settings_kml_file" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/settings_category_advanced"
+        app:allowDividerAbove="true"
         app:iconSpaceReserved="false">
 
         <Preference

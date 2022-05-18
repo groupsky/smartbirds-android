@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 
@@ -44,4 +45,8 @@ fun Context.showAlert(
     builder.setPositiveButton(android.R.string.ok, positiveButtonClickListener)
     builder.setNegativeButton(android.R.string.cancel, negativeButtonClickListener)
     builder.show()
+}
+
+fun Context.popToast(text: String, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, text, length).show()
 }

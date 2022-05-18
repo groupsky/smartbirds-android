@@ -574,6 +574,11 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         // TODO to be implemented
     }
 
+    @Override
+    public void setShowKml(boolean showKml) {
+        // TODO to be implemented
+    }
+
     private static class EventsOverlay extends Overlay {
 
         @Nullable

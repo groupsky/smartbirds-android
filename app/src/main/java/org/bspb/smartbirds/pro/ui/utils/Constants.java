@@ -9,5 +9,5 @@ public interface Constants {
     String VIEWTYPE_MAP = "MAP";
     String VIEWTYPE_LIST = "LIST";
     String VIEWTYPE_COMBINED = "COMBINED";
-
+    String AREA_FILE_NAME = "user.kml";
 }

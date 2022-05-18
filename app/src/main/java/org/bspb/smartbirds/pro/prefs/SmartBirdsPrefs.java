@@ -61,4 +61,9 @@ public interface SmartBirdsPrefs {
     Set<String> formsEnabled();
 
     int versionCode();
+
+    String kmlFileName();
+
+    @DefaultBoolean(false)
+    boolean showUserKml();
 }

@@ -161,6 +161,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     boolean showRandomCells;
     boolean showGrid1km;
     boolean showGrid10km;
+    boolean showKml;
 
     @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
@@ -416,6 +417,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         currentMap.setShowRandomCells(showRandomCells);
         currentMap.setShowGrid1km(showGrid1km);
         currentMap.setShowGrid10km(showGrid10km);
+        currentMap.setShowKml(showKml);
     }
 
     private List<BGAtlasCell> readAtlasCells() {
@@ -575,6 +577,14 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         this.showGrid10km = showGrid10km;
         if (currentMap != null) {
             currentMap.setShowGrid10km(showGrid10km);
+            currentMap.updateCamera();
+        }
+    }
+
+    private void setShowKml(boolean showKml) {
+        this.showKml = showKml;
+        if (currentMap != null) {
+            currentMap.setShowKml(showKml);
             currentMap.updateCamera();
         }
     }
@@ -816,6 +826,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         setShowRandomCells(prefs.showRandomCells().get());
         setShowGrid1km(prefs.showGrid1km().get());
         setShowGrid10km(prefs.showGrid10km().get());
+        setShowKml(prefs.showUserKml().get());
 
         restorePoints();
 
