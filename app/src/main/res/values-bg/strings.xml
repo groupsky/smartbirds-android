@@ -19,7 +19,7 @@
     <string name="entry_type_herptile">"Земноводни и влечуги"</string>
     <string name="entry_type_mammal">"Бозайници"</string>
     <string name="entry_type_humid">"Влажни зони"</string>
-    <string name="entry_type_invertebrates">"Защитени безгръбначни"</string>
+    <string name="entry_type_invertebrates">"Безгръбначни животни"</string>
     <string name="required_field">"Задължително поле"</string>
     <string name="monitoring_notification_title">"Мониторинг"</string>
     <string name="monitoring_notification_content">"Стартиран мониторинг"</string>
@@ -163,7 +163,7 @@
     <string name="main_screen_btn_help">"Помощ"</string>
     <string name="info_dialog_title">"Информация"</string>
     <string name="info_text"><![CDATA[
-            <p><b>SmartBirds Pro е мобилно приложение за мониторинг на птици, земноводни, влечуги, бозайници, защитени безгръбначни животни и растения</b></p>
+            <p><b>SmartBirds Pro е мобилно приложение за мониторинг на птици, земноводни, влечуги, бозайници, безгръбначни животни и растения</b></p>
             <p>Този продукт е създаден от Българско дружество за защита на птиците / BirdLife България,</p>
             <img src="logo_bspb" width="120" height="120"/>
             <br />
@@ -398,4 +398,8 @@
     <string name="main_screen_btn_report">"Отчет за последен мониторинг"</string>
     <string name="report_last_monitoring_warning_title">"Внимание"</string>
     <string name="report_last_monitoring_warning_message">"Няма мониторинг, за който да се покаже отчет."</string>
+    <string name="settings_kml_file">"Няма качени файлове"</string>
+    <string name="settings_kml_file_summary">"Потребителски KML файл за показване на карта"</string>
+    <string name="settings_show_kml">"Потребителски KML"</string>
+    <string name="settings_show_kml_summary">"Показване на потребителски KML файл"</string>
 </resources>
