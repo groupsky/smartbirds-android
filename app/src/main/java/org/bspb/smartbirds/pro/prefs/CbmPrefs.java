@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by dani on 14-11-18.
  */
-@SharedPref
+@SharedPref(SharedPref.Scope.APPLICATION_DEFAULT)
 public interface CbmPrefs {
 
     String cbmZone();
