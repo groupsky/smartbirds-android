@@ -148,7 +148,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.9.3'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.10.0'
 
     implementation "androidx.lifecycle:lifecycle-common-java8:2.4.1"
 
@@ -158,7 +158,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
 
     testImplementation 'junit:junit:4.13.2'
 
