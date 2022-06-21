@@ -9,6 +9,7 @@ import org.bspb.smartbirds.pro.utils.MonitoringManager
 class BaseEntryViewModel : ViewModel() {
 
     private val formRepository = FormRepository()
+    var haveDeserialized = false
 
     suspend fun loadEntry(id: Long): MonitoringEntry? {
         var formEntry: Form? = formRepository.findById(id) ?: return null
