@@ -105,6 +105,7 @@ android {
     lint {
         abortOnError true
     }
+    namespace 'org.bspb.smartbirds.pro'
 }
 
 dependencies {
