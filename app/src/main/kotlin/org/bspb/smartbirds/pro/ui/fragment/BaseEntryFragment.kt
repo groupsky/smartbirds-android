@@ -71,7 +71,6 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
      */
     protected var entryTimestamp: Date? = null
 
-    private var haveDeserialized = false
 
     @JvmField
     @InstanceState
@@ -90,7 +89,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
     }
 
     private fun loadEntry() {
-        if (haveDeserialized) return
+        if (viewModel.haveDeserialized) return
         lifecycleScope.launch {
             storedEntry = viewModel.loadEntry(entryId)
             if (storedEntry == null) {
@@ -121,7 +120,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
     }
 
     override fun doDeserialize(monitoringCode: String?, data: HashMap<String?, String?>?) {
-        haveDeserialized = true
+        viewModel.haveDeserialized = true
         LoaderManager.getInstance(requireActivity()).destroyLoader(this.hashCode())
         super.doDeserialize(monitoringCode, data)
     }
