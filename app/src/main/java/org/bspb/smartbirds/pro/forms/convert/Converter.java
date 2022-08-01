@@ -42,6 +42,7 @@ public abstract class Converter {
         this.context = context.getApplicationContext();
 
         // common form
+        addSingle(R.string.tag_source, "source");
         add(R.string.tag_location, "location");
         add(R.string.tag_lat, "latitude");
         add(R.string.tag_lon, "longitude");
