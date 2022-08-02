@@ -14,7 +14,6 @@ public class BirdsConverter extends Converter {
         super(context);
 
         // birds
-        addSingle(R.string.tag_source, "source");
         addSpecies(R.string.tag_species_scientific_name, "species");
         addBool(R.string.tag_confidential, "confidential");
         addSingle(R.string.tag_count_unit, "countUnit");
