@@ -145,7 +145,7 @@
     <string name="tag_migration_point" translatable="false">MigrationPoint</string>
     <string name="tag_distance_from_migration_point" translatable="false">DistanceFromMigrationPoint</string>
     <string name="tag_location_from_migration_point" translatable="false">LocationFromMigrationPoint</string>
-    <string name="tag_pulmage" translatable="false">Pulmage</string>
+    <string name="tag_plumage" translatable="false">Plumage</string>
     <string name="tag_visochina_polet" translatable="false">VisochinaPolet</string>
     <string name="tag_posoka_polet_from" translatable="false">PosokaPoletFrom</string>
     <string name="tag_posoka_polet_to" translatable="false">PosokaPoletTo</string>
