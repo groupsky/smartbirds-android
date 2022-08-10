@@ -11,7 +11,6 @@ class BirdsMigrationsConverter(context: Context?) : Converter(context) {
         addSpecies(R.string.tag_species_scientific_name, "species")
         add(R.string.tag_count, "count", "0")
         addSingle(R.string.tag_migration_point, "migrationPoint")
-        add(R.string.tag_distance_from_migration_point, "distanceFromMigrationPoint")
         addSingle(R.string.tag_location_from_migration_point, "locationFromMigrationPoint")
         addSingle(R.string.tag_sex, "sex")
         addSingle(R.string.tag_plumage, "plumage")

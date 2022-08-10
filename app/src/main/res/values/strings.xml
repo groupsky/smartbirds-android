@@ -410,7 +410,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_birds_migrations_plumage">Plumage</string>
     <string name="monitoring_birds_migrations_location">Location</string>
     <string name="monitoring_birds_migrations_migration_point">Migration point</string>
-    <string name="monitoring_birds_migrations_distance">Distance</string>
     <string name="monitoring_birds_migrations_posoka_polet_from">Flight direction from</string>
     <string name="monitoring_birds_migrations_posoka_polet_to">Flight direction to</string>
     <string name="monitoring_birds_migrations_visochina_polet">Flight height</string>

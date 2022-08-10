@@ -192,6 +192,20 @@ class NomenclaturesManager private constructor(val context: Context) {
                         .updateNomenclaturesAndClearOld(nomenclatures)
                 }
 
+                limit = 500
+                offset = 0
+                while (true) {
+                    val response = backend.api().pois(limit, offset).execute()
+                    if (!response.isSuccessful) throw IOException("Server error: " + response.code() + " - " + response.message())
+                    if (response.body()!!.data.isEmpty()) break
+                    offset += response.body()!!.data.size
+                    response.body()!!.data.forEach {
+                        nomenclatures.add(it.convertToEntity())
+                    }
+                }
+                SmartBirdsDatabase.getInstance().nomenclatureDao()
+                    .updateNomenclaturesAndClearOld(nomenclatures)
+
                 loadNomenclatures()
             } catch (t: Throwable) {
                 Reporting.logException(t)

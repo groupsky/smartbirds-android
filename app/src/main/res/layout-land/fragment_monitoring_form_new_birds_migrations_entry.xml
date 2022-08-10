@@ -159,7 +159,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="6">
+                    android:layout_span="4">
 
                     <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                         android:id="@+id/form_birds_migrations_posoka_polet_from"
@@ -174,7 +174,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="6">
+                    android:layout_span="4">
 
                     <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                         android:id="@+id/form_birds_migrations_posoka_polet_to"
@@ -185,29 +185,11 @@
                         app:entriesType="form_main_geo_direction" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-            </TableRow>
-
-            <TableRow>
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="6">
-
-                    <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
-                        android:id="@+id/form_birds_migrations_distance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_birds_migrations_distance"
-                        android:tag="@string/tag_distance_from_migration_point" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/TextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="6">
+                    android:layout_span="4">
 
                     <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                         android:id="@+id/form_birds_migrations_visochina_polet"
@@ -218,6 +200,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
             </TableRow>
+
 
             <TableRow>
 
