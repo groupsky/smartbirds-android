@@ -29,7 +29,7 @@
                     tools:layout="@layout/fragment_moderator_review" />
 
                 <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-                    android:id="@+id/form_birds_confidential"
+                    android:id="@+id/form_birds_migrations_confidential"
                     android:layout_span="3"
                     android:tag="@string/tag_confidential"
                     android:text="@string/monitoring_birds_private" />
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
                         android:id="@+id/form_birds_migrations_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_birds_migrations_plumage"
                         android:tag="@string/tag_plumage"
-                        app:entriesType="form_birds_migration_pulmage" />
+                        app:entriesType="form_birds_migration_plumage" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+            <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
                 android:id="@+id/form_birds_migrations_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
