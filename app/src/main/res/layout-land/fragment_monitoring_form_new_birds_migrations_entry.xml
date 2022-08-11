@@ -38,11 +38,11 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.CbmQuickChoiceFormInput
+                <org.bspb.smartbirds.pro.ui.views.QuickChoiceFormInput
                     android:id="@+id/form_birds_migrations_species_quick"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="10"
+                    android:layout_span="12"
                     android:tag="birds_migrations_quick_species"
                     app:entriesType="species_birds"
                     app:hint="@string/monitoring_birds_migrations_name" />
@@ -82,7 +82,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_birds_migrations_count"
-                        android:tag="@string/tag_count" />
+                        android:tag="@string/tag_count"
+                        app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -161,7 +162,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/monitoring_birds_migrations_migration_point"
                         android:tag="@string/tag_migration_point"
-                        app:entriesType="form_birds_migration_point" />
+                        app:entriesType="form_birds_migration_point"
+                        app:required="true" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
