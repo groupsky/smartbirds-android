@@ -36,7 +36,19 @@
 
             </TableRow>
 
-            <TableRow android:id="@+id/row1">
+            <TableRow>
+
+                <org.bspb.smartbirds.pro.ui.views.CbmQuickChoiceFormInput
+                    android:id="@+id/form_birds_migrations_species_quick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="10"
+                    android:tag="birds_migrations_quick_species"
+                    app:entriesType="species_birds"
+                    app:hint="@string/monitoring_birds_migrations_name" />
+            </TableRow>
+
+            <TableRow>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"

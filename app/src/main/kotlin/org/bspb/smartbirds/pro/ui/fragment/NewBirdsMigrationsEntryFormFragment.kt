@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.FragmentById
 import org.androidannotations.annotations.ViewById
@@ -10,6 +11,9 @@ import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
+import org.bspb.smartbirds.pro.ui.views.QuickChoiceFormInput
+import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
 import java.util.*
 
@@ -26,8 +30,23 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
     protected var confidential: SwitchFormInput? = null
 
     @JvmField
+    @ViewById(R.id.form_birds_migrations_species_quick)
+    protected var speciesQuickChoice: QuickChoiceFormInput? = null
+
+    @JvmField
+    @ViewById(R.id.form_birds_migrations_species)
+    protected var speciesInput: SingleChoiceFormInput? = null
+
+    @JvmField
     @Pref
     protected var commonPrefs: CommonPrefs_? = null
+
+    @AfterViews
+    open fun initQuickChoice() {
+        speciesQuickChoice?.onItemSelected = { nomenclatureItem: NomenclatureItem? ->
+            speciesInput?.setSelection(nomenclatureItem)
+        }
+    }
 
     override fun onResume() {
         super.onResume()
@@ -77,7 +96,8 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
-            return NewBirdsMigrationsEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build()
+            return NewBirdsMigrationsEntryFormFragment_.builder().entryId(id).readOnly(readOnly)
+                .build()
         }
     }
 }
