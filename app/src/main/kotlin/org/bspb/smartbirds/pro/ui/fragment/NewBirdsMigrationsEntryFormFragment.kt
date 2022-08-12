@@ -10,6 +10,7 @@ import org.androidannotations.annotations.ViewById
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
+import org.bspb.smartbirds.pro.prefs.BirdsMigrationsPrefs_
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.QuickChoiceFormInput
@@ -38,8 +39,16 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
     protected var speciesInput: SingleChoiceFormInput? = null
 
     @JvmField
+    @ViewById(R.id.form_birds_migrations_migration_point)
+    protected var migrationPoint: SingleChoiceFormInput? = null
+
+    @JvmField
     @Pref
     protected var commonPrefs: CommonPrefs_? = null
+
+    @JvmField
+    @Pref
+    protected var migrationPrefs: BirdsMigrationsPrefs_? = null
 
     @AfterViews
     open fun initQuickChoice() {
@@ -52,12 +61,14 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
         super.onResume()
         if (isNewEntry) {
             confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
+            migrationPoint?.setText(migrationPrefs!!.migrationPoint().get())
         }
     }
 
     override fun onPause() {
         super.onPause()
         commonPrefs!!.confidentialRecord().put(confidential!!.isChecked)
+        migrationPrefs!!.migrationPoint().put(migrationPoint?.text?.toString())
     }
 
     override fun getEntryType(): EntryType? {

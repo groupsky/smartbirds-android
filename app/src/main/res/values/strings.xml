@@ -415,4 +415,5 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_birds_migrations_visochina_polet">Flight height</string>
     <string name="monitoring_birds_monitorings_notes">Notes</string>
     <string name="entry_type_birds_migrations">"Birds migrations"</string>
+    <string name="monitoring_birds_migrations_type_flight">Flight type</string>
 </resources>

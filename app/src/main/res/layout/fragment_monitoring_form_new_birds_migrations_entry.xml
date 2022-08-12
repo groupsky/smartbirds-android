@@ -42,6 +42,23 @@
 
         <View style="@style/FieldSeparator" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_birds_migrations_migration_point"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_migrations_migration_point"
+                android:tag="@string/tag_migration_point"
+                app:entriesType="form_birds_migration_point"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
         <org.bspb.smartbirds.pro.ui.views.QuickChoiceFormInput
             android:id="@+id/form_birds_migrations_species_quick"
             android:layout_width="match_parent"
@@ -153,23 +170,6 @@
             android:layout_height="wrap_content">
 
             <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
-                android:id="@+id/form_birds_migrations_migration_point"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/monitoring_birds_migrations_migration_point"
-                android:tag="@string/tag_migration_point"
-                app:entriesType="form_birds_migration_point"
-                app:required="true" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <View style="@style/FieldSeparator" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
                 android:id="@+id/form_birds_migrations_posoka_polet_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,6 +201,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
+                android:id="@+id/form_birds_migrations_type_flight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_birds_migrations_type_flight"
+                android:tag="@string/tag_type_flight"
+                app:entriesType="form_birds_migration_type_flight" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/GroupSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                 android:id="@+id/form_birds_migrations_visochina_polet"
                 android:layout_width="match_parent"
@@ -210,7 +226,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/GroupSeparator" />
-
+        
         <com.google.android.material.textfield.TextInputLayout
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
