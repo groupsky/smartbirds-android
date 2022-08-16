@@ -20,5 +20,7 @@ class BirdsMigrationsConverter(context: Context?) : Converter(context) {
         addSingle(R.string.tag_posoka_polet_to, "posokaPoletTo")
         addMulti(R.string.tag_type_flight, "typeFlight")
         add(R.string.tag_remarks_type, "speciesNotes")
+        addBool(R.string.tag_confidential, "confidential")
+        addBool(R.string.tag_moderator_review, "moderatorReview")
     }
 }
