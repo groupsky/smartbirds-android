@@ -9,9 +9,12 @@ import org.androidannotations.annotations.FragmentById
 import org.androidannotations.annotations.ViewById
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.prefs.BirdsMigrationsPrefs_
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.tools.Reporting
+import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.QuickChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
@@ -61,14 +64,27 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
         super.onResume()
         if (isNewEntry) {
             confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
-            migrationPoint?.setText(migrationPrefs!!.migrationPoint().get())
+            migrationPrefs!!.migrationPoint().get()?.let { nomenclatureJson ->
+                try {
+                    val nomenclature = SBGsonParser.createParser().fromJson(nomenclatureJson, Nomenclature::class.java)
+                    nomenclature.localeLabel = nomenclature.label.get(context?.getString(R.string.locale))
+                    nomenclature?.let {
+                        migrationPoint?.setSelectionIfAvailable(NomenclatureItem(it))
+                    }
+                } catch (t: Throwable) {
+                    Reporting.logException(t)
+                }
+
+            }
         }
     }
 
     override fun onPause() {
         super.onPause()
         commonPrefs!!.confidentialRecord().put(confidential!!.isChecked)
-        migrationPrefs!!.migrationPoint().put(migrationPoint?.text?.toString())
+        migrationPoint?.selectedItem?.let {
+            migrationPrefs!!.migrationPoint().put(SBGsonParser.createParser().toJson(it))
+        }
     }
 
     override fun getEntryType(): EntryType? {
