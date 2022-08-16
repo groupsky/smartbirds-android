@@ -66,7 +66,8 @@ open class UploadManager {
         isUploading = true
         try {
             val baseDir = context.getExternalFilesDir(null)
-            for (monitoringCode in monitoringManager.monitoringCodesForStatus(Monitoring.Status.finished)) {
+
+            for (monitoringCode in baseDir!!.list()) {
                 val monitoringDir = File(baseDir, monitoringCode)
                 if (!monitoringDir.exists()) {
                     val msg = "Missing folder " + monitoringDir.path

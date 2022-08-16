@@ -79,4 +79,7 @@ public interface SmartBirdsApi {
 
     @GET
     Call<DownloadsResponse> getDownloads(@Url String url);
+
+    @POST("birds-migrations")
+    Call<UploadFormResponse> createBirdsMigrations(@Body JsonObject request);
 }

@@ -130,5 +130,11 @@
     <string name="tag_primary_type" translatable="false">Primary_Type</string>
     <string name="tag_moderator_review" translatable="false">Moderator_Review</string>
     <string name="tag_observation_methodology" translatable="false">Observation_Methodology</string>
-
+    <string name="tag_migration_point" translatable="false">MigrationPoint</string>
+    <string name="tag_location_from_migration_point" translatable="false">LocationFromMigrationPoint</string>
+    <string name="tag_plumage" translatable="false">Plumage</string>
+    <string name="tag_visochina_polet" translatable="false">VisochinaPolet</string>
+    <string name="tag_posoka_polet_from" translatable="false">PosokaPoletFrom</string>
+    <string name="tag_posoka_polet_to" translatable="false">PosokaPoletTo</string>
+    <string name="tag_type_flight" translatable="false">TypeFlight</string>
 </resources>

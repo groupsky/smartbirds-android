@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.forms.convert.BirdsConverter;
+import org.bspb.smartbirds.pro.forms.convert.BirdsMigrationsConverter;
 import org.bspb.smartbirds.pro.forms.convert.CbmConverter;
 import org.bspb.smartbirds.pro.forms.convert.CiconiaConverter;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
@@ -19,6 +20,7 @@ import org.bspb.smartbirds.pro.forms.convert.InvertebratesConverter;
 import org.bspb.smartbirds.pro.forms.convert.MammalConverter;
 import org.bspb.smartbirds.pro.forms.convert.PlantsConverter;
 import org.bspb.smartbirds.pro.forms.convert.ThreatsConverter;
+import org.bspb.smartbirds.pro.forms.upload.BirdsMigrationsUploader;
 import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
 import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
 import org.bspb.smartbirds.pro.forms.upload.CiconiaUploader;
@@ -53,7 +55,8 @@ public enum EntryType {
     MAMMAL(new NewMammalEntryFormFragment.Builder(), R.string.entry_type_mammal, R.id.action_form_type_mammal, "form_mammal.csv", MammalConverter.class, MammalUploader.class, true),
     INVERTEBRATES(new NewInvertebratesEntryFormFragment.Builder(), R.string.entry_type_invertebrates, R.id.action_form_type_invertebrates, "form_invertebrates.csv", InvertebratesConverter.class, InvertebratesUploader.class, true),
     PLANTS(new NewPlantsEntryFormFragment.Builder(), R.string.entry_type_plants, R.id.action_form_type_plants, "form_plants.csv", PlantsConverter.class, PlantsUploader.class, true),
-    THREATS(new NewThreatsEntryFormFragment.Builder(), R.string.entry_type_threats, R.id.action_form_type_threats, "form_threats.csv", ThreatsConverter.class, ThreatsUploader.class, true)
+    THREATS(new NewThreatsEntryFormFragment.Builder(), R.string.entry_type_threats, R.id.action_form_type_threats, "form_threats.csv", ThreatsConverter.class, ThreatsUploader.class, true),
+    BIRDS_MIGRATIONS(new NewBirdsEntryFormFragment.Builder(), R.string.entry_type_birds, R.id.action_form_type_birds, "form_birds_migrations.csv", BirdsMigrationsConverter.class, BirdsMigrationsUploader.class, true),
     // prevent auto-formatting
     ;
 

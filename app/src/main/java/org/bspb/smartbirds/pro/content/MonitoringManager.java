@@ -23,11 +23,13 @@ import org.bspb.smartbirds.pro.db.SmartBirdsProvider;
 import org.bspb.smartbirds.pro.db.TrackingColumns;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -282,8 +284,8 @@ public class MonitoringManager {
         } catch (Throwable t) {
             logException(t);
         }
-
-        return count;
+        File baseDir = rootContext.getExternalFilesDir(null);
+        return baseDir.list().length;
     }
 
     public void deleteEntries(long[] ids) {
