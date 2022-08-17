@@ -99,8 +99,8 @@ public enum EntryType {
         this.enabled = enabled;
     }
 
-    public Fragment buildFragment(double lat, double lon) {
-        return builder.build(lat, lon);
+    public Fragment buildFragment(double lat, double lon, double geolocationAccuracy) {
+        return builder.build(lat, lon, geolocationAccuracy);
     }
 
     public Fragment loadFragment(long id) {

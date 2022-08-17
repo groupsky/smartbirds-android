@@ -75,6 +75,7 @@ import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
 import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.bspb.smartbirds.pro.viewmodel.MonitoringViewModel;
 import org.osmdroid.config.Configuration;
 
@@ -430,7 +431,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     @Click(R.id.fab)
     void onNewEntry() {
         if (currentMap.getMyLocation() != null) {
-            startNewEntryWithoutAsking(new LatLng(currentMap.getMyLocation().getLatitude(), currentMap.getMyLocation().getLongitude()));
+            startNewEntryWithoutAsking(new LatLng(currentMap.getMyLocation().getLatitude(), currentMap.getMyLocation().getLongitude()), currentMap.getMyLocation().getAccuracy());
         }
     }
 
@@ -649,11 +650,11 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     public void onEvent(MapClickedEvent event) {
-        startNewEntryWithoutAsking(event.position);
+        startNewEntryWithoutAsking(event.position, 0);
     }
 
     public void onEvent(MapLongClickedEvent event) {
-        startNewEntryAsking(event.position);
+        startNewEntryAsking(event.position, 0);
     }
 
     public void onEventMainThread(ActiveMonitoringEvent event) {
@@ -676,20 +677,20 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         finish();
     }
 
-    void startNewEntryWithoutAsking(final LatLng position) {
+    void startNewEntryWithoutAsking(final LatLng position, double accuracy) {
         if (entryType == null) {
-            startNewEntryAsking(position);
+            startNewEntryAsking(position, accuracy);
             return;
         }
         NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
         ib.entryType(entryType);
         if (position != null) {
-            ib.lat(position.latitude).lon(position.longitude);
+            ib.lat(position.latitude).lon(position.longitude).geolocationAccuracy(accuracy);
         }
         ib.startForResult(REQUEST_NEW_ENTRY);
     }
 
-    protected void startNewEntryAsking(final LatLng position) {
+    protected void startNewEntryAsking(final LatLng position, double accuracy) {
         final List<EntryType> enabledEntryTypes = new ArrayList();
         final List<String> typeTitles = new ArrayList<>();
 
@@ -712,7 +713,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         setEntryType(enabledEntryTypes.get(i));
-                        startNewEntryWithoutAsking(position);
+                        startNewEntryWithoutAsking(position, accuracy);
                         dialogInterface.cancel();
                     }
                 })

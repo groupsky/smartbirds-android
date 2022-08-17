@@ -46,6 +46,7 @@ public abstract class Converter {
         add(R.string.tag_location, "location");
         add(R.string.tag_lat, "latitude");
         add(R.string.tag_lon, "longitude");
+        add(R.string.tag_geolocation_accuracy, "geolocationAccuracy");
         addDateTime(R.string.entry_date, R.string.entry_time, "observationDateTime");
         add(R.string.monitoring_id, "monitoringCode");
         addDateTime(R.string.tag_begin_date, R.string.tag_begin_time, "startDateTime");

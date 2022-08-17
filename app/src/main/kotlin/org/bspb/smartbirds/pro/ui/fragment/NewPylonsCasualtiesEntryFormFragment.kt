@@ -72,8 +72,8 @@ open class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
     }
 
     class Builder : BaseEntryFragment.Builder {
-        override fun build(lat: Double, lon: Double): Fragment? {
-            return NewPylonsCasualtiesEntryFormFragment_.builder().lat(lat).lon(lon).build()
+        override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
+            return NewPylonsCasualtiesEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy).build()
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {

@@ -49,8 +49,8 @@ public class NewMammalEntryFormFragment extends BaseTabEntryFragment {
     public static class Builder implements BaseEntryFragment.Builder {
 
         @Override
-        public Fragment build(double lat, double lon) {
-            return NewMammalEntryFormFragment_.builder().lat(lat).lon(lon).build();
+        public Fragment build(double lat, double lon, double geolocationAccuracy) {
+            return NewMammalEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy).build();
         }
 
         @Override

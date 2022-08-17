@@ -37,6 +37,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
         protected const val ARG_LAT = "lat"
         protected const val ARG_LON = "lon"
+        protected const val ARG_GEOLOCATION_ACCURACY = "geolocationAccuracy"
     }
 
     @JvmField
@@ -48,6 +49,12 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
     @FragmentArg(ARG_LON)
     @InstanceState
     protected var lon = 0.0
+
+    @JvmField
+    @FragmentArg(ARG_GEOLOCATION_ACCURACY)
+    @InstanceState
+    protected var geolocationAccuracy = 0.0
+
 
     @JvmField
     @FragmentArg
@@ -131,6 +138,8 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         if (!TextUtils.isEmpty(latVal)) lat = latVal!!.toDouble()
         val lonVal = data[getString(R.string.tag_lon)]
         if (!TextUtils.isEmpty(lonVal)) lon = lonVal!!.toDouble()
+        val accuracyVal = data[getString(R.string.tag_geolocation_accuracy)]
+        if (!TextUtils.isEmpty(accuracyVal)) geolocationAccuracy = accuracyVal!!.toDouble()
         checkCoordinates()
         val dateVal = data[getString(R.string.entry_date)]
         val timeVal = data[getString(R.string.entry_time)]
@@ -165,6 +174,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         val data = super.serialize()
         data[getString(R.string.tag_lat)] = lat.toString()
         data[getString(R.string.tag_lon)] = lon.toString()
+        data[getString(R.string.tag_geolocation_accuracy)] = geolocationAccuracy.toString()
         data[getString(R.string.entry_date)] = Configuration.STORAGE_DATE_FORMAT.format(entryTime)
         data[getString(R.string.entry_time)] = Configuration.STORAGE_TIME_FORMAT.format(entryTime)
         return data
@@ -214,7 +224,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
     }
 
     interface Builder {
-        fun build(lat: Double, lon: Double): Fragment?
+        fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment?
 
         fun load(id: Long, readOnly: Boolean = false): Fragment?
     }
