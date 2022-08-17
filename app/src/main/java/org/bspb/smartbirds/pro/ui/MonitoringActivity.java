@@ -650,11 +650,11 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     public void onEvent(MapClickedEvent event) {
-        startNewEntryWithoutAsking(event.position, 0);
+        startNewEntryWithoutAsking(event.position, -1);
     }
 
     public void onEvent(MapLongClickedEvent event) {
-        startNewEntryAsking(event.position, 0);
+        startNewEntryAsking(event.position, -1);
     }
 
     public void onEventMainThread(ActiveMonitoringEvent event) {

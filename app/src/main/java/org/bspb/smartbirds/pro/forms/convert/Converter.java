@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
+import org.bspb.smartbirds.pro.forms.convert.fields.AccuracyConverter;
 import org.bspb.smartbirds.pro.forms.convert.fields.BooleanConverter;
 import org.bspb.smartbirds.pro.forms.convert.fields.DateConverter;
 import org.bspb.smartbirds.pro.forms.convert.fields.DateTimeConverter;
@@ -46,7 +47,7 @@ public abstract class Converter {
         add(R.string.tag_location, "location");
         add(R.string.tag_lat, "latitude");
         add(R.string.tag_lon, "longitude");
-        add(R.string.tag_geolocation_accuracy, "geolocationAccuracy");
+        addAccuracy(R.string.tag_geolocation_accuracy, "geolocationAccuracy");
         addDateTime(R.string.entry_date, R.string.entry_time, "observationDateTime");
         add(R.string.monitoring_id, "monitoringCode");
         addDateTime(R.string.tag_begin_date, R.string.tag_begin_time, "startDateTime");
@@ -103,6 +104,10 @@ public abstract class Converter {
 
     protected void addDate(@StringRes int csvDateFieldName, String jsonFieldName) {
         add(new DateConverter(context.getString(csvDateFieldName), jsonFieldName));
+    }
+
+    protected void addAccuracy(@StringRes int csvFieldName, String jsonFieldName) {
+        add(new AccuracyConverter(context.getString(csvFieldName), jsonFieldName, null));
     }
 
     public JsonObject convert(Map<String, String> csv) throws Exception {
