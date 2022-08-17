@@ -33,12 +33,15 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
     public static final String EXTRA_LON = "lon";
     public static final String EXTRA_NAME = "name";
     public static final String EXTRA_TYPE = "entryType";
+    public static final String EXTRA_GEOLOCATION_ACCURACY = "geolocationAccuracy";
     private static final String TAG = SmartBirdsApplication.TAG + ".NewMonAct";
 
     @Extra(EXTRA_LAT)
     double lat;
     @Extra(EXTRA_LON)
     double lon;
+    @Extra(EXTRA_GEOLOCATION_ACCURACY)
+    double geolocationAccuracy;
     @Extra(EXTRA_TYPE)
     EntryType entryType;
 
@@ -62,7 +65,7 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
         setTitle(entryType.titleId);
         if (getSupportFragmentManager().findFragmentById(R.id.container) == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, entryType.buildFragment(lat, lon))
+                    .add(R.id.container, entryType.buildFragment(lat, lon, geolocationAccuracy))
                     .commit();
         }
     }
@@ -90,7 +93,10 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
     }
 
     public void onEvent(EntrySubmitted event) {
-        Intent intent = new Intent().putExtra(EXTRA_LAT, lat).putExtra(EXTRA_LON, lon);
+        Intent intent = new Intent()
+                .putExtra(EXTRA_LAT, lat)
+                .putExtra(EXTRA_LON, lon)
+                .putExtra(EXTRA_GEOLOCATION_ACCURACY, geolocationAccuracy);
 
         if (EntryType.CICONIA.equals(event.entryType)) {
             intent.putExtra(EXTRA_NAME, getString(R.string.entry_type_ciconia));

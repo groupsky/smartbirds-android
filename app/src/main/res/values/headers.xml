@@ -108,6 +108,7 @@
 
     <string name="tag_lat" translatable="false">Lat</string>
     <string name="tag_lon" translatable="false">Long</string>
+    <string name="tag_geolocation_accuracy" translatable="false">GeolocationAccuracy</string>
 
     <string name="tag_user_id" translatable="false">userId</string>
     <string name="tag_user_first_name" translatable="false">firstName</string>
