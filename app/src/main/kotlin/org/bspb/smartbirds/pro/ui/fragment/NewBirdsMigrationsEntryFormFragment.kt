@@ -118,8 +118,9 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
     }
 
     class Builder : BaseEntryFragment.Builder {
-        override fun build(lat: Double, lon: Double): Fragment? {
-            return NewBirdsMigrationsEntryFormFragment_.builder().lat(lat).lon(lon).build()
+        override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
+            return NewBirdsMigrationsEntryFormFragment_.builder().lat(lat).lon(lon)
+                .geolocationAccuracy(geolocationAccuracy).build()
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
