@@ -20,6 +20,7 @@
         <attr name="singleChoiceConfigRadioFormInputStyle" format="reference" />
         <attr name="singleChoiceRadioFormInputStyle" format="reference" />
         <attr name="quickChoiceInputStyle" format="reference" />
+        <attr name="toggleGroupFormInputStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SupportRequiredView">
@@ -79,5 +80,13 @@
     <declare-styleable name="QuickChoiceFormInput">
         <attr name="entriesType" />
         <attr name="hint" />
+    </declare-styleable>
+
+    <declare-styleable name="ToggleGroupFormInput">
+        <attr name="entriesType" />
+        <attr name="hint" />
+        <attr name="required" />
+        <attr name="orientation" />
+        <attr name="singleSelection" />
     </declare-styleable>
 </resources>
