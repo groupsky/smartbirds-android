@@ -6,13 +6,16 @@ import android.view.View
 import android.widget.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.gson.reflect.TypeToken
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
+import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.inflate
+import java.util.*
+
 
 class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
 
@@ -22,13 +25,13 @@ class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
     private var mEntriesKey: CharSequence? = null
     private var mHint: CharSequence? = null
     private var mIsVertical = false
-    private var mIsSingleSelection = false
+    private var mIsSingleSelection = true
 
 
     private lateinit var hintTextView: TextView
     private lateinit var toggleGroup: MaterialButtonToggleGroup
 
-    private var mSelectedItem: NomenclatureItem? = null
+    private var mSelectedItems: MutableMap<Int, NomenclatureItem> = mutableMapOf()
 
     private var nomenclatures = NomenclaturesManager.getInstance()
 
@@ -57,9 +60,9 @@ class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
                 a.getText(R.styleable.ToggleGroupFormInput_entriesType)
             mRequired = a.getBoolean(R.styleable.ToggleGroupFormInput_required, false)
             mIsVertical =
-                a.getInteger(R.styleable.ToggleGroupFormInput_orientation, 0) == 1
+                a.getBoolean(R.styleable.ToggleGroupFormInput_orientation, false)
             mIsSingleSelection =
-                a.getInteger(R.styleable.ToggleGroupFormInput_singleSelection, 0) == 1
+                a.getBoolean(R.styleable.ToggleGroupFormInput_singleSelection, true)
         } finally {
             a.recycle()
         }
@@ -76,24 +79,30 @@ class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
             toggleGroup.orientation = LinearLayout.VERTICAL
         }
 
+        toggleGroup.isSingleSelection = mIsSingleSelection
+
         toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (checkedId != -1) {
                 hintTextView.error = null
             }
 
             if (checkedId == -1) {
-                mSelectedItem = null
+                mSelectedItems.clear()
             } else {
                 val toggleButton = toggleGroup.findViewById<View>(checkedId)
                 val idx = toggleGroup.indexOfChild(toggleButton)
-                mValues?.also {
-                    mSelectedItem = NomenclatureItem(it[idx])
+                if (isChecked) {
+                    mValues?.also {
+                        mSelectedItems[idx] = NomenclatureItem(it[idx])
+                    }
+                } else {
+                    mSelectedItems.remove(idx)
                 }
+
             }
         }
 
 
-        debugLog("hint: $mHint")
         mHint?.apply {
             if (isNotEmpty()) {
                 hintTextView.text = mHint.toString() + ":"
@@ -106,7 +115,8 @@ class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
 
         mValues?.also {
             for (item in it) {
-                var toggleButton: MaterialButton = inflate(R.layout.toggle_group_button, false) as MaterialButton
+                var toggleButton: MaterialButton =
+                    inflate(R.layout.toggle_group_button, false) as MaterialButton
                 toggleButton.text = item.label.get(context.getString(R.string.locale))
                 var layoutParams = LinearLayout.LayoutParams(
                     0,
@@ -134,27 +144,72 @@ class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
     }
 
     override fun serializeToStorage(storage: MutableMap<String, String>, fieldName: String) {
-        storage[fieldName] =
-            mSelectedItem?.label.toString().replace("\n", Configuration.MULTIPLE_CHOICE_DELIMITER)
-        val locale = context.getString(R.string.locale)
-        if (mSelectedItem != null) {
-            if (mSelectedItem!!.nomenclature?.label?.hasValue(locale) == true) {
-                storage["$fieldName.$locale"] = mSelectedItem!!.nomenclature!!.label!!.get(locale)
+        if (mIsSingleSelection) {
+            val selectedItem = mSelectedItems.values.firstOrNull()
+            val locale = context.getString(R.string.locale)
+
+            if (selectedItem != null) {
+                storage[fieldName] = mSelectedItems.values.first().label.toString()
+                    .replace("\n", Configuration.MULTIPLE_CHOICE_DELIMITER)
+
+                if (selectedItem.nomenclature?.label?.hasValue(locale) == true) {
+                    storage["$fieldName.$locale"] =
+                        selectedItem.nomenclature!!.label!!.get(locale)
+                }
+                storage["$fieldName.en"] = selectedItem.nomenclature?.label?.get("en") ?: ""
+
+            } else {
+                storage[fieldName] = ""
+                storage["$fieldName.$locale"] = ""
+                storage["$fieldName.en"] = ""
             }
-            storage["$fieldName.en"] = mSelectedItem!!.nomenclature?.label?.get("en") ?: ""
         } else {
-            storage["$fieldName.$locale"] = ""
-            storage["$fieldName.en"] = ""
+            var labelValue = ""
+            mSelectedItems.values.forEach {
+                labelValue += it.label.toString()
+                    .replace("\n", Configuration.MULTIPLE_CHOICE_DELIMITER) + ","
+            }
+            if (labelValue.isNotEmpty()) {
+                labelValue = labelValue.substring(0, labelValue.length - 1)
+            }
+            storage[fieldName] = labelValue
+
+            val selectedItems: MutableList<Nomenclature> = mutableListOf()
+            mSelectedItems.values.forEach {
+                selectedItems.add(it.nomenclature!!)
+            }
+            storage["$fieldName.json"] = SBGsonParser.createParser().toJson(selectedItems)
         }
+
+
     }
 
     override fun restoreFromStorage(storage: MutableMap<String, String>, fieldName: String) {
-        val value = storage["$fieldName.${Configuration.NOMENCLATURE_ID_LANGUAGE}"]
-        mValues?.forEachIndexed { index, nomenclature ->
-            if (nomenclature.label[Configuration.NOMENCLATURE_ID_LANGUAGE] == value) {
-                (toggleGroup.getChildAt(index) as MaterialButton).isChecked = true
-                mSelectedItem = NomenclatureItem(nomenclature)
+        if (mIsSingleSelection) {
+            val value = storage["$fieldName.${Configuration.NOMENCLATURE_ID_LANGUAGE}"]
+            mValues?.forEachIndexed { index, nomenclature ->
+                if (nomenclature.label[Configuration.NOMENCLATURE_ID_LANGUAGE] == value) {
+                    (toggleGroup.getChildAt(index) as MaterialButton).isChecked = true
+                    mSelectedItems[index] = NomenclatureItem(nomenclature)
+                }
+            }
+        } else {
+            if (storage["$fieldName.json"] != null) {
+                val listType = object : TypeToken<List<Nomenclature>>() {}.type
+                val selectedItems: List<Nomenclature> = SBGsonParser.createParser()
+                    .fromJson(storage["$fieldName.json"], listType)
+                selectedItems.forEach { selected ->
+                    mValues?.forEachIndexed { index, nomenclature ->
+                        if (nomenclature.label.labelId == selected.label.labelId) {
+                            (toggleGroup.getChildAt(index) as MaterialButton).isChecked = true
+                            mSelectedItems[index] = NomenclatureItem(nomenclature)
+                        }
+                    }
+                }
+            } else {
+                mSelectedItems.clear()
             }
         }
+
     }
 }
