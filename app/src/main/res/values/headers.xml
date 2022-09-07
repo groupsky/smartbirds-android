@@ -142,5 +142,12 @@
     <string name="tag_casualties_body_condition" translatable="false">Body_condition</string>
     <string name="tag_casualties_primary_habitat" translatable="false">Primary_habitat_100m</string>
     <string name="tag_casualties_secondary_habitat" translatable="false">Secondary_habitat_100m</string>
+    <string name="tag_migration_point" translatable="false">MigrationPoint</string>
+    <string name="tag_location_from_migration_point" translatable="false">LocationFromMigrationPoint</string>
+    <string name="tag_plumage" translatable="false">Plumage</string>
+    <string name="tag_visochina_polet" translatable="false">VisochinaPolet</string>
+    <string name="tag_posoka_polet_from" translatable="false">PosokaPoletFrom</string>
+    <string name="tag_posoka_polet_to" translatable="false">PosokaPoletTo</string>
+    <string name="tag_type_flight" translatable="false">TypeFlight</string>
 
 </resources>

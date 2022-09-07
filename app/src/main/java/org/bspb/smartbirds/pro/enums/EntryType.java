@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.forms.convert.BirdsConverter;
+import org.bspb.smartbirds.pro.forms.convert.BirdsMigrationsConverter;
 import org.bspb.smartbirds.pro.forms.convert.CbmConverter;
 import org.bspb.smartbirds.pro.forms.convert.CiconiaConverter;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
@@ -21,6 +22,7 @@ import org.bspb.smartbirds.pro.forms.convert.PlantsConverter;
 import org.bspb.smartbirds.pro.forms.convert.PylonsCasualtiesConverter;
 import org.bspb.smartbirds.pro.forms.convert.PylonsConverter;
 import org.bspb.smartbirds.pro.forms.convert.ThreatsConverter;
+import org.bspb.smartbirds.pro.forms.upload.BirdsMigrationsUploader;
 import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
 import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
 import org.bspb.smartbirds.pro.forms.upload.CiconiaUploader;
@@ -34,6 +36,8 @@ import org.bspb.smartbirds.pro.forms.upload.ThreatsUploader;
 import org.bspb.smartbirds.pro.forms.upload.Uploader;
 import org.bspb.smartbirds.pro.ui.fragment.BaseEntryFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
+import org.bspb.smartbirds.pro.ui.fragment.NewBirdsMigrationsEntryFormFragment;
+import org.bspb.smartbirds.pro.ui.fragment.NewBirdsMigrationsEntryFormFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.NewCbmEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewCiconiaEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHerptileEntryFormFragment;
@@ -62,6 +66,7 @@ public enum EntryType {
     THREATS(new NewThreatsEntryFormFragment.Builder(), R.string.entry_type_threats, R.id.action_form_type_threats, "form_threats.csv", ThreatsConverter.class, ThreatsUploader.class, true),
     PYLONS(new NewPylonsEntryFormFragment.Builder(), R.string.entry_type_pylons, R.id.action_form_type_pylons, "form_pylons.csv", PylonsConverter.class, PylonsUploader.class, true),
     PYLONS_CASUALTIES(new NewPylonsCasualtiesEntryFormFragment.Builder(), R.string.entry_type_pylons_casualties, R.id.action_form_type_pylons_casualties, "form_pylons_casualties.csv", PylonsCasualtiesConverter.class, PylonsCasualtiesUploader.class, true),
+    BIRDS_MIGRATIONS(new NewBirdsMigrationsEntryFormFragment.Builder(), R.string.entry_type_birds_migrations, R.id.action_form_type_birds_migrations, "form_birds_migrations.csv", BirdsMigrationsConverter.class, BirdsMigrationsUploader.class, true),
     // prevent auto-formatting
     ;
 
@@ -76,7 +81,8 @@ public enum EntryType {
             R.id.action_form_type_plants,
             R.id.action_form_type_threats,
             R.id.action_form_type_pylons,
-            R.id.action_form_type_pylons_casualties
+            R.id.action_form_type_pylons_casualties,
+            R.id.action_form_type_birds_migrations
     };
 
     private final BaseEntryFragment.Builder builder;

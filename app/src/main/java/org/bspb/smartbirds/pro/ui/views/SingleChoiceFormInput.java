@@ -40,6 +40,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
 
 import java.util.ArrayList;
@@ -158,6 +159,20 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
     public void setSelection(String label) {
         setSelection(new NomenclatureItem(label));
+    }
+
+    public void setSelectionIfAvailable(NomenclatureItem item) {
+        if (item == null) {
+            setSelection((NomenclatureItem) null);
+        } else {
+            if (mAdapter == null || mAdapter.getCount() == 0) return;
+            int position = mAdapter.getPosition(item);
+            if (position != INVALID_POSITION) {
+                setSelection(mAdapter.getItem(position));
+            } else {
+                setSelection((NomenclatureItem) null);
+            }
+        }
     }
 
     public void setSelection(NomenclatureItem item) {

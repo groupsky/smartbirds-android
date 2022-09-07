@@ -80,4 +80,10 @@ public interface SmartBirdsApi {
 
     @POST("pylons-casualties")
     Call<UploadFormResponse> createPylonsCasualties(@Body JsonObject request);
+
+    @POST("birds-migrations")
+    Call<UploadFormResponse> createBirdsMigrations(@Body JsonObject request);
+
+    @GET("pois")
+    Call<ResponseListEnvelope<Nomenclature>> pois(@Query("limit") int limit, @Query("offset") int offset);
 }

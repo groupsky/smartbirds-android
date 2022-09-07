@@ -403,4 +403,17 @@ Do you really want to cancel the monitoring?"</string>
     <string name="settings_kml_file_summary">"User KML file to show on the map"</string>
     <string name="settings_show_kml">"User KML"</string>
     <string name="settings_show_kml_summary">"Show user imported KML file"</string>
+    <string name="monitoring_birds_migrations_name">"Species"</string>
+    <string name="monitoring_birds_migrations_count">"Count"</string>
+    <string name="monitoring_birds_migrations_age">"Age"</string>
+    <string name="monitoring_birds_migrations_gender">"Sex"</string>
+    <string name="monitoring_birds_migrations_plumage">"Plumage"</string>
+    <string name="monitoring_birds_migrations_location">"Direction from migration point"</string>
+    <string name="monitoring_birds_migrations_migration_point">"Migration point"</string>
+    <string name="monitoring_birds_migrations_posoka_polet_from">"Flight direction from"</string>
+    <string name="monitoring_birds_migrations_posoka_polet_to">"Flight direction to"</string>
+    <string name="monitoring_birds_migrations_visochina_polet">"Flight height, m"</string>
+    <string name="monitoring_birds_monitorings_notes">"Notes"</string>
+    <string name="entry_type_birds_migrations">"Birds migrations"</string>
+    <string name="monitoring_birds_migrations_type_flight">"Flight type"</string>
 </resources>

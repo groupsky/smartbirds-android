@@ -129,6 +129,11 @@
                     android:title="@string/entry_type_pylons_casualties"
                     android:visible="false" />
 
+                <item
+                    android:id="@+id/action_form_type_birds_migrations"
+                    android:title="@string/entry_type_birds_migrations"
+                    android:visible="false" />
+
             </group>
         </menu>
     </item>

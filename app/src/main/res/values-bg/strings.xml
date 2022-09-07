@@ -402,4 +402,17 @@
     <string name="settings_kml_file_summary">"Потребителски KML файл за показване на карта"</string>
     <string name="settings_show_kml">"Потребителски KML"</string>
     <string name="settings_show_kml_summary">"Показване на потребителски KML файл"</string>
+    <string name="monitoring_birds_migrations_name">"Вид научно име"</string>
+    <string name="monitoring_birds_migrations_count">"Брой"</string>
+    <string name="monitoring_birds_migrations_age">"Възраст"</string>
+    <string name="monitoring_birds_migrations_gender">"Пол"</string>
+    <string name="monitoring_birds_migrations_plumage">"Форма"</string>
+    <string name="monitoring_birds_migrations_location">"Посока от точката на наблюдение"</string>
+    <string name="monitoring_birds_migrations_migration_point">"Точка на наблюдение"</string>
+    <string name="monitoring_birds_migrations_posoka_polet_from">"Посока от"</string>
+    <string name="monitoring_birds_migrations_posoka_polet_to">"Посока към"</string>
+    <string name="monitoring_birds_migrations_visochina_polet">"Височина на полета, m"</string>
+    <string name="monitoring_birds_monitorings_notes">"Бележки"</string>
+    <string name="entry_type_birds_migrations">"Миграция на птици"</string>
+    <string name="monitoring_birds_migrations_type_flight">"Тип на полета"</string>
 </resources>
