@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/form_horizontal_spacing"
+        android:paddingTop="@dimen/form_vertical_spacing"
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_transect_length"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_transect_length"
+                android:tag="@string/tag_transect_length_m" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_transect_width"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_transect_width"
+                android:tag="@string/tag_transect_width_m" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_fishing_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_fishing_area"
+                android:tag="@string/tag_fishing_area_m" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveDecimalNumberFormInput
+                android:id="@+id/form_fish_exposition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_exposition"
+                android:tag="@string/tag_exposition" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_mesh_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_mesh_size"
+                android:tag="@string/tag_mesh_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveDecimalNumberFormInput
+                android:id="@+id/form_fish_count_net_trap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_count_net_trap"
+                android:tag="@string/tag_count_net_trap" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_water_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_water_temp"
+                android:tag="@string/tag_water_temp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_conductivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_conductivity"
+                android:tag="@string/tag_conductivity" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_ph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_ph"
+                android:tag="@string/tag_ph" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_o2_mgl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_o2_mg"
+                android:tag="@string/tag_o2_mg" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                android:id="@+id/form_fish_o2_percent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_02_percent"
+                android:tag="@string/tag_o2_percent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_salinity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_salinity"
+                android:tag="@string/tag_salinity" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_fish_habitat_description_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_habitat_description_type"
+                android:tag="@string/tag_habitat_description_type"
+                app:entriesType="form_fishes_habitat_description_type" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_mud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_mud"
+                android:tag="@string/tag_substrate_mud" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_silt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_silt"
+                android:tag="@string/tag_substrate_silt" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_sand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_sand"
+                android:tag="@string/tag_substrate_sand" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_gravel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_gravel"
+                android:tag="@string/tag_substrate_gravel" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_small_stones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_small_stones"
+                android:tag="@string/tag_substrate_small_stones" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_cobble"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_cobble"
+                android:tag="@string/tag_substrate_cobble" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_boulder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_boulder"
+                android:tag="@string/tag_substrate_boulder" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_rock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_rock"
+                android:tag="@string/tag_substrate_rock" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_substrate_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_substrate_other"
+                android:tag="@string/tag_substrate_other" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_fish_water_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_water_level"
+                android:tag="@string/tag_water_level"
+                app:entriesType="form_fishes_water_level" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_fish_river_current"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_river_current"
+                android:tag="@string/tag_river_current"
+                app:entriesType="form_fishes_river_current" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_transect_av_depth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_transect_av_depth"
+                android:tag="@string/tag_transect_av_depth" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_transect_max_depth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_transect_max_depth"
+                android:tag="@string/tag_transect_max_depth" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_fish_slope"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_slope"
+                android:tag="@string/tag_slope"
+                app:entriesType="form_fishes_slope" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_fish_bank_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_bank_type"
+                android:tag="@string/tag_bank_type"
+                app:entriesType="form_fishes_bank_type" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_shading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_shading"
+                android:tag="@string/tag_shading" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_riparian_vegetation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_riparian_vegetation"
+                android:tag="@string/tag_riparian_vegetation" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                android:id="@+id/form_fish_shelters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_shelters"
+                android:tag="@string/tag_shelters"
+                app:entriesType="form_fishes_shelters" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_fish_transparency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_transparency"
+                android:tag="@string/tag_transparency" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                android:id="@+id/form_fish_vegetation_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_fish_vegetation_type"
+                android:tag="@string/tag_vegetation_type"
+                app:entriesType="form_fishes_vegetation_type" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+</ScrollView>

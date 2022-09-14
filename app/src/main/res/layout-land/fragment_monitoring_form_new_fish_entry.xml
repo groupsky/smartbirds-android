@@ -148,11 +148,11 @@
                     android:layout_height="wrap_content"
                     android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                         android:id="@+id/form_fish_size_tl_mm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_size_tl_mm"
+                        android:hint="@string/monitoring_fish_size_tl_mm"
                         android:tag="@string/tag_size_tl" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,11 +163,11 @@
                     android:layout_height="wrap_content"
                     android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                         android:id="@+id/form_fish_size_sl_mm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/monitoring_size_sl_mm"
+                        android:hint="@string/monitoring_fish_size_sl_mm"
                         android:tag="@string/tag_size_sl" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput
+                    <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                         android:id="@+id/form_fish_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
