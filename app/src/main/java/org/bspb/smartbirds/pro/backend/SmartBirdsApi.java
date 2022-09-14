@@ -86,4 +86,7 @@ public interface SmartBirdsApi {
 
     @GET("pois")
     Call<ResponseListEnvelope<Nomenclature>> pois(@Query("limit") int limit, @Query("offset") int offset);
+
+    @POST("fishes")
+    Call<UploadFormResponse> createFish(@Body JsonObject request);
 }

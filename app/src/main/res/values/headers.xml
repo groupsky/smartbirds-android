@@ -149,7 +149,6 @@
     <string name="tag_posoka_polet_from" translatable="false">PosokaPoletFrom</string>
     <string name="tag_posoka_polet_to" translatable="false">PosokaPoletTo</string>
     <string name="tag_type_flight" translatable="false">TypeFlight</string>
-    <string name="tag_type_flight" translatable="false">TypeFlight</string>
     <string name="tag_waterbody" translatable="false">nameWaterBody</string>
     <string name="tag_size_tl" translatable="false">sizeTL_mm</string>
     <string name="tag_size_sl" translatable="false">sizeSL_mm</string>

@@ -133,6 +133,10 @@
                     android:id="@+id/action_form_type_birds_migrations"
                     android:title="@string/entry_type_birds_migrations"
                     android:visible="false" />
+                <item
+                    android:id="@+id/action_form_type_fish"
+                    android:title="@string/entry_type_fish"
+                    android:visible="false" />
 
             </group>
         </menu>

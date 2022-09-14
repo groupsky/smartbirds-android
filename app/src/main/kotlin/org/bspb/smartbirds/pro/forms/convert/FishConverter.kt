@@ -54,7 +54,6 @@ class FishConverter(context: Context?) : Converter(context) {
         addSingle(R.string.tag_bank_type, "bankType")
         add(R.string.tag_shading, "shading")
         add(R.string.tag_riparian_vegetation, "riparianVegetation")
-        // Multiple???
         addMulti(R.string.tag_shelters, "shelters")
         add(R.string.tag_transparency, "transparency")
         addMulti(R.string.tag_vegetation_type, "vegetationType")

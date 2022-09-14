@@ -416,4 +416,17 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_birds_monitorings_notes">"Notes"</string>
     <string name="entry_type_birds_migrations">"Birds migrations"</string>
     <string name="monitoring_birds_migrations_type_flight">"Flight type"</string>
+    <string name="monitoring_private">Confidential</string>
+    <string name="monitoring_fish_name">Species</string>
+    <string name="monitoring_fish_count">Count</string>
+    <string name="monitoring_fish_age">Age</string>
+    <string name="monitoring_fish_gender">Sex</string>
+    <string name="monitoring_fish_waterbody">Waterbody</string>
+    <string name="monitoring_size_tl_mm">Total length</string>
+    <string name="monitoring_size_sl_mm">Standart length</string>
+    <string name="monitoring_fish_masa_gr">Weight</string>
+    <string name="monitoring_fish_findings">Findings</string>
+    <string name="monitoring_fish_monitoring_type">Monitoring type</string>
+    <string name="monitoring_fish_notes">Notes</string>
+    <string name="entry_type_fish">"Fish"</string>
 </resources>
