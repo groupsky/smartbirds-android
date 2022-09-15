@@ -43,6 +43,9 @@ public class Monitoring {
     @SerializedName("commonForm")
     public final HashMap<String, String> commonForm = new HashMap<>();
     @Expose
+    @SerializedName("fishCommonForm")
+    public final HashMap<String, String> fishCommonForm = new HashMap<>();
+    @Expose
     @SerializedName("pictureCounter")
     public int pictureCounter = 0;
 
@@ -59,6 +62,7 @@ public class Monitoring {
                 ", code='" + code + '\'' +
                 ", status=" + status +
                 ", commonForm=" + commonForm +
+                ", fishCommonForm=" + fishCommonForm +
                 ", pictureCounter=" + pictureCounter +
                 ", entriesCount=" + entriesCount +
                 '}';

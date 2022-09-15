@@ -1,85 +1,49 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
+import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentById
-import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_
-import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-import java.util.*
 
-@EFragment(R.layout.fragment_monitoring_form_new_fish_entry)
-open class NewFishEntryFormFragment : BaseEntryFragment() {
+@EFragment
+open class NewFishEntryFormFragment : BaseTabEntryFragment() {
+    @AfterViews
+    protected fun setupTabs() {
+        setAdapter(object : FragmentStatePagerAdapter(fragmentManager!!) {
+            override fun getItem(position: Int): Fragment {
+                return when (position) {
+                    0 -> NewFishEntryMainFormFragment_.builder().setNewEntry(isNewEntry).readOnly(readOnly)
+                        .build()
+                    1 -> NewFishEntryCommonFormFragment_.builder().setNewEntry(isNewEntry).readOnly(readOnly)
+                        .build()
+                    else -> throw IllegalArgumentException("Unhandled position$position")
+                }
+            }
 
-    @JvmField
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
-    protected var picturesFragment: NewEntryPicturesFragment? = null
+            override fun getPageTitle(position: Int): CharSequence? {
+                return getString(if (position == 0) R.string.tab_required else R.string.tab_optional)
+            }
 
-
-    @JvmField
-    @ViewById(R.id.form_fish_confidential)
-    protected var confidential: SwitchFormInput? = null
-
-    @JvmField
-    @Pref
-    protected var commonPrefs: CommonPrefs_? = null
-
-    override fun onResume() {
-        super.onResume()
-        if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        commonPrefs!!.confidentialRecord().put(confidential!!.isChecked)
+            override fun getCount(): Int {
+                return 2
+            }
+        })
     }
 
     override fun getEntryType(): EntryType? {
         return EntryType.FISH
     }
 
-    override fun serialize(entryTime: Date?): HashMap<String, String> {
-        val data = super.serialize(entryTime)
-        data.putAll(picturesFragment!!.serialize())
-        return data
-    }
-
-    override fun deserialize(data: HashMap<String?, String?>) {
-        super.deserialize(data)
-        // In some cases picturesFragment is still null. Try to find it by id
-        if (picturesFragment == null) {
-            picturesFragment =
-                childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
-        }
-        if (picturesFragment != null) {
-            picturesFragment!!.doDeserialize(monitoringCode, data)
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (picturesFragment == null) {
-            picturesFragment =
-                childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
-        }
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     class Builder : BaseEntryFragment.Builder {
         override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
-            return NewFishEntryFormFragment_.builder().lat(lat).lon(lon)
-                .geolocationAccuracy(geolocationAccuracy).build()
+            return NewFishEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy)
+                .build()
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
-            return NewFishEntryFormFragment_.builder().entryId(id).readOnly(readOnly)
-                .build()
+            return NewFishEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build()
         }
     }
 }

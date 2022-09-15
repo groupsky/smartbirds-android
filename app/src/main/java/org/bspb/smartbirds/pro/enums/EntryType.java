@@ -39,7 +39,6 @@ import org.bspb.smartbirds.pro.forms.upload.Uploader;
 import org.bspb.smartbirds.pro.ui.fragment.BaseEntryFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsMigrationsEntryFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.NewBirdsMigrationsEntryFormFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.NewCbmEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewCiconiaEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewFishEntryFormFragment;
