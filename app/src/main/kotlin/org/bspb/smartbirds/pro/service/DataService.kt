@@ -245,6 +245,28 @@ open class DataService : Service() {
         }
     }
 
+    fun onEvent(event: SubmitFishCommonForm) {
+        scope.sbLaunch {
+            Log.d(TAG, "onSubmitFishCommonForm")
+            try {
+                if (!TextUtils.isEmpty(event.monitoringCode)) {
+                    monitoringManager.getMonitoring(event.monitoringCode.toString())?.let {
+                        it.commonForm.putAll(event.data!!)
+                        monitoringManager.update(it)
+                    }
+                } else {
+                    monitoring?.let {
+                        it.commonForm.putAll(event.data!!)
+                        monitoringManager.update(it)
+                    }
+                }
+            } catch (t: Throwable) {
+                Reporting.logException("Unable to persist fish common data", t)
+                Toast.makeText(this@DataService, "Could not persist fish common data!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     fun onEvent(location: Location?) {
         Log.d(TAG, "onLocation")
         if (isMonitoring() && location != null) {
