@@ -187,5 +187,5 @@
     <string name="tag_shelters" translatable="false">shelters</string>
     <string name="tag_transparency" translatable="false">transparency</string>
     <string name="tag_vegetation_type" translatable="false">vegetationType</string>
-
+    <string name="tag_natural_barriers" translatable="false">naturalBarriers</string>
 </resources>

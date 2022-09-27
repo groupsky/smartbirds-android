@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.androidannotations.annotations.AfterViews
@@ -13,11 +14,15 @@ import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.events.SubmitFishCommonForm
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.utils.MonitoringManager
+import org.bspb.smartbirds.pro.viewmodel.BaseEntryViewModel
+import org.bspb.smartbirds.pro.viewmodel.FishFormViewModel
 
 @EFragment
 open class NewFishEntryFormFragment : BaseTabEntryFragment() {
 
     private val monitoringManager = MonitoringManager.getInstance()
+
+    protected val fishFormViewModel: FishFormViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +83,7 @@ open class NewFishEntryFormFragment : BaseTabEntryFragment() {
     }
 
     private fun loadFishCommonData() {
+        if (fishFormViewModel.haveDeserializedCommonForm) return
         lifecycleScope.launch {
             var monitoring: Monitoring? = null
 
@@ -97,6 +103,7 @@ open class NewFishEntryFormFragment : BaseTabEntryFragment() {
                             adapter.instantiateItem(viewPager, i) as? NewFishEntryCommonFormFragment
                                 ?: continue
                         fragment.doDeserialize(it.code, it.commonForm)
+                        fishFormViewModel.haveDeserializedCommonForm = true
                     }
                 }
             }

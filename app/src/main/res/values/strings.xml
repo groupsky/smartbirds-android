@@ -462,4 +462,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_fish_shelters">Shelters</string>
     <string name="monitoring_fish_transparency">Transparency</string>
     <string name="monitoring_fish_vegetation_type">Vegetation type</string>
+    <string name="monitoring_fish_natural_barriers">Natural barriers</string>
+    <string name="class_fishes">"Fishes"</string>
 </resources>

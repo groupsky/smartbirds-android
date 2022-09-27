@@ -531,7 +531,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_span="12">
+                    android:layout_span="6">
 
                     <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
                         android:id="@+id/form_fish_vegetation_type"
@@ -541,6 +541,14 @@
                         android:tag="@string/tag_vegetation_type"
                         app:entriesType="form_fishes_vegetation_type" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                    android:id="@+id/form_fish_natural_barriers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="6"
+                    android:tag="@string/tag_natural_barriers"
+                    android:text="@string/monitoring_fish_natural_barriers" />
             </TableRow>
         </TableLayout>
 

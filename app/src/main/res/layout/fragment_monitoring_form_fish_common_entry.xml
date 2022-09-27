@@ -518,5 +518,13 @@
                 app:entriesType="form_fishes_vegetation_type" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:id="@+id/form_fish_natural_barriers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/tag_natural_barriers"
+            android:text="@string/monitoring_fish_natural_barriers"/>
     </LinearLayout>
 </ScrollView>

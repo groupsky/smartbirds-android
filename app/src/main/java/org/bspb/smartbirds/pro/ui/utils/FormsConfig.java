@@ -21,7 +21,8 @@ public class FormsConfig {
         herptiles(R.string.class_herptiles),
         mammals(R.string.class_mammals),
         invertebrates(R.string.class_invertebrates),
-        plants(R.string.class_plants);
+        plants(R.string.class_plants),
+        fishes(R.string.class_fishes);
 
         final int labelId;
 

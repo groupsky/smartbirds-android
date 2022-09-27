@@ -57,6 +57,7 @@ class FishConverter(context: Context?) : Converter(context) {
         addMulti(R.string.tag_shelters, "shelters")
         add(R.string.tag_transparency, "transparency")
         addMulti(R.string.tag_vegetation_type, "vegetationType")
+        addBool(R.string.tag_natural_barriers, "naturalBarriers")
 
     }
 }
