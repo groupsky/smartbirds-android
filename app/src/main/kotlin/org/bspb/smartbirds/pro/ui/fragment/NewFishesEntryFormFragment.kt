@@ -29,7 +29,7 @@ open class NewFishesEntryFormFragment : BaseTabEntryFragment() {
 
     @AfterViews
     protected fun setupTabs() {
-        setAdapter(object : FragmentStatePagerAdapter(fragmentManager!!) {
+        setAdapter(object : FragmentStatePagerAdapter(parentFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> NewFishesEntryMainFormFragment_.builder().setNewEntry(isNewEntry)
