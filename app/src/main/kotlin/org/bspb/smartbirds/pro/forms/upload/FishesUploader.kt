@@ -5,7 +5,7 @@ import org.bspb.smartbirds.pro.backend.SmartBirdsApi
 import org.bspb.smartbirds.pro.backend.dto.UploadFormResponse
 import retrofit2.Call
 
-class FishUploader : Uploader {
+class FishesUploader : Uploader {
     override fun upload(api: SmartBirdsApi?, data: JsonObject?): Call<UploadFormResponse> {
         return api!!.createFish(data)
     }

@@ -6,8 +6,8 @@ import org.androidannotations.annotations.EFragment
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.utils.debugLog
 
-@EFragment(R.layout.fragment_monitoring_form_fish_common_entry)
-open class NewFishEntryCommonFormFragment : BaseFormFragment() {
+@EFragment(R.layout.fragment_monitoring_form_fishes_common_entry)
+open class NewFishesEntryCommonFormFragment : BaseFormFragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

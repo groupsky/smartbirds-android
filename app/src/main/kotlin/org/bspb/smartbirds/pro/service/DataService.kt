@@ -245,7 +245,7 @@ open class DataService : Service() {
         }
     }
 
-    fun onEvent(event: SubmitFishCommonForm) {
+    fun onEvent(event: SubmitFishesCommonForm) {
         scope.sbLaunch {
             Log.d(TAG, "onSubmitFishCommonForm")
             try {

@@ -11,18 +11,16 @@ import org.androidannotations.annotations.EFragment
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.events.SubmitFishCommonForm
-import org.bspb.smartbirds.pro.tools.Reporting
+import org.bspb.smartbirds.pro.events.SubmitFishesCommonForm
 import org.bspb.smartbirds.pro.utils.MonitoringManager
-import org.bspb.smartbirds.pro.viewmodel.BaseEntryViewModel
-import org.bspb.smartbirds.pro.viewmodel.FishFormViewModel
+import org.bspb.smartbirds.pro.viewmodel.FishesFormViewModel
 
 @EFragment
-open class NewFishEntryFormFragment : BaseTabEntryFragment() {
+open class NewFishesEntryFormFragment : BaseTabEntryFragment() {
 
     private val monitoringManager = MonitoringManager.getInstance()
 
-    protected val fishFormViewModel: FishFormViewModel by viewModels()
+    protected val fishFormViewModel: FishesFormViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +32,10 @@ open class NewFishEntryFormFragment : BaseTabEntryFragment() {
         setAdapter(object : FragmentStatePagerAdapter(fragmentManager!!) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
-                    0 -> NewFishEntryMainFormFragment_.builder().setNewEntry(isNewEntry)
+                    0 -> NewFishesEntryMainFormFragment_.builder().setNewEntry(isNewEntry)
                         .readOnly(readOnly)
                         .build()
-                    1 -> NewFishEntryCommonFormFragment_.builder().setNewEntry(isNewEntry)
+                    1 -> NewFishesEntryCommonFormFragment_.builder().setNewEntry(isNewEntry)
                         .readOnly(readOnly)
                         .build()
                     else -> throw IllegalArgumentException("Unhandled position$position")
@@ -63,10 +61,10 @@ open class NewFishEntryFormFragment : BaseTabEntryFragment() {
             val adapter = viewPager.adapter!!
             for (i in 0 until adapter.count) {
                 val fragment =
-                    adapter.instantiateItem(viewPager, i) as? NewFishEntryCommonFormFragment
+                    adapter.instantiateItem(viewPager, i) as? NewFishesEntryCommonFormFragment
                         ?: continue
                 val fishCommonData = fragment.serializeCommonData()
-                eventBus.post(SubmitFishCommonForm(monitoringCode, fishCommonData))
+                eventBus.post(SubmitFishesCommonForm(monitoringCode, fishCommonData))
             }
         }
         super.submitData(data)
@@ -77,7 +75,7 @@ open class NewFishEntryFormFragment : BaseTabEntryFragment() {
         val adapter = viewPager.adapter ?: return
         for (i in 0 until adapter.count) {
             val fragment =
-                adapter.instantiateItem(viewPager, i) as? NewFishEntryMainFormFragment ?: continue
+                adapter.instantiateItem(viewPager, i) as? NewFishesEntryMainFormFragment ?: continue
             fragment.doDeserialize(monitoringCode, data)
         }
     }
@@ -100,7 +98,10 @@ open class NewFishEntryFormFragment : BaseTabEntryFragment() {
                     val adapter = viewPager.adapter!!
                     for (i in 0 until adapter.count) {
                         val fragment =
-                            adapter.instantiateItem(viewPager, i) as? NewFishEntryCommonFormFragment
+                            adapter.instantiateItem(
+                                viewPager,
+                                i
+                            ) as? NewFishesEntryCommonFormFragment
                                 ?: continue
                         fragment.doDeserialize(it.code, it.commonForm)
                         fishFormViewModel.haveDeserializedCommonForm = true
@@ -112,13 +113,13 @@ open class NewFishEntryFormFragment : BaseTabEntryFragment() {
 
     class Builder : BaseEntryFragment.Builder {
         override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
-            return NewFishEntryFormFragment_.builder().lat(lat).lon(lon)
+            return NewFishesEntryFormFragment_.builder().lat(lat).lon(lon)
                 .geolocationAccuracy(geolocationAccuracy)
                 .build()
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
-            return NewFishEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build()
+            return NewFishesEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build()
         }
     }
 }

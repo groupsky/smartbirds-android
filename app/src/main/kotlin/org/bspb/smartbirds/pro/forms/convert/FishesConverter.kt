@@ -3,7 +3,7 @@ package org.bspb.smartbirds.pro.forms.convert
 import android.content.Context
 import org.bspb.smartbirds.pro.R
 
-class FishConverter(context: Context?) : Converter(context) {
+class FishesConverter(context: Context?) : Converter(context) {
 
 
     init {

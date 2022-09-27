@@ -15,7 +15,7 @@ import org.bspb.smartbirds.pro.forms.convert.BirdsMigrationsConverter;
 import org.bspb.smartbirds.pro.forms.convert.CbmConverter;
 import org.bspb.smartbirds.pro.forms.convert.CiconiaConverter;
 import org.bspb.smartbirds.pro.forms.convert.Converter;
-import org.bspb.smartbirds.pro.forms.convert.FishConverter;
+import org.bspb.smartbirds.pro.forms.convert.FishesConverter;
 import org.bspb.smartbirds.pro.forms.convert.HerptileConverter;
 import org.bspb.smartbirds.pro.forms.convert.InvertebratesConverter;
 import org.bspb.smartbirds.pro.forms.convert.MammalConverter;
@@ -27,7 +27,7 @@ import org.bspb.smartbirds.pro.forms.upload.BirdsMigrationsUploader;
 import org.bspb.smartbirds.pro.forms.upload.BirdsUploader;
 import org.bspb.smartbirds.pro.forms.upload.CbmUploader;
 import org.bspb.smartbirds.pro.forms.upload.CiconiaUploader;
-import org.bspb.smartbirds.pro.forms.upload.FishUploader;
+import org.bspb.smartbirds.pro.forms.upload.FishesUploader;
 import org.bspb.smartbirds.pro.forms.upload.HerptileUploader;
 import org.bspb.smartbirds.pro.forms.upload.InvertebratesUploader;
 import org.bspb.smartbirds.pro.forms.upload.MammalUploader;
@@ -41,7 +41,7 @@ import org.bspb.smartbirds.pro.ui.fragment.NewBirdsEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewBirdsMigrationsEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewCbmEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewCiconiaEntryFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.NewFishEntryFormFragment;
+import org.bspb.smartbirds.pro.ui.fragment.NewFishesEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHerptileEntryFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewHumidBirdsEntryFragment;
 import org.bspb.smartbirds.pro.ui.fragment.NewInvertebratesEntryFormFragment;
@@ -69,7 +69,7 @@ public enum EntryType {
     PYLONS(new NewPylonsEntryFormFragment.Builder(), R.string.entry_type_pylons, R.id.action_form_type_pylons, "form_pylons.csv", PylonsConverter.class, PylonsUploader.class, true),
     PYLONS_CASUALTIES(new NewPylonsCasualtiesEntryFormFragment.Builder(), R.string.entry_type_pylons_casualties, R.id.action_form_type_pylons_casualties, "form_pylons_casualties.csv", PylonsCasualtiesConverter.class, PylonsCasualtiesUploader.class, true),
     BIRDS_MIGRATIONS(new NewBirdsMigrationsEntryFormFragment.Builder(), R.string.entry_type_birds_migrations, R.id.action_form_type_birds_migrations, "form_birds_migrations.csv", BirdsMigrationsConverter.class, BirdsMigrationsUploader.class, true),
-    FISH(new NewFishEntryFormFragment.Builder(), R.string.entry_type_fish, R.id.action_form_type_fish, "form_fish.csv", FishConverter.class, FishUploader.class, true),
+    FISH(new NewFishesEntryFormFragment.Builder(), R.string.entry_type_fish, R.id.action_form_type_fish, "form_fish.csv", FishesConverter.class, FishesUploader.class, true),
     // prevent auto-formatting
     ;
 
