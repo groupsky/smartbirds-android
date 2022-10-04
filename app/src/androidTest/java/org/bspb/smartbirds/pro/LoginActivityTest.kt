@@ -60,6 +60,8 @@ class LoginActivityTest {
         mockApiRule.server.enqueue(nomenclaturesResponse)
         // zones
         mockApiRule.server.enqueue(nomenclaturesResponse)
+        // pois
+        mockApiRule.server.enqueue(nomenclaturesResponse)
 
         loginScreen {
             isDisplayed()
