@@ -137,49 +137,55 @@
 
         <View style="@style/FieldSeparator" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
-                android:id="@+id/form_fish_ph"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/monitoring_fish_ph"
-                android:tag="@string/tag_ph" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1">
 
-        <View style="@style/FieldSeparator" />
+                <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                    android:id="@+id/form_fish_ph"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_fish_ph"
+                    android:tag="@string/tag_ph" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
-                android:id="@+id/form_fish_o2_mgl"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/monitoring_fish_o2_mg"
-                android:tag="@string/tag_o2_mg" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1">
 
-        <View style="@style/FieldSeparator" />
+                <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                    android:id="@+id/form_fish_o2_mgl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_fish_o2_mg"
+                    android:tag="@string/tag_o2_mg" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
-                android:id="@+id/form_fish_o2_percent"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/monitoring_fish_02_percent"
-                android:tag="@string/tag_o2_percent" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1">
+
+                <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
+                    android:id="@+id/form_fish_o2_percent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monitoring_fish_02_percent"
+                    android:tag="@string/tag_o2_percent" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
 
         <View style="@style/FieldSeparator" />
 
@@ -525,6 +531,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="@string/tag_natural_barriers"
-            android:text="@string/monitoring_fish_natural_barriers"/>
+            android:text="@string/monitoring_fish_natural_barriers" />
     </LinearLayout>
 </ScrollView>
