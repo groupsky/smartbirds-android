@@ -20,7 +20,7 @@ buildProperties {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
@@ -109,7 +109,7 @@ android {
 }
 
 dependencies {
-    def room_version = "2.4.2"
+    def room_version = "2.4.3"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "org.androidannotations:androidannotations:4.8.0"
@@ -118,27 +118,27 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // KTX extensions
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation "androidx.fragment:fragment-ktx:1.5.3"
     implementation "androidx.preference:preference-ktx:1.2.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:20.0.0'
 
     // TODO: migrate to v3.x
     implementation 'de.greenrobot:eventbus:2.4.1'
 
     // Crashlytics Kit
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.11'
+    implementation 'com.google.firebase:firebase-crashlytics:18.3.0'
 
-    implementation 'com.google.firebase:firebase-analytics:21.0.0'
+    implementation 'com.google.firebase:firebase-analytics:21.2.0'
 
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
     implementation 'com.googlecode.jcsv:jcsv:1.4.0'
-    implementation 'com.google.maps.android:android-maps-utils:2.3.0'
+    implementation 'com.google.maps.android:android-maps-utils:2.4.0'
 
     implementation 'org.osmdroid:osmdroid-android:6.1.13'
     implementation 'com.github.MKergall:osmbonuspack:6.9.0'
@@ -151,7 +151,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.10.0'
 
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.5.1"
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"
