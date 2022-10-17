@@ -68,6 +68,10 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
     @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
+        deserializeTabs(data);
+    }
+
+    protected void deserializeTabs(HashMap<String, String> data) {
         if (viewPager == null) return;
         PagerAdapter adapter = viewPager.getAdapter();
         if (adapter == null) return;

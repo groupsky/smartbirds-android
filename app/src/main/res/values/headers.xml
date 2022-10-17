@@ -149,5 +149,43 @@
     <string name="tag_posoka_polet_from" translatable="false">PosokaPoletFrom</string>
     <string name="tag_posoka_polet_to" translatable="false">PosokaPoletTo</string>
     <string name="tag_type_flight" translatable="false">TypeFlight</string>
-
+    <string name="tag_waterbody" translatable="false">nameWaterBody</string>
+    <string name="tag_size_tl" translatable="false">sizeTL_mm</string>
+    <string name="tag_size_sl" translatable="false">sizeSL_mm</string>
+    <string name="tag_masa_gr" translatable="false">masa_gr</string>
+    <string name="tag_monitoring_type" translatable="false">monitoringType</string>
+    <string name="tag_transect_length_m" translatable="false">transectLength_M</string>
+    <string name="tag_transect_width_m" translatable="false">transectWidth_M</string>
+    <string name="tag_fishing_area_m" translatable="false">fishingArea_M</string>
+    <string name="tag_exposition" translatable="false">exposition</string>
+    <string name="tag_mesh_size" translatable="false">meshSize</string>
+    <string name="tag_count_net_trap" translatable="false">countNetTrap</string>
+    <string name="tag_water_temp" translatable="false">waterTemp</string>
+    <string name="tag_conductivity" translatable="false">conductivity</string>
+    <string name="tag_ph" translatable="false">pH</string>
+    <string name="tag_o2_mg" translatable="false">o2mgL</string>
+    <string name="tag_o2_percent" translatable="false">o2percent</string>
+    <string name="tag_salinity" translatable="false">salinity</string>
+    <string name="tag_habitat_description_type" translatable="false">habitatDescriptionType</string>
+    <string name="tag_substrate_mud" translatable="false">substrateMud</string>
+    <string name="tag_substrate_silt" translatable="false">substrateSilt</string>
+    <string name="tag_substrate_sand" translatable="false">substrateSand</string>
+    <string name="tag_substrate_gravel" translatable="false">substrateGravel</string>
+    <string name="tag_substrate_small_stones" translatable="false">substrateSmallStones</string>
+    <string name="tag_substrate_cobble" translatable="false">substrateCobble</string>
+    <string name="tag_substrate_boulder" translatable="false">substrateBoulder</string>
+    <string name="tag_substrate_rock" translatable="false">substrateRock</string>
+    <string name="tag_substrate_other" translatable="false">substrateOther</string>
+    <string name="tag_water_level" translatable="false">waterLevel</string>
+    <string name="tag_river_current" translatable="false">riverCurrent</string>
+    <string name="tag_transect_av_depth" translatable="false">transectAvDepth</string>
+    <string name="tag_transect_max_depth" translatable="false">transectMaxDepth</string>
+    <string name="tag_slope" translatable="false">slope</string>
+    <string name="tag_bank_type" translatable="false">bankType</string>
+    <string name="tag_shading" translatable="false">shading</string>
+    <string name="tag_riparian_vegetation" translatable="false">riparianVegetation</string>
+    <string name="tag_shelters" translatable="false">shelters</string>
+    <string name="tag_transparency" translatable="false">transparency</string>
+    <string name="tag_vegetation_type" translatable="false">vegetationType</string>
+    <string name="tag_natural_barriers" translatable="false">naturalBarriers</string>
 </resources>

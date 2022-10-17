@@ -9,7 +9,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.loader.app.LoaderManager
 import de.greenrobot.event.EventBusException
 import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
@@ -85,7 +84,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     protected abstract fun getEntryType(): EntryType?
 
-    private val viewModel: BaseEntryViewModel by viewModels()
+    protected val viewModel: BaseEntryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,7 +127,6 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     override fun doDeserialize(monitoringCode: String?, data: HashMap<String?, String?>?) {
         viewModel.haveDeserialized = true
-        LoaderManager.getInstance(requireActivity()).destroyLoader(this.hashCode())
         super.doDeserialize(monitoringCode, data)
     }
 
@@ -206,7 +204,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        menuCrash?.apply {
+        menuCrash.apply {
             isVisible = BuildConfig.DEBUG
         }
     }

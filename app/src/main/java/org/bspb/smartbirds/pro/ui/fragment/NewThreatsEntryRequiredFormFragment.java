@@ -226,6 +226,9 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
             case plants:
                 species.setKey("species_plants");
                 break;
+            case fishes:
+                species.setKey("species_fishes");
+                break;
             default:
                 species.setKey(null);
                 break;
