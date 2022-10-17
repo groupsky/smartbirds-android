@@ -45,6 +45,8 @@ import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.ImageFileEvent;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -136,7 +138,6 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         return data;
     }
 
-    @Override
     protected void deserialize(HashMap<String, String> data) {
         super.deserialize(data);
         Log.d(TAG, String.format(Locale.ENGLISH, "deserializing: %d", picturesCount));
@@ -217,8 +218,12 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
                     if (images[picturesCount] != null) {
                         logException(new IllegalStateException("Overriding existing picture!"));
                     }
+
                     images[picturesCount] = currentImage;
                     currentImage = null;
+
+                    downscaleImage(images[picturesCount]);
+
                     displayPicture(images[picturesCount], pictures.get(picturesCount));
                     picturesCount++;
                     updateTakePicture();
@@ -229,6 +234,32 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
         }
         if (takePicture != null) {
             takePicture.setEnabled(picturesCount < pictures.size());
+        }
+    }
+
+    private void downscaleImage(ImageStruct image) {
+        if (image == null) {
+            logException(new IllegalStateException("Bitmap is null!"));
+            return;
+        }
+
+        Bitmap bmp = BitmapFactory.decodeFile(image.path, new BitmapFactory.Options());
+
+        if(bmp.getWidth() > 1920 || bmp.getHeight() > 1920) {
+            if(bmp.getWidth() > bmp.getHeight()) {
+                bmp = Bitmap.createScaledBitmap(bmp, 1920, (int) (bmp.getHeight() * 1920f / bmp.getWidth()), false);
+            } else {
+                bmp = Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() * 1920f / bmp.getHeight()), 1920, false);
+            }
+
+            try {
+                FileOutputStream out = new FileOutputStream(images[picturesCount].path);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
