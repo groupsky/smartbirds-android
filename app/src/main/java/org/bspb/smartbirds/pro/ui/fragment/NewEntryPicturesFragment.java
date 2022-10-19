@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.ui.fragment;
 
 import static android.text.TextUtils.isEmpty;
 import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.IMAGE_DOWNSCALE_SIZE;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -43,6 +44,7 @@ import org.bspb.smartbirds.pro.events.GetImageFile;
 import org.bspb.smartbirds.pro.events.ImageFileCreated;
 import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed;
 import org.bspb.smartbirds.pro.events.ImageFileEvent;
+import org.bspb.smartbirds.pro.ui.utils.Configuration;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -245,11 +247,11 @@ public class NewEntryPicturesFragment extends BaseFormFragment {
 
         Bitmap bmp = BitmapFactory.decodeFile(image.path, new BitmapFactory.Options());
 
-        if(bmp.getWidth() > 1920 || bmp.getHeight() > 1920) {
+        if(bmp.getWidth() > IMAGE_DOWNSCALE_SIZE || bmp.getHeight() > IMAGE_DOWNSCALE_SIZE) {
             if(bmp.getWidth() > bmp.getHeight()) {
-                bmp = Bitmap.createScaledBitmap(bmp, 1920, (int) (bmp.getHeight() * 1920f / bmp.getWidth()), false);
+                bmp = Bitmap.createScaledBitmap(bmp, IMAGE_DOWNSCALE_SIZE, (int) (bmp.getHeight() * IMAGE_DOWNSCALE_SIZE / bmp.getWidth()), false);
             } else {
-                bmp = Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() * 1920f / bmp.getHeight()), 1920, false);
+                bmp = Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() * IMAGE_DOWNSCALE_SIZE / bmp.getHeight()), IMAGE_DOWNSCALE_SIZE, false);
             }
 
             try {

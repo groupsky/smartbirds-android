@@ -37,6 +37,7 @@ public class Configuration {
      * How many recently used values to display, only applicable if @ITEM_COUNT_FOR_FILTER is matched
      */
     public static final int MAX_RECENT_USED_VALUES = 10;
+    public static final int IMAGE_DOWNSCALE_SIZE = 1024;
 
     public static void init(Context context) {
         STORAGE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
