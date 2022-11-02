@@ -47,6 +47,7 @@ import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
+import org.bspb.smartbirds.pro.backend.dto.MapLayerItem;
 import org.bspb.smartbirds.pro.beans.EntriesToMapMarkersConverter;
 import org.bspb.smartbirds.pro.collections.IterableConverter;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
@@ -158,11 +159,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     boolean showZoneBackground;
     boolean showLocalProjects;
     boolean showBgAtlasCells;
-    boolean showSPA;
-    boolean showRandomCells;
-    boolean showGrid1km;
-    boolean showGrid10km;
     boolean showKml;
+    List<MapLayerItem> mapLayers;
 
     @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
@@ -414,11 +412,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         currentMap.showMap();
         currentMap.setBgAtlasCells(readAtlasCells());
         currentMap.setShowBgAtlasCells(showBgAtlasCells);
-        currentMap.setShowSPA(showSPA);
-        currentMap.setShowRandomCells(showRandomCells);
-        currentMap.setShowGrid1km(showGrid1km);
-        currentMap.setShowGrid10km(showGrid10km);
         currentMap.setShowKml(showKml);
+        currentMap.setShowMapLayers(mapLayers);
     }
 
     private List<BGAtlasCell> readAtlasCells() {
@@ -550,42 +545,18 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         }
     }
 
-    private void setShowSPA(boolean showSPA) {
-        this.showSPA = showSPA;
-        if (currentMap != null) {
-            currentMap.setShowSPA(showSPA);
-            currentMap.updateCamera();
-        }
-    }
-
-    private void setShowRandomCells(boolean showRandomCells) {
-        this.showRandomCells = showRandomCells;
-        if (currentMap != null) {
-            currentMap.setShowRandomCells(showRandomCells);
-            currentMap.updateCamera();
-        }
-    }
-
-    private void setShowGrid1km(boolean showGrid1km) {
-        this.showGrid1km = showGrid1km;
-        if (currentMap != null) {
-            currentMap.setShowGrid1km(showGrid1km);
-            currentMap.updateCamera();
-        }
-    }
-
-    private void setShowGrid10km(boolean showGrid10km) {
-        this.showGrid10km = showGrid10km;
-        if (currentMap != null) {
-            currentMap.setShowGrid10km(showGrid10km);
-            currentMap.updateCamera();
-        }
-    }
-
     private void setShowKml(boolean showKml) {
         this.showKml = showKml;
         if (currentMap != null) {
             currentMap.setShowKml(showKml);
+            currentMap.updateCamera();
+        }
+    }
+
+    private void setShowMapLayers(List<MapLayerItem> mapLayers) {
+        this.mapLayers = mapLayers;
+        if (currentMap != null) {
+            currentMap.setShowMapLayers(mapLayers);
             currentMap.updateCamera();
         }
     }
@@ -825,11 +796,21 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         setShowZoneBackground(prefs.showZoneBackground().get());
         setShowLocalProjects(prefs.showLocalProjects().get());
         setShowBgAtlasCells(prefs.showBgAtlasCells().get());
-        setShowSPA(prefs.showSPA().get());
-        setShowRandomCells(prefs.showRandomCells().get());
-        setShowGrid1km(prefs.showGrid1km().get());
-        setShowGrid10km(prefs.showGrid10km().get());
         setShowKml(prefs.showUserKml().get());
+
+        Type listType = new TypeToken<List<MapLayerItem>>() {
+        }.getType();
+        List<MapLayerItem> mapLayers = SBGsonParser.createParser().fromJson(prefs.mapLayers().get(), listType);
+        Set<String> enabledLayerIds = prefs.enabledMapLayers().get();
+        List<MapLayerItem> enabledLayers = new ArrayList<>();
+        for (String layerId : enabledLayerIds) {
+            for (MapLayerItem mapLayer : mapLayers) {
+                if (layerId.equals(String.valueOf(mapLayer.getId()))) {
+                    enabledLayers.add(mapLayer);
+                }
+            }
+        }
+        setShowMapLayers(enabledLayers);
 
         restorePoints();
 

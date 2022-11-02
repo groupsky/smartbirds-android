@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
+import org.bspb.smartbirds.pro.backend.dto.MapLayerItem;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.enums.EntryType;
 
@@ -72,15 +73,9 @@ public interface MapProvider {
 
     void setBgAtlasCells(List<BGAtlasCell> cells);
 
-    void setShowSPA(boolean showSPA);
-
     void clearPositioned();
 
-    void setShowRandomCells(boolean showRandomCells);
-
-    void setShowGrid1km(boolean showGrid1km);
-
-    void setShowGrid10km(boolean showGrid10km);
-
     void setShowKml(boolean showKml);
+
+    void setShowMapLayers(List<MapLayerItem> mapLayers);
 }

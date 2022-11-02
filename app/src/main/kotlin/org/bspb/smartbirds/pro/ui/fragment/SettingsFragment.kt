@@ -67,10 +67,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
                 true
             }
-        exportPreference?.onPreferenceClickListener = Preference.OnPreferenceClickListener { _: Preference ->
-            context?.let { DBExporter.exportDB(it) }
-            return@OnPreferenceClickListener true
-        }
+        exportPreference?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener { _: Preference ->
+                context?.let { DBExporter.exportDB(it) }
+                return@OnPreferenceClickListener true
+            }
 
         showKmlPreference = findPreference("showUserKml")
         showKmlPreference?.setOnPreferenceChangeListener { _, newValue ->
@@ -98,10 +99,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val listType = object : TypeToken<List<MapLayerItem?>?>() {}.type
         val layersPreferenceCategory: PreferenceCategory? = findPreference("layersCategory")
         layersPreferenceCategory ?: return
-        var enabledLayers =
-            SBGsonParser.createParser()
-                .fromJson<List<MapLayerItem>>(prefs?.enabledMapLayers()?.get(), listType)
-        var mapLayers = SBGsonParser.createParser().fromJson<List<MapLayerItem>>(prefs?.mapLayers()?.get(), listType)
+        var enabledLayers = mutableSetOf<String>()
+        enabledLayers.addAll(prefs?.enabledMapLayers()?.get() ?: emptySet())
+
+        var mapLayers = SBGsonParser.createParser()
+            .fromJson<List<MapLayerItem>>(prefs?.mapLayers()?.get(), listType)
 
         mapLayers ?: return
 
@@ -110,22 +112,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val layerPreference = SwitchPreferenceCompat(requireContext())
             layerPreference.key = "map_layer_${mapLayerItem.id}"
             layerPreference.isIconSpaceReserved = false
-            layerPreference.title = mapLayerItem.label?.get("en")
-            layerPreference.summary = mapLayerItem.summary?.get("en")
+            layerPreference.title = mapLayerItem.label?.get(getString(R.string.locale))
+            layerPreference.summary = mapLayerItem.summary?.get(getString(R.string.locale))
             layerPreference.setOnPreferenceChangeListener { _, newValue ->
-                if (enabledLayers == null) {
-                    enabledLayers = mutableListOf()
+
+                if (newValue as Boolean) {
+                    enabledLayers.add(mapLayerItem.id.toString())
+                } else {
+                    enabledLayers.remove(mapLayerItem.id.toString())
                 }
 
-                enabledLayers = if (newValue as Boolean) {
-                    enabledLayers?.plus(mapLayerItem)
-                } else {
-                    enabledLayers?.filter { it.id != mapLayerItem.id }
-                }
-                prefs?.enabledMapLayers()?.put(SBGsonParser.createParser().toJson(enabledLayers))
+                prefs?.enabledMapLayers()?.put(enabledLayers)
+
                 return@setOnPreferenceChangeListener true
             }
-            layersPreferenceCategory?.addPreference(layerPreference)
+
+            layersPreferenceCategory.addPreference(layerPreference)
         }
 
     }

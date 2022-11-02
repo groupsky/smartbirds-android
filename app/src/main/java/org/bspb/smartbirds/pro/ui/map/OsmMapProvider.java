@@ -28,6 +28,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
 import org.bspb.smartbirds.pro.backend.dto.Coordinate;
+import org.bspb.smartbirds.pro.backend.dto.MapLayerItem;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EEventBus_;
@@ -555,27 +556,12 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     @Override
-    public void setShowSPA(boolean showSPA) {
-        // TODO to be implemented
-    }
-
-    @Override
-    public void setShowRandomCells(boolean showRandomCells) {
-        // TODO to be implemented
-    }
-
-    @Override
-    public void setShowGrid1km(boolean showGrid1km) {
-        // TODO to be implemented
-    }
-
-    @Override
-    public void setShowGrid10km(boolean showGrid10km) {
-        // TODO to be implemented
-    }
-
-    @Override
     public void setShowKml(boolean showKml) {
+        // TODO to be implemented
+    }
+
+    @Override
+    public void setShowMapLayers(List<MapLayerItem> mapLayers) {
         // TODO to be implemented
     }
 
