@@ -98,20 +98,34 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val listType = object : TypeToken<List<MapLayerItem?>?>() {}.type
         val layersPreferenceCategory: PreferenceCategory? = findPreference("layersCategory")
         layersPreferenceCategory ?: return
-        val enabledLayers = SBGsonParser.createParser().fromJson<List<MapLayerItem>>(prefs?.enabledMapLayers()?.get(), listType)
+        var enabledLayers =
+            SBGsonParser.createParser()
+                .fromJson<List<MapLayerItem>>(prefs?.enabledMapLayers()?.get(), listType)
+        var mapLayers = SBGsonParser.createParser().fromJson<List<MapLayerItem>>(prefs?.mapLayers()?.get(), listType)
 
-        prefs?.mapLayers()?.get().also {
-            val mapLayers =
-                SBGsonParser.createParser().fromJson<List<MapLayerItem>>(it, listType)
-            mapLayers?.forEach { mapLayerItem ->
-                val layerPreference = SwitchPreferenceCompat(requireContext())
-                layerPreference.key = mapLayerItem.id.toString()
-                layerPreference.isIconSpaceReserved = false
-                layerPreference.title = mapLayerItem.label?.get("en")
-                layerPreference.summary = mapLayerItem.summary?.get("en")
-                layersPreferenceCategory?.addPreference(layerPreference)
+        mapLayers ?: return
+
+        mapLayers.forEach { mapLayerItem ->
+            mapLayerItem.enabled ?: return@forEach
+            val layerPreference = SwitchPreferenceCompat(requireContext())
+            layerPreference.key = "map_layer_${mapLayerItem.id}"
+            layerPreference.isIconSpaceReserved = false
+            layerPreference.title = mapLayerItem.label?.get("en")
+            layerPreference.summary = mapLayerItem.summary?.get("en")
+            layerPreference.setOnPreferenceChangeListener { _, newValue ->
+                if (enabledLayers == null) {
+                    enabledLayers = mutableListOf()
+                }
+
+                enabledLayers = if (newValue as Boolean) {
+                    enabledLayers?.plus(mapLayerItem)
+                } else {
+                    enabledLayers?.filter { it.id != mapLayerItem.id }
+                }
+                prefs?.enabledMapLayers()?.put(SBGsonParser.createParser().toJson(enabledLayers))
+                return@setOnPreferenceChangeListener true
             }
-
+            layersPreferenceCategory?.addPreference(layerPreference)
         }
 
     }
