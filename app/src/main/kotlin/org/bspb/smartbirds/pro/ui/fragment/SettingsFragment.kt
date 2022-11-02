@@ -1,13 +1,19 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.*
+import com.google.gson.reflect.TypeToken
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
+import org.bspb.smartbirds.pro.backend.dto.MapLayerItem
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.tools.DBExporter
+import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.map.MapProvider
 import org.bspb.smartbirds.pro.utils.KmlUtils
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 
 
@@ -85,6 +91,29 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         updateImportedKmlPreference()
+        initMapLayersSettings()
+    }
+
+    private fun initMapLayersSettings() {
+        val listType = object : TypeToken<List<MapLayerItem?>?>() {}.type
+        val layersPreferenceCategory: PreferenceCategory? = findPreference("layersCategory")
+        layersPreferenceCategory ?: return
+        val enabledLayers = SBGsonParser.createParser().fromJson<List<MapLayerItem>>(prefs?.enabledMapLayers()?.get(), listType)
+
+        prefs?.mapLayers()?.get().also {
+            val mapLayers =
+                SBGsonParser.createParser().fromJson<List<MapLayerItem>>(it, listType)
+            mapLayers?.forEach { mapLayerItem ->
+                val layerPreference = SwitchPreferenceCompat(requireContext())
+                layerPreference.key = mapLayerItem.id.toString()
+                layerPreference.isIconSpaceReserved = false
+                layerPreference.title = mapLayerItem.label?.get("en")
+                layerPreference.summary = mapLayerItem.summary?.get("en")
+                layersPreferenceCategory?.addPreference(layerPreference)
+            }
+
+        }
+
     }
 
     private fun updateImportedKmlPreference() {

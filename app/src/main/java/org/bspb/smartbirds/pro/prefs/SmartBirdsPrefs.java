@@ -66,4 +66,8 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean showUserKml();
+
+    String mapLayers();
+
+    String enabledMapLayers();
 }

@@ -7,6 +7,7 @@ import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest;
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse;
+import org.bspb.smartbirds.pro.backend.dto.MapLayerItem;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.backend.dto.ResponseEnvelope;
 import org.bspb.smartbirds.pro.backend.dto.ResponseListEnvelope;
@@ -89,4 +90,7 @@ public interface SmartBirdsApi {
 
     @POST("fishes")
     Call<UploadFormResponse> createFish(@Body JsonObject request);
+
+    @GET("map-layers")
+    Call<ResponseListEnvelope<MapLayerItem>> mapLayers(@Query("limit") int limit, @Query("offset") int offset);
 }
