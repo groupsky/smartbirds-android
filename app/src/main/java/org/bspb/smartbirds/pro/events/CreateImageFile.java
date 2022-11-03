@@ -6,8 +6,10 @@ package org.bspb.smartbirds.pro.events;
 public class CreateImageFile {
 
     public final String monitoringCode;
+    public final String action;
 
-    public CreateImageFile(String monitoringCode) {
+    public CreateImageFile(String monitoringCode, String action) {
         this.monitoringCode = monitoringCode;
+        this.action = action;
     }
 }

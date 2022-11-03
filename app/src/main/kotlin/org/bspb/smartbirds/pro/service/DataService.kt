@@ -309,7 +309,15 @@ open class DataService : Service() {
                                 SmartBirdsApplication.FILES_AUTHORITY,
                                 image
                             )
-                        bus.post(ImageFileCreated(monitoring.code, imageFileName, uri, image.absolutePath))
+                        bus.post(
+                            ImageFileCreated(
+                                monitoring.code,
+                                imageFileName,
+                                uri,
+                                image.absolutePath,
+                                event.action
+                            )
+                        )
                         return@sbLaunch
                     }
                 } catch (e: IOException) {

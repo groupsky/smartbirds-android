@@ -464,4 +464,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_fish_vegetation_type">"Vegetation type"</string>
     <string name="monitoring_fish_natural_barriers">"Natural barriers"</string>
     <string name="class_fishes">"Fishes"</string>
+    <string name="menu_attach_image_take_picture">Use camera</string>
+    <string name="menu_attach_image_pick_image">Choose from gallery</string>
 </resources>
