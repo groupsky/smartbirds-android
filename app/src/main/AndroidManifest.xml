@@ -50,6 +50,7 @@
         <activity
             android:name=".ui.SplashScreenActivity_"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:exported="true"
             android:label="SmartBirds Pro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
