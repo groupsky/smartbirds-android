@@ -135,21 +135,22 @@ open class MonitoringListFragment : ListFragment() {
     }
 
     private fun updateMenuItems(status: Monitoring.Status?) {
-        menuStatusFinished.setChecked(false)
-        menuStatusUploaded.setChecked(false)
-        menuStatusPaused.setChecked(false)
-        menuStatusCanceled.setChecked(false)
+        menuStatusFinished.isChecked = false
+        menuStatusUploaded.isChecked = false
+        menuStatusPaused.isChecked = false
+        menuStatusCanceled.isChecked = false
 
         status?.apply {
             when (this) {
                 Monitoring.Status.finished ->
-                    menuStatusFinished.setChecked(true)
+                    menuStatusFinished.isChecked = true
                 Monitoring.Status.uploaded ->
-                    menuStatusUploaded.setChecked(true)
+                    menuStatusUploaded.isChecked = true
                 Monitoring.Status.paused ->
-                    menuStatusPaused.setChecked(true)
+                    menuStatusPaused.isChecked = true
                 Monitoring.Status.canceled ->
-                    menuStatusCanceled.setChecked(true)
+                    menuStatusCanceled.isChecked = true
+                else -> {}
             }
         }
 
