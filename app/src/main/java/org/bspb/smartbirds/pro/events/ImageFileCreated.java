@@ -11,11 +11,13 @@ public class ImageFileCreated {
     public final String imageFileName;
     public final Uri uri;
     public final String imagePath;
+    public final String action;
 
-    public ImageFileCreated(String monitoringCode, String imageFileName, Uri uri, String imagePath) {
+    public ImageFileCreated(String monitoringCode, String imageFileName, Uri uri, String imagePath, String action) {
         this.monitoringCode = monitoringCode;
         this.imageFileName = imageFileName;
         this.uri = uri;
         this.imagePath = imagePath;
+        this.action = action;
     }
 }
