@@ -15,16 +15,13 @@ import android.os.Parcelable.Creator
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.PopupMenu
-import androidx.core.app.ActivityOptionsCompat
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import org.androidannotations.annotations.*
 import org.bspb.smartbirds.pro.R
@@ -33,13 +30,10 @@ import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.FileUtils
-import org.bspb.smartbirds.pro.utils.KmlUtils
-import org.bspb.smartbirds.pro.utils.debugLog
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -176,30 +170,26 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
             return
         }
 
-        requireActivity().findViewById<View>(android.R.id.content)?.let { showPopup(it) }
+        showPopup()
     }
 
-    fun showPopup(v: View) {
-        PopupMenu(requireContext(), v).apply {
-            // MainActivity implements OnMenuItemClickListener
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.take_picture -> {
-                        if (INTENT_TAKE_PICTURE.resolveActivity(requireActivity().packageManager) != null) {
-                            eventBus.post(CreateImageFile(monitoringCode, "take_picture"))
-                        }
-                        true
+    private fun showPopup() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setItems(
+            R.array.attach_image_options
+        ) { _, which ->
+            when (which) {
+                0 -> {
+                    if (INTENT_TAKE_PICTURE.resolveActivity(requireActivity().packageManager) != null) {
+                        eventBus.post(CreateImageFile(monitoringCode, "take_picture"))
                     }
-                    R.id.pick_image -> {
-                        eventBus.post(CreateImageFile(monitoringCode, "pick_image"))
-                        true
-                    }
-                    else -> false
+                }
+                1 -> {
+                    eventBus.post(CreateImageFile(monitoringCode, "pick_image"))
                 }
             }
-            inflate(R.menu.menu_attach_image)
-            show()
         }
+        builder.create().show()
     }
 
     open fun onEventMainThread(event: ImageFileCreatedFailed?) {

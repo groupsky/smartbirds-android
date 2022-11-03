@@ -463,4 +463,6 @@
     <string name="monitoring_fish_vegetation_type">"Водна растителност"</string>
     <string name="monitoring_fish_natural_barriers">"Наличие на естествени препядствия"</string>
     <string name="class_fishes">"Риби"</string>
+    <string name="menu_attach_image_take_picture">Използвай камера</string>
+    <string name="menu_attach_image_pick_image">Избор от галерия</string>
 </resources>
