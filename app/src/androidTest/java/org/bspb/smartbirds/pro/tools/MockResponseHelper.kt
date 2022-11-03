@@ -24,6 +24,14 @@ class MockResponseHelper {
             return MockResponse().setBody(parser.toJson(nomenclaturesResponse))
         }
 
+        fun prepareMapLayersResponse(): MockResponse {
+            var parser = SBGsonParser.createParser()
+            var mapLayersResponse = ResponseListEnvelope<MapLayerItem>()
+            mapLayersResponse.count = 0
+            mapLayersResponse.data = ArrayList()
+            return MockResponse().setBody(parser.toJson(mapLayersResponse))
+        }
+
         fun prepareUploadFileResponse(): MockResponse {
             var parser = SBGsonParser.createParser()
             var uploadResponse = ResponseEnvelope<FileId>()
