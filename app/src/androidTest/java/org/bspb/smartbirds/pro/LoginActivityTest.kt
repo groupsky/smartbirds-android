@@ -5,6 +5,7 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
+import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareMapLayersResponse
 import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareNomenclatureResponse
 import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareSuccessLoginResponse
 import org.bspb.smartbirds.pro.tools.robot.LoginTestRobot.Companion.loginScreen
@@ -51,6 +52,7 @@ class LoginActivityTest {
     fun testLoginSuccess() {
         val loginResponse = prepareSuccessLoginResponse()
         val nomenclaturesResponse = prepareNomenclatureResponse()
+        val mapLayersResponse = prepareMapLayersResponse()
 
         // login
         mockApiRule.server.enqueue(loginResponse)
@@ -62,6 +64,8 @@ class LoginActivityTest {
         mockApiRule.server.enqueue(nomenclaturesResponse)
         // pois
         mockApiRule.server.enqueue(nomenclaturesResponse)
+        // app settings
+        mockApiRule.server.enqueue(mapLayersResponse)
 
         loginScreen {
             isDisplayed()

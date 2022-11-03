@@ -11,6 +11,7 @@ import org.androidannotations.api.support.app.AbstractIntentService
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.prefs.UserPrefs_
+import org.bspb.smartbirds.pro.sync.AppSettingsManager
 import org.bspb.smartbirds.pro.sync.AuthenticationManager
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.sync.ZonesManager
@@ -41,6 +42,9 @@ open class SyncService : AbstractIntentService("SyncService") {
 
     @Bean
     protected lateinit var uploadManager: UploadManager
+
+    @Bean
+    protected lateinit var appSettingsManager: AppSettingsManager
 
     private val nomenclaturesManager = NomenclaturesManager.getInstance()
 
@@ -83,6 +87,8 @@ open class SyncService : AbstractIntentService("SyncService") {
         nomenclaturesManager.updateNomenclatures()
         updateSyncProgress(R.string.sync_dialog_downloading_zones)
         zonesManager.downloadZones()
+        updateSyncProgress(R.string.sync_dialog_downloading_app_settings)
+        appSettingsManager.fetchSettings()
     }
 
     private fun updateSyncProgress(messageResource: Int) {

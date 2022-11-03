@@ -45,6 +45,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
 import org.bspb.smartbirds.pro.backend.dto.Coordinate;
+import org.bspb.smartbirds.pro.backend.dto.MapLayerItem;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
@@ -75,6 +76,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by dani on 14-11-6.
@@ -105,17 +107,11 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private List<Marker> localProjectsMarkers = new ArrayList<>();
     private boolean showLocalProjects;
     private boolean showBgAtlasCells;
-    private boolean showSPA;
-    private boolean showRandomCells;
-    private boolean showGrid1km;
-    private boolean showGrid10km;
     private boolean showKml;
     private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
     private List<Polygon> atlasCellsPolygons = new ArrayList<>();
-    private TileOverlay spaTiles;
-    private TileOverlay randomCellsTiles;
-    private TileOverlay grid1kmTiles;
-    private TileOverlay grid10kmTiles;
+    private List<MapLayerItem> mapLayers;
+    private Map<Integer, TileOverlay> mapLayerTiles = new HashMap<>();
 
     private List<Polygon> kmlPolygons = new ArrayList();
     private List<Marker> kmlMarkers = new ArrayList();
@@ -189,10 +185,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         drawLocalProjects(showLocalProjects);
         drawBgAtlasCells();
-        showSPA();
-        showRandomCells();
-        showGrid1km();
-        showGrid10km();
+        showMapLayers();
         showKml();
 
         fragment.getView().post(new Runnable() {
@@ -479,27 +472,9 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     }
 
     @Override
-    public void setShowSPA(boolean showSPA) {
-        this.showSPA = showSPA;
-        showSPA();
-    }
-
-    @Override
-    public void setShowRandomCells(boolean showRandomCells) {
-        this.showRandomCells = showRandomCells;
-        showRandomCells();
-    }
-
-    @Override
-    public void setShowGrid1km(boolean showGrid1km) {
-        this.showGrid1km = showGrid1km;
-        showGrid1km();
-    }
-
-    @Override
-    public void setShowGrid10km(boolean showGrid10km) {
-        this.showGrid10km = showGrid10km;
-        showGrid10km();
+    public void setShowMapLayers(List<MapLayerItem> mapLayers) {
+        this.mapLayers = mapLayers;
+        showMapLayers();
     }
 
     @Override
@@ -508,38 +483,46 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         showKml();
     }
 
-    private void showSPA() {
-        spaTiles = showTilesOverlay(spaTiles, R.string.spa_url, showSPA);
-    }
-
-    private void showRandomCells() {
-        randomCellsTiles = showTilesOverlay(randomCellsTiles, R.string.random_cells_url, showRandomCells);
-    }
-
-    private void showGrid1km() {
-        grid1kmTiles = showTilesOverlay(grid1kmTiles, R.string.grid_1km_url, showGrid1km);
-    }
-
-    private void showGrid10km() {
-        grid10kmTiles = showTilesOverlay(grid10kmTiles, R.string.grid_10km_url, showGrid10km);
-    }
-
-    private TileOverlay showTilesOverlay(TileOverlay overlay, int urlResourceId, boolean enabled) {
+    private void showMapLayers() {
         if (mMap == null) {
-            return null;
+            return;
         }
-        if (enabled) {
-            if (overlay == null) {
-                TileProvider tileProvider = new UrlTileProvider(256, 256) {
+
+        if (mapLayerTiles.size() > 0) {
+            ArrayList<Integer> idsToRemove = new ArrayList<>();
+            for (Integer id : mapLayerTiles.keySet()) {
+                boolean found = false;
+                for (MapLayerItem mapLayer : mapLayers) {
+                    if (Objects.equals(mapLayer.getId(), id)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    idsToRemove.add(id);
+                }
+            }
+
+            for (Integer id : idsToRemove) {
+                mapLayerTiles.get(id).remove();
+                mapLayerTiles.remove(id);
+            }
+        }
+        for (MapLayerItem mapLayer : mapLayers) {
+            if (!mapLayerTiles.containsKey(mapLayer.getId())) {
+                TileProvider tileProvider = new UrlTileProvider(
+                        mapLayer.getTileWidth() != null ? mapLayer.getTileWidth() : 256,
+                        mapLayer.getTileHeight() != null ? mapLayer.getTileHeight() : 256
+                ) {
                     @Override
                     public synchronized URL getTileUrl(int x, int y, int zoom) {
                         // The moon tile coordinate system is reversed.  This is not normal.
                         int reversedY = (1 << zoom) - y - 1;
-                        String s = fragment.getString(urlResourceId, zoom, x, reversedY);
+                        String layerUrl = String.format(mapLayer.getUrl().get(fragment.getString(R.string.locale)), zoom, x, reversedY);
 
                         URL url = null;
                         try {
-                            url = new URL(s);
+                            url = new URL(layerUrl);
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                             throw new AssertionError(e);
@@ -548,16 +531,12 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                     }
 
                 };
-                return mMap.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
-            }
-        } else {
-            if (overlay != null) {
-                overlay.remove();
-                return null;
+
+                TileOverlayOptions tileOverlayOptions = new TileOverlayOptions();
+                tileOverlayOptions.tileProvider(tileProvider);
+                mapLayerTiles.put(mapLayer.getId(), mMap.addTileOverlay(tileOverlayOptions));
             }
         }
-
-        return overlay;
     }
 
     @Override

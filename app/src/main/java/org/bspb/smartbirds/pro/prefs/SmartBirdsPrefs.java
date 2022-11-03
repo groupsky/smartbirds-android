@@ -46,18 +46,6 @@ public interface SmartBirdsPrefs {
     @DefaultBoolean(true)
     boolean showBgAtlasCells();
 
-    @DefaultBoolean(false)
-    boolean showSPA();
-
-    @DefaultBoolean(false)
-    boolean showRandomCells();
-
-    @DefaultBoolean(false)
-    boolean showGrid1km();
-
-    @DefaultBoolean(false)
-    boolean showGrid10km();
-
     Set<String> formsEnabled();
 
     int versionCode();
@@ -66,4 +54,8 @@ public interface SmartBirdsPrefs {
 
     @DefaultBoolean(false)
     boolean showUserKml();
+
+    String mapLayers();
+
+    Set<String> enabledMapLayers();
 }
