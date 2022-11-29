@@ -12,3 +12,4 @@ crashlytics-build.properties
 
 keystore/
 keystore.properties
+keystore-upload.properties

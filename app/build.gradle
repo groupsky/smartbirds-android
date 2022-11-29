@@ -15,7 +15,7 @@ buildProperties {
         using rootProject.file('debug_gradle.properties')
     }
     secrets {
-        using rootProject.file('keystore.properties')
+        using rootProject.file('keystore-upload.properties')
     }
 }
 
