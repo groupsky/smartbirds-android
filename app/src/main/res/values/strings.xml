@@ -467,4 +467,34 @@ Do you really want to cancel the monitoring?"</string>
     <string name="class_fishes">"Fishes"</string>
     <string name="menu_attach_image_take_picture">Use camera</string>
     <string name="menu_attach_image_pick_image">Choose from gallery</string>
+
+
+
+    <string name="monitoring_bats_name">"Species"</string>
+    <string name="monitoring_bats_count">"Count"</string>
+    <string name="monitoring_bats_age">"Age"</string>
+    <string name="monitoring_bats_gender">"Sex"</string>
+    <string name="monitoring_bats_notes">"Notes"</string>
+    <string name="monitoring_bats_methodology">"Methodology"</string>
+    <string name="monitoring_bats_t_cave">"T Cave"</string>
+    <string name="monitoring_bats_h_cave">"H Cave"</string>
+    <string name="monitoring_bats_type_locality">"Typloc"</string>
+    <string name="monitoring_bats_sublocality">"Sublocality"</string>
+    <string name="monitoring_bats_swarming">"Swarming"</string>
+    <string name="monitoring_bats_habitat">"Habitat"</string>
+    <string name="monitoring_bats_condition">"Condition"</string>
+    <string name="monitoring_bats_type_condition">"Type condition"</string>
+    <string name="monitoring_bats_reproductive_status">"Reproductive status"</string>
+    <string name="monitoring_bats_ring">"Ring"</string>
+    <string name="monitoring_bats_ring_number">"Ring number"</string>
+    <string name="monitoring_bats_body_length">"Body length"</string>
+    <string name="monitoring_bats_tail_length">"Tail length"</string>
+    <string name="monitoring_bats_ear_length">"Ear length"</string>
+    <string name="monitoring_bats_forearm_length">"Forearm length"</string>
+    <string name="monitoring_bats_length_third_digit">"Length third digit"</string>
+    <string name="monitoring_bats_length_fifth_digit">"Length fifth digit"</string>
+    <string name="monitoring_bats_length_ws">"Length WS"</string>
+    <string name="monitoring_bats_weight">"Weight"</string>
+    <string name="class_bats">"Bats"</string>
+    <string name="entry_type_bats">"Bats"</string>
 </resources>

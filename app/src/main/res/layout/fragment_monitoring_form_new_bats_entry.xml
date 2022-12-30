@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/form_horizontal_spacing"
+        android:paddingTop="@dimen/form_vertical_spacing"
+        android:paddingRight="@dimen/form_horizontal_spacing"
+        android:paddingBottom="@dimen/form_vertical_spacing">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <fragment
+                android:id="@+id/moderator_review_fragment"
+                android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:layout="@layout/fragment_moderator_review" />
+
+
+            <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+                android:id="@+id/form_bats_confidential"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:tag="@string/tag_confidential"
+                android:text="@string/monitoring_private" />
+
+        </LinearLayout>
+
+        <View style="@style/FieldSeparator" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_species"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_name"
+                android:tag="@string/tag_species_scientific_name"
+                app:entriesType="species_bats"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_metodology"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_methodology"
+                android:tag="@string/tag_metodoly"
+                app:entriesType="bats_methodology" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_bats_t_cave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_t_cave"
+                android:tag="@string/tag_temp_cave" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
+                android:id="@+id/form_bats_h_cave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_h_cave"
+                android:tag="@string/tag_humidity_cave" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_typloc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_type_locality"
+                android:tag="@string/tag_type_locality"
+                app:entriesType="bats_type_location" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.TextFormInput
+                android:id="@+id/form_bats_sublocality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_sublocality"
+                android:tag="@string/tag_sublocality" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SumDecimalNumberFormInput
+                android:id="@+id/form_bats_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_count"
+                android:tag="@string/tag_count"
+                app:required="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <org.bspb.smartbirds.pro.ui.views.SwitchFormInput
+            android:id="@+id/form_bats_swarming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/tag_swarming"
+            android:text="@string/monitoring_bats_swarming" />
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_gender"
+                android:tag="@string/tag_sex"
+                app:entriesType="bats_sex" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_age"
+                android:tag="@string/tag_age"
+                app:entriesType="bats_age" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_habitat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_habitat"
+                android:tag="@string/tag_habitats"
+                app:entriesType="bats_habitat" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_condition"
+                android:tag="@string/tag_condition"
+                app:entriesType="bats_condition" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                android:id="@+id/form_bats_type_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_type_condition"
+                android:tag="@string/tag_bat_type_condition"
+                app:entriesType="bats_type_condition" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                android:id="@+id/form_bats_threats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_common_threats"
+                android:tag="@string/tag_threats"
+                app:entriesType="form_main_threats" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
+                android:id="@+id/form_bats_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monitoring_bats_notes"
+                android:tag="@string/tag_remarks_type" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View style="@style/GroupSeparator" />
+
+        <fragment
+            android:id="@+id/pictures_fragment"
+            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
