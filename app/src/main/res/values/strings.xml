@@ -467,9 +467,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="class_fishes">"Fishes"</string>
     <string name="menu_attach_image_take_picture">Use camera</string>
     <string name="menu_attach_image_pick_image">Choose from gallery</string>
-
-
-
     <string name="monitoring_bats_name">"Species"</string>
     <string name="monitoring_bats_count">"Count"</string>
     <string name="monitoring_bats_age">"Age"</string>

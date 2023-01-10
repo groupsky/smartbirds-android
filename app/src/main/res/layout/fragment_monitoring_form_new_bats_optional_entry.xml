@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_bats_forearm_length"
-                android:tag="@string/tag_tail_length" />
+                android:tag="@string/tag_forearm_length" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View style="@style/FieldSeparator" />
