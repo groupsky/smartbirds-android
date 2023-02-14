@@ -472,11 +472,11 @@
     <string name="monitoring_bats_gender">"Пол"</string>
     <string name="monitoring_bats_notes">"Бележки"</string>
     <string name="monitoring_bats_methodology">"Метод"</string>
-    <string name="monitoring_bats_t_cave">"T° на пещерата"</string>
-    <string name="monitoring_bats_h_cave">"H на пещерата (m)"</string>
+    <string name="monitoring_bats_t_cave">"T°C на убежището"</string>
+    <string name="monitoring_bats_h_cave">"H - Влажност на пещерата (%)"</string>
     <string name="monitoring_bats_type_locality">"Тип на мястото"</string>
     <string name="monitoring_bats_sublocality">"Описание на мястото"</string>
-    <string name="monitoring_bats_swarming">"Роене"</string>
+    <string name="monitoring_bats_swarming">"Суорминг"</string>
     <string name="monitoring_bats_habitat">"Местобитание"</string>
     <string name="monitoring_bats_condition">"Състояние"</string>
     <string name="monitoring_bats_type_condition">"Тип на броя"</string>

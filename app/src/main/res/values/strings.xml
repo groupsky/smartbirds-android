@@ -473,8 +473,8 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_bats_gender">"Sex"</string>
     <string name="monitoring_bats_notes">"Notes"</string>
     <string name="monitoring_bats_methodology">"Methodology"</string>
-    <string name="monitoring_bats_t_cave">"T° Cave"</string>
-    <string name="monitoring_bats_h_cave">"H Cave (m)"</string>
+    <string name="monitoring_bats_t_cave">"T°C Roost"</string>
+    <string name="monitoring_bats_h_cave">"H - Roost humidity (%)"</string>
     <string name="monitoring_bats_type_locality">"Type of locality"</string>
     <string name="monitoring_bats_sublocality">"Sublocality"</string>
     <string name="monitoring_bats_swarming">"Swarming"</string>
