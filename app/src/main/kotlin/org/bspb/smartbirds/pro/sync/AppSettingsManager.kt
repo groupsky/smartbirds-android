@@ -36,10 +36,12 @@ open class AppSettingsManager {
             try {
 
                 val response = backend.api().mapLayers(-1, 0).execute()
-                if (!response.isSuccessful) throw IOException("Server error: " + response.code() + " - " + response.message())
-                    response.body()?.data?.apply {
-                        prefs.mapLayers().put(SBGsonParser.createParser().toJson(this))
-                    }
+                if (!response.isSuccessful) {
+                    throw IOException("Server error: " + response.code() + " - " + response.message())
+                }
+                response.body()?.data?.apply {
+                    prefs.mapLayers().put(SBGsonParser.createParser().toJson(this))
+                }
             } catch (t: Throwable) {
                 Reporting.logException(t)
                 showToast("Could not fetch app settings. Try again.")
