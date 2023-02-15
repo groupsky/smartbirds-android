@@ -138,6 +138,11 @@
                     android:title="@string/entry_type_fish"
                     android:visible="false" />
 
+                <item
+                    android:id="@+id/action_form_type_bats"
+                    android:title="@string/entry_type_bats"
+                    android:visible="false" />
+
             </group>
         </menu>
     </item>

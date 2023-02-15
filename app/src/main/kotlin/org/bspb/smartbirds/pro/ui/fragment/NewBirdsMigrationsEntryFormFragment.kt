@@ -66,7 +66,8 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
             confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
             migrationPrefs!!.migrationPoint().get()?.let { nomenclatureJson ->
                 try {
-                    val nomenclature = SBGsonParser.createParser().fromJson(nomenclatureJson, Nomenclature::class.java)
+                    val nomenclature = SBGsonParser.createParser()
+                        .fromJson(nomenclatureJson, Nomenclature::class.java)
                     nomenclature?.let {
                         it.localeLabel = it.label.get(context?.getString(R.string.locale))
                         migrationPoint?.setSelectionIfAvailable(NomenclatureItem(it))

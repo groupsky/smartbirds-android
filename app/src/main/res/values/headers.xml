@@ -188,4 +188,24 @@
     <string name="tag_transparency" translatable="false">transparency</string>
     <string name="tag_vegetation_type" translatable="false">vegetationType</string>
     <string name="tag_natural_barriers" translatable="false">naturalBarriers</string>
+    <string name="tag_metodoly" translatable="false">metodology</string>
+    <string name="tag_temp_cave" translatable="false">tCave</string>
+    <string name="tag_humidity_cave" translatable="false">hCave</string>
+    <string name="tag_type_locality" translatable="false">typloc</string>
+    <string name="tag_sublocality" translatable="false">sublocality</string>
+    <string name="tag_swarming" translatable="false">swarming</string>
+    <string name="tag_habitats" translatable="false">habitats</string>
+    <string name="tag_condition" translatable="false">condition</string>
+    <string name="tag_bat_type_condition" translatable="false">typeCond</string>
+    <string name="tag_reproductive_status" translatable="false">reproductiveStatus</string>
+    <string name="tag_ring" translatable="false">ring</string>
+    <string name="tag_ring_number" translatable="false">ringN</string>
+    <string name="tag_body_length" translatable="false">bodyLength</string>
+    <string name="tag_tail_length" translatable="false">tailLength</string>
+    <string name="tag_ear_length" translatable="false">earLength</string>
+    <string name="tag_forearm_length" translatable="false">forearmLength</string>
+    <string name="tag_length_third_digit" translatable="false">lengthThirdDigit</string>
+    <string name="tag_length_fifth_digit" translatable="false">lengthFifthDigit</string>
+    <string name="tag_length" translatable="false">lengthWS</string>
+    <string name="tag_weight" translatable="false">weight</string>
 </resources>

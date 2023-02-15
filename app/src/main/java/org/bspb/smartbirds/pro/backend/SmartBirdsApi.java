@@ -93,4 +93,7 @@ public interface SmartBirdsApi {
 
     @GET("map-layers")
     Call<ResponseListEnvelope<MapLayerItem>> mapLayers(@Query("limit") int limit, @Query("offset") int offset);
+
+    @POST("bats")
+    Call<UploadFormResponse> createBat(@Body JsonObject request);
 }

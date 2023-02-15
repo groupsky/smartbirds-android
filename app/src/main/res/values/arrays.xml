@@ -48,6 +48,7 @@
         <item>@string/entry_type_pylons_casualties</item>
         <item>@string/entry_type_birds_migrations</item>
         <item>@string/entry_type_fish</item>
+        <item>@string/entry_type_bats</item>
     </array>
 
     <array name="monitoring_form_values">
@@ -64,6 +65,7 @@
         <item>PYLONS_CASUALTIES</item>
         <item>BIRDS_MIGRATIONS</item>
         <item>FISH</item>
+        <item>BATS</item>
     </array>
 
     <array name="attach_image_options">
