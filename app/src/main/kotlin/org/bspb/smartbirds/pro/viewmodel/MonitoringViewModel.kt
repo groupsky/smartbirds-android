@@ -26,7 +26,7 @@ class MonitoringViewModel : ViewModel() {
 
     private fun transformDbEntries(items: List<Form>?): LiveData<List<MonitoringEntry>> {
         return liveData {
-            var monitoringEntries = mutableListOf<MonitoringEntry>()
+            val monitoringEntries = mutableListOf<MonitoringEntry>()
 
             items?.forEach {
                 monitoringEntries.add(MonitoringManager.entryFromDb(it))
@@ -40,7 +40,7 @@ class MonitoringViewModel : ViewModel() {
         if (zones != null) {
             return zones!!
         }
-        zones = Transformations.switchMap(zonesRepo.getAllZones()) { dbZones ->
+        zones = zonesRepo.getAllZones().switchMap { dbZones ->
             val zones = mutableListOf<Zone>()
             dbZones.forEach { dbZone ->
                 zones.add(Zone.fromDbModel(dbZone))
