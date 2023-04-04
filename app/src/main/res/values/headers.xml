@@ -208,4 +208,6 @@
     <string name="tag_length_fifth_digit" translatable="false">lengthFifthDigit</string>
     <string name="tag_length" translatable="false">lengthWS</string>
     <string name="tag_weight" translatable="false">weight</string>
+    <string name="tag_tragus" translatable="false">tragus</string>
+    <string name="tag_upper_molar" translatable="false">upperMolar</string>
 </resources>

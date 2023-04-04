@@ -197,6 +197,39 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
             </TableRow>
+
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="6">
+
+                    <org.bspb.smartbirds.pro.ui.views.PositiveDecimalNumberFormInput
+                        android:id="@+id/form_bats_tragus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_bats_tragus"
+                        android:tag="@string/tag_tragus" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="6">
+
+                    <org.bspb.smartbirds.pro.ui.views.PositiveDecimalNumberFormInput
+                        android:id="@+id/form_bats_upper_molar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_bats_upper_molar"
+                        android:tag="@string/tag_upper_molar" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </TableRow>
         </TableLayout>
 
     </LinearLayout>

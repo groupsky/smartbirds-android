@@ -38,6 +38,8 @@ class BatsConverter(context: Context?) : Converter(context) {
         add(R.string.tag_length_fifth_digit, "lengthFifthDigit")
         add(R.string.tag_length, "lengthWS")
         add(R.string.tag_weight, "weight")
+        add(R.string.tag_tragus, "tragus")
+        add(R.string.tag_upper_molar, "upperMolar")
 
     }
 }
