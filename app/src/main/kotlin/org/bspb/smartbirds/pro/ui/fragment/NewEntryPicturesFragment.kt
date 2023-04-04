@@ -244,7 +244,9 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         } else {
             currentImage = null
         }
-        takePicture.isEnabled = picturesCount < pictures.size
+        if (this::takePicture.isInitialized) {
+            takePicture.isEnabled = picturesCount < pictures.size
+        }
     }
 
     private fun downscaleImage(image: ImageStruct?) {
