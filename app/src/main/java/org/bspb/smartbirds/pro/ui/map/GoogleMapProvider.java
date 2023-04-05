@@ -23,6 +23,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -56,7 +58,6 @@ import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.Constants;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.KmlFeature;
 import org.osmdroid.bonuspack.kml.KmlFolder;
@@ -115,6 +116,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     private List<Polygon> kmlPolygons = new ArrayList();
     private List<Marker> kmlMarkers = new ArrayList();
+
+    private Circle currentPositionCircle;
+
+    private boolean showCurrentLocationCircle = false;
 
     @Override
     /**
@@ -187,6 +192,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         drawBgAtlasCells();
         showMapLayers();
         showKml();
+        drawCurrentPositionCircle();
 
         fragment.getView().post(new Runnable() {
             @Override
@@ -239,6 +245,12 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void drawPath(List<LatLng> points) {
 
+    }
+
+    @Override
+    public void setShowCurrentLocationCircle(boolean showCurrentLocationCircle) {
+        this.showCurrentLocationCircle = showCurrentLocationCircle;
+        drawCurrentPositionCircle();
     }
 
     private void drawLocalProjects(boolean showKml) {
@@ -431,6 +443,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void setPosition(LatLng position) {
         lastPosition = position;
+        drawCurrentPositionCircle();
     }
 
     @Override
@@ -750,5 +763,35 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void clearPositioned() {
         positioned = false;
+    }
+
+    private void drawCurrentPositionCircle() {
+        if (mMap == null) {
+            return;
+        }
+
+        if(showCurrentLocationCircle) {
+
+        } else {
+            if (currentPositionCircle != null) {
+                currentPositionCircle.remove();
+            }
+        }
+
+        if (currentPositionCircle != null) {
+            currentPositionCircle.remove();
+        }
+
+        if (!showCurrentLocationCircle || lastPosition == null) {
+            return;
+        }
+
+        currentPositionCircle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(lastPosition.latitude, lastPosition.longitude))
+                .radius(50)
+                .strokeColor(Color.BLUE)
+                .fillColor(Color.argb(30, 0, 0, 255))
+                .strokeWidth(2f));
+        curr
     }
 }

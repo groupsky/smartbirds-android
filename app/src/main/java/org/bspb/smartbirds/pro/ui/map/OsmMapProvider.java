@@ -17,6 +17,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
@@ -40,6 +41,7 @@ import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.osmdroid.bonuspack.kml.IconStyle;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.Style;
@@ -65,6 +67,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -103,6 +106,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
     private List<Polygon> atlasCellsPolygons = new ArrayList<>();
 
+    private Polygon currentLocationCircle;
+
+    private boolean showCurrentLocationCircle;
+
     @Override
     public void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -121,10 +128,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         mMap.setMultiTouchControls(true);
         mMap.setTileSource(TileSourceFactory.MAPNIK);
         mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.ALWAYS);
-        mMap.getZoomController().getDisplay().setPositions(
-                false,
-                CustomZoomButtonsDisplay.HorizontalPosition.RIGHT,
-                CustomZoomButtonsDisplay.VerticalPosition.BOTTOM);
+        mMap.getZoomController().getDisplay().setPositions(false, CustomZoomButtonsDisplay.HorizontalPosition.RIGHT, CustomZoomButtonsDisplay.VerticalPosition.BOTTOM);
         mMap.getZoomController().getDisplay().setMarginPadding(0.5f, 0.1f);
         mMap.getController().setZoom(16f);
 
@@ -159,6 +163,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         loadKmlFile();
         drawLocalProjects(showLocalProjects);
         drawBgAtlasCells();
+        drawCurrentPositionCircle();
 
         for (MarkerHolder markerHolder : markers) {
             if (markerHolder.marker == null || !mMap.getOverlayManager().contains(markerHolder.marker)) {
@@ -445,6 +450,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setPosition(LatLng position) {
         lastPosition = position;
+
+        if (!Objects.equals(lastPosition, position)) {
+            drawCurrentPositionCircle();
+        }
     }
 
     public void onEvent(MapAttachedEvent event) {
@@ -716,5 +725,39 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void clearPositioned() {
         positioned = false;
+    }
+
+    @Override
+    public void setShowCurrentLocationCircle(boolean showCurrentLocationCircle) {
+        this.showCurrentLocationCircle = showCurrentLocationCircle;
+        drawCurrentPositionCircle();
+    }
+
+    private void drawCurrentPositionCircle() {
+        if (mMap == null) {
+            return;
+        }
+
+        if (currentLocationCircle != null) {
+            mMap.getOverlayManager().remove(currentLocationCircle);
+        }
+
+        if (!showCurrentLocationCircle || lastPosition == null) {
+            return;
+        }
+
+        currentLocationCircle = new Polygon(mMap);
+        final double radius = 50;
+        ArrayList<GeoPoint> circlePoints = new ArrayList<GeoPoint>();
+        for (float f = 0; f < 360; f += 1) {
+            circlePoints.add(new GeoPoint(lastPosition.latitude, lastPosition.longitude).destinationPoint(radius, f));
+        }
+
+        currentLocationCircle.setPoints(circlePoints);
+        mMap.getOverlayManager().add(currentLocationCircle);
+
+        currentLocationCircle.getOutlinePaint().setColor(Color.BLUE);
+        currentLocationCircle.getOutlinePaint().setStrokeWidth(2);
+        currentLocationCircle.getFillPaint().setColor(Color.argb(30, 0, 0, 255));
     }
 }

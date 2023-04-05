@@ -54,6 +54,13 @@
             app:positiveButtonText="hello"
             app:title="@string/settings_map_type"
             app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="showCurrentLocationCircle"
+            app:summary="@string/settings_show_current_location_circle_summary"
+            app:title="@string/settings_show_current_location_circle" />
     </PreferenceCategory>
 
     <PreferenceCategory
