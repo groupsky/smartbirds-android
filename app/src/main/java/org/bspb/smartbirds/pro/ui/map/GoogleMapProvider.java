@@ -117,7 +117,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private List<Polygon> kmlPolygons = new ArrayList();
     private List<Marker> kmlMarkers = new ArrayList();
 
-    private Circle currentPositionCircle;
+    private List<Circle> currentLocationCircles = new ArrayList();
 
     private boolean showCurrentLocationCircle = false;
 
@@ -192,7 +192,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         drawBgAtlasCells();
         showMapLayers();
         showKml();
-        drawCurrentPositionCircle();
+        drawCurrentLocationCircle();
 
         fragment.getView().post(new Runnable() {
             @Override
@@ -250,7 +250,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void setShowCurrentLocationCircle(boolean showCurrentLocationCircle) {
         this.showCurrentLocationCircle = showCurrentLocationCircle;
-        drawCurrentPositionCircle();
+        drawCurrentLocationCircle();
     }
 
     private void drawLocalProjects(boolean showKml) {
@@ -443,7 +443,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void setPosition(LatLng position) {
         lastPosition = position;
-        drawCurrentPositionCircle();
+        drawCurrentLocationCircle();
     }
 
     @Override
@@ -765,33 +765,47 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         positioned = false;
     }
 
-    private void drawCurrentPositionCircle() {
+    private void drawCurrentLocationCircle() {
         if (mMap == null) {
             return;
         }
 
-        if(showCurrentLocationCircle) {
-
-        } else {
-            if (currentPositionCircle != null) {
-                currentPositionCircle.remove();
-            }
-        }
-
-        if (currentPositionCircle != null) {
-            currentPositionCircle.remove();
-        }
-
-        if (!showCurrentLocationCircle || lastPosition == null) {
+        if (!showCurrentLocationCircle) {
+            clearCurrentLocationCircles();
             return;
         }
 
-        currentPositionCircle = mMap.addCircle(new CircleOptions()
-                .center(new LatLng(lastPosition.latitude, lastPosition.longitude))
-                .radius(50)
-                .strokeColor(Color.BLUE)
-                .fillColor(Color.argb(30, 0, 0, 255))
-                .strokeWidth(2f));
-        curr
+        if (currentLocationCircles.size() > 0 && Objects.equals(currentLocationCircles.get(0).getCenter(), lastPosition)) {
+            return;
+        }
+
+        if (lastPosition == null) {
+            return;
+        }
+
+        clearCurrentLocationCircles();
+
+        for (int i = 0; i < 5; i++) {
+            final CircleOptions circle = new CircleOptions()
+                    .center(new LatLng(lastPosition.latitude, lastPosition.longitude))
+                    .radius(50 * (i + 1))
+                    .strokeColor(Color.argb(150, 0, 0, 255))
+                    .strokeWidth(2f);
+
+            if(i == 4) {
+                circle.fillColor(Color.argb(30, 0, 0, 255));
+            }
+
+            currentLocationCircles.add(mMap.addCircle(circle));
+        }
+    }
+
+    private void clearCurrentLocationCircles() {
+        if (currentLocationCircles != null) {
+            for (Circle circle : currentLocationCircles) {
+                circle.remove();
+            }
+            currentLocationCircles.clear();
+        }
     }
 }

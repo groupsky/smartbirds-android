@@ -17,6 +17,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
@@ -41,7 +42,6 @@ import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.osmdroid.bonuspack.kml.IconStyle;
 import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.kml.Style;
@@ -106,7 +106,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private ArrayList<BGAtlasCell> atlasCells = new ArrayList<>();
     private List<Polygon> atlasCellsPolygons = new ArrayList<>();
 
-    private Polygon currentLocationCircle;
+    private List<Polygon> currentLocationCircles = new ArrayList<>();
 
     private boolean showCurrentLocationCircle;
 
@@ -163,7 +163,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         loadKmlFile();
         drawLocalProjects(showLocalProjects);
         drawBgAtlasCells();
-        drawCurrentPositionCircle();
+        drawCurrentLocationCircle();
 
         for (MarkerHolder markerHolder : markers) {
             if (markerHolder.marker == null || !mMap.getOverlayManager().contains(markerHolder.marker)) {
@@ -452,7 +452,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         lastPosition = position;
 
         if (!Objects.equals(lastPosition, position)) {
-            drawCurrentPositionCircle();
+            drawCurrentLocationCircle();
         }
     }
 
@@ -730,34 +730,63 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setShowCurrentLocationCircle(boolean showCurrentLocationCircle) {
         this.showCurrentLocationCircle = showCurrentLocationCircle;
-        drawCurrentPositionCircle();
+        drawCurrentLocationCircle();
     }
 
-    private void drawCurrentPositionCircle() {
+    private void drawCurrentLocationCircle() {
         if (mMap == null) {
             return;
         }
 
-        if (currentLocationCircle != null) {
-            mMap.getOverlayManager().remove(currentLocationCircle);
-        }
-
-        if (!showCurrentLocationCircle || lastPosition == null) {
+        if (!showCurrentLocationCircle) {
+            clearCurrentLocationCircles();
             return;
         }
 
-        currentLocationCircle = new Polygon(mMap);
-        final double radius = 50;
-        ArrayList<GeoPoint> circlePoints = new ArrayList<GeoPoint>();
-        for (float f = 0; f < 360; f += 1) {
-            circlePoints.add(new GeoPoint(lastPosition.latitude, lastPosition.longitude).destinationPoint(radius, f));
+
+        if (currentLocationCircles.size() > 0 && currentLocationCircles.get(0) != null && currentLocationCircles.get(0).getActualPoints().size() > 0) {
+            GeoPoint point = currentLocationCircles.get(0).getActualPoints().get(0);
+            LatLng lastLocationCenter = new LatLng(point.getLatitude(), point.getLongitude());
+            if (Objects.equals(lastPosition, lastLocationCenter)) {
+                return;
+            }
         }
 
-        currentLocationCircle.setPoints(circlePoints);
-        mMap.getOverlayManager().add(currentLocationCircle);
+        if (lastPosition == null) {
+            return;
+        }
 
-        currentLocationCircle.getOutlinePaint().setColor(Color.BLUE);
-        currentLocationCircle.getOutlinePaint().setStrokeWidth(2);
-        currentLocationCircle.getFillPaint().setColor(Color.argb(30, 0, 0, 255));
+        clearCurrentLocationCircles();
+
+        for (int i = 0; i < 5; i++) {
+            Polygon circle = new Polygon(mMap);
+            circle.getOutlinePaint().setColor(Color.argb(150, 0, 0, 255));
+            circle.getOutlinePaint().setStrokeWidth(2);
+
+            if (i == 4) {
+                circle.getFillPaint().setColor(Color.argb(30, 0, 0, 255));
+            }
+
+
+            ArrayList<GeoPoint> circlePoints = new ArrayList<GeoPoint>();
+            for (float f = 0; f < 360; f += 1) {
+                circlePoints.add(new GeoPoint(lastPosition.latitude, lastPosition.longitude).destinationPoint(50 * (i + 1), f));
+            }
+
+            circle.setPoints(circlePoints);
+            mMap.getOverlayManager().add(circle);
+
+
+            currentLocationCircles.add(circle);
+        }
+    }
+
+    private void clearCurrentLocationCircles() {
+        if (currentLocationCircles != null) {
+            for (Polygon circle : currentLocationCircles) {
+                mMap.getOverlayManager().remove(circle);
+            }
+            currentLocationCircles.clear();
+        }
     }
 }
