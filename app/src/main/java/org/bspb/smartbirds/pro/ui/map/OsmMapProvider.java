@@ -774,6 +774,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
             }
 
             circle.setPoints(circlePoints);
+            circle.setOnClickListener((polygon, mapView, eventPos) -> false);
             mMap.getOverlayManager().add(circle);
 
 
