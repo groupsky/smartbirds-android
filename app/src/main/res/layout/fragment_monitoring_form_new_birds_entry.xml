@@ -40,6 +40,25 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance" />
+
+            <TextView
+                android:id="@+id/form_birds_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 250m" />
+
+        </LinearLayout>
+
         <View style="@style/FieldSeparator" />
 
         <com.google.android.material.textfield.TextInputLayout

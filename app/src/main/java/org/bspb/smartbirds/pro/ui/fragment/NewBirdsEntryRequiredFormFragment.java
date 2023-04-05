@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
@@ -13,6 +14,8 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
@@ -56,8 +59,27 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Pref
     CommonPrefs_ commonPrefs;
 
+    @Bean
+    EEventBus eventBus;
+
     @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        eventBus.registerSticky(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        eventBus.unregister(this);
+    }
+
+    public void onEvent(LocationChangedEvent e) {
+        ExtensionsKt.debugLog("Read location in birds fragment: " + e.location);
+    }
 
     @Override
     public void onResume() {
