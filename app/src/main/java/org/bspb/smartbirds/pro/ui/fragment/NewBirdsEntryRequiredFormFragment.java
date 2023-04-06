@@ -1,24 +1,29 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.content.res.Configuration;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
+import org.bspb.smartbirds.pro.events.EEventBus;
+import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -30,6 +35,14 @@ import java.util.Locale;
 @EFragment(R.layout.fragment_monitoring_form_new_birds_required_entry)
 public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
 
+    protected static final String ARG_LAT = "lat";
+    protected static final String ARG_LON = "lon";
+
+    @FragmentArg(ARG_LAT)
+    protected double lat;
+
+    @FragmentArg(ARG_LON)
+    protected double lon;
 
     @ViewById(R.id.form_birds_count_units)
     SingleChoiceFormInput countUnits;
@@ -50,14 +63,56 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.warning_confidential_nest)
     TextView warningConfidential;
 
+    @ViewById(R.id.form_birds_distance)
+    EditText distanceView;
+
     @Pref
     BirdPrefs_ prefs;
 
     @Pref
     CommonPrefs_ commonPrefs;
 
+    @Bean
+    EEventBus eventBus;
+
     @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (lat != 0 && lon != 0 && isNewEntry()) {
+            eventBus.registerSticky(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        eventBus.unregister(this);
+    }
+
+    public void onEvent(LocationChangedEvent e) {
+        if (e == null || e.location == null) {
+            return;
+        }
+
+        eventBus.unregister(this);
+
+        Location entryLocation = new Location("entry");
+        entryLocation.setLatitude(lat);
+        entryLocation.setLongitude(lon);
+
+        double distance = e.location.distanceTo(entryLocation);
+
+        if (distance < 10) {
+            return;
+        }
+
+        distanceView.setVisibility(View.VISIBLE);
+        distanceView.setText(String.format(Locale.getDefault(), getString(R.string.form_birds_distance_value), distance));
+
+    }
 
     @Override
     public void onResume() {

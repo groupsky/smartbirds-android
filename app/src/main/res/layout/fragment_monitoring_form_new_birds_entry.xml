@@ -18,8 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <fragment
                 android:id="@+id/moderator_review_fragment"
@@ -41,6 +40,23 @@
         </LinearLayout>
 
         <View style="@style/FieldSeparator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/form_birds_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="@string/form_birds_distance"
+                android:visibility="gone"
+                tools:text="250m"
+                tools:visibility="visible" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/TextInputLayout"
@@ -82,7 +98,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4sp"
             android:layout_marginRight="4sp"
-            android:layout_span="3"
             android:gravity="top"
             android:text="@string/warning_confidential_nest"
             android:textColor="@android:color/holo_red_dark"

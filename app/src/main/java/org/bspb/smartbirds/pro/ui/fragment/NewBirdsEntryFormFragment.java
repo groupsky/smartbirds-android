@@ -19,7 +19,7 @@ public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
             public androidx.fragment.app.Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return NewBirdsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                        return NewBirdsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).lat(lat).lon(lon).build();
                     case 1:
                         return NewBirdsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
                     default:
