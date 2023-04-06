@@ -78,4 +78,6 @@ public interface MapProvider {
     void setShowKml(boolean showKml);
 
     void setShowMapLayers(List<MapLayerItem> mapLayers);
+
+    void setShowCurrentLocationCircle(boolean showCurrentLocationCircle);
 }

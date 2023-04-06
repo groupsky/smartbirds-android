@@ -160,6 +160,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     boolean showLocalProjects;
     boolean showBgAtlasCells;
     boolean showKml;
+
+    boolean showCurrentLocationCircle;
     List<MapLayerItem> mapLayers;
 
     @FragmentById(R.id.list_container)
@@ -414,6 +416,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         currentMap.setShowBgAtlasCells(showBgAtlasCells);
         currentMap.setShowKml(showKml);
         currentMap.setShowMapLayers(mapLayers);
+        currentMap.setShowCurrentLocationCircle(showCurrentLocationCircle);
     }
 
     private List<BGAtlasCell> readAtlasCells() {
@@ -567,6 +570,14 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
+
+    private void setShowCurrentLocationCircle(boolean showCurrentLocationCircle) {
+        this.showCurrentLocationCircle = showCurrentLocationCircle;
+        if (currentMap != null) {
+            currentMap.setShowCurrentLocationCircle(showCurrentLocationCircle);
+            currentMap.updateCamera();
         }
     }
 
@@ -798,6 +809,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         setShowLocalProjects(prefs.showLocalProjects().get());
         setShowBgAtlasCells(prefs.showBgAtlasCells().get());
         setShowKml(prefs.showUserKml().get());
+        setShowCurrentLocationCircle(prefs.showCurrentLocationCircle().get());
 
         Type listType = new TypeToken<List<MapLayerItem>>() {
         }.getType();
