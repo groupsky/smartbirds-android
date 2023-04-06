@@ -496,4 +496,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_bats_upper_molar">"Upper molar - CM3"</string>
     <string name="class_bats">"Bats"</string>
     <string name="entry_type_bats">"Bats"</string>
+    <string name="form_birds_distance">"Distance"</string>
+    <string name="form_birds_distance_value">%.0f m</string>
 </resources>

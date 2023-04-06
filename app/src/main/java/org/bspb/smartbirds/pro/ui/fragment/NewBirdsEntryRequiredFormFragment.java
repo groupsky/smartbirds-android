@@ -1,13 +1,16 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.content.res.Configuration;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
@@ -21,7 +24,6 @@ import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,6 +35,14 @@ import java.util.Locale;
 @EFragment(R.layout.fragment_monitoring_form_new_birds_required_entry)
 public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
 
+    protected static final String ARG_LAT = "lat";
+    protected static final String ARG_LON = "lon";
+
+    @FragmentArg(ARG_LAT)
+    protected double lat;
+
+    @FragmentArg(ARG_LON)
+    protected double lon;
 
     @ViewById(R.id.form_birds_count_units)
     SingleChoiceFormInput countUnits;
@@ -53,6 +63,9 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.warning_confidential_nest)
     TextView warningConfidential;
 
+    @ViewById(R.id.form_birds_distance)
+    EditText distanceView;
+
     @Pref
     BirdPrefs_ prefs;
 
@@ -68,7 +81,9 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onStart() {
         super.onStart();
-        eventBus.registerSticky(this);
+        if (lat != 0 || lon != 0) {
+            eventBus.registerSticky(this);
+        }
     }
 
     @Override
@@ -78,7 +93,25 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     }
 
     public void onEvent(LocationChangedEvent e) {
-        ExtensionsKt.debugLog("Read location in birds fragment: " + e.location);
+        if (e == null || e.location == null) {
+            return;
+        }
+
+        eventBus.unregister(this);
+
+        Location entryLocation = new Location("entry");
+        entryLocation.setLatitude(lat);
+        entryLocation.setLongitude(lon);
+
+        double distance = e.location.distanceTo(entryLocation);
+
+        if (distance < 10) {
+            return;
+        }
+
+        distanceView.setVisibility(View.VISIBLE);
+        distanceView.setText(String.format(Locale.getDefault(), getString(R.string.form_birds_distance_value), distance));
+
     }
 
     @Override
