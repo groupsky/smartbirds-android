@@ -785,14 +785,14 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
         clearCurrentLocationCircles();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < NUMBER_OF_LOCATION_CIRCLES; i++) {
             final CircleOptions circle = new CircleOptions()
                     .center(new LatLng(lastPosition.latitude, lastPosition.longitude))
-                    .radius(50 * (i + 1))
-                    .strokeColor(Color.argb(150, 0, 0, 255))
-                    .strokeWidth(2f);
+                    .radius(LOCATION_CIRCLE_RADIUS * (i + 1))
+                    .strokeColor(Color.BLUE)
+                    .strokeWidth(4f);
 
-            if(i == 4) {
+            if(i == NUMBER_OF_LOCATION_CIRCLES -1) {
                 circle.fillColor(Color.argb(30, 0, 0, 255));
             }
 

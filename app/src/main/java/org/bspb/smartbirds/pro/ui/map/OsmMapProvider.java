@@ -758,19 +758,19 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
         clearCurrentLocationCircles();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < NUMBER_OF_LOCATION_CIRCLES; i++) {
             Polygon circle = new Polygon(mMap);
-            circle.getOutlinePaint().setColor(Color.argb(150, 0, 0, 255));
-            circle.getOutlinePaint().setStrokeWidth(2);
+            circle.getOutlinePaint().setColor(Color.BLUE);
+            circle.getOutlinePaint().setStrokeWidth(4);
 
-            if (i == 4) {
+            if (i == NUMBER_OF_LOCATION_CIRCLES - 1) {
                 circle.getFillPaint().setColor(Color.argb(30, 0, 0, 255));
             }
 
 
             ArrayList<GeoPoint> circlePoints = new ArrayList<GeoPoint>();
             for (float f = 0; f < 360; f += 1) {
-                circlePoints.add(new GeoPoint(lastPosition.latitude, lastPosition.longitude).destinationPoint(50 * (i + 1), f));
+                circlePoints.add(new GeoPoint(lastPosition.latitude, lastPosition.longitude).destinationPoint(LOCATION_CIRCLE_RADIUS * (i + 1), f));
             }
 
             circle.setPoints(circlePoints);

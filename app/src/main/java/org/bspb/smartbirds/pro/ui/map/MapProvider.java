@@ -35,6 +35,10 @@ public interface MapProvider {
         NORMAL, SATELLITE, HYBRID;
     }
 
+    int NUMBER_OF_LOCATION_CIRCLES = 7;
+
+    int LOCATION_CIRCLE_RADIUS = 50;
+
     void setUpMapIfNeeded();
 
     void setZoomFactor(double zoomFactor);

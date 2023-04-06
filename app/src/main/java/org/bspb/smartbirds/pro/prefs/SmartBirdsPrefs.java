@@ -59,6 +59,6 @@ public interface SmartBirdsPrefs {
 
     Set<String> enabledMapLayers();
 
-    @DefaultBoolean(true)
+    @DefaultBoolean(false)
     boolean showCurrentLocationCircle();
 }
