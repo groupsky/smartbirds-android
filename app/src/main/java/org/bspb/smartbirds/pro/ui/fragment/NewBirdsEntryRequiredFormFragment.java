@@ -81,7 +81,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (lat != 0 || lon != 0) {
+        if (lat != 0 && lon != 0 && isNewEntry()) {
             eventBus.registerSticky(this);
         }
     }
