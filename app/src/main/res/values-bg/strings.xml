@@ -496,7 +496,7 @@
     <string name="monitoring_bats_tragus">"Tr - Трагус"</string>
     <string name="monitoring_bats_upper_molar">"CM3 - Горен зъбен ред"</string>
     <string name="form_birds_distance">"Разстояние"</string>
-    <string name="form_birds_distance_value">"%. 0f m"</string>
+    <string name="form_birds_distance_value">"%.0f m"</string>
     <string name="settings_show_current_location_circle_summary">"Изчертани кръгове през 50 m от текущата позиция"</string>
     <string name="settings_show_current_location_circle">"Текуща зона на местоположение"</string>
 </resources>

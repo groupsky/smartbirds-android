@@ -110,7 +110,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         }
 
         distanceView.setVisibility(View.VISIBLE);
-        distanceView.setText(String.format(Locale.getDefault(), getString(R.string.form_birds_distance_value), distance));
+        distanceView.setText(getString(R.string.form_birds_distance_value, distance));
 
     }
 
