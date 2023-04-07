@@ -346,7 +346,7 @@ Do you really want to cancel the monitoring?"</string>
     <string name="settings_export_db_summary">"Export the DB in Downloads."</string>
     <string name="settings_enabled_forms_alert_title">"Warning"</string>
     <string name="settings_enabled_forms_alert_message">"You have to select at least one active monitoring form."</string>
-        <string name="settings_show_current_location_circle_summary">"Draw circles through 50m from the current position"</string>
+    <string name="settings_show_current_location_circle_summary">"Draw circles through 50m from the current position"</string>
     <string name="settings_show_current_location_circle">"Current location zone"</string>
     <string name="export_db_dialog_title_success">"Success"</string>
     <string name="export_db_dialog_title_fail">"Warning"</string>

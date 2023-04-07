@@ -667,6 +667,11 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             startNewEntryAsking(position, accuracy);
             return;
         }
+
+        if (currentMap.getMyLocation() != null) {
+            eventBus.postSticky(new LocationChangedEvent(currentMap.getMyLocation()));
+        }
+
         NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
         ib.entryType(entryType);
         if (position != null) {
