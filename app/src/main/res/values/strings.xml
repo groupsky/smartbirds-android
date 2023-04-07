@@ -346,8 +346,6 @@ Do you really want to cancel the monitoring?"</string>
     <string name="settings_export_db_summary">"Export the DB in Downloads."</string>
     <string name="settings_enabled_forms_alert_title">"Warning"</string>
     <string name="settings_enabled_forms_alert_message">"You have to select at least one active monitoring form."</string>
-        <string name="settings_show_current_location_circle_summary">"Draw circles through 50m from the current position"</string>
-    <string name="settings_show_current_location_circle">"Current location zone"</string>
     <string name="export_db_dialog_title_success">"Success"</string>
     <string name="export_db_dialog_title_fail">"Warning"</string>
     <string name="export_db_dialog_message_success">"You have successfully exported the DB."</string>
@@ -494,10 +492,12 @@ Do you really want to cancel the monitoring?"</string>
     <string name="monitoring_bats_length_fifth_digit">"D5 - Length fifth digit (mm)"</string>
     <string name="monitoring_bats_length_ws">"WS -  Length (mm)"</string>
     <string name="monitoring_bats_weight">"Weight (g)"</string>
-    <string name="monitoring_bats_tragus">"Tr - Tragus"</string>
-    <string name="monitoring_bats_upper_molar">"Upper molar - CM3"</string>
     <string name="class_bats">"Bats"</string>
     <string name="entry_type_bats">"Bats"</string>
+    <string name="monitoring_bats_tragus">"Tr - Tragus"</string>
+    <string name="monitoring_bats_upper_molar">"Upper molar - CM3"</string>
     <string name="form_birds_distance">"Distance"</string>
-    <string name="form_birds_distance_value">%.0f m</string>
+    <string name="form_birds_distance_value">"%.0f m"</string>
+    <string name="settings_show_current_location_circle_summary">"Draw circles through 50m from the current position"</string>
+    <string name="settings_show_current_location_circle">"Current location zone"</string>
 </resources>

@@ -491,10 +491,12 @@
     <string name="monitoring_bats_length_fifth_digit">"D5 - Дължина на пети пръст +китката (mm)"</string>
     <string name="monitoring_bats_length_ws">"WS - Дължина на горен зъбен ред (mm)"</string>
     <string name="monitoring_bats_weight">"Тегло (g)"</string>
-    <string name="monitoring_bats_tragus">"Tr - Трагус"</string>
-    <string name="monitoring_bats_upper_molar">"CM3 - Горен зъбен ред"</string>
     <string name="class_bats">"Прилепи"</string>
     <string name="entry_type_bats">"Прилепи"</string>
-    <string name="form_birds_distance">"Дистанция"</string>
-    <string name="form_birds_distance_value">%.0f м</string>
+    <string name="monitoring_bats_tragus">"Tr - Трагус"</string>
+    <string name="monitoring_bats_upper_molar">"CM3 - Горен зъбен ред"</string>
+    <string name="form_birds_distance">"Разстояние"</string>
+    <string name="form_birds_distance_value">"%.0f m"</string>
+    <string name="settings_show_current_location_circle_summary">"Изчертани кръгове през 50 m от текущата позиция"</string>
+    <string name="settings_show_current_location_circle">"Текуща зона на местоположение"</string>
 </resources>

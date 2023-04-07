@@ -56,7 +56,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
-            app:defaultValue="true"
+            app:defaultValue="false"
             app:iconSpaceReserved="false"
             app:key="showCurrentLocationCircle"
             app:summary="@string/settings_show_current_location_circle_summary"
