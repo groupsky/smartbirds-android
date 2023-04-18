@@ -123,6 +123,9 @@ open class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if (!SyncService.isWorking) {
+            onSyncComplete()
+        }
         checkBatteryOptimization()
         checkForLastMonitoring()
     }
