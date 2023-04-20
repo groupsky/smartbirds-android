@@ -1,6 +1,8 @@
 package org.bspb.smartbirds.pro.content;
 
 import android.location.Location;
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -31,14 +33,16 @@ public class TrackingLocation {
     @Expose
     @SerializedName("time")
     public final long time;
+    @Expose
+    @SerializedName("accuracy")
+    public final Float accuracy;
+    @Expose
+    @SerializedName("verticalAccuracy")
+    public final Float verticalAccuracy;
+    @Expose
+    @SerializedName("speed")
+    public final Float speed;
 
-    public TrackingLocation(@NonNull String monitoringCode, long time, double latitude, double longitude, @Nullable Double altitude) {
-        this.monitoringCode = monitoringCode;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.time = time;
-    }
 
     public TrackingLocation(@NonNull String monitoringCode, @NonNull Location location) {
         this.monitoringCode = monitoringCode;
@@ -46,6 +50,9 @@ public class TrackingLocation {
         this.longitude = location.getLongitude();
         this.altitude = location.hasAltitude() ? location.getAltitude() : null;
         this.time = location.getTime();
+        this.accuracy = location.hasAccuracy() ? location.getAccuracy() : null;
+        this.verticalAccuracy = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && location.hasVerticalAccuracy() ? location.getVerticalAccuracyMeters() : null;
+        this.speed = location.hasSpeed() ? location.getSpeed() : null;
     }
 
     @Override
@@ -57,6 +64,9 @@ public class TrackingLocation {
                 ", longitude=" + longitude +
                 ", altitude=" + altitude +
                 ", time=" + time +
+                ", accuracy=" + accuracy +
+                ", verticalAccuracy=" + verticalAccuracy +
+                ", speed=" + speed +
                 '}';
     }
 }
