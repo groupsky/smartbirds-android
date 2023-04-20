@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.service
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.location.Location
@@ -29,12 +30,10 @@ import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils
-import org.bspb.smartbirds.pro.utils.MonitoringManager
-import org.bspb.smartbirds.pro.utils.MonitoringUtils
+import org.bspb.smartbirds.pro.utils.*
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.closeGpxFile
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.createMonitoringDir
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.initGpxFile
-import org.bspb.smartbirds.pro.utils.SBGlobalScope
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,9 +46,14 @@ open class DataService : Service() {
         private val DATE_FORMATTER = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US)
         private val GPX_DATE_FORMATTER = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
 
+        @SuppressLint("StaticFieldLeak")
+        @Volatile
+        private var INSTANCE: DataService? = null
+
         init {
             DATE_FORMATTER.timeZone = TimeZone.getTimeZone("UTC")
             GPX_DATE_FORMATTER.timeZone = TimeZone.getTimeZone("UTC")
+
         }
     }
 
@@ -104,13 +108,23 @@ open class DataService : Service() {
 
     @AfterInject
     protected open fun initBus() {
+        if (INSTANCE != null) {
+            Log.d(TAG, "instance already created")
+            Reporting.logException(IllegalStateException("DataService already created"))
+        }
+
+        INSTANCE = this
+
         scope.sbLaunch {
             // restore state
             monitoring = monitoringManager.getActiveMonitoring()
 
-            Log.d(TAG, "bus registering...")
+            if (bus.isRegistered(this@DataService))
+                Log.d(TAG, "bus already registered ${this@DataService}")
+
+            Log.d(TAG, "bus registering... ${this@DataService}")
             bus.registerSticky(this@DataService)
-            Log.d(TAG, "bus registered")
+            Log.d(TAG, "bus registered ${this@DataService}")
         }
     }
 
@@ -126,6 +140,8 @@ open class DataService : Service() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             if (isMonitoring()) DataService_.intent(this).start()
         }
+
+        INSTANCE = null
         super.onDestroy()
     }
 
@@ -154,6 +170,7 @@ open class DataService : Service() {
             Log.d(TAG, "onStartMonitoringEvent...")
             Toast.makeText(this@DataService, "Start monitoring", Toast.LENGTH_SHORT).show()
             monitoring = monitoringManager.createNew()
+            Log.d(TAG, "create new monitoring=$monitoring")
             if (createMonitoringDir(this@DataService, monitoring!!) != null && initGpxFile(
                     this@DataService,
                     monitoring!!
@@ -236,6 +253,10 @@ open class DataService : Service() {
                         event.data
                     )
                 } else {
+                    debugLog("monitoring: $monitoring")
+                    debugLog("monitoring code: ${event.monitoringCode}")
+                    debugLog("dataService: ${this@DataService}")
+                    debugLog("monitoringManager: $monitoringManager")
                     monitoringManager.newEntry(monitoring!!, event.entryType, event.data)
                 }
             } catch (t: Throwable) {
