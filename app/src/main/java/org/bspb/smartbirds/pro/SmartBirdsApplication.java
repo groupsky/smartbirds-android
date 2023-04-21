@@ -16,7 +16,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.db.SmartBirdsDatabase;
-import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.utils.MonitoringManager;
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
@@ -66,14 +66,14 @@ public class SmartBirdsApplication extends Application {
     }
 
     public void onEvent(StartMonitoringEvent event) {
-        DataService_.intent(this).start();
+        DataService.Companion.intent(this).start();
     }
 
     public void onEvent(ResumeMonitoringEvent event) {
-        DataService_.intent(this).start();
+        DataService.Companion.intent(this).start();
     }
 
     public void onEvent(CancelMonitoringEvent event) {
-        DataService_.intent(this).stop();
+        DataService.Companion.intent(this).stop();
     }
 }

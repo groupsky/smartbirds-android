@@ -12,7 +12,7 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_
 import org.bspb.smartbirds.pro.prefs.UserPrefs_
-import org.bspb.smartbirds.pro.service.DataService_
+import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.ui.utils.FormUtils
 import org.bspb.smartbirds.pro.ui.views.DateFormInput
 import org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
@@ -50,7 +50,7 @@ abstract class BaseCommonFormFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        DataService_.intent(context).start()
+        DataService.intent(context).start()
     }
 
     override fun onResume() {

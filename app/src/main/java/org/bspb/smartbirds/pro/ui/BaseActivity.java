@@ -6,9 +6,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
-import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.DataService;
 
 /**
  * This is the parent for all activities.
@@ -33,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        bindService(DataService_.intent(this).get(), mConnection, Context.BIND_AUTO_CREATE);
+        bindService(DataService.Companion.intent(this).get(), mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override

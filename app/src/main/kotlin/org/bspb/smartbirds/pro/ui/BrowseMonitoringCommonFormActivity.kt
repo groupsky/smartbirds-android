@@ -5,7 +5,7 @@ import android.view.MenuItem
 import org.androidannotations.annotations.*
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
-import org.bspb.smartbirds.pro.service.DataService_
+import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringCommonFormFragment
 import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringCommonFormFragment_
 
@@ -28,7 +28,7 @@ open class BrowseMonitoringCommonFormActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataService_.intent(this).start()
+        DataService.intent(this).start()
     }
 
     @AfterViews

@@ -17,7 +17,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
-import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.DataService;
 
 /**
  * Created by groupsky on 16.03.17.
@@ -38,7 +38,7 @@ public class EditMonitoringEntryActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataService_.intent(this).start();
+        DataService.Companion.intent(this).start();
     }
 
     @AfterViews

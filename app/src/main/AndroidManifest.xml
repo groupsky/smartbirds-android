@@ -188,7 +188,7 @@
             android:parentActivityName=".ui.MonitoringDetailActivity_" />
 
         <service
-            android:name=".service.DataService_"
+            android:name=".service.DataService"
             android:enabled="true"
             android:exported="false" />
 

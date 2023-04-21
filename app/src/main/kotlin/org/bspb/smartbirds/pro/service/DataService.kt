@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.service
 
 import android.annotation.SuppressLint
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.net.Uri
@@ -14,10 +15,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import org.androidannotations.annotations.AfterInject
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EService
-import org.androidannotations.annotations.sharedpreferences.Pref
+import org.androidannotations.api.builder.ServiceIntentBuilder
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
@@ -38,7 +36,6 @@ import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-@EService
 open class DataService : Service() {
 
     companion object {
@@ -46,14 +43,17 @@ open class DataService : Service() {
         private val DATE_FORMATTER = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US)
         private val GPX_DATE_FORMATTER = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
 
-        @SuppressLint("StaticFieldLeak")
-        @Volatile
-        private var INSTANCE: DataService? = null
-
         init {
             DATE_FORMATTER.timeZone = TimeZone.getTimeZone("UTC")
             GPX_DATE_FORMATTER.timeZone = TimeZone.getTimeZone("UTC")
 
+        }
+
+        class IntentBuilder(context: Context?) :
+            ServiceIntentBuilder<IntentBuilder?>(context, DataService::class.java)
+
+        fun intent(context: Context?): IntentBuilder {
+            return IntentBuilder(context)
         }
     }
 
@@ -63,20 +63,11 @@ open class DataService : Service() {
     @OptIn(DelicateCoroutinesApi::class)
     private val scope = SBGlobalScope()
 
-    @Bean
     protected lateinit var bus: EEventBus
-
-
+    private lateinit var globalPrefs: SmartBirdsPrefs_
+    private lateinit var userPrefs: UserPrefs_
+    private lateinit var monitoringPrefs: MonitoringPrefs_
     private val monitoringManager = MonitoringManager.getInstance()
-
-    @Pref
-    protected lateinit var globalPrefs: SmartBirdsPrefs_
-
-    @Pref
-    protected lateinit var userPrefs: UserPrefs_
-
-    @Pref
-    protected lateinit var monitoringPrefs: MonitoringPrefs_
 
     var monitoring: Monitoring? = null
         set(value) {
@@ -106,15 +97,19 @@ open class DataService : Service() {
         return binder
     }
 
-    @AfterInject
+    override fun onCreate() {
+        init()
+        super.onCreate()
+    }
+
+    private fun init() {
+        globalPrefs = SmartBirdsPrefs_(this)
+        userPrefs = UserPrefs_(this)
+        monitoringPrefs = MonitoringPrefs_(this)
+        bus = EEventBus_.getInstance_(this)
+    }
+
     protected open fun initBus() {
-        if (INSTANCE != null) {
-            Log.d(TAG, "instance already created")
-            Reporting.logException(IllegalStateException("DataService already created"))
-        }
-
-        INSTANCE = this
-
         scope.sbLaunch {
             // restore state
             monitoring = monitoringManager.getActiveMonitoring()
@@ -129,7 +124,7 @@ open class DataService : Service() {
     }
 
     override fun onDestroy() {
-        Log.d(TAG, "destroying...")
+        Log.d(TAG, "destroying... ${this@DataService}")
         bus.unregister(this)
         // Restart service only if the device is with SDK lower than Oreo, otherwise there is a crash
         // when the service is killed and recreated. The reason is that in Oreo there are
@@ -138,15 +133,14 @@ open class DataService : Service() {
         // when the service is killed and recreated. The reason is that in Oreo there are
         // limitations for starting services when the app is in background.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            if (isMonitoring()) DataService_.intent(this).start()
+            if (isMonitoring()) DataService.intent(this).start()
         }
 
-        INSTANCE = null
         super.onDestroy()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(TAG, "onStartCommand...")
+        Log.d(TAG, "onStartCommand... ${this@DataService}")
         // Start sticky only if the device is with SDK lower than Oreo, otherwise there is a crash
         // when the service is killed and recreated. The reason is that in Oreo there are
         // limitations for starting services when the app is in background.
@@ -167,7 +161,7 @@ open class DataService : Service() {
                 bus.postSticky(MonitoringStartedEvent())
                 return@sbLaunch
             }
-            Log.d(TAG, "onStartMonitoringEvent...")
+            Log.d(TAG, "onStartMonitoringEvent... ${this@DataService}")
             Toast.makeText(this@DataService, "Start monitoring", Toast.LENGTH_SHORT).show()
             monitoring = monitoringManager.createNew()
             Log.d(TAG, "create new monitoring=$monitoring")
@@ -190,7 +184,7 @@ open class DataService : Service() {
 
     fun onEvent(event: CancelMonitoringEvent) {
         scope.sbLaunch(Dispatchers.Main) {
-            Log.d(TAG, "onCancelMonitoringEvent...")
+            Log.d(TAG, "onCancelMonitoringEvent... ${this@DataService}")
             if (isMonitoring()) {
                 monitoringManager.updateStatus(monitoring!!, Monitoring.Status.canceled)
             } else {
@@ -212,7 +206,7 @@ open class DataService : Service() {
 
     fun onEvent(event: SetMonitoringCommonData) {
         scope.sbLaunch {
-            Log.d(TAG, "onSetMonitoringCommonData")
+            Log.d(TAG, "onSetMonitoringCommonData ${this@DataService}")
             event.data[resources.getString(R.string.monitoring_id)] = monitoring!!.code
             event.data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
             monitoring!!.commonForm.clear()
@@ -243,7 +237,7 @@ open class DataService : Service() {
 
     fun onEvent(event: EntrySubmitted) {
         scope.sbLaunch {
-            Log.d(TAG, "onEntrySubmitted")
+            Log.d(TAG, "onEntrySubmitted ${this@DataService}")
             try {
                 if (event.entryId > 0) {
                     monitoringManager.updateEntry(
@@ -289,7 +283,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(location: Location?) {
-        Log.d(TAG, "onLocation")
+        Log.d(TAG, "onLocation ${this@DataService}")
         if (isMonitoring() && location != null) {
             val trackingLocation = monitoringManager.newTracking(monitoring!!, location)
             val file = File(createMonitoringDir(this, monitoring!!), "track.gpx")

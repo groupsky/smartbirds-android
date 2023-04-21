@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui;
 
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -19,12 +21,10 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.EntrySubmitted;
-import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.service.TrackingService;
 
 import java.util.Locale;
-
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 @EActivity(R.layout.activity_form)
 public class NewMonitoringEntryActivity extends BaseActivity implements ServiceConnection {
@@ -52,7 +52,7 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
-        DataService_.intent(this).start();
+        DataService.Companion.intent(this).start();
         try {
             bindService(new Intent(this, TrackingService.class), this, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {

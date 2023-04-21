@@ -12,7 +12,7 @@ import org.androidannotations.annotations.WindowFeature
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.service.DataService_
+import org.bspb.smartbirds.pro.service.DataService
 
 @WindowFeature(Window.FEATURE_NO_TITLE)
 @Fullscreen
@@ -46,7 +46,7 @@ open class SplashScreenActivity : BaseActivity(), Runnable {
 
     override fun run() {
         if (prefs!!.runningMonitoring().get()) {
-            DataService_.intent(this).start()
+            DataService.intent(this).start()
             TaskStackBuilder.create(this@SplashScreenActivity)
                     .addNextIntentWithParentStack(MonitoringActivity_.intent(this@SplashScreenActivity).get())
                     .startActivities()

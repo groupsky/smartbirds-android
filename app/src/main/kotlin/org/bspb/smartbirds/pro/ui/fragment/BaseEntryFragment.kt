@@ -20,7 +20,7 @@ import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.enums.EntryType.EntryFragment
 import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.EntrySubmitted
-import org.bspb.smartbirds.pro.service.DataService_
+import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.viewmodel.BaseEntryViewModel
@@ -108,7 +108,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        DataService_.intent(context).start()
+        DataService.intent(context).start()
     }
 
     override fun onStart() {

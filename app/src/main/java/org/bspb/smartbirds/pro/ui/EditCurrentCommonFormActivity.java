@@ -11,7 +11,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment;
 import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment_;
 
@@ -40,7 +40,7 @@ public class EditCurrentCommonFormActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataService_.intent(this).start();
+        DataService.Companion.intent(this).start();
     }
 
     @AfterViews
