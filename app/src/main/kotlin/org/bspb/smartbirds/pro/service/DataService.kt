@@ -1,6 +1,5 @@
 package org.bspb.smartbirds.pro.service
 
-import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -13,8 +12,8 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import org.androidannotations.api.builder.ServiceIntentBuilder
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -35,6 +34,7 @@ import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.initGpxFile
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.CancellationException
 
 open class DataService : Service() {
 
@@ -57,11 +57,10 @@ open class DataService : Service() {
         }
     }
 
+    private var initServiceJob: Job? = null
     private val binder: IBinder = Binder()
 
-    // TODO replace with custom scope
-    @OptIn(DelicateCoroutinesApi::class)
-    private val scope = SBGlobalScope()
+    private val scope = SBScope()
 
     protected lateinit var bus: EEventBus
     private lateinit var globalPrefs: SmartBirdsPrefs_
@@ -107,10 +106,12 @@ open class DataService : Service() {
         userPrefs = UserPrefs_(this)
         monitoringPrefs = MonitoringPrefs_(this)
         bus = EEventBus_.getInstance_(this)
+
+        initBus()
     }
 
     protected open fun initBus() {
-        scope.sbLaunch {
+        initServiceJob = scope.sbLaunch {
             // restore state
             monitoring = monitoringManager.getActiveMonitoring()
 
@@ -125,6 +126,17 @@ open class DataService : Service() {
 
     override fun onDestroy() {
         Log.d(TAG, "destroying... ${this@DataService}")
+
+        initServiceJob?.let {
+            if (it.isActive) {
+                Log.d(TAG, "canceling job... ${this@DataService}")
+                it.cancel(CancellationException("Service destroyed"))
+            }
+        }
+
+        // Make sure we will unregister from the bus if we were registered during the cancellation
+        scope.sbLaunch { bus.unregister(this@DataService) }
+
         bus.unregister(this)
         // Restart service only if the device is with SDK lower than Oreo, otherwise there is a crash
         // when the service is killed and recreated. The reason is that in Oreo there are
