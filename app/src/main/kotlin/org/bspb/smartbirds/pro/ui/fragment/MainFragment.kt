@@ -38,10 +38,7 @@ import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.events.*
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.service.DataService_
-import org.bspb.smartbirds.pro.service.ExportService_
-import org.bspb.smartbirds.pro.service.SyncService
-import org.bspb.smartbirds.pro.service.SyncService_
+import org.bspb.smartbirds.pro.service.*
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.*
@@ -532,7 +529,7 @@ open class MainFragment : Fragment() {
     }
 
     private fun doCancel() {
-        DataService_.intent(context).start()
+        DataService.intent(context).start()
         bus.postSticky(CancelMonitoringEvent())
     }
 

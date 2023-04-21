@@ -5,8 +5,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-@DelicateCoroutinesApi
-class SBGlobalScope : CoroutineScope {
+class SBScope : CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = EmptyCoroutineContext
 
@@ -30,7 +29,7 @@ class SBGlobalScope : CoroutineScope {
 
     private fun sbLaunchMain(
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        block: suspend CoroutineScope.() -> Unit
+        block: suspend CoroutineScope.() -> Unit,
     ): Job {
         return launch(Dispatchers.Main, start, block)
     }

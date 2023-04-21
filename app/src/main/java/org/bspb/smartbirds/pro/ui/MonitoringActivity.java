@@ -67,7 +67,7 @@ import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
-import org.bspb.smartbirds.pro.service.DataService_;
+import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.service.TrackingService;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
@@ -76,7 +76,6 @@ import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
 import org.bspb.smartbirds.pro.ui.map.OsmMapProvider;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.bspb.smartbirds.pro.viewmodel.MonitoringViewModel;
 import org.osmdroid.config.Configuration;
 
@@ -252,7 +251,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         super.onCreate(savedInstanceState);
         try {
-            bindService(DataService_.intent(this).get(), trackingServiceConnection, BIND_AUTO_CREATE);
+            bindService(DataService.Companion.intent(this).get(), trackingServiceConnection, BIND_AUTO_CREATE);
             bindService(new Intent(this, TrackingService.class), dataServiceConnection, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {
             logException(t);
