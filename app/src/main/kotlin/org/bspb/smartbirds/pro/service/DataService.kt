@@ -116,20 +116,19 @@ open class DataService : Service() {
             monitoring = monitoringManager.getActiveMonitoring()
 
             if (bus.isRegistered(this@DataService))
-                Log.d(TAG, "bus already registered ${this@DataService}")
+                Log.d(TAG, "bus already registered")
 
-            Log.d(TAG, "bus registering... ${this@DataService}")
+            Log.d(TAG, "bus registering...")
             bus.registerSticky(this@DataService)
-            Log.d(TAG, "bus registered ${this@DataService}")
         }
     }
 
     override fun onDestroy() {
-        Log.d(TAG, "destroying... ${this@DataService}")
+        Log.d(TAG, "destroying...")
 
         initServiceJob?.let {
             if (it.isActive) {
-                Log.d(TAG, "canceling job... ${this@DataService}")
+                Log.d(TAG, "canceling initService job...")
                 it.cancel(CancellationException("Service destroyed"))
             }
         }
@@ -152,7 +151,7 @@ open class DataService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(TAG, "onStartCommand... ${this@DataService}")
+        Log.d(TAG, "onStartCommand...")
         // Start sticky only if the device is with SDK lower than Oreo, otherwise there is a crash
         // when the service is killed and recreated. The reason is that in Oreo there are
         // limitations for starting services when the app is in background.
@@ -173,10 +172,9 @@ open class DataService : Service() {
                 bus.postSticky(MonitoringStartedEvent())
                 return@sbLaunch
             }
-            Log.d(TAG, "onStartMonitoringEvent... ${this@DataService}")
+            Log.d(TAG, "onStartMonitoringEvent...")
             Toast.makeText(this@DataService, "Start monitoring", Toast.LENGTH_SHORT).show()
             monitoring = monitoringManager.createNew()
-            Log.d(TAG, "create new monitoring=$monitoring")
             if (createMonitoringDir(this@DataService, monitoring!!) != null && initGpxFile(
                     this@DataService,
                     monitoring!!
@@ -196,7 +194,7 @@ open class DataService : Service() {
 
     fun onEvent(event: CancelMonitoringEvent) {
         scope.sbLaunch(Dispatchers.Main) {
-            Log.d(TAG, "onCancelMonitoringEvent... ${this@DataService}")
+            Log.d(TAG, "onCancelMonitoringEvent...")
             if (isMonitoring()) {
                 monitoringManager.updateStatus(monitoring!!, Monitoring.Status.canceled)
             } else {
@@ -218,7 +216,7 @@ open class DataService : Service() {
 
     fun onEvent(event: SetMonitoringCommonData) {
         scope.sbLaunch {
-            Log.d(TAG, "onSetMonitoringCommonData ${this@DataService}")
+            Log.d(TAG, "onSetMonitoringCommonData")
             event.data[resources.getString(R.string.monitoring_id)] = monitoring!!.code
             event.data[resources.getString(R.string.version)] = Configuration.STORAGE_VERSION_CODE
             monitoring!!.commonForm.clear()
@@ -249,7 +247,7 @@ open class DataService : Service() {
 
     fun onEvent(event: EntrySubmitted) {
         scope.sbLaunch {
-            Log.d(TAG, "onEntrySubmitted ${this@DataService}")
+            Log.d(TAG, "onEntrySubmitted")
             try {
                 if (event.entryId > 0) {
                     monitoringManager.updateEntry(
@@ -259,10 +257,6 @@ open class DataService : Service() {
                         event.data
                     )
                 } else {
-                    debugLog("monitoring: $monitoring")
-                    debugLog("monitoring code: ${event.monitoringCode}")
-                    debugLog("dataService: ${this@DataService}")
-                    debugLog("monitoringManager: $monitoringManager")
                     monitoringManager.newEntry(monitoring!!, event.entryType, event.data)
                 }
             } catch (t: Throwable) {
@@ -295,7 +289,7 @@ open class DataService : Service() {
     }
 
     fun onEvent(location: Location?) {
-        Log.d(TAG, "onLocation ${this@DataService}")
+        Log.d(TAG, "onLocation")
         if (isMonitoring() && location != null) {
             val trackingLocation = monitoringManager.newTracking(monitoring!!, location)
             val file = File(createMonitoringDir(this, monitoring!!), "track.gpx")
