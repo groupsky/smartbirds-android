@@ -46,8 +46,11 @@ public class GpxWriter {
         output.write(
                 "    <trkseg>\n" +
                         "      <trkpt lat=\"" + location.latitude + "\" lon=\"" + location.longitude + "\">\n" +
-                        (location.altitude != null ? "        <ele>" + location.altitude + "</ele>\n" : "") +
                         "        <time>" + GPX_DATE_FORMATTER.format(new Date(location.time)) + "</time>\n" +
+                        (location.altitude != null ? "        <ele>" + location.altitude + "</ele>\n" : "") +
+                        (location.accuracy != null ? "        <hdop>" + location.accuracy + "</hdop>\n" : "") +
+                        (location.verticalAccuracy != null ? "        <vdop>" + location.verticalAccuracy + "</vdop>\n" : "") +
+                        (location.speed != null ? "        <speed>" + location.speed + "</speed>\n" : "") +
                         "      </trkpt>\n" +
                         "    </trkseg>\n");
     }
