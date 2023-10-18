@@ -61,19 +61,21 @@ open class UploadManager {
         val monitoringDir = File(baseDir, monitoringCode)
         var hasErrors = false
 
+        var fileObjects: Map<String, JsonObject>? = null
         if (monitoringDir.exists() && monitoringDir.isDirectory) {
-            var fileObjects: Map<String, JsonObject>? = null
-
             try {
                 fileObjects = uploadMonitoringFiles(monitoringDir.absolutePath, monitoringCode)
             } catch (t: Throwable) {
                 hasErrors = true
             }
-
-            if (!uploadMonitoringEntries(monitoringCode, fileObjects)) {
-                hasErrors = true
-            }
+        } else {
+            errors.add(context.getString(R.string.sync_error_missing_files, monitoringCode))
         }
+
+        if (!uploadMonitoringEntries(monitoringCode, fileObjects)) {
+            hasErrors = true
+        }
+
         if (hasErrors) {
             Toast.makeText(
                 context, String.format(
