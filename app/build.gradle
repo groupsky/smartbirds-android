@@ -1,10 +1,10 @@
 plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'com.novoda.build-properties'
+    id("com.android.application")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("com.novoda.build-properties")
 }
 
 def versionNameBase = "2.0.73"
@@ -12,10 +12,10 @@ def versionCodeBase = 143
 
 buildProperties {
     notThere {
-        using rootProject.file('debug_gradle.properties')
+        using rootProject.file("debug_gradle.properties")
     }
     secrets {
-        using rootProject.file('keystore-upload.properties')
+        using rootProject.file("keystore-upload.properties")
     }
 }
 
@@ -36,15 +36,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // The following argument makes the Android Test Orchestrator run its
         // "pm clear" command after each test invocation. This command ensures
-        // that the app's state is completely cleared between tests.
-        testInstrumentationRunnerArguments clearPackageData: 'true'
+        // that the app"s state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: "true"
     }
     signingConfigs {
         release {
-            keyAlias((buildProperties.secrets['keyAlias'] | buildProperties.notThere['keyAlias']).string)
-            keyPassword((buildProperties.secrets['keyPassword'] | buildProperties.notThere['keyPassword']).string)
-            storeFile file((buildProperties.secrets['storeFile'] | buildProperties.notThere['storeFile']).string)
-            storePassword((buildProperties.secrets['storePassword'] | buildProperties.notThere['storePassword']).string)
+            keyAlias((buildProperties.secrets["keyAlias"] | buildProperties.notThere["keyAlias"]).string)
+            keyPassword((buildProperties.secrets["keyPassword"] | buildProperties.notThere["keyPassword"]).string)
+            storeFile file((buildProperties.secrets["storeFile"] | buildProperties.notThere["storeFile"]).string)
+            storePassword((buildProperties.secrets["storePassword"] | buildProperties.notThere["storePassword"]).string)
         }
     }
     buildTypes {
@@ -61,10 +61,10 @@ android {
 
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
 
-            def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+            def gitSha = "git rev-parse --short HEAD".execute([], project.rootDir).text.trim()
             buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
             buildConfigField "String", "BACKEND_BASE_URL", "\"https://smartbirds.org/api/\""
 
@@ -82,11 +82,11 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "17"
     }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main.java.srcDirs += "src/main/kotlin"
     }
 
     kapt {
@@ -100,84 +100,84 @@ android {
     testOptions {
         animationsDisabled = true
         // enable android orchestrator for isolated tests
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        execution "ANDROIDX_TEST_ORCHESTRATOR"
     }
     lint {
         abortOnError true
     }
-    namespace 'org.bspb.smartbirds.pro'
+    namespace "org.bspb.smartbirds.pro"
 }
 
 dependencies {
     def room_version = "2.6.0"
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt "org.androidannotations:androidannotations:4.8.0"
-    implementation "org.androidannotations:androidannotations-api:4.8.0"
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    kapt("org.androidannotations:androidannotations:4.8.0")
+    implementation("org.androidannotations:androidannotations-api:4.8.0")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.10"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
     // KTX extensions
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation "androidx.fragment:fragment-ktx:1.6.2"
-    implementation "androidx.preference:preference-ktx:1.2.1"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.google.android.gms:play-services-maps:18.2.0'
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     // TODO: migrate to v3.x
-    implementation 'de.greenrobot:eventbus:2.4.1'
+    implementation("de.greenrobot:eventbus:2.4.1")
 
     // Crashlytics Kit
-    implementation 'com.google.firebase:firebase-crashlytics:18.6.0'
+    implementation("com.google.firebase:firebase-crashlytics:18.6.0")
 
-    implementation 'com.google.firebase:firebase-analytics:21.5.0'
+    implementation("com.google.firebase:firebase-analytics:21.5.0")
 
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
-    implementation 'com.googlecode.jcsv:jcsv:1.4.0'
-    implementation 'com.google.maps.android:android-maps-utils:3.4.0'
+    implementation("com.googlecode.jcsv:jcsv:1.4.0")
+    implementation("com.google.maps.android:android-maps-utils:3.4.0")
 
-    implementation 'org.osmdroid:osmdroid-android:6.1.16'
-    implementation 'com.github.MKergall:osmbonuspack:6.9.0'
-    implementation 'com.google.android.material:material:1.10.0'
-    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
+    implementation("com.github.MKergall:osmbonuspack:6.9.0")
+    implementation("com.google.android.material:material:1.10.0")
+    implementation("androidx.legacy:legacy-support-v13:1.0.0")
 
     // http://square.github.io/retrofit/
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.12.0'
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.12.0")
 
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.6.2"
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.6.2")
 
     // Room
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation("junit:junit:4.13.2")
 
     // Instrumentation testing
 
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestUtil 'androidx.test:orchestrator:1.4.2'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
     // Optional -- UI testing with Espresso
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
     // mock server for backend
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.11.0'
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
     // Optional -- Hamcrest library
-    androidTestImplementation 'org.hamcrest:hamcrest:2.2'
-    androidTestImplementation 'org.hamcrest:hamcrest-library:2.2'
-    androidTestImplementation 'junit:junit:4.13.2'
+    androidTestImplementation("org.hamcrest:hamcrest:2.2")
+    androidTestImplementation("org.hamcrest:hamcrest-library:2.2")
+    androidTestImplementation("junit:junit:4.13.2")
 
-    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.2.0")
 }
