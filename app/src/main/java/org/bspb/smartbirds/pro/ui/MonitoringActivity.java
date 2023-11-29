@@ -473,7 +473,9 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         pauseMonitoring();
+
     }
 
     void pauseMonitoring() {

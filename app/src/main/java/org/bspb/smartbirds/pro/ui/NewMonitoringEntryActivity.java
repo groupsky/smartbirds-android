@@ -118,6 +118,7 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         confirmCancel();
     }
 
