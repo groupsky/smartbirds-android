@@ -52,6 +52,7 @@ open class MainFragment : Fragment() {
 
     private val REQUEST_LOCATION = 0
     private val REQUEST_STORAGE = 1
+    private val REQUEST_NOTIFICATION = 2
 
     private var exportDialog: AlertDialog? = null
     private var loading: LoadingDialog? = null
@@ -104,8 +105,12 @@ open class MainFragment : Fragment() {
         val intentFilter = IntentFilter()
         intentFilter.addAction(SyncService.ACTION_SYNC_COMPLETED)
         intentFilter.addAction(SyncService.ACTION_SYNC_PROGRESS)
-        LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(syncBroadcastReceiver, intentFilter)
+        ContextCompat.registerReceiver(
+            requireContext(),
+            syncBroadcastReceiver,
+            intentFilter,
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
 
         bus.registerSticky(this)
         if (SyncService.isWorking) {
@@ -129,8 +134,7 @@ open class MainFragment : Fragment() {
 
     override fun onStop() {
         bus.unregister(this)
-        LocalBroadcastManager.getInstance(requireContext())
-            .unregisterReceiver(syncBroadcastReceiver)
+        requireContext().unregisterReceiver(syncBroadcastReceiver)
         super.onStop()
     }
 
@@ -242,7 +246,12 @@ open class MainFragment : Fragment() {
                 R.string.report_last_monitoring_warning_message
             )
         } else {
-            startActivity(MonitoringReportActivity.newIntent(requireContext(), lastMonitoring!!.code))
+            startActivity(
+                MonitoringReportActivity.newIntent(
+                    requireContext(),
+                    lastMonitoring!!.code
+                )
+            )
         }
     }
 
@@ -438,7 +447,7 @@ open class MainFragment : Fragment() {
     }
 
     private fun permissionsGranted(): Boolean {
-        return locationPermissionsGranted() && storagePermissionsGranted()
+        return locationPermissionsGranted() && storagePermissionsGranted() && notificationPermissionsGranted()
     }
 
     private fun locationPermissionsGranted(): Boolean {
@@ -514,6 +523,46 @@ open class MainFragment : Fragment() {
             ), REQUEST_STORAGE
         )
         Toast.makeText(activity, R.string.storage_permission_rationale, Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+    private fun notificationPermissionsGranted(): Boolean {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return false
+        }
+        if (shouldShowRequestPermissionRationale(permission.POST_NOTIFICATIONS)) {
+            try {
+                Snackbar.make(
+                    btnStartBirds,
+                    R.string.notifications_permission_rationale,
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                    .setAction(android.R.string.ok) {
+                        requestPermissions(
+                            arrayOf(
+                                permission.POST_NOTIFICATIONS
+                            ), REQUEST_NOTIFICATION
+                        )
+                    }.show()
+                return false
+            } catch (t: Throwable) {
+                // we get IAE because we don't extend the Theme.AppCompat, but that messes up styling of the fields
+                Reporting.logException(t)
+            }
+        }
+        requestPermissions(
+            arrayOf(
+                permission.POST_NOTIFICATIONS
+            ), REQUEST_NOTIFICATION
+        )
+        Toast.makeText(activity, R.string.notifications_permission_rationale, Toast.LENGTH_SHORT).show()
         return false
     }
 

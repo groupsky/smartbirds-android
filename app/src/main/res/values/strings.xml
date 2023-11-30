@@ -501,4 +501,5 @@ Do you really want to cancel the monitoring?"</string>
     <string name="form_birds_distance_value">"%.0f m"</string>
     <string name="settings_show_current_location_circle_summary">"Draw circles through 50m from the current position"</string>
     <string name="settings_show_current_location_circle">"Current location zone"</string>
+    <string name="notifications_permission_rationale">"Notification permission is required for starting a monitoring"</string>
 </resources>

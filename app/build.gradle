@@ -24,8 +24,8 @@ android {
 
     defaultConfig {
         applicationId "org.bspb.smartbirds.pro"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 34
         versionCode versionCodeBase
         versionName "${versionNameBase}"
 

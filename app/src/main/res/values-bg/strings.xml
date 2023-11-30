@@ -500,4 +500,5 @@
     <string name="form_birds_distance_value">"%.0f m"</string>
     <string name="settings_show_current_location_circle_summary">"Изчертани кръгове през 50 m от текущата позиция"</string>
     <string name="settings_show_current_location_circle">"Текуща зона на местоположение"</string>
+    <string name="notifications_permission_rationale">"Показването на нотификаций е необходимо за стартирането на мониторинг"</string>
 </resources>
