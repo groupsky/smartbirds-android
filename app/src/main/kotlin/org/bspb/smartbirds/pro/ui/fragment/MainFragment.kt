@@ -43,6 +43,7 @@ import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.*
 import org.bspb.smartbirds.pro.utils.MonitoringManager
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
@@ -106,7 +107,7 @@ open class MainFragment : Fragment() {
         intentFilter.addAction(SyncService.ACTION_SYNC_COMPLETED)
         intentFilter.addAction(SyncService.ACTION_SYNC_PROGRESS)
         ContextCompat.registerReceiver(
-            requireContext(),
+            requireActivity(),
             syncBroadcastReceiver,
             intentFilter,
             ContextCompat.RECEIVER_NOT_EXPORTED
@@ -134,7 +135,7 @@ open class MainFragment : Fragment() {
 
     override fun onStop() {
         bus.unregister(this)
-        requireContext().unregisterReceiver(syncBroadcastReceiver)
+        requireActivity().unregisterReceiver(syncBroadcastReceiver)
         super.onStop()
     }
 
@@ -562,7 +563,8 @@ open class MainFragment : Fragment() {
                 permission.POST_NOTIFICATIONS
             ), REQUEST_NOTIFICATION
         )
-        Toast.makeText(activity, R.string.notifications_permission_rationale, Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, R.string.notifications_permission_rationale, Toast.LENGTH_SHORT)
+            .show()
         return false
     }
 

@@ -60,7 +60,7 @@ open class SyncService : AbstractIntentService("SyncService") {
                 isWorking = false
                 syncMessage = null
                 val intent = Intent(ACTION_SYNC_COMPLETED)
-                LocalBroadcastManager.getInstance(this@SyncService).sendBroadcast(intent)
+                sendBroadcast(intent)
             }
         }
     }
@@ -75,7 +75,7 @@ open class SyncService : AbstractIntentService("SyncService") {
                 isWorking = false
                 syncMessage = null
                 val intent = Intent(ACTION_SYNC_COMPLETED)
-                LocalBroadcastManager.getInstance(this@SyncService).sendBroadcast(intent)
+                sendBroadcast(intent)
             }
         }
     }
@@ -95,7 +95,7 @@ open class SyncService : AbstractIntentService("SyncService") {
         syncMessage = getString(messageResource)
         val intent = Intent(ACTION_SYNC_PROGRESS)
         intent.putExtra(EXTRA_SYNC_MESSAGE, syncMessage)
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+        sendBroadcast(intent)
     }
 
 }
