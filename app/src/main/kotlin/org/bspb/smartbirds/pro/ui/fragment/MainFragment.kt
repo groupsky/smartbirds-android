@@ -482,6 +482,10 @@ open class MainFragment : Fragment() {
     }
 
     private fun storagePermissionsGranted(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return true
+        }
+
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 permission.WRITE_EXTERNAL_STORAGE
