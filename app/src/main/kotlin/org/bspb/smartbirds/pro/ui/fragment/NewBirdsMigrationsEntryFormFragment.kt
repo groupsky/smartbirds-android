@@ -45,13 +45,11 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
     @ViewById(R.id.form_birds_migrations_migration_point)
     protected var migrationPoint: SingleChoiceFormInput? = null
 
-    @JvmField
     @Pref
-    protected var commonPrefs: CommonPrefs_? = null
+    protected lateinit var commonPrefs: CommonPrefs_
 
-    @JvmField
     @Pref
-    protected var migrationPrefs: BirdsMigrationsPrefs_? = null
+    protected lateinit var migrationPrefs: BirdsMigrationsPrefs_
 
     @AfterViews
     open fun initQuickChoice() {
@@ -63,8 +61,8 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
-            migrationPrefs!!.migrationPoint().get()?.let { nomenclatureJson ->
+            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
+            migrationPrefs.migrationPoint().get()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -82,9 +80,9 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
 
     override fun onPause() {
         super.onPause()
-        commonPrefs!!.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
         migrationPoint?.selectedItem?.let {
-            migrationPrefs!!.migrationPoint().put(SBGsonParser.createParser().toJson(it))
+            migrationPrefs.migrationPoint().put(SBGsonParser.createParser().toJson(it))
         }
     }
 

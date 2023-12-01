@@ -33,20 +33,19 @@ open class NewPylonsEntryFormFragment : BaseEntryFragment() {
     @ViewById(R.id.form_pylons_damaged_insulation)
     protected var damagedInsulation: SwitchFormInput? = null
 
-    @JvmField
     @Pref
-    protected var commonPrefs: CommonPrefs_? = null
+    protected lateinit var commonPrefs: CommonPrefs_
 
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
+            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
         }
     }
 
     override fun onPause() {
         super.onPause()
-        commonPrefs!!.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
     }
 
     override fun getEntryType(): EntryType? {
@@ -95,7 +94,8 @@ open class NewPylonsEntryFormFragment : BaseEntryFragment() {
 
     class Builder : BaseEntryFragment.Builder {
         override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
-            return NewPylonsEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy)
+            return NewPylonsEntryFormFragment_.builder().lat(lat).lon(lon)
+                .geolocationAccuracy(geolocationAccuracy)
                 .build()
         }
 

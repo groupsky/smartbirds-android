@@ -25,20 +25,19 @@ open class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
     @ViewById(R.id.form_pylons_casualties_confidential)
     protected var confidential: SwitchFormInput? = null
 
-    @JvmField
     @Pref
-    protected var commonPrefs: CommonPrefs_? = null
+    protected lateinit var commonPrefs: CommonPrefs_
 
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
+            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
         }
     }
 
     override fun onPause() {
         super.onPause()
-        commonPrefs!!.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
     }
 
     override fun getEntryType(): EntryType? {

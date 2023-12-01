@@ -14,7 +14,6 @@ import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
-import org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
 import java.util.*
@@ -31,13 +30,11 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
     @ViewById(R.id.form_bats_confidential)
     protected var confidential: SwitchFormInput? = null
 
-    @JvmField
     @Pref
-    protected var commonPrefs: CommonPrefs_? = null
+    protected lateinit var commonPrefs: CommonPrefs_
 
-    @JvmField
     @Pref
-    protected var batsPrefs: BatsPrefs_? = null
+    protected lateinit var batsPrefs: BatsPrefs_
 
     @JvmField
     @ViewById(R.id.form_bats_metodology)
@@ -62,8 +59,8 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs!!.confidentialRecord().get()
-            batsPrefs!!.metodology()?.get()?.let { nomenclatureJson ->
+            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
+            batsPrefs.metodology()?.get()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -75,7 +72,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
                     Reporting.logException(t)
                 }
             }
-            batsPrefs!!.habitat()?.get()?.let { nomenclatureJson ->
+            batsPrefs.habitat()?.get()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -87,7 +84,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
                     Reporting.logException(t)
                 }
             }
-            batsPrefs!!.typeLoc()?.get()?.let { nomenclatureJson ->
+            batsPrefs.typeLoc()?.get()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -99,10 +96,10 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
                     Reporting.logException(t)
                 }
             }
-            batsPrefs!!.tempCave()?.get()?.let { temp ->
+            batsPrefs.tempCave()?.get()?.let { temp ->
                 tempCave?.setText(temp)
             }
-            batsPrefs!!.humidityCave()?.get()?.let { temp ->
+            batsPrefs.humidityCave()?.get()?.let { temp ->
                 humidityCave?.setText(temp)
             }
         }
@@ -110,21 +107,21 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
 
     override fun onPause() {
         super.onPause()
-        commonPrefs!!.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
         metodology?.selectedItem?.let {
-            batsPrefs!!.metodology().put(SBGsonParser.createParser().toJson(it))
+            batsPrefs.metodology().put(SBGsonParser.createParser().toJson(it))
         }
         habitat?.selectedItem?.let {
-            batsPrefs!!.habitat().put(SBGsonParser.createParser().toJson(it))
+            batsPrefs.habitat().put(SBGsonParser.createParser().toJson(it))
         }
         typeLoc?.selectedItem?.let {
-            batsPrefs!!.typeLoc().put(SBGsonParser.createParser().toJson(it))
+            batsPrefs.typeLoc().put(SBGsonParser.createParser().toJson(it))
         }
         tempCave?.text?.let {
-            batsPrefs!!.tempCave().put(it.toString())
+            batsPrefs.tempCave().put(it.toString())
         }
         humidityCave?.text?.let {
-            batsPrefs!!.humidityCave().put(it.toString())
+            batsPrefs.humidityCave().put(it.toString())
         }
     }
 
