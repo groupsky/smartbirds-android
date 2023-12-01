@@ -19,21 +19,23 @@ class SmartbirdsStateRule(val statement: Statement) : TestRule {
         fun setVersionCheck(check: Boolean) = SmartbirdsStateRule(VersionCodeCheck(check))
 
         fun grantMonitoringPermissions(): GrantPermissionRule {
-            return if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
-                GrantPermissionRule.grant(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
+            val permissions = mutableListOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            )
+
+            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
+                permissions.addAll(listOf(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                )
-            } else {
-                GrantPermissionRule.grant(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                )
+                ))
             }
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+            }
+
+            return GrantPermissionRule.grant(*permissions.toTypedArray())
         }
     }
 
