@@ -7,8 +7,8 @@ plugins {
     id("com.novoda.build-properties")
 }
 
-def versionNameBase = "2.0.73"
-def versionCodeBase = 143
+def versionNameBase = "2.0.75"
+def versionCodeBase = 145
 
 buildProperties {
     notThere {
@@ -46,6 +46,13 @@ android {
             storeFile file((buildProperties.secrets["storeFile"] | buildProperties.notThere["storeFile"]).string)
             storePassword((buildProperties.secrets["storePassword"] | buildProperties.notThere["storePassword"]).string)
         }
+
+        beta {
+            keyAlias(buildProperties.notThere["keyAlias"].string)
+            keyPassword(buildProperties.notThere["keyPassword"].string)
+            storeFile file(buildProperties.notThere["storeFile"].string)
+            storePassword(buildProperties.notThere["storePassword"].string)
+        }
     }
     buildTypes {
         ext.betaDistributionGroupAliases = "BSPB"
@@ -71,6 +78,22 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     output.outputFileName = "smartbirdspro-${variant.versionName}-${versionCodeBase}.apk"
+                }
+            }
+        }
+
+        beta {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.beta
+
+            def gitSha = "git rev-parse --short HEAD".execute([], project.rootDir).text.trim()
+            buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+            buildConfigField "String", "BACKEND_BASE_URL", "\"https://smartbirds.org/api/\""
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFileName = "smartbirdspro-${variant.versionName}-${versionCodeBase}-beta.apk"
                 }
             }
         }
