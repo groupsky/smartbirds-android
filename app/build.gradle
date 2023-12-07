@@ -4,20 +4,19 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("com.novoda.build-properties")
 }
 
 def versionNameBase = "2.0.75"
 def versionCodeBase = 145
 
-buildProperties {
-    notThere {
-        using rootProject.file("debug_gradle.properties")
-    }
-    secrets {
-        using rootProject.file("keystore-upload.properties")
-    }
-}
+def betaKeystorePropertiesFile = rootProject.file("keystore-beta.properties")
+def uploadKeystorePropertiesFile = rootProject.file("keystore-upload.properties")
+
+def betaKeystoreProperties = new Properties()
+def uploadKeystoreProperties = new Properties()
+
+betaKeystoreProperties.load(new FileInputStream(betaKeystorePropertiesFile))
+uploadKeystoreProperties.load(new FileInputStream(uploadKeystorePropertiesFile))
 
 android {
     compileSdk 34
@@ -39,21 +38,23 @@ android {
         // that the app"s state is completely cleared between tests.
         testInstrumentationRunnerArguments clearPackageData: "true"
     }
+
     signingConfigs {
         release {
-            keyAlias((buildProperties.secrets["keyAlias"] | buildProperties.notThere["keyAlias"]).string)
-            keyPassword((buildProperties.secrets["keyPassword"] | buildProperties.notThere["keyPassword"]).string)
-            storeFile file((buildProperties.secrets["storeFile"] | buildProperties.notThere["storeFile"]).string)
-            storePassword((buildProperties.secrets["storePassword"] | buildProperties.notThere["storePassword"]).string)
+            keyAlias(uploadKeystoreProperties["keyAlias"])
+            keyPassword(uploadKeystoreProperties["keyPassword"])
+            storeFile file(uploadKeystoreProperties["storeFile"])
+            storePassword(uploadKeystoreProperties["storePassword"])
         }
 
         beta {
-            keyAlias(buildProperties.notThere["keyAlias"].string)
-            keyPassword(buildProperties.notThere["keyPassword"].string)
-            storeFile file(buildProperties.notThere["storeFile"].string)
-            storePassword(buildProperties.notThere["storePassword"].string)
+            keyAlias(betaKeystoreProperties["keyAlias"])
+            keyPassword(betaKeystoreProperties["keyPassword"])
+            storeFile file(betaKeystoreProperties["storeFile"])
+            storePassword(betaKeystoreProperties["storePassword"])
         }
     }
+
     buildTypes {
         ext.betaDistributionGroupAliases = "BSPB"
 
