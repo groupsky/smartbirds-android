@@ -11,12 +11,19 @@ def versionCodeBase = 145
 
 def betaKeystorePropertiesFile = rootProject.file("keystore-beta.properties")
 def uploadKeystorePropertiesFile = rootProject.file("keystore-upload.properties")
-
 def betaKeystoreProperties = new Properties()
 def uploadKeystoreProperties = new Properties()
 
-betaKeystoreProperties.load(new FileInputStream(betaKeystorePropertiesFile))
-uploadKeystoreProperties.load(new FileInputStream(uploadKeystorePropertiesFile))
+def betaKeyAvailable = betaKeystorePropertiesFile.exists()
+def uploadKeyAvailable = uploadKeystorePropertiesFile.exists()
+
+if (betaKeyAvailable) {
+    betaKeystoreProperties.load(new FileInputStream(betaKeystorePropertiesFile))
+}
+
+if (uploadKeyAvailable) {
+    uploadKeystoreProperties.load(new FileInputStream(uploadKeystorePropertiesFile))
+}
 
 android {
     compileSdk 34
@@ -41,17 +48,21 @@ android {
 
     signingConfigs {
         release {
-            keyAlias(uploadKeystoreProperties["keyAlias"])
-            keyPassword(uploadKeystoreProperties["keyPassword"])
-            storeFile file(uploadKeystoreProperties["storeFile"])
-            storePassword(uploadKeystoreProperties["storePassword"])
+            if (uploadKeyAvailable) {
+                keyAlias(uploadKeystoreProperties["keyAlias"])
+                keyPassword(uploadKeystoreProperties["keyPassword"])
+                storeFile file(uploadKeystoreProperties["storeFile"])
+                storePassword(uploadKeystoreProperties["storePassword"])
+            }
         }
 
         beta {
-            keyAlias(betaKeystoreProperties["keyAlias"])
-            keyPassword(betaKeystoreProperties["keyPassword"])
-            storeFile file(betaKeystoreProperties["storeFile"])
-            storePassword(betaKeystoreProperties["storePassword"])
+            if (betaKeyAvailable) {
+                keyAlias(betaKeystoreProperties["keyAlias"])
+                keyPassword(betaKeystoreProperties["keyPassword"])
+                storeFile file(betaKeystoreProperties["storeFile"])
+                storePassword(betaKeystoreProperties["storePassword"])
+            }
         }
     }
 
@@ -70,32 +81,31 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
+            if (uploadKeyAvailable) {
+                signingConfig signingConfigs.release
+            }
 
             def gitSha = "git rev-parse --short HEAD".execute([], project.rootDir).text.trim()
             buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
             buildConfigField "String", "BACKEND_BASE_URL", "\"https://smartbirds.org/api/\""
-
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFileName = "smartbirdspro-${variant.versionName}-${versionCodeBase}.apk"
-                }
-            }
         }
 
         beta {
+            versionNameSuffix "-BETA"
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.beta
+            if (betaKeyAvailable) {
+                signingConfig signingConfigs.beta
+            }
 
             def gitSha = "git rev-parse --short HEAD".execute([], project.rootDir).text.trim()
             buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
             buildConfigField "String", "BACKEND_BASE_URL", "\"https://smartbirds.org/api/\""
+        }
 
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFileName = "smartbirdspro-${variant.versionName}-${versionCodeBase}-beta.apk"
-                }
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                output.outputFileName = "smartbirdspro-${variant.versionName}-${versionCodeBase}.apk"
             }
         }
     }
