@@ -6,8 +6,8 @@ plugins {
     id("kotlin-kapt")
 }
 
-def versionNameBase = "2.0.75"
-def versionCodeBase = 145
+def versionNameBase = "2.0.76"
+def versionCodeBase = 146
 
 def betaKeystorePropertiesFile = rootProject.file("keystore-beta.properties")
 def uploadKeystorePropertiesFile = rootProject.file("keystore-upload.properties")
