@@ -261,8 +261,10 @@ open class MainFragment : Fragment() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(getString(R.string.help_url))
         context?.packageManager?.let {
-            if (intent.resolveActivity(it) != null) {
+            try {
                 startActivity(intent)
+            } catch (e: Exception) {
+                debugLog("helpButton exception: $e")
             }
         }
     }
@@ -318,8 +320,10 @@ open class MainFragment : Fragment() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(getString(R.string.privacy_policy_url))
         context?.packageManager?.let {
-            if (intent.resolveActivity(it) != null) {
+            try {
                 startActivity(intent)
+            } catch (e: Exception) {
+                debugLog("openPrivacyPolicy exception: $e")
             }
         }
     }
