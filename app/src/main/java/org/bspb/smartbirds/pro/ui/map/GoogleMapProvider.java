@@ -121,6 +121,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
 
     private boolean showCurrentLocationCircle = false;
 
+    private boolean askedForMap = false;
+
     @Override
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
@@ -139,8 +141,9 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
      */
     public void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
+        if (mMap == null && fragment != null && !askedForMap) {
             // Try to obtain the map from the SupportMapFragment.
+            this.askedForMap = true;
             fragment.getMapAsync(this);
         }
     }
@@ -179,15 +182,8 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                 markerHolder.marker = addMarker(markerHolder.mapMarker);
             }
         }
-        if (zonePolygons.isEmpty()) {
-            for (Zone zone : zones) {
-                Polygon p = addZone(zone);
-                if (p != null) {
-                    zonePolygons.add(p);
-                }
-            }
-        }
 
+        drawZones();
         drawLocalProjects(showLocalProjects);
         drawBgAtlasCells();
         showMapLayers();
@@ -211,8 +207,6 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
-        drawZones();
-        drawBgAtlasCells();
     }
 
     @Override
@@ -224,15 +218,26 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void setShowBgAtlasCells(boolean showBgAtlasCells) {
         this.showBgAtlasCells = showBgAtlasCells;
-        drawBgAtlasCells();
     }
 
     private void drawZones() {
+        if (mMap == null || fragment == null || fragment.getContext() == null || (zonePolygons.size() == zones.size())) {
+            return;
+        }
+
         for (Polygon p : zonePolygons) {
             if (p.isVisible()) {
-                p.remove();
+                if (fragment.getView() != null) {
+                    fragment.getView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            p.remove();
+                        }
+                    });
+                }
             }
         }
+
         zonePolygons.clear();
         for (Zone zone : zones) {
             Polygon p = addZone(zone);
@@ -280,15 +285,23 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     }
 
     private void drawBgAtlasCells() {
-        if (fragment == null || fragment.getContext() == null) {
+        if (mMap == null || fragment == null || fragment.getContext() == null || (atlasCellsPolygons.size() == atlasCells.size())) {
             return;
         }
 
         for (Polygon p : atlasCellsPolygons) {
             if (p.isVisible()) {
-                p.remove();
+                if (fragment.getView() != null) {
+                    fragment.getView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            p.remove();
+                        }
+                    });
+                }
             }
         }
+
         atlasCellsPolygons.clear();
 
         if (!showBgAtlasCells) {
@@ -467,8 +480,10 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void setZones(Iterable<Zone> zones) {
         this.zones.clear();
-        for (Zone zone : zones) {
-            this.zones.add(zone);
+        if (zones != null) {
+            for (Zone zone : zones) {
+                this.zones.add(zone);
+            }
         }
         drawZones();
     }
@@ -477,9 +492,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     public void setBgAtlasCells(List<BGAtlasCell> cells) {
         this.atlasCells.clear();
         if (cells != null) {
-            for (BGAtlasCell cell : cells) {
-                this.atlasCells.add(cell);
-            }
+            this.atlasCells.addAll(cells);
         }
         drawBgAtlasCells();
     }
@@ -710,11 +723,14 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        this.askedForMap = false;
         // Check if we were successful in obtaining the map.
         if (mMap != null) {
             setUpMap();
         } else {
-            fragment.getMapAsync(this);
+            if (fragment != null) {
+                fragment.getMapAsync(this);
+            }
         }
     }
 
@@ -792,7 +808,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
                     .strokeColor(Color.BLUE)
                     .strokeWidth(4f);
 
-            if(i == NUMBER_OF_LOCATION_CIRCLES -1) {
+            if (i == NUMBER_OF_LOCATION_CIRCLES - 1) {
                 circle.fillColor(Color.argb(30, 0, 0, 255));
             }
 

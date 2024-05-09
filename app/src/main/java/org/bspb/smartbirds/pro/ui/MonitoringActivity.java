@@ -399,6 +399,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
                 currentMap = osmMap;
                 break;
         }
+        if (currentMap == null) {
+            return;
+        }
+
         currentMap.setPosition(lastPosition);
         currentMap.setZoomFactor(zoomFactor);
         currentMap.setMarkers(getMarkers());
@@ -416,6 +420,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         currentMap.setShowKml(showKml);
         currentMap.setShowMapLayers(mapLayers);
         currentMap.setShowCurrentLocationCircle(showCurrentLocationCircle);
+        currentMap.updateCamera();
     }
 
     private List<BGAtlasCell> readAtlasCells() {
@@ -525,46 +530,46 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         prefs.zoomFactor().put(zoomFactor);
     }
 
-    private void setShowZoneBackground(boolean showBackground) {
-        this.showZoneBackground = showBackground;
-        if (currentMap != null) {
-            currentMap.setShowZoneBackground(showBackground);
-            currentMap.updateCamera();
-        }
-    }
-
-    private void setShowLocalProjects(boolean showLocalProjects) {
-        this.showLocalProjects = showLocalProjects;
-        if (currentMap != null) {
-            currentMap.setShowLocalProjects(showLocalProjects);
-            currentMap.updateCamera();
-        }
-    }
-
-    private void setShowBgAtlasCells(boolean showBgAtlasCells) {
-        this.showBgAtlasCells = showBgAtlasCells;
-        if (currentMap != null) {
-            currentMap.setShowBgAtlasCells(showBgAtlasCells);
-            currentMap.updateCamera();
-        }
-    }
-
-    private void setShowKml(boolean showKml) {
-        this.showKml = showKml;
-        if (currentMap != null) {
-            currentMap.setShowKml(showKml);
-            currentMap.updateCamera();
-        }
-    }
-
-    private void setShowMapLayers(List<MapLayerItem> mapLayers) {
-        this.mapLayers = mapLayers;
-        if (currentMap != null) {
-            currentMap.setShowMapLayers(mapLayers);
-            currentMap.updateCamera();
-        }
-    }
-
+    //    private void setShowZoneBackground(boolean showBackground) {
+//        this.showZoneBackground = showBackground;
+//        if (currentMap != null) {
+//            currentMap.setShowZoneBackground(showBackground);
+//            currentMap.updateCamera();
+//        }
+//    }
+//
+//    private void setShowLocalProjects(boolean showLocalProjects) {
+//        this.showLocalProjects = showLocalProjects;
+//        if (currentMap != null) {
+//            currentMap.setShowLocalProjects(showLocalProjects);
+//            currentMap.updateCamera();
+//        }
+//    }
+//
+//    private void setShowBgAtlasCells(boolean showBgAtlasCells) {
+//        this.showBgAtlasCells = showBgAtlasCells;
+//        if (currentMap != null) {
+//            currentMap.setShowBgAtlasCells(showBgAtlasCells);
+//            currentMap.updateCamera();
+//        }
+//    }
+//
+//    private void setShowKml(boolean showKml) {
+//        this.showKml = showKml;
+//        if (currentMap != null) {
+//            currentMap.setShowKml(showKml);
+//            currentMap.updateCamera();
+//        }
+//    }
+//
+//    private void setShowMapLayers(List<MapLayerItem> mapLayers) {
+//        this.mapLayers = mapLayers;
+//        if (currentMap != null) {
+//            currentMap.setShowMapLayers(mapLayers);
+//            currentMap.updateCamera();
+//        }
+//    }
+//
     private void setStayAwake(boolean stayAwake) {
         this.stayAwake = stayAwake;
         if (stayAwake) {
@@ -573,14 +578,14 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
-
-    private void setShowCurrentLocationCircle(boolean showCurrentLocationCircle) {
-        this.showCurrentLocationCircle = showCurrentLocationCircle;
-        if (currentMap != null) {
-            currentMap.setShowCurrentLocationCircle(showCurrentLocationCircle);
-            currentMap.updateCamera();
-        }
-    }
+//
+//    private void setShowCurrentLocationCircle(boolean showCurrentLocationCircle) {
+//        this.showCurrentLocationCircle = showCurrentLocationCircle;
+//        if (currentMap != null) {
+//            currentMap.setShowCurrentLocationCircle(showCurrentLocationCircle);
+//            currentMap.updateCamera();
+//        }
+//    }
 
     @OptionsItem({
             R.id.action_form_type_birds,
@@ -811,11 +816,11 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         }
 
         setStayAwake(prefs.stayAwake().get());
-        setShowZoneBackground(prefs.showZoneBackground().get());
-        setShowLocalProjects(prefs.showLocalProjects().get());
-        setShowBgAtlasCells(prefs.showBgAtlasCells().get());
-        setShowKml(prefs.showUserKml().get());
-        setShowCurrentLocationCircle(prefs.showCurrentLocationCircle().get());
+        this.showZoneBackground = prefs.showZoneBackground().get();
+        this.showLocalProjects = prefs.showLocalProjects().get();
+        this.showBgAtlasCells = prefs.showBgAtlasCells().get();
+        this.showKml = prefs.showUserKml().get();
+        this.showCurrentLocationCircle = prefs.showCurrentLocationCircle().get();
 
         Type listType = new TypeToken<List<MapLayerItem>>() {
         }.getType();
@@ -829,7 +834,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
                 }
             }
         }
-        setShowMapLayers(enabledLayers);
+
+        this.mapLayers = enabledLayers;
 
         restorePoints();
 

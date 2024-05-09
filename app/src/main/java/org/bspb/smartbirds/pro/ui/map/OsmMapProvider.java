@@ -17,8 +17,6 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
@@ -171,14 +169,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
             }
         }
-        if (zoneOverlays.isEmpty()) {
-            for (Zone zone : zones) {
-                Polygon overlay = addZone(zone);
-                if (overlay != null) {
-                    zoneOverlays.add(overlay);
-                }
-            }
-        }
+        drawZones();
         mMap.invalidate();
 
         updateCamera();
@@ -214,8 +205,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setShowZoneBackground(boolean showBackground) {
         this.showZoneBackground = showBackground;
-        drawZones();
-        drawBgAtlasCells();
     }
 
     @Override
@@ -253,14 +242,12 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     private void drawBgAtlasCells() {
-        if (fragment == null || fragment.getContext() == null) {
+        if (mMap == null || fragment == null || fragment.getContext() == null) {
             return;
         }
 
-        if (mMap != null) {
-            mMap.getOverlayManager().removeAll(atlasCellsPolygons);
-        }
-        zoneOverlays.clear();
+        mMap.getOverlayManager().removeAll(atlasCellsPolygons);
+        atlasCellsPolygons.clear();
 
         if (!showBgAtlasCells) {
             return;
@@ -272,7 +259,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
                 atlasCellsPolygons.add(overlay);
             }
         }
-        if (mMap != null) mMap.invalidate();
+        mMap.invalidate();
     }
 
     private Polygon addAtlasCell(BGAtlasCell cell) {
@@ -315,17 +302,21 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     }
 
     private void drawZones() {
-        if (mMap != null) {
-            mMap.getOverlayManager().removeAll(zoneOverlays);
+        if (mMap == null || fragment == null || fragment.getContext() == null) {
+            return;
         }
+
+        mMap.getOverlayManager().removeAll(zoneOverlays);
         zoneOverlays.clear();
+
         for (Zone zone : zones) {
             Polygon overlay = addZone(zone);
             if (overlay != null) {
                 zoneOverlays.add(overlay);
             }
         }
-        if (mMap != null) mMap.invalidate();
+
+        mMap.invalidate();
     }
 
     @Override
@@ -349,6 +340,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     @Override
     public void updateCamera() {
+        if (mMap == null) return;
         if (zoomFactor > 0) {
             mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
             mMap.setMultiTouchControls(false);
@@ -550,7 +542,6 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void setShowBgAtlasCells(boolean showBgAtlasCells) {
         this.showBgAtlasCells = showBgAtlasCells;
-        drawBgAtlasCells();
     }
 
     @Override
