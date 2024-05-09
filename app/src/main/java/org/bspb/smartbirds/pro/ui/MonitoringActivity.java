@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -257,6 +258,12 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             logException(t);
         }
         initViewModel();
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                pauseMonitoring();
+            }
+        });
     }
 
     private void initViewModel() {
@@ -474,13 +481,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     @OptionsItem(android.R.id.home)
     void onUp() {
         pauseMonitoring();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        pauseMonitoring();
-
     }
 
     void pauseMonitoring() {

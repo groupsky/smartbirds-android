@@ -3,6 +3,8 @@ package org.bspb.smartbirds.pro.ui;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.OnBackPressedCallback;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -32,6 +34,13 @@ public class StartMonitoringActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataService.Companion.intent(this).start();
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                cancelMonitoring();
+            }
+        });
     }
 
     @AfterViews
@@ -63,12 +72,6 @@ public class StartMonitoringActivity extends BaseActivity {
         Log.d(TAG, "onStop");
         bus.unregister(this);
         super.onStop();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        cancelMonitoring();
     }
 
     @OptionsItem(android.R.id.home)

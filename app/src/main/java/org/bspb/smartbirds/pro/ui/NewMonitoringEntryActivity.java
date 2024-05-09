@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.activity.OnBackPressedCallback;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -58,6 +60,13 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
         } catch (Throwable t) {
             logException(t);
         }
+        
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                confirmCancel();
+            }
+        });
     }
 
     @AfterViews
@@ -116,11 +125,11 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
         confirmCancel();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        confirmCancel();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        confirmCancel();
+//    }
 
     private void confirmCancel() {
         //Ask the user if they want to quit
