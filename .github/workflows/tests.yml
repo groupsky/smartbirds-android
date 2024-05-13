@@ -10,7 +10,7 @@ jobs:
   test:
     # android emulator runs faster on macos
     # ref: https://github.com/ReactiveCircus/android-emulator-runner#usage
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         api-level: [ 28 ]
