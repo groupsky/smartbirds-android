@@ -146,7 +146,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_span="4">
+                    android:layout_span="6">
 
                     <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                         android:id="@+id/form_fish_size_tl_mm"
@@ -161,7 +161,7 @@
                     style="@style/TextInputLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_span="4">
+                    android:layout_span="6">
 
                     <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                         android:id="@+id/form_fish_size_sl_mm"
@@ -171,12 +171,29 @@
                         android:tag="@string/tag_size_sl" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+            </TableRow>
+
+            <TableRow>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_span="6">
+
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                        android:id="@+id/form_fish_total_length"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/monitoring_fish_total_length"
+                        android:tag="@string/tag_total_length"
+                        app:entriesType="form_fishes_total_length" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TextInputLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_span="4">
+                    android:layout_span="6">
 
                     <org.bspb.smartbirds.pro.ui.views.PositiveFloatNumberFormInput
                         android:id="@+id/form_fish_weight"

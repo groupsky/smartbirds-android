@@ -22,6 +22,7 @@ class FishesConverter(context: Context?) : Converter(context) {
         addSingle(R.string.tag_monitoring_type, "monitoringType")
         add(R.string.tag_threats, "threats")
         add(R.string.tag_remarks_type, "speciesNotes")
+        addSingle(R.string.tag_total_length, "totalLength")
 
         // fish - common
         add(R.string.tag_transect_length_m, "transectLength_M")
