@@ -38,8 +38,7 @@ public class SmartBirdsApplication extends Application {
 
     AuthenticationInterceptor authenticationInterceptor;
 
-    @Bean
-    Backend backend;
+    Backend backend = Backend.Companion.getInstance();
 
     @Override
     public void onCreate() {

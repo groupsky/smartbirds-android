@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.reflect.TypeToken
 import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
@@ -25,8 +24,7 @@ import retrofit2.Response
 @EFragment(R.layout.fragment_downloads)
 open class DownloadsFragment : Fragment() {
 
-    @Bean
-    protected lateinit var backend: Backend
+    protected val backend: Backend by lazy { Backend.getInstance() }
 
     @Pref
     protected lateinit var prefs: DownloadsPrefs_

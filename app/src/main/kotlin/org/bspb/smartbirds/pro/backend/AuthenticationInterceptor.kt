@@ -40,7 +40,6 @@ class AuthenticationInterceptor private constructor() : Interceptor {
                 INSTANCE = AuthenticationInterceptor()
                 INSTANCE!!.context = context
                 INSTANCE!!.prefs = UserPrefs_(context)
-                INSTANCE!!.backend = Backend_.getInstance_(context)
                 INSTANCE!!.bus = EEventBus_.getInstance_(context)
                 INSTANCE!!.authenticationManager = AuthenticationManager(context)
                 INSTANCE!!.loadAuthorization()
@@ -51,7 +50,7 @@ class AuthenticationInterceptor private constructor() : Interceptor {
 
     private lateinit var context: Context
     private lateinit var prefs: UserPrefs_
-    private lateinit var backend: Backend
+    private val backend: Backend by lazy { Backend.getInstance() }
     private lateinit var bus: EEventBus
     private lateinit var authenticationManager: AuthenticationManager
     private var authorization: String? = null

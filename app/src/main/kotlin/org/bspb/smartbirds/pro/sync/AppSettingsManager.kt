@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.RootContext
 import org.androidannotations.annotations.sharedpreferences.Pref
@@ -24,8 +23,7 @@ open class AppSettingsManager {
     @RootContext
     protected lateinit var context: Context
 
-    @Bean
-    protected lateinit var backend: Backend
+    protected val backend: Backend by lazy { Backend.getInstance() }
 
     @Pref
     protected lateinit var prefs: SmartBirdsPrefs_

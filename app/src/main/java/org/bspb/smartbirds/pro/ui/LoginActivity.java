@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     @ViewById(R.id.login_error)
     TextView mError;
 
-    @Bean
-    Backend backend;
+    Backend backend = Backend.Companion.getInstance();
+
     @Bean
     EEventBus bus;
     @Pref

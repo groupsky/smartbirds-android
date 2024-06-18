@@ -13,7 +13,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.backend.Backend_
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.db.model.NomenclatureModel
@@ -24,7 +23,7 @@ import org.bspb.smartbirds.pro.tools.AlphanumComparator
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.io.IOException
-import java.util.*
+import java.util.Collections
 
 class NomenclaturesManager private constructor(val context: Context) {
 
@@ -61,7 +60,7 @@ class NomenclaturesManager private constructor(val context: Context) {
     private val locale = context.getString(R.string.locale)
     private var loading = false
     private val db = SmartBirdsDatabase.getInstance()
-    private val backend: Backend = Backend_.getInstance_(context)
+    private val backend: Backend = Backend.getInstance()
 
     private val comparator: Comparator<in Nomenclature> =
         Comparator { o1: Nomenclature, o2: Nomenclature ->
