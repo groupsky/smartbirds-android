@@ -3,19 +3,17 @@ package org.bspb.smartbirds.pro.sync
 import android.content.Context
 import android.util.Log
 import androidx.annotation.WorkerThread
-import org.androidannotations.annotations.Background
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
-import org.androidannotations.annotations.sharedpreferences.Pref
+import kotlinx.coroutines.Dispatchers
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor
 import org.bspb.smartbirds.pro.backend.Backend
+import org.bspb.smartbirds.pro.backend.Backend_
 import org.bspb.smartbirds.pro.backend.LoginResultEvent
 import org.bspb.smartbirds.pro.backend.dto.CheckSessionRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse
 import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.events.LoginStateEvent
 import org.bspb.smartbirds.pro.events.LogoutEvent
 import org.bspb.smartbirds.pro.events.UserDataEvent
@@ -23,50 +21,42 @@ import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
+import org.bspb.smartbirds.pro.utils.SBScope
 import java.io.IOException
 
 
-@EBean(scope = EBean.Scope.Default)
-open class AuthenticationManager {
+open class AuthenticationManager(private var context: Context) {
 
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".AuthenticationSvc"
         var isDownloading = false
     }
 
-    @Pref
-    protected lateinit var prefs: SmartBirdsPrefs_
+    protected var prefs: SmartBirdsPrefs_ = SmartBirdsPrefs_(context)
+    protected var backend: Backend = Backend_.getInstance_(context)
+    protected var bus: EEventBus = EEventBus_.getInstance_(context)
+    protected var scope = SBScope()
 
-    @Bean
-    protected lateinit var backend: Backend
-
-    private val authenticationInterceptor: AuthenticationInterceptor =
-        AuthenticationInterceptor.getInstance()
-
-    @Bean
-    protected lateinit var bus: EEventBus
-
-    @RootContext
-    protected lateinit var context: Context
-
-    @Background
     open fun logout() {
-        authenticationInterceptor.clearAuthorization()
-        bus.removeStickyEvent(LoginResultEvent::class.java)
-        bus.postSticky(LogoutEvent())
+        scope.sbLaunch(Dispatchers.IO) {
+            AuthenticationInterceptor.getInstance().clearAuthorization()
+            bus.removeStickyEvent(LoginResultEvent::class.java)
+            bus.postSticky(LogoutEvent())
+        }
     }
 
-    @Background
     open fun login(email: String?, password: String?, gdprConsent: Boolean?) {
-        Log.d(TAG, String.format("login: %s %s", email, password))
-        bus.postSticky(LoginStateEvent(true))
-        try {
-            val result = doLogin(email, password, gdprConsent)
-            Log.d(TAG, String.format("login: %s %s => %s", email, password, result))
-            bus.postSticky(result)
-            bus.postSticky(UserDataEvent(result.user))
-        } finally {
-            bus.postSticky(LoginStateEvent(false))
+        scope.sbLaunch(Dispatchers.IO) {
+            Log.d(TAG, String.format("login: %s %s", email, password))
+            bus.postSticky(LoginStateEvent(true))
+            try {
+                val result = doLogin(email, password, gdprConsent)
+                Log.d(TAG, String.format("login: %s %s => %s", email, password, result))
+                bus.postSticky(result)
+                bus.postSticky(UserDataEvent(result.user))
+            } finally {
+                bus.postSticky(LoginStateEvent(false))
+            }
         }
     }
 
@@ -122,7 +112,8 @@ open class AuthenticationManager {
             }
         }
 
-        authenticationInterceptor.setAuthorization(response.body()!!.token, email, password)
+        AuthenticationInterceptor.getInstance()
+            .setAuthorization(response.body()!!.token, email, password)
 
         SyncService_.intent(context).initialSync().start()
 

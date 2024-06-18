@@ -15,7 +15,6 @@ import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.events.UserDataEvent
 import org.bspb.smartbirds.pro.prefs.UserPrefs_
 import org.bspb.smartbirds.pro.sync.AuthenticationManager
-import org.bspb.smartbirds.pro.sync.AuthenticationManager_
 import org.bspb.smartbirds.pro.tools.Reporting
 import java.io.IOException
 
@@ -43,7 +42,8 @@ class AuthenticationInterceptor private constructor() : Interceptor {
                 INSTANCE!!.prefs = UserPrefs_(context)
                 INSTANCE!!.backend = Backend_.getInstance_(context)
                 INSTANCE!!.bus = EEventBus_.getInstance_(context)
-                INSTANCE!!.authenticationManager = AuthenticationManager_.getInstance_(context)
+                INSTANCE!!.authenticationManager = AuthenticationManager(context)
+                INSTANCE!!.loadAuthorization()
                 INSTANCE
             }
         }
@@ -55,6 +55,10 @@ class AuthenticationInterceptor private constructor() : Interceptor {
     private lateinit var bus: EEventBus
     private lateinit var authenticationManager: AuthenticationManager
     private var authorization: String? = null
+
+    private fun loadAuthorization() {
+        authorization = prefs.authToken().get()
+    }
 
     fun clearAuthorization() {
         authorization = null
@@ -108,13 +112,13 @@ class AuthenticationInterceptor private constructor() : Interceptor {
         var response: Response? = null
 
         while (true) {
-            val auth = authorization!!
+            val auth: String? = authorization
             if (TextUtils.isEmpty(auth)) {
                 Log.d(TAG, "not authorized")
                 return chain.proceed(chain.request())
             }
             val newRequest: Request =
-                chain.request().newBuilder().addHeader("x-sb-csrf-token", auth).build()
+                chain.request().newBuilder().addHeader("x-sb-csrf-token", auth!!).build()
             Log.d(TAG, String.format("Authorization: %s", auth))
             response?.close()
             response = chain.proceed(newRequest)

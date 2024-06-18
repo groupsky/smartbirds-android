@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.service
 
 import android.content.Intent
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.runBlocking
 import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EIntentService
@@ -33,9 +32,6 @@ open class SyncService : AbstractIntentService("SyncService") {
 
     @Pref
     protected lateinit var prefs: UserPrefs_
-
-    @Bean
-    protected lateinit var authenticationManager: AuthenticationManager
 
     @Bean
     protected lateinit var zonesManager: ZonesManager
@@ -82,6 +78,7 @@ open class SyncService : AbstractIntentService("SyncService") {
 
     private suspend fun fetchNewData() {
         updateSyncProgress(R.string.sync_dialog_downloading_user_data)
+        val authenticationManager = AuthenticationManager(this)
         authenticationManager.checkSession();
         updateSyncProgress(R.string.sync_dialog_downloading_nomenclatures)
         nomenclaturesManager.updateNomenclatures()

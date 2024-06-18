@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -63,8 +62,6 @@ public class LoginActivity extends AppCompatActivity {
     EEventBus bus;
     @Pref
     UserPrefs_ prefs;
-    @Bean
-    AuthenticationManager authenticationManager;
 
     private boolean isLoginRunning;
     private boolean missingGdpr = false;
@@ -86,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         bus.removeStickyEvent(LoginResultEvent.class);
         super.onDestroy();
     }
+
 
     @AfterViews
     void initLoginForm() {
@@ -177,7 +175,8 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            authenticationManager.login(email, password, gdprConsent);
+            AuthenticationManager authManager = new AuthenticationManager(this);
+            authManager.login(email, password, gdprConsent);
         }
     }
 
