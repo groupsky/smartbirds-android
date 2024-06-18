@@ -11,11 +11,11 @@ import org.bspb.smartbirds.pro.backend.AddLanguageInterceptor;
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.ReceivedCookiesInterceptor;
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.db.SmartBirdsDatabase;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.utils.MonitoringManager;
@@ -36,8 +36,8 @@ public class SmartBirdsApplication extends Application {
     @Bean
     EEventBus bus;
 
-    @Bean
     AuthenticationInterceptor authenticationInterceptor;
+
     @Bean
     Backend backend;
 
@@ -54,10 +54,11 @@ public class SmartBirdsApplication extends Application {
         SmartBirdsDatabase.Companion.init(this);
         NomenclaturesManager.Companion.init(this);
         MonitoringManager.Companion.init(this);
+        AuthenticationInterceptor.Companion.init(this);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));
-        backend.addInterceptor(authenticationInterceptor);
+        backend.addInterceptor(AuthenticationInterceptor.Companion.getInstance());
         backend.addInterceptor(new AddLanguageInterceptor());
 
         bus.register(this);

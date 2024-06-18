@@ -15,7 +15,10 @@ import org.bspb.smartbirds.pro.backend.LoginResultEvent
 import org.bspb.smartbirds.pro.backend.dto.CheckSessionRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse
-import org.bspb.smartbirds.pro.events.*
+import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.events.LoginStateEvent
+import org.bspb.smartbirds.pro.events.LogoutEvent
+import org.bspb.smartbirds.pro.events.UserDataEvent
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.tools.Reporting
@@ -37,8 +40,8 @@ open class AuthenticationManager {
     @Bean
     protected lateinit var backend: Backend
 
-    @Bean
-    protected lateinit var authenticationInterceptor: AuthenticationInterceptor
+    private val authenticationInterceptor: AuthenticationInterceptor =
+        AuthenticationInterceptor.getInstance()
 
     @Bean
     protected lateinit var bus: EEventBus
@@ -67,7 +70,11 @@ open class AuthenticationManager {
         }
     }
 
-    private fun doLogin(email: String?, password: String?, gdprConsent: Boolean?): LoginResultEvent {
+    private fun doLogin(
+        email: String?,
+        password: String?,
+        gdprConsent: Boolean?
+    ): LoginResultEvent {
         val response = try {
             backend.api().login(LoginRequest(email, password, gdprConsent)).execute()
         } catch (e: IOException) {
@@ -87,21 +94,30 @@ open class AuthenticationManager {
             } catch (e: IOException) {
                 Reporting.logException(e)
             }
-            val loginResponse = SBGsonParser.createParser().fromJson(errorResponse, LoginResponse::class.java)
+            val loginResponse =
+                SBGsonParser.createParser().fromJson(errorResponse, LoginResponse::class.java)
             var errorMessage: String? = null
             if (loginResponse != null) {
                 errorMessage = loginResponse.error
             }
             return when (response.code()) {
-                Backend.HTTP_STATUS_BAD_REQUEST -> LoginResultEvent(LoginResultEvent.Status.ERROR, errorMessage)
+                Backend.HTTP_STATUS_BAD_REQUEST -> LoginResultEvent(
+                    LoginResultEvent.Status.ERROR,
+                    errorMessage
+                )
+
                 Backend.HTTP_STATUS_UNAUTHORIZED -> {
                     if (loginResponse != null && loginResponse.token == null) {
                         if (LoginResponse.REQUIRE_GDPR == loginResponse.require) {
-                            return LoginResultEvent(LoginResultEvent.Status.MISSING_GDPR, loginResponse.error)
+                            return LoginResultEvent(
+                                LoginResultEvent.Status.MISSING_GDPR,
+                                loginResponse.error
+                            )
                         }
                     }
                     LoginResultEvent(LoginResultEvent.Status.BAD_PASSWORD)
                 }
+
                 else -> LoginResultEvent(LoginResultEvent.Status.CONNECTIVITY)
             }
         }
