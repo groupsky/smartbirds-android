@@ -14,7 +14,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.EditorAction;
@@ -58,8 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Backend backend = Backend.Companion.getInstance();
 
-    @Bean
-    EEventBus bus;
+    EEventBus bus = EEventBus.getInstance();
     @Pref
     UserPrefs_ prefs;
 

@@ -40,7 +40,6 @@ import com.google.android.gms.maps.model.UrlTileProvider;
 import com.google.maps.android.SphericalUtil;
 
 import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
@@ -93,8 +92,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     private double zoomFactor;
     private LatLng lastPosition;
 
-    @Bean
-    EEventBus eventBus;
+    EEventBus eventBus = EEventBus.getInstance();
     private final Map<Long, MarkerHolder> markers = new HashMap<>();
     private ArrayList<LatLng> points;
     private Polyline path;

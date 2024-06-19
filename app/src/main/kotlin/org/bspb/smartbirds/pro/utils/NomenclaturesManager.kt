@@ -17,7 +17,7 @@ import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.db.model.NomenclatureModel
 import org.bspb.smartbirds.pro.db.model.NomenclatureUsesCount
-import org.bspb.smartbirds.pro.events.EEventBus_
+import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent
 import org.bspb.smartbirds.pro.tools.AlphanumComparator
 import org.bspb.smartbirds.pro.tools.Reporting
@@ -95,7 +95,7 @@ class NomenclaturesManager private constructor(val context: Context) {
             }
 
             loading = false
-            EEventBus_.getInstance_(context).postSticky(NomenclaturesReadyEvent())
+            EEventBus.getInstance().postSticky(NomenclaturesReadyEvent())
         }
     }
 

@@ -3,7 +3,6 @@ package org.bspb.smartbirds.pro.ui.fragment;
 import androidx.fragment.app.Fragment;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
@@ -20,8 +19,7 @@ public class OsmMapFragment extends Fragment {
     @ViewById(R.id.mapview)
     MapView mapView;
 
-    @Bean
-    EEventBus eventBus;
+    EEventBus eventBus = EEventBus.getInstance();
 
     public MapView getMapView() {
         return mapView;

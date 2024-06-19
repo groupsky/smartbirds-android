@@ -12,7 +12,6 @@ import org.bspb.smartbirds.pro.backend.dto.CheckSessionRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest
 import org.bspb.smartbirds.pro.backend.dto.LoginResponse
 import org.bspb.smartbirds.pro.events.EEventBus
-import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.events.LoginStateEvent
 import org.bspb.smartbirds.pro.events.LogoutEvent
 import org.bspb.smartbirds.pro.events.UserDataEvent
@@ -33,7 +32,7 @@ open class AuthenticationManager(private var context: Context) {
 
     protected var prefs: SmartBirdsPrefs_ = SmartBirdsPrefs_(context)
     protected val backend: Backend by lazy { Backend.getInstance() }
-    protected var bus: EEventBus = EEventBus_.getInstance_(context)
+    protected val bus: EEventBus by lazy { EEventBus.getInstance() }
     protected var scope = SBScope()
 
     open fun logout() {

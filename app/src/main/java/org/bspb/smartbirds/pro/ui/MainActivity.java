@@ -6,7 +6,6 @@ import android.view.Window;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.WindowFeature;
 import org.androidannotations.annotations.sharedpreferences.Pref;
@@ -27,8 +26,7 @@ import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
 
-    @Bean
-    EEventBus bus;
+    EEventBus bus = EEventBus.getInstance();
 
     @Pref
     UserPrefs_ prefs;

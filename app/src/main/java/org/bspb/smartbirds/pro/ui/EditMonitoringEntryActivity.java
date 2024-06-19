@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentById;
@@ -32,8 +31,8 @@ public class EditMonitoringEntryActivity extends BaseActivity {
     EntryType entryType;
     @FragmentById(R.id.container)
     Fragment fragment;
-    @Bean
-    EEventBus eventBus;
+
+    EEventBus eventBus = EEventBus.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

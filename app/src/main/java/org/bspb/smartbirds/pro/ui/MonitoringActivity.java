@@ -117,8 +117,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     MenuItem menuNewEntry;
     @OptionsMenuItem(R.id.action_undo_last_entry)
     MenuItem menuUndoEntry;
-    @Bean
-    EEventBus eventBus;
+
+    EEventBus eventBus = EEventBus.getInstance();
 
     @NonNull
     ArrayList<LatLng> points = new ArrayList<LatLng>();

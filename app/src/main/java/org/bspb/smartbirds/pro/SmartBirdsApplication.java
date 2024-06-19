@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EApplication;
 import org.bspb.smartbirds.pro.backend.AddCookiesInterceptor;
 import org.bspb.smartbirds.pro.backend.AddLanguageInterceptor;
@@ -33,8 +32,7 @@ public class SmartBirdsApplication extends Application {
 
     public static final String PREFS_MONITORING_POINTS = "points";
 
-    @Bean
-    EEventBus bus;
+    EEventBus bus = EEventBus.getInstance();
 
     AuthenticationInterceptor authenticationInterceptor;
 

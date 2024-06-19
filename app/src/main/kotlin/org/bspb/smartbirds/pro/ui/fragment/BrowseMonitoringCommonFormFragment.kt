@@ -3,7 +3,6 @@ package org.bspb.smartbirds.pro.ui.fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.FragmentArg
 import org.bspb.smartbirds.pro.R
@@ -23,8 +22,7 @@ open class BrowseMonitoringCommonFormFragment : BaseCommonFormFragment() {
 
     private val monitoringManager = MonitoringManager.getInstance()
 
-    @Bean
-    protected lateinit var bus: EEventBus
+    protected val bus: EEventBus by lazy { EEventBus.getInstance() }
 
     @FragmentArg
     protected lateinit var monitoringCode: String

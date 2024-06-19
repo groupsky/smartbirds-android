@@ -28,7 +28,6 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.androidannotations.annotations.*
@@ -81,8 +80,7 @@ open class MainFragment : Fragment() {
 
     private val monitoringManager = MonitoringManager.getInstance()
 
-    @Bean
-    protected lateinit var bus: EEventBus
+    protected val bus: EEventBus by lazy { EEventBus.getInstance() }
 
     private var lastMonitoring: Monitoring? = null
     private var menuBrowseLastMonitorig: MenuItem? = null

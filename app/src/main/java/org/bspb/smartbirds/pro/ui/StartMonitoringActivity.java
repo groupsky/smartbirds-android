@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.activity.OnBackPressedCallback;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
@@ -26,8 +25,7 @@ public class StartMonitoringActivity extends BaseActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
 
-    @Bean
-    EEventBus bus;
+    EEventBus bus = EEventBus.getInstance();
     CurrentMonitoringCommonFormFragment formFragment;
 
     @Override

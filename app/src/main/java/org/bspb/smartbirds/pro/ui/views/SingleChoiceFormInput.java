@@ -32,7 +32,6 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewTreeLifecycleOwner;
 
 import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
@@ -40,7 +39,6 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.NomenclaturesReadyEvent;
 import org.bspb.smartbirds.pro.tools.AlphanumComparator;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
 
 import java.util.ArrayList;
@@ -57,8 +55,7 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
 
     NomenclaturesManager nomenclatures = NomenclaturesManager.Companion.getInstance();
 
-    @Bean
-    EEventBus bus;
+    EEventBus bus = EEventBus.getInstance();
 
     private SmartArrayAdapter<NomenclatureItem> mAdapter;
     /**

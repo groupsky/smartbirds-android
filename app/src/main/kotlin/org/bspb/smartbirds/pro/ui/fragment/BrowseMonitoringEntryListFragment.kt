@@ -17,7 +17,6 @@ import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity_
 import org.bspb.smartbirds.pro.ui.MonitoringReportActivity
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.MonitoringUtils
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.*
 
@@ -34,8 +33,7 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     @Pref
     protected lateinit var globalPrefs: SmartBirdsPrefs_
 
-    @Bean
-    protected lateinit var bus: EEventBus
+    protected val bus: EEventBus by lazy { EEventBus.getInstance() }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)

@@ -11,7 +11,6 @@ import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest
 import org.bspb.smartbirds.pro.events.EEventBus
-import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.events.UserDataEvent
 import org.bspb.smartbirds.pro.prefs.UserPrefs_
 import org.bspb.smartbirds.pro.sync.AuthenticationManager
@@ -40,7 +39,6 @@ class AuthenticationInterceptor private constructor() : Interceptor {
                 INSTANCE = AuthenticationInterceptor()
                 INSTANCE!!.context = context
                 INSTANCE!!.prefs = UserPrefs_(context)
-                INSTANCE!!.bus = EEventBus_.getInstance_(context)
                 INSTANCE!!.authenticationManager = AuthenticationManager(context)
                 INSTANCE!!.loadAuthorization()
                 INSTANCE
@@ -51,7 +49,7 @@ class AuthenticationInterceptor private constructor() : Interceptor {
     private lateinit var context: Context
     private lateinit var prefs: UserPrefs_
     private val backend: Backend by lazy { Backend.getInstance() }
-    private lateinit var bus: EEventBus
+    private val bus: EEventBus by lazy { EEventBus.getInstance() }
     private lateinit var authenticationManager: AuthenticationManager
     private var authorization: String? = null
 

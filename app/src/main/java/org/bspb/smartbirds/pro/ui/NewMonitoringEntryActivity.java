@@ -14,7 +14,6 @@ import android.util.Log;
 import androidx.activity.OnBackPressedCallback;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
@@ -47,8 +46,7 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
     @Extra(EXTRA_TYPE)
     EntryType entryType;
 
-    @Bean
-    EEventBus eventBus;
+    EEventBus eventBus = EEventBus.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +58,7 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
         } catch (Throwable t) {
             logException(t);
         }
-        
+
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

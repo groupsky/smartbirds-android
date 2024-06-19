@@ -7,7 +7,6 @@ import androidx.core.content.FileProvider
 import com.googlecode.jcsv.CSVStrategy
 import com.googlecode.jcsv.writer.internal.CSVWriterBuilder
 import kotlinx.coroutines.runBlocking
-import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EIntentService
 import org.androidannotations.annotations.ServiceAction
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -35,11 +34,11 @@ open class ExportService : IntentService("Export Service") {
         private const val BUFFER = 2048
     }
 
-    @Bean
-    protected lateinit var eventBus: EEventBus
+    protected val eventBus: EEventBus by lazy { EEventBus.getInstance() }
 
-    val monitoringManager = MonitoringManager.getInstance()
+    private val monitoringManager = MonitoringManager.getInstance()
 
+    @Deprecated("Deprecated in Java")
     override fun onHandleIntent(intent: Intent?) {
     }
 
@@ -80,7 +79,11 @@ open class ExportService : IntentService("Export Service") {
                 eventBus.post(ExportFailedEvent())
                 return@runBlocking
             }
-            val uri = FileProvider.getUriForFile(applicationContext, SmartBirdsApplication.FILES_AUTHORITY, exportFile)
+            val uri = FileProvider.getUriForFile(
+                applicationContext,
+                SmartBirdsApplication.FILES_AUTHORITY,
+                exportFile
+            )
             eventBus.post(ExportPreparedEvent(uri))
         }
     }

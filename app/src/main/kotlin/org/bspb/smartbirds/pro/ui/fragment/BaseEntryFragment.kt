@@ -11,7 +11,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import de.greenrobot.event.EventBusException
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.AfterInject
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Click
+import org.androidannotations.annotations.EFragment
+import org.androidannotations.annotations.FragmentArg
+import org.androidannotations.annotations.InstanceState
+import org.androidannotations.annotations.OptionsItem
+import org.androidannotations.annotations.OptionsMenu
+import org.androidannotations.annotations.OptionsMenuItem
+import org.androidannotations.annotations.ViewById
 import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -25,7 +34,7 @@ import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.viewmodel.BaseEntryViewModel
 import java.text.ParseException
-import java.util.*
+import java.util.Date
 
 @EFragment
 @OptionsMenu(R.menu.debug_menu, R.menu.form_entry)
@@ -59,8 +68,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
     @FragmentArg
     protected var entryId: Long = 0
 
-    @Bean
-    protected lateinit var eventBus: EEventBus
+    protected val eventBus: EEventBus by lazy { EEventBus.getInstance() }
 
     @OptionsMenuItem(R.id.action_crash)
     protected lateinit var menuCrash: MenuItem

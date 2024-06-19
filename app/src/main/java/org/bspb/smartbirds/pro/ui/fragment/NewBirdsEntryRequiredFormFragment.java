@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -72,8 +71,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Pref
     CommonPrefs_ commonPrefs;
 
-    @Bean
-    EEventBus eventBus;
+    EEventBus eventBus = EEventBus.getInstance();
 
     @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;

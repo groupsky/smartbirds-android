@@ -21,7 +21,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
 import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
@@ -31,7 +30,6 @@ import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.MapLayerItem;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.events.EEventBus;
-import org.bspb.smartbirds.pro.events.EEventBus_;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
@@ -82,8 +80,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private double zoomFactor;
     private LatLng lastPosition;
 
-    @Bean
-    EEventBus eventBus;
+    EEventBus eventBus = EEventBus.getInstance();
     private final Set<MarkerHolder> markers = new HashSet<>();
     private ArrayList<LatLng> points;
     private Polyline pathOverlay;
@@ -665,11 +662,10 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     private static class LocationRetrievalOverlay extends MyLocationNewOverlay {
 
         @Nullable
-        private EEventBus bus;
+        private EEventBus bus = EEventBus.getInstance();
 
         public LocationRetrievalOverlay(MapView mapView) {
             super(mapView);
-            bus = EEventBus_.getInstance_(mapView.getContext());
         }
 
         @Override

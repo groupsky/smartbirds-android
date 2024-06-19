@@ -2,7 +2,6 @@ package org.bspb.smartbirds.pro.ui.fragment
 
 import android.app.Activity
 import android.content.ClipData
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -23,17 +22,29 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.AfterInject
+import org.androidannotations.annotations.Click
+import org.androidannotations.annotations.EFragment
+import org.androidannotations.annotations.InstanceState
+import org.androidannotations.annotations.OnActivityResult
+import org.androidannotations.annotations.OptionsItem
+import org.androidannotations.annotations.OptionsMenu
+import org.androidannotations.annotations.OptionsMenuItem
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
-import org.bspb.smartbirds.pro.events.*
+import org.bspb.smartbirds.pro.events.CreateImageFile
+import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.events.GetImageFile
+import org.bspb.smartbirds.pro.events.ImageFileCreated
+import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed
+import org.bspb.smartbirds.pro.events.ImageFileEvent
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.FileUtils
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -58,8 +69,7 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
     }
 
 
-    @Bean
-    protected lateinit var eventBus: EEventBus
+    protected val eventBus: EEventBus by lazy { EEventBus.getInstance() }
 
     @OptionsMenuItem(R.id.take_picture)
     protected lateinit var takePicture: MenuItem
@@ -76,19 +86,20 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
     @InstanceState
     var picturesCount = 0
 
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri ?: return@registerForActivityResult
+    private val pickImage =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri ?: return@registerForActivityResult
 
-        currentImage?.path?.apply {
-            val file = File(this)
-            FileUtils.copyUriContentToFile(requireContext(), uri, file)
+            currentImage?.path?.apply {
+                val file = File(this)
+                FileUtils.copyUriContentToFile(requireContext(), uri, file)
+            }
+
+            images[picturesCount] = currentImage
+            displayPicture(currentImage, pictures[picturesCount])
+            picturesCount++
+            updateTakePicture()
         }
-
-        images[picturesCount] = currentImage
-        displayPicture(currentImage, pictures[picturesCount])
-        picturesCount++
-        updateTakePicture()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,13 +109,6 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
     @AfterInject
     protected open fun registerBus() {
         eventBus.register(this)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (this::eventBus.isInitialized) {
-            registerBus()
-        }
     }
 
     override fun onStart() {
@@ -184,6 +188,7 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
                         eventBus.post(CreateImageFile(monitoringCode, "take_picture"))
                     }
                 }
+
                 1 -> {
                     eventBus.post(CreateImageFile(monitoringCode, "pick_image"))
                 }
@@ -325,7 +330,8 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
             File(images[idx]!!.path!!)
         )
         val intent =
-            Intent(INTENT_VIEW_PICTURE).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).setDataAndType(uri, "image/jpg")
+            Intent(INTENT_VIEW_PICTURE).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .setDataAndType(uri, "image/jpg")
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(intent)
         }
