@@ -39,9 +39,6 @@ import com.google.android.gms.maps.model.TileProvider;
 import com.google.android.gms.maps.model.UrlTileProvider;
 import com.google.maps.android.SphericalUtil;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
@@ -54,6 +51,7 @@ import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapDetachedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
+import org.bspb.smartbirds.pro.tools.AppExecutors;
 import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.utils.Constants;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
@@ -81,7 +79,6 @@ import java.util.Objects;
 /**
  * Created by dani on 14-11-6.
  */
-@EBean
 public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".GMap";
@@ -589,37 +586,39 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
         }
     }
 
-    @Background
     void drawArea() {
-        if (fragment == null || fragment.getContext() == null) {
-            return;
-        }
-
-        KmlDocument kml = new KmlDocument();
-        File file = new File(fragment.getContext().getExternalFilesDir(null), Constants.AREA_FILE_NAME);
-        if (!file.exists()) {
-            return;
-        }
-
-        try {
-            kml.parseKMLFile(file);
-            if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
-                displayArea(kml);
+        AppExecutors.background().execute(() -> {
+            if (fragment == null || fragment.getContext() == null) {
+                return;
             }
 
-        } catch (Throwable t) {
-            Reporting.logException(t);
-        }
+            KmlDocument kml = new KmlDocument();
+            File file = new File(fragment.getContext().getExternalFilesDir(null), Constants.AREA_FILE_NAME);
+            if (!file.exists()) {
+                return;
+            }
+
+            try {
+                kml.parseKMLFile(file);
+                if (kml.mKmlRoot != null && kml.mKmlRoot.mItems != null && !kml.mKmlRoot.mItems.isEmpty()) {
+                    displayArea(kml);
+                }
+
+            } catch (Throwable t) {
+                Reporting.logException(t);
+            }
+        });
     }
 
 
-    @UiThread
     void displayArea(KmlDocument kml) {
-        // sometimes map is null
-        if (mMap == null) {
-            return;
-        }
-        displayItem(kml, kml.mKmlRoot);
+        AppExecutors.mainThread().execute(() -> {
+            // sometimes map is null
+            if (mMap == null) {
+                return;
+            }
+            displayItem(kml, kml.mKmlRoot);
+        });
     }
 
     void displayItem(KmlDocument kml, KmlFeature item) {

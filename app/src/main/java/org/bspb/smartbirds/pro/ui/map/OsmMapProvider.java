@@ -20,9 +20,6 @@ import androidx.lifecycle.LifecycleOwner;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.UiThread;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.BGAtlasCell;
@@ -34,6 +31,7 @@ import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.events.MapAttachedEvent;
 import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
+import org.bspb.smartbirds.pro.tools.AppExecutors;
 import org.bspb.smartbirds.pro.tools.Reporting;
 import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
@@ -69,7 +67,6 @@ import java.util.Set;
 /**
  * Created by dani on 14-11-6.
  */
-@EBean
 public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".OsmMap";
@@ -172,26 +169,27 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
         updateCamera();
     }
 
-    @Background
     void loadKmlFile() {
-        KmlDocument kml = new KmlDocument();
-        File file = new File(AREA_FILE_PATH);
-        if (file.exists()) {
-            try {
-                if (kml.parseKMLFile(file)) {
-                    FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, new OsmKmlStyler(), kml);
-                    displayKml(kmlOverlay);
+        AppExecutors.background().execute(() -> {
+            KmlDocument kml = new KmlDocument();
+            File file = new File(AREA_FILE_PATH);
+            if (file.exists()) {
+                try {
+                    if (kml.parseKMLFile(file)) {
+                        FolderOverlay kmlOverlay = (FolderOverlay) kml.mKmlRoot.buildOverlay(mMap, null, new OsmKmlStyler(), kml);
+                        displayKml(kmlOverlay);
+                    }
+                } catch (Throwable t) {
+                    Reporting.logException(t);
                 }
-            } catch (Throwable t) {
-                Reporting.logException(t);
             }
-        }
-
+        });
     }
 
-    @UiThread
     void displayKml(Overlay kmlOverlay) {
-        mMap.getOverlayManager().add(kmlOverlay);
+        AppExecutors.mainThread().execute(() -> {
+            mMap.getOverlayManager().add(kmlOverlay);
+        });
     }
 
     @Override

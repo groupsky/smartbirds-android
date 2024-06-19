@@ -33,7 +33,6 @@ import com.google.gson.reflect.TypeToken;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
@@ -106,10 +105,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     @NonNull
     MapProvider.MapType mapType = MapProvider.MapType.NORMAL;
 
-    @Bean(GoogleMapProvider.class)
-    MapProvider googleMap;
-    @Bean(OsmMapProvider.class)
-    MapProvider osmMap;
+    MapProvider googleMap = new GoogleMapProvider();
+    MapProvider osmMap = new OsmMapProvider();
 
     MapProvider currentMap;
 
