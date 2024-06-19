@@ -36,9 +36,6 @@ open class SyncService : AbstractIntentService("SyncService") {
     @Bean
     protected lateinit var uploadManager: UploadManager
 
-    @Bean
-    protected lateinit var appSettingsManager: AppSettingsManager
-
     private val nomenclaturesManager = NomenclaturesManager.getInstance()
 
     @ServiceAction
@@ -75,6 +72,7 @@ open class SyncService : AbstractIntentService("SyncService") {
 
     private suspend fun fetchNewData() {
         val zonesManager = ZonesManager(this)
+        val appSettingsManager = AppSettingsManager(this)
 
         updateSyncProgress(R.string.sync_dialog_downloading_user_data)
         val authenticationManager = AuthenticationManager(this)
