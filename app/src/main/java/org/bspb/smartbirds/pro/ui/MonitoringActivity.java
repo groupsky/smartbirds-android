@@ -175,8 +175,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     @ViewById(R.id.list_container)
     View listContainer;
 
-    @Bean
-    EntriesToMapMarkersConverter mapMarkerConverter;
+    EntriesToMapMarkersConverter mapMarkerConverter = EntriesToMapMarkersConverter.Companion.getInstance();
 
     private Set<String> formsEnabled;
     private Menu menu;
