@@ -34,9 +34,6 @@ open class SyncService : AbstractIntentService("SyncService") {
     protected lateinit var prefs: UserPrefs_
 
     @Bean
-    protected lateinit var zonesManager: ZonesManager
-
-    @Bean
     protected lateinit var uploadManager: UploadManager
 
     @Bean
@@ -77,6 +74,8 @@ open class SyncService : AbstractIntentService("SyncService") {
     }
 
     private suspend fun fetchNewData() {
+        val zonesManager = ZonesManager(this)
+
         updateSyncProgress(R.string.sync_dialog_downloading_user_data)
         val authenticationManager = AuthenticationManager(this)
         authenticationManager.checkSession();
