@@ -2,7 +2,6 @@ package org.bspb.smartbirds.pro.service
 
 import android.content.Intent
 import kotlinx.coroutines.runBlocking
-import org.androidannotations.annotations.Bean
 import org.androidannotations.annotations.EIntentService
 import org.androidannotations.annotations.ServiceAction
 import org.androidannotations.annotations.sharedpreferences.Pref
@@ -33,8 +32,7 @@ open class SyncService : AbstractIntentService("SyncService") {
     @Pref
     protected lateinit var prefs: UserPrefs_
 
-    @Bean
-    protected lateinit var uploadManager: UploadManager
+    private val uploadManager: UploadManager by lazy { UploadManager(this) }
 
     private val nomenclaturesManager = NomenclaturesManager.getInstance()
 

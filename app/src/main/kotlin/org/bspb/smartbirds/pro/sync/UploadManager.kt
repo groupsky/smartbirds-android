@@ -9,8 +9,6 @@ import com.google.gson.JsonObject
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
 import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -26,16 +24,12 @@ import java.io.File
 import java.io.IOException
 import java.util.regex.Pattern
 
-@EBean(scope = EBean.Scope.Default)
-open class UploadManager {
+open class UploadManager(private val context: Context) {
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".UploadService"
         var isUploading = false
         var errors: ArrayList<String> = arrayListOf()
     }
-
-    @RootContext
-    protected lateinit var context: Context
 
     protected val backend: Backend by lazy { Backend.getInstance() }
 
