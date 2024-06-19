@@ -7,13 +7,24 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import org.bspb.smartbirds.pro.db.dao.*
-import org.bspb.smartbirds.pro.db.model.*
+import org.bspb.smartbirds.pro.db.dao.FormDao
+import org.bspb.smartbirds.pro.db.dao.MonitoringDao
+import org.bspb.smartbirds.pro.db.dao.NomenclatureDao
+import org.bspb.smartbirds.pro.db.dao.NomenclatureUsesCountDao
+import org.bspb.smartbirds.pro.db.dao.TrackingDao
+import org.bspb.smartbirds.pro.db.dao.ZoneDao
+import org.bspb.smartbirds.pro.db.model.Form
+import org.bspb.smartbirds.pro.db.model.MonitoringModel
+import org.bspb.smartbirds.pro.db.model.NomenclatureModel
+import org.bspb.smartbirds.pro.db.model.NomenclatureUsesCount
+import org.bspb.smartbirds.pro.db.model.Tracking
+import org.bspb.smartbirds.pro.db.model.ZoneModel
 import org.bspb.smartbirds.pro.utils.debugLog
 
 @Database(
     entities = [Form::class, MonitoringModel::class, NomenclatureModel::class, NomenclatureUsesCount::class, Tracking::class, ZoneModel::class],
-    version = 7
+    version = 7,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class SmartBirdsDatabase : RoomDatabase() {
