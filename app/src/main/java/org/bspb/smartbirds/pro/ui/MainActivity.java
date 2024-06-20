@@ -2,13 +2,7 @@ package org.bspb.smartbirds.pro.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.WindowFeature;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -22,21 +16,22 @@ import org.bspb.smartbirds.pro.service.SyncService_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
-@WindowFeature({Window.FEATURE_INDETERMINATE_PROGRESS})
-@EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
 
     EEventBus bus = EEventBus.getInstance();
-
-    @Pref
     UserPrefs_ prefs;
-
-    @Pref
     SmartBirdsPrefs_ globalPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        prefs = new UserPrefs_(this);
+        globalPrefs = new SmartBirdsPrefs_(this);
+
+        createFragment();
+
         requireAuthentication();
         if (!isFinishing()) {
             if (globalPrefs.runningMonitoring().get()) {
@@ -51,7 +46,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @AfterViews
     void createFragment() {
         if (getSupportFragmentManager().findFragmentById(R.id.container) == null)
             getSupportFragmentManager().beginTransaction()
@@ -90,7 +84,6 @@ public class MainActivity extends BaseActivity {
         requireAuthentication();
     }
 
-    @AfterInject
     protected void requireAuthentication() {
         if (!prefs.isAuthenticated().get() && !isFinishing()) {
             startActivity(new Intent(this, LoginActivity.class));

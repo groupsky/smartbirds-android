@@ -231,7 +231,7 @@ public class LoginActivity extends AppCompatActivity {
         switch (loginResult.status) {
             case SUCCESS:
                 bus.postSticky(new UserDataEvent(loginResult.user));
-                MainActivity_.intent(this).start();
+                startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;
             case CONNECTIVITY:

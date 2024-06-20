@@ -1,5 +1,6 @@
 package org.bspb.smartbirds.pro.ui
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -48,10 +49,12 @@ open class SplashScreenActivity : BaseActivity(), Runnable {
         if (prefs!!.runningMonitoring().get()) {
             DataService.intent(this).start()
             TaskStackBuilder.create(this@SplashScreenActivity)
-                    .addNextIntentWithParentStack(MonitoringActivity_.intent(this@SplashScreenActivity).get())
-                    .startActivities()
+                .addNextIntentWithParentStack(
+                    MonitoringActivity_.intent(this@SplashScreenActivity).get()
+                )
+                .startActivities()
         } else {
-            MainActivity_.intent(this@SplashScreenActivity).start()
+            startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
         }
         finish()
     }
