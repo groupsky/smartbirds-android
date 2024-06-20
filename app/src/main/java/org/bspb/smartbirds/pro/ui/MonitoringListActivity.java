@@ -95,6 +95,6 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
 
     @Override
     public void onMonitoringEntrySelected(long id, EntryType entryType) {
-        EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
+        startActivity(EditMonitoringEntryActivity.newIntent(this, id, entryType));
     }
 }

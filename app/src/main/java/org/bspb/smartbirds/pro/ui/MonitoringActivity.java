@@ -868,7 +868,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     @Override
     public void onMonitoringEntrySelected(long id, EntryType entryType) {
-        EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
+        startActivity(EditMonitoringEntryActivity.newIntent(this, id, entryType));
     }
 
     private Iterable<EntryMapMarker> getMarkers() {

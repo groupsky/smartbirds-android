@@ -137,7 +137,7 @@
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
         </activity>
         <activity
-            android:name=".ui.EditMonitoringEntryActivity_"
+            android:name=".ui.EditMonitoringEntryActivity"
             android:label="@string/title_activity_form"
             android:parentActivityName=".ui.MonitoringListActivity_"
             android:windowSoftInputMode="stateHidden"

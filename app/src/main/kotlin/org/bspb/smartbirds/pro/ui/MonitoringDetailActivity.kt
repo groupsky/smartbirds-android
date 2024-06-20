@@ -6,7 +6,11 @@ import android.view.MenuItem
 import androidx.core.app.NavUtils
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.AfterInject
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.EActivity
+import org.androidannotations.annotations.Extra
+import org.androidannotations.annotations.FragmentById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.enums.EntryType
@@ -46,7 +50,9 @@ open class MonitoringDetailActivity : BaseActivity(), MonitoringEntryListFragmen
     @AfterViews
     protected open fun setupFragment() {
         if (fragment == null) {
-            val fragment = BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build()
+            val fragment =
+                BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode)
+                    .build()
             supportFragmentManager.beginTransaction()
                 .add(R.id.monitoring_detail_container, fragment)
                 .commit()
@@ -80,7 +86,7 @@ open class MonitoringDetailActivity : BaseActivity(), MonitoringEntryListFragmen
         if (monitoring != null && Monitoring.Status.uploaded == monitoring!!.status) {
             ViewMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start()
         } else {
-            EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start()
+            startActivity(EditMonitoringEntryActivity.newIntent(this, id, entryType))
         }
     }
 }
