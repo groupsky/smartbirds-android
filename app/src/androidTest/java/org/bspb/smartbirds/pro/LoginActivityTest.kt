@@ -1,6 +1,9 @@
 package org.bspb.smartbirds.pro
 
-import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.bspb.smartbirds.pro.tools.MockResponseHelper.Companion.prepareMapLayersResponse
@@ -11,7 +14,7 @@ import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules
 import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
 import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
-import org.bspb.smartbirds.pro.ui.LoginActivity_
+import org.bspb.smartbirds.pro.ui.LoginActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,8 +25,8 @@ class LoginActivityTest {
 
     @Rule
     @JvmField
-    val activityRule: ActivityScenarioRule<LoginActivity_> =
-        ActivityScenarioRule(LoginActivity_::class.java)
+    val activityRule: ActivityScenarioRule<LoginActivity> =
+        ActivityScenarioRule(LoginActivity::class.java)
 
     @Rule
     @JvmField

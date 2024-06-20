@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,17 +12,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.EditorAction;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.LoginResultEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LoginStateEvent;
@@ -32,37 +27,56 @@ import org.bspb.smartbirds.pro.sync.AuthenticationManager;
 /**
  * A login screen that offers login via email/password.
  */
-@EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".LoginActivity";
 
     // UI references.
-    @ViewById(R.id.email)
     EditText mEmailView;
-    @ViewById(R.id.password)
     EditText mPasswordView;
-    @ViewById(R.id.login_progress)
     View mProgressView;
-    @ViewById(R.id.login_form)
     View mLoginFormView;
-    @ViewById(R.id.gdpr_panel)
     View mGdprPanel;
-    @ViewById(R.id.gdpr_consent)
     CheckBox mGdprConsent;
-    @ViewById(R.id.gdpr_info)
     TextView mGdprInfo;
-    @ViewById(R.id.login_error)
     TextView mError;
 
-    Backend backend = Backend.Companion.getInstance();
-
     EEventBus bus = EEventBus.getInstance();
-    @Pref
     UserPrefs_ prefs;
 
     private boolean isLoginRunning;
     private boolean missingGdpr = false;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        prefs = new UserPrefs_(this);
+        setContentView(R.layout.activity_login);
+        initViews();
+    }
+
+    private void initViews() {
+        mEmailView = findViewById(R.id.email);
+        mPasswordView = findViewById(R.id.password);
+        mProgressView = findViewById(R.id.login_progress);
+        mLoginFormView = findViewById(R.id.login_form);
+        mGdprPanel = findViewById(R.id.gdpr_panel);
+        mGdprConsent = findViewById(R.id.gdpr_consent);
+        mGdprInfo = findViewById(R.id.gdpr_info);
+        mError = findViewById(R.id.login_error);
+
+        findViewById(R.id.register_button).setOnClickListener((view) -> register());
+        findViewById(R.id.gdpr_info).setOnClickListener((view) -> showGdprInfo());
+        findViewById(R.id.email_sign_in_button).setOnClickListener((view) -> attemptLogin());
+        mPasswordView.setOnEditorActionListener((textView, actionId, event) -> {
+            attemptLogin();
+            return true;
+        });
+
+        if (prefs.username().exists()) {
+            mEmailView.setText(prefs.username().get());
+        }
+    }
 
     @Override
     protected void onStart() {
@@ -83,21 +97,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    @AfterViews
-    void initLoginForm() {
-        if (prefs.username().exists()) {
-            mEmailView.setText(prefs.username().get());
-        }
-    }
-
-
-    @Click(R.id.register_button)
     protected void register() {
         String registerUrl = getString(R.string.register_url);
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(registerUrl)));
     }
 
-    @Click(R.id.gdpr_info)
     protected void showGdprInfo() {
         String gdprUrl = getString(R.string.gdpr_info_url);
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(gdprUrl)));
@@ -108,8 +112,6 @@ public class LoginActivity extends AppCompatActivity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    @Click(R.id.email_sign_in_button)
-    @EditorAction(R.id.password)
     protected void attemptLogin() {
         if (isLoginRunning) {
             return;

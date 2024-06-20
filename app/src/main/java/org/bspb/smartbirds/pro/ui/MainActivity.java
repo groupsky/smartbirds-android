@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity {
     @AfterInject
     protected void requireAuthentication() {
         if (!prefs.isAuthenticated().get() && !isFinishing()) {
-            startActivity(new Intent(this, LoginActivity_.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
     }
