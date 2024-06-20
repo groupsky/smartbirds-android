@@ -119,7 +119,7 @@
             android:label="@string/title_activity_login" />
 
         <activity
-            android:name=".ui.MonitoringListActivity_"
+            android:name=".ui.MonitoringListActivity"
             android:label="@string/title_monitoring_list"
             android:parentActivityName=".ui.MainActivity"
             tools:ignore="UnusedAttribute">
@@ -130,21 +130,21 @@
         <activity
             android:name=".ui.MonitoringDetailActivity_"
             android:label="@string/title_monitoring_detail"
-            android:parentActivityName=".ui.MonitoringListActivity_"
+            android:parentActivityName=".ui.MonitoringListActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity" />
         </activity>
         <activity
             android:name=".ui.EditMonitoringEntryActivity"
             android:label="@string/title_activity_form"
-            android:parentActivityName=".ui.MonitoringListActivity_"
+            android:parentActivityName=".ui.MonitoringListActivity"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity" />
         </activity>
 
         <activity
@@ -176,12 +176,12 @@
         <activity
             android:name=".ui.ViewMonitoringEntryActivity_"
             android:label="@string/title_activity_form"
-            android:parentActivityName=".ui.MonitoringListActivity_"
+            android:parentActivityName=".ui.MonitoringListActivity"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity_" />
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringListActivity" />
         </activity>
         <activity
             android:name=".ui.SettingsActivity"

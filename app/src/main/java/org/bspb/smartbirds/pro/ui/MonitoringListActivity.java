@@ -6,9 +6,6 @@ import android.view.MenuItem;
 
 import androidx.core.app.NavUtils;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.FragmentById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment;
@@ -25,7 +22,6 @@ import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-@EActivity(R.layout.activity_monitoring_list)
 public class MonitoringListActivity extends BaseActivity implements MonitoringListFragment.Listener, MonitoringEntryListFragment.Listener {
 
     /**
@@ -34,12 +30,16 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
      */
     private boolean mTwoPane;
 
-    @FragmentById(R.id.monitoring_list_container)
     MonitoringListFragment listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_monitoring_list);
+
+        detectScreen();
+        setupListFragment();
+
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
@@ -47,7 +47,6 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
         }
     }
 
-    @AfterViews
     protected void detectScreen() {
         if (findViewById(R.id.monitoring_detail_container) != null) {
             // The detail container view will be present only in the
@@ -58,8 +57,8 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
         }
     }
 
-    @AfterViews
     protected void setupListFragment() {
+        listFragment = (MonitoringListFragment) getSupportFragmentManager().findFragmentById(R.id.monitoring_list_container);
         if (listFragment == null) {
             listFragment = MonitoringListFragment_.builder().build();
             getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_list_container, listFragment).commit();

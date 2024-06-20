@@ -16,7 +16,11 @@ import android.os.PowerManager
 import android.text.Html
 import android.text.Html.ImageGetter
 import android.text.TextUtils
-import android.view.*
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -30,21 +34,42 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.AfterViews
+import org.androidannotations.annotations.Click
+import org.androidannotations.annotations.EFragment
+import org.androidannotations.annotations.OptionsItem
+import org.androidannotations.annotations.OptionsMenu
+import org.androidannotations.annotations.UiThread
+import org.androidannotations.annotations.ViewById
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.events.*
+import org.bspb.smartbirds.pro.events.CancelMonitoringEvent
+import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.events.ExportFailedEvent
+import org.bspb.smartbirds.pro.events.ExportPreparedEvent
+import org.bspb.smartbirds.pro.events.MonitoringCanceledEvent
+import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
+import org.bspb.smartbirds.pro.events.MonitoringPausedEvent
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent
+import org.bspb.smartbirds.pro.events.StartMonitoringEvent
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.service.*
+import org.bspb.smartbirds.pro.service.DataService
+import org.bspb.smartbirds.pro.service.ExportService_
+import org.bspb.smartbirds.pro.service.SyncService
+import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
-import org.bspb.smartbirds.pro.ui.*
+import org.bspb.smartbirds.pro.ui.DownloadsActivity
+import org.bspb.smartbirds.pro.ui.MonitoringListActivity
+import org.bspb.smartbirds.pro.ui.MonitoringReportActivity
+import org.bspb.smartbirds.pro.ui.SettingsActivity
+import org.bspb.smartbirds.pro.ui.StatsActivity_
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
-import java.util.*
+import java.util.Date
 
 @EFragment(R.layout.fragment_main)
 @OptionsMenu(R.menu.menu_main)
@@ -234,7 +259,7 @@ open class MainFragment : Fragment() {
 
     @OptionsItem(R.id.menu_browse)
     open fun browseBtnClicked() {
-        MonitoringListActivity_.intent(this).start()
+        startActivity(Intent(activity, MonitoringListActivity::class.java))
     }
 
     @OptionsItem(R.id.menu_report_last)
