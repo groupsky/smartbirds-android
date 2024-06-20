@@ -1,14 +1,12 @@
 package org.bspb.smartbirds.pro.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.OptionsMenuItem;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.service.DataService;
@@ -18,17 +16,63 @@ import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment_;
 /**
  * Created by groupsky on 14-10-21.
  */
-@EActivity(R.layout.activity_start_monitoring)
-@OptionsMenu(R.menu.monitoring_edit_common_form)
 public class EditCurrentCommonFormActivity extends BaseActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
-    CurrentMonitoringCommonFormFragment formFragment;
+    public static final String EXTRA_IS_FINISHING = "isFinishing";
 
-    @Extra
+    CurrentMonitoringCommonFormFragment formFragment;
     boolean isFinishing = false;
 
-    @OptionsMenuItem(R.id.action_submit)
+    public static Intent intent(Context context) {
+        return intent(context, false);
+    }
+
+    public static Intent intent(Context context, boolean isFinishing) {
+        Intent intent = new Intent(context, EditCurrentCommonFormActivity.class);
+        intent.putExtra(EXTRA_IS_FINISHING, isFinishing);
+        return intent;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            isFinishing = extras.getBoolean(EXTRA_IS_FINISHING, false);
+        }
+
+        DataService.Companion.intent(this).start();
+        setContentView(R.layout.activity_start_monitoring);
+        createFragment();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.monitoring_edit_common_form, menu);
+        {
+            MenuItem menuSubmit = menu.findItem(R.id.action_submit);
+            setMenuSubmit(menuSubmit);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_submit) {
+            save();
+            return true;
+        }
+        if (itemId == android.R.id.home) {
+            cancel();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     void setMenuSubmit(MenuItem menuSubmit) {
         if (isFinishing) {
             menuSubmit.setTitle(R.string.menu_monitoring_finish);
@@ -37,13 +81,6 @@ public class EditCurrentCommonFormActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        DataService.Companion.intent(this).start();
-    }
-
-    @AfterViews
     void createFragment() {
         formFragment = (CurrentMonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
@@ -60,7 +97,6 @@ public class EditCurrentCommonFormActivity extends BaseActivity {
         }
     }
 
-    @OptionsItem(R.id.action_submit)
     void save() {
         if (formFragment.validate()) {
             formFragment.save();
@@ -69,7 +105,6 @@ public class EditCurrentCommonFormActivity extends BaseActivity {
         }
     }
 
-    @OptionsItem(android.R.id.home)
     void cancel() {
         setResult(RESULT_CANCELED);
         finish();

@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -178,6 +180,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     private Menu menu;
     private MonitoringViewModel viewModel;
     private List<MonitoringEntry> monitoringEntries = new ArrayList<>();
+
+    private final ActivityResultLauncher<Intent> editCurrentCommonFormActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        onFinishConfirm(result.getResultCode(), result.getData());
+    });
 
     private ServiceConnection trackingServiceConnection = new ServiceConnection() {
         @Override
@@ -442,7 +448,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     @OptionsItem(R.id.action_common_form)
     void onCommonForm() {
-        EditCurrentCommonFormActivity_.intent(this).start();
+        startActivity(EditCurrentCommonFormActivity.intent(this));
     }
 
     @OptionsItem(R.id.menu_settings)
@@ -459,7 +465,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         }
     }
 
-    @OnActivityResult(REQUEST_FINISH_MONITORING)
     void onFinishConfirm(int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
             return;
@@ -471,7 +476,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     @OptionsItem(R.id.action_finish)
     void onFinish() {
-        EditCurrentCommonFormActivity_.intent(this).isFinishing(true).startForResult(REQUEST_FINISH_MONITORING);
+        editCurrentCommonFormActivityLauncher.launch(EditCurrentCommonFormActivity.intent(this, true));
     }
 
     @OptionsItem(android.R.id.home)
