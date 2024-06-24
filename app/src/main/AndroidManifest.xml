@@ -94,7 +94,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.NewMonitoringEntryActivity_"
+            android:name=".ui.NewMonitoringEntryActivity"
             android:label="@string/title_activity_form"
             android:parentActivityName=".ui.MonitoringActivity"
             android:windowSoftInputMode="stateHidden"

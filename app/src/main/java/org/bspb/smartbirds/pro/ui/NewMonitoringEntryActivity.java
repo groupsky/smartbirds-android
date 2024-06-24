@@ -4,19 +4,18 @@ import static org.bspb.smartbirds.pro.tools.Reporting.logException;
 
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OptionsItem;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.enums.EntryType;
@@ -27,7 +26,6 @@ import org.bspb.smartbirds.pro.service.TrackingService;
 
 import java.util.Locale;
 
-@EActivity(R.layout.activity_form)
 public class NewMonitoringEntryActivity extends BaseActivity implements ServiceConnection {
 
     public static final String EXTRA_LAT = "lat";
@@ -37,20 +35,47 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
     public static final String EXTRA_GEOLOCATION_ACCURACY = "geolocationAccuracy";
     private static final String TAG = SmartBirdsApplication.TAG + ".NewMonAct";
 
-    @Extra(EXTRA_LAT)
     double lat;
-    @Extra(EXTRA_LON)
     double lon;
-    @Extra(EXTRA_GEOLOCATION_ACCURACY)
     double geolocationAccuracy;
-    @Extra(EXTRA_TYPE)
     EntryType entryType;
 
     EEventBus eventBus = EEventBus.getInstance();
 
+    public static Intent newIntent(Context context, EntryType entryType) {
+        return new Intent(context, NewMonitoringEntryActivity.class)
+                .putExtra(EXTRA_TYPE, entryType);
+    }
+
+    public static Intent newIntent(Context context, EntryType entryType, double lat, double lon, double geolocationAccuracy) {
+        return new Intent(context, NewMonitoringEntryActivity.class)
+                .putExtra(EXTRA_TYPE, entryType)
+                .putExtra(EXTRA_LAT, lat)
+                .putExtra(EXTRA_LON, lon)
+                .putExtra(EXTRA_GEOLOCATION_ACCURACY, geolocationAccuracy);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_form);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey(EXTRA_LAT)) {
+                lat = extras.getDouble(EXTRA_LAT);
+            }
+            if (extras.containsKey(EXTRA_LON)) {
+                lon = extras.getDouble(EXTRA_LON);
+            }
+            if (extras.containsKey(EXTRA_GEOLOCATION_ACCURACY)) {
+                geolocationAccuracy = extras.getDouble(EXTRA_GEOLOCATION_ACCURACY);
+            }
+            if (extras.containsKey(EXTRA_TYPE)) {
+                entryType = (EntryType) extras.getSerializable(EXTRA_TYPE);
+            }
+        }
+
         setResult(RESULT_CANCELED);
         DataService.Companion.intent(this).start();
         try {
@@ -65,9 +90,10 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
                 confirmCancel();
             }
         });
+
+        createFragment();
     }
 
-    @AfterViews
     void createFragment() {
         setTitle(entryType.titleId);
         if (getSupportFragmentManager().findFragmentById(R.id.container) == null) {
@@ -118,9 +144,14 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
         finish();
     }
 
-    @OptionsItem(android.R.id.home)
-    void onUp() {
-        confirmCancel();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            confirmCancel();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 //    @Override

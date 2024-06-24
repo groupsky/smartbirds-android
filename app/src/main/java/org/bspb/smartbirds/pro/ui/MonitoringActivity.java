@@ -157,6 +157,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         onFinishConfirm(result.getResultCode(), result.getData());
     });
 
+    private final ActivityResultLauncher<Intent> newEntryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        onNewEntry(result.getResultCode(), result.getData());
+    });
+
     private ServiceConnection trackingServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -435,14 +439,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_NEW_ENTRY) {
-            onNewEntry(resultCode, data);
-        }
     }
 
     private void updateTypeOfObservationMenus(Menu menu) {
@@ -740,12 +736,14 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             eventBus.postSticky(new LocationChangedEvent(currentMap.getMyLocation()));
         }
 
-        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
-        ib.entryType(entryType);
+        Intent newEntryIntent;
         if (position != null) {
-            ib.lat(position.latitude).lon(position.longitude).geolocationAccuracy(accuracy);
+            newEntryIntent = NewMonitoringEntryActivity.newIntent(this, entryType, position.latitude, position.longitude, accuracy);
+        } else {
+            newEntryIntent = NewMonitoringEntryActivity.newIntent(this, entryType);
         }
-        ib.startForResult(REQUEST_NEW_ENTRY);
+
+        newEntryLauncher.launch(newEntryIntent);
     }
 
     protected void startNewEntryAsking(final LatLng position, double accuracy) {
