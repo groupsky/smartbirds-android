@@ -65,7 +65,7 @@ import org.bspb.smartbirds.pro.ui.DownloadsActivity
 import org.bspb.smartbirds.pro.ui.MonitoringListActivity
 import org.bspb.smartbirds.pro.ui.MonitoringReportActivity
 import org.bspb.smartbirds.pro.ui.SettingsActivity
-import org.bspb.smartbirds.pro.ui.StatsActivity_
+import org.bspb.smartbirds.pro.ui.StatsActivity
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
@@ -330,7 +330,7 @@ open class MainFragment : Fragment() {
 
     @OptionsItem(R.id.menu_statistics)
     open fun showStats() {
-        StatsActivity_.intent(activity).start()
+        startActivity(Intent(activity, StatsActivity::class.java))
     }
 
     @OptionsItem(R.id.menu_settings)

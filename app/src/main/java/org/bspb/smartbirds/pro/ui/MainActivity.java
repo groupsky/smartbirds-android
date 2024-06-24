@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onEvent(StartMonitoringEvent event) {
-        StartMonitoringActivity_.intent(this).start();
+        startActivity(new Intent(this, StartMonitoringActivity.class));
     }
 
     public void onEvent(ResumeMonitoringEvent event) {
