@@ -77,7 +77,7 @@
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.MonitoringActivity_"
+            android:name=".ui.MonitoringActivity"
             android:label="@string/title_activity_monitoring"
             android:parentActivityName=".ui.MainActivity"
             tools:ignore="UnusedAttribute">
@@ -96,22 +96,22 @@
         <activity
             android:name=".ui.NewMonitoringEntryActivity_"
             android:label="@string/title_activity_form"
-            android:parentActivityName=".ui.MonitoringActivity_"
+            android:parentActivityName=".ui.MonitoringActivity"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity" />
         </activity>
         <activity
             android:name=".ui.EditCurrentCommonFormActivity"
             android:label="@string/title_activity_edit"
-            android:parentActivityName=".ui.MonitoringActivity_"
+            android:parentActivityName=".ui.MonitoringActivity"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity" />
         </activity>
 
         <activity
@@ -166,12 +166,12 @@
         <activity
             android:name=".ui.BrowseMonitoringCommonFormActivity_"
             android:label="@string/title_activity_edit"
-            android:parentActivityName=".ui.MonitoringActivity_"
+            android:parentActivityName=".ui.MonitoringActivity"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity_" />
+                android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity" />
         </activity>
         <activity
             android:name=".ui.ViewMonitoringEntryActivity_"

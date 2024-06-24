@@ -50,7 +50,7 @@ open class SplashScreenActivity : BaseActivity(), Runnable {
             DataService.intent(this).start()
             TaskStackBuilder.create(this@SplashScreenActivity)
                 .addNextIntentWithParentStack(
-                    MonitoringActivity_.intent(this@SplashScreenActivity).get()
+                    MonitoringActivity.newIntent(this@SplashScreenActivity)
                 )
                 .startActivities()
         } else {

@@ -86,7 +86,7 @@ public class StartMonitoringActivity extends BaseActivity {
     public void save() {
         if (formFragment.validate()) {
             formFragment.save();
-            MonitoringActivity_.intent(this).start();
+            startActivity(MonitoringActivity.newIntent(this));
             finish();
         }
     }

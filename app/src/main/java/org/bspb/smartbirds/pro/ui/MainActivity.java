@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity {
         requireAuthentication();
         if (!isFinishing()) {
             if (globalPrefs.runningMonitoring().get()) {
-                MonitoringActivity_.intent(this).start();
+                startActivity(MonitoringActivity.newIntent(this));
             } else if (globalPrefs.versionCode().getOr(0) != BuildConfig.VERSION_CODE) {
                 // Sync data if app is updated
                 if (!SyncService.Companion.isWorking()) {
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onEvent(ResumeMonitoringEvent event) {
-        MonitoringActivity_.intent(this).start();
+        startActivity(MonitoringActivity.newIntent(this));
     }
 
     public void onEvent(LogoutEvent event) {
