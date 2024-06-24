@@ -25,7 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_common_methodology"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_common_rain"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_common_wind_strength"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_common_wind_direction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -232,7 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_common_cloudiness"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_common_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

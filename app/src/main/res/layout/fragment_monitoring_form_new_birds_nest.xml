@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_death"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_marking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_nest_substrate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_nest_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_nest_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_nest_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_age_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_age_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -262,7 +262,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_nest_success"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

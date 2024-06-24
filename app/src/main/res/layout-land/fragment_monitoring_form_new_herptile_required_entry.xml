@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_herptiles_species"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_herptiles_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="4">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_herptiles_age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_herp_habitat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

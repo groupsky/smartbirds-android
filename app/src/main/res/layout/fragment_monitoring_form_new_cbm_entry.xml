@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_cbm_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

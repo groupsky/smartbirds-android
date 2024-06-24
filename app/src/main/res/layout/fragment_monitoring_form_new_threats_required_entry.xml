@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_threats_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_threats_species"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_threats_estimate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_threats_state_carcass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="12">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_plants_species"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="6">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_plants_reporting_unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="6">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_plants_phenological_phase"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -169,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="8">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_plants_habitat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

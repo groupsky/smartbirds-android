@@ -31,7 +31,6 @@ import android.widget.ListView;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewTreeLifecycleOwner;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
@@ -87,6 +86,8 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         } finally {
             a.recycle();
         }
+
+        loadData();
     }
 
     public void setKey(CharSequence key) {
@@ -105,7 +106,6 @@ public class SingleChoiceFormInput extends TextViewFormInput implements SupportS
         }
     }
 
-    @AfterInject
     void loadData() {
         if (key != null && !isInEditMode()) {
             if (nomenclatures.isLoading()) {

@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_migrations_migration_point"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_migrations_species"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_migrations_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_migrations_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,7 +169,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_migrations_posoka_polet_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                 android:id="@+id/form_birds_migrations_posoka_polet_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
