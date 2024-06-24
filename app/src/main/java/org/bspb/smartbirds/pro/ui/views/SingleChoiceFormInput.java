@@ -31,7 +31,6 @@ import android.widget.ListView;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewTreeLifecycleOwner;
 
-import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -47,7 +46,6 @@ import java.util.Map;
 /**
  * Created by groupsky on 14-10-10.
  */
-@EView
 public class SingleChoiceFormInput extends TextViewFormInput implements SupportStorage {
 
     private CharSequence key;
