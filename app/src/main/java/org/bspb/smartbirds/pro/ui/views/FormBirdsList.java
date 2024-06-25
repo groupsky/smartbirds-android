@@ -55,7 +55,7 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
 
     private FormBirdsRow addRow() {
         try {
-            final FormBirdsRow row = FormBirdsRow_.build(getContext());
+            final FormBirdsRow row = FormBirdsRow.build(getContext());
             if (getChildCount() % 2 != 0) {
                 row.setBackgroundColor(getResources().getColor(R.color.black_transparent_20));
             }

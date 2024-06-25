@@ -11,17 +11,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 
 import java.util.Map;
 
-@EViewGroup(R.layout.single_choice_radio)
 public class SingleChoiceConfigRadioFormInput extends FrameLayout implements SupportRequiredView, SupportStorage {
+
+    private boolean alreadyInflated = false;
 
     public interface OnValueChangeListener {
         void onValueChanged(String value);
@@ -33,10 +31,8 @@ public class SingleChoiceConfigRadioFormInput extends FrameLayout implements Sup
     private boolean mIsVertical;
 
 
-    @ViewById(R.id.single_choice_radio_hint)
-    protected TextView hintTextView;
-    @ViewById(R.id.single_choice_radio_group)
-    protected RadioGroup radioGroup;
+    private TextView hintTextView;
+    private RadioGroup radioGroup;
     private FormsConfig.NomenclatureConfig[] mConfig;
     private OnValueChangeListener mOnValueChangeListener;
     private String mSelectedItem;
@@ -63,8 +59,20 @@ public class SingleChoiceConfigRadioFormInput extends FrameLayout implements Sup
         }
     }
 
-    @AfterViews
+    @Override
+    protected void onFinishInflate() {
+        if (!alreadyInflated) {
+            alreadyInflated = true;
+            inflate(getContext(), R.layout.single_choice_radio, this);
+            init();
+        }
+        super.onFinishInflate();
+    }
+
     protected void init() {
+        hintTextView = findViewById(R.id.single_choice_radio_hint);
+        radioGroup = findViewById(R.id.single_choice_radio_group);
+
         if (mIsVertical) {
             radioGroup.setOrientation(LinearLayout.VERTICAL);
         }

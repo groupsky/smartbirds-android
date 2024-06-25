@@ -91,7 +91,7 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
 
     private MultipleChoiceFullScreenRow addRow() {
         try {
-            final MultipleChoiceFullScreenRow row = MultipleChoiceFullScreenRow_.build(getContext(), key, hint);
+            final MultipleChoiceFullScreenRow row = MultipleChoiceFullScreenRow.build(getContext(), key, hint);
             row.setEnabled(isEnabled());
             addView(row);
             return row;

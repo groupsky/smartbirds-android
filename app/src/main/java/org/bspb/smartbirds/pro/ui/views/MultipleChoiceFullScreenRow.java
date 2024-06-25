@@ -1,6 +1,7 @@
 package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.Button;
@@ -8,37 +9,31 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.TextChange;
-import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 /**
  * Created by dani on 26.02.18.
  */
 
-@EViewGroup(R.layout.multiple_choice_full_screen_row)
 public class MultipleChoiceFullScreenRow extends LinearLayout {
 
     private OnDeleteListener onDeleteListener;
     private OnPopulatedListener onPopulatedListener;
 
-    @ViewById(R.id.field_input)
-    protected SingleChoiceFormInput input;
-
-    @ViewById(R.id.field_hint)
-    protected TextInputLayout hintView;
-
-    @ViewById(R.id.btn_delete)
-    protected Button btnDelete;
+    private SingleChoiceFormInput input;
+    private TextInputLayout hintView;
+    private Button btnDelete;
 
 
     CharSequence key;
     CharSequence hint;
+    private boolean alreadyInflated = false;
 
+    public static MultipleChoiceFullScreenRow build(Context context, CharSequence key, CharSequence hint) {
+        MultipleChoiceFullScreenRow instance = new MultipleChoiceFullScreenRow(context, key, hint);
+        instance.onFinishInflate();
+        return instance;
+    }
 
     public MultipleChoiceFullScreenRow(Context context, CharSequence key, CharSequence hint) {
         super(context);
@@ -58,6 +53,16 @@ public class MultipleChoiceFullScreenRow extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    protected void onFinishInflate() {
+        if (!alreadyInflated) {
+            alreadyInflated = true;
+            inflate(getContext(), R.layout.multiple_choice_full_screen_row, this);
+            init();
+        }
+        super.onFinishInflate();
+    }
+
     public void setKey(CharSequence key) {
         this.key = key;
     }
@@ -66,21 +71,46 @@ public class MultipleChoiceFullScreenRow extends LinearLayout {
         this.hint = hint;
     }
 
-    @AfterViews
     protected void init() {
+        input = findViewById(R.id.field_input);
+        hintView = findViewById(R.id.field_hint);
+        btnDelete = findViewById(R.id.btn_delete);
+        if (btnDelete != null) {
+            btnDelete.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(android.view.View view) {
+                    doOnDelete();
+                }
+            });
+        }
+        if (input != null) {
+            input.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    doOnSpeciesChange();
+                }
+
+                @Override
+                public void afterTextChanged(android.text.Editable s) {
+                }
+            });
+        }
+
         setGravity(Gravity.BOTTOM);
         setOrientation(HORIZONTAL);
         input.setKey(key);
         hintView.setHint(hint);
     }
 
-    @Click(R.id.btn_delete)
     protected void doOnDelete() {
         if (onDeleteListener != null)
             onDeleteListener.onDelete(this);
     }
 
-    @TextChange(R.id.field_input)
     protected void doOnSpeciesChange() {
         if (onPopulatedListener != null && isPopulated())
             onPopulatedListener.onPopulate(this);
