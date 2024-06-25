@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
-import org.androidannotations.annotations.EApplication;
 import org.bspb.smartbirds.pro.backend.AddCookiesInterceptor;
 import org.bspb.smartbirds.pro.backend.AddLanguageInterceptor;
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor;
@@ -24,7 +23,6 @@ import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
 /**
  * Created by groupsky on 14-9-25.
  */
-@EApplication
 public class SmartBirdsApplication extends Application {
 
     public static final String TAG = "SBP";

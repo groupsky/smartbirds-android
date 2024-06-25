@@ -43,7 +43,7 @@
     <!-- TODO fix backup. Temporary disable backup until fix lack of  permissions after restore -->
     <!-- TODO Remove legacy external storage support and refactor accessing files-->
     <application
-        android:name=".SmartBirdsApplication_"
+        android:name=".SmartBirdsApplication"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
