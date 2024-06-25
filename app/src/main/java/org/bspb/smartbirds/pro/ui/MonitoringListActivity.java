@@ -88,7 +88,7 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
             BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
             getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_detail_container, fragment).commit();
         } else {
-            MonitoringDetailActivity_.intent(this).monitoringCode(monitoringCode).start();
+            startActivity(MonitoringDetailActivity.Companion.newIntent(this, monitoringCode));
         }
     }
 

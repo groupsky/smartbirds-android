@@ -53,7 +53,7 @@
             android:required="false" />
 
         <activity
-            android:name=".ui.SplashScreenActivity_"
+            android:name=".ui.SplashScreenActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:label="SmartBirds Pro">
@@ -128,7 +128,7 @@
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.MonitoringDetailActivity_"
+            android:name=".ui.MonitoringDetailActivity"
             android:label="@string/title_monitoring_detail"
             android:parentActivityName=".ui.MonitoringListActivity"
             tools:ignore="UnusedAttribute">
@@ -174,7 +174,7 @@
                 android:value="org.bspb.smartbirds.pro.ui.MonitoringActivity" />
         </activity>
         <activity
-            android:name=".ui.ViewMonitoringEntryActivity_"
+            android:name=".ui.ViewMonitoringEntryActivity"
             android:label="@string/title_activity_form"
             android:parentActivityName=".ui.MonitoringListActivity"
             android:windowSoftInputMode="stateHidden"
@@ -190,7 +190,7 @@
         <activity
             android:name=".ui.MonitoringReportActivity"
             android:label="@string/title_activity_report"
-            android:parentActivityName=".ui.MonitoringDetailActivity_" />
+            android:parentActivityName=".ui.MonitoringDetailActivity" />
 
         <service
             android:name=".service.DataService"

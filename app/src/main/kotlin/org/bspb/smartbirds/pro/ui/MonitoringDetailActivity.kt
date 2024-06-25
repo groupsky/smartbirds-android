@@ -6,11 +6,6 @@ import android.view.MenuItem
 import androidx.core.app.NavUtils
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.AfterInject
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
-import org.androidannotations.annotations.FragmentById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.enums.EntryType
@@ -24,31 +19,41 @@ import org.bspb.smartbirds.pro.utils.MonitoringManager
  * item details are presented side-by-side with a list of items
  * in a {@link MonitoringListActivity}.
  */
-@EActivity(R.layout.activity_monitoring_detail)
 open class MonitoringDetailActivity : BaseActivity(), MonitoringEntryListFragment.Listener {
 
-    @JvmField
-    @Extra
-    protected var monitoringCode: String? = null
+    companion object {
+        fun newIntent(context: BaseActivity, monitoringCode: String): Intent {
+            val intent = Intent(context, MonitoringDetailActivity::class.java)
+            intent.putExtra("monitoringCode", monitoringCode)
+            return intent
+        }
+    }
 
-    @JvmField
-    @FragmentById(R.id.monitoring_detail_container)
-    protected var fragment: MonitoringEntryListFragment? = null
-
+    private var monitoringCode: String? = null
+    private var fragment: MonitoringEntryListFragment? = null
     private var monitoring: Monitoring? = null
-
     private val monitoringManager = MonitoringManager.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_monitoring_detail)
+
+        intent?.let {
+            monitoringCode = it.getStringExtra("monitoringCode")
+        }
+
+        loadMonitoring()
+        setupFragment()
 
         // Show the Up button in the action bar.
         val actionBar = actionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    @AfterViews
     protected open fun setupFragment() {
+        fragment =
+            supportFragmentManager.findFragmentById(R.id.monitoring_detail_container) as MonitoringEntryListFragment?
+
         if (fragment == null) {
             val fragment =
                 BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode)
@@ -59,7 +64,6 @@ open class MonitoringDetailActivity : BaseActivity(), MonitoringEntryListFragmen
         }
     }
 
-    @AfterInject
     protected open fun loadMonitoring() {
         lifecycleScope.launch {
             monitoring = monitoringManager.getMonitoring(monitoringCode!!)
@@ -84,7 +88,7 @@ open class MonitoringDetailActivity : BaseActivity(), MonitoringEntryListFragmen
 
     override fun onMonitoringEntrySelected(id: Long, entryType: EntryType?) {
         if (monitoring != null && Monitoring.Status.uploaded == monitoring!!.status) {
-            ViewMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start()
+            startActivity(ViewMonitoringEntryActivity.newIntent(this, id, entryType))
         } else {
             startActivity(EditMonitoringEntryActivity.newIntent(this, id, entryType))
         }
