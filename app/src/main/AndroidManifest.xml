@@ -164,7 +164,7 @@
                 android:value="org.bspb.smartbirds.pro.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.BrowseMonitoringCommonFormActivity_"
+            android:name=".ui.BrowseMonitoringCommonFormActivity"
             android:label="@string/title_activity_edit"
             android:parentActivityName=".ui.MonitoringActivity"
             android:windowSoftInputMode="stateHidden"

@@ -6,19 +6,22 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.*
+import org.androidannotations.annotations.EFragment
+import org.androidannotations.annotations.OptionsItem
+import org.androidannotations.annotations.OptionsMenu
+import org.androidannotations.annotations.OptionsMenuItem
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity_
+import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity
 import org.bspb.smartbirds.pro.ui.MonitoringReportActivity
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.MonitoringUtils
 import org.bspb.smartbirds.pro.utils.showAlert
-import java.util.*
+import java.util.Date
 
 @EFragment
 @OptionsMenu(R.menu.monitoring_entry_list)
@@ -45,7 +48,10 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
 
     @OptionsItem(R.id.menu_common_form)
     open fun onCommonForm() {
-        BrowseMonitoringCommonFormActivity_.intent(this).monitoringCode(code).start()
+        context?.let {
+            startActivity(BrowseMonitoringCommonFormActivity.newIntent(it, code))
+        }
+
     }
 
     @OptionsItem(R.id.menu_finish_monitoring)
