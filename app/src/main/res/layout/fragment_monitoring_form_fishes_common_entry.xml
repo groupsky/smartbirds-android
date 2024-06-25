@@ -484,7 +484,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
                 android:id="@+id/form_fish_shelters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -515,7 +515,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
                 android:id="@+id/form_fish_vegetation_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

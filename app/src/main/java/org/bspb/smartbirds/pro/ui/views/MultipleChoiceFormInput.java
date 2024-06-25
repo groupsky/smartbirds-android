@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
 
-import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -28,7 +27,6 @@ import java.util.Map;
 /**
  * Created by groupsky on 14-10-13.
  */
-@EView
 public class MultipleChoiceFormInput extends TextViewFormInput implements SupportStorage {
 
     CharSequence[] entries;

@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="5">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput
                         android:id="@+id/form_threats_class"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
                         android:id="@+id/form_mammals_findings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -179,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
                         android:id="@+id/form_mammals_threats"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

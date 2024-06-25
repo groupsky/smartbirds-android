@@ -273,7 +273,7 @@
             android:layout_height="wrap_content"
             android:layout_span="3">
 
-            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput_
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFormInput
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/monitoring_common_threats"
