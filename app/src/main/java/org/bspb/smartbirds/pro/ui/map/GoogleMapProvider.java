@@ -344,7 +344,7 @@ public class GoogleMapProvider implements MapProvider, GoogleMap.OnMapClickListe
     @Override
     public void showMap() {
         if (fragment == null) {
-            fragment = BspbMapFragment_.builder().build();
+            fragment = new BspbMapFragment();
             positioned = false;
         }
 
