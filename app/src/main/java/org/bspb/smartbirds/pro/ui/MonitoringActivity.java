@@ -55,7 +55,7 @@ import org.bspb.smartbirds.pro.events.PauseMonitoringEvent;
 import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
-import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.DataService;
@@ -127,7 +127,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     LatLng lastPosition;
     String monitoringCode;
 
-    MonitoringPrefs_ monitoringPrefs;
+    MonitoringPrefs monitoringPrefs;
     SmartBirdsPrefs_ prefs;
     UserPrefs_ userPrefs;
 
@@ -196,7 +196,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     void init() {
-        monitoringPrefs = new MonitoringPrefs_(this);
+        monitoringPrefs = new MonitoringPrefs(this);
         prefs = new SmartBirdsPrefs_(this);
         userPrefs = new UserPrefs_(this);
 
@@ -673,9 +673,9 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     public void setEntryType(@Nullable EntryType entryType) {
         this.entryType = entryType;
         if (entryType != null)
-            monitoringPrefs.entryType().put(entryType.name());
+            monitoringPrefs.setEntryType(entryType.name());
         else
-            monitoringPrefs.entryType().remove();
+            monitoringPrefs.edit().remove(MonitoringPrefs.KEY_ENTRY_TYPE).apply();
     }
 
     public void onEvent(LocationChangedEvent event) {
@@ -686,8 +686,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         if (menuNewEntry != null) {
             menuNewEntry.setEnabled(true);
         }
-        monitoringPrefs.lastPositionLat().put((float) lastPosition.latitude);
-        monitoringPrefs.lastPositionLon().put((float) lastPosition.longitude);
+        monitoringPrefs.setLastPositionLat((float) lastPosition.latitude);
+        monitoringPrefs.setLastPositionLon((float) lastPosition.longitude);
 
         addPoint(new LatLng(location.getLatitude(), location.getLongitude()));
     }
@@ -798,22 +798,22 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         Log.d(TAG, "persisting state");
         if (!canceled) {
 
-            MonitoringPrefs_.MonitoringPrefsEditor_ editor = monitoringPrefs.edit();
             if (lastPosition != null) {
-                editor.lastPositionLat().put((float) lastPosition.latitude);
-                editor.lastPositionLon().put((float) lastPosition.longitude);
+                monitoringPrefs.setLastPositionLat((float) lastPosition.latitude);
+                monitoringPrefs.setLastPositionLon((float) lastPosition.longitude);
             } else {
-                editor.lastPositionLat().remove();
-                editor.lastPositionLon().remove();
+                monitoringPrefs
+                        .edit()
+                        .remove(MonitoringPrefs.KEY_LAST_POSITION_LAT)
+                        .remove(MonitoringPrefs.KEY_LAST_POSITION_LON)
+                        .apply();
             }
             prefs.zoomFactor().put(zoomFactor);
             if (entryType != null) {
-                editor.entryType().put(entryType.name());
+                monitoringPrefs.setEntryType(entryType.name());
             } else {
-                editor.entryType().remove();
+                monitoringPrefs.edit().remove(MonitoringPrefs.KEY_ENTRY_TYPE).apply();
             }
-
-            editor.apply();
 
             persistPoints();
         }
@@ -825,10 +825,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         editor.clear();
         try {
             if (points.isEmpty()) {
-                monitoringPrefs.pointsCount().remove();
+                monitoringPrefs.edit().remove(MonitoringPrefs.KEY_POINTS_COUNT).apply();
                 return;
             }
-            monitoringPrefs.pointsCount().put(points.size());
+            monitoringPrefs.setPointsCount(points.size());
             for (int i = 0; i < points.size(); i++) {
                 editor.putFloat("lat_" + i, (float) points.get(i).latitude);
                 editor.putFloat("lon_" + i, (float) points.get(i).longitude);
@@ -858,8 +858,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         } catch (IllegalArgumentException ignored) {
         }
 
-        if (monitoringPrefs.lastPositionLat().exists() && monitoringPrefs.lastPositionLon().exists()) {
-            lastPosition = new LatLng(monitoringPrefs.lastPositionLat().get(), monitoringPrefs.lastPositionLon().get());
+        if (monitoringPrefs.contains(MonitoringPrefs.KEY_LAST_POSITION_LAT) && monitoringPrefs.contains(MonitoringPrefs.KEY_LAST_POSITION_LON)) {
+            lastPosition = new LatLng(monitoringPrefs.getLastPositionLat(), monitoringPrefs.getLastPositionLon());
         } else {
             lastPosition = null;
         }
@@ -867,7 +867,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         zoomFactor = prefs.zoomFactor().getOr(500);
         entryType = null;
         try {
-            final String entryTypeName = monitoringPrefs.entryType().get();
+            final String entryTypeName = monitoringPrefs.getEntryType();
             if (!isEmpty(entryTypeName) && formsEnabled.contains(entryTypeName))
                 entryType = EntryType.valueOf(entryTypeName);
         } catch (IllegalArgumentException ignored) {
@@ -901,7 +901,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private void restorePoints() {
-        int pointsCount = monitoringPrefs.pointsCount().get();
+        int pointsCount = monitoringPrefs.getPointsCount();
         if (pointsCount <= 0) {
             return;
         }

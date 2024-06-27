@@ -53,7 +53,6 @@ import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
 import org.bspb.smartbirds.pro.events.MonitoringPausedEvent
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent
-import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.service.ExportService_
@@ -99,9 +98,6 @@ open class MainFragment : Fragment() {
 
     @Pref
     protected lateinit var prefs: SmartBirdsPrefs_
-
-    @Pref
-    protected lateinit var monitoringPrefs: MonitoringPrefs_
 
     private val monitoringManager = MonitoringManager.getInstance()
 

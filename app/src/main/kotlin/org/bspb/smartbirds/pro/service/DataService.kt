@@ -44,7 +44,7 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent
 import org.bspb.smartbirds.pro.events.SubmitFishesCommonForm
 import org.bspb.smartbirds.pro.events.UndoLastEntry
 import org.bspb.smartbirds.pro.events.UserDataEvent
-import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.prefs.UserPrefs_
 import org.bspb.smartbirds.pro.tools.GpxWriter
@@ -98,7 +98,7 @@ open class DataService : Service() {
     protected val bus: EEventBus by lazy { EEventBus.getInstance() }
     private lateinit var globalPrefs: SmartBirdsPrefs_
     private lateinit var userPrefs: UserPrefs_
-    private lateinit var monitoringPrefs: MonitoringPrefs_
+    private lateinit var monitoringPrefs: MonitoringPrefs
     private val monitoringManager = MonitoringManager.getInstance()
 
     var monitoring: Monitoring? = null
@@ -137,7 +137,7 @@ open class DataService : Service() {
     private fun init() {
         globalPrefs = SmartBirdsPrefs_(this)
         userPrefs = UserPrefs_(this)
-        monitoringPrefs = MonitoringPrefs_(this)
+        monitoringPrefs = MonitoringPrefs(this)
 
         initBus()
     }
