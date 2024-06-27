@@ -7,19 +7,19 @@ import android.view.View
 import android.view.WindowManager
 import androidx.core.app.TaskStackBuilder
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.service.DataService
 
 open class SplashScreenActivity : BaseActivity(), Runnable {
 
     protected lateinit var content: View
 
-    protected lateinit var prefs: SmartBirdsPrefs_
+    protected lateinit var prefs: SmartBirdsPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(1)
-        
+
         setContentView(R.layout.activity_splash_screen)
 
         window.setFlags(
@@ -27,7 +27,7 @@ open class SplashScreenActivity : BaseActivity(), Runnable {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        prefs = SmartBirdsPrefs_(this)
+        prefs = SmartBirdsPrefs(this)
         content = findViewById(android.R.id.content)
     }
 
@@ -47,7 +47,7 @@ open class SplashScreenActivity : BaseActivity(), Runnable {
     }
 
     override fun run() {
-        if (prefs.runningMonitoring().get()) {
+        if (prefs.getRunningMonitoring()) {
             DataService.intent(this).start()
             TaskStackBuilder.create(this@SplashScreenActivity)
                 .addNextIntentWithParentStack(

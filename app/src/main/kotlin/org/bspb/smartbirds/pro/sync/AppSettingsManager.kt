@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.io.IOException
@@ -19,7 +19,7 @@ open class AppSettingsManager(private val context: Context) {
 
     protected val backend: Backend by lazy { Backend.getInstance() }
 
-    protected val prefs: SmartBirdsPrefs_ = SmartBirdsPrefs_(context)
+    protected val prefs: SmartBirdsPrefs = SmartBirdsPrefs(context)
 
     open fun fetchSettings() {
         isDownloading = true
@@ -31,7 +31,7 @@ open class AppSettingsManager(private val context: Context) {
                     throw IOException("Server error: " + response.code() + " - " + response.message())
                 }
                 response.body()?.data?.apply {
-                    prefs.mapLayers().put(SBGsonParser.createParser().toJson(this))
+                    prefs.setMapLayers(SBGsonParser.createParser().toJson(this))
                 }
             } catch (t: Throwable) {
                 Reporting.logException(t)

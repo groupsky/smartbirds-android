@@ -56,7 +56,7 @@ import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs;
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.service.TrackingService;
@@ -128,7 +128,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     String monitoringCode;
 
     MonitoringPrefs monitoringPrefs;
-    SmartBirdsPrefs_ prefs;
+    SmartBirdsPrefs prefs;
     UserPrefs_ userPrefs;
 
     private boolean canceled = false;
@@ -197,7 +197,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     void init() {
         monitoringPrefs = new MonitoringPrefs(this);
-        prefs = new SmartBirdsPrefs_(this);
+        prefs = new SmartBirdsPrefs(this);
         userPrefs = new UserPrefs_(this);
 
         restoreSavedInstanceState(getIntent().getExtras());
@@ -225,7 +225,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private void updateViewType() {
-        String viewType = prefs.monitoringViewType().get();
+        String viewType = prefs.getMonitoringViewType();
         mapContainer.setVisibility(!VIEWTYPE_LIST.equals(viewType) ? View.VISIBLE : View.GONE);
         if (getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT && !VIEWTYPE_LIST.equals(viewType)) {
             listContainer.setVisibility(View.GONE);
@@ -601,7 +601,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         this.zoomFactor = zoomFactor;
         currentMap.setZoomFactor(zoomFactor);
         currentMap.updateCamera();
-        prefs.zoomFactor().put(zoomFactor);
+        prefs.setZoomFactor(zoomFactor);
     }
 
     //    private void setShowZoneBackground(boolean showBackground) {
@@ -808,7 +808,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
                         .remove(MonitoringPrefs.KEY_LAST_POSITION_LON)
                         .apply();
             }
-            prefs.zoomFactor().put(zoomFactor);
+            prefs.setZoomFactor(zoomFactor);
             if (entryType != null) {
                 monitoringPrefs.setEntryType(entryType.name());
             } else {
@@ -841,18 +841,17 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     private void restoreState() {
         Log.d(TAG, "restoring state");
 
-        formsEnabled = prefs.formsEnabled().getOr(new HashSet(Arrays.asList(getResources().getStringArray(R.array.monitoring_form_values))));
-
+        formsEnabled = prefs.getFormsEnabled(new HashSet<>(Arrays.asList(getResources().getStringArray(R.array.monitoring_form_values))));
         providerType = MapProvider.ProviderType.GOOGLE;
         try {
-            final String providerTypeName = prefs.providerType().get();
+            final String providerTypeName = prefs.getProviderType();
             if (!isEmpty(providerTypeName))
                 providerType = MapProvider.ProviderType.valueOf(providerTypeName);
         } catch (IllegalArgumentException ignored) {
         }
         mapType = MapProvider.MapType.NORMAL;
         try {
-            final String mapTypeName = prefs.mapType().get();
+            final String mapTypeName = prefs.getMapType();
             if (!isEmpty(mapTypeName))
                 mapType = MapProvider.MapType.valueOf(mapTypeName);
         } catch (IllegalArgumentException ignored) {
@@ -864,7 +863,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             lastPosition = null;
         }
 
-        zoomFactor = prefs.zoomFactor().getOr(500);
+        zoomFactor = prefs.getZoomFactor(500);
         entryType = null;
         try {
             final String entryTypeName = monitoringPrefs.getEntryType();
@@ -873,17 +872,17 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         } catch (IllegalArgumentException ignored) {
         }
 
-        setStayAwake(prefs.stayAwake().get());
-        this.showZoneBackground = prefs.showZoneBackground().get();
-        this.showLocalProjects = prefs.showLocalProjects().get();
-        this.showBgAtlasCells = prefs.showBgAtlasCells().get();
-        this.showKml = prefs.showUserKml().get();
-        this.showCurrentLocationCircle = prefs.showCurrentLocationCircle().get();
+        setStayAwake(prefs.getStayAwake());
+        this.showZoneBackground = prefs.getShowZoneBackground();
+        this.showLocalProjects = prefs.getShowLocalProjects();
+        this.showBgAtlasCells = prefs.getShowBgAtlasCells();
+        this.showKml = prefs.getShowUserKml();
+        this.showCurrentLocationCircle = prefs.getShowCurrentLocationCircle();
 
         Type listType = new TypeToken<List<MapLayerItem>>() {
         }.getType();
-        List<MapLayerItem> mapLayers = SBGsonParser.createParser().fromJson(prefs.mapLayers().get(), listType);
-        Set<String> enabledLayerIds = prefs.enabledMapLayers().get();
+        List<MapLayerItem> mapLayers = SBGsonParser.createParser().fromJson(prefs.getMapLayers(), listType);
+        Set<String> enabledLayerIds = prefs.getEnabledMapLayers();
         List<MapLayerItem> enabledLayers = new ArrayList<>();
         for (String layerId : enabledLayerIds) {
             for (MapLayerItem mapLayer : mapLayers) {

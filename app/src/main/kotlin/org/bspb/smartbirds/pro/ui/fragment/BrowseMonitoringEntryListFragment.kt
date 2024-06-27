@@ -10,12 +10,11 @@ import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.OptionsItem
 import org.androidannotations.annotations.OptionsMenu
 import org.androidannotations.annotations.OptionsMenuItem
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.ui.BrowseMonitoringCommonFormActivity
 import org.bspb.smartbirds.pro.ui.MonitoringReportActivity
 import org.bspb.smartbirds.pro.ui.utils.Configuration
@@ -33,8 +32,7 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
     @OptionsMenuItem(R.id.menu_delete_monitoring)
     protected lateinit var menuDeleteMonitoring: MenuItem
 
-    @Pref
-    protected lateinit var globalPrefs: SmartBirdsPrefs_
+    protected lateinit var globalPrefs: SmartBirdsPrefs
 
     protected val bus: EEventBus by lazy { EEventBus.getInstance() }
 
@@ -112,8 +110,8 @@ open class BrowseMonitoringEntryListFragment : MonitoringEntryListFragment() {
 
                 if (code == pausedMonitoring?.code) {
                     context?.let { MonitoringUtils.closeGpxFile(it, this@apply) }
-                    globalPrefs.runningMonitoring().put(false)
-                    globalPrefs.pausedMonitoring().put(false)
+                    globalPrefs.setRunningMonitoring(false)
+                    globalPrefs.setPausedMonitoring(false)
                 }
                 bus.postSticky(MonitoringFinishedEvent())
                 activity?.finish()

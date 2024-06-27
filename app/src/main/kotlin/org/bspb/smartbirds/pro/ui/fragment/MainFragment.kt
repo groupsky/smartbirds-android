@@ -34,6 +34,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.Click
 import org.androidannotations.annotations.EFragment
@@ -41,7 +42,6 @@ import org.androidannotations.annotations.OptionsItem
 import org.androidannotations.annotations.OptionsMenu
 import org.androidannotations.annotations.UiThread
 import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent
@@ -53,7 +53,7 @@ import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
 import org.bspb.smartbirds.pro.events.MonitoringPausedEvent
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.service.ExportService_
 import org.bspb.smartbirds.pro.service.SyncService
@@ -96,8 +96,7 @@ open class MainFragment : Fragment() {
     @ViewById(R.id.btn_cancel_birds)
     protected lateinit var btnCancelBirds: Button
 
-    @Pref
-    protected lateinit var prefs: SmartBirdsPrefs_
+    protected lateinit var prefs: SmartBirdsPrefs
 
     private val monitoringManager = MonitoringManager.getInstance()
 
@@ -185,9 +184,14 @@ open class MainFragment : Fragment() {
         }
     }
 
+    @AfterInject
+    open fun initPrefs() {
+        prefs = SmartBirdsPrefs(requireContext())
+    }
+
     @AfterViews
     open fun setupMonitoringButtons() {
-        if (prefs.pausedMonitoring().get()) {
+        if (prefs.getPausedMonitoring()) {
             btnStartBirds.visibility = View.GONE
             btnResumeBirds.visibility = View.VISIBLE
             btnCancelBirds.visibility = View.VISIBLE
@@ -381,9 +385,9 @@ open class MainFragment : Fragment() {
             if (pm.isIgnoringBatteryOptimizations(requireContext().packageName)) {
                 btnBatteryOptimization.visibility = View.GONE
             } else {
-                if (!prefs.isBatteryOptimizationDialogShown.get()) {
+                if (!prefs.getBatteryOptimizationDialogShown()) {
                     showBatteryOptimizationDialog()
-                    prefs.isBatteryOptimizationDialogShown.put(true)
+                    prefs.setBatteryOptimizationDialogShown(true)
                 }
                 btnBatteryOptimization.visibility = View.VISIBLE
             }

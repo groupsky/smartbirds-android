@@ -9,7 +9,7 @@ import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LogoutEvent;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs;
 import org.bspb.smartbirds.pro.prefs.UserPrefs_;
 import org.bspb.smartbirds.pro.service.SyncService;
 import org.bspb.smartbirds.pro.service.SyncService_;
@@ -20,7 +20,7 @@ public class MainActivity extends BaseActivity {
 
     EEventBus bus = EEventBus.getInstance();
     UserPrefs_ prefs;
-    SmartBirdsPrefs_ globalPrefs;
+    SmartBirdsPrefs globalPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +28,20 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         prefs = new UserPrefs_(this);
-        globalPrefs = new SmartBirdsPrefs_(this);
+        globalPrefs = new SmartBirdsPrefs(this);
 
         createFragment();
 
         requireAuthentication();
         if (!isFinishing()) {
-            if (globalPrefs.runningMonitoring().get()) {
+            if (globalPrefs.getRunningMonitoring()) {
                 startActivity(MonitoringActivity.newIntent(this));
-            } else if (globalPrefs.versionCode().getOr(0) != BuildConfig.VERSION_CODE) {
+            } else if (globalPrefs.getVersionCode() != BuildConfig.VERSION_CODE) {
                 // Sync data if app is updated
                 if (!SyncService.Companion.isWorking()) {
                     SyncService_.intent(this).initialSync().start();
                 }
-                globalPrefs.versionCode().put(BuildConfig.VERSION_CODE);
+                globalPrefs.setVersionCode(BuildConfig.VERSION_CODE);
             }
         }
     }

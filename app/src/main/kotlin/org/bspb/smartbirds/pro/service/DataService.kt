@@ -45,7 +45,7 @@ import org.bspb.smartbirds.pro.events.SubmitFishesCommonForm
 import org.bspb.smartbirds.pro.events.UndoLastEntry
 import org.bspb.smartbirds.pro.events.UserDataEvent
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.prefs.UserPrefs_
 import org.bspb.smartbirds.pro.tools.GpxWriter
 import org.bspb.smartbirds.pro.tools.Reporting
@@ -96,7 +96,7 @@ open class DataService : Service() {
     private val scope = SBScope()
 
     protected val bus: EEventBus by lazy { EEventBus.getInstance() }
-    private lateinit var globalPrefs: SmartBirdsPrefs_
+    private lateinit var globalPrefs: SmartBirdsPrefs
     private lateinit var userPrefs: UserPrefs_
     private lateinit var monitoringPrefs: MonitoringPrefs
     private val monitoringManager = MonitoringManager.getInstance()
@@ -111,13 +111,13 @@ open class DataService : Service() {
                     startService(Intent(this, TrackingService::class.java))
                     NotificationUtils.showMonitoringNotification(applicationContext)
                 }
-                globalPrefs.runningMonitoring().put(true)
+                globalPrefs.setRunningMonitoring(true)
             } else {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                     NotificationUtils.hideMonitoringNotification(applicationContext)
                 }
                 stopService(Intent(this, TrackingService::class.java))
-                globalPrefs.runningMonitoring().put(false)
+                globalPrefs.setRunningMonitoring(false)
             }
         }
 
@@ -135,7 +135,7 @@ open class DataService : Service() {
     }
 
     private fun init() {
-        globalPrefs = SmartBirdsPrefs_(this)
+        globalPrefs = SmartBirdsPrefs(this)
         userPrefs = UserPrefs_(this)
         monitoringPrefs = MonitoringPrefs(this)
 
@@ -235,7 +235,7 @@ open class DataService : Service() {
                     monitoringManager.updateStatus(pausedMonitoring, Monitoring.Status.canceled)
                 }
             }
-            globalPrefs.pausedMonitoring().put(false)
+            globalPrefs.setPausedMonitoring(false)
             monitoring = null
             monitoringPrefs.edit().clear().apply()
             getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit()
@@ -433,7 +433,7 @@ open class DataService : Service() {
                 monitoringManager.updateStatus(monitoring!!, Monitoring.Status.paused)
                 this@DataService.monitoring = null
             }
-            globalPrefs.pausedMonitoring().put(true)
+            globalPrefs.setPausedMonitoring(true)
             bus.postSticky(MonitoringPausedEvent())
         }
     }
@@ -444,7 +444,7 @@ open class DataService : Service() {
                 bus.postSticky(MonitoringResumedEvent())
                 return@sbLaunch
             }
-            globalPrefs.pausedMonitoring().put(false)
+            globalPrefs.setPausedMonitoring(false)
 
             val pausedMonitoring = monitoringManager.getPausedMonitoring()
             if (pausedMonitoring != null) {

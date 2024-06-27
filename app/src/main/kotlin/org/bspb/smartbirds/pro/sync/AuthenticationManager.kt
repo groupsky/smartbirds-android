@@ -15,7 +15,6 @@ import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.LoginStateEvent
 import org.bspb.smartbirds.pro.events.LogoutEvent
 import org.bspb.smartbirds.pro.events.UserDataEvent
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
 import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
@@ -30,7 +29,6 @@ open class AuthenticationManager(private var context: Context) {
         var isDownloading = false
     }
 
-    protected var prefs: SmartBirdsPrefs_ = SmartBirdsPrefs_(context)
     protected val backend: Backend by lazy { Backend.getInstance() }
     protected val bus: EEventBus by lazy { EEventBus.getInstance() }
     protected var scope = SBScope()
