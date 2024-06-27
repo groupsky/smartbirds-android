@@ -6,10 +6,9 @@ import android.view.View;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs;
-import org.bspb.smartbirds.pro.prefs.MammalPrefs_;
+import org.bspb.smartbirds.pro.prefs.MammalPrefs;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
@@ -32,8 +31,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.form_mammals_confidential)
     SwitchFormInput confidential;
 
-    @Pref
-    MammalPrefs_ prefs;
+    MammalPrefs prefs;
 
 
     CommonPrefs commonPrefs;
@@ -45,7 +43,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            habitat.setText(prefs.mammalHabitat().get());
+            habitat.setText(prefs.getMammalHabitat());
             confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
     }
@@ -75,6 +73,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         commonPrefs = new CommonPrefs(getContext());
+        prefs = new MammalPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -82,7 +81,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onPause() {
         super.onPause();
-        prefs.mammalHabitat().put(habitat.getText().toString());
+        prefs.setMammalHabitat(habitat.getText().toString());
         commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 

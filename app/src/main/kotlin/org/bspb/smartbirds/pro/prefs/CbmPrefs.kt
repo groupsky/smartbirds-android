@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
-class CbmPrefs constructor(context: Context) {
+class CbmPrefs(context: Context) {
 
     companion object {
         const val KEY_CBM_ZONE = "cbmZone"
@@ -16,11 +16,7 @@ class CbmPrefs constructor(context: Context) {
         const val KEY_SPECIES_QUICK_6 = "speciesQuick6"
     }
 
-    private var prefs: SharedPreferences? = null
-
-    init {
-        prefs = PreferenceManager.getDefaultSharedPreferences(context)
-    }
+    private var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     fun getCbmZone(): String {
         return prefs?.getString(KEY_CBM_ZONE, "") ?: ""

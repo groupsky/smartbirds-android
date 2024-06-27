@@ -4,18 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
-class CommonPrefs constructor(context: Context) {
+class CommonPrefs(context: Context) {
 
     companion object {
         const val KEY_COMMON_OTHER_OBSERVERS = "commonOtherObservers"
         const val KEY_CONFIDENTIAL_RECORD = "confidentialRecord"
     }
 
-    private var prefs: SharedPreferences? = null
-
-    init {
-        prefs = PreferenceManager.getDefaultSharedPreferences(context)
-    }
+    private var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     fun getCommonOtherObservers(): String {
         return prefs?.getString(KEY_COMMON_OTHER_OBSERVERS, "") ?: ""

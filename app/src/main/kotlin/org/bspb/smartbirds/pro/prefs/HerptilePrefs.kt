@@ -5,19 +5,14 @@ import android.content.SharedPreferences
 
 class HerptilePrefs(context: Context) {
 
-    private var prefs: SharedPreferences? = null
-
     companion object {
         const val KEY_HERPTILE_HABITAT = "herptileHabitat"
     }
-
-    init {
-        prefs =
-            context.getSharedPreferences(
-                (PrefsHelper.getLocalClassName(context) + "_HerptilePrefs"),
-                0
-            )
-    }
+    
+    private var prefs: SharedPreferences = context.getSharedPreferences(
+        (PrefsHelper.getLocalClassName(context) + "_HerptilePrefs"),
+        0
+    )
 
     fun getHerptileHabitat(): String {
         return prefs?.getString(KEY_HERPTILE_HABITAT, "") ?: ""
