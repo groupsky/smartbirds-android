@@ -1,17 +1,15 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
-import org.bspb.smartbirds.pro.prefs.HerptilePrefs_;
+import org.bspb.smartbirds.pro.prefs.HerptilePrefs;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
@@ -34,8 +32,7 @@ public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.form_herptiles_confidential)
     SwitchFormInput confidential;
 
-    @Pref
-    HerptilePrefs_ prefs;
+    HerptilePrefs prefs;
 
     @Pref
     CommonPrefs_ commonPrefs;
@@ -47,7 +44,7 @@ public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            habitat.setText(prefs.herptileHabitat().get());
+            habitat.setText(prefs.getHerptileHabitat());
             confidential.setChecked(commonPrefs.confidentialRecord().get());
         }
     }
@@ -76,6 +73,7 @@ public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        prefs = new HerptilePrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -83,7 +81,7 @@ public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onPause() {
         super.onPause();
-        prefs.herptileHabitat().put(habitat.getText().toString());
+        prefs.setHerptileHabitat(habitat.getText().toString());
         commonPrefs.confidentialRecord().put(confidential.isChecked());
     }
 
