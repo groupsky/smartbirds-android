@@ -18,7 +18,7 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.prefs.CbmPrefs_;
+import org.bspb.smartbirds.pro.prefs.CbmPrefs;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.views.CbmQuickChoiceFormInput;
@@ -53,8 +53,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @ViewById(R.id.form_cbm_name)
     SingleChoiceFormInput speciesInput;
 
-    @Pref
-    CbmPrefs_ prefs;
+    CbmPrefs prefs;
 
     @Pref
     CommonPrefs_ commonPrefs;
@@ -71,7 +70,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            zoneInput.setText(prefs.cbmZone().get());
+            zoneInput.setText(prefs.getCbmZone());
             confidential.setChecked(commonPrefs.confidentialRecord().get());
         }
 
@@ -101,6 +100,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        prefs = new CbmPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -132,7 +132,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     @Override
     public void onPause() {
         super.onPause();
-        prefs.cbmZone().put(zoneInput.getText().toString());
+        prefs.setCbmZone(zoneInput.getText().toString());
         commonPrefs.confidentialRecord().put(confidential.isChecked());
     }
 
