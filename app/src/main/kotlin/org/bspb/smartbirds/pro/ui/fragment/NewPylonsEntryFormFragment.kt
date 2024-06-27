@@ -6,12 +6,11 @@ import androidx.fragment.app.Fragment
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.FragmentById
 import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-import java.util.*
+import java.util.Date
 
 @EFragment(R.layout.fragment_monitoring_form_new_pylons_entry)
 open class NewPylonsEntryFormFragment : BaseEntryFragment() {
@@ -33,19 +32,18 @@ open class NewPylonsEntryFormFragment : BaseEntryFragment() {
     @ViewById(R.id.form_pylons_damaged_insulation)
     protected var damagedInsulation: SwitchFormInput? = null
 
-    @Pref
-    protected lateinit var commonPrefs: CommonPrefs_
+    protected lateinit var commonPrefs: CommonPrefs
 
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
+            confidential!!.isChecked = commonPrefs.getConfidentialRecord()
         }
     }
 
     override fun onPause() {
         super.onPause()
-        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.setConfidentialRecord(confidential!!.isChecked)
     }
 
     override fun getEntryType(): EntryType? {
@@ -75,6 +73,7 @@ open class NewPylonsEntryFormFragment : BaseEntryFragment() {
             picturesFragment =
                 childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
         }
+        commonPrefs = CommonPrefs(requireContext())
         super.onViewCreated(view, savedInstanceState)
     }
 

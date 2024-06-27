@@ -12,14 +12,13 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.backend.dto.Coordinate;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.prefs.CbmPrefs;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.views.CbmQuickChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
@@ -55,8 +54,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
 
     CbmPrefs prefs;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
 
     @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
@@ -71,7 +69,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         super.onResume();
         if (isNewEntry()) {
             zoneInput.setText(prefs.getCbmZone());
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
 
     }
@@ -101,6 +99,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         prefs = new CbmPrefs(getContext());
+        commonPrefs = new CommonPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -133,7 +132,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
     public void onPause() {
         super.onPause();
         prefs.setCbmZone(zoneInput.getText().toString());
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
     public static class Builder implements BaseEntryFragment.Builder {

@@ -14,13 +14,12 @@ import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
 import org.bspb.smartbirds.pro.prefs.BirdPrefs;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
@@ -68,8 +67,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
 
     BirdPrefs prefs;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
 
     EEventBus eventBus = EEventBus.getInstance();
 
@@ -123,7 +121,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         if (isNewEntry()) {
             countUnits.setSelection(prefs.getCountUnits());
             countType.setSelection(prefs.getCountType());
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
         handleCountsLogic();
         showConfidentialWarningIfNeeded();
@@ -153,6 +151,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        commonPrefs = new CommonPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -161,7 +160,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         super.onPause();
         prefs.setCountUnits(countUnits.getSelection());
         prefs.setCountType(countType.getSelection());
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
     @TextChange(R.id.form_birds_count_units)

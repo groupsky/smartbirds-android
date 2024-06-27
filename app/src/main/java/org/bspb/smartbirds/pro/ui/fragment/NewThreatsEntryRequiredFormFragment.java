@@ -10,9 +10,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput;
@@ -77,8 +76,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
 
     private OnPrimaryTypeChangedListener primaryTypeChangedListener;
 
@@ -86,7 +84,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
         handleInitialState();
     }
@@ -94,7 +92,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onPause() {
         super.onPause();
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
     @Override
@@ -121,6 +119,7 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        commonPrefs = new CommonPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 

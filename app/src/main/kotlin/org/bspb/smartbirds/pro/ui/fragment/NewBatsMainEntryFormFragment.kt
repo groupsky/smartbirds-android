@@ -9,14 +9,13 @@ import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.prefs.BatsPrefs_
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-import java.util.*
 
 @EFragment(R.layout.fragment_monitoring_form_new_bats_entry)
 open class NewBatsMainEntryFormFragment : BaseFormFragment() {
@@ -30,8 +29,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
     @ViewById(R.id.form_bats_confidential)
     protected var confidential: SwitchFormInput? = null
 
-    @Pref
-    protected lateinit var commonPrefs: CommonPrefs_
+    protected lateinit var commonPrefs: CommonPrefs
 
     @Pref
     protected lateinit var batsPrefs: BatsPrefs_
@@ -59,7 +57,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
+            confidential!!.isChecked = commonPrefs.getConfidentialRecord()
             batsPrefs.metodology()?.get()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
@@ -107,7 +105,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
 
     override fun onPause() {
         super.onPause()
-        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.setConfidentialRecord(confidential!!.isChecked)
         metodology?.selectedItem?.let {
             batsPrefs.metodology().put(SBGsonParser.createParser().toJson(it))
         }
@@ -149,6 +147,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
             picturesFragment =
                 childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
         }
+        commonPrefs = CommonPrefs(requireContext())
         super.onViewCreated(view, savedInstanceState)
     }
 }

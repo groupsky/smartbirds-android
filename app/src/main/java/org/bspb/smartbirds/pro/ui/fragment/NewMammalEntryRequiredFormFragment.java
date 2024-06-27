@@ -1,16 +1,14 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.prefs.MammalPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
@@ -38,8 +36,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
     MammalPrefs_ prefs;
 
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
 
     @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
@@ -49,7 +46,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
         super.onResume();
         if (isNewEntry()) {
             habitat.setText(prefs.mammalHabitat().get());
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
     }
 
@@ -77,6 +74,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        commonPrefs = new CommonPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -85,7 +83,7 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
     public void onPause() {
         super.onPause();
         prefs.mammalHabitat().put(habitat.getText().toString());
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
 }

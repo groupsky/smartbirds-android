@@ -1,20 +1,16 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import androidx.fragment.app.Fragment;
-
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import org.androidannotations.annotations.AfterViews;
+import androidx.fragment.app.Fragment;
+
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.PreferenceScreen;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 
 import java.util.Date;
@@ -31,21 +27,20 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
     @ViewById(R.id.form_invertebrates_confidential)
     SwitchFormInput confidential;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
 
     @Override
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
     @Override
@@ -77,6 +72,7 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+        commonPrefs = new CommonPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 

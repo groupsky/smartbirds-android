@@ -3,6 +3,7 @@ package org.bspb.smartbirds.pro.ui.fragment
 import android.content.Context
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.OptionsItem
@@ -10,14 +11,14 @@ import org.androidannotations.annotations.ViewById
 import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.prefs.UserPrefs_
 import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.ui.utils.FormUtils
 import org.bspb.smartbirds.pro.ui.views.DateFormInput
 import org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
 import org.bspb.smartbirds.pro.ui.views.TimeFormInput
-import java.util.*
+import java.util.Calendar
 
 @EFragment()
 abstract class BaseCommonFormFragment : Fragment() {
@@ -36,8 +37,7 @@ abstract class BaseCommonFormFragment : Fragment() {
     @ViewById(R.id.form_common_end_date)
     protected lateinit var endDateView: DateFormInput
 
-    @Pref
-    protected lateinit var prefs: CommonPrefs_
+    protected lateinit var prefs: CommonPrefs
 
     @Pref
     protected lateinit var userPrefs: UserPrefs_
@@ -55,12 +55,17 @@ abstract class BaseCommonFormFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        observers.setText(prefs.commonOtherObservers().get())
+        observers.setText(prefs.getCommonOtherObservers())
     }
 
     override fun onPause() {
         super.onPause()
-        prefs.commonOtherObservers().put(observers.text.toString())
+        prefs.setCommonOtherObservers(observers.text.toString())
+    }
+
+    @AfterInject
+    open fun initPrefs() {
+        prefs = CommonPrefs(requireContext())
     }
 
     @AfterViews
