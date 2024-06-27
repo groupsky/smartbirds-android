@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
 /**
@@ -31,7 +30,6 @@ public class FormBirdsRow extends LinearLayout implements SingleChoiceFormInput.
     protected DecimalNumberFormInput countMin;
     protected DecimalNumberFormInput countMax;
 
-    BirdPrefs_ prefs;
     private boolean alreadyInflated = false;
 
     public static FormBirdsRow build(Context context) {
@@ -39,7 +37,7 @@ public class FormBirdsRow extends LinearLayout implements SingleChoiceFormInput.
         instance.onFinishInflate();
         return instance;
     }
-    
+
     public FormBirdsRow(Context context) {
         super(context);
     }
@@ -63,8 +61,6 @@ public class FormBirdsRow extends LinearLayout implements SingleChoiceFormInput.
     }
 
     protected void init() {
-        prefs = new BirdPrefs_(getContext());
-
         species = findViewById(R.id.field_name);
         countUnits = findViewById(R.id.form_birds_count_units);
         countType = findViewById(R.id.form_birds_count_type);

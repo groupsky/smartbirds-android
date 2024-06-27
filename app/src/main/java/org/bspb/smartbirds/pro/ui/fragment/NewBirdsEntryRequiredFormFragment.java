@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -18,7 +19,7 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
-import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
+import org.bspb.smartbirds.pro.prefs.BirdPrefs;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
@@ -65,8 +66,7 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @ViewById(R.id.form_birds_distance)
     EditText distanceView;
 
-    @Pref
-    BirdPrefs_ prefs;
+    BirdPrefs prefs;
 
     @Pref
     CommonPrefs_ commonPrefs;
@@ -75,6 +75,11 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
 
     @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
+
+    @AfterInject
+    void initPrefs() {
+        prefs = new BirdPrefs(getContext());
+    }
 
     @Override
     public void onStart() {
@@ -116,8 +121,8 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            countUnits.setSelection(prefs.birdCountUnits().get());
-            countType.setSelection(prefs.birdCountType().get());
+            countUnits.setSelection(prefs.getCountUnits());
+            countType.setSelection(prefs.getCountType());
             confidential.setChecked(commonPrefs.confidentialRecord().get());
         }
         handleCountsLogic();
@@ -154,8 +159,8 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onPause() {
         super.onPause();
-        prefs.birdCountUnits().put(countUnits.getSelection());
-        prefs.birdCountType().put(countType.getSelection());
+        prefs.setCountUnits(countUnits.getSelection());
+        prefs.setCountType(countType.getSelection());
         commonPrefs.confidentialRecord().put(confidential.isChecked());
     }
 
