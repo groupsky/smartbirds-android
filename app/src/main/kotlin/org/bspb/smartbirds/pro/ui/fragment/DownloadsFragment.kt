@@ -6,16 +6,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.reflect.TypeToken
+import org.androidannotations.annotations.AfterInject
 import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.adapter.DownloadsAdapter
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse
 import org.bspb.smartbirds.pro.databinding.FragmentDownloadsBinding
-import org.bspb.smartbirds.pro.prefs.DownloadsPrefs_
+import org.bspb.smartbirds.pro.prefs.DownloadsPrefs
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,13 +26,17 @@ open class DownloadsFragment : Fragment() {
 
     protected val backend: Backend by lazy { Backend.getInstance() }
 
-    @Pref
-    protected lateinit var prefs: DownloadsPrefs_
+    protected lateinit var prefs: DownloadsPrefs
 
     private lateinit var adapter: DownloadsAdapter
     private lateinit var locale: String
 
     protected lateinit var binding: FragmentDownloadsBinding
+
+    @AfterInject
+    fun initPrefs() {
+        prefs = DownloadsPrefs(requireContext())
+    }
 
     @AfterViews
     fun initViews() {
@@ -49,7 +53,7 @@ open class DownloadsFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         binding.downloadsListView.addItemDecoration(dividerItemDecoration)
 
-        val cachedDownloads = prefs.downloads().get()
+        val cachedDownloads = prefs.getDownloads()
         var downloads: List<DownloadsItem>? = null
         if (!TextUtils.isEmpty(cachedDownloads)) {
             val listType = object : TypeToken<List<DownloadsItem?>?>() {}.type
@@ -101,7 +105,7 @@ open class DownloadsFragment : Fragment() {
                 response.apply {
                     if (isSuccessful) {
                         body()?.downloads?.apply {
-                            prefs.downloads().put(SBGsonParser.createParser().toJson(this))
+                            prefs.setDownloads(SBGsonParser.createParser().toJson(this))
                             listDownloads(this)
                         }
                     }

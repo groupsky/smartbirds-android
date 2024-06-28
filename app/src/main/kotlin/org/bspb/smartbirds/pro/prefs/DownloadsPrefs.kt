@@ -1,10 +1,23 @@
 package org.bspb.smartbirds.pro.prefs
 
-import org.androidannotations.annotations.sharedpreferences.SharedPref
+import android.content.Context
+import androidx.preference.PreferenceManager
 
-@SharedPref(SharedPref.Scope.APPLICATION_DEFAULT)
-interface DownloadsPrefs {
+class DownloadsPrefs(context: Context) {
 
-    fun downloads() : String?
+    companion object {
+        const val KEY_DOWNLOADS = "downloads"
+    }
+
+    private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+
+    fun getDownloads(): String? {
+        return prefs.getString(KEY_DOWNLOADS, "")
+    }
+
+    fun setDownloads(value: String?) {
+        prefs.edit().putString(KEY_DOWNLOADS, value).apply()
+    }
 
 }

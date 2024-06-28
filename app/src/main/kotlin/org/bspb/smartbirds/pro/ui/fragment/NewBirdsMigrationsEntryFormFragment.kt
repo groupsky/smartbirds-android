@@ -7,11 +7,10 @@ import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.FragmentById
 import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.prefs.BirdsMigrationsPrefs_
+import org.bspb.smartbirds.pro.prefs.BirdsMigrationsPrefs
 import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
@@ -47,8 +46,7 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
 
     protected lateinit var commonPrefs: CommonPrefs
 
-    @Pref
-    protected lateinit var migrationPrefs: BirdsMigrationsPrefs_
+    private lateinit var migrationPrefs: BirdsMigrationsPrefs
 
     @AfterViews
     open fun initQuickChoice() {
@@ -61,7 +59,7 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
         super.onResume()
         if (isNewEntry) {
             confidential!!.isChecked = commonPrefs.getConfidentialRecord()
-            migrationPrefs.migrationPoint().get()?.let { nomenclatureJson ->
+            migrationPrefs.getMigrationPoint()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -81,7 +79,7 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
         super.onPause()
         commonPrefs.setConfidentialRecord(confidential!!.isChecked)
         migrationPoint?.selectedItem?.let {
-            migrationPrefs.migrationPoint().put(SBGsonParser.createParser().toJson(it))
+            migrationPrefs.setMigrationPoint(SBGsonParser.createParser().toJson(it))
         }
     }
 
@@ -113,6 +111,7 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
                 childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
         }
         commonPrefs = CommonPrefs(requireContext())
+        migrationPrefs = BirdsMigrationsPrefs(requireContext())
         super.onViewCreated(view, savedInstanceState)
     }
 
