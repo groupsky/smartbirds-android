@@ -57,7 +57,6 @@ import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.service.ExportService_
 import org.bspb.smartbirds.pro.service.SyncService
-import org.bspb.smartbirds.pro.service.SyncService_
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.DownloadsActivity
@@ -234,7 +233,9 @@ open class MainFragment : Fragment() {
 
     @Click(R.id.btn_upload)
     open fun uploadBtnClicked() {
-        SyncService_.intent(activity).sync().start()
+        activity?.let {
+            it.startService(SyncService.syncIntent(it))
+        }
     }
 
     @Click(R.id.btn_battery_optimization)

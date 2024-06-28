@@ -15,7 +15,7 @@ import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.LoginStateEvent
 import org.bspb.smartbirds.pro.events.LogoutEvent
 import org.bspb.smartbirds.pro.events.UserDataEvent
-import org.bspb.smartbirds.pro.service.SyncService_
+import org.bspb.smartbirds.pro.service.SyncService
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.utils.SBScope
@@ -111,7 +111,7 @@ open class AuthenticationManager(private var context: Context) {
         AuthenticationInterceptor.getInstance()
             .setAuthorization(response.body()!!.token, email, password)
 
-        SyncService_.intent(context).initialSync().start()
+        context.startService(SyncService.initialSyncIntent(context))
 
         return LoginResultEvent(response.body()!!.user)
     }

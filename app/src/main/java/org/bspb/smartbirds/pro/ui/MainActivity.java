@@ -12,7 +12,6 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs;
 import org.bspb.smartbirds.pro.prefs.UserPrefs;
 import org.bspb.smartbirds.pro.service.SyncService;
-import org.bspb.smartbirds.pro.service.SyncService_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 
 
@@ -39,7 +38,7 @@ public class MainActivity extends BaseActivity {
             } else if (globalPrefs.getVersionCode() != BuildConfig.VERSION_CODE) {
                 // Sync data if app is updated
                 if (!SyncService.Companion.isWorking()) {
-                    SyncService_.intent(this).initialSync().start();
+                    startService(SyncService.Companion.initialSyncIntent(this));
                 }
                 globalPrefs.setVersionCode(BuildConfig.VERSION_CODE);
             }
