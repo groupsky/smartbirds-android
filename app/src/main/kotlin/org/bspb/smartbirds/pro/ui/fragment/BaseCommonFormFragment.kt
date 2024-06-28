@@ -8,11 +8,10 @@ import org.androidannotations.annotations.AfterViews
 import org.androidannotations.annotations.EFragment
 import org.androidannotations.annotations.OptionsItem
 import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.prefs.CommonPrefs
-import org.bspb.smartbirds.pro.prefs.UserPrefs_
+import org.bspb.smartbirds.pro.prefs.UserPrefs
 import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.ui.utils.FormUtils
 import org.bspb.smartbirds.pro.ui.views.DateFormInput
@@ -39,8 +38,7 @@ abstract class BaseCommonFormFragment : Fragment() {
 
     protected lateinit var prefs: CommonPrefs
 
-    @Pref
-    protected lateinit var userPrefs: UserPrefs_
+    protected lateinit var userPrefs: UserPrefs
 
     @ViewById(R.id.observers)
     protected lateinit var observers: MultipleTextFormInput
@@ -66,6 +64,7 @@ abstract class BaseCommonFormFragment : Fragment() {
     @AfterInject
     open fun initPrefs() {
         prefs = CommonPrefs(requireContext())
+        userPrefs = UserPrefs(requireContext())
     }
 
     @AfterViews
@@ -79,15 +78,15 @@ abstract class BaseCommonFormFragment : Fragment() {
     @OptionsItem(R.id.action_submit)
     fun save() {
         val data = form!!.serialize()
-        data[getString(R.string.tag_user_id)] = userPrefs.userId().get()
-        data[getString(R.string.tag_user_first_name)] = userPrefs.firstName().get()
-        data[getString(R.string.tag_user_last_name)] = userPrefs.lastName().get()
-        data[getString(R.string.tag_user_email)] = userPrefs.email().get()
+        data[getString(R.string.tag_user_id)] = userPrefs.getUserId()
+        data[getString(R.string.tag_user_first_name)] = userPrefs.getFirstName()
+        data[getString(R.string.tag_user_last_name)] = userPrefs.getLastName()
+        data[getString(R.string.tag_user_email)] = userPrefs.getEmail()
         persistForm(data)
     }
 
     fun loadForm(data: HashMap<String, String>?) {
-        if (data != null && data.isNotEmpty()) {
+        if (!data.isNullOrEmpty()) {
             form!!.deserialize(data)
         }
     }

@@ -46,7 +46,7 @@ import org.bspb.smartbirds.pro.events.UndoLastEntry
 import org.bspb.smartbirds.pro.events.UserDataEvent
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
-import org.bspb.smartbirds.pro.prefs.UserPrefs_
+import org.bspb.smartbirds.pro.prefs.UserPrefs
 import org.bspb.smartbirds.pro.tools.GpxWriter
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
@@ -97,7 +97,7 @@ open class DataService : Service() {
 
     protected val bus: EEventBus by lazy { EEventBus.getInstance() }
     private lateinit var globalPrefs: SmartBirdsPrefs
-    private lateinit var userPrefs: UserPrefs_
+    private lateinit var userPrefs: UserPrefs
     private lateinit var monitoringPrefs: MonitoringPrefs
     private val monitoringManager = MonitoringManager.getInstance()
 
@@ -136,7 +136,7 @@ open class DataService : Service() {
 
     private fun init() {
         globalPrefs = SmartBirdsPrefs(this)
-        userPrefs = UserPrefs_(this)
+        userPrefs = UserPrefs(this)
         monitoringPrefs = MonitoringPrefs(this)
 
         initBus()
@@ -460,12 +460,11 @@ open class DataService : Service() {
 
     fun onEvent(event: UserDataEvent) {
         if (event.user != null) {
-            userPrefs.userId().put(event.user.id)
-            userPrefs.firstName().put(event.user.firstName)
-            userPrefs.lastName().put(event.user.lastName)
-            userPrefs.email().put(event.user.email)
-            userPrefs.bgAtlasCells()
-                .put(SBGsonParser.createParser().toJson(event.user.bgAtlasCells))
+            userPrefs.setUserId(event.user.id)
+            userPrefs.setFirstName(event.user.firstName)
+            userPrefs.setLastName(event.user.lastName)
+            userPrefs.setEmail(event.user.email)
+            userPrefs.setBgAtlasCells(SBGsonParser.createParser().toJson(event.user.bgAtlasCells))
         }
         bus.removeStickyEvent(event)
     }

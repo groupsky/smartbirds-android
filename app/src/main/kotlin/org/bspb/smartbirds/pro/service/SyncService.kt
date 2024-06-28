@@ -4,11 +4,9 @@ import android.content.Intent
 import kotlinx.coroutines.runBlocking
 import org.androidannotations.annotations.EIntentService
 import org.androidannotations.annotations.ServiceAction
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.androidannotations.api.support.app.AbstractIntentService
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
-import org.bspb.smartbirds.pro.prefs.UserPrefs_
 import org.bspb.smartbirds.pro.sync.AppSettingsManager
 import org.bspb.smartbirds.pro.sync.AuthenticationManager
 import org.bspb.smartbirds.pro.sync.UploadManager
@@ -28,9 +26,6 @@ open class SyncService : AbstractIntentService("SyncService") {
         var isWorking = false
         var syncMessage: String? = null
     }
-
-    @Pref
-    protected lateinit var prefs: UserPrefs_
 
     private val uploadManager: UploadManager by lazy { UploadManager(this) }
 

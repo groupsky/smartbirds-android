@@ -57,7 +57,7 @@ import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
 import org.bspb.smartbirds.pro.prefs.MonitoringPrefs;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs;
-import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.service.TrackingService;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
@@ -129,7 +129,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     MonitoringPrefs monitoringPrefs;
     SmartBirdsPrefs prefs;
-    UserPrefs_ userPrefs;
+    UserPrefs userPrefs;
 
     private boolean canceled = false;
     boolean stayAwake;
@@ -198,7 +198,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     void init() {
         monitoringPrefs = new MonitoringPrefs(this);
         prefs = new SmartBirdsPrefs(this);
-        userPrefs = new UserPrefs_(this);
+        userPrefs = new UserPrefs(this);
 
         restoreSavedInstanceState(getIntent().getExtras());
         listFragment = (MonitoringEntryListFragment) getSupportFragmentManager().findFragmentById(R.id.list_container);
@@ -520,7 +520,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     private List<BGAtlasCell> readAtlasCells() {
         Type listType = new TypeToken<List<BGAtlasCell>>() {
         }.getType();
-        return SBGsonParser.createParser().fromJson(userPrefs.bgAtlasCells().get(), listType);
+        return SBGsonParser.createParser().fromJson(userPrefs.getBgAtlasCells(), listType);
     }
 
     void onNewEntry() {

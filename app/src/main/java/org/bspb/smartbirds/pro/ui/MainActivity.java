@@ -10,7 +10,7 @@ import org.bspb.smartbirds.pro.events.LogoutEvent;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs;
-import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs;
 import org.bspb.smartbirds.pro.service.SyncService;
 import org.bspb.smartbirds.pro.service.SyncService_;
 import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
@@ -19,7 +19,7 @@ import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
 public class MainActivity extends BaseActivity {
 
     EEventBus bus = EEventBus.getInstance();
-    UserPrefs_ prefs;
+    UserPrefs prefs;
     SmartBirdsPrefs globalPrefs;
 
     @Override
@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = new UserPrefs_(this);
+        prefs = new UserPrefs(this);
         globalPrefs = new SmartBirdsPrefs(this);
 
         createFragment();
@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
     }
 
     protected void requireAuthentication() {
-        if (!prefs.isAuthenticated().get() && !isFinishing()) {
+        if (!prefs.isAuthenticated() && !isFinishing()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }

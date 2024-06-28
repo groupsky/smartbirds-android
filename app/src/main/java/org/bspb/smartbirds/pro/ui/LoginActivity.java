@@ -21,7 +21,7 @@ import org.bspb.smartbirds.pro.backend.LoginResultEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LoginStateEvent;
 import org.bspb.smartbirds.pro.events.UserDataEvent;
-import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.prefs.UserPrefs;
 import org.bspb.smartbirds.pro.sync.AuthenticationManager;
 
 /**
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView mError;
 
     EEventBus bus = EEventBus.getInstance();
-    UserPrefs_ prefs;
+    UserPrefs prefs;
 
     private boolean isLoginRunning;
     private boolean missingGdpr = false;
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = new UserPrefs_(this);
+        prefs = new UserPrefs(this);
         setContentView(R.layout.activity_login);
         initViews();
     }
@@ -73,8 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         });
 
-        if (prefs.username().exists()) {
-            mEmailView.setText(prefs.username().get());
+        if (!TextUtils.isEmpty(prefs.getUsername())) {
+            mEmailView.setText(prefs.getUsername());
         }
     }
 

@@ -12,7 +12,7 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.backend.dto.LoginRequest
 import org.bspb.smartbirds.pro.events.EEventBus
 import org.bspb.smartbirds.pro.events.UserDataEvent
-import org.bspb.smartbirds.pro.prefs.UserPrefs_
+import org.bspb.smartbirds.pro.prefs.UserPrefs
 import org.bspb.smartbirds.pro.sync.AuthenticationManager
 import org.bspb.smartbirds.pro.tools.Reporting
 import java.io.IOException
@@ -38,7 +38,7 @@ class AuthenticationInterceptor private constructor() : Interceptor {
             synchronized(this) {
                 INSTANCE = AuthenticationInterceptor()
                 INSTANCE!!.context = context
-                INSTANCE!!.prefs = UserPrefs_(context)
+                INSTANCE!!.prefs = UserPrefs(context)
                 INSTANCE!!.authenticationManager = AuthenticationManager(context)
                 INSTANCE!!.loadAuthorization()
                 INSTANCE
@@ -47,28 +47,28 @@ class AuthenticationInterceptor private constructor() : Interceptor {
     }
 
     private lateinit var context: Context
-    private lateinit var prefs: UserPrefs_
+    private lateinit var prefs: UserPrefs
     private val backend: Backend by lazy { Backend.getInstance() }
     private val bus: EEventBus by lazy { EEventBus.getInstance() }
     private lateinit var authenticationManager: AuthenticationManager
     private var authorization: String? = null
 
     private fun loadAuthorization() {
-        authorization = prefs.authToken().get()
+        authorization = prefs.getAuthToken()
     }
 
     fun clearAuthorization() {
         authorization = null
         prefs.clear()
-        prefs.isAuthenticated().put(false)
+        prefs.setAuthenticated(false)
     }
 
     fun setAuthorization(authorization: String?, username: String?, password: String?) {
         this.authorization = authorization
-        prefs.authToken().put(authorization)
-        prefs.isAuthenticated().put(!TextUtils.isEmpty(authorization))
-        prefs.username().put(username)
-        prefs.password().put(password)
+        prefs.setAuthToken(authorization)
+        prefs.setAuthenticated(!TextUtils.isEmpty(authorization))
+        prefs.setUsername(username)
+        prefs.setPassword(password)
         Log.i(TAG, String.format("Authorization: %s", authorization))
     }
 
@@ -79,11 +79,11 @@ class AuthenticationInterceptor private constructor() : Interceptor {
                 authorization
             )
             val loginResponse =
-                backend.api().login(LoginRequest(prefs.username().get(), prefs.password().get()))
+                backend.api().login(LoginRequest(prefs.getUsername(), prefs.getPassword()))
                     .execute()
             if (loginResponse.isSuccessful) {
                 authorization = loginResponse.body()!!.token
-                prefs.authToken().put(authorization)
+                prefs.setAuthToken(authorization)
                 bus.postSticky(UserDataEvent(loginResponse.body()!!.user))
                 return true
             } else {
