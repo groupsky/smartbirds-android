@@ -202,7 +202,7 @@
             android:value="77d73d871322caaa0ef4f96a467325bcc3b2dfb5" />
 
         <service
-            android:name=".service.ExportService_"
+            android:name=".service.ExportService"
             android:enabled="true"
             android:exported="false" />
 

@@ -55,7 +55,7 @@ import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.service.DataService
-import org.bspb.smartbirds.pro.service.ExportService_
+import org.bspb.smartbirds.pro.service.ExportService
 import org.bspb.smartbirds.pro.service.SyncService
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.tools.Reporting
@@ -255,7 +255,9 @@ open class MainFragment : Fragment() {
             getString(R.string.export_dialog_text),
             true
         )
-        ExportService_.intent(activity).prepareForExport().start()
+        activity?.let {
+            it.startService(ExportService.newIntent(it))
+        }
     }
 
     @OptionsItem(R.id.menu_browse)
