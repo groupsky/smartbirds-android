@@ -1,11 +1,13 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.ViewById;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.prefs.MammalPrefs;
@@ -19,25 +21,42 @@ import java.util.HashMap;
  * Created by dani on 04.01.18.
  */
 
-@EFragment(R.layout.fragment_monitoring_form_new_mammal_required_entry)
 public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
 
-    @ViewById(R.id.form_herp_habitat)
     SingleChoiceFormInput habitat;
-
-    @ViewById(R.id.form_herp_count)
     DecimalNumberFormInput count;
-
-    @ViewById(R.id.form_mammals_confidential)
     SwitchFormInput confidential;
 
     MammalPrefs prefs;
-
-
     CommonPrefs commonPrefs;
 
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
+
+    public static NewMammalEntryRequiredFormFragment newInstance(boolean isNewEntry, boolean readOnly) {
+        NewMammalEntryRequiredFormFragment fragment = new NewMammalEntryRequiredFormFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_IS_NEW_ENTRY, isNewEntry);
+        args.putBoolean(ARG_READ_ONLY, readOnly);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_new_mammal_required_entry, container, false);
+        }
+        return view;
+    }
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        commonPrefs = new CommonPrefs(getContext());
+        prefs = new MammalPrefs(getContext());
+    }
 
     @Override
     public void onResume() {
@@ -72,9 +91,14 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
-        commonPrefs = new CommonPrefs(getContext());
-        prefs = new MammalPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
+        initViews();
+    }
+
+    private void initViews() {
+        habitat = requireView().findViewById(R.id.form_herp_habitat);
+        count = requireView().findViewById(R.id.form_herp_count);
+        confidential = requireView().findViewById(R.id.form_mammals_confidential);
     }
 
 
