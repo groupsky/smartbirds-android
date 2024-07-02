@@ -28,16 +28,18 @@ open class NewFishesEntryFormFragment : BaseTabEntryFragment() {
     }
 
     @AfterViews
-    protected fun setupTabs() {
+    override fun setupTabs() {
         setAdapter(object : FragmentStatePagerAdapter(parentFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> NewFishesEntryMainFormFragment_.builder().setNewEntry(isNewEntry)
                         .readOnly(readOnly)
                         .build()
+
                     1 -> NewFishesEntryCommonFormFragment_.builder().setNewEntry(isNewEntry)
                         .readOnly(readOnly)
                         .build()
+
                     else -> throw IllegalArgumentException("Unhandled position$position")
                 }
             }

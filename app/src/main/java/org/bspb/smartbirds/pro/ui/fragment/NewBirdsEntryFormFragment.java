@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -13,12 +12,8 @@ import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setupTabs();
-    }
 
+    @Override
     protected void setupTabs() {
         setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
             @Override

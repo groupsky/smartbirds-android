@@ -11,15 +11,17 @@ import org.bspb.smartbirds.pro.enums.EntryType
 open class NewBatsEntryFormFragment : BaseTabEntryFragment() {
 
     @AfterViews
-    protected open fun setupTabs() {
+    override fun setupTabs() {
         setAdapter(object : FragmentStatePagerAdapter(parentFragmentManager!!) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> NewBatsMainEntryFormFragment_.builder().setNewEntry(
                         isNewEntry
                     ).readOnly(readOnly).build()
+
                     1 -> NewBatsOptionalEntryFormFragment_.builder().setNewEntry(isNewEntry)
                         .readOnly(readOnly).build()
+
                     else -> throw IllegalArgumentException("Unhandled position$position")
                 }
             }

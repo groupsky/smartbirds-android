@@ -145,7 +145,11 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         viewPager = view.findViewById(R.id.pager);
         updateViewPager();
+        setupTabs();
     }
+
+    protected abstract void setupTabs();
 }
