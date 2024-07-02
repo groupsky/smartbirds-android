@@ -35,10 +35,10 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
     companion object {
         protected val TAG = SmartBirdsApplication.TAG + "." + javaClass.simpleName
 
-        protected const val ARG_LAT = "lat"
-        protected const val ARG_LON = "lon"
-        protected const val ARG_GEOLOCATION_ACCURACY = "geolocationAccuracy"
-        protected const val ARG_ENTRY_ID = "entryId"
+        const val ARG_LAT = "lat"
+        const val ARG_LON = "lon"
+        const val ARG_GEOLOCATION_ACCURACY = "geolocationAccuracy"
+        const val ARG_ENTRY_ID = "entryId"
         private const val STATE_STORED_ENTRY = "storedEntry"
     }
 

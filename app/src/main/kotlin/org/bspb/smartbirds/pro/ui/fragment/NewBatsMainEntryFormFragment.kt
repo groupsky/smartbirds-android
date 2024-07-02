@@ -1,10 +1,9 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentById
-import org.androidannotations.annotations.ViewById
+import android.view.ViewGroup
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.prefs.BatsPrefs
@@ -16,41 +15,60 @@ import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
 
-@EFragment(R.layout.fragment_monitoring_form_new_bats_entry)
 open class NewBatsMainEntryFormFragment : BaseFormFragment() {
 
-    @JvmField
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
+    companion object {
+        fun newInstance(isNewEntry: Boolean, readOnly: Boolean): NewBatsMainEntryFormFragment {
+            return NewBatsMainEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_IS_NEW_ENTRY, isNewEntry)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
+        }
+    }
+
     protected var picturesFragment: NewEntryPicturesFragment? = null
 
 
-    @JvmField
-    @ViewById(R.id.form_bats_confidential)
-    protected var confidential: SwitchFormInput? = null
+    private lateinit var commonPrefs: CommonPrefs
+    private lateinit var batsPrefs: BatsPrefs
 
-    protected lateinit var commonPrefs: CommonPrefs
+    private var confidential: SwitchFormInput? = null
+    private var metodology: SingleChoiceFormInput? = null
+    private var tempCave: FloatNumberFormInput? = null
+    private var humidityCave: FloatNumberFormInput? = null
+    private var typeLoc: SingleChoiceFormInput? = null
+    private var habitat: SingleChoiceFormInput? = null
 
-    protected lateinit var batsPrefs: BatsPrefs
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        commonPrefs = CommonPrefs(requireContext())
+        batsPrefs = BatsPrefs(requireContext())
+    }
 
-    @JvmField
-    @ViewById(R.id.form_bats_metodology)
-    protected var metodology: SingleChoiceFormInput? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_monitoring_form_new_bats_entry,
+            container,
+            false
+        )
+    }
 
-    @JvmField
-    @ViewById(R.id.form_bats_t_cave)
-    protected var tempCave: FloatNumberFormInput? = null
+    override fun initViews() {
+        super.initViews()
 
-    @JvmField
-    @ViewById(R.id.form_bats_h_cave)
-    protected var humidityCave: FloatNumberFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_bats_typloc)
-    protected var typeLoc: SingleChoiceFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_bats_habitat)
-    protected var habitat: SingleChoiceFormInput? = null
+        confidential = view?.findViewById(R.id.form_bats_confidential)
+        metodology = view?.findViewById(R.id.form_bats_metodology)
+        tempCave = view?.findViewById(R.id.form_bats_t_cave)
+        humidityCave = view?.findViewById(R.id.form_bats_h_cave)
+        typeLoc = view?.findViewById(R.id.form_bats_typloc)
+        habitat = view?.findViewById(R.id.form_bats_habitat)
+    }
 
     override fun onResume() {
         super.onResume()
@@ -145,8 +163,6 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
             picturesFragment =
                 childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
         }
-        commonPrefs = CommonPrefs(requireContext())
-        batsPrefs = BatsPrefs(requireContext())
         super.onViewCreated(view, savedInstanceState)
     }
 }

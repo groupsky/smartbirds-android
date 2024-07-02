@@ -1,27 +1,19 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EFragment
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
 
-@EFragment
 open class NewBatsEntryFormFragment : BaseTabEntryFragment() {
 
-    @AfterViews
     override fun setupTabs() {
         setAdapter(object : FragmentStatePagerAdapter(parentFragmentManager!!) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
-                    0 -> NewBatsMainEntryFormFragment_.builder().setNewEntry(
-                        isNewEntry
-                    ).readOnly(readOnly).build()
-
-                    1 -> NewBatsOptionalEntryFormFragment_.builder().setNewEntry(isNewEntry)
-                        .readOnly(readOnly).build()
-
+                    0 -> NewBatsMainEntryFormFragment.newInstance(isNewEntry, readOnly)
+                    1 -> NewBatsOptionalEntryFormFragment.newInstance(isNewEntry, readOnly)
                     else -> throw IllegalArgumentException("Unhandled position$position")
                 }
             }
@@ -42,12 +34,22 @@ open class NewBatsEntryFormFragment : BaseTabEntryFragment() {
 
     class Builder : BaseEntryFragment.Builder {
         override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
-            return NewBatsEntryFormFragment_.builder().lat(lat).lon(lon)
-                .geolocationAccuracy(geolocationAccuracy).build()
+            return NewBatsEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putDouble(ARG_LAT, lat)
+                    putDouble(ARG_LON, lon)
+                    putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy)
+                }
+            }
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
-            return NewBatsEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build()
+            return NewBatsEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_ENTRY_ID, id)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
         }
     }
 
