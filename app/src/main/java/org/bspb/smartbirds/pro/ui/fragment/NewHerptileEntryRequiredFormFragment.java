@@ -42,10 +42,10 @@ public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
         prefs = new HerptilePrefs(requireContext());
         commonPrefs = new CommonPrefs(requireContext());
-        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -93,10 +93,12 @@ public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
         }
 
         super.onViewCreated(view, savedInstanceState);
-        initViews();
     }
 
-    private void initViews() {
+    @Override
+    protected void initViews() {
+        super.initViews();
+
         habitat = requireView().findViewById(R.id.form_herp_habitat);
         count = requireView().findViewById(R.id.form_herp_count);
         confidential = requireView().findViewById(R.id.form_herptiles_confidential);

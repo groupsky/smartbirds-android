@@ -3,11 +3,13 @@ package org.bspb.smartbirds.pro.ui.fragment;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.ViewById;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs;
@@ -20,22 +22,47 @@ import java.util.HashMap;
  * Created by dani on 26.02.18.
  */
 
-@EFragment(R.layout.fragment_monitoring_form_new_plants_required_entry)
 public class NewPlantsEntryRequiredFormFragment extends BaseFormFragment {
 
-    @ViewById(R.id.form_plants_confidential)
     SwitchFormInput confidential;
-
-    @ViewById(R.id.form_plants_elevation)
     DecimalNumberFormInput elevation;
 
     CommonPrefs commonPrefs;
-
     EEventBus eventBus = EEventBus.getInstance();
 
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
+    public static NewPlantsEntryRequiredFormFragment newInstance(boolean isNewEntry, boolean readOnly) {
+        NewPlantsEntryRequiredFormFragment fragment = new NewPlantsEntryRequiredFormFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_IS_NEW_ENTRY, isNewEntry);
+        args.putBoolean(ARG_READ_ONLY, readOnly);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_new_plants_required_entry, container, false);
+        }
+        return view;
+    }
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        commonPrefs = new CommonPrefs(requireContext());
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        confidential = requireView().findViewById(R.id.form_plants_confidential);
+        elevation = requireView().findViewById(R.id.form_plants_elevation);
+    }
 
     @Override
     public void onStart() {
@@ -81,7 +108,6 @@ public class NewPlantsEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
-        commonPrefs = new CommonPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 

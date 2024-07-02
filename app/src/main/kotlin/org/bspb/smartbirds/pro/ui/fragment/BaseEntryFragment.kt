@@ -84,11 +84,6 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initViews()
-    }
-
     override fun onBeforeCreate(savedInstanceState: Bundle?) {
         super.onBeforeCreate(savedInstanceState)
         restoreInstanceState(savedInstanceState)
@@ -206,7 +201,9 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         }
     }
 
-    protected open fun initViews() {
+
+    override fun initViews() {
+        super.initViews()
         btnSubmit = view?.findViewById(R.id.btn_submit)
         btnSubmit?.setOnClickListener { onSubmitClicked() }
         if (btnSubmit != null && readOnly) {

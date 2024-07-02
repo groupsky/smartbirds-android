@@ -65,6 +65,9 @@ public class BaseFormFragment extends Fragment {
     protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
     }
 
+    protected void initViews() {
+    }
+
     protected void readArgs() {
         if (getArguments() != null) {
             newEntry = getArguments().getBoolean(ARG_IS_NEW_ENTRY, false);
@@ -135,6 +138,7 @@ public class BaseFormFragment extends Fragment {
             doDeserialize(monitoringCode, pendingDeserializeData);
             pendingDeserializeData = null;
         }
+        initViews();
     }
 
     @Override

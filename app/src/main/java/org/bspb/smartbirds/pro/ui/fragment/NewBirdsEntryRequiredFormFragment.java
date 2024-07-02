@@ -87,17 +87,16 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        initPrefs();
-        super.onCreate(savedInstanceState);
-    }
-
-    void initPrefs() {
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
         prefs = new BirdPrefs(requireContext());
         commonPrefs = new CommonPrefs(requireContext());
     }
 
-    void initViews() {
+    @Override
+    protected void initViews() {
+        super.initViews();
+
         if (getView() == null) return;
 
         countUnits = getView().findViewById(R.id.form_birds_count_units);
@@ -221,7 +220,6 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         super.onViewCreated(view, savedInstanceState);
-        initViews();
     }
 
     @Override

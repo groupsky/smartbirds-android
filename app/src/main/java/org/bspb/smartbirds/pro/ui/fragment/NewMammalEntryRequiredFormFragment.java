@@ -92,10 +92,12 @@ public class NewMammalEntryRequiredFormFragment extends BaseFormFragment {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
         super.onViewCreated(view, savedInstanceState);
-        initViews();
     }
 
-    private void initViews() {
+    @Override
+    protected void initViews() {
+        super.initViews();
+        
         habitat = requireView().findViewById(R.id.form_herp_habitat);
         count = requireView().findViewById(R.id.form_herp_count);
         confidential = requireView().findViewById(R.id.form_mammals_confidential);

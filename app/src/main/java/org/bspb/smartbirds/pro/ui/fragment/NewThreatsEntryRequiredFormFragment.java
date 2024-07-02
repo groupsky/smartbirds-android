@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ViewById;
@@ -124,12 +123,10 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     }
 
 
-    @AfterViews
-    protected void flushDeserialize() {
-        initViews();
-    }
-
-    private void initViews() {
+    @Override
+    protected void initViews() {
+        super.initViews();
+        
         primaryType.setOnValueChangeListener(new SingleChoiceConfigRadioFormInput.OnValueChangeListener() {
             @Override
             public void onValueChanged(String value) {

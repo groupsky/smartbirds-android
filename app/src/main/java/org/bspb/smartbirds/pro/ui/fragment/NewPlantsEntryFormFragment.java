@@ -1,29 +1,29 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 
-@EFragment
 public class NewPlantsEntryFormFragment extends BaseTabEntryFragment {
 
 
-    @AfterViews
+    @Override
     protected void setupTabs() {
         setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
-                    case 0:
-                        return NewPlantsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
-                    case 1:
-                        return NewPlantsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
-                    default:
-                        throw new IllegalArgumentException("Unhandled position" + position);
+                    case 0 -> {
+                        return NewPlantsEntryRequiredFormFragment.newInstance(isNewEntry(), readOnly);
+                    }
+                    case 1 -> {
+                        return NewPlantsEntryOptionalFormFragment.Companion.newInstance(isNewEntry(), readOnly);
+                    }
+                    default -> throw new IllegalArgumentException("Unhandled position" + position);
                 }
             }
 
@@ -48,12 +48,23 @@ public class NewPlantsEntryFormFragment extends BaseTabEntryFragment {
 
         @Override
         public Fragment build(double lat, double lon, double geolocationAccuracy) {
-            return NewPlantsEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy).build();
+            Fragment fragment = new NewPlantsEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putDouble(ARG_LAT, lat);
+            args.putDouble(ARG_LON, lon);
+            args.putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
         public Fragment load(long id, boolean readOnly) {
-            return NewPlantsEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
+            Fragment fragment = new NewPlantsEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putLong(ARG_ENTRY_ID, id);
+            args.putBoolean(ARG_READ_ONLY, readOnly);
+            fragment.setArguments(args);
+            return fragment;
         }
     }
 
