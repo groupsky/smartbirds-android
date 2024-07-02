@@ -49,13 +49,6 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
 
     NewEntryPicturesFragment picturesFragment;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        prefs = new CbmPrefs(requireContext());
-        commonPrefs = new CommonPrefs(requireContext());
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,6 +57,13 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
             view = inflater.inflate(R.layout.fragment_monitoring_form_new_cbm_entry, container, false);
         }
         return view;
+    }
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        prefs = new CbmPrefs(requireContext());
+        commonPrefs = new CommonPrefs(requireContext());
     }
 
     @Override
