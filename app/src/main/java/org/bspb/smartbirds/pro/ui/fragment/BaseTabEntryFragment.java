@@ -1,22 +1,17 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import org.bspb.smartbirds.pro.R;
 
 import java.util.Date;
@@ -26,10 +21,8 @@ import java.util.HashMap;
  * Created by groupsky on 26.01.17.
  */
 
-@EFragment(R.layout.fragment_monitoring_form_tabs)
 public abstract class BaseTabEntryFragment extends BaseEntryFragment {
 
-    @ViewById(R.id.pager)
     ViewPager viewPager;
     ActionBar ab;
 
@@ -82,7 +75,6 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
         }
     }
 
-    @AfterViews
     protected void updateViewPager() {
         if (ab != null) {
             viewPager.setCurrentItem(ab.getSelectedTab().getPosition());
@@ -150,4 +142,10 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
         return contentView;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewPager = view.findViewById(R.id.pager);
+        updateViewPager();
+    }
 }
