@@ -1,11 +1,14 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Bundle;
-
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
@@ -20,13 +23,27 @@ import java.util.HashMap;
  * Created by groupsky on 19.12.16.
  */
 
-@EFragment(R.layout.fragment_monitoring_form_humid_birds)
 public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
 
-    @ViewById(R.id.form_birds_list)
     FormBirdsList birdsList;
 
     FormUtils.FormModel fakeForm = new FormUtils.FormModel();
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_humid_birds, container, false);
+        }
+        return view;
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        birdsList = requireView().findViewById(R.id.form_birds_list);
+    }
 
     @Override
     protected EntryType getEntryType() {
@@ -129,12 +146,23 @@ public class NewHumidBirdsEntryFragment extends BaseEntryFragment {
 
         @Override
         public Fragment build(double lat, double lon, double geolocationAccuracy) {
-            return NewHumidBirdsEntryFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy).build();
+            Fragment fragment = new NewHumidBirdsEntryFragment();
+            Bundle args = new Bundle();
+            args.putDouble(ARG_LAT, lat);
+            args.putDouble(ARG_LON, lon);
+            args.putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
         public Fragment load(long id, boolean readOnly) {
-            return NewHumidBirdsEntryFragment_.builder().entryId(id).readOnly(readOnly).build();
+            Fragment fragment = new NewHumidBirdsEntryFragment();
+            Bundle args = new Bundle();
+            args.putLong(ARG_ENTRY_ID, id);
+            args.putBoolean(ARG_READ_ONLY, readOnly);
+            fragment.setArguments(args);
+            return fragment;
         }
     }
 }
