@@ -2,13 +2,15 @@ package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
@@ -20,64 +22,58 @@ import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 
 import java.util.HashMap;
 
-@EFragment(R.layout.fragment_monitoring_form_new_threats_required_entry)
 public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
 
     interface OnPrimaryTypeChangedListener {
         void onPrimaryTypeChange(String primaryType);
     }
 
-    @ViewById(R.id.form_threats_confidential)
+    public static NewThreatsEntryRequiredFormFragment newInstance(boolean isNewEntry, boolean readOnly) {
+        NewThreatsEntryRequiredFormFragment fragment = new NewThreatsEntryRequiredFormFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_IS_NEW_ENTRY, isNewEntry);
+        args.putBoolean(ARG_READ_ONLY, readOnly);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     SwitchFormInput confidential;
-
-    @ViewById(R.id.form_threats_primary_type)
     SingleChoiceConfigRadioFormInput primaryType;
-
-    @ViewById(R.id.form_threats_category)
     SingleChoiceFormInput category;
-
-    @ViewById(R.id.form_threats_class)
     SingleChoiceConfigFormInput classInput;
-
-    @ViewById(R.id.form_threats_species)
     SingleChoiceFormInput species;
-
-    @ViewById(R.id.form_threats_count)
     DecimalNumberFormInput count;
-
-    @ViewById(R.id.form_threats_estimate)
     SingleChoiceFormInput estimate;
-
-    @ViewById(R.id.form_threats_poisoned_type)
     SingleChoiceConfigRadioFormInput poisonedType;
-
-    @ViewById(R.id.form_threats_state_carcass)
     SingleChoiceFormInput stateCarcass;
-
-    @ViewById(R.id.form_threats_category_hint)
     TextInputLayout categoryHint;
-
-    @ViewById(R.id.form_threats_estimate_hint)
     TextInputLayout estimateHint;
-
-    @ViewById(R.id.form_threats_class_hint)
     TextInputLayout classInputHint;
-
-    @ViewById(R.id.form_threats_species_hint)
     TextInputLayout speciesHint;
-
-    @ViewById(R.id.form_threats_count_hint)
     TextInputLayout countHint;
-
-    @ViewById(R.id.form_threats_state_carcass_hint)
     TextInputLayout stateCarcassHint;
 
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
     CommonPrefs commonPrefs;
 
     private OnPrimaryTypeChangedListener primaryTypeChangedListener;
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        commonPrefs = new CommonPrefs(requireContext());
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_new_threats_required_entry, container, false);
+        }
+        return view;
+    }
 
     @Override
     public void onResume() {
@@ -118,7 +114,6 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
-        commonPrefs = new CommonPrefs(getContext());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -126,7 +121,23 @@ public class NewThreatsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     protected void initViews() {
         super.initViews();
-        
+
+        confidential = requireView().findViewById(R.id.form_threats_confidential);
+        primaryType = requireView().findViewById(R.id.form_threats_primary_type);
+        category = requireView().findViewById(R.id.form_threats_category);
+        classInput = requireView().findViewById(R.id.form_threats_class);
+        species = requireView().findViewById(R.id.form_threats_species);
+        count = requireView().findViewById(R.id.form_threats_count);
+        estimate = requireView().findViewById(R.id.form_threats_estimate);
+        poisonedType = requireView().findViewById(R.id.form_threats_poisoned_type);
+        stateCarcass = requireView().findViewById(R.id.form_threats_state_carcass);
+        categoryHint = requireView().findViewById(R.id.form_threats_category_hint);
+        estimateHint = requireView().findViewById(R.id.form_threats_estimate_hint);
+        classInputHint = requireView().findViewById(R.id.form_threats_class_hint);
+        speciesHint = requireView().findViewById(R.id.form_threats_species_hint);
+        countHint = requireView().findViewById(R.id.form_threats_count_hint);
+        stateCarcassHint = requireView().findViewById(R.id.form_threats_state_carcass_hint);
+
         primaryType.setOnValueChangeListener(new SingleChoiceConfigRadioFormInput.OnValueChangeListener() {
             @Override
             public void onValueChanged(String value) {
