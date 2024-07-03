@@ -33,7 +33,7 @@ import org.bspb.smartbirds.pro.events.MapClickedEvent;
 import org.bspb.smartbirds.pro.events.MapLongClickedEvent;
 import org.bspb.smartbirds.pro.tools.AppExecutors;
 import org.bspb.smartbirds.pro.tools.Reporting;
-import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment_;
+import org.bspb.smartbirds.pro.ui.fragment.OsmMapFragment;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.ui.utils.KmlUtils;
 import org.osmdroid.bonuspack.kml.IconStyle;
@@ -71,7 +71,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".OsmMap";
     private FragmentManager fragmentManager;
-    private OsmMapFragment_ fragment;
+    private OsmMapFragment fragment;
     private MapView mMap;
 
     private double zoomFactor;
@@ -322,7 +322,7 @@ public class OsmMapProvider implements MapProvider, MapEventsReceiver {
     @Override
     public void showMap() {
         if (fragment == null) {
-            fragment = new OsmMapFragment_();
+            fragment = new OsmMapFragment();
             positioned = false;
         }
 
