@@ -1,30 +1,43 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentById
-import org.androidannotations.annotations.ViewById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
 import java.util.Date
 
-@EFragment(R.layout.fragment_monitoring_form_new_pylons_casualties_entry)
-open class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
+class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
 
-    @JvmField
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
-    protected var picturesFragment: NewEntryPicturesFragment? = null
+    private var picturesFragment: NewEntryPicturesFragment? = null
+    private var confidential: SwitchFormInput? = null
+    private lateinit var commonPrefs: CommonPrefs
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_monitoring_form_new_pylons_casualties_entry,
+            container,
+            false
+        )
+    }
 
-    @JvmField
-    @ViewById(R.id.form_pylons_casualties_confidential)
-    protected var confidential: SwitchFormInput? = null
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        commonPrefs = CommonPrefs(requireContext())
+    }
 
-    protected lateinit var commonPrefs: CommonPrefs
+    override fun initViews() {
+        super.initViews()
+        confidential = view?.findViewById(R.id.form_pylons_casualties_confidential)
+    }
 
     override fun onResume() {
         super.onResume()
@@ -65,19 +78,27 @@ open class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
             picturesFragment =
                 childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
         }
-        commonPrefs = CommonPrefs(requireContext())
         super.onViewCreated(view, savedInstanceState)
     }
 
     class Builder : BaseEntryFragment.Builder {
         override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
-            return NewPylonsCasualtiesEntryFormFragment_.builder().lat(lat).lon(lon)
-                .geolocationAccuracy(geolocationAccuracy).build()
+            return NewPylonsCasualtiesEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putDouble(ARG_LAT, lat)
+                    putDouble(ARG_LON, lon)
+                    putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy)
+                }
+            }
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
-            return NewPylonsCasualtiesEntryFormFragment_.builder().entryId(id).readOnly(readOnly)
-                .build()
+            return NewPylonsCasualtiesEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_ENTRY_ID, id)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
         }
     }
 }
