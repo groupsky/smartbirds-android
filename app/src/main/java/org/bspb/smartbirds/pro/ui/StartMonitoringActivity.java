@@ -16,7 +16,6 @@ import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment_;
 
 public class StartMonitoringActivity extends BaseActivity {
 
@@ -44,7 +43,7 @@ public class StartMonitoringActivity extends BaseActivity {
     void createFragment() {
         formFragment = (CurrentMonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
-            formFragment = CurrentMonitoringCommonFormFragment_.builder().build();
+            formFragment = new CurrentMonitoringCommonFormFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, formFragment)
                     .commit();

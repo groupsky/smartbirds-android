@@ -11,7 +11,6 @@ import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment_;
 
 /**
  * Created by groupsky on 14-10-21.
@@ -84,7 +83,7 @@ public class EditCurrentCommonFormActivity extends BaseActivity {
     void createFragment() {
         formFragment = (CurrentMonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
-            formFragment = CurrentMonitoringCommonFormFragment_.builder().isFinishing(isFinishing).build();
+            formFragment = CurrentMonitoringCommonFormFragment.Companion.newInstance(isFinishing);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, formFragment)
                     .commit();

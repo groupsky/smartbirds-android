@@ -1,13 +1,11 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.content.Context
+import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import org.androidannotations.annotations.AfterInject
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.OptionsItem
-import org.androidannotations.annotations.ViewById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.prefs.CommonPrefs
@@ -19,32 +17,48 @@ import org.bspb.smartbirds.pro.ui.views.MultipleTextFormInput
 import org.bspb.smartbirds.pro.ui.views.TimeFormInput
 import java.util.Calendar
 
-@EFragment()
 abstract class BaseCommonFormFragment : Fragment() {
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".CommonForm"
     }
 
     protected var form: FormUtils.FormModel? = null
-
-    @ViewById(R.id.form_common_start_date)
     protected lateinit var startDateView: DateFormInput
-
-    @ViewById(R.id.form_common_start_time)
     protected lateinit var startTimeView: TimeFormInput
-
-    @ViewById(R.id.form_common_end_date)
     protected lateinit var endDateView: DateFormInput
-
-    protected lateinit var prefs: CommonPrefs
-
-    protected lateinit var userPrefs: UserPrefs
-
-    @ViewById(R.id.observers)
     protected lateinit var observers: MultipleTextFormInput
-
-    @ViewById(R.id.location)
     protected lateinit var locationView: TextView
+    protected lateinit var prefs: CommonPrefs
+    private lateinit var userPrefs: UserPrefs
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        initPrefs()
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+        loadSavedData()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        if (itemId == R.id.action_submit) {
+            save()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun initViews() {
+        startDateView = requireView().findViewById(R.id.form_common_start_date)
+        startTimeView = requireView().findViewById(R.id.form_common_start_time)
+        endDateView = requireView().findViewById(R.id.form_common_end_date)
+        observers = requireView().findViewById(R.id.observers)
+        locationView = requireView().findViewById(R.id.location)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,21 +75,18 @@ abstract class BaseCommonFormFragment : Fragment() {
         prefs.setCommonOtherObservers(observers.text.toString())
     }
 
-    @AfterInject
-    open fun initPrefs() {
+    private fun initPrefs() {
         prefs = CommonPrefs(requireContext())
         userPrefs = UserPrefs(requireContext())
     }
 
-    @AfterViews
-    open fun loadSavedData() {
+    private fun loadSavedData() {
         form = FormUtils.traverseForm(view)
         startDateView.value = Calendar.getInstance()
         startTimeView.setValue(Calendar.getInstance())
         endDateView.value = Calendar.getInstance()
     }
 
-    @OptionsItem(R.id.action_submit)
     fun save() {
         val data = form!!.serialize()
         data[getString(R.string.tag_user_id)] = userPrefs.getUserId()
