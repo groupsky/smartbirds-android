@@ -9,7 +9,6 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.service.DataService
 import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringCommonFormFragment
-import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringCommonFormFragment_
 
 open class BrowseMonitoringCommonFormActivity : BaseActivity() {
     companion object {
@@ -46,7 +45,7 @@ open class BrowseMonitoringCommonFormActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.container) as BrowseMonitoringCommonFormFragment?
         if (formFragmentBrowse == null) {
             formFragmentBrowse =
-                BrowseMonitoringCommonFormFragment_.builder().monitoringCode(monitoringCode).build()
+                BrowseMonitoringCommonFormFragment.newInstance(monitoringCode)
             formFragmentBrowse?.let {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.container, it)
