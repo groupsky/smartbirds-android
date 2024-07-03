@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.ui.fragment.StatsFragment_;
+import org.bspb.smartbirds.pro.ui.fragment.StatsFragment;
 
 public class StatsActivity extends BaseActivity {
 
@@ -20,7 +20,7 @@ public class StatsActivity extends BaseActivity {
     void createFragment() {
         if (getSupportFragmentManager().findFragmentById(R.id.container) == null)
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, StatsFragment_.builder().build())
+                    .add(R.id.container, new StatsFragment())
                     .commit();
     }
 }
