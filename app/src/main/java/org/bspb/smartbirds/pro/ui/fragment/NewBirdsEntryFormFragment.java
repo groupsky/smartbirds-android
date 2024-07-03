@@ -21,7 +21,7 @@ public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
                 ExtensionsKt.debugLog("Open birds entry form " + isNewEntry() + " " + readOnly);
                 return switch (position) {
                     case 0 ->
-                            NewBirdsEntryRequiredFormFragment.newInstance(isNewEntry(), readOnly, lat, lon);
+                            NewBirdsEntryRequiredFormFragment.newInstance(isNewEntry(), readOnly, getLat(), getLon());
                     case 1 ->
                             NewBirdsEntryOptionalFormFragment.Companion.newInstance(isNewEntry(), readOnly);
                     default -> throw new IllegalArgumentException("Unhandled position" + position);

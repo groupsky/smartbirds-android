@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
@@ -21,7 +19,6 @@ import java.util.HashMap;
  * Created by groupsky on 26.01.17.
  */
 
-@EFragment
 public class BaseFormFragment extends Fragment {
 
     protected static final String KEY_FORM_DATA = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.FORM_DATA";
@@ -42,14 +39,12 @@ public class BaseFormFragment extends Fragment {
     private boolean newEntry;
     private ModeratorReviewFragment moderatorReviewFragment;
 
-    @FragmentArg(ARG_READ_ONLY)
     protected boolean readOnly;
 
     public boolean isNewEntry() {
         return newEntry;
     }
 
-    @FragmentArg(ARG_IS_NEW_ENTRY)
     public void setNewEntry(boolean isNewEntry) {
         this.newEntry = isNewEntry;
     }

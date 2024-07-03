@@ -148,7 +148,7 @@ public class NewCbmEntryFormFragment extends BaseEntryFragment {
         if (zone != null) {
             Coordinate center = zone.getCenter();
             float[] res = new float[1];
-            Location.distanceBetween(lat, lon, center.latitude, center.longitude, res);
+            Location.distanceBetween(getLat(), getLon(), center.latitude, center.longitude, res);
             Log.d(TAG, String.format(Locale.ENGLISH, "distance (m): %f", res[0]));
 
             if (res[0] > Configuration.MAX_DISTANCE_TO_ZONE_METERS) {

@@ -12,8 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import de.greenrobot.event.EventBusException
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentArg
 import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -29,7 +27,6 @@ import org.bspb.smartbirds.pro.viewmodel.BaseEntryViewModel
 import java.text.ParseException
 import java.util.Date
 
-@EFragment
 abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     companion object {
@@ -42,20 +39,9 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         private const val STATE_STORED_ENTRY = "storedEntry"
     }
 
-    @JvmField
-    @FragmentArg(ARG_LAT)
     protected var lat = 0.0
-
-    @JvmField
-    @FragmentArg(ARG_LON)
     protected var lon = 0.0
-
-    @JvmField
-    @FragmentArg(ARG_GEOLOCATION_ACCURACY)
     protected var geolocationAccuracy = 0.0
-
-    @JvmField
-    @FragmentArg
     protected var entryId: Long = 0
 
     protected val eventBus: EEventBus by lazy { EEventBus.getInstance() }
