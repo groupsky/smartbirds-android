@@ -3,7 +3,7 @@ package org.bspb.smartbirds.pro.ui
 import android.os.Bundle
 import androidx.fragment.app.commit
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.ui.fragment.DownloadsFragment_
+import org.bspb.smartbirds.pro.ui.fragment.DownloadsFragment
 
 class DownloadsActivity : BaseActivity() {
 
@@ -15,7 +15,7 @@ class DownloadsActivity : BaseActivity() {
 
         if (supportFragmentManager.findFragmentById(R.id.fragment_container) == null) {
             supportFragmentManager.commit(false) {
-                add(R.id.fragment_container, DownloadsFragment_.builder().build())
+                add(R.id.fragment_container, DownloadsFragment())
             }
         }
     }

@@ -1,14 +1,14 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
+import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.reflect.TypeToken
-import org.androidannotations.annotations.AfterInject
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EFragment
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.adapter.DownloadsAdapter
 import org.bspb.smartbirds.pro.backend.Backend
@@ -21,25 +21,42 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-@EFragment(R.layout.fragment_downloads)
-open class DownloadsFragment : Fragment() {
+class DownloadsFragment : Fragment() {
 
-    protected val backend: Backend by lazy { Backend.getInstance() }
-
-    protected lateinit var prefs: DownloadsPrefs
-
+    private val backend: Backend by lazy { Backend.getInstance() }
+    private lateinit var prefs: DownloadsPrefs
     private lateinit var adapter: DownloadsAdapter
     private lateinit var locale: String
 
-    protected lateinit var binding: FragmentDownloadsBinding
+    private lateinit var binding: FragmentDownloadsBinding
 
-    @AfterInject
-    fun initPrefs() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        initPrefs()
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_downloads,
+            container,
+            false
+        )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
+
+    private fun initPrefs() {
         prefs = DownloadsPrefs(requireContext())
     }
 
-    @AfterViews
-    fun initViews() {
+    private fun initViews() {
         locale = context?.getString(R.string.locale).toString()
         binding = FragmentDownloadsBinding.bind(requireView())
 
@@ -92,7 +109,7 @@ open class DownloadsFragment : Fragment() {
     private fun fetchDownloads() {
         binding.progressBar.visibility = View.VISIBLE
 
-        var call = backend.api().getDownloads(getString(R.string.downloads_url))
+        val call = backend.api().getDownloads(getString(R.string.downloads_url))
         call.enqueue(object : Callback<DownloadsResponse> {
             override fun onResponse(
                 call: Call<DownloadsResponse>,
