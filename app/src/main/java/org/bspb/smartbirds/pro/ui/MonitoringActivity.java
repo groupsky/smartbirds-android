@@ -244,7 +244,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         init();
 
         try {
-            bindService(DataService.Companion.intent(this).get(), trackingServiceConnection, BIND_AUTO_CREATE);
+            bindService(DataService.Companion.intent(this), trackingServiceConnection, BIND_AUTO_CREATE);
             bindService(new Intent(this, TrackingService.class), dataServiceConnection, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {
             logException(t);

@@ -77,7 +77,7 @@ public class NewMonitoringEntryActivity extends BaseActivity implements ServiceC
         }
 
         setResult(RESULT_CANCELED);
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
         try {
             bindService(new Intent(this, TrackingService.class), this, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {

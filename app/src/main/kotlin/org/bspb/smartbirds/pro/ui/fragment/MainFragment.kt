@@ -678,7 +678,7 @@ class MainFragment : Fragment() {
     }
 
     private fun doCancel() {
-        DataService.intent(context).start()
+        context?.startService(DataService.intent(context))
         bus.postSticky(CancelMonitoringEvent())
     }
 

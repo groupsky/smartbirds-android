@@ -64,14 +64,14 @@ public class SmartBirdsApplication extends Application {
     }
 
     public void onEvent(StartMonitoringEvent event) {
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
     }
 
     public void onEvent(ResumeMonitoringEvent event) {
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
     }
 
     public void onEvent(CancelMonitoringEvent event) {
-        DataService.Companion.intent(this).stop();
+        stopService(DataService.Companion.intent(this));
     }
 }

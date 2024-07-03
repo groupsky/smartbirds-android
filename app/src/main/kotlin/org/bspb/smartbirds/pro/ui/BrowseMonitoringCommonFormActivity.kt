@@ -37,7 +37,7 @@ open class BrowseMonitoringCommonFormActivity : BaseActivity() {
 
         createFragment()
 
-        DataService.intent(this).start()
+        startService(DataService.intent(this))
     }
 
     private fun createFragment() {

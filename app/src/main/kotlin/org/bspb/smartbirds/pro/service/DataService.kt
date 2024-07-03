@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import org.androidannotations.api.builder.ServiceIntentBuilder
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
@@ -82,11 +81,8 @@ open class DataService : Service() {
 
         }
 
-        class IntentBuilder(context: Context?) :
-            ServiceIntentBuilder<IntentBuilder?>(context, DataService::class.java)
-
-        fun intent(context: Context?): IntentBuilder {
-            return IntentBuilder(context)
+        fun intent(context: Context?): Intent {
+            return Intent(context, DataService::class.java)
         }
     }
 
@@ -176,7 +172,7 @@ open class DataService : Service() {
         // when the service is killed and recreated. The reason is that in Oreo there are
         // limitations for starting services when the app is in background.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            if (isMonitoring()) DataService.intent(this).start()
+            if (isMonitoring()) startService(intent(this))
         }
 
         super.onDestroy()

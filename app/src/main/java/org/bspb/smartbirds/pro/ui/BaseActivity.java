@@ -32,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        bindService(DataService.Companion.intent(this).get(), mConnection, Context.BIND_AUTO_CREATE);
+        bindService(DataService.Companion.intent(this), mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override

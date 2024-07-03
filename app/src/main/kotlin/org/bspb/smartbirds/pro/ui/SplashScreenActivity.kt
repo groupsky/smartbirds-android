@@ -48,7 +48,7 @@ open class SplashScreenActivity : BaseActivity(), Runnable {
 
     override fun run() {
         if (prefs.getRunningMonitoring()) {
-            DataService.intent(this).start()
+            startService(DataService.intent(this))
             TaskStackBuilder.create(this@SplashScreenActivity)
                 .addNextIntentWithParentStack(
                     MonitoringActivity.newIntent(this@SplashScreenActivity)

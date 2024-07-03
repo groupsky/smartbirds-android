@@ -42,7 +42,7 @@ public class EditCurrentCommonFormActivity extends BaseActivity {
             isFinishing = extras.getBoolean(EXTRA_IS_FINISHING, false);
         }
 
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
         setContentView(R.layout.activity_start_monitoring);
         createFragment();
     }

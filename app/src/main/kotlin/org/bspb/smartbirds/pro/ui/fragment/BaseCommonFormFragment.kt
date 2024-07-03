@@ -62,7 +62,7 @@ abstract class BaseCommonFormFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        DataService.intent(context).start()
+        context.startService(DataService.intent(context))
     }
 
     override fun onResume() {

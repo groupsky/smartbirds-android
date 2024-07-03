@@ -42,7 +42,7 @@ public class EditMonitoringEntryActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
         setContentView(R.layout.activity_form);
 
         Bundle extras = getIntent().getExtras();

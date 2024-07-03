@@ -28,7 +28,7 @@ public class StartMonitoringActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_monitoring);
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
