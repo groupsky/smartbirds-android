@@ -9,16 +9,13 @@ import android.view.View
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
 import androidx.fragment.app.viewModels
-import org.androidannotations.annotations.*
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.adapter.MonitoringListAdapter
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.viewmodel.MonitoringListViewModel
 
-@EFragment
-@OptionsMenu(R.menu.monitoring_list)
-open class MonitoringListFragment : ListFragment() {
+class MonitoringListFragment : ListFragment() {
 
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".FMonLst"
@@ -27,20 +24,12 @@ open class MonitoringListFragment : ListFragment() {
 
     private var filterStatus: Monitoring.Status? = null
 
-    @OptionsMenuItem(R.id.menu_filter_status_finished)
-    protected lateinit var menuStatusFinished: MenuItem
-
-    @OptionsMenuItem(R.id.menu_filter_status_uploaded)
-    protected lateinit var menuStatusUploaded: MenuItem
-
-    @OptionsMenuItem(R.id.menu_filter_status_canceled)
-    protected lateinit var menuStatusCanceled: MenuItem
-
-    @OptionsMenuItem(R.id.menu_filter_status_paused)
-    protected lateinit var menuStatusPaused: MenuItem
+    private lateinit var menuStatusFinished: MenuItem
+    private lateinit var menuStatusUploaded: MenuItem
+    private lateinit var menuStatusCanceled: MenuItem
+    private lateinit var menuStatusPaused: MenuItem
 
     private var adapter: MonitoringListAdapter? = null
-
     private val viewModel: MonitoringListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +45,13 @@ open class MonitoringListFragment : ListFragment() {
         listAdapter = adapter
     }
 
-    @AfterViews
-    protected open fun initViewModel() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        setupListView()
+    }
+
+    private fun initViewModel() {
         viewModel.init()
         viewModel.entries?.observe(viewLifecycleOwner) { items ->
             items?.apply {
@@ -81,39 +75,62 @@ open class MonitoringListFragment : ListFragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.monitoring_list, menu)
+        menuStatusFinished = menu.findItem(R.id.menu_filter_status_finished)
+        menuStatusUploaded = menu.findItem(R.id.menu_filter_status_uploaded)
+        menuStatusCanceled = menu.findItem(R.id.menu_filter_status_canceled)
+        menuStatusPaused = menu.findItem(R.id.menu_filter_status_paused)
         filterStatus?.apply {
             updateMenuItems(this)
         }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        if (itemId == R.id.menu_filter_status_finished) {
+            filterFinished()
+            return true
+        }
+        if (itemId == R.id.menu_filter_status_uploaded) {
+            filterUploaded()
+            return true
+        }
+        if (itemId == R.id.menu_filter_status_paused) {
+            filterPaused()
+            return true
+        }
+        if (itemId == R.id.menu_filter_status_canceled) {
+            filterCanceled()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     interface Listener {
         fun onMonitoringSelected(monitoringCode: String?)
     }
 
-    @AfterViews
-    protected open fun setupListView() {
+    private fun setupListView() {
         setEmptyText(getText(R.string.emptyList))
     }
 
-    @OptionsItem(R.id.menu_filter_status_finished)
-    protected open fun filterFinished() {
+    private fun filterFinished() {
         filterByStatus(Monitoring.Status.finished)
     }
 
-    @OptionsItem(R.id.menu_filter_status_uploaded)
-    protected open fun filterUploaded() {
+    private fun filterUploaded() {
         filterByStatus(Monitoring.Status.uploaded)
     }
 
-    @OptionsItem(R.id.menu_filter_status_paused)
-    protected open fun filterPaused() {
+    private fun filterPaused() {
         filterByStatus(Monitoring.Status.paused)
     }
 
-    @OptionsItem(R.id.menu_filter_status_canceled)
-    protected open fun filterCanceled() {
+    private fun filterCanceled() {
         filterByStatus(Monitoring.Status.canceled)
     }
 
@@ -144,12 +161,16 @@ open class MonitoringListFragment : ListFragment() {
             when (this) {
                 Monitoring.Status.finished ->
                     menuStatusFinished.isChecked = true
+
                 Monitoring.Status.uploaded ->
                     menuStatusUploaded.isChecked = true
+
                 Monitoring.Status.paused ->
                     menuStatusPaused.isChecked = true
+
                 Monitoring.Status.canceled ->
                     menuStatusCanceled.isChecked = true
+
                 else -> {}
             }
         }

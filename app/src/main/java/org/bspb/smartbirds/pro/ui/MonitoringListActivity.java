@@ -11,7 +11,6 @@ import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_;
 
 /**
  * An activity representing a list of Monitorings. This activity
@@ -59,7 +58,7 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
     protected void setupListFragment() {
         listFragment = (MonitoringListFragment) getSupportFragmentManager().findFragmentById(R.id.monitoring_list_container);
         if (listFragment == null) {
-            listFragment = MonitoringListFragment_.builder().build();
+            listFragment = new MonitoringListFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_list_container, listFragment).commit();
         }
     }
