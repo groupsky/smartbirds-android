@@ -12,15 +12,18 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.PowerManager
 import android.text.Html
 import android.text.Html.ImageGetter
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -33,15 +36,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.AfterInject
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.Click
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.OptionsItem
-import org.androidannotations.annotations.OptionsMenu
-import org.androidannotations.annotations.UiThread
-import org.androidannotations.annotations.ViewById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent
@@ -65,13 +61,12 @@ import org.bspb.smartbirds.pro.ui.MonitoringReportActivity
 import org.bspb.smartbirds.pro.ui.SettingsActivity
 import org.bspb.smartbirds.pro.ui.StatsActivity
 import org.bspb.smartbirds.pro.utils.MonitoringManager
+import org.bspb.smartbirds.pro.utils.SBScope
 import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 import java.util.Date
 
-@EFragment(R.layout.fragment_main)
-@OptionsMenu(R.menu.menu_main)
-open class MainFragment : Fragment() {
+class MainFragment : Fragment() {
 
     private val REQUEST_LOCATION = 0
     private val REQUEST_STORAGE = 1
@@ -80,29 +75,21 @@ open class MainFragment : Fragment() {
     private var exportDialog: AlertDialog? = null
     private var loading: LoadingDialog? = null
 
-    @ViewById(R.id.btn_battery_optimization)
-    protected lateinit var btnBatteryOptimization: ImageButton
+    private lateinit var btnBatteryOptimization: ImageButton
+    private lateinit var btnUpload: Button
+    private lateinit var btnStartBirds: Button
+    private lateinit var btnResumeBirds: Button
+    private lateinit var btnCancelBirds: Button
 
-    @ViewById(R.id.btn_upload)
-    protected lateinit var btnUpload: Button
-
-    @ViewById(R.id.btn_start_birds)
-    protected lateinit var btnStartBirds: Button
-
-    @ViewById(R.id.btn_resume_birds)
-    protected lateinit var btnResumeBirds: Button
-
-    @ViewById(R.id.btn_cancel_birds)
-    protected lateinit var btnCancelBirds: Button
-
-    protected lateinit var prefs: SmartBirdsPrefs
+    private lateinit var prefs: SmartBirdsPrefs
 
     private val monitoringManager = MonitoringManager.getInstance()
-
-    protected val bus: EEventBus by lazy { EEventBus.getInstance() }
+    private val bus: EEventBus by lazy { EEventBus.getInstance() }
 
     private var lastMonitoring: Monitoring? = null
     private var menuBrowseLastMonitorig: MenuItem? = null
+
+    private val scope = SBScope()
 
     private val syncBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -115,6 +102,44 @@ open class MainFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        initPrefs()
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_main,
+            container,
+            false
+        )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+        setupMonitoringButtons()
+    }
+
+    private fun initViews() {
+        btnBatteryOptimization = requireView().findViewById(R.id.btn_battery_optimization)
+        btnUpload = requireView().findViewById(R.id.btn_upload)
+        btnStartBirds = requireView().findViewById(R.id.btn_start_birds)
+        btnResumeBirds = requireView().findViewById(R.id.btn_resume_birds)
+        btnCancelBirds = requireView().findViewById(R.id.btn_cancel_birds)
+
+        btnStartBirds.setOnClickListener { startBirdsClicked() }
+        btnResumeBirds.setOnClickListener { resumeBirdsClicked() }
+        btnCancelBirds.setOnClickListener { cancelBirdsClicked() }
+        btnUpload.setOnClickListener { uploadBtnClicked() }
+        btnBatteryOptimization.setOnClickListener { showBatteryOptimizationDialog() }
     }
 
     override fun onStart() {
@@ -156,6 +181,7 @@ open class MainFragment : Fragment() {
         super.onStop()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String?>,
@@ -183,13 +209,11 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @AfterInject
-    open fun initPrefs() {
+    private fun initPrefs() {
         prefs = SmartBirdsPrefs(requireContext())
     }
 
-    @AfterViews
-    open fun setupMonitoringButtons() {
+    private fun setupMonitoringButtons() {
         if (prefs.getPausedMonitoring()) {
             btnStartBirds.visibility = View.GONE
             btnResumeBirds.visibility = View.VISIBLE
@@ -201,10 +225,54 @@ open class MainFragment : Fragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main, menu)
         menuBrowseLastMonitorig = menu.findItem(R.id.menu_report_last)
         checkForLastMonitoring()
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        if (itemId == R.id.menu_export) {
+            exportBtnClicked()
+            return true
+        }
+        if (itemId == R.id.menu_browse) {
+            browseBtnClicked()
+            return true
+        }
+        if (itemId == R.id.menu_report_last) {
+            reportBtnClicked()
+            return true
+        }
+        if (itemId == R.id.menu_help) {
+            helpBtnClicked()
+            return true
+        }
+        if (itemId == R.id.menu_information) {
+            infoBtnClicked()
+            return true
+        }
+        if (itemId == R.id.menu_downloads) {
+            openDownloads()
+            return true
+        }
+        if (itemId == R.id.menu_statistics) {
+            showStats()
+            return true
+        }
+        if (itemId == R.id.menu_settings) {
+            showSettings()
+            return true
+        }
+        if (itemId == R.id.menu_privacy_policy) {
+            openPrivacyPolicy()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkForLastMonitoring() {
@@ -214,32 +282,27 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @Click(R.id.btn_start_birds)
-    open fun startBirdsClicked() {
+    private fun startBirdsClicked() {
         if (!permissionsGranted()) return
         bus.postSticky(StartMonitoringEvent())
     }
 
-    @Click(R.id.btn_resume_birds)
-    open fun resumeBirdsClicked() {
+    private fun resumeBirdsClicked() {
         if (!permissionsGranted()) return
         bus.postSticky(ResumeMonitoringEvent())
     }
 
-    @Click(R.id.btn_cancel_birds)
-    open fun cancelBirdsClicked() {
+    private fun cancelBirdsClicked() {
         confirmCancel()
     }
 
-    @Click(R.id.btn_upload)
-    open fun uploadBtnClicked() {
+    private fun uploadBtnClicked() {
         activity?.let {
             it.startService(SyncService.syncIntent(it))
         }
     }
 
-    @Click(R.id.btn_battery_optimization)
-    open fun showBatteryOptimizationDialog() {
+    private fun showBatteryOptimizationDialog() {
         AlertDialog.Builder(activity)
             .setTitle(getString(R.string.battery_optimization_title))
             .setMessage(getString(R.string.battery_optimization_message))
@@ -247,8 +310,7 @@ open class MainFragment : Fragment() {
             .show()
     }
 
-    @OptionsItem(R.id.menu_export)
-    open fun exportBtnClicked() {
+    private fun exportBtnClicked() {
         exportDialog = ProgressDialog.show(
             activity,
             getString(R.string.export_dialog_title),
@@ -260,13 +322,11 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @OptionsItem(R.id.menu_browse)
-    open fun browseBtnClicked() {
+    private fun browseBtnClicked() {
         startActivity(Intent(activity, MonitoringListActivity::class.java))
     }
 
-    @OptionsItem(R.id.menu_report_last)
-    open fun reportBtnClicked() {
+    private fun reportBtnClicked() {
         if (lastMonitoring == null) {
             requireContext().showAlert(
                 R.string.report_last_monitoring_warning_title,
@@ -282,8 +342,7 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @OptionsItem(R.id.menu_help)
-    open fun helpBtnClicked() {
+    private fun helpBtnClicked() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(getString(R.string.help_url))
         context?.packageManager?.let {
@@ -295,8 +354,7 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @OptionsItem(R.id.menu_information)
-    open fun infoBtnClicked() {
+    private fun infoBtnClicked() {
         val density = resources.displayMetrics.density
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(getString(R.string.info_dialog_title))
@@ -326,23 +384,19 @@ open class MainFragment : Fragment() {
         builder.create().show()
     }
 
-    @OptionsItem(R.id.menu_downloads)
-    open fun openDownloads() {
+    private fun openDownloads() {
         startActivity(Intent(activity, DownloadsActivity::class.java))
     }
 
-    @OptionsItem(R.id.menu_statistics)
-    open fun showStats() {
+    private fun showStats() {
         startActivity(Intent(activity, StatsActivity::class.java))
     }
 
-    @OptionsItem(R.id.menu_settings)
-    open fun showSettings() {
+    private fun showSettings() {
         startActivity(Intent(activity, SettingsActivity::class.java))
     }
 
-    @OptionsItem(R.id.menu_privacy_policy)
-    open fun openPrivacyPolicy() {
+    private fun openPrivacyPolicy() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(getString(R.string.privacy_policy_url))
         context?.packageManager?.let {
@@ -355,7 +409,7 @@ open class MainFragment : Fragment() {
     }
 
     //    @LongClick(R.id.btn_export)
-    open fun displayDescription(v: View): Boolean {
+    private fun displayDescription(v: View): Boolean {
         if (TextUtils.isEmpty(v.contentDescription)) return false
         val screenPos = IntArray(2)
         val displayFrame = Rect()
@@ -399,25 +453,29 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @UiThread
-    open fun displayNotSyncedCount(notSyncedCount: Int) {
-        try {
-            btnUpload.text = "${getString(R.string.main_screen_btn_upload)} : $notSyncedCount"
-        } catch (t: Throwable) {
-            // IllegalStateException: not attached to Activity
-            Reporting.logException(t)
+    private fun displayNotSyncedCount(notSyncedCount: Int) {
+        scope.launch(Dispatchers.Main) {
+            try {
+                btnUpload.text = "${getString(R.string.main_screen_btn_upload)} : $notSyncedCount"
+            } catch (t: Throwable) {
+                // IllegalStateException: not attached to Activity
+                Reporting.logException(t)
+            }
+        }
+
+    }
+
+    private fun updateSyncProgress(message: String?) {
+        scope.launch(Dispatchers.Main) {
+            showProgressDialog(message ?: "")
         }
     }
 
-    @UiThread
-    open fun updateSyncProgress(message: String?) {
-        showProgressDialog(message ?: "")
-    }
-
-    @UiThread
-    open fun onSyncComplete() {
-        hideProgressDialog()
-        showErrorsIfAny()
+    private fun onSyncComplete() {
+        scope.launch(Dispatchers.Main) {
+            hideProgressDialog()
+            showErrorsIfAny()
+        }
     }
 
     private fun showErrorsIfAny() {
@@ -441,40 +499,46 @@ open class MainFragment : Fragment() {
         }
     }
 
-    @UiThread
-    open fun onEvent(event: ExportPreparedEvent) {
-        exportDialog?.cancel()
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "application/zip"
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_subject))
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.export_text, Date().toString()))
-        intent.putExtra(Intent.EXTRA_STREAM, event.uri)
-        startActivity(Intent.createChooser(intent, getString(R.string.export_app_chooser)))
+    fun onEvent(event: ExportPreparedEvent) {
+        scope.launch(Dispatchers.Main) {
+            exportDialog?.cancel()
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "application/zip"
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_subject))
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.export_text, Date().toString()))
+            intent.putExtra(Intent.EXTRA_STREAM, event.uri)
+            startActivity(Intent.createChooser(intent, getString(R.string.export_app_chooser)))
+        }
     }
 
-    @UiThread
-    open fun onEvent(event: ExportFailedEvent?) {
-        exportDialog?.cancel()
-        Toast.makeText(activity, getString(R.string.export_failed_error), Toast.LENGTH_LONG).show()
+    fun onEvent(event: ExportFailedEvent?) {
+        scope.launch(Dispatchers.Main) {
+            exportDialog?.cancel()
+            Toast.makeText(activity, getString(R.string.export_failed_error), Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
-    @UiThread
-    open fun onEvent(event: MonitoringPausedEvent?) {
-        setupMonitoringButtons()
-        bus.removeStickyEvent(MonitoringPausedEvent::class.java)
+    fun onEvent(event: MonitoringPausedEvent?) {
+        scope.launch(Dispatchers.Main) {
+            setupMonitoringButtons()
+            bus.removeStickyEvent(MonitoringPausedEvent::class.java)
+        }
     }
 
-    @UiThread
-    open fun onEvent(event: MonitoringCanceledEvent?) {
-        setupMonitoringButtons()
-        checkForLastMonitoring()
-        bus.removeStickyEvent(MonitoringCanceledEvent::class.java)
+    fun onEvent(event: MonitoringCanceledEvent?) {
+        scope.launch(Dispatchers.Main) {
+            setupMonitoringButtons()
+            checkForLastMonitoring()
+            bus.removeStickyEvent(MonitoringCanceledEvent::class.java)
+        }
     }
 
-    @UiThread
-    open fun onEvent(event: MonitoringFinishedEvent?) {
-        setupMonitoringButtons()
-        bus.removeStickyEvent(MonitoringFinishedEvent::class.java)
+    fun onEvent(event: MonitoringFinishedEvent?) {
+        scope.launch(Dispatchers.Main) {
+            setupMonitoringButtons()
+            bus.removeStickyEvent(MonitoringFinishedEvent::class.java)
+        }
     }
 
     private fun permissionsGranted(): Boolean {

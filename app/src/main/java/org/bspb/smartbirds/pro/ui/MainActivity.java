@@ -12,7 +12,7 @@ import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs;
 import org.bspb.smartbirds.pro.prefs.UserPrefs;
 import org.bspb.smartbirds.pro.service.SyncService;
-import org.bspb.smartbirds.pro.ui.fragment.MainFragment_;
+import org.bspb.smartbirds.pro.ui.fragment.MainFragment;
 
 
 public class MainActivity extends BaseActivity {
@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
     void createFragment() {
         if (getSupportFragmentManager().findFragmentById(R.id.container) == null)
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, MainFragment_.builder().build())
+                    .add(R.id.container, new MainFragment())
                     .commit();
     }
 
