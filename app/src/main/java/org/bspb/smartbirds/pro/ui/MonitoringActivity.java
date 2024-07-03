@@ -62,7 +62,6 @@ import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.service.TrackingService;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -216,7 +215,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     private void setupList() {
         if (isEmpty(monitoringCode)) return;
         if (listFragment == null) {
-            listFragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            listFragment = MonitoringEntryListFragment.Companion.newInstance(monitoringCode);
             getSupportFragmentManager().beginTransaction().replace(R.id.list_container, listFragment).commit();
         } else {
             listFragment.setMonitoringCode(monitoringCode);

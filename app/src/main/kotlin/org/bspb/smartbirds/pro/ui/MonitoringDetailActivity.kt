@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment_
+import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 
@@ -56,8 +56,7 @@ open class MonitoringDetailActivity : BaseActivity(), MonitoringEntryListFragmen
 
         if (fragment == null) {
             val fragment =
-                BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode)
-                    .build()
+                BrowseMonitoringEntryListFragment.newInstance(monitoringCode)
             supportFragmentManager.beginTransaction()
                 .add(R.id.monitoring_detail_container, fragment)
                 .commit()

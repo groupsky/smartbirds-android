@@ -9,7 +9,6 @@ import androidx.core.app.NavUtils;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment;
-import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_;
@@ -85,7 +84,7 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
     @Override
     public void onMonitoringSelected(String monitoringCode) {
         if (mTwoPane) {
-            BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment.Companion.newInstance(monitoringCode);
             getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_detail_container, fragment).commit();
         } else {
             startActivity(MonitoringDetailActivity.Companion.newIntent(this, monitoringCode));
