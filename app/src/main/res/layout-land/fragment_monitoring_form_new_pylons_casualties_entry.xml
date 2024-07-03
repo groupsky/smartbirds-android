@@ -21,7 +21,7 @@
 
                 <fragment
                     android:id="@+id/moderator_review_fragment"
-                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_span="7"

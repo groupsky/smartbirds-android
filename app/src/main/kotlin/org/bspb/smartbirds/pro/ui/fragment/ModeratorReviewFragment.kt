@@ -1,23 +1,38 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.ViewById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
 
-@EFragment(R.layout.fragment_moderator_review)
-open class ModeratorReviewFragment : Fragment() {
+class ModeratorReviewFragment : Fragment() {
 
     var picturesFragment: NewEntryPicturesFragment? = null
 
-    @ViewById(R.id.form_moderator_review)
-    protected lateinit var moderatorReview: SwitchFormInput
+    private lateinit var moderatorReview: SwitchFormInput
+    private lateinit var warningModeratorReview: TextView
 
-    @ViewById(R.id.warning_moderator_review)
-    protected lateinit var warningModeratorReview: TextView
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_moderator_review,
+            container,
+            false
+        )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        moderatorReview = view.findViewById(R.id.form_moderator_review)
+        warningModeratorReview = view.findViewById(R.id.warning_moderator_review)
+    }
 
     fun isValid(): Boolean {
         var res = true
