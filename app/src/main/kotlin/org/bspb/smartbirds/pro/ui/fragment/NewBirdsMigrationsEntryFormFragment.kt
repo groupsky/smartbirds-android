@@ -1,12 +1,10 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentById
-import org.androidannotations.annotations.ViewById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.enums.EntryType
@@ -20,40 +18,47 @@ import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
 import java.util.Date
 
-@EFragment(R.layout.fragment_monitoring_form_new_birds_migrations_entry)
-open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
+class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
 
-    @JvmField
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
-    protected var picturesFragment: NewEntryPicturesFragment? = null
+    private var picturesFragment: NewEntryPicturesFragment? = null
+    private var confidential: SwitchFormInput? = null
+    private var speciesQuickChoice: QuickChoiceFormInput? = null
+    private var speciesInput: SingleChoiceFormInput? = null
+    private var migrationPoint: SingleChoiceFormInput? = null
 
-
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_confidential)
-    protected var confidential: SwitchFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_species_quick)
-    protected var speciesQuickChoice: QuickChoiceFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_species)
-    protected var speciesInput: SingleChoiceFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_migration_point)
-    protected var migrationPoint: SingleChoiceFormInput? = null
-
-    protected lateinit var commonPrefs: CommonPrefs
-
+    private lateinit var commonPrefs: CommonPrefs
     private lateinit var migrationPrefs: BirdsMigrationsPrefs
 
-    @AfterViews
-    open fun initQuickChoice() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_monitoring_form_new_birds_migrations_entry,
+            container,
+            false
+        )
+    }
+
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        commonPrefs = CommonPrefs(requireContext())
+        migrationPrefs = BirdsMigrationsPrefs(requireContext())
+    }
+
+
+    override fun initViews() {
+        super.initViews()
+        confidential = view?.findViewById(R.id.form_birds_migrations_confidential)
+        speciesQuickChoice = view?.findViewById(R.id.form_birds_migrations_species_quick)
+        speciesInput = view?.findViewById(R.id.form_birds_migrations_species)
+        migrationPoint = view?.findViewById(R.id.form_birds_migrations_migration_point)
         speciesQuickChoice?.onItemSelected = { nomenclatureItem: NomenclatureItem? ->
             speciesInput?.setSelection(nomenclatureItem)
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -110,20 +115,27 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
             picturesFragment =
                 childFragmentManager.findFragmentById(R.id.pictures_fragment) as NewEntryPicturesFragment?
         }
-        commonPrefs = CommonPrefs(requireContext())
-        migrationPrefs = BirdsMigrationsPrefs(requireContext())
         super.onViewCreated(view, savedInstanceState)
     }
 
     class Builder : BaseEntryFragment.Builder {
         override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
-            return NewBirdsMigrationsEntryFormFragment_.builder().lat(lat).lon(lon)
-                .geolocationAccuracy(geolocationAccuracy).build()
+            return NewBirdsMigrationsEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putDouble(ARG_LAT, lat)
+                    putDouble(ARG_LON, lon)
+                    putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy)
+                }
+            }
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
-            return NewBirdsMigrationsEntryFormFragment_.builder().entryId(id).readOnly(readOnly)
-                .build()
+            return NewBirdsMigrationsEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_ENTRY_ID, id)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
         }
     }
 }

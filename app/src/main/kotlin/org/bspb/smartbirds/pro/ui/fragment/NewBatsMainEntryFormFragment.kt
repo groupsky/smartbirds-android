@@ -15,7 +15,7 @@ import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
 
-open class NewBatsMainEntryFormFragment : BaseFormFragment() {
+class NewBatsMainEntryFormFragment : BaseFormFragment() {
 
     companion object {
         fun newInstance(isNewEntry: Boolean, readOnly: Boolean): NewBatsMainEntryFormFragment {

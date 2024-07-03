@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import org.bspb.smartbirds.pro.R
 
-open class NewBatsOptionalEntryFormFragment : BaseFormFragment() {
+class NewBatsOptionalEntryFormFragment : BaseFormFragment() {
 
     companion object {
         fun newInstance(isNewEntry: Boolean, readOnly: Boolean): NewBatsOptionalEntryFormFragment {
