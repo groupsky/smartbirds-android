@@ -14,22 +14,18 @@ import android.os.Parcelable.Creator
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import org.androidannotations.annotations.AfterInject
-import org.androidannotations.annotations.Click
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.InstanceState
-import org.androidannotations.annotations.OnActivityResult
-import org.androidannotations.annotations.OptionsItem
-import org.androidannotations.annotations.OptionsMenu
-import org.androidannotations.annotations.OptionsMenuItem
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.events.CreateImageFile
@@ -48,42 +44,29 @@ import java.util.Locale
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-@EFragment(R.layout.fragment_form_pictures)
-@OptionsMenu(R.menu.form_pictures)
-open class NewEntryPicturesFragment : BaseFormFragment() {
+class NewEntryPicturesFragment : BaseFormFragment() {
 
     companion object {
         const val TAG = SmartBirdsApplication.TAG + ".PicFrm"
-        protected val INTENT_TAKE_PICTURE = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        protected val INTENT_VIEW_PICTURE = Intent(Intent.ACTION_VIEW)
-        protected const val REQUEST_TAKE_PICTURE = 2
+        private val INTENT_TAKE_PICTURE = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        private val INTENT_VIEW_PICTURE = Intent(Intent.ACTION_VIEW)
     }
 
 
     private val pictures: List<ImageView> by lazy {
         listOf(
-            view?.findViewById(R.id.picture1) as ImageView,
-            view?.findViewById(R.id.picture2) as ImageView,
-            view?.findViewById(R.id.picture3) as ImageView
+            view?.findViewById<ImageView>(R.id.picture1)!!,
+            view?.findViewById<ImageView>(R.id.picture2)!!,
+            view?.findViewById<ImageView>(R.id.picture3)!!
         )
     }
 
 
-    protected val eventBus: EEventBus by lazy { EEventBus.getInstance() }
+    private val eventBus: EEventBus by lazy { EEventBus.getInstance() }
+    private lateinit var takePicture: MenuItem
 
-    @OptionsMenuItem(R.id.take_picture)
-    protected lateinit var takePicture: MenuItem
-
-    @JvmField
-    @InstanceState
-    protected var images = arrayOfNulls<ImageStruct>(3)
-
-    @JvmField
-    @InstanceState
-    protected var currentImage: ImageStruct? = null
-
-    @JvmField
-    @InstanceState
+    private var images = arrayOfNulls<ImageStruct>(3)
+    private var currentImage: ImageStruct? = null
     var picturesCount = 0
 
     private val pickImage =
@@ -101,14 +84,48 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
             updateTakePicture()
         }
 
+    private val takePictureLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onTakePictureResult(result.resultCode)
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    @AfterInject
-    protected open fun registerBus() {
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        savedInstanceState?.let {
+            images = it.getParcelableArray("images") as Array<ImageStruct?>
+            currentImage = it.getParcelable("currentImage")
+            picturesCount = it.getInt("picturesCount")
+        }
         eventBus.register(this)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_form_pictures,
+            container,
+            false
+        )
+    }
+
+    override fun initViews() {
+        super.initViews()
+        pictures.forEach { it.setOnClickListener { v -> onPictureClick(v) } }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArray("images", images)
+        outState.putParcelable("currentImage", currentImage)
+        outState.putInt("picturesCount", picturesCount)
     }
 
     override fun onStart() {
@@ -124,6 +141,23 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
                 hidePicture(pictures[i])
             }
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.form_pictures, menu)
+        takePicture = menu.findItem(R.id.take_picture)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        if (itemId == R.id.take_picture) {
+            onTakePicture(item)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDetach() {
@@ -158,7 +192,7 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         updateTakePicture()
     }
 
-    open fun onEventMainThread(event: ImageFileEvent) {
+    fun onEventMainThread(event: ImageFileEvent) {
         if (images[picturesCount] != null) {
             Reporting.logException(IllegalStateException("Overriding existing picture!"))
         }
@@ -168,8 +202,7 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         updateTakePicture()
     }
 
-    @OptionsItem(R.id.take_picture)
-    open fun onTakePicture(item: MenuItem) {
+    private fun onTakePicture(item: MenuItem) {
         if (picturesCount >= pictures.size) {
             return
         }
@@ -197,11 +230,11 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         builder.create().show()
     }
 
-    open fun onEventMainThread(event: ImageFileCreatedFailed?) {
+    fun onEventMainThread(event: ImageFileCreatedFailed?) {
         Toast.makeText(activity, R.string.image_file_create_error, Toast.LENGTH_SHORT).show()
     }
 
-    open fun onEventMainThread(event: ImageFileCreated) {
+    fun onEventMainThread(event: ImageFileCreated) {
         currentImage = ImageStruct(event.imageFileName, event.imagePath, event.uri)
         if (event.action == "take_picture") {
             val intent = Intent(INTENT_TAKE_PICTURE).putExtra(MediaStore.EXTRA_OUTPUT, event.uri)
@@ -209,12 +242,13 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
                 intent.clipData = ClipData.newRawUri("", event.uri)
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
-            startActivityForResult(intent, REQUEST_TAKE_PICTURE)
+            takePictureLauncher.launch(intent)
         } else if (event.action == "pick_image") {
             pickImage.launch("image/*")
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         updateTakePicture()
@@ -232,8 +266,7 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         }
     }
 
-    @OnActivityResult(REQUEST_TAKE_PICTURE)
-    open fun onTakePictureResult(resultCode: Int) {
+    private fun onTakePictureResult(resultCode: Int) {
         if (resultCode == Activity.RESULT_OK) {
             requireView().post {
                 if (images[picturesCount] != null) {
@@ -285,7 +318,7 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         }
     }
 
-    open fun displayPicture(image: ImageStruct?, picture: ImageView) {
+    private fun displayPicture(image: ImageStruct?, picture: ImageView) {
         // in some cases the fragment is not attached
         if (!isAdded) {
             return
@@ -315,12 +348,11 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         picture.visibility = View.VISIBLE
     }
 
-    open fun hidePicture(picture: ImageView) {
+    private fun hidePicture(picture: ImageView) {
         picture.visibility = View.INVISIBLE
     }
 
-    @Click(R.id.picture1, R.id.picture2, R.id.picture3)
-    open fun onPictureClick(v: View?) {
+    private fun onPictureClick(v: View?) {
         val idx = pictures.indexOf(v)
         if (idx < 0 || idx >= images.size) return
         if (images[idx] == null) return
@@ -341,7 +373,7 @@ open class NewEntryPicturesFragment : BaseFormFragment() {
         throw UnsupportedOperationException("not implemented")
     }
 
-    open fun setReadOnly(readOnly: Boolean) {
+    fun setReadOnly(readOnly: Boolean) {
         this.readOnly = readOnly
         updateTakePicture()
     }

@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
 
-open class NewBatsEntryFormFragment : BaseTabEntryFragment() {
+class NewBatsEntryFormFragment : BaseTabEntryFragment() {
 
     override fun setupTabs() {
         setAdapter(object : FragmentStatePagerAdapter(parentFragmentManager!!) {
