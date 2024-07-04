@@ -18,7 +18,7 @@ class MammalPrefs(context: Context) {
         return prefs.getString(KEY_MAMMAL_HABITAT, "") ?: ""
     }
 
-    fun setMammalHabitat(value: String) {
+    fun setMammalHabitat(value: String?) {
         prefs.edit().putString(KEY_MAMMAL_HABITAT, value).apply()
     }
 }

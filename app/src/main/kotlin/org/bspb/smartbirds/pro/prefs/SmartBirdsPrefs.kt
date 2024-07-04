@@ -40,7 +40,7 @@ class SmartBirdsPrefs(context: Context) {
         return prefs.getString(KEY_PROVIDER_TYPE, "") ?: ""
     }
 
-    fun setProviderType(value: String) {
+    fun setProviderType(value: String?) {
         prefs.edit().putString(KEY_PROVIDER_TYPE, value).apply()
     }
 
@@ -48,7 +48,7 @@ class SmartBirdsPrefs(context: Context) {
         return prefs.getString(KEY_MAP_TYPE, "") ?: ""
     }
 
-    fun setMapType(value: String) {
+    fun setMapType(value: String?) {
         prefs.edit().putString(KEY_MAP_TYPE, value).apply()
     }
 
@@ -73,7 +73,7 @@ class SmartBirdsPrefs(context: Context) {
             ?: Constants.VIEWTYPE_MAP
     }
 
-    fun setMonitoringViewType(value: String) {
+    fun setMonitoringViewType(value: String?) {
         prefs.edit().putString(KEY_MONITORING_VIEW_TYPE, value).apply()
     }
 
@@ -137,7 +137,7 @@ class SmartBirdsPrefs(context: Context) {
         return prefs.getString(KEY_KML_FILE_NAME, "") ?: ""
     }
 
-    fun setKmlFileName(value: String) {
+    fun setKmlFileName(value: String?) {
         prefs.edit().putString(KEY_KML_FILE_NAME, value).apply()
     }
 
@@ -153,7 +153,7 @@ class SmartBirdsPrefs(context: Context) {
         return prefs.getString(KEY_MAP_LAYERS, "") ?: ""
     }
 
-    fun setMapLayers(value: String) {
+    fun setMapLayers(value: String?) {
         prefs.edit().putString(KEY_MAP_LAYERS, value).apply()
     }
 

@@ -15,19 +15,19 @@ class BirdPrefs(context: Context) {
 
 
     fun getCountUnits(): String {
-        return prefs?.getString(KEY_BIRD_COUNT_UNITS, "") ?: ""
+        return prefs.getString(KEY_BIRD_COUNT_UNITS, "") ?: ""
     }
 
-    fun setCountUnits(value: String) {
-        prefs?.edit()?.putString(KEY_BIRD_COUNT_UNITS, value)?.apply()
+    fun setCountUnits(value: String?) {
+        prefs.edit()?.putString(KEY_BIRD_COUNT_UNITS, value)?.apply()
     }
 
     fun getCountType(): String {
-        return prefs?.getString(KEY_BIRD_COUNT_TYPE, "") ?: ""
+        return prefs.getString(KEY_BIRD_COUNT_TYPE, "") ?: ""
     }
 
-    fun setCountType(value: String) {
-        prefs?.edit()?.putString(KEY_BIRD_COUNT_TYPE, value)?.apply()
+    fun setCountType(value: String?) {
+        prefs.edit()?.putString(KEY_BIRD_COUNT_TYPE, value)?.apply()
     }
 
 }
