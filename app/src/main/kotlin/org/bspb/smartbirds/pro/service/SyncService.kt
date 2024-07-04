@@ -71,6 +71,7 @@ class SyncService : IntentService("SyncService") {
                 isWorking = false
                 syncMessage = null
                 val intent = Intent(ACTION_SYNC_COMPLETED)
+                intent.setPackage(packageName)
                 sendBroadcast(intent)
             }
         }
@@ -85,6 +86,7 @@ class SyncService : IntentService("SyncService") {
                 isWorking = false
                 syncMessage = null
                 val intent = Intent(ACTION_SYNC_COMPLETED)
+                intent.setPackage(packageName)
                 sendBroadcast(intent)
             }
         }
@@ -108,6 +110,7 @@ class SyncService : IntentService("SyncService") {
     private fun updateSyncProgress(messageResource: Int) {
         syncMessage = getString(messageResource)
         val intent = Intent(ACTION_SYNC_PROGRESS)
+        intent.setPackage(packageName)
         intent.putExtra(EXTRA_SYNC_MESSAGE, syncMessage)
         sendBroadcast(intent)
     }
