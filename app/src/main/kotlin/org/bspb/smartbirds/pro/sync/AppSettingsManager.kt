@@ -4,31 +4,22 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.backend.Backend
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.io.IOException
 
-@EBean(scope = EBean.Scope.Default)
-open class AppSettingsManager {
+open class AppSettingsManager(private val context: Context) {
 
     companion object {
         var isDownloading = false
     }
 
-    @RootContext
-    protected lateinit var context: Context
 
-    @Bean
-    protected lateinit var backend: Backend
+    protected val backend: Backend by lazy { Backend.getInstance() }
 
-    @Pref
-    protected lateinit var prefs: SmartBirdsPrefs_
+    protected val prefs: SmartBirdsPrefs = SmartBirdsPrefs(context)
 
     open fun fetchSettings() {
         isDownloading = true
@@ -40,7 +31,7 @@ open class AppSettingsManager {
                     throw IOException("Server error: " + response.code() + " - " + response.message())
                 }
                 response.body()?.data?.apply {
-                    prefs.mapLayers().put(SBGsonParser.createParser().toJson(this))
+                    prefs.setMapLayers(SBGsonParser.createParser().toJson(this))
                 }
             } catch (t: Throwable) {
                 Reporting.logException(t)

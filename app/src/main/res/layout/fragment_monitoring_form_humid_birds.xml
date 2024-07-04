@@ -27,7 +27,7 @@
                 android:paddingBottom="@dimen/form_vertical_spacing"
                 android:text="@string/wetland_zones_info_text" />
 
-            <org.bspb.smartbirds.pro.ui.views.FormBirdsList_
+            <org.bspb.smartbirds.pro.ui.views.FormBirdsList
                 android:id="@+id/form_birds_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

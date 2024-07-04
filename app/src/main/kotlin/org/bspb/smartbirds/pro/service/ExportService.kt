@@ -1,15 +1,13 @@
 package org.bspb.smartbirds.pro.service
 
 import android.app.IntentService
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.FileProvider
 import com.googlecode.jcsv.CSVStrategy
 import com.googlecode.jcsv.writer.internal.CSVWriterBuilder
 import kotlinx.coroutines.runBlocking
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EIntentService
-import org.androidannotations.annotations.ServiceAction
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
@@ -26,25 +24,36 @@ import java.io.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
-@EIntentService
-open class ExportService : IntentService("Export Service") {
+class ExportService : IntentService("Export Service") {
 
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".ExportService"
-
+        private const val ACTION_PREPARE_FOR_EXPORT: String = "prepareForExport"
         private const val BUFFER = 2048
+
+        fun newIntent(context: Context): Intent {
+            return Intent(context, ExportService::class.java).apply {
+                action = ACTION_PREPARE_FOR_EXPORT
+            }
+        }
     }
 
-    @Bean
-    protected lateinit var eventBus: EEventBus
+    private val eventBus: EEventBus by lazy { EEventBus.getInstance() }
+    private val monitoringManager = MonitoringManager.getInstance()
 
-    val monitoringManager = MonitoringManager.getInstance()
 
+    @Deprecated("Deprecated in Java")
     override fun onHandleIntent(intent: Intent?) {
+        intent ?: return
+
+        val action = intent.action
+        if (ACTION_PREPARE_FOR_EXPORT == action) {
+            prepareForExport()
+            return
+        }
     }
 
-    @ServiceAction
-    open fun prepareForExport() {
+    private fun prepareForExport() {
         runBlocking {
             Log.d(TAG, "Prepare for export all finished monitorings")
             val exportFile = File(getExternalFilesDir(null), "export.zip")
@@ -80,7 +89,11 @@ open class ExportService : IntentService("Export Service") {
                 eventBus.post(ExportFailedEvent())
                 return@runBlocking
             }
-            val uri = FileProvider.getUriForFile(applicationContext, SmartBirdsApplication.FILES_AUTHORITY, exportFile)
+            val uri = FileProvider.getUriForFile(
+                applicationContext,
+                SmartBirdsApplication.FILES_AUTHORITY,
+                exportFile
+            )
             eventBus.post(ExportPreparedEvent(uri))
         }
     }

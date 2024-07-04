@@ -23,7 +23,7 @@ class MockBackendRule : TestRule {
                 server.start()
 
                 // replace retrofit proxy with our mock
-                Backend.backendBaseUrl =
+                Backend.Companion.backendBaseUrl =
                     "http://" + server.hostName + ":" + server.port
                 base?.evaluate()
             }

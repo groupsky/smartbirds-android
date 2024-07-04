@@ -1,5 +1,7 @@
 package org.bspb.smartbirds.pro.ui.utils;
 
+import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,9 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.ui.SplashScreenActivity_;
-
-import static org.bspb.smartbirds.pro.tools.Reporting.logException;
+import org.bspb.smartbirds.pro.ui.SplashScreenActivity;
 
 /**
  * Created by dani on 14-11-14.
@@ -27,7 +27,7 @@ public class NotificationUtils {
     public static final int MONITORING_NOTIFICATION_ID = 1001;
 
     public static Notification buildMonitoringNotification(Context context) {
-        Intent intent = SplashScreenActivity_.intent(context).get();
+        Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 

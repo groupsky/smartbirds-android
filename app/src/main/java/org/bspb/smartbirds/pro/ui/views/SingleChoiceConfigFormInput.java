@@ -1,20 +1,22 @@
 package org.bspb.smartbirds.pro.ui.views;
 
+import static android.app.Dialog.BUTTON_NEGATIVE;
+import static android.app.Dialog.BUTTON_NEUTRAL;
+import static android.app.Dialog.BUTTON_POSITIVE;
+import static android.widget.AdapterView.INVALID_POSITION;
+import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.utils.FormsConfig;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
@@ -22,13 +24,6 @@ import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static android.app.Dialog.BUTTON_NEGATIVE;
-import static android.app.Dialog.BUTTON_NEUTRAL;
-import static android.app.Dialog.BUTTON_POSITIVE;
-import static android.widget.AdapterView.INVALID_POSITION;
-import static org.bspb.smartbirds.pro.ui.utils.Configuration.MULTIPLE_CHOICE_DELIMITER;
-
-@EView
 public class SingleChoiceConfigFormInput extends TextViewFormInput implements SupportStorage {
 
     private int key;
@@ -63,6 +58,8 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
         } finally {
             a.recycle();
         }
+
+        loadData();
     }
 
     public void setKey(int key) {
@@ -70,7 +67,6 @@ public class SingleChoiceConfigFormInput extends TextViewFormInput implements Su
         loadData();
     }
 
-    @AfterInject
     void loadData() {
         if (key != -1 && !isInEditMode()) {
             mConfig = FormsConfig.configs.get(key);

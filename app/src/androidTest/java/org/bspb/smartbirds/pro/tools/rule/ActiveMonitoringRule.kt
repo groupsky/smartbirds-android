@@ -6,14 +6,14 @@ import org.bspb.smartbirds.pro.tools.robot.CommonFormTestRobot.Companion.commonF
 import org.bspb.smartbirds.pro.tools.robot.MainTestRobot
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
-import org.bspb.smartbirds.pro.ui.MainActivity_
+import org.bspb.smartbirds.pro.ui.MainActivity
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class ActiveMonitoringRule : TestRule {
 
-    private val activityRule = ActivityScenarioRule(MainActivity_::class.java)
+    private val activityRule = ActivityScenarioRule(MainActivity::class.java)
     val mockApiRule = MockBackendRule()
     private val permissionsRule = SmartbirdsStateRule.grantMonitoringPermissions()
     private val loggedInRule = SmartbirdsStateRule.setLoggedIn(true)

@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_threats_sample_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_threats_sample_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_threats_sample_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

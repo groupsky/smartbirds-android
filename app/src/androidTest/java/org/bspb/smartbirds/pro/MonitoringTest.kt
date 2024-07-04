@@ -15,11 +15,15 @@ import org.bspb.smartbirds.pro.tools.robot.CommonFormTestRobot.Companion.commonF
 import org.bspb.smartbirds.pro.tools.robot.MainTestRobot.Companion.mainScreen
 import org.bspb.smartbirds.pro.tools.robot.MonitoringTestRobot.Companion.monitoringScreen
 import org.bspb.smartbirds.pro.tools.robot.SingleChoiceDialogTestRobot.Companion.singleChoiceDialog
-import org.bspb.smartbirds.pro.tools.rule.*
-import org.bspb.smartbirds.pro.ui.MainActivity_
+import org.bspb.smartbirds.pro.tools.rule.CompositeRules
+import org.bspb.smartbirds.pro.tools.rule.FixturesRule
+import org.bspb.smartbirds.pro.tools.rule.MockBackendRule
+import org.bspb.smartbirds.pro.tools.rule.MockLocationRule
+import org.bspb.smartbirds.pro.tools.rule.SmartbirdsStateRule
+import org.bspb.smartbirds.pro.ui.MainActivity
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.endsWith
+import org.hamcrest.Matchers.`is`
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,7 +41,7 @@ class MonitoringTest {
     // Must be applied after all other rules
     @Rule(order = 1)
     @JvmField
-    val activityRule = ActivityScenarioRule(MainActivity_::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Rule
     @JvmField

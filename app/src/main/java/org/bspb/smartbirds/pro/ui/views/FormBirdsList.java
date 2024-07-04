@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui.views;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,12 +10,9 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
-import org.bspb.smartbirds.pro.ui.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +21,6 @@ import java.util.HashMap;
  * Created by groupsky on 15.12.16.
  */
 
-@EView
 public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDeleteListener, FormBirdsRow.OnPopulatedListener {
 
 
@@ -34,17 +29,19 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
 
     public FormBirdsList(Context context) {
         super(context);
+        init();
     }
 
     public FormBirdsList(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public FormBirdsList(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
-    @AfterViews
     protected void init() {
         setOrientation(VERTICAL);
         if (isInEditMode()) {
@@ -58,7 +55,7 @@ public class FormBirdsList extends LinearLayout implements FormBirdsRow.OnDelete
 
     private FormBirdsRow addRow() {
         try {
-            final FormBirdsRow row = FormBirdsRow_.build(getContext());
+            final FormBirdsRow row = FormBirdsRow.build(getContext());
             if (getChildCount() % 2 != 0) {
                 row.setBackgroundColor(getResources().getColor(R.color.black_transparent_20));
             }

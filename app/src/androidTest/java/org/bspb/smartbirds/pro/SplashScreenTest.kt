@@ -6,7 +6,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.bspb.smartbirds.pro.tools.rule.CompositeRules
-import org.bspb.smartbirds.pro.ui.SplashScreenActivity_
+import org.bspb.smartbirds.pro.ui.SplashScreenActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,8 +15,8 @@ import org.junit.runner.RunWith
 class SplashScreenTest {
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<SplashScreenActivity_> =
-        ActivityScenarioRule(SplashScreenActivity_::class.java)
+    var activityRule: ActivityScenarioRule<SplashScreenActivity> =
+        ActivityScenarioRule(SplashScreenActivity::class.java)
 
     @Rule
     @JvmField

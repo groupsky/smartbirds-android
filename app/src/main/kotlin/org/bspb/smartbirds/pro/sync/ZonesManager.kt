@@ -4,9 +4,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EBean
-import org.androidannotations.annotations.RootContext
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.db.SmartBirdsDatabase
 import org.bspb.smartbirds.pro.db.model.ZoneModel
@@ -14,18 +11,13 @@ import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.io.IOException
 
-@EBean(scope = EBean.Scope.Default)
-open class ZonesManager {
+open class ZonesManager(private var context: Context) {
 
     companion object {
         var isDownloading = false
     }
 
-    @RootContext
-    protected lateinit var context: Context
-
-    @Bean
-    protected lateinit var backend: Backend
+    protected val backend: Backend by lazy { Backend.getInstance() }
 
     open fun downloadZones() {
         isDownloading = true

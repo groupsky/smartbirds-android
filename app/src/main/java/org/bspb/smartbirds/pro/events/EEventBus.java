@@ -1,21 +1,30 @@
 package org.bspb.smartbirds.pro.events;
 
-import android.os.Looper;
 import android.util.Log;
 
-import org.androidannotations.annotations.EBean;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by groupsky on 14-9-25.
  */
-@EBean(scope = EBean.Scope.Singleton)
 public class EEventBus extends EventBus {
 
-    public EEventBus() {
+    private static volatile EEventBus instance;
+
+    public static EEventBus getInstance() {
+        if (instance == null) {
+            synchronized (EEventBus.class) {
+                if (instance == null) {
+                    instance = new EEventBus();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private EEventBus() {
         super();
         TAG = SmartBirdsApplication.TAG + ".Bus";
     }

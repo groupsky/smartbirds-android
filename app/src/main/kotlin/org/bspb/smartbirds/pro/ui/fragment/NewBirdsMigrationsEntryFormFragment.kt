@@ -1,68 +1,70 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentById
-import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.prefs.BirdsMigrationsPrefs_
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.prefs.BirdsMigrationsPrefs
+import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.QuickChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-import java.util.*
+import java.util.Date
 
-@EFragment(R.layout.fragment_monitoring_form_new_birds_migrations_entry)
-open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
+class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
 
-    @JvmField
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
-    protected var picturesFragment: NewEntryPicturesFragment? = null
+    private var picturesFragment: NewEntryPicturesFragment? = null
+    private var confidential: SwitchFormInput? = null
+    private var speciesQuickChoice: QuickChoiceFormInput? = null
+    private var speciesInput: SingleChoiceFormInput? = null
+    private var migrationPoint: SingleChoiceFormInput? = null
+
+    private lateinit var commonPrefs: CommonPrefs
+    private lateinit var migrationPrefs: BirdsMigrationsPrefs
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_monitoring_form_new_birds_migrations_entry,
+            container,
+            false
+        )
+    }
+
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        commonPrefs = CommonPrefs(requireContext())
+        migrationPrefs = BirdsMigrationsPrefs(requireContext())
+    }
 
 
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_confidential)
-    protected var confidential: SwitchFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_species_quick)
-    protected var speciesQuickChoice: QuickChoiceFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_species)
-    protected var speciesInput: SingleChoiceFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_birds_migrations_migration_point)
-    protected var migrationPoint: SingleChoiceFormInput? = null
-
-    @Pref
-    protected lateinit var commonPrefs: CommonPrefs_
-
-    @Pref
-    protected lateinit var migrationPrefs: BirdsMigrationsPrefs_
-
-    @AfterViews
-    open fun initQuickChoice() {
+    override fun initViews() {
+        super.initViews()
+        confidential = view?.findViewById(R.id.form_birds_migrations_confidential)
+        speciesQuickChoice = view?.findViewById(R.id.form_birds_migrations_species_quick)
+        speciesInput = view?.findViewById(R.id.form_birds_migrations_species)
+        migrationPoint = view?.findViewById(R.id.form_birds_migrations_migration_point)
         speciesQuickChoice?.onItemSelected = { nomenclatureItem: NomenclatureItem? ->
             speciesInput?.setSelection(nomenclatureItem)
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
-            migrationPrefs.migrationPoint().get()?.let { nomenclatureJson ->
+            confidential!!.isChecked = commonPrefs.getConfidentialRecord()
+            migrationPrefs.getMigrationPoint()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -80,9 +82,9 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
 
     override fun onPause() {
         super.onPause()
-        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.setConfidentialRecord(confidential!!.isChecked)
         migrationPoint?.selectedItem?.let {
-            migrationPrefs.migrationPoint().put(SBGsonParser.createParser().toJson(it))
+            migrationPrefs.setMigrationPoint(SBGsonParser.createParser().toJson(it))
         }
     }
 
@@ -118,13 +120,22 @@ open class NewBirdsMigrationsEntryFormFragment : BaseEntryFragment() {
 
     class Builder : BaseEntryFragment.Builder {
         override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
-            return NewBirdsMigrationsEntryFormFragment_.builder().lat(lat).lon(lon)
-                .geolocationAccuracy(geolocationAccuracy).build()
+            return NewBirdsMigrationsEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putDouble(ARG_LAT, lat)
+                    putDouble(ARG_LON, lon)
+                    putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy)
+                }
+            }
         }
 
         override fun load(id: Long, readOnly: Boolean): Fragment? {
-            return NewBirdsMigrationsEntryFormFragment_.builder().entryId(id).readOnly(readOnly)
-                .build()
+            return NewBirdsMigrationsEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_ENTRY_ID, id)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
         }
     }
 }

@@ -1,30 +1,31 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
+import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 
-@EFragment
 public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
 
-    @AfterViews
+
+    @Override
     protected void setupTabs() {
         setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
             @Override
             public androidx.fragment.app.Fragment getItem(int position) {
-                switch (position) {
-                    case 0:
-                        return NewBirdsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).lat(lat).lon(lon).build();
-                    case 1:
-                        return NewBirdsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
-                    default:
-                        throw new IllegalArgumentException("Unhandled position" + position);
-                }
+                ExtensionsKt.debugLog("Open birds entry form " + isNewEntry() + " " + readOnly);
+                return switch (position) {
+                    case 0 ->
+                            NewBirdsEntryRequiredFormFragment.newInstance(isNewEntry(), readOnly, getLat(), getLon());
+                    case 1 ->
+                            NewBirdsEntryOptionalFormFragment.Companion.newInstance(isNewEntry(), readOnly);
+                    default -> throw new IllegalArgumentException("Unhandled position" + position);
+                };
             }
 
             @Override
@@ -48,12 +49,23 @@ public class NewBirdsEntryFormFragment extends BaseTabEntryFragment {
 
         @Override
         public Fragment build(double lat, double lon, double geolocationAccuracy) {
-            return NewBirdsEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy).build();
+            Fragment fragment = new NewBirdsEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putDouble(ARG_LAT, lat);
+            args.putDouble(ARG_LON, lon);
+            args.putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
         public Fragment load(long id, boolean readOnly) {
-            return NewBirdsEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
+            Fragment fragment = new NewBirdsEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putLong(ARG_ENTRY_ID, id);
+            args.putBoolean(ARG_READ_ONLY, readOnly);
+            fragment.setArguments(args);
+            return fragment;
         }
     }
 }

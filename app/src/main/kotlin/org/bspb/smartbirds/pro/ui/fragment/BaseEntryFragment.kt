@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -11,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import de.greenrobot.event.EventBusException
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.*
 import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -25,51 +25,30 @@ import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.viewmodel.BaseEntryViewModel
 import java.text.ParseException
-import java.util.*
+import java.util.Date
 
-@EFragment
-@OptionsMenu(R.menu.debug_menu, R.menu.form_entry)
 abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     companion object {
         protected val TAG = SmartBirdsApplication.TAG + "." + javaClass.simpleName
 
-        protected const val ARG_LAT = "lat"
-        protected const val ARG_LON = "lon"
-        protected const val ARG_GEOLOCATION_ACCURACY = "geolocationAccuracy"
+        const val ARG_LAT = "lat"
+        const val ARG_LON = "lon"
+        const val ARG_GEOLOCATION_ACCURACY = "geolocationAccuracy"
+        const val ARG_ENTRY_ID = "entryId"
+        private const val STATE_STORED_ENTRY = "storedEntry"
     }
 
-    @JvmField
-    @FragmentArg(ARG_LAT)
-    @InstanceState
     protected var lat = 0.0
-
-    @JvmField
-    @FragmentArg(ARG_LON)
-    @InstanceState
     protected var lon = 0.0
-
-    @JvmField
-    @FragmentArg(ARG_GEOLOCATION_ACCURACY)
-    @InstanceState
     protected var geolocationAccuracy = 0.0
-
-
-    @JvmField
-    @FragmentArg
     protected var entryId: Long = 0
 
-    @Bean
-    protected lateinit var eventBus: EEventBus
+    protected val eventBus: EEventBus by lazy { EEventBus.getInstance() }
 
-    @OptionsMenuItem(R.id.action_crash)
     protected lateinit var menuCrash: MenuItem
-
-    @OptionsMenuItem(R.id.action_submit)
     protected lateinit var menuSubmit: MenuItem
 
-    @JvmField
-    @ViewById(R.id.btn_submit)
     protected var btnSubmit: View? = null
 
     /**
@@ -77,9 +56,6 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
      */
     protected var entryTimestamp: Date? = null
 
-
-    @JvmField
-    @InstanceState
     protected var storedEntry: MonitoringEntry? = null
 
     protected abstract fun getEntryType(): EntryType?
@@ -88,10 +64,67 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+
         if (entryId > 0) {
             loadEntry()
         }
+    }
+
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        restoreInstanceState(savedInstanceState)
+        checkArguments()
+        setHasOptionsMenu(true)
+    }
+
+    override fun readArgs() {
+        super.readArgs()
+        arguments?.let {
+            lat = it.getDouble(ARG_LAT, lat)
+            lon = it.getDouble(ARG_LON, lon)
+            geolocationAccuracy = it.getDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy)
+            entryId = it.getLong(ARG_ENTRY_ID, entryId)
+        }
+    }
+
+    private fun restoreInstanceState(savedInstanceState: Bundle?) {
+        savedInstanceState ?: return
+        lat = savedInstanceState.getDouble(ARG_LAT, lat)
+        lon = savedInstanceState.getDouble(ARG_LON, lon)
+        geolocationAccuracy =
+            savedInstanceState.getDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy)
+        storedEntry = savedInstanceState.getParcelable(STATE_STORED_ENTRY)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putDouble(ARG_LAT, lat)
+        outState.putDouble(ARG_LON, lon)
+        outState.putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy)
+        outState.putParcelable(STATE_STORED_ENTRY, storedEntry)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.debug_menu, menu)
+        inflater.inflate(R.menu.form_entry, menu)
+        menuCrash = menu.findItem(R.id.action_crash)
+        menuSubmit = menu.findItem(R.id.action_submit)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        if (itemId == R.id.action_submit) {
+            onMenuSubmitClicked(item)
+            return true
+        }
+        if (itemId == R.id.action_crash) {
+            crash()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun loadEntry() {
@@ -108,7 +141,7 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        DataService.intent(context).start()
+        context.startService(DataService.intent(context))
     }
 
     override fun onStart() {
@@ -148,15 +181,17 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         }
     }
 
-    @AfterInject
     protected open fun checkArguments() {
         if (entryId == 0L) {
             checkCoordinates()
         }
     }
 
-    @AfterViews
-    open fun initViews() {
+
+    override fun initViews() {
+        super.initViews()
+        btnSubmit = view?.findViewById(R.id.btn_submit)
+        btnSubmit?.setOnClickListener { onSubmitClicked() }
         if (btnSubmit != null && readOnly) {
             btnSubmit!!.isEnabled = false
         }
@@ -186,12 +221,10 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         submitData(serialize(if (entryTimestamp != null) entryTimestamp else Date()))
     }
 
-    @OptionsItem(R.id.action_submit)
     open fun onMenuSubmitClicked(item: MenuItem?) {
         onSubmitClicked()
     }
 
-    @Click(R.id.btn_submit)
     open fun onSubmitClicked() {
         if (isValid) {
             menuSubmit.isEnabled = false
@@ -209,7 +242,6 @@ abstract class BaseEntryFragment : BaseFormFragment(), EntryFragment {
         }
     }
 
-    @OptionsItem(R.id.action_crash)
     open fun crash() {
         throw RuntimeException("Test Crash")
     }

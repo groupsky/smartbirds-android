@@ -3,24 +3,23 @@ package org.bspb.smartbirds.pro.ui.fragment;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.CheckedChange;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.TextChange;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.LocationChangedEvent;
-import org.bspb.smartbirds.pro.prefs.BirdPrefs_;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.BirdPrefs;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
@@ -32,51 +31,121 @@ import java.util.Locale;
  * Created by groupsky on 26.01.17.
  */
 
-@EFragment(R.layout.fragment_monitoring_form_new_birds_required_entry)
 public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
 
     protected static final String ARG_LAT = "lat";
     protected static final String ARG_LON = "lon";
 
-    @FragmentArg(ARG_LAT)
     protected double lat;
-
-    @FragmentArg(ARG_LON)
     protected double lon;
 
-    @ViewById(R.id.form_birds_count_units)
     SingleChoiceFormInput countUnits;
-
-    @ViewById(R.id.form_birds_count_type)
     SingleChoiceFormInput countType;
-
-    @ViewById(R.id.form_birds_count)
     DecimalNumberFormInput count;
-    @ViewById(R.id.form_birds_count_min)
     DecimalNumberFormInput countMin;
-    @ViewById(R.id.form_birds_count_max)
     DecimalNumberFormInput countMax;
-
-    @ViewById(R.id.form_birds_confidential)
     SwitchFormInput confidential;
-
-    @ViewById(R.id.warning_confidential_nest)
     TextView warningConfidential;
-
-    @ViewById(R.id.form_birds_distance)
     EditText distanceView;
 
-    @Pref
-    BirdPrefs_ prefs;
+    BirdPrefs prefs;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
 
-    @Bean
-    EEventBus eventBus;
+    EEventBus eventBus = EEventBus.getInstance();
 
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
+
+    public static NewBirdsEntryRequiredFormFragment newInstance(boolean isNewEntry, boolean readOnly, double lat, double lon) {
+        NewBirdsEntryRequiredFormFragment fragment = new NewBirdsEntryRequiredFormFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_IS_NEW_ENTRY, isNewEntry);
+        args.putBoolean(ARG_READ_ONLY, readOnly);
+        args.putDouble(ARG_LAT, lat);
+        args.putDouble(ARG_LON, lon);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    protected void readArgs() {
+        super.readArgs();
+        if (getArguments() != null) {
+            lat = getArguments().getDouble(ARG_LAT, 0);
+            lon = getArguments().getDouble(ARG_LON, 0);
+        }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_new_birds_required_entry, container, false);
+        }
+        return view;
+    }
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        prefs = new BirdPrefs(requireContext());
+        commonPrefs = new CommonPrefs(requireContext());
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        if (getView() == null) return;
+
+        countUnits = getView().findViewById(R.id.form_birds_count_units);
+        countType = getView().findViewById(R.id.form_birds_count_type);
+        count = getView().findViewById(R.id.form_birds_count);
+        countMin = getView().findViewById(R.id.form_birds_count_min);
+        countMax = getView().findViewById(R.id.form_birds_count_max);
+        confidential = getView().findViewById(R.id.form_birds_confidential);
+        warningConfidential = getView().findViewById(R.id.warning_confidential_nest);
+        distanceView = getView().findViewById(R.id.form_birds_distance);
+
+        if (confidential != null) {
+            confidential.setOnCheckedChangeListener((buttonView, isChecked) -> showConfidentialWarningIfNeeded());
+        }
+
+        if (countUnits != null) {
+            countUnits.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    showConfidentialWarningIfNeeded();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        }
+
+        if (countType != null) {
+            countType.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    handleCountsLogic();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        }
+    }
 
     @Override
     public void onStart() {
@@ -118,9 +187,9 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            countUnits.setSelection(prefs.birdCountUnits().get());
-            countType.setSelection(prefs.birdCountType().get());
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            countUnits.setSelection(prefs.getCountUnits());
+            countType.setSelection(prefs.getCountType());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
         handleCountsLogic();
         showConfidentialWarningIfNeeded();
@@ -156,13 +225,11 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onPause() {
         super.onPause();
-        prefs.birdCountUnits().put(countUnits.getSelection());
-        prefs.birdCountType().put(countType.getSelection());
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        prefs.setCountUnits(countUnits.getSelection());
+        prefs.setCountType(countType.getSelection());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
-    @TextChange(R.id.form_birds_count_units)
-    @CheckedChange(R.id.form_birds_confidential)
     void showConfidentialWarningIfNeeded() {
         Nomenclature item = countUnits.getSelectedItem();
         String countUnit = item != null ? item.label.get("en") : null;
@@ -185,7 +252,6 @@ public class NewBirdsEntryRequiredFormFragment extends BaseFormFragment {
         }
     }
 
-    @TextChange(R.id.form_birds_count_type)
     void handleCountsLogic() {
         if (readOnly) {
             count.setEnabled(false);

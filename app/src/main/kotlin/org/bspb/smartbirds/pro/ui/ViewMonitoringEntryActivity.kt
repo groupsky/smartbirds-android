@@ -1,31 +1,44 @@
 package org.bspb.smartbirds.pro.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.fragment.app.Fragment
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EActivity
-import org.androidannotations.annotations.Extra
-import org.androidannotations.annotations.FragmentById
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.enums.EntryType
 
-@EActivity(R.layout.activity_form)
 open class ViewMonitoringEntryActivity : BaseActivity() {
 
-    @Extra
-    @JvmField
-    protected var entryId: Long = 0
+    companion object {
+        fun newIntent(context: Context, entryId: Long, entryType: EntryType?): Intent {
+            return Intent(context, ViewMonitoringEntryActivity::class.java).apply {
+                putExtra("entryId", entryId)
+                entryType?.let {
+                    putExtra("entryType", it.name)
+                }
+            }
+        }
+    }
 
-    @Extra
+    protected var entryId: Long = 0
     protected lateinit var entryType: EntryType
 
-    @FragmentById(R.id.container)
-    @JvmField
     protected var fragment: Fragment? = null
 
-    @AfterViews
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_form)
+
+        intent.extras?.let {
+            entryId = it.getLong("entryId", 0)
+            entryType = EntryType.valueOf(it.getString("entryType", ""))
+        }
+
+        setupFragment()
+    }
+
     protected open fun setupFragment() {
+        fragment = supportFragmentManager.findFragmentById(R.id.container)
         if (entryId <= 0) {
             finish()
             return

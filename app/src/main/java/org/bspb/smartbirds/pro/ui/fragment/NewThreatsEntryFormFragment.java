@@ -1,26 +1,21 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.os.Parcelable;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 
 /**
  * Created by dani on 11-07-19.
  */
-@EFragment
 public class NewThreatsEntryFormFragment extends BaseTabEntryFragment {
 
-    @AfterViews
+    @Override
     protected void setupTabs() {
         setAdapter(new FragmentStatePagerAdapter(getFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -31,13 +26,13 @@ public class NewThreatsEntryFormFragment extends BaseTabEntryFragment {
             public androidx.fragment.app.Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        requiredFormFragment = NewThreatsEntryRequiredFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                        requiredFormFragment = NewThreatsEntryRequiredFormFragment.newInstance(isNewEntry(), readOnly);
                         if (optionalFormFragment != null) {
                             requiredFormFragment.setOnPrimaryTypeChangedListener(optionalFormFragment);
                         }
                         return requiredFormFragment;
                     case 1:
-                        optionalFormFragment = NewThreatsEntryOptionalFormFragment_.builder().setNewEntry(isNewEntry()).readOnly(readOnly).build();
+                        optionalFormFragment = NewThreatsEntryOptionalFormFragment.Companion.newInstance(isNewEntry(), readOnly);
                         if (requiredFormFragment != null) {
                             requiredFormFragment.setOnPrimaryTypeChangedListener(optionalFormFragment);
                         }
@@ -86,12 +81,23 @@ public class NewThreatsEntryFormFragment extends BaseTabEntryFragment {
 
         @Override
         public Fragment build(double lat, double lon, double geolocationAccuracy) {
-            return NewThreatsEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy).build();
+            Fragment fragment = new NewThreatsEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putDouble(ARG_LAT, lat);
+            args.putDouble(ARG_LON, lon);
+            args.putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
         public Fragment load(long id, boolean readOnly) {
-            return NewThreatsEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
+            Fragment fragment = new NewThreatsEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putLong(ARG_ENTRY_ID, id);
+            args.putBoolean(ARG_READ_ONLY, readOnly);
+            fragment.setArguments(args);
+            return fragment;
         }
     }
 

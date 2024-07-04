@@ -14,26 +14,58 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import org.androidannotations.api.builder.ServiceIntentBuilder
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.events.*
-import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
-import org.bspb.smartbirds.pro.prefs.UserPrefs_
+import org.bspb.smartbirds.pro.events.ActiveMonitoringEvent
+import org.bspb.smartbirds.pro.events.CancelMonitoringEvent
+import org.bspb.smartbirds.pro.events.CreateImageFile
+import org.bspb.smartbirds.pro.events.EEventBus
+import org.bspb.smartbirds.pro.events.EntrySubmitted
+import org.bspb.smartbirds.pro.events.FinishMonitoringEvent
+import org.bspb.smartbirds.pro.events.GetImageFile
+import org.bspb.smartbirds.pro.events.GetMonitoringCommonData
+import org.bspb.smartbirds.pro.events.ImageFileCreated
+import org.bspb.smartbirds.pro.events.ImageFileCreatedFailed
+import org.bspb.smartbirds.pro.events.ImageFileEvent
+import org.bspb.smartbirds.pro.events.MonitoringCanceledEvent
+import org.bspb.smartbirds.pro.events.MonitoringCommonData
+import org.bspb.smartbirds.pro.events.MonitoringFailedEvent
+import org.bspb.smartbirds.pro.events.MonitoringFinishedEvent
+import org.bspb.smartbirds.pro.events.MonitoringPausedEvent
+import org.bspb.smartbirds.pro.events.MonitoringResumedEvent
+import org.bspb.smartbirds.pro.events.MonitoringStartedEvent
+import org.bspb.smartbirds.pro.events.PauseMonitoringEvent
+import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent
+import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent
+import org.bspb.smartbirds.pro.events.SetMonitoringCommonData
+import org.bspb.smartbirds.pro.events.StartMonitoringEvent
+import org.bspb.smartbirds.pro.events.SubmitFishesCommonForm
+import org.bspb.smartbirds.pro.events.UndoLastEntry
+import org.bspb.smartbirds.pro.events.UserDataEvent
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
+import org.bspb.smartbirds.pro.prefs.UserPrefs
 import org.bspb.smartbirds.pro.tools.GpxWriter
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils
-import org.bspb.smartbirds.pro.utils.*
+import org.bspb.smartbirds.pro.utils.MonitoringManager
+import org.bspb.smartbirds.pro.utils.MonitoringUtils
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.closeGpxFile
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.createMonitoringDir
 import org.bspb.smartbirds.pro.utils.MonitoringUtils.Companion.initGpxFile
-import java.io.*
+import org.bspb.smartbirds.pro.utils.SBScope
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
+import java.io.Writer
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import java.util.concurrent.CancellationException
 
 open class DataService : Service() {
@@ -49,11 +81,8 @@ open class DataService : Service() {
 
         }
 
-        class IntentBuilder(context: Context?) :
-            ServiceIntentBuilder<IntentBuilder?>(context, DataService::class.java)
-
-        fun intent(context: Context?): IntentBuilder {
-            return IntentBuilder(context)
+        fun intent(context: Context?): Intent {
+            return Intent(context, DataService::class.java)
         }
     }
 
@@ -62,10 +91,10 @@ open class DataService : Service() {
 
     private val scope = SBScope()
 
-    protected lateinit var bus: EEventBus
-    private lateinit var globalPrefs: SmartBirdsPrefs_
-    private lateinit var userPrefs: UserPrefs_
-    private lateinit var monitoringPrefs: MonitoringPrefs_
+    protected val bus: EEventBus by lazy { EEventBus.getInstance() }
+    private lateinit var globalPrefs: SmartBirdsPrefs
+    private lateinit var userPrefs: UserPrefs
+    private lateinit var monitoringPrefs: MonitoringPrefs
     private val monitoringManager = MonitoringManager.getInstance()
 
     var monitoring: Monitoring? = null
@@ -78,13 +107,13 @@ open class DataService : Service() {
                     startService(Intent(this, TrackingService::class.java))
                     NotificationUtils.showMonitoringNotification(applicationContext)
                 }
-                globalPrefs.runningMonitoring().put(true)
+                globalPrefs.setRunningMonitoring(true)
             } else {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                     NotificationUtils.hideMonitoringNotification(applicationContext)
                 }
                 stopService(Intent(this, TrackingService::class.java))
-                globalPrefs.runningMonitoring().put(false)
+                globalPrefs.setRunningMonitoring(false)
             }
         }
 
@@ -102,10 +131,9 @@ open class DataService : Service() {
     }
 
     private fun init() {
-        globalPrefs = SmartBirdsPrefs_(this)
-        userPrefs = UserPrefs_(this)
-        monitoringPrefs = MonitoringPrefs_(this)
-        bus = EEventBus_.getInstance_(this)
+        globalPrefs = SmartBirdsPrefs(this)
+        userPrefs = UserPrefs(this)
+        monitoringPrefs = MonitoringPrefs(this)
 
         initBus()
     }
@@ -144,7 +172,7 @@ open class DataService : Service() {
         // when the service is killed and recreated. The reason is that in Oreo there are
         // limitations for starting services when the app is in background.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            if (isMonitoring()) DataService.intent(this).start()
+            if (isMonitoring()) startService(intent(this))
         }
 
         super.onDestroy()
@@ -203,12 +231,17 @@ open class DataService : Service() {
                     monitoringManager.updateStatus(pausedMonitoring, Monitoring.Status.canceled)
                 }
             }
-            globalPrefs.pausedMonitoring().put(false)
+            globalPrefs.setPausedMonitoring(false)
             monitoring = null
             monitoringPrefs.edit().clear().apply()
-            getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit().clear().apply()
+            getSharedPreferences(SmartBirdsApplication.PREFS_MONITORING_POINTS, MODE_PRIVATE).edit()
+                .clear().apply()
             bus.postSticky(MonitoringCanceledEvent())
-            Toast.makeText(this@DataService, getString(R.string.toast_cancel_monitoring), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@DataService,
+                getString(R.string.toast_cancel_monitoring),
+                Toast.LENGTH_SHORT
+            ).show()
             bus.removeStickyEvent(event)
             stopSelf()
         }
@@ -261,7 +294,11 @@ open class DataService : Service() {
                 }
             } catch (t: Throwable) {
                 Reporting.logException("Unable to persist entry", t)
-                Toast.makeText(this@DataService, "Could not persist monitoring entry!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DataService,
+                    "Could not persist monitoring entry!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -283,7 +320,11 @@ open class DataService : Service() {
                 }
             } catch (t: Throwable) {
                 Reporting.logException("Unable to persist fish common data", t)
-                Toast.makeText(this@DataService, "Could not persist fish common data!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DataService,
+                    "Could not persist fish common data!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -308,11 +349,12 @@ open class DataService : Service() {
     fun onEvent(event: CreateImageFile) {
         scope.sbLaunch {
 
-            val monitoring = if (TextUtils.isEmpty(event.monitoringCode) || isMonitoring() && TextUtils.equals(
-                    event.monitoringCode,
-                    monitoring!!.code
-                )
-            ) monitoring else monitoringManager.getMonitoring(event.monitoringCode)
+            val monitoring =
+                if (TextUtils.isEmpty(event.monitoringCode) || isMonitoring() && TextUtils.equals(
+                        event.monitoringCode,
+                        monitoring!!.code
+                    )
+                ) monitoring else monitoringManager.getMonitoring(event.monitoringCode)
             // Create an image file name
             var cnt = 100
             while (isMonitoring() && cnt-- > 0) {
@@ -387,7 +429,7 @@ open class DataService : Service() {
                 monitoringManager.updateStatus(monitoring!!, Monitoring.Status.paused)
                 this@DataService.monitoring = null
             }
-            globalPrefs.pausedMonitoring().put(true)
+            globalPrefs.setPausedMonitoring(true)
             bus.postSticky(MonitoringPausedEvent())
         }
     }
@@ -398,7 +440,7 @@ open class DataService : Service() {
                 bus.postSticky(MonitoringResumedEvent())
                 return@sbLaunch
             }
-            globalPrefs.pausedMonitoring().put(false)
+            globalPrefs.setPausedMonitoring(false)
 
             val pausedMonitoring = monitoringManager.getPausedMonitoring()
             if (pausedMonitoring != null) {
@@ -414,11 +456,11 @@ open class DataService : Service() {
 
     fun onEvent(event: UserDataEvent) {
         if (event.user != null) {
-            userPrefs.userId().put(event.user.id)
-            userPrefs.firstName().put(event.user.firstName)
-            userPrefs.lastName().put(event.user.lastName)
-            userPrefs.email().put(event.user.email)
-            userPrefs.bgAtlasCells().put(SBGsonParser.createParser().toJson(event.user.bgAtlasCells))
+            userPrefs.setUserId(event.user.id)
+            userPrefs.setFirstName(event.user.firstName)
+            userPrefs.setLastName(event.user.lastName)
+            userPrefs.setEmail(event.user.email)
+            userPrefs.setBgAtlasCells(SBGsonParser.createParser().toJson(event.user.bgAtlasCells))
         }
         bus.removeStickyEvent(event)
     }

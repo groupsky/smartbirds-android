@@ -14,10 +14,6 @@ import androidx.fragment.app.ListFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import org.androidannotations.annotations.AfterInject
-import org.androidannotations.annotations.AfterViews
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentArg
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.adapter.MonitoringEntryListAdapter
@@ -26,10 +22,26 @@ import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 import org.bspb.smartbirds.pro.viewmodel.MonitoringEntryListViewModel
-import java.util.*
+import java.util.Locale
 
-@EFragment
 open class MonitoringEntryListFragment : ListFragment() {
+
+    companion object {
+        private const val TAG = SmartBirdsApplication.TAG + ".FFormLst"
+
+        const val ARG_MONITORING_CODE = "monitoringCode"
+
+        fun newInstance(monitoringCode: String?): MonitoringEntryListFragment {
+            return MonitoringEntryListFragment().apply {
+                arguments = Bundle().apply {
+                    monitoringCode?.let {
+                        putString(ARG_MONITORING_CODE, monitoringCode)
+                    }
+                }
+            }
+        }
+    }
+
     private var adapter: MonitoringEntryListAdapter? = null
 
     protected val monitoringManager = MonitoringManager.getInstance()
@@ -41,10 +53,21 @@ open class MonitoringEntryListFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate")
+        readArgs()
+        setupLoader()
         super.onCreate(savedInstanceState)
 
         adapter = MonitoringEntryListAdapter(requireContext())
         listAdapter = adapter
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupListview()
+    }
+
+    private fun readArgs() {
+        setMonitoringCode(arguments?.getString(ARG_MONITORING_CODE))
     }
 
     private fun initViewModel() {
@@ -58,8 +81,7 @@ open class MonitoringEntryListFragment : ListFragment() {
         }
     }
 
-    @AfterInject
-    protected fun setupLoader() {
+    private fun setupLoader() {
         code?.let {
             lifecycleScope.launch {
                 monitoring = monitoringManager.getMonitoring(it)
@@ -67,8 +89,7 @@ open class MonitoringEntryListFragment : ListFragment() {
         }
     }
 
-    @AfterViews
-    protected fun setupListview() {
+    private fun setupListview() {
         initViewModel()
         val lv = listView
         setEmptyText(getText(R.string.emptyList))
@@ -116,6 +137,7 @@ open class MonitoringEntryListFragment : ListFragment() {
                         }
                         return true
                     }
+
                     R.id.action_delete -> {
                         val selectedItems = lv.checkedItemIds
                         val builder = AlertDialog.Builder(activity)
@@ -149,8 +171,7 @@ open class MonitoringEntryListFragment : ListFragment() {
         }
     }
 
-    @FragmentArg
-    open fun setMonitoringCode(monitoringCode: String?) {
+    fun setMonitoringCode(monitoringCode: String?) {
         this.code = monitoringCode
         this.code?.let {
             lifecycleScope.launch {
@@ -162,9 +183,5 @@ open class MonitoringEntryListFragment : ListFragment() {
 
     interface Listener {
         fun onMonitoringEntrySelected(id: Long, entryType: EntryType?)
-    }
-
-    companion object {
-        private const val TAG = SmartBirdsApplication.TAG + ".FFormLst"
     }
 }

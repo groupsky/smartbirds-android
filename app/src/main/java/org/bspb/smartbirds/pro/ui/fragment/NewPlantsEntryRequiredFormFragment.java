@@ -1,54 +1,68 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.google.android.gms.maps.model.LatLng;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.events.EEventBus;
-import org.bspb.smartbirds.pro.events.LocationChangedEvent;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
-import org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 
 import java.util.HashMap;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by dani on 26.02.18.
  */
 
-@EFragment(R.layout.fragment_monitoring_form_new_plants_required_entry)
 public class NewPlantsEntryRequiredFormFragment extends BaseFormFragment {
 
-    @ViewById(R.id.form_plants_confidential)
     SwitchFormInput confidential;
-
-    @ViewById(R.id.form_plants_elevation)
     DecimalNumberFormInput elevation;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
+    EEventBus eventBus = EEventBus.getInstance();
 
-    @Bean
-    EEventBus eventBus;
-
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
+    public static NewPlantsEntryRequiredFormFragment newInstance(boolean isNewEntry, boolean readOnly) {
+        NewPlantsEntryRequiredFormFragment fragment = new NewPlantsEntryRequiredFormFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_IS_NEW_ENTRY, isNewEntry);
+        args.putBoolean(ARG_READ_ONLY, readOnly);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_new_plants_required_entry, container, false);
+        }
+        return view;
+    }
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        commonPrefs = new CommonPrefs(requireContext());
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        confidential = requireView().findViewById(R.id.form_plants_confidential);
+        elevation = requireView().findViewById(R.id.form_plants_elevation);
+    }
 
     @Override
     public void onStart() {
@@ -66,7 +80,7 @@ public class NewPlantsEntryRequiredFormFragment extends BaseFormFragment {
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
     }
 
@@ -101,7 +115,7 @@ public class NewPlantsEntryRequiredFormFragment extends BaseFormFragment {
     @Override
     public void onPause() {
         super.onPause();
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
     public void onEvent(Location location) {

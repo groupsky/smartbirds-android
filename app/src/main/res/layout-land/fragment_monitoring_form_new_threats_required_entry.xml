@@ -21,7 +21,7 @@
 
                 <fragment
                     android:id="@+id/moderator_review_fragment"
-                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_span="9"
@@ -36,7 +36,7 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput
                     android:id="@+id/form_threats_primary_type"
                     android:layout_span="12"
                     android:tag="@string/tag_primary_type"
@@ -48,7 +48,7 @@
 
             <TableRow>
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigRadioFormInput
                     android:id="@+id/form_threats_poisoned_type"
                     android:layout_span="9"
                     android:tag="@string/tag_poisoned_type"
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_threats_category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="5">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceConfigFormInput
                         android:id="@+id/form_threats_class"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="5">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_threats_species"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="5">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_threats_estimate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="5">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_threats_state_carcass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
 
         <fragment
             android:id="@+id/pictures_fragment"
-            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
+            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -9,9 +9,6 @@ import android.widget.Checkable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.ViewById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.content.MonitoringEntry;
@@ -25,29 +22,26 @@ import java.util.Locale;
  * Created by groupsky on 08.03.17.
  */
 
-@EViewGroup(R.layout.partial_monitoring_entry_list_row)
 public class MonitoringEntryListRowPartialView extends LinearLayout implements Checkable {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonEnLRPV";
 
-    @ViewById(R.id.type)
     TextView typeView;
-
-    @ViewById(R.id.species)
     TextView speciesView;
-
-    @ViewById(R.id.count)
     TextView countView;
-
-    @ViewById(R.id.status)
     TextView statusView;
-
-    @ViewById(R.id.moderator_review)
     View moderatorReview;
 
     private boolean isChecked;
 
     private MonitoringEntry entry;
+    private boolean alreadyInflated = false;
+
+    public static MonitoringEntryListRowPartialView build(Context context) {
+        MonitoringEntryListRowPartialView instance = new MonitoringEntryListRowPartialView(context);
+        instance.onFinishInflate();
+        return instance;
+    }
 
     public MonitoringEntryListRowPartialView(Context context) {
         this(context, null);
@@ -61,9 +55,24 @@ public class MonitoringEntryListRowPartialView extends LinearLayout implements C
         super(context, attrs, defStyleAttr);
     }
 
-    @AfterViews
+    @Override
+    protected void onFinishInflate() {
+        if (!alreadyInflated) {
+            alreadyInflated = true;
+            inflate(getContext(), R.layout.partial_monitoring_entry_list_row, this);
+            bind();
+        }
+        super.onFinishInflate();
+    }
+
     protected void bind() {
         Log.d(TAG, "bind after views");
+        typeView = findViewById(R.id.type);
+        speciesView = findViewById(R.id.species);
+        countView = findViewById(R.id.count);
+        statusView = findViewById(R.id.status);
+        moderatorReview = findViewById(R.id.moderator_review);
+
         if (entry != null) bind(entry);
     }
 

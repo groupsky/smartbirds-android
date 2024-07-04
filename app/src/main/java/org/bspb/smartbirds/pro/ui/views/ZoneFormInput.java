@@ -22,11 +22,10 @@ import android.widget.ListView;
 
 import androidx.lifecycle.ViewTreeLifecycleOwner;
 
-import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.backend.dto.Zone;
-import org.bspb.smartbirds.pro.repository.ZoneRepository;
 import org.bspb.smartbirds.pro.db.model.ZoneModel;
+import org.bspb.smartbirds.pro.repository.ZoneRepository;
 import org.bspb.smartbirds.pro.ui.utils.SmartArrayAdapter;
 
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ import java.util.Map;
  * Created by groupsky on 06.10.16.
  */
 
-@EView
 public class ZoneFormInput extends TextViewFormInput implements SupportStorage {
 
     private SmartArrayAdapter<ZoneHolder> mAdapter;

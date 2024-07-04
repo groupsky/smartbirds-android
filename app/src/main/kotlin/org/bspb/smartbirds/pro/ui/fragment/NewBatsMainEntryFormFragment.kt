@@ -1,66 +1,80 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentById
-import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
+import android.view.ViewGroup
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
-import org.bspb.smartbirds.pro.prefs.BatsPrefs_
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.prefs.BatsPrefs
+import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.tools.Reporting
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.views.FloatNumberFormInput
 import org.bspb.smartbirds.pro.ui.views.NomenclatureItem
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-import java.util.*
 
-@EFragment(R.layout.fragment_monitoring_form_new_bats_entry)
-open class NewBatsMainEntryFormFragment : BaseFormFragment() {
+class NewBatsMainEntryFormFragment : BaseFormFragment() {
 
-    @JvmField
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
+    companion object {
+        fun newInstance(isNewEntry: Boolean, readOnly: Boolean): NewBatsMainEntryFormFragment {
+            return NewBatsMainEntryFormFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_IS_NEW_ENTRY, isNewEntry)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
+        }
+    }
+
     protected var picturesFragment: NewEntryPicturesFragment? = null
 
 
-    @JvmField
-    @ViewById(R.id.form_bats_confidential)
-    protected var confidential: SwitchFormInput? = null
+    private lateinit var commonPrefs: CommonPrefs
+    private lateinit var batsPrefs: BatsPrefs
 
-    @Pref
-    protected lateinit var commonPrefs: CommonPrefs_
+    private var confidential: SwitchFormInput? = null
+    private var metodology: SingleChoiceFormInput? = null
+    private var tempCave: FloatNumberFormInput? = null
+    private var humidityCave: FloatNumberFormInput? = null
+    private var typeLoc: SingleChoiceFormInput? = null
+    private var habitat: SingleChoiceFormInput? = null
 
-    @Pref
-    protected lateinit var batsPrefs: BatsPrefs_
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        commonPrefs = CommonPrefs(requireContext())
+        batsPrefs = BatsPrefs(requireContext())
+    }
 
-    @JvmField
-    @ViewById(R.id.form_bats_metodology)
-    protected var metodology: SingleChoiceFormInput? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_monitoring_form_new_bats_entry,
+            container,
+            false
+        )
+    }
 
-    @JvmField
-    @ViewById(R.id.form_bats_t_cave)
-    protected var tempCave: FloatNumberFormInput? = null
+    override fun initViews() {
+        super.initViews()
 
-    @JvmField
-    @ViewById(R.id.form_bats_h_cave)
-    protected var humidityCave: FloatNumberFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_bats_typloc)
-    protected var typeLoc: SingleChoiceFormInput? = null
-
-    @JvmField
-    @ViewById(R.id.form_bats_habitat)
-    protected var habitat: SingleChoiceFormInput? = null
+        confidential = view?.findViewById(R.id.form_bats_confidential)
+        metodology = view?.findViewById(R.id.form_bats_metodology)
+        tempCave = view?.findViewById(R.id.form_bats_t_cave)
+        humidityCave = view?.findViewById(R.id.form_bats_h_cave)
+        typeLoc = view?.findViewById(R.id.form_bats_typloc)
+        habitat = view?.findViewById(R.id.form_bats_habitat)
+    }
 
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
-            batsPrefs.metodology()?.get()?.let { nomenclatureJson ->
+            confidential!!.isChecked = commonPrefs.getConfidentialRecord()
+            batsPrefs.getMetodology()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -72,7 +86,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
                     Reporting.logException(t)
                 }
             }
-            batsPrefs.habitat()?.get()?.let { nomenclatureJson ->
+            batsPrefs.getHabitat()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -84,7 +98,7 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
                     Reporting.logException(t)
                 }
             }
-            batsPrefs.typeLoc()?.get()?.let { nomenclatureJson ->
+            batsPrefs.getTypeLoc()?.let { nomenclatureJson ->
                 try {
                     val nomenclature = SBGsonParser.createParser()
                         .fromJson(nomenclatureJson, Nomenclature::class.java)
@@ -96,10 +110,10 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
                     Reporting.logException(t)
                 }
             }
-            batsPrefs.tempCave()?.get()?.let { temp ->
+            batsPrefs.getTempCave()?.let { temp ->
                 tempCave?.setText(temp)
             }
-            batsPrefs.humidityCave()?.get()?.let { temp ->
+            batsPrefs.getHumidityCave()?.let { temp ->
                 humidityCave?.setText(temp)
             }
         }
@@ -107,21 +121,21 @@ open class NewBatsMainEntryFormFragment : BaseFormFragment() {
 
     override fun onPause() {
         super.onPause()
-        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.setConfidentialRecord(confidential!!.isChecked)
         metodology?.selectedItem?.let {
-            batsPrefs.metodology().put(SBGsonParser.createParser().toJson(it))
+            batsPrefs.setMetodology(SBGsonParser.createParser().toJson(it))
         }
         habitat?.selectedItem?.let {
-            batsPrefs.habitat().put(SBGsonParser.createParser().toJson(it))
+            batsPrefs.setHabitat(SBGsonParser.createParser().toJson(it))
         }
         typeLoc?.selectedItem?.let {
-            batsPrefs.typeLoc().put(SBGsonParser.createParser().toJson(it))
+            batsPrefs.setTypeLoc(SBGsonParser.createParser().toJson(it))
         }
         tempCave?.text?.let {
-            batsPrefs.tempCave().put(it.toString())
+            batsPrefs.setTempCave(it.toString())
         }
         humidityCave?.text?.let {
-            batsPrefs.humidityCave().put(it.toString())
+            batsPrefs.setHumidityCave(it.toString())
         }
     }
 

@@ -18,11 +18,14 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,19 +34,6 @@ import androidx.preference.PreferenceManager;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.reflect.TypeToken;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.InstanceState;
-import org.androidannotations.annotations.OnActivityResult;
-import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.OptionsMenuItem;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.BuildConfig;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
@@ -65,14 +55,13 @@ import org.bspb.smartbirds.pro.events.PauseMonitoringEvent;
 import org.bspb.smartbirds.pro.events.QueryActiveMonitoringEvent;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.UndoLastEntry;
-import org.bspb.smartbirds.pro.prefs.MonitoringPrefs_;
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_;
-import org.bspb.smartbirds.pro.prefs.UserPrefs_;
+import org.bspb.smartbirds.pro.prefs.MonitoringPrefs;
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs;
+import org.bspb.smartbirds.pro.prefs.UserPrefs;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.service.TrackingService;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.map.EntryMapMarker;
 import org.bspb.smartbirds.pro.ui.map.GoogleMapProvider;
 import org.bspb.smartbirds.pro.ui.map.MapProvider;
@@ -91,9 +80,11 @@ import java.util.Set;
 /**
  * Created by dani on 14-11-4.
  */
-@EActivity(R.layout.activity_monitoring)
-@OptionsMenu({R.menu.monitoring, R.menu.debug_menu})
 public class MonitoringActivity extends BaseActivity implements MonitoringEntryListFragment.Listener, MapProvider.MarkerClickListener {
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, MonitoringActivity.class);
+    }
 
     private static final String TAG = SmartBirdsApplication.TAG + ".MonitoringActivity";
 
@@ -106,53 +97,38 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     @NonNull
     MapProvider.MapType mapType = MapProvider.MapType.NORMAL;
 
-    @Bean(GoogleMapProvider.class)
-    MapProvider googleMap;
-    @Bean(OsmMapProvider.class)
-    MapProvider osmMap;
+    MapProvider googleMap = new GoogleMapProvider();
+    MapProvider osmMap = new OsmMapProvider();
 
     MapProvider currentMap;
 
-    @OptionsMenuItem(R.id.action_new_entry)
     MenuItem menuNewEntry;
-    @OptionsMenuItem(R.id.action_undo_last_entry)
     MenuItem menuUndoEntry;
-    @Bean
-    EEventBus eventBus;
+
+    EEventBus eventBus = EEventBus.getInstance();
 
     @NonNull
     ArrayList<LatLng> points = new ArrayList<LatLng>();
-    @InstanceState
-    int zoomFactor = 500;
-    @InstanceState
-    LatLng lastPosition;
 
 
-    @OptionsMenuItem(R.id.menu_zoom)
     MenuItem menuZoom;
-    @OptionsMenuItem(R.id.action_zoom_free)
     MenuItem menuZoomFree;
-    @OptionsMenuItem(R.id.action_zoom_1km)
     MenuItem menuZoom1km;
-    @OptionsMenuItem(R.id.action_zoom_500m)
     MenuItem menuZoom500m;
-    @OptionsMenuItem(R.id.action_zoom_250m)
     MenuItem menuZoom250m;
-    @OptionsMenuItem(R.id.action_zoom_100m)
     MenuItem menuZoom100m;
-    @OptionsMenuItem(R.id.action_crash)
     MenuItem menuCrash;
 
-    @InstanceState
+    // InstanceState fields
     @Nullable
     EntryType entryType = null;
+    int zoomFactor = 500;
+    LatLng lastPosition;
+    String monitoringCode;
 
-    @Pref
-    MonitoringPrefs_ monitoringPrefs;
-    @Pref
-    SmartBirdsPrefs_ prefs;
-    @Pref
-    UserPrefs_ userPrefs;
+    MonitoringPrefs monitoringPrefs;
+    SmartBirdsPrefs prefs;
+    UserPrefs userPrefs;
 
     private boolean canceled = false;
     boolean stayAwake;
@@ -164,24 +140,25 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     boolean showCurrentLocationCircle;
     List<MapLayerItem> mapLayers;
 
-    @FragmentById(R.id.list_container)
     MonitoringEntryListFragment listFragment;
 
-    @InstanceState
-    String monitoringCode;
-
-    @ViewById(R.id.root_map_container)
     View mapContainer;
-    @ViewById(R.id.list_container)
     View listContainer;
 
-    @Bean
-    EntriesToMapMarkersConverter mapMarkerConverter;
+    EntriesToMapMarkersConverter mapMarkerConverter = EntriesToMapMarkersConverter.Companion.getInstance();
 
     private Set<String> formsEnabled;
     private Menu menu;
     private MonitoringViewModel viewModel;
     private List<MonitoringEntry> monitoringEntries = new ArrayList<>();
+
+    private final ActivityResultLauncher<Intent> editCurrentCommonFormActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        onFinishConfirm(result.getResultCode(), result.getData());
+    });
+
+    private final ActivityResultLauncher<Intent> newEntryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        onNewEntry(result.getResultCode(), result.getData());
+    });
 
     private ServiceConnection trackingServiceConnection = new ServiceConnection() {
         @Override
@@ -207,27 +184,38 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         }
     };
 
-    @AfterInject
     protected void initProviders() {
         googleMap.setFragmentManager(getSupportFragmentManager());
         osmMap.setFragmentManager(getSupportFragmentManager());
         osmMap.setLifeCycle(getLifecycle());
     }
 
-    @AfterInject
     protected void fetchMonitoringCode() {
         eventBus.postSticky(new QueryActiveMonitoringEvent());
     }
 
-    @AfterViews
     void init() {
+        monitoringPrefs = new MonitoringPrefs(this);
+        prefs = new SmartBirdsPrefs(this);
+        userPrefs = new UserPrefs(this);
+
+        restoreSavedInstanceState(getIntent().getExtras());
+        listFragment = (MonitoringEntryListFragment) getSupportFragmentManager().findFragmentById(R.id.list_container);
+        // bind views
+        mapContainer = findViewById(R.id.root_map_container);
+        listContainer = findViewById(R.id.list_container);
+
+        findViewById(R.id.fab).setOnClickListener(v -> onNewEntry());
+
+        initProviders();
+        fetchMonitoringCode();
         setupList();
     }
 
     private void setupList() {
         if (isEmpty(monitoringCode)) return;
         if (listFragment == null) {
-            listFragment = MonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            listFragment = MonitoringEntryListFragment.Companion.newInstance(monitoringCode);
             getSupportFragmentManager().beginTransaction().replace(R.id.list_container, listFragment).commit();
         } else {
             listFragment.setMonitoringCode(monitoringCode);
@@ -236,7 +224,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private void updateViewType() {
-        String viewType = prefs.monitoringViewType().get();
+        String viewType = prefs.getMonitoringViewType();
         mapContainer.setVisibility(!VIEWTYPE_LIST.equals(viewType) ? View.VISIBLE : View.GONE);
         if (getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT && !VIEWTYPE_LIST.equals(viewType)) {
             listContainer.setVisibility(View.GONE);
@@ -248,11 +236,15 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_monitoring);
+
+        init();
+
         try {
-            bindService(DataService.Companion.intent(this).get(), trackingServiceConnection, BIND_AUTO_CREATE);
+            bindService(DataService.Companion.intent(this), trackingServiceConnection, BIND_AUTO_CREATE);
             bindService(new Intent(this, TrackingService.class), dataServiceConnection, BIND_ABOVE_CLIENT);
         } catch (Throwable t) {
             logException(t);
@@ -264,6 +256,25 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
                 pauseMonitoring();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putInt("zoomFactor", zoomFactor);
+        bundle.putParcelable("lastPosition", lastPosition);
+        bundle.putSerializable("entryType", entryType);
+        bundle.putString("monitoringCode", monitoringCode);
+    }
+
+    private void restoreSavedInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return;
+        }
+        zoomFactor = savedInstanceState.getInt("zoomFactor");
+        lastPosition = savedInstanceState.getParcelable("lastPosition");
+        entryType = ((EntryType) savedInstanceState.getSerializable("entryType"));
+        monitoringCode = savedInstanceState.getString("monitoringCode");
     }
 
     private void initViewModel() {
@@ -323,6 +334,23 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.monitoring, menu);
+        menuInflater.inflate(R.menu.debug_menu, menu);
+        this.menuNewEntry = menu.findItem(R.id.action_new_entry);
+        this.menuUndoEntry = menu.findItem(R.id.action_undo_last_entry);
+        this.menuZoom = menu.findItem(R.id.menu_zoom);
+        this.menuZoomFree = menu.findItem(R.id.action_zoom_free);
+        this.menuZoom1km = menu.findItem(R.id.action_zoom_1km);
+        this.menuZoom500m = menu.findItem(R.id.action_zoom_500m);
+        this.menuZoom250m = menu.findItem(R.id.action_zoom_250m);
+        this.menuZoom100m = menu.findItem(R.id.action_zoom_100m);
+        this.menuCrash = menu.findItem(R.id.action_crash);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         this.menu = menu;
         menuCrash.setVisible(BuildConfig.DEBUG);
@@ -352,6 +380,64 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         updateTypeOfObservationMenus(menu);
 
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_new_entry) {
+            onNewEntry();
+            return true;
+        }
+        if (itemId == R.id.action_common_form) {
+            onCommonForm();
+            return true;
+        }
+        if (itemId == R.id.menu_settings) {
+            openSettings();
+            return true;
+        }
+        if (itemId == R.id.action_finish) {
+            onFinish();
+            return true;
+        }
+        if (itemId == android.R.id.home) {
+            onUp();
+            return true;
+        }
+        if (itemId == R.id.action_zoom_1km) {
+            setZoom1km(item);
+            return true;
+        }
+        if (itemId == R.id.action_zoom_500m) {
+            setZoom500m(item);
+            return true;
+        }
+        if (itemId == R.id.action_zoom_250m) {
+            setZoom250m(item);
+            return true;
+        }
+        if (itemId == R.id.action_zoom_100m) {
+            setZoom100m(item);
+            return true;
+        }
+        if (itemId == R.id.action_zoom_free) {
+            setZoomFree(item);
+            return true;
+        }
+        if ((((((((((((((itemId == R.id.action_form_type_birds) || (itemId == R.id.action_form_type_cbm)) || (itemId == R.id.action_form_type_ciconia)) || (itemId == R.id.action_form_type_humid)) || (itemId == R.id.action_form_type_herptile)) || (itemId == R.id.action_form_type_mammal)) || (itemId == R.id.action_form_type_invertebrates)) || (itemId == R.id.action_form_type_plants)) || (itemId == R.id.action_form_type_threats)) || (itemId == R.id.action_form_type_pylons)) || (itemId == R.id.action_form_type_pylons_casualties)) || (itemId == R.id.action_form_type_birds_migrations)) || (itemId == R.id.action_form_type_fish)) || (itemId == R.id.action_form_type_bats)) {
+            setFormType(item);
+            return true;
+        }
+        if (itemId == R.id.action_undo_last_entry) {
+            undoLastEntry();
+            return true;
+        }
+        if (itemId == R.id.action_crash) {
+            crash();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateTypeOfObservationMenus(Menu menu) {
@@ -433,28 +519,23 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     private List<BGAtlasCell> readAtlasCells() {
         Type listType = new TypeToken<List<BGAtlasCell>>() {
         }.getType();
-        return SBGsonParser.createParser().fromJson(userPrefs.bgAtlasCells().get(), listType);
+        return SBGsonParser.createParser().fromJson(userPrefs.getBgAtlasCells(), listType);
     }
 
-    @OptionsItem(R.id.action_new_entry)
-    @Click(R.id.fab)
     void onNewEntry() {
         if (currentMap.getMyLocation() != null) {
             startNewEntryWithoutAsking(new LatLng(currentMap.getMyLocation().getLatitude(), currentMap.getMyLocation().getLongitude()), currentMap.getMyLocation().getAccuracy());
         }
     }
 
-    @OptionsItem(R.id.action_common_form)
     void onCommonForm() {
-        EditCurrentCommonFormActivity_.intent(this).start();
+        startActivity(EditCurrentCommonFormActivity.intent(this));
     }
 
-    @OptionsItem(R.id.menu_settings)
     void openSettings() {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    @OnActivityResult(REQUEST_NEW_ENTRY)
     void onNewEntry(int resultCode, Intent data) {
         if (resultCode != RESULT_OK)
             return;
@@ -463,7 +544,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         }
     }
 
-    @OnActivityResult(REQUEST_FINISH_MONITORING)
     void onFinishConfirm(int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
             return;
@@ -473,12 +553,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         finish();
     }
 
-    @OptionsItem(R.id.action_finish)
     void onFinish() {
-        EditCurrentCommonFormActivity_.intent(this).isFinishing(true).startForResult(REQUEST_FINISH_MONITORING);
+        editCurrentCommonFormActivityLauncher.launch(EditCurrentCommonFormActivity.intent(this, true));
     }
 
-    @OptionsItem(android.R.id.home)
     void onUp() {
         pauseMonitoring();
     }
@@ -488,35 +566,30 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         finish();
     }
 
-    @OptionsItem(R.id.action_zoom_1km)
     void setZoom1km(MenuItem sender) {
         setZoomFactor(1000);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
     }
 
-    @OptionsItem(R.id.action_zoom_500m)
     void setZoom500m(MenuItem sender) {
         setZoomFactor(500);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
     }
 
-    @OptionsItem(R.id.action_zoom_250m)
     void setZoom250m(MenuItem sender) {
         setZoomFactor(250);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
     }
 
-    @OptionsItem(R.id.action_zoom_100m)
     void setZoom100m(MenuItem sender) {
         setZoomFactor(100);
         sender.setChecked(true);
         menuZoom.setTitle(sender.getTitle());
     }
 
-    @OptionsItem(R.id.action_zoom_free)
     void setZoomFree(MenuItem sender) {
         setZoomFactor(-1);
         sender.setChecked(true);
@@ -527,7 +600,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         this.zoomFactor = zoomFactor;
         currentMap.setZoomFactor(zoomFactor);
         currentMap.updateCamera();
-        prefs.zoomFactor().put(zoomFactor);
+        prefs.setZoomFactor(zoomFactor);
     }
 
     //    private void setShowZoneBackground(boolean showBackground) {
@@ -587,22 +660,6 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 //        }
 //    }
 
-    @OptionsItem({
-            R.id.action_form_type_birds,
-            R.id.action_form_type_cbm,
-            R.id.action_form_type_ciconia,
-            R.id.action_form_type_humid,
-            R.id.action_form_type_herptile,
-            R.id.action_form_type_mammal,
-            R.id.action_form_type_invertebrates,
-            R.id.action_form_type_plants,
-            R.id.action_form_type_threats,
-            R.id.action_form_type_pylons,
-            R.id.action_form_type_pylons_casualties,
-            R.id.action_form_type_birds_migrations,
-            R.id.action_form_type_fish,
-            R.id.action_form_type_bats
-    })
     void setFormType(MenuItem sender) {
         final int senderId = sender.getItemId();
         for (EntryType entryType : EntryType.values())
@@ -615,9 +672,9 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     public void setEntryType(@Nullable EntryType entryType) {
         this.entryType = entryType;
         if (entryType != null)
-            monitoringPrefs.entryType().put(entryType.name());
+            monitoringPrefs.setEntryType(entryType.name());
         else
-            monitoringPrefs.entryType().remove();
+            monitoringPrefs.edit().remove(MonitoringPrefs.KEY_ENTRY_TYPE).apply();
     }
 
     public void onEvent(LocationChangedEvent event) {
@@ -628,8 +685,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         if (menuNewEntry != null) {
             menuNewEntry.setEnabled(true);
         }
-        monitoringPrefs.lastPositionLat().put((float) lastPosition.latitude);
-        monitoringPrefs.lastPositionLon().put((float) lastPosition.longitude);
+        monitoringPrefs.setLastPositionLat((float) lastPosition.latitude);
+        monitoringPrefs.setLastPositionLon((float) lastPosition.longitude);
 
         addPoint(new LatLng(location.getLatitude(), location.getLongitude()));
     }
@@ -678,12 +735,14 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
             eventBus.postSticky(new LocationChangedEvent(currentMap.getMyLocation()));
         }
 
-        NewMonitoringEntryActivity_.IntentBuilder_ ib = NewMonitoringEntryActivity_.intent(MonitoringActivity.this);
-        ib.entryType(entryType);
+        Intent newEntryIntent;
         if (position != null) {
-            ib.lat(position.latitude).lon(position.longitude).geolocationAccuracy(accuracy);
+            newEntryIntent = NewMonitoringEntryActivity.newIntent(this, entryType, position.latitude, position.longitude, accuracy);
+        } else {
+            newEntryIntent = NewMonitoringEntryActivity.newIntent(this, entryType);
         }
-        ib.startForResult(REQUEST_NEW_ENTRY);
+
+        newEntryLauncher.launch(newEntryIntent);
     }
 
     protected void startNewEntryAsking(final LatLng position, double accuracy) {
@@ -719,13 +778,11 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     }
 
-    @OptionsItem(R.id.action_undo_last_entry)
     void undoLastEntry() {
         menuUndoEntry.setEnabled(false);
         eventBus.post(new UndoLastEntry());
     }
 
-    @OptionsItem(R.id.action_crash)
     void crash() {
         throw new RuntimeException("Test Crash");
     }
@@ -740,22 +797,22 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         Log.d(TAG, "persisting state");
         if (!canceled) {
 
-            MonitoringPrefs_.MonitoringPrefsEditor_ editor = monitoringPrefs.edit();
             if (lastPosition != null) {
-                editor.lastPositionLat().put((float) lastPosition.latitude);
-                editor.lastPositionLon().put((float) lastPosition.longitude);
+                monitoringPrefs.setLastPositionLat((float) lastPosition.latitude);
+                monitoringPrefs.setLastPositionLon((float) lastPosition.longitude);
             } else {
-                editor.lastPositionLat().remove();
-                editor.lastPositionLon().remove();
+                monitoringPrefs
+                        .edit()
+                        .remove(MonitoringPrefs.KEY_LAST_POSITION_LAT)
+                        .remove(MonitoringPrefs.KEY_LAST_POSITION_LON)
+                        .apply();
             }
-            prefs.zoomFactor().put(zoomFactor);
+            prefs.setZoomFactor(zoomFactor);
             if (entryType != null) {
-                editor.entryType().put(entryType.name());
+                monitoringPrefs.setEntryType(entryType.name());
             } else {
-                editor.entryType().remove();
+                monitoringPrefs.edit().remove(MonitoringPrefs.KEY_ENTRY_TYPE).apply();
             }
-
-            editor.apply();
 
             persistPoints();
         }
@@ -767,10 +824,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         editor.clear();
         try {
             if (points.isEmpty()) {
-                monitoringPrefs.pointsCount().remove();
+                monitoringPrefs.edit().remove(MonitoringPrefs.KEY_POINTS_COUNT).apply();
                 return;
             }
-            monitoringPrefs.pointsCount().put(points.size());
+            monitoringPrefs.setPointsCount(points.size());
             for (int i = 0; i < points.size(); i++) {
                 editor.putFloat("lat_" + i, (float) points.get(i).latitude);
                 editor.putFloat("lon_" + i, (float) points.get(i).longitude);
@@ -783,49 +840,48 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     private void restoreState() {
         Log.d(TAG, "restoring state");
 
-        formsEnabled = prefs.formsEnabled().getOr(new HashSet(Arrays.asList(getResources().getStringArray(R.array.monitoring_form_values))));
-
+        formsEnabled = prefs.getFormsEnabled(new HashSet<>(Arrays.asList(getResources().getStringArray(R.array.monitoring_form_values))));
         providerType = MapProvider.ProviderType.GOOGLE;
         try {
-            final String providerTypeName = prefs.providerType().get();
+            final String providerTypeName = prefs.getProviderType();
             if (!isEmpty(providerTypeName))
                 providerType = MapProvider.ProviderType.valueOf(providerTypeName);
         } catch (IllegalArgumentException ignored) {
         }
         mapType = MapProvider.MapType.NORMAL;
         try {
-            final String mapTypeName = prefs.mapType().get();
+            final String mapTypeName = prefs.getMapType();
             if (!isEmpty(mapTypeName))
                 mapType = MapProvider.MapType.valueOf(mapTypeName);
         } catch (IllegalArgumentException ignored) {
         }
 
-        if (monitoringPrefs.lastPositionLat().exists() && monitoringPrefs.lastPositionLon().exists()) {
-            lastPosition = new LatLng(monitoringPrefs.lastPositionLat().get(), monitoringPrefs.lastPositionLon().get());
+        if (monitoringPrefs.contains(MonitoringPrefs.KEY_LAST_POSITION_LAT) && monitoringPrefs.contains(MonitoringPrefs.KEY_LAST_POSITION_LON)) {
+            lastPosition = new LatLng(monitoringPrefs.getLastPositionLat(), monitoringPrefs.getLastPositionLon());
         } else {
             lastPosition = null;
         }
 
-        zoomFactor = prefs.zoomFactor().getOr(500);
+        zoomFactor = prefs.getZoomFactor(500);
         entryType = null;
         try {
-            final String entryTypeName = monitoringPrefs.entryType().get();
+            final String entryTypeName = monitoringPrefs.getEntryType();
             if (!isEmpty(entryTypeName) && formsEnabled.contains(entryTypeName))
                 entryType = EntryType.valueOf(entryTypeName);
         } catch (IllegalArgumentException ignored) {
         }
 
-        setStayAwake(prefs.stayAwake().get());
-        this.showZoneBackground = prefs.showZoneBackground().get();
-        this.showLocalProjects = prefs.showLocalProjects().get();
-        this.showBgAtlasCells = prefs.showBgAtlasCells().get();
-        this.showKml = prefs.showUserKml().get();
-        this.showCurrentLocationCircle = prefs.showCurrentLocationCircle().get();
+        setStayAwake(prefs.getStayAwake());
+        this.showZoneBackground = prefs.getShowZoneBackground();
+        this.showLocalProjects = prefs.getShowLocalProjects();
+        this.showBgAtlasCells = prefs.getShowBgAtlasCells();
+        this.showKml = prefs.getShowUserKml();
+        this.showCurrentLocationCircle = prefs.getShowCurrentLocationCircle();
 
         Type listType = new TypeToken<List<MapLayerItem>>() {
         }.getType();
-        List<MapLayerItem> mapLayers = SBGsonParser.createParser().fromJson(prefs.mapLayers().get(), listType);
-        Set<String> enabledLayerIds = prefs.enabledMapLayers().get();
+        List<MapLayerItem> mapLayers = SBGsonParser.createParser().fromJson(prefs.getMapLayers(), listType);
+        Set<String> enabledLayerIds = prefs.getEnabledMapLayers();
         List<MapLayerItem> enabledLayers = new ArrayList<>();
         for (String layerId : enabledLayerIds) {
             for (MapLayerItem mapLayer : mapLayers) {
@@ -843,7 +899,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private void restorePoints() {
-        int pointsCount = monitoringPrefs.pointsCount().get();
+        int pointsCount = monitoringPrefs.getPointsCount();
         if (pointsCount <= 0) {
             return;
         }
@@ -867,7 +923,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     @Override
     public void onMonitoringEntrySelected(long id, EntryType entryType) {
-        EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
+        startActivity(EditMonitoringEntryActivity.newIntent(this, id, entryType));
     }
 
     private Iterable<EntryMapMarker> getMarkers() {

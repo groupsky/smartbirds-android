@@ -1,18 +1,15 @@
 package org.bspb.smartbirds.pro.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.OptionsItem;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.events.EEventBus;
@@ -23,26 +20,46 @@ import org.bspb.smartbirds.pro.service.DataService;
  * Created by groupsky on 16.03.17.
  */
 
-@EActivity(R.layout.activity_form)
 public class EditMonitoringEntryActivity extends BaseActivity {
 
-    @Extra
+    public static final String EXTRA_ENTRY_ID = "entryId";
+    public static final String EXTRA_ENTRY_TYPE = "entryType";
+
     long entryId;
-    @Extra
     EntryType entryType;
-    @FragmentById(R.id.container)
+
     Fragment fragment;
-    @Bean
-    EEventBus eventBus;
+
+    EEventBus eventBus = EEventBus.getInstance();
+
+    public static Intent newIntent(Context context, long entryId, EntryType entryType) {
+        Intent intent = new Intent(context, EditMonitoringEntryActivity.class);
+        intent.putExtra(EXTRA_ENTRY_ID, entryId);
+        intent.putExtra(EXTRA_ENTRY_TYPE, entryType);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
+        setContentView(R.layout.activity_form);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey(EXTRA_ENTRY_ID)) {
+                entryId = extras.getLong(EXTRA_ENTRY_ID);
+            }
+            if (extras.containsKey(EXTRA_ENTRY_TYPE)) {
+                entryType = (EntryType) extras.getSerializable(EXTRA_ENTRY_TYPE);
+            }
+        }
+
+        setupFragment();
     }
 
-    @AfterViews
     protected void setupFragment() {
+        fragment = getSupportFragmentManager().findFragmentById(R.id.container);
         if (entryId <= 0 || entryType == null) {
             this.finish();
             return;
@@ -59,9 +76,14 @@ public class EditMonitoringEntryActivity extends BaseActivity {
         eventBus.register(this);
     }
 
-    @OptionsItem(android.R.id.home)
-    boolean onUp() {
-        return confirmCancel();
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            return confirmCancel();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

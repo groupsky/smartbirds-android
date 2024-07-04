@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView
-import org.bspb.smartbirds.pro.ui.partial.MonitoringEntryListRowPartialView_
 
 class MonitoringEntryListAdapter(context: Context) :
     ArrayAdapter<MonitoringEntry>(context, R.layout.partial_monitoring_entry_list_row) {
@@ -15,7 +14,7 @@ class MonitoringEntryListAdapter(context: Context) :
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var resultView = convertView
         if (resultView == null) {
-            resultView = MonitoringEntryListRowPartialView_.build(context)
+            resultView = MonitoringEntryListRowPartialView.build(context)
         }
         require(resultView is MonitoringEntryListRowPartialView) { "Must use " + MonitoringEntryListRowPartialView::class.java.simpleName }
         resultView.bind(getItem(position))

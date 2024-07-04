@@ -2,14 +2,12 @@ package org.bspb.smartbirds.pro.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.activity.OnBackPressedCallback;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.SmartBirdsApplication;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
@@ -18,22 +16,19 @@ import org.bspb.smartbirds.pro.events.MonitoringStartedEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment;
-import org.bspb.smartbirds.pro.ui.fragment.CurrentMonitoringCommonFormFragment_;
 
-@EActivity(R.layout.activity_start_monitoring)
-@OptionsMenu(R.menu.monitoring_common_form)
 public class StartMonitoringActivity extends BaseActivity {
 
     private static final String TAG = SmartBirdsApplication.TAG + ".StartMonitoring";
 
-    @Bean
-    EEventBus bus;
+    EEventBus bus = EEventBus.getInstance();
     CurrentMonitoringCommonFormFragment formFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataService.Companion.intent(this).start();
+        setContentView(R.layout.activity_start_monitoring);
+        startService(DataService.Companion.intent(this));
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -41,13 +36,14 @@ public class StartMonitoringActivity extends BaseActivity {
                 cancelMonitoring();
             }
         });
+
+        createFragment();
     }
 
-    @AfterViews
     void createFragment() {
         formFragment = (CurrentMonitoringCommonFormFragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if (formFragment == null) {
-            formFragment = CurrentMonitoringCommonFormFragment_.builder().build();
+            formFragment = new CurrentMonitoringCommonFormFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, formFragment)
                     .commit();
@@ -74,7 +70,27 @@ public class StartMonitoringActivity extends BaseActivity {
         super.onStop();
     }
 
-    @OptionsItem(android.R.id.home)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.monitoring_common_form, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId_ = item.getItemId();
+        if (itemId_ == android.R.id.home) {
+            cancelMonitoring();
+            return true;
+        }
+        if (itemId_ == R.id.action_submit) {
+            save();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     void cancelMonitoring() {
         Log.d(TAG, "cancelMonitoring");
         bus.removeStickyEvent(StartMonitoringEvent.class);
@@ -84,11 +100,10 @@ public class StartMonitoringActivity extends BaseActivity {
             finish();
     }
 
-    @OptionsItem(R.id.action_submit)
     public void save() {
         if (formFragment.validate()) {
             formFragment.save();
-            MonitoringActivity_.intent(this).start();
+            startActivity(MonitoringActivity.newIntent(this));
             finish();
         }
     }

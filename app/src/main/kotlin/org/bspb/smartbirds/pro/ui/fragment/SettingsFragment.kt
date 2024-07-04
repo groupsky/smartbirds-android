@@ -1,19 +1,21 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.preference.*
+import androidx.preference.ListPreference
+import androidx.preference.MultiSelectListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import com.google.gson.reflect.TypeToken
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.backend.dto.MapLayerItem
-import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs_
+import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
 import org.bspb.smartbirds.pro.tools.DBExporter
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import org.bspb.smartbirds.pro.ui.map.MapProvider
 import org.bspb.smartbirds.pro.utils.KmlUtils
-import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
 
 
@@ -24,12 +26,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var exportPreference: Preference? = null
     private var showKmlPreference: SwitchPreferenceCompat? = null
     private var importedKmlPreference: Preference? = null
-    private var prefs: SmartBirdsPrefs_? = null
+    private var prefs: SmartBirdsPrefs? = null
 
     private val pickKml = registerForActivityResult(ActivityResultContracts.GetContent()) {
         it ?: return@registerForActivityResult
 
-        prefs?.kmlFileName()?.put(KmlUtils.getFileName(requireContext(), it))
+        prefs?.setKmlFileName(KmlUtils.getFileName(requireContext(), it).toString())
         KmlUtils.copyFileToExternalStorage(requireContext(), it)
         updateImportedKmlPreference()
         showKmlPreference?.isChecked = true
@@ -38,7 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
-        prefs = SmartBirdsPrefs_(requireContext())
+        prefs = SmartBirdsPrefs(requireContext())
         initPreferences()
         updateMapType(MapProvider.ProviderType.valueOf(providerPreference?.value as String))
     }
@@ -99,11 +101,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val listType = object : TypeToken<List<MapLayerItem?>?>() {}.type
         val layersPreferenceCategory: PreferenceCategory? = findPreference("layersCategory")
         layersPreferenceCategory ?: return
-        var enabledLayers = mutableSetOf<String>()
-        enabledLayers.addAll(prefs?.enabledMapLayers()?.get() ?: emptySet())
+        val enabledLayers = mutableSetOf<String>()
+        enabledLayers.addAll(prefs?.getEnabledMapLayers() ?: emptySet())
 
-        var mapLayers = SBGsonParser.createParser()
-            .fromJson<List<MapLayerItem>>(prefs?.mapLayers()?.get(), listType)
+        val mapLayers = SBGsonParser.createParser()
+            .fromJson<List<MapLayerItem>>(prefs?.getMapLayers(), listType)
 
         mapLayers ?: return
 
@@ -122,7 +124,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     enabledLayers.remove(mapLayerItem.id.toString())
                 }
 
-                prefs?.enabledMapLayers()?.put(enabledLayers)
+                prefs?.setEnabledMapLayers(enabledLayers)
 
                 return@setOnPreferenceChangeListener true
             }
@@ -134,7 +136,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun updateImportedKmlPreference() {
         if (KmlUtils.checkExistingUserKml(requireContext())) {
-            importedKmlPreference?.title = prefs?.kmlFileName()?.get() ?: "user.kml"
+            importedKmlPreference?.title = prefs?.getKmlFileName() ?: "user.kml"
         }
     }
 

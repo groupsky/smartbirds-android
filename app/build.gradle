@@ -146,8 +146,6 @@ dependencies {
     def room_version = "2.6.0"
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    kapt("org.androidannotations:androidannotations:4.8.0")
-    implementation("org.androidannotations:androidannotations-api:4.8.0")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 

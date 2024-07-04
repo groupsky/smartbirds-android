@@ -1,27 +1,24 @@
 package org.bspb.smartbirds.pro.service
 
+import android.app.IntentService
+import android.content.Context
 import android.content.Intent
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.runBlocking
-import org.androidannotations.annotations.Bean
-import org.androidannotations.annotations.EIntentService
-import org.androidannotations.annotations.ServiceAction
-import org.androidannotations.annotations.sharedpreferences.Pref
-import org.androidannotations.api.support.app.AbstractIntentService
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
-import org.bspb.smartbirds.pro.prefs.UserPrefs_
 import org.bspb.smartbirds.pro.sync.AppSettingsManager
 import org.bspb.smartbirds.pro.sync.AuthenticationManager
 import org.bspb.smartbirds.pro.sync.UploadManager
 import org.bspb.smartbirds.pro.sync.ZonesManager
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager
 
-@EIntentService
-open class SyncService : AbstractIntentService("SyncService") {
+class SyncService : IntentService("SyncService") {
 
     companion object {
         private const val TAG = SmartBirdsApplication.TAG + ".SyncService"
+
+        const val ACTION_SYNC: String = "sync"
+        const val ACTION_INITIAL_SYNC: String = "initialSync"
 
         const val ACTION_SYNC_PROGRESS = "syncProgress"
         const val ACTION_SYNC_COMPLETED = "syncCompleted"
@@ -29,26 +26,40 @@ open class SyncService : AbstractIntentService("SyncService") {
 
         var isWorking = false
         var syncMessage: String? = null
+
+        fun initialSyncIntent(context: Context): Intent {
+            return Intent(context, SyncService::class.java).apply {
+                action = ACTION_INITIAL_SYNC
+            }
+        }
+
+        fun syncIntent(context: Context): Intent {
+            return Intent(context, SyncService::class.java).apply {
+                action = ACTION_SYNC
+            }
+        }
     }
 
-    @Pref
-    protected lateinit var prefs: UserPrefs_
-
-    @Bean
-    protected lateinit var authenticationManager: AuthenticationManager
-
-    @Bean
-    protected lateinit var zonesManager: ZonesManager
-
-    @Bean
-    protected lateinit var uploadManager: UploadManager
-
-    @Bean
-    protected lateinit var appSettingsManager: AppSettingsManager
+    private val uploadManager: UploadManager by lazy { UploadManager(this) }
 
     private val nomenclaturesManager = NomenclaturesManager.getInstance()
 
-    @ServiceAction
+    @Deprecated("Deprecated in Java")
+    override fun onHandleIntent(intent: Intent?) {
+        if (intent == null) {
+            return
+        }
+        val action = intent.action
+        if (ACTION_SYNC == action) {
+            sync()
+            return
+        }
+        if (ACTION_INITIAL_SYNC == action) {
+            initialSync()
+            return
+        }
+    }
+
     fun sync() {
         runBlocking {
             try {
@@ -65,7 +76,6 @@ open class SyncService : AbstractIntentService("SyncService") {
         }
     }
 
-    @ServiceAction
     fun initialSync() {
         runBlocking {
             try {
@@ -81,7 +91,11 @@ open class SyncService : AbstractIntentService("SyncService") {
     }
 
     private suspend fun fetchNewData() {
+        val zonesManager = ZonesManager(this)
+        val appSettingsManager = AppSettingsManager(this)
+
         updateSyncProgress(R.string.sync_dialog_downloading_user_data)
+        val authenticationManager = AuthenticationManager(this)
         authenticationManager.checkSession();
         updateSyncProgress(R.string.sync_dialog_downloading_nomenclatures)
         nomenclaturesManager.updateNomenclatures()

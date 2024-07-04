@@ -9,10 +9,13 @@ import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.events.EEventBus
-import org.bspb.smartbirds.pro.events.EEventBus_
 import org.bspb.smartbirds.pro.ui.utils.NotificationUtils
 
 class TrackingService : Service() {
@@ -23,7 +26,7 @@ class TrackingService : Service() {
 
     private var tracking = false
     private var fusedLocationClient: FusedLocationProviderClient? = null
-    private lateinit var eventBus: EEventBus
+    private val eventBus: EEventBus by lazy { EEventBus.getInstance() }
 
     private val binder: IBinder = object : Binder() {
         val service: TrackingService = this@TrackingService
@@ -39,11 +42,6 @@ class TrackingService : Service() {
             }
         }
 
-    }
-
-    override fun onCreate() {
-        this.eventBus = EEventBus_.getInstance_(this)
-        super.onCreate()
     }
 
     override fun onBind(intent: Intent?): IBinder {
@@ -89,7 +87,11 @@ class TrackingService : Service() {
             if (fusedLocationClient == null) {
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
             }
-            fusedLocationClient!!.requestLocationUpdates(createLocationRequest(), locationCallback, Looper.myLooper()!!)
+            fusedLocationClient!!.requestLocationUpdates(
+                createLocationRequest(),
+                locationCallback,
+                Looper.myLooper()!!
+            )
         } else {
             throw IllegalStateException("No permission to retrieve location!")
         }

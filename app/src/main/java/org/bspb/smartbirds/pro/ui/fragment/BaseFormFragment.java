@@ -1,7 +1,6 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -10,9 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.ui.utils.FormUtils;
 
@@ -23,7 +19,6 @@ import java.util.HashMap;
  * Created by groupsky on 26.01.17.
  */
 
-@EFragment
 public class BaseFormFragment extends Fragment {
 
     protected static final String KEY_FORM_DATA = "org.bspb.smartbirds.pro.ui.fragment.BaseFormFragment.FORM_DATA";
@@ -44,16 +39,35 @@ public class BaseFormFragment extends Fragment {
     private boolean newEntry;
     private ModeratorReviewFragment moderatorReviewFragment;
 
-    @FragmentArg(ARG_READ_ONLY)
     protected boolean readOnly;
 
     public boolean isNewEntry() {
         return newEntry;
     }
 
-    @FragmentArg(ARG_IS_NEW_ENTRY)
     public void setNewEntry(boolean isNewEntry) {
         this.newEntry = isNewEntry;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        readArgs();
+        onBeforeCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+    }
+
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+    }
+
+    protected void initViews() {
+    }
+
+    protected void readArgs() {
+        if (getArguments() != null) {
+            newEntry = getArguments().getBoolean(ARG_IS_NEW_ENTRY, false);
+            readOnly = getArguments().getBoolean(ARG_READ_ONLY, false);
+        }
     }
 
     protected boolean isValid() {
@@ -72,7 +86,7 @@ public class BaseFormFragment extends Fragment {
         View view = getView();
         if (view == null) return false;
         form = FormUtils.traverseForm(view);
-        if (form != null && form.fields != null) {
+        if (form.fields != null) {
             for (FormUtils.FormField field : form.fields.values()) {
                 if (readOnly) {
                     field.view.setEnabled(false);
@@ -112,12 +126,14 @@ public class BaseFormFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initModeratorReviewFragment();
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         } else if (pendingDeserializeData != null) {
             doDeserialize(monitoringCode, pendingDeserializeData);
             pendingDeserializeData = null;
         }
+        initViews();
     }
 
     @Override
@@ -142,8 +158,7 @@ public class BaseFormFragment extends Fragment {
         }
     }
 
-    @AfterViews
-    public void initModeratorReviewFragment() {
+    private void initModeratorReviewFragment() {
         moderatorReviewFragment = (ModeratorReviewFragment) getChildFragmentManager().findFragmentById(R.id.moderator_review_fragment);
         NewEntryPicturesFragment picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         if (picturesFragment != null) {

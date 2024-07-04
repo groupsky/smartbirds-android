@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.prefs.CbmPrefs_
+import org.bspb.smartbirds.pro.prefs.CbmPrefs
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager
 
 class CbmQuickChoiceFormInput : FrameLayout {
@@ -26,7 +26,7 @@ class CbmQuickChoiceFormInput : FrameLayout {
     private lateinit var btnQuick6: Button
 
     private lateinit var nomenclatures: NomenclaturesManager
-    private lateinit var prefs: CbmPrefs_
+    private lateinit var prefs: CbmPrefs
     private val currentValues = mutableMapOf<Int, NomenclatureItem?>()
 
     private val quickButtonsClickListener = object : OnClickListener {
@@ -91,7 +91,7 @@ class CbmQuickChoiceFormInput : FrameLayout {
         inflate(context, R.layout.cbm_input_quick_choice, this)
 
         nomenclatures = NomenclaturesManager.getInstance()
-        prefs = CbmPrefs_(context)
+        prefs = CbmPrefs(context)
 
         loadValues()
 
@@ -132,12 +132,12 @@ class CbmQuickChoiceFormInput : FrameLayout {
 
     private fun loadValues() {
         var items = nomenclatures.getNomenclature(entriesKey.toString())
-        val quick1Pref = prefs.speciesQuick1().get()
-        val quick2Pref = prefs.speciesQuick2().get()
-        val quick3Pref = prefs.speciesQuick3().get()
-        val quick4Pref = prefs.speciesQuick4().get()
-        val quick5Pref = prefs.speciesQuick5().get()
-        val quick6Pref = prefs.speciesQuick6().get()
+        val quick1Pref = prefs.getSpeciesQuick1()
+        val quick2Pref = prefs.getSpeciesQuick2()
+        val quick3Pref = prefs.getSpeciesQuick3()
+        val quick4Pref = prefs.getSpeciesQuick4()
+        val quick5Pref = prefs.getSpeciesQuick5()
+        val quick6Pref = prefs.getSpeciesQuick6()
 
         for (item in items) {
             if (item.label.labelId.equals(quick1Pref)) {
@@ -169,18 +169,12 @@ class CbmQuickChoiceFormInput : FrameLayout {
     private fun setValue(resourceId: Int, nomenclatureItem: NomenclatureItem?) {
         currentValues[resourceId] = nomenclatureItem
         when (resourceId) {
-            R.id.quick_1 -> prefs.speciesQuick1()
-                .put(nomenclatureItem?.nomenclature?.label?.labelId)
-            R.id.quick_2 -> prefs.speciesQuick2()
-                .put(nomenclatureItem?.nomenclature?.label?.labelId)
-            R.id.quick_3 -> prefs.speciesQuick3()
-                .put(nomenclatureItem?.nomenclature?.label?.labelId)
-            R.id.quick_4 -> prefs.speciesQuick4()
-                .put(nomenclatureItem?.nomenclature?.label?.labelId)
-            R.id.quick_5 -> prefs.speciesQuick5()
-                .put(nomenclatureItem?.nomenclature?.label?.labelId)
-            R.id.quick_6 -> prefs.speciesQuick6()
-                .put(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_1 -> prefs.setSpeciesQuick1(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_2 -> prefs.setSpeciesQuick2(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_3 -> prefs.setSpeciesQuick3(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_4 -> prefs.setSpeciesQuick4(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_5 -> prefs.setSpeciesQuick5(nomenclatureItem?.nomenclature?.label?.labelId)
+            R.id.quick_6 -> prefs.setSpeciesQuick6(nomenclatureItem?.nomenclature?.label?.labelId)
         }
         updateButtons()
     }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="org.bspb.smartbirds.pro.ui.MainActivity_">
+    tools:context="org.bspb.smartbirds.pro.ui.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"

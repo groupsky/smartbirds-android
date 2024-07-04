@@ -25,7 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="12">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_bats_reproductive_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="6">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_bats_ring"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

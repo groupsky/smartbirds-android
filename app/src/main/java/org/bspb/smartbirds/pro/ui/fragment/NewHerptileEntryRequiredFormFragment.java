@@ -1,17 +1,16 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
-import org.bspb.smartbirds.pro.prefs.HerptilePrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
+import org.bspb.smartbirds.pro.prefs.HerptilePrefs;
 import org.bspb.smartbirds.pro.ui.views.DecimalNumberFormInput;
 import org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
@@ -22,33 +21,49 @@ import java.util.HashMap;
  * Created by dani on 04.01.18.
  */
 
-@EFragment(R.layout.fragment_monitoring_form_new_herptile_required_entry)
 public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
 
-    @ViewById(R.id.form_herp_habitat)
     SingleChoiceFormInput habitat;
-
-    @ViewById(R.id.form_herp_count)
     DecimalNumberFormInput count;
-
-    @ViewById(R.id.form_herptiles_confidential)
     SwitchFormInput confidential;
 
-    @Pref
-    HerptilePrefs_ prefs;
+    HerptilePrefs prefs;
+    CommonPrefs commonPrefs;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
-
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
+
+    public static NewHerptileEntryRequiredFormFragment newInstance(boolean isNewEntry, boolean readOnly) {
+        NewHerptileEntryRequiredFormFragment fragment = new NewHerptileEntryRequiredFormFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_IS_NEW_ENTRY, isNewEntry);
+        args.putBoolean(ARG_READ_ONLY, readOnly);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        prefs = new HerptilePrefs(requireContext());
+        commonPrefs = new CommonPrefs(requireContext());
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_new_herptile_required_entry, container, false);
+        }
+        return view;
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            habitat.setText(prefs.herptileHabitat().get());
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            habitat.setText(prefs.getHerptileHabitat());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
     }
 
@@ -76,15 +91,25 @@ public class NewHerptileEntryRequiredFormFragment extends BaseFormFragment {
         if (picturesFragment == null) {
             picturesFragment = (NewEntryPicturesFragment) getChildFragmentManager().findFragmentById(R.id.pictures_fragment);
         }
+
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        habitat = requireView().findViewById(R.id.form_herp_habitat);
+        count = requireView().findViewById(R.id.form_herp_count);
+        confidential = requireView().findViewById(R.id.form_herptiles_confidential);
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-        prefs.herptileHabitat().put(habitat.getText().toString());
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        prefs.setHerptileHabitat(habitat.getText().toString());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
 }

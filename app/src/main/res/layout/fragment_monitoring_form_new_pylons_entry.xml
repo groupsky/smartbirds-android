@@ -28,7 +28,7 @@
 
                 <fragment
                     android:id="@+id/moderator_review_fragment"
-                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_pylons_pylon_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_pylons_species_nest_on_pylon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_pylons_nest_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_pylons_primary_habitat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                     android:id="@+id/form_pylons_secondary_habitat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
 
             <fragment
                 android:id="@+id/pictures_fragment"
-                android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
+                android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

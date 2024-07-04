@@ -11,11 +11,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EView;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.tools.SBGsonParser;
-import org.bspb.smartbirds.pro.utils.ExtensionsKt;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +22,6 @@ import java.util.Map;
  * Created by dani on 26.02.18.
  */
 
-@EView
 public class MultipleChoiceFullScreenFormInput extends LinearLayout implements MultipleChoiceFullScreenRow.OnDeleteListener, MultipleChoiceFullScreenRow.OnPopulatedListener, SupportStorage {
 
 
@@ -34,6 +30,7 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
     private final CharSequence hint;
 
     private boolean isUpdating = false;
+    private boolean alreadyInflated = false;
 
     public MultipleChoiceFullScreenFormInput(Context context) {
         this(context, null);
@@ -77,7 +74,16 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
         deserialize(items);
     }
 
-    @AfterViews
+
+    @Override
+    protected void onFinishInflate() {
+        if (!alreadyInflated) {
+            alreadyInflated = true;
+            init();
+        }
+        super.onFinishInflate();
+    }
+
     protected void init() {
         setOrientation(VERTICAL);
         addRow();
@@ -85,7 +91,7 @@ public class MultipleChoiceFullScreenFormInput extends LinearLayout implements M
 
     private MultipleChoiceFullScreenRow addRow() {
         try {
-            final MultipleChoiceFullScreenRow row = MultipleChoiceFullScreenRow_.build(getContext(), key, hint);
+            final MultipleChoiceFullScreenRow row = MultipleChoiceFullScreenRow.build(getContext(), key, hint);
             row.setEnabled(isEnabled());
             addView(row);
             return row;

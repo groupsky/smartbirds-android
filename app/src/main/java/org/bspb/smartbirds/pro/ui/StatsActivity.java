@@ -1,18 +1,26 @@
 package org.bspb.smartbirds.pro.ui;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.bspb.smartbirds.pro.R;
-import org.bspb.smartbirds.pro.ui.fragment.StatsFragment_;
+import android.os.Bundle;
 
-@EActivity(R.layout.activity_stats)
+import androidx.annotation.Nullable;
+
+import org.bspb.smartbirds.pro.R;
+import org.bspb.smartbirds.pro.ui.fragment.StatsFragment;
+
 public class StatsActivity extends BaseActivity {
 
-    @AfterViews
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_stats);
+        createFragment();
+    }
+
     void createFragment() {
         if (getSupportFragmentManager().findFragmentById(R.id.container) == null)
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, StatsFragment_.builder().build())
+                    .add(R.id.container, new StatsFragment())
                     .commit();
     }
 }

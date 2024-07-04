@@ -1,51 +1,58 @@
 package org.bspb.smartbirds.pro.ui.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.PreferenceScreen;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_;
+import org.bspb.smartbirds.pro.prefs.CommonPrefs;
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput;
 
 import java.util.Date;
 import java.util.HashMap;
 
-@EFragment(R.layout.fragment_monitoring_form_new_invertebrates_entry)
-
 public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
 
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
     NewEntryPicturesFragment picturesFragment;
 
-
-    @ViewById(R.id.form_invertebrates_confidential)
     SwitchFormInput confidential;
 
-    @Pref
-    CommonPrefs_ commonPrefs;
+    CommonPrefs commonPrefs;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_monitoring_form_new_invertebrates_entry, container, false);
+        }
+        return view;
+    }
+
+    @Override
+    protected void onBeforeCreate(@Nullable Bundle savedInstanceState) {
+        super.onBeforeCreate(savedInstanceState);
+        commonPrefs = new CommonPrefs(requireContext());
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         if (isNewEntry()) {
-            confidential.setChecked(commonPrefs.confidentialRecord().get());
+            confidential.setChecked(commonPrefs.getConfidentialRecord());
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        commonPrefs.confidentialRecord().put(confidential.isChecked());
+        commonPrefs.setConfidentialRecord(confidential.isChecked());
     }
 
     @Override
@@ -80,17 +87,33 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    protected void initViews() {
+        super.initViews();
+        confidential = requireView().findViewById(R.id.form_invertebrates_confidential);
+    }
 
     public static class Builder implements BaseEntryFragment.Builder {
 
         @Override
         public Fragment build(double lat, double lon, double geolocationAccuracy) {
-            return NewInvertebratesEntryFormFragment_.builder().lat(lat).lon(lon).geolocationAccuracy(geolocationAccuracy).build();
+            Fragment fragment = new NewInvertebratesEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putDouble(ARG_LAT, lat);
+            args.putDouble(ARG_LON, lon);
+            args.putDouble(ARG_GEOLOCATION_ACCURACY, geolocationAccuracy);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
         public Fragment load(long id, boolean readOnly) {
-            return NewInvertebratesEntryFormFragment_.builder().entryId(id).readOnly(readOnly).build();
+            Fragment fragment = new NewInvertebratesEntryFormFragment();
+            Bundle args = new Bundle();
+            args.putLong(ARG_ENTRY_ID, id);
+            args.putBoolean(ARG_READ_ONLY, readOnly);
+            fragment.setArguments(args);
+            return fragment;
         }
     }
 

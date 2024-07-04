@@ -1,41 +1,62 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import org.androidannotations.annotations.EFragment
-import org.androidannotations.annotations.FragmentById
-import org.androidannotations.annotations.ViewById
-import org.androidannotations.annotations.sharedpreferences.Pref
+import android.view.ViewGroup
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.prefs.CommonPrefs_
+import org.bspb.smartbirds.pro.prefs.CommonPrefs
 import org.bspb.smartbirds.pro.ui.views.SwitchFormInput
-import java.util.*
 
-@EFragment(R.layout.fragment_monitoring_form_new_fishes_entry)
-open class NewFishesEntryMainFormFragment : BaseFormFragment() {
+class NewFishesEntryMainFormFragment : BaseFormFragment() {
 
-    @JvmField
-    @FragmentById(value = R.id.pictures_fragment, childFragment = true)
-    protected var picturesFragment: NewEntryPicturesFragment? = null
+    private var picturesFragment: NewEntryPicturesFragment? = null
+    private var confidential: SwitchFormInput? = null
+    private lateinit var commonPrefs: CommonPrefs
 
+    companion object {
+        fun newInstance(isNewEntry: Boolean, readOnly: Boolean): NewFishesEntryMainFormFragment {
+            return NewFishesEntryMainFormFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_IS_NEW_ENTRY, isNewEntry)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
+        }
+    }
 
-    @JvmField
-    @ViewById(R.id.form_fish_confidential)
-    protected var confidential: SwitchFormInput? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_monitoring_form_new_fishes_entry,
+            container,
+            false
+        )
+    }
 
-    @Pref
-    protected lateinit var commonPrefs: CommonPrefs_
+    override fun onBeforeCreate(savedInstanceState: Bundle?) {
+        super.onBeforeCreate(savedInstanceState)
+        commonPrefs = CommonPrefs(requireContext())
+    }
+
+    override fun initViews() {
+        super.initViews()
+        confidential = view?.findViewById(R.id.form_fish_confidential)
+    }
 
     override fun onResume() {
         super.onResume()
         if (isNewEntry) {
-            confidential!!.isChecked = commonPrefs.confidentialRecord().get()
+            confidential!!.isChecked = commonPrefs.getConfidentialRecord()
         }
     }
 
     override fun onPause() {
         super.onPause()
-        commonPrefs.confidentialRecord().put(confidential!!.isChecked)
+        commonPrefs.setConfidentialRecord(confidential!!.isChecked)
     }
 
 

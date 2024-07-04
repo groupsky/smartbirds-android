@@ -21,7 +21,7 @@
 
                 <fragment
                     android:id="@+id/moderator_review_fragment"
-                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment_"
+                    android:name="org.bspb.smartbirds.pro.ui.fragment.ModeratorReviewFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_span="7"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_pylons_casualties_species"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="3">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_pylons_casualties_age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="3">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_pylons_casualties_sex"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="5">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_pylons_casualties_cause_of_death"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="5">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_pylons_casualties_body_condition"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_pylons_casualties_primary_habitat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_span="10">
 
-                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput_
+                    <org.bspb.smartbirds.pro.ui.views.SingleChoiceFormInput
                         android:id="@+id/form_pylons_casualties_secondary_habitat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
 
         <fragment
             android:id="@+id/pictures_fragment"
-            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment_"
+            android:name="org.bspb.smartbirds.pro.ui.fragment.NewEntryPicturesFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

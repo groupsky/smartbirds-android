@@ -6,16 +6,11 @@ import android.view.MenuItem;
 
 import androidx.core.app.NavUtils;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.FragmentById;
 import org.bspb.smartbirds.pro.R;
 import org.bspb.smartbirds.pro.enums.EntryType;
 import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment;
-import org.bspb.smartbirds.pro.ui.fragment.BrowseMonitoringEntryListFragment_;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringEntryListFragment;
 import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment;
-import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_;
 
 /**
  * An activity representing a list of Monitorings. This activity
@@ -25,7 +20,6 @@ import org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-@EActivity(R.layout.activity_monitoring_list)
 public class MonitoringListActivity extends BaseActivity implements MonitoringListFragment.Listener, MonitoringEntryListFragment.Listener {
 
     /**
@@ -34,12 +28,16 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
      */
     private boolean mTwoPane;
 
-    @FragmentById(R.id.monitoring_list_container)
     MonitoringListFragment listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_monitoring_list);
+
+        detectScreen();
+        setupListFragment();
+
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
@@ -47,7 +45,6 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
         }
     }
 
-    @AfterViews
     protected void detectScreen() {
         if (findViewById(R.id.monitoring_detail_container) != null) {
             // The detail container view will be present only in the
@@ -58,10 +55,10 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
         }
     }
 
-    @AfterViews
     protected void setupListFragment() {
+        listFragment = (MonitoringListFragment) getSupportFragmentManager().findFragmentById(R.id.monitoring_list_container);
         if (listFragment == null) {
-            listFragment = MonitoringListFragment_.builder().build();
+            listFragment = new MonitoringListFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_list_container, listFragment).commit();
         }
     }
@@ -86,15 +83,15 @@ public class MonitoringListActivity extends BaseActivity implements MonitoringLi
     @Override
     public void onMonitoringSelected(String monitoringCode) {
         if (mTwoPane) {
-            BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment_.builder().setMonitoringCode(monitoringCode).build();
+            BrowseMonitoringEntryListFragment fragment = BrowseMonitoringEntryListFragment.Companion.newInstance(monitoringCode);
             getSupportFragmentManager().beginTransaction().replace(R.id.monitoring_detail_container, fragment).commit();
         } else {
-            MonitoringDetailActivity_.intent(this).monitoringCode(monitoringCode).start();
+            startActivity(MonitoringDetailActivity.Companion.newIntent(this, monitoringCode));
         }
     }
 
     @Override
     public void onMonitoringEntrySelected(long id, EntryType entryType) {
-        EditMonitoringEntryActivity_.intent(this).entryId(id).entryType(entryType).start();
+        startActivity(EditMonitoringEntryActivity.newIntent(this, id, entryType));
     }
 }

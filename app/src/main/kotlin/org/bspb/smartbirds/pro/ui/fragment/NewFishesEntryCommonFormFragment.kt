@@ -1,19 +1,36 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import org.androidannotations.annotations.EFragment
+import android.view.ViewGroup
 import org.bspb.smartbirds.pro.R
-import org.bspb.smartbirds.pro.utils.debugLog
 
-@EFragment(R.layout.fragment_monitoring_form_fishes_common_entry)
-open class NewFishesEntryCommonFormFragment : BaseFormFragment() {
+class NewFishesEntryCommonFormFragment : BaseFormFragment() {
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        debugLog("MonitoringCODE $monitoringCode")
+    companion object {
+        fun newInstance(isNewEntry: Boolean, readOnly: Boolean): NewFishesEntryCommonFormFragment {
+            return NewFishesEntryCommonFormFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_IS_NEW_ENTRY, isNewEntry)
+                    putBoolean(ARG_READ_ONLY, readOnly)
+                }
+            }
+        }
     }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
+            R.layout.fragment_monitoring_form_fishes_common_entry,
+            container,
+            false
+        )
+    }
+
     override fun serialize(): HashMap<String, String> {
         return HashMap()
     }

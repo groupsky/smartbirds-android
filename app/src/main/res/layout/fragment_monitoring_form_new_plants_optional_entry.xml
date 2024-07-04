@@ -13,7 +13,7 @@
 
         <TableRow>
 
-            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFullScreenFormInput_
+            <org.bspb.smartbirds.pro.ui.views.MultipleChoiceFullScreenFormInput
                 android:tag="@string/tag_accompanyingSpecies"
                 app:entriesType="species_plants"
                 app:hint="@string/monitoring_plants_accompanying_species" />

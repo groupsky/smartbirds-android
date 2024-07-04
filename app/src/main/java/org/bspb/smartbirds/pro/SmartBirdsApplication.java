@@ -4,18 +4,17 @@ import android.app.Application;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EApplication;
 import org.bspb.smartbirds.pro.backend.AddCookiesInterceptor;
 import org.bspb.smartbirds.pro.backend.AddLanguageInterceptor;
 import org.bspb.smartbirds.pro.backend.AuthenticationInterceptor;
 import org.bspb.smartbirds.pro.backend.Backend;
 import org.bspb.smartbirds.pro.backend.ReceivedCookiesInterceptor;
+import org.bspb.smartbirds.pro.beans.EntriesToMapMarkersConverter;
+import org.bspb.smartbirds.pro.db.SmartBirdsDatabase;
 import org.bspb.smartbirds.pro.events.CancelMonitoringEvent;
 import org.bspb.smartbirds.pro.events.EEventBus;
 import org.bspb.smartbirds.pro.events.ResumeMonitoringEvent;
 import org.bspb.smartbirds.pro.events.StartMonitoringEvent;
-import org.bspb.smartbirds.pro.db.SmartBirdsDatabase;
 import org.bspb.smartbirds.pro.service.DataService;
 import org.bspb.smartbirds.pro.ui.utils.Configuration;
 import org.bspb.smartbirds.pro.utils.MonitoringManager;
@@ -24,7 +23,6 @@ import org.bspb.smartbirds.pro.utils.NomenclaturesManager;
 /**
  * Created by groupsky on 14-9-25.
  */
-@EApplication
 public class SmartBirdsApplication extends Application {
 
     public static final String TAG = "SBP";
@@ -33,13 +31,11 @@ public class SmartBirdsApplication extends Application {
 
     public static final String PREFS_MONITORING_POINTS = "points";
 
-    @Bean
-    EEventBus bus;
+    EEventBus bus = EEventBus.getInstance();
 
-    @Bean
     AuthenticationInterceptor authenticationInterceptor;
-    @Bean
-    Backend backend;
+
+    Backend backend = Backend.Companion.getInstance();
 
     @Override
     public void onCreate() {
@@ -54,10 +50,12 @@ public class SmartBirdsApplication extends Application {
         SmartBirdsDatabase.Companion.init(this);
         NomenclaturesManager.Companion.init(this);
         MonitoringManager.Companion.init(this);
+        AuthenticationInterceptor.Companion.init(this);
+        EntriesToMapMarkersConverter.Companion.init(this);
 
         backend.addInterceptor(new AddCookiesInterceptor(this));
         backend.addInterceptor(new ReceivedCookiesInterceptor(this));
-        backend.addInterceptor(authenticationInterceptor);
+        backend.addInterceptor(AuthenticationInterceptor.Companion.getInstance());
         backend.addInterceptor(new AddLanguageInterceptor());
 
         bus.register(this);
@@ -66,14 +64,14 @@ public class SmartBirdsApplication extends Application {
     }
 
     public void onEvent(StartMonitoringEvent event) {
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
     }
 
     public void onEvent(ResumeMonitoringEvent event) {
-        DataService.Companion.intent(this).start();
+        startService(DataService.Companion.intent(this));
     }
 
     public void onEvent(CancelMonitoringEvent event) {
-        DataService.Companion.intent(this).stop();
+        stopService(DataService.Companion.intent(this));
     }
 }

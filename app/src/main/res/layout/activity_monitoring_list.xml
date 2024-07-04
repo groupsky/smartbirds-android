@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/monitoring_list_container"
-    android:name="org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment_"
+    android:name="org.bspb.smartbirds.pro.ui.fragment.MonitoringListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.bspb.smartbirds.pro.ui.MonitoringListActivity" />
