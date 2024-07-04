@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 class CommonPrefs(context: Context) {
 
@@ -22,7 +22,7 @@ class CommonPrefs(context: Context) {
     }
 
     fun getConfidentialRecord(): Boolean {
-        return prefs.getBoolean(KEY_CONFIDENTIAL_RECORD, false) ?: false
+        return prefs.getBoolean(KEY_CONFIDENTIAL_RECORD, false)
     }
 
     fun setConfidentialRecord(value: Boolean) {

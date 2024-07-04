@@ -70,17 +70,19 @@ class ExportService : IntentService("Export Service") {
                     val monitoringDir = File(baseDir, monitoringCode)
                     if (!monitoringDir.exists()) continue
                     if (!monitoringDir.isDirectory) continue
-                    for (fileToZip in monitoringDir.listFiles()) {
-                        val entry = ZipEntry(monitoringDir.name + "/" + fileToZip.name)
-                        zipOut.putNextEntry(entry)
-                        val inputStream = FileInputStream(fileToZip)
-                        val `in` = BufferedInputStream(inputStream)
-                        var count: Int
-                        while (`in`.read(data, 0, BUFFER).also { count = it } != -1) {
-                            zipOut.write(data, 0, count)
+                    monitoringDir.listFiles()?.let { files ->
+                        for (fileToZip in files) {
+                            val entry = ZipEntry(monitoringDir.name + "/" + fileToZip.name)
+                            zipOut.putNextEntry(entry)
+                            val inputStream = FileInputStream(fileToZip)
+                            val `in` = BufferedInputStream(inputStream)
+                            var count: Int
+                            while (`in`.read(data, 0, BUFFER).also { count = it } != -1) {
+                                zipOut.write(data, 0, count)
+                            }
+                            zipOut.closeEntry()
+                            `in`.close()
                         }
-                        zipOut.closeEntry()
-                        `in`.close()
                     }
                 }
                 zipOut.close()
@@ -110,7 +112,7 @@ class ExportService : IntentService("Export Service") {
                     continue
                 }
                 val outWriter = BufferedWriter(FileWriter(entriesFile))
-                outWriter.use { outWriter ->
+                outWriter.apply {
                     var firstLine = true
                     val entries: MutableList<MonitoringEntry> = ArrayList()
                     for (formEntry in formEntries) {
@@ -132,16 +134,16 @@ class ExportService : IntentService("Export Service") {
                         entry.data.keys.retainAll(normalizedKeys)
                         val lines = convertToCsvLines(entry.data)
                         if (firstLine) {
-                            outWriter.write(commonLines[0])
-                            outWriter.write(CSVStrategy.DEFAULT.delimiter.toInt())
-                            outWriter.write(lines[0])
-                            outWriter.newLine()
+                            write(commonLines[0])
+                            write(CSVStrategy.DEFAULT.delimiter.code)
+                            write(lines[0])
+                            newLine()
                             firstLine = false
                         }
-                        outWriter.write(commonLines[1])
-                        outWriter.write(CSVStrategy.DEFAULT.delimiter.toInt())
-                        outWriter.write(lines[1])
-                        outWriter.newLine()
+                        write(commonLines[1])
+                        write(CSVStrategy.DEFAULT.delimiter.code)
+                        write(lines[1])
+                        newLine()
                     }
                 }
             }
@@ -154,15 +156,15 @@ class ExportService : IntentService("Export Service") {
     private fun convertToCsvLines(data: HashMap<String, String>): Array<String> {
         val prepared = CsvPreparer.prepareCsvLine(data)
         val memory = StringWriter()
-        memory.use { memory ->
-            val csvWriter = CSVWriterBuilder<Array<String>>(memory).strategy(CSVStrategy.DEFAULT)
+        memory.apply {
+            val csvWriter = CSVWriterBuilder<Array<String>>(this).strategy(CSVStrategy.DEFAULT)
                 .entryConverter(SmartBirdsCSVEntryConverter()).build()
             csvWriter.write(prepared.keys)
             csvWriter.write(prepared.values)
-            memory.flush()
+            flush()
         }
         val commonData = memory.buffer.toString()
-        return commonData.split(System.getProperty("line.separator")).toTypedArray()
+        return commonData.split(System.lineSeparator()).toTypedArray()
     }
 
     private fun getEntriesFile(monitoring: Monitoring, entryType: EntryType): File {

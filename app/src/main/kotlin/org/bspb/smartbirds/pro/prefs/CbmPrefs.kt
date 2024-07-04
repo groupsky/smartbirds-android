@@ -2,7 +2,7 @@ package org.bspb.smartbirds.pro.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 class CbmPrefs(context: Context) {
 

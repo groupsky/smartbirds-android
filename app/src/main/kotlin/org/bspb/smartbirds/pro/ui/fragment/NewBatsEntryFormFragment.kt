@@ -9,7 +9,7 @@ import org.bspb.smartbirds.pro.enums.EntryType
 class NewBatsEntryFormFragment : BaseTabEntryFragment() {
 
     override fun setupTabs() {
-        setAdapter(object : FragmentStatePagerAdapter(parentFragmentManager!!) {
+        setAdapter(object : FragmentStatePagerAdapter(parentFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> NewBatsMainEntryFormFragment.newInstance(isNewEntry, readOnly)
