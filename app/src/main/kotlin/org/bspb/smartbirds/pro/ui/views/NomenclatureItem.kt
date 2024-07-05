@@ -31,10 +31,10 @@ class NomenclatureItem {
     }
 
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val that = o as NomenclatureItem
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        val that = other as NomenclatureItem
         return label == that.label
     }
 

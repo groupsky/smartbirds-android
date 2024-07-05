@@ -23,7 +23,7 @@ import org.bspb.smartbirds.pro.utils.showAlert
 class NomenclatureChooser(
     private val context: Context,
     private val nomenclatureType: String,
-    private val hint: String
+    private val hint: String,
 ) : TextWatcher {
 
     companion object {
@@ -85,7 +85,7 @@ class NomenclatureChooser(
             dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
         }
 
-        if (needFilter) dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+        if (needFilter) dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
     private fun loadData(): Boolean {

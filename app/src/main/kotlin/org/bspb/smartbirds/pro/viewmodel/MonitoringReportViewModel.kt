@@ -1,7 +1,11 @@
 package org.bspb.smartbirds.pro.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.db.model.Form
@@ -10,7 +14,17 @@ import org.bspb.smartbirds.pro.enums.EntryType
 import org.bspb.smartbirds.pro.enums.ReportEntryType
 import org.bspb.smartbirds.pro.repository.FormRepository
 import org.bspb.smartbirds.pro.utils.MonitoringManager
-import org.bspb.smartbirds.pro.utils.debugLog
+import kotlin.collections.List
+import kotlin.collections.MutableList
+import kotlin.collections.containsKey
+import kotlin.collections.forEach
+import kotlin.collections.get
+import kotlin.collections.maxOrNull
+import kotlin.collections.mutableListOf
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
+import kotlin.collections.sorted
+import kotlin.collections.sortedWith
 
 class MonitoringReportViewModel : ViewModel() {
 
@@ -23,8 +37,9 @@ class MonitoringReportViewModel : ViewModel() {
             return
         }
         this.monitoringCode = monitoringCode
-        this.entries = formRepository.findAllByMonitoringCode(monitoringCode!!).distinctUntilChanged()
-            .switchMap { transformDbEntries(it) }
+        this.entries =
+            formRepository.findAllByMonitoringCode(monitoringCode!!).distinctUntilChanged()
+                .switchMap { transformDbEntries(it) }
     }
 
     private fun transformDbEntries(items: List<Form>?): LiveData<List<MonitoringEntry>> {
@@ -39,7 +54,10 @@ class MonitoringReportViewModel : ViewModel() {
         }
     }
 
-    fun prepareReportEntries(context: Context, items: List<MonitoringEntry>): MutableList<MonitoringReportEntry> {
+    fun prepareReportEntries(
+        context: Context,
+        items: List<MonitoringEntry>,
+    ): MutableList<MonitoringReportEntry> {
         var monitoringReportForms = mutableMapOf<String, MutableList<MonitoringEntry>>()
         var reportEntries = mutableListOf<MonitoringReportEntry>()
 
@@ -65,15 +83,16 @@ class MonitoringReportViewModel : ViewModel() {
             )
             val formEntries = mutableMapOf<String, Int>()
             monitoringReportForms[formType]?.forEach { entry ->
-                var label: String? = "N/A"
+                var label: String?
                 label = if (entry.type == EntryType.PYLONS) {
                     entry.data[context.getString(R.string.tag_pylons_pylon_type)]
                 } else if (entry.type == EntryType.CICONIA) {
                     context.getString(entry.type.titleId)
                 } else {
-                    entry.data[context.getString(R.string.tag_species_scientific_name)] ?: entry.data[context.getString(
-                        R.string.tag_observed_bird
-                    )]
+                    entry.data[context.getString(R.string.tag_species_scientific_name)]
+                        ?: entry.data[context.getString(
+                            R.string.tag_observed_bird
+                        )]
                 }
                 if (label == null) {
                     label = "n/a"
@@ -82,7 +101,9 @@ class MonitoringReportViewModel : ViewModel() {
                 val counts = mutableListOf<Int>()
                 counts.add(1)
                 if (entry.data.containsKey(context.getString(R.string.tag_count))) {
-                    counts.add(entry.data[context.getString(R.string.tag_count)]!!.toIntOrNull() ?: 0)
+                    counts.add(
+                        entry.data[context.getString(R.string.tag_count)]!!.toIntOrNull() ?: 0
+                    )
                 }
                 if (entry.data.containsKey(context.getString(R.string.tag_min))) {
                     counts.add(entry.data[context.getString(R.string.tag_min)]!!.toIntOrNull() ?: 0)

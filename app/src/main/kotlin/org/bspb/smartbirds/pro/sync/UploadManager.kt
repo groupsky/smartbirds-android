@@ -85,6 +85,7 @@ open class UploadManager(private val context: Context) {
         monitoringManager.updateStatus(monitoringCode, Monitoring.Status.uploaded)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     @Throws(Exception::class)
     private fun uploadMonitoringFiles(
         monitoringPath: String,

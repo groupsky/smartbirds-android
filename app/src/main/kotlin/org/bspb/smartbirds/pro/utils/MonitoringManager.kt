@@ -12,16 +12,19 @@ import org.bspb.smartbirds.pro.SmartBirdsApplication
 import org.bspb.smartbirds.pro.content.Monitoring
 import org.bspb.smartbirds.pro.content.MonitoringEntry
 import org.bspb.smartbirds.pro.content.TrackingLocation
-import org.bspb.smartbirds.pro.enums.EntryType
-import org.bspb.smartbirds.pro.repository.FormRepository
-import org.bspb.smartbirds.pro.repository.MonitoringRepository
 import org.bspb.smartbirds.pro.db.model.Form
 import org.bspb.smartbirds.pro.db.model.MonitoringModel
 import org.bspb.smartbirds.pro.db.model.Tracking
+import org.bspb.smartbirds.pro.enums.EntryType
+import org.bspb.smartbirds.pro.repository.FormRepository
+import org.bspb.smartbirds.pro.repository.MonitoringRepository
 import org.bspb.smartbirds.pro.tools.SBGsonParser
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import java.util.UUID
 
 class MonitoringManager private constructor(val context: Context) {
 
@@ -64,7 +67,7 @@ class MonitoringManager private constructor(val context: Context) {
             dbModel ?: return null
 
             val monitoring = SERIALIZER.fromJson(
-                dbModel.data!!,
+                dbModel.data,
                 Monitoring::class.java
             )
             monitoring.id = dbModel.id
@@ -87,7 +90,11 @@ class MonitoringManager private constructor(val context: Context) {
         monitoringRepository = MonitoringRepository()
     }
 
-    suspend fun newEntry(monitoring: Monitoring, entryType: EntryType, data: HashMap<String?, String?>) {
+    suspend fun newEntry(
+        monitoring: Monitoring,
+        entryType: EntryType,
+        data: HashMap<String?, String?>,
+    ) {
         val entry = MonitoringEntry(monitoring.code, entryType)
         entry.data.putAll(data)
         formsRepository.insertForm(toDbModel(entry))
@@ -97,7 +104,7 @@ class MonitoringManager private constructor(val context: Context) {
         monitoringCode: String,
         entryId: Long,
         entryType: EntryType,
-        data: HashMap<String?, String?>
+        data: HashMap<String?, String?>,
     ) {
         val entry = MonitoringEntry(monitoringCode, entryType)
         entry.data.putAll(data)
@@ -192,7 +199,11 @@ class MonitoringManager private constructor(val context: Context) {
 
     private fun generateMonitoringCode(): String {
         val uuid = UUID.randomUUID().toString()
-        return String.format("%s-%s", DATE_FORMATTER.format(Date()), uuid.substring(uuid.length - 12))
+        return String.format(
+            "%s-%s",
+            DATE_FORMATTER.format(Date()),
+            uuid.substring(uuid.length - 12)
+        )
     }
 
     private fun toDbModel(monitoring: Monitoring): MonitoringModel {
