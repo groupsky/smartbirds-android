@@ -38,6 +38,14 @@ public class NewCiconiaEntryFormFragment extends BaseEntryFragment {
     }
 
     @Override
+    protected HashMap<String, String> serialize() {
+        HashMap<String, String> data = super.serialize();
+        data.putAll(picturesFragment.serialize());
+        return data;
+    }
+
+    @NonNull
+    @Override
     protected HashMap<String, String> serialize(Date entryTime) {
         HashMap<String, String> data = super.serialize(entryTime);
         data.putAll(picturesFragment.serialize());

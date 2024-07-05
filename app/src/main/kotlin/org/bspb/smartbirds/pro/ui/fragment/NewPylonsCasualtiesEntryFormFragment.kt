@@ -20,7 +20,7 @@ class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
             R.layout.fragment_monitoring_form_new_pylons_casualties_entry,
@@ -53,6 +53,12 @@ class NewPylonsCasualtiesEntryFormFragment : BaseEntryFragment() {
 
     override fun getEntryType(): EntryType? {
         return EntryType.PYLONS_CASUALTIES
+    }
+
+    override fun serialize(): HashMap<String, String> {
+        val data = super.serialize()
+        data.putAll(picturesFragment!!.serialize())
+        return data
     }
 
     override fun serialize(entryTime: Date?): HashMap<String, String> {
