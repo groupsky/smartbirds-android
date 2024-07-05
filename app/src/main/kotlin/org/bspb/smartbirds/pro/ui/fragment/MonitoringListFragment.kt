@@ -70,7 +70,7 @@ class MonitoringListFragment : ListFragment() {
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
         super.onListItemClick(l, v, position, id)
         val monitoring = listAdapter?.getItem(position) as Monitoring
-        if (monitoring != null && activity is Listener) {
+        if (activity is Listener) {
             (activity as Listener).onMonitoringSelected(monitoring.code)
         }
     }

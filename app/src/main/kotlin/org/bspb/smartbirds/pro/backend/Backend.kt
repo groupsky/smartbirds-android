@@ -40,7 +40,7 @@ class Backend private constructor() {
     private var client: OkHttpClient? = null
     private var retrofit: Retrofit? = null
     private var api: SmartBirdsApi? = null
-    private var gson: Gson? = null
+    private val gson: Gson by lazy { SBGsonParser.createParser() }
 
     init {
         val logging = HttpLoggingInterceptor()
@@ -73,8 +73,6 @@ class Backend private constructor() {
     }
 
     private fun getRetrofit(): Retrofit {
-        gson = SBGsonParser.createParser()
-
         if (retrofit == null) {
             Log.d(TAG, String.format("Backend base url: %s", backendBaseUrl))
             retrofit = Retrofit.Builder()

@@ -3,7 +3,11 @@ package org.bspb.smartbirds.pro.ui.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
 import org.bspb.smartbirds.pro.ui.exception.ViewValidationException
@@ -70,7 +74,7 @@ class SingleChoiceRadioFormInput : FrameLayout, SupportRequiredView, SupportStor
             radioGroup.orientation = LinearLayout.VERTICAL
         }
 
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId != -1) {
                 hintTextView.error = null
             }

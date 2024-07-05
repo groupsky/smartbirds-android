@@ -60,6 +60,7 @@ public class NewInvertebratesEntryFormFragment extends BaseEntryFragment {
         return EntryType.INVERTEBRATES;
     }
 
+    @NonNull
     @Override
     protected HashMap<String, String> serialize(Date entryTime) {
         HashMap<String, String> data = super.serialize(entryTime);

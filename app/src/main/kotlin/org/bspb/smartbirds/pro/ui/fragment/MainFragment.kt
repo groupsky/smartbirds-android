@@ -113,7 +113,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
             R.layout.fragment_main,
@@ -185,7 +185,7 @@ class MainFragment : Fragment() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String?>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         when (requestCode) {
             REQUEST_LOCATION, REQUEST_STORAGE -> {
@@ -454,7 +454,7 @@ class MainFragment : Fragment() {
     }
 
     private fun displayNotSyncedCount(notSyncedCount: Int) {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             try {
                 btnUpload.text = "${getString(R.string.main_screen_btn_upload)} : $notSyncedCount"
             } catch (t: Throwable) {
@@ -466,13 +466,13 @@ class MainFragment : Fragment() {
     }
 
     private fun updateSyncProgress(message: String?) {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             showProgressDialog(message ?: "")
         }
     }
 
     private fun onSyncComplete() {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             hideProgressDialog()
             showErrorsIfAny()
         }
@@ -500,7 +500,7 @@ class MainFragment : Fragment() {
     }
 
     fun onEvent(event: ExportPreparedEvent) {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             exportDialog?.cancel()
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "application/zip"
@@ -511,31 +511,35 @@ class MainFragment : Fragment() {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: ExportFailedEvent?) {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             exportDialog?.cancel()
             Toast.makeText(activity, getString(R.string.export_failed_error), Toast.LENGTH_LONG)
                 .show()
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: MonitoringPausedEvent?) {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             setupMonitoringButtons()
             bus.removeStickyEvent(MonitoringPausedEvent::class.java)
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: MonitoringCanceledEvent?) {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             setupMonitoringButtons()
             checkForLastMonitoring()
             bus.removeStickyEvent(MonitoringCanceledEvent::class.java)
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: MonitoringFinishedEvent?) {
-        scope.launch(Dispatchers.Main) {
+        scope.sbLaunch(Dispatchers.Main) {
             setupMonitoringButtons()
             bus.removeStickyEvent(MonitoringFinishedEvent::class.java)
         }

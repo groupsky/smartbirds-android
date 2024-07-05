@@ -258,6 +258,7 @@ open class DataService : Service() {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: FinishMonitoringEvent) {
         scope.sbLaunch {
             if (monitoring!!.commonForm.containsKey(resources.getString(R.string.end_time_key))) {
@@ -409,20 +410,24 @@ open class DataService : Service() {
         )
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: GetMonitoringCommonData) {
         bus.post(MonitoringCommonData(monitoring!!.commonForm))
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: UndoLastEntry) {
         scope.sbLaunch {
             monitoringManager.deleteLastEntry(monitoring!!)
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: QueryActiveMonitoringEvent) {
         bus.postSticky(ActiveMonitoringEvent(monitoring))
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: PauseMonitoringEvent?) {
         scope.sbLaunch {
             if (isMonitoring()) {
@@ -434,6 +439,7 @@ open class DataService : Service() {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEvent(event: ResumeMonitoringEvent) {
         scope.sbLaunch {
             if (isMonitoring()) {

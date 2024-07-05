@@ -1,9 +1,13 @@
 package org.bspb.smartbirds.pro.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import org.bspb.smartbirds.pro.content.Monitoring
-import org.bspb.smartbirds.pro.repository.MonitoringRepository
 import org.bspb.smartbirds.pro.db.model.MonitoringWithEntriesCount
+import org.bspb.smartbirds.pro.repository.MonitoringRepository
 import org.bspb.smartbirds.pro.utils.MonitoringManager
 
 class MonitoringListViewModel : ViewModel() {
@@ -31,7 +35,7 @@ class MonitoringListViewModel : ViewModel() {
             items?.forEach {
                 val monitoring = MonitoringManager.monitoringFromDb(it.monitoring)
                 monitoring!!.entriesCount = it.records
-                monitorings.add(monitoring!!)
+                monitorings.add(monitoring)
             }
 
             emit(monitorings)

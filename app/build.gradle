@@ -4,6 +4,7 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 def versionNameBase = "2.0.77"
@@ -147,7 +148,7 @@ dependencies {
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+    implementation('org.jetbrains.kotlin:kotlin-stdlib:1.9.21')
 
     // KTX extensions
     implementation("androidx.core:core-ktx:1.13.1")
@@ -170,28 +171,28 @@ dependencies {
 
     // TODO: migrate to https://commons.apache.org/proper/commons-csv/
     implementation("com.googlecode.jcsv:jcsv:1.4.0")
-    implementation("com.google.maps.android:android-maps-utils:3.4.0")
+    implementation('com.google.maps.android:android-maps-utils:3.8.2')
 
-    implementation("org.osmdroid:osmdroid-android:6.1.16")
+    implementation('org.osmdroid:osmdroid-android:6.1.18')
     implementation("com.github.MKergall:osmbonuspack:6.9.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
 
     // http://square.github.io/retrofit/
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation('com.squareup.retrofit2:retrofit:2.11.0')
+    implementation('com.squareup.retrofit2:converter-gson:2.11.0')
+    implementation('com.squareup.okhttp3:logging-interceptor:4.12.0')
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.12.0")
 
     implementation("androidx.lifecycle:lifecycle-common-java8:2.8.3")
 
     // Room
     implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1')
 
     testImplementation("junit:junit:4.13.2")
 
@@ -205,7 +206,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
     // mock server for backend
-    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
+    androidTestImplementation('com.squareup.okhttp3:mockwebserver:4.12.0')
     // Optional -- Hamcrest library
     androidTestImplementation("org.hamcrest:hamcrest:2.2")
     androidTestImplementation("org.hamcrest:hamcrest-library:2.2")

@@ -107,7 +107,7 @@ class NewEntryPicturesFragment : BaseFormFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return super.onCreateView(inflater, container, savedInstanceState) ?: inflater.inflate(
             R.layout.fragment_form_pictures,
@@ -202,6 +202,7 @@ class NewEntryPicturesFragment : BaseFormFragment() {
         updateTakePicture()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun onTakePicture(item: MenuItem) {
         if (picturesCount >= pictures.size) {
             return
@@ -230,6 +231,7 @@ class NewEntryPicturesFragment : BaseFormFragment() {
         builder.create().show()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onEventMainThread(event: ImageFileCreatedFailed?) {
         Toast.makeText(activity, R.string.image_file_create_error, Toast.LENGTH_SHORT).show()
     }

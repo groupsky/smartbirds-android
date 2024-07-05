@@ -10,7 +10,8 @@ import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.dto.DownloadsItem
 import org.bspb.smartbirds.pro.utils.inflate
 
-class DownloadsAdapter(val locale: String) : RecyclerView.Adapter<DownloadsAdapter.DownloadsViewHolder>() {
+class DownloadsAdapter(val locale: String) :
+    RecyclerView.Adapter<DownloadsAdapter.DownloadsViewHolder>() {
 
     var downloads: List<DownloadsItem>? = null
         set(value) {
@@ -18,7 +19,8 @@ class DownloadsAdapter(val locale: String) : RecyclerView.Adapter<DownloadsAdapt
             notifyDataSetChanged()
         }
 
-    class DownloadsViewHolder(private val containerView: View, val locale: String) : RecyclerView.ViewHolder(containerView), View.OnClickListener {
+    class DownloadsViewHolder(private val containerView: View, val locale: String) :
+        RecyclerView.ViewHolder(containerView), View.OnClickListener {
         private var downloadItem: DownloadsItem? = null
 
         // TODO Replace with LayoutContainer auto binding when become stable
@@ -34,7 +36,7 @@ class DownloadsAdapter(val locale: String) : RecyclerView.Adapter<DownloadsAdapt
         fun bindItem(downloadItem: DownloadsItem?) {
             this.downloadItem = downloadItem
             labelView.text = downloadItem?.title?.get(locale) ?: ""
-            localeView.text = downloadItem?.contentLocale?.toUpperCase() ?: ""
+            localeView.text = downloadItem?.contentLocale?.uppercase() ?: ""
         }
 
         override fun onClick(v: View?) {

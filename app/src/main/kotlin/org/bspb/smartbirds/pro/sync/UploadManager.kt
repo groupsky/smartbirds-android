@@ -8,7 +8,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.bspb.smartbirds.pro.BuildConfig
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.SmartBirdsApplication
@@ -41,7 +41,7 @@ open class UploadManager(private val context: Context) {
         isUploading = true
         try {
             monitoringManager.monitoringCodesForStatus(Monitoring.Status.finished)
-                ?.forEach { monitoringCode ->
+                .forEach { monitoringCode ->
                     uploadMonitoring(monitoringCode)
                 }
         } finally {
@@ -85,10 +85,11 @@ open class UploadManager(private val context: Context) {
         monitoringManager.updateStatus(monitoringCode, Monitoring.Status.uploaded)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     @Throws(Exception::class)
     private fun uploadMonitoringFiles(
         monitoringPath: String,
-        monitoringCode: String
+        monitoringCode: String,
     ): Map<String, JsonObject> {
         val monitoringDir = File(monitoringPath)
 
@@ -132,7 +133,7 @@ open class UploadManager(private val context: Context) {
 
     private suspend fun uploadMonitoringEntries(
         monitoringCode: String,
-        fileObjects: Map<String, JsonObject>?
+        fileObjects: Map<String, JsonObject>?,
     ): Boolean {
         val monitoring = monitoringManager.getMonitoring(monitoringCode)
         monitoring ?: return false
@@ -187,13 +188,13 @@ open class UploadManager(private val context: Context) {
 //                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 Reporting.logException(IllegalStateException(msg))
             } else {
-                dataJson.add("track", fileObjects?.get("track.gpx")!!["url"])
+                dataJson.add("track", fileObjects.get("track.gpx")!!["url"])
             }
 
             val call = monitoringEntry.type.uploader.upload(backend.api(), dataJson)
 
             var response: Response<UploadFormResponse>? = null
-            var failed = false
+            var failed: Boolean
             try {
                 response = call.execute()
                 failed = !response.isSuccessful
@@ -231,7 +232,7 @@ open class UploadManager(private val context: Context) {
 
     @Throws(IOException::class)
     private fun uploadFile(file: File): JsonObject {
-        val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+        val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val body: MultipartBody.Part =
             MultipartBody.Part.createFormData("file", file.name, requestFile)
         val call = backend.api().upload(body)

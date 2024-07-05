@@ -3,7 +3,9 @@ package org.bspb.smartbirds.pro.ui.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.gson.reflect.TypeToken
@@ -14,7 +16,6 @@ import org.bspb.smartbirds.pro.ui.exception.ViewValidationException
 import org.bspb.smartbirds.pro.ui.utils.Configuration
 import org.bspb.smartbirds.pro.utils.NomenclaturesManager
 import org.bspb.smartbirds.pro.utils.inflate
-import java.util.*
 
 
 class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
@@ -81,7 +82,7 @@ class ToggleGroupFormInput : FrameLayout, SupportRequiredView, SupportStorage {
 
         toggleGroup.isSingleSelection = mIsSingleSelection
 
-        toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (checkedId != -1) {
                 hintTextView.error = null
             }

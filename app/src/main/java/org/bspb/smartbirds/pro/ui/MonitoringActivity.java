@@ -680,8 +680,12 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     public void onEvent(LocationChangedEvent event) {
         Location location = event.location;
         lastPosition = new LatLng(location.getLatitude(), location.getLongitude());
-        currentMap.setPosition(lastPosition);
-        currentMap.updateCamera();
+
+        if (currentMap != null) {
+            currentMap.setPosition(lastPosition);
+            currentMap.updateCamera();
+        }
+
         if (menuNewEntry != null) {
             menuNewEntry.setEnabled(true);
         }
@@ -693,7 +697,9 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
 
     private void addPoint(LatLng point) {
         points.add(point);
-        currentMap.updatePath(points);
+        if (currentMap != null) {
+            currentMap.updatePath(points);
+        }
         persistPoints();
     }
 

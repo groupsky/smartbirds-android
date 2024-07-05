@@ -9,8 +9,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.bspb.smartbirds.pro.R
 import org.bspb.smartbirds.pro.backend.Backend
 import org.bspb.smartbirds.pro.backend.dto.Nomenclature
@@ -61,18 +59,19 @@ class NomenclaturesManager private constructor(val context: Context) {
     private var loading = false
     private val db = SmartBirdsDatabase.getInstance()
     private val backend: Backend = Backend.getInstance()
+    private val scope: SBScope by lazy { SBScope() }
 
     private val comparator: Comparator<in Nomenclature> =
         Comparator { o1: Nomenclature, o2: Nomenclature ->
             if (o1.label.labelId.equals(o2.label.labelId, ignoreCase = true)) {
                 return@Comparator 0
             }
-            AlphanumComparator.compareStrings(o1.localeLabel, o2.localeLabel)
+            AlphanumComparator.compareStrings(o1.label.get(locale), o2.label.get(locale))
         }
 
     @VisibleForTesting
     fun loadNomenclatures() {
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.sbLaunch(Dispatchers.IO) {
             loading = true
             data.clear()
             val dbNomenclatures = db.nomenclatureDao().getAll()
@@ -100,14 +99,12 @@ class NomenclaturesManager private constructor(val context: Context) {
     }
 
     fun getNomenclature(key: String): List<Nomenclature> {
-        var key = key
-        key = key.replaceFirst("^form_".toRegex(), "")
-        if (!data.containsKey(key)) {
+        val formattedKey = key.replaceFirst("^form_".toRegex(), "")
+        if (!data.containsKey(formattedKey)) {
             check(!loading) { "Still loading" }
-            throw IllegalArgumentException("Unknown nomenclature $key")
+            throw IllegalArgumentException("Unknown nomenclature $formattedKey")
         }
-
-        return data[key]!!
+        return data[formattedKey]!!
     }
 
     fun isLoading() = loading
@@ -137,7 +134,7 @@ class NomenclaturesManager private constructor(val context: Context) {
     }
 
     fun addRecentNomenclature(nomenclature: Nomenclature) {
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.sbLaunch(Dispatchers.IO) {
             var recentNomenclature =
                 db.nomenclatureUsesCountDao().findByLabel(nomenclature.label.labelId)
             if (recentNomenclature == null) {
