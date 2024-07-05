@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,6 +45,7 @@ public abstract class BaseTabEntryFragment extends BaseEntryFragment {
         return valid;
     }
 
+    @NonNull
     @Override
     protected HashMap<String, String> serialize(Date entryTime) {
         HashMap<String, String> data = super.serialize(entryTime);
