@@ -103,7 +103,7 @@ class NewPylonsEntryFormFragment : BaseEntryFragment() {
     }
 
     class Builder : BaseEntryFragment.Builder {
-        override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment? {
+        override fun build(lat: Double, lon: Double, geolocationAccuracy: Double): Fragment {
             return NewPylonsEntryFormFragment().apply {
                 arguments = Bundle().apply {
                     putDouble(ARG_LAT, lat)
@@ -113,7 +113,7 @@ class NewPylonsEntryFormFragment : BaseEntryFragment() {
             }
         }
 
-        override fun load(id: Long, readOnly: Boolean): Fragment? {
+        override fun load(id: Long, readOnly: Boolean): Fragment {
             return NewPylonsEntryFormFragment().apply {
                 arguments = Bundle().apply {
                     putLong(ARG_ENTRY_ID, id)
