@@ -33,7 +33,7 @@ object KmlUtils {
             val cursor: Cursor? =
                 context.contentResolver
                     .query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
-            cursor.let {
+            cursor.use {
                 if (it != null && it.moveToFirst()) {
                     result = it.getString(0)
                 }

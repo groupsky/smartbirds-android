@@ -43,7 +43,9 @@ class MonitoringUtils {
             val file = File(createMonitoringDir(context, monitoring), "track.gpx")
             try {
                 val osw: Writer = BufferedWriter(FileWriter(file, true))
-                GpxWriter(osw).writeFooter()
+                osw.use {
+                    GpxWriter(it).writeFooter()
+                }
             } catch (e: IOException) {
                 Reporting.logException(e)
                 Toast.makeText(context, "Could not write to track.gpx!", Toast.LENGTH_SHORT).show()
@@ -55,7 +57,7 @@ class MonitoringUtils {
             val file = File(createMonitoringDir(context, monitoring), "track.gpx")
             try {
                 val osw = OutputStreamWriter(BufferedOutputStream(FileOutputStream(file, false)))
-                osw.let {
+                osw.use {
                     val writer = GpxWriter(it)
                     writer.writeHeader()
                 }
