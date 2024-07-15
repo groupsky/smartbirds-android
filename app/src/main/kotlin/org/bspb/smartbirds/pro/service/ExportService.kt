@@ -112,7 +112,7 @@ class ExportService : IntentService("Export Service") {
                     continue
                 }
                 val outWriter = BufferedWriter(FileWriter(entriesFile))
-                outWriter.apply {
+                outWriter.use { writer ->
                     var firstLine = true
                     val entries: MutableList<MonitoringEntry> = ArrayList()
                     for (formEntry in formEntries) {
@@ -134,16 +134,16 @@ class ExportService : IntentService("Export Service") {
                         entry.data.keys.retainAll(normalizedKeys)
                         val lines = convertToCsvLines(entry.data)
                         if (firstLine) {
-                            write(commonLines[0])
-                            write(CSVStrategy.DEFAULT.delimiter.code)
-                            write(lines[0])
-                            newLine()
+                            writer.write(commonLines[0])
+                            writer.write(CSVStrategy.DEFAULT.delimiter.code)
+                            writer.write(lines[0])
+                            writer.newLine()
                             firstLine = false
                         }
-                        write(commonLines[1])
-                        write(CSVStrategy.DEFAULT.delimiter.code)
-                        write(lines[1])
-                        newLine()
+                        writer.write(commonLines[1])
+                        writer.write(CSVStrategy.DEFAULT.delimiter.code)
+                        writer.write(lines[1])
+                        writer.newLine()
                     }
                 }
             }
@@ -156,12 +156,12 @@ class ExportService : IntentService("Export Service") {
     private fun convertToCsvLines(data: HashMap<String, String>): Array<String> {
         val prepared = CsvPreparer.prepareCsvLine(data)
         val memory = StringWriter()
-        memory.apply {
-            val csvWriter = CSVWriterBuilder<Array<String>>(this).strategy(CSVStrategy.DEFAULT)
+        memory.use {
+            val csvWriter = CSVWriterBuilder<Array<String>>(it).strategy(CSVStrategy.DEFAULT)
                 .entryConverter(SmartBirdsCSVEntryConverter()).build()
             csvWriter.write(prepared.keys)
             csvWriter.write(prepared.values)
-            flush()
+            it.flush()
         }
         val commonData = memory.buffer.toString()
         return commonData.split(System.lineSeparator()).toTypedArray()
