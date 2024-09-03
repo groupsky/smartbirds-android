@@ -148,7 +148,7 @@ dependencies {
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
-    implementation('org.jetbrains.kotlin:kotlin-stdlib:2.0.0')
+    implementation('org.jetbrains.kotlin:kotlin-stdlib:2.0.20')
 
     // KTX extensions
     implementation("androidx.core:core-ktx:1.13.1")
