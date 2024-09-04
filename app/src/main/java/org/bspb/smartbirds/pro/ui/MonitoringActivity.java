@@ -698,6 +698,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private void addPoint(LatLng point) {
+        // Check if state is restored to avoid losing previous points
         if (!stateRestored) {
             return;
         }
