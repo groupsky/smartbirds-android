@@ -152,6 +152,8 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     private MonitoringViewModel viewModel;
     private List<MonitoringEntry> monitoringEntries = new ArrayList<>();
 
+    private boolean stateRestored = false;
+
     private final ActivityResultLauncher<Intent> editCurrentCommonFormActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         onFinishConfirm(result.getResultCode(), result.getData());
     });
@@ -696,6 +698,10 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
     }
 
     private void addPoint(LatLng point) {
+        if (!stateRestored) {
+            return;
+        }
+
         points.add(point);
         if (currentMap != null) {
             currentMap.updatePath(points);
@@ -902,6 +908,7 @@ public class MonitoringActivity extends BaseActivity implements MonitoringEntryL
         restorePoints();
 
         updateTypeOfObservationMenus(menu);
+        this.stateRestored = true;
     }
 
     private void restorePoints() {
