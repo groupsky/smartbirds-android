@@ -344,6 +344,8 @@ Do you really want to cancel the monitoring?"</string>
     <string name="settings_category_advanced">"Advanced"</string>
     <string name="settings_export_db">"Export DB"</string>
     <string name="settings_export_db_summary">"Export the DB in Downloads."</string>
+    <string name="settings_delete_account">"Delete account"</string>
+    <string name="settings_delete_account_summary">"This operation will delete your account and all related data. It cannot be undone! "</string>
     <string name="settings_enabled_forms_alert_title">"Warning"</string>
     <string name="settings_enabled_forms_alert_message">"You have to select at least one active monitoring form."</string>
     <string name="export_db_dialog_title_success">"Success"</string>
@@ -503,4 +505,10 @@ Do you really want to cancel the monitoring?"</string>
     <string name="settings_show_current_location_circle">"Current location zone"</string>
     <string name="notifications_permission_rationale">"Notification permission is required for starting a monitoring"</string>
     <string name="monitoring_fish_total_length">"Total length (TL) class, cm"</string>
+    <string name="delete_account_dialog_title">Delete account</string>
+    <string name="delete_account_dialog_confirmation_message">Are you sure you want to delete your account?</string>
+    <string name="delete_account_dialog_confirmation_warning_message">Warning: This action cannot be undone.</string>
+    <string name="delete_account_dialog_error_message">Failed to delete account</string>
+    <string name="deleting_account_progress">Deleting account...</string>
+    <string name="dialog_delete_account_btn_yes">Yes, delete account.</string>
 </resources>

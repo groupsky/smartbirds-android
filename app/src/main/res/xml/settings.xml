@@ -148,6 +148,12 @@
             app:key="exportDB"
             app:summary="@string/settings_export_db_summary"
             app:title="@string/settings_export_db" />
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="deleteAccount"
+            app:summary="@string/settings_delete_account_summary"
+            app:title="@string/settings_delete_account" />
     </PreferenceCategory>
 
 </PreferenceScreen>

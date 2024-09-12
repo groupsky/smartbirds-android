@@ -2,6 +2,7 @@ package org.bspb.smartbirds.pro.backend;
 
 import com.google.gson.JsonObject;
 
+import org.bspb.smartbirds.pro.backend.dto.BaseResponse;
 import org.bspb.smartbirds.pro.backend.dto.CheckSessionRequest;
 import org.bspb.smartbirds.pro.backend.dto.DownloadsResponse;
 import org.bspb.smartbirds.pro.backend.dto.FileId;
@@ -17,11 +18,13 @@ import org.bspb.smartbirds.pro.backend.dto.Zone;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -96,4 +99,7 @@ public interface SmartBirdsApi {
 
     @POST("bats")
     Call<UploadFormResponse> createBat(@Body JsonObject request);
+
+    @DELETE("user/{id}")
+    Call<BaseResponse> deleteUser(@Path("id") long id);
 }
