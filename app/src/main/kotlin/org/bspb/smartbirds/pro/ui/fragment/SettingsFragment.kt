@@ -1,7 +1,9 @@
 package org.bspb.smartbirds.pro.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
@@ -10,13 +12,21 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.gson.reflect.TypeToken
 import org.bspb.smartbirds.pro.R
+import org.bspb.smartbirds.pro.backend.Backend
+import org.bspb.smartbirds.pro.backend.dto.BaseResponse
 import org.bspb.smartbirds.pro.backend.dto.MapLayerItem
 import org.bspb.smartbirds.pro.prefs.SmartBirdsPrefs
+import org.bspb.smartbirds.pro.prefs.UserPrefs
 import org.bspb.smartbirds.pro.tools.DBExporter
 import org.bspb.smartbirds.pro.tools.SBGsonParser
+import org.bspb.smartbirds.pro.ui.MainActivity
 import org.bspb.smartbirds.pro.ui.map.MapProvider
 import org.bspb.smartbirds.pro.utils.KmlUtils
+import org.bspb.smartbirds.pro.utils.debugLog
 import org.bspb.smartbirds.pro.utils.showAlert
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -26,7 +36,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var exportPreference: Preference? = null
     private var showKmlPreference: SwitchPreferenceCompat? = null
     private var importedKmlPreference: Preference? = null
+    private var deleteAccountPreference: Preference? = null
+
     private var prefs: SmartBirdsPrefs? = null
+    private var userPrefs: UserPrefs? = null
+
+    private val backend: Backend by lazy { Backend.getInstance() }
 
     private val pickKml = registerForActivityResult(ActivityResultContracts.GetContent()) {
         it ?: return@registerForActivityResult
@@ -41,6 +56,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
         prefs = SmartBirdsPrefs(requireContext())
+        userPrefs = UserPrefs(requireContext())
         initPreferences()
         updateMapType(MapProvider.ProviderType.valueOf(providerPreference?.value as String))
     }
@@ -50,6 +66,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         mapTypePreference = findPreference("mapType")
         enabledFormsPreference = findPreference("formsEnabled")
         exportPreference = findPreference("exportDB")
+        deleteAccountPreference = findPreference("deleteAccount")
 
         providerPreference?.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener() { _: Preference, newValue: Any ->
@@ -92,6 +109,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             pickKml()
             return@setOnPreferenceClickListener true
         }
+
+        deleteAccountPreference?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener { _: Preference ->
+                showDeleteAccountConfirmation()
+                return@OnPreferenceClickListener true
+            }
 
         updateImportedKmlPreference()
         initMapLayersSettings()
@@ -151,5 +174,54 @@ class SettingsFragment : PreferenceFragmentCompat() {
         } else {
             mapTypePreference?.isEnabled = true
         }
+    }
+
+    private fun showDeleteAccountConfirmation() {
+        debugLog("Show delete account confirmation")
+        AlertDialog.Builder(requireContext())
+            .setView(R.layout.dialog_delete_account)
+            .setPositiveButton(R.string.dialog_delete_account_btn_yes) { _, _ ->
+                deleteAccount()
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
+    }
+
+    private fun deleteAccount() {
+        userPrefs?.getUserId() ?: return
+
+        val loadingDialog = LoadingDialog.newInstance(getString(R.string.deleting_account_progress))
+        loadingDialog.show(parentFragmentManager, "deleting")
+
+        backend.api().deleteUser(userPrefs!!.getUserId().toLong())
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>,
+                ) {
+                    loadingDialog.dismiss()
+                    if (response.isSuccessful && response.body()?.success == true) {
+                        userPrefs?.clear()
+                        startActivity(Intent(context, MainActivity::class.java))
+                    } else {
+                        showDeleteAccountError()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, error: Throwable) {
+                    loadingDialog.dismiss()
+                    debugLog("Delete account failed ${error.message}")
+                }
+            })
+    }
+
+    private fun showDeleteAccountError() {
+        context?.showAlert(
+            R.string.delete_account_dialog_title,
+            R.string.delete_account_dialog_error_message,
+            null,
+            null
+        )
     }
 }
