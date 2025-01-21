@@ -73,7 +73,7 @@ android {
         debug {
             versionNameSuffix "-DEBUG"
             buildConfigField "String", "GIT_SHA", "\"DEBUG\""
-            buildConfigField "String", "BACKEND_BASE_URL", "\"https://staging.smartbirds.org/api/staging/\""
+            buildConfigField "String", "BACKEND_BASE_URL", "\"https://staging.smartbirds.org/api/\""
             firebaseCrashlytics {
                 mappingFileUploadEnabled false
             }
